@@ -8,21 +8,21 @@ import Header from "../components/Header";
 import PopUpBox from "../components/PopUpBox";
 
 const CountersPage = ({
-  localSavedCountersArray,
+  savedCountersArray,
   invokeSetActiveCounter,
   resetSingleCounter,
   activeCounterNumber,
   addItemToSavedCountersArray,
+  setLocalSavedCountersArray,
+  localSavedCountersArray,
+  addCounter,
 }) => {
   const [showPopUpBox, setShowPopUpBox] = useState(false);
 
-  return <div></div>;
-};
-
-export default CountersPage;
-
-/*   <Header text={"Counters"} />
-      {localSavedCountersArray.map((counterItem) => {
+  return (
+    <div>
+      <Header text={"Counters"} />
+      {savedCountersArray.map((counterItem) => {
         return (
           <div className="counter-page-single-counter" key={counterItem.id}>
             <div
@@ -53,8 +53,16 @@ export default CountersPage;
       <span>
         {showPopUpBox ? (
           <PopUpBox
-            savedCountersArray={localSavedCountersArray}
             setShowPopUpBox={setShowPopUpBox}
+            setLocalSavedCountersArray={setLocalSavedCountersArray}
+            savedCountersArray={savedCountersArray}
+            localSavedCountersArray={localSavedCountersArray}
+            addCounter={addCounter}
           />
         ) : null}
-      </span> */
+      </span>
+    </div>
+  );
+};
+
+export default CountersPage;

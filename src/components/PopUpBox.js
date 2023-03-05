@@ -1,18 +1,35 @@
 import { useState } from "react";
 
-const PopUpBox = ({ setShowPopUpBox, savedCountersArray }) => {
+const PopUpBox = ({
+  setShowPopUpBox,
+  setLocalSavedCountersArray,
+  localSavedCountersArray,
+  addCounter,
+}) => {
   const closePopUpBox = () => {
     setShowPopUpBox(false);
   };
 
-  const submitCounter = () => {
-    alert("submit");
+  const submitCounter = (e) => {
+    e.preventDefault();
+    if (!input) {
+      alert("please add counter");
+      return;
+    }
+
+    addCounter(input);
+    setInput("");
+    setShowPopUpBox(false);
   };
+
+  //   const onSubmit = (e) => {
+  //     e.preventDefault();
+  //   };
 
   const [input, setInput] = useState("");
 
   return (
-    <div className="pop-up-box-wrap">
+    <form className="pop-up-box-wrap">
       <input
         onChange={(e) => {
           setInput(e.target.value);
@@ -22,7 +39,7 @@ const PopUpBox = ({ setShowPopUpBox, savedCountersArray }) => {
       ></input>
       <button onClick={closePopUpBox}>Cancel</button>
       <button onClick={submitCounter}>Submit</button>
-    </div>
+    </form>
   );
 };
 

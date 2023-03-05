@@ -19,96 +19,56 @@ let counterName; // This is the prop that will be passed into the CounterNumber 
 let currentCount; // This is the prop that will be passed into the CounterNumber component
 let counterId;
 
-// function saveCountersArray() {
-//   localStorage.setItem(
-//     "savedCountersArray",
-//     JSON.stringify(savedCountersArray)
-//   );
-// }
+savedCountersArray = [
+  {
+    counter: "Alhumdulillah",
+    count: 0,
+    isActive: true,
+    id: 0,
+  },
 
-// if (
-//   localStorage.getItem("firstLaunch") == null ||
-//   JSON.parse(localStorage.getItem("savedCountersArray")).length === 0
-// ) {
-//   console.log("FIRST LAUNCH");
+  {
+    counter: "Subhanallah",
+    count: 0,
+    isActive: false,
+    id: 1,
+  },
 
-//   // Sets a keyname + value so when the user launches the app again, this if statement will return false
-//   // and the next one will return true
-//   localStorage.setItem("firstLaunch", "firstLaunch");
+  {
+    counter: "Allahu-Akbar",
+    count: 10,
+    isActive: false,
+    id: 2,
+  },
 
-//   // As it's the users first time using the application, the savedCountersArray is populated with a few counters
+  {
+    counter: "Astagfirullah",
+    count: 10,
+    isActive: false,
+    id: 3,
+  },
+];
 
-//   // The isActive key:value pair will help determine which counter (and count) to show and update both on screen
-//   // and within the localStorage (savedCountersArray)
+function saveCountersArray() {
+  localStorage.setItem(
+    "savedCountersArray",
+    JSON.stringify(savedCountersArray)
+  );
+}
 
-//   // savedCountersArray = [
-//   //   {
-//   //     counter: "Alhumdulillah",
-//   //     count: 0,
-//   //     isActive: true,
-//   //     id: 0,
-//   //   },
+if (JSON.parse(localStorage.getItem("savedCountersArray"))) {
+  console.log("FIRST LAUNCH");
 
-//   //   {
-//   //     counter: "Subhanallah",
-//   //     count: 0,
-//   //     isActive: false,
-//   //     id: 1,
-//   //   },
+  // Sets a keyname + value so when the user launches the app again, this if statement will return false
+  // and the next one will return true
+  localStorage.setItem("firstLaunch", "firstLaunch");
 
-//   //   {
-//   //     counter: "Allahu-Akbar",
-//   //     count: 10,
-//   //     isActive: false,
-//   //     id: 2,
-//   //   },
+  // As it's the users first time using the application, the savedCountersArray is populated with a few counters
 
-//   //   {
-//   //     counter: "Astagfirullah",
-//   //     count: 10,
-//   //     isActive: false,
-//   //     id: 3,
-//   //   },
-//   // ];
+  // The isActive key:value pair will help determine which counter (and count) to show and update both on screen
+  // and within the localStorage (savedCountersArray)
 
-//   // Saved the array to local storage and store it in the savedCountersArray variable
-//   saveCountersArray();
-//   savedCountersArray = JSON.parse(localStorage.getItem("savedCountersArray"));
-//   // This function will loop through the savedCountersArray and will populate the menu with the counters present in the array
-//   // createCounterList();
-
-//   // This will find the last object in the savedCountersArray with the isActive property marked as true
-//   lastUsedCounterIndex = savedCountersArray.findIndex(
-//     (object) => object.isActive === true
-//   );
-
-//   // The lastUsedCounterIndex variable is then used to populate the counter and count fields on the main page
-//   // with the active counter from savedCountersArray
-//   counterName = savedCountersArray[lastUsedCounterIndex].counter;
-//   currentCount = savedCountersArray[lastUsedCounterIndex].count;
-//   counterId = savedCountersArray[lastUsedCounterIndex].id;
-// } else if (localStorage.getItem("firstLaunch") !== null) {
-//   // Grab the savedCountersArray already present and parse it
-//   savedCountersArray = JSON.parse(localStorage.getItem("savedCountersArray"));
-
-//   // Find the object with the isActive property set to true
-//   lastUsedCounterIndex = savedCountersArray.findIndex(
-//     (object) => object.isActive === true
-//   );
-
-//   // The lastUsedCounterIndex variable is then used to locate the last used counter and
-//   // populate the counter and count fields on the main page
-//   // with the currently active counter from savedCountersArray
-//   counterName = savedCountersArray[lastUsedCounterIndex].counter;
-//   currentCount = savedCountersArray[lastUsedCounterIndex].count;
-//   counterId = savedCountersArray[lastUsedCounterIndex].id;
-
-//   // This function will loop through the savedCountersArray and will populate the menu with the counters present in the array
-//   // createCounterList();
-// }
-
-const saveCountersArray = [
-  [
+  savedCountersArray = [
     {
       counter: "Alhumdulillah",
       count: 0,
@@ -136,11 +96,79 @@ const saveCountersArray = [
       isActive: false,
       id: 3,
     },
-  ],
-];
+  ];
+
+  // Saved the array to local storage and store it in the savedCountersArray variable
+  // saveCountersArray();
+  // savedCountersArray = JSON.parse(localStorage.getItem("savedCountersArray"));
+  // This function will loop through the savedCountersArray and will populate the menu with the counters present in the array
+  // createCounterList();
+
+  // This will find the last object in the savedCountersArray with the isActive property marked as true
+  lastUsedCounterIndex = savedCountersArray.findIndex(
+    (object) => object.isActive === true
+  );
+
+  // The lastUsedCounterIndex variable is then used to populate the counter and count fields on the main page
+  // with the active counter from savedCountersArray
+  counterName = savedCountersArray[lastUsedCounterIndex].counter;
+  currentCount = savedCountersArray[lastUsedCounterIndex].count;
+  counterId = savedCountersArray[lastUsedCounterIndex].id;
+} else if (localStorage.getItem("firstLaunch") !== null) {
+  // Grab the savedCountersArray already present and parse it
+  // savedCountersArray = JSON.parse(localStorage.getItem("savedCountersArray"));
+
+  // Find the object with the isActive property set to true
+  lastUsedCounterIndex = savedCountersArray.findIndex(
+    (object) => object.isActive === true
+  );
+
+  // The lastUsedCounterIndex variable is then used to locate the last used counter and
+  // populate the counter and count fields on the main page
+  // with the currently active counter from savedCountersArray
+  counterName = savedCountersArray[lastUsedCounterIndex].counter;
+  currentCount = savedCountersArray[lastUsedCounterIndex].count;
+  counterId = savedCountersArray[lastUsedCounterIndex].id;
+
+  // This function will loop through the savedCountersArray and will populate the menu with the counters present in the array
+  // createCounterList();
+}
 
 function App() {
-  const [localSavedCountersArray, setLocalSavedCountersArray] = useState();
+  const [localSavedCountersArray, setLocalSavedCountersArray] = useState([
+    {
+      counter: "Alhumdulillah",
+      count: 0,
+      isActive: true,
+      id: 0,
+    },
+
+    {
+      counter: "Subhanallah",
+      count: 0,
+      isActive: false,
+      id: 1,
+    },
+
+    {
+      counter: "Allahu-Akbar",
+      count: 10,
+      isActive: false,
+      id: 2,
+    },
+
+    {
+      counter: "Astagfirullah",
+      count: 10,
+      isActive: false,
+      id: 3,
+    },
+  ]);
+
+  // useEffect(() => {
+  //   setLocalSavedCountersArray(savedCountersArray);
+  //   console.log(localSavedCountersArray);
+  // }, []);
 
   // useEffect(() => {
   //   console.log("useEffect has run");
@@ -161,6 +189,19 @@ function App() {
   //     );
   //   }
   // }, []);
+
+  const addCounter = (counterToAdd) => {
+    const randomlyGeneratedId = Math.floor(Math.random() * 10000) + 1;
+    const newCounter = {
+      counter: counterToAdd,
+      count: 0,
+      isActive: false,
+      id: randomlyGeneratedId,
+    };
+    const newArray = [...localSavedCountersArray, newCounter];
+    setLocalSavedCountersArray([newArray]);
+    console.log(newArray);
+  };
 
   const [activeCounterName, setActiveCounterName] = useState(counterName);
   const [activeCounterNumber, setActiveCounterNumber] = useState(currentCount);
@@ -224,6 +265,9 @@ function App() {
                 resetSingleCounter={resetSingleCounter}
                 activeCounterNumber={activeCounterNumber}
                 addItemToSavedCountersArray={addItemToSavedCountersArray}
+                savedCountersArray={savedCountersArray}
+                setLocalSavedCountersArray={setLocalSavedCountersArray}
+                addCounter={addCounter}
               />
             }
           />
