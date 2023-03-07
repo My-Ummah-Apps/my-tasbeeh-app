@@ -1,24 +1,15 @@
 import { useState } from "react";
 
-const PopUpBox = ({
-  setShowPopUpBox,
-  setLocalSavedCountersArray,
-  localSavedCountersArray,
-  addCounter,
-}) => {
+const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
   const closePopUpBox = () => {
     setShowPopUpBox(false);
   };
 
   const submitCounter = (e) => {
     e.preventDefault();
-    if (!input) {
-      alert("please add counter");
-      return;
-    }
 
-    addCounter(input);
-    setInput("");
+    addCounter(dhikrInput);
+    setDhikrName("");
     setShowPopUpBox(false);
   };
 
@@ -26,17 +17,20 @@ const PopUpBox = ({
   //     e.preventDefault();
   //   };
 
-  const [input, setInput] = useState("");
+  const [dhikrInput, setDhikrName] = useState("");
+  const [targetInput, setTarget] = useState("");
 
   return (
     <form className="pop-up-box-wrap">
       <input
         onChange={(e) => {
-          setInput(e.target.value);
+          setDhikrName(e.target.value);
         }}
         type="text"
         placeholder="Dhikr Name"
+        required
       ></input>
+      <input type="text" placeholder="Daily Target (can be left blank)"></input>
       <button onClick={closePopUpBox}>Cancel</button>
       <button onClick={submitCounter}>Submit</button>
     </form>

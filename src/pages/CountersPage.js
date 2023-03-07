@@ -17,14 +17,46 @@ const CountersPage = ({
   localSavedCountersArray,
   addCounter,
 }) => {
-  const [showPopUpBox, setShowPopUpBox] = useState(false);
+  const materialColors = [
+    "#EF5350",
+    "#EC407A",
+    "#AB47BC",
+    "#7E57C2",
+    "#5C6BC0",
+    "#42A5F5",
+    "#29B6F6",
+    "#26C6DA",
+    "#26A69A",
+    "#66BB6A",
+    "#9CCC65",
+    "#D4E157",
+    "#FFEE58",
+    "#FFCA28",
+    "#FFA726",
+    "#FF7043",
+    "#8D6E63",
+  ];
 
+  let nextColorIndex = 0;
+  let nextColor;
+
+  const [showPopUpBox, setShowPopUpBox] = useState(false);
+  // console.log("counterpage has run");
+  // console.log(localSavedCountersArray);
   return (
     <div>
-      <Header text={"Counters"} />
-      {savedCountersArray.map((counterItem) => {
+      {/* <Header text={"Counters"} /> */}
+      {localSavedCountersArray.map((counterItem) => {
+        nextColorIndex == materialColors.length
+          ? (nextColorIndex = 0)
+          : (nextColorIndex += 1);
+        nextColor = materialColors[nextColorIndex];
         return (
-          <div className="counter-page-single-counter" key={counterItem.id}>
+          <div
+            className="counter-page-single-counter"
+            key={counterItem.id}
+            style={{ backgroundColor: nextColor }}
+          >
             <div
               className="counter-and-count-wrap"
               onClick={() => {

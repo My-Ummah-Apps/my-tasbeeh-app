@@ -13,7 +13,7 @@ const SettingsPage = () => {
 
   return (
     <div className="settings-page-wrap">
-      <Header text={"Settings"} />
+      {/* <Header text={"Settings"} /> */}
       <div className="theme-selection-wrap">
         <h1>Theme</h1>
         <div className="theme-blocks-container">

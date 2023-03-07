@@ -19,84 +19,48 @@ let counterName; // This is the prop that will be passed into the CounterNumber 
 let currentCount; // This is the prop that will be passed into the CounterNumber component
 let counterId;
 
-savedCountersArray = [
-  {
-    counter: "Alhumdulillah",
-    count: 0,
-    isActive: true,
-    id: 0,
-  },
+// savedCountersArray = [
+//   {
+//     counter: "Alhumdulillah",
+//     count: 2000,
+//     isActive: true,
+//     id: 0,
+//   },
 
-  {
-    counter: "Subhanallah",
-    count: 0,
-    isActive: false,
-    id: 1,
-  },
+//   {
+//     counter: "Subhanallah",
+//     count: 25,
+//     isActive: false,
+//     id: 1,
+//   },
 
-  {
-    counter: "Allahu-Akbar",
-    count: 10,
-    isActive: false,
-    id: 2,
-  },
+//   {
+//     counter: "Allahu-Akbar",
+//     count: 10,
+//     isActive: false,
+//     id: 2,
+//   },
 
-  {
-    counter: "Astagfirullah",
-    count: 10,
-    isActive: false,
-    id: 3,
-  },
-];
+//   {
+//     counter: "Astagfirullah",
+//     count: 10,
+//     isActive: false,
+//     id: 3,
+//   },
+// ];
 
-function saveCountersArray() {
-  localStorage.setItem(
-    "savedCountersArray",
-    JSON.stringify(savedCountersArray)
-  );
-}
+// function saveCountersArrayFunc() {
+//   localStorage.setItem(
+//     "savedCountersArray",
+//     JSON.stringify(savedCountersArray)
+//   );
+// }
 
 if (JSON.parse(localStorage.getItem("savedCountersArray"))) {
-  console.log("FIRST LAUNCH");
-
-  // Sets a keyname + value so when the user launches the app again, this if statement will return false
-  // and the next one will return true
-  localStorage.setItem("firstLaunch", "firstLaunch");
-
   // As it's the users first time using the application, the savedCountersArray is populated with a few counters
 
   // The isActive key:value pair will help determine which counter (and count) to show and update both on screen
   // and within the localStorage (savedCountersArray)
-
-  savedCountersArray = [
-    {
-      counter: "Alhumdulillah",
-      count: 0,
-      isActive: true,
-      id: 0,
-    },
-
-    {
-      counter: "Subhanallah",
-      count: 0,
-      isActive: false,
-      id: 1,
-    },
-
-    {
-      counter: "Allahu-Akbar",
-      count: 10,
-      isActive: false,
-      id: 2,
-    },
-
-    {
-      counter: "Astagfirullah",
-      count: 10,
-      isActive: false,
-      id: 3,
-    },
-  ];
 
   // Saved the array to local storage and store it in the savedCountersArray variable
   // saveCountersArray();
@@ -135,40 +99,52 @@ if (JSON.parse(localStorage.getItem("savedCountersArray"))) {
 }
 
 function App() {
-  const [localSavedCountersArray, setLocalSavedCountersArray] = useState([
-    {
-      counter: "Alhumdulillah",
-      count: 0,
-      isActive: true,
-      id: 0,
-    },
+  const [localSavedCountersArray, setLocalSavedCountersArray] =
+    useState(savedCountersArray);
 
-    {
-      counter: "Subhanallah",
-      count: 0,
-      isActive: false,
-      id: 1,
-    },
+  useEffect(() => {
+    console.log("FIRST LAUNCH");
 
-    {
-      counter: "Allahu-Akbar",
-      count: 10,
-      isActive: false,
-      id: 2,
-    },
+    localStorage.setItem("firstLaunch", "firstLaunch");
 
-    {
-      counter: "Astagfirullah",
-      count: 10,
-      isActive: false,
-      id: 3,
-    },
-  ]);
+    if (JSON.parse(localStorage.getItem("localSavedCountersArray"))) {
+      console.log("local data exists");
+      let local = JSON.parse(localStorage.getItem("localSavedCountersArray"));
+      setLocalSavedCountersArray(local);
+    } else {
+      setLocalSavedCountersArray(
+        (savedCountersArray = [
+          {
+            counter: "Alhumdulillah",
+            count: 2000,
+            isActive: true,
+            id: 0,
+          },
 
-  // useEffect(() => {
-  //   setLocalSavedCountersArray(savedCountersArray);
-  //   console.log(localSavedCountersArray);
-  // }, []);
+          {
+            counter: "Subhanallah",
+            count: 25,
+            isActive: false,
+            id: 1,
+          },
+
+          {
+            counter: "Allahu-Akbar",
+            count: 10,
+            isActive: false,
+            id: 2,
+          },
+
+          {
+            counter: "Astagfirullah",
+            count: 10,
+            isActive: false,
+            id: 3,
+          },
+        ])
+      );
+    }
+  }, []);
 
   // useEffect(() => {
   //   console.log("useEffect has run");
@@ -199,14 +175,14 @@ function App() {
       id: randomlyGeneratedId,
     };
     const newArray = [...localSavedCountersArray, newCounter];
-    setLocalSavedCountersArray([newArray]);
+    setLocalSavedCountersArray(newArray);
     console.log(newArray);
   };
 
   const [activeCounterName, setActiveCounterName] = useState(counterName);
   const [activeCounterNumber, setActiveCounterNumber] = useState(currentCount);
   const invokeSetActiveCounter = (id) => {
-    savedCountersArray.map((counterItem) => {
+    localSavedCountersArray.map((counterItem) => {
       counterItem.isActive = false;
 
       if (counterItem.id == id) {
@@ -223,19 +199,19 @@ function App() {
   };
 
   const resetSingleCounter = (id) => {
-    savedCountersArray.map((counterItem) => {
+    localSavedCountersArray.map((counterItem) => {
       if (counterItem.id == id) {
         counterItem.count = 0;
-        currentCount = counterItem.count;
-        setActiveCounterNumber(currentCount);
-        // saveCountersArray();
+        setActiveCounterNumber(0);
       }
     });
+    setLocalSavedCountersArray(localSavedCountersArray);
+    console.log(localSavedCountersArray);
   };
 
   const addItemToSavedCountersArray = () => {};
 
-  document.body.style = "background: #000;";
+  // document.body.style = "background: #fff;";
 
   return (
     <BrowserRouter>
@@ -249,6 +225,7 @@ function App() {
                 currentCount={currentCount}
                 counterName={counterName}
                 savedCountersArray={savedCountersArray}
+                localSavedCountersArray={localSavedCountersArray}
                 counterId={counterId}
                 activeCounterName={activeCounterName}
                 setActiveCounterNumber={setActiveCounterNumber}
@@ -263,6 +240,7 @@ function App() {
                 localSavedCountersArray={localSavedCountersArray}
                 invokeSetActiveCounter={invokeSetActiveCounter}
                 resetSingleCounter={resetSingleCounter}
+                activeCounterName={activeCounterName}
                 activeCounterNumber={activeCounterNumber}
                 addItemToSavedCountersArray={addItemToSavedCountersArray}
                 savedCountersArray={savedCountersArray}

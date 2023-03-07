@@ -3,6 +3,7 @@ const PlusBtn = ({
   activeCounterNumber,
   savedCountersArray,
   counterId,
+  localSavedCountersArray,
 }) => {
   return (
     <div className="plus-svg-wrap">
@@ -10,16 +11,16 @@ const PlusBtn = ({
         onClick={() => {
           setActiveCounterNumber((activeCounterNumber += 1));
 
-          savedCountersArray.map((counterItem) => {
+          localSavedCountersArray.map((counterItem) => {
             if (counterItem.id == counterId) {
               counterItem.count = activeCounterNumber;
             }
           });
 
-          localStorage.setItem(
-            "savedCountersArray",
-            JSON.stringify(savedCountersArray)
-          );
+          // localStorage.setItem(
+          //   "savedCountersArray",
+          //   JSON.stringify(savedCountersArray)
+          // );
         }}
         version="1.1"
         id="Capa_1"

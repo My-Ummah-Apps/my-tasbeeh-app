@@ -7,6 +7,7 @@ const MainPage = ({
   currentCount,
   counterName,
   savedCountersArray,
+  localSavedCountersArray,
   counterId,
   activeCounterName,
   setActiveCounterNumber,
@@ -18,12 +19,13 @@ const MainPage = ({
 
   return (
     <div>
-      <Header text={"Tasbeeh"} />
+      {/* <Header text={"Tasbeeh"} /> */}
       <CounterNameAndNumber
         activeCounterName={activeCounterName}
         activeCounterNumber={activeCounterNumber}
       />
       <PlusBtn
+        localSavedCountersArray={localSavedCountersArray}
         setActiveCounterNumber={setActiveCounterNumber}
         activeCounterNumber={activeCounterNumber}
         savedCountersArray={savedCountersArray}
