@@ -55,7 +55,22 @@ body {
   background: white;
   color: var(--svg-color);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 1;
 }
+
+/* .dhikr-type-wrap::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -63px;
+  right: 0;
+  height: 25px;
+  background: #fff;
+  padding: 2rem;
+  background-size: cover;
+  transform: skewY(-7deg);
+} */
 
 .plus-svg-wrap {
   margin-top: 25vh;
@@ -73,6 +88,11 @@ body {
 }
 
 /* COUNTERS PAGE */
+
+.counters-wrap {
+  max-height: 75vh;
+  overflow: scroll;
+}
 
 .counter-and-count-wrap {
   width: 65%;
@@ -97,7 +117,7 @@ body {
   position: absolute;
   padding: 1rem;
   right: 10%;
-  bottom: 20%;
+  bottom: 12%;
   font-size: 3rem;
   border-radius: 50vw;
   cursor: pointer;

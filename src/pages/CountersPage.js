@@ -8,14 +8,14 @@ import Header from "../components/Header";
 import PopUpBox from "../components/PopUpBox";
 
 const CountersPage = ({
-  savedCountersArray,
-  invokeSetActiveCounter,
   resetSingleCounter,
+  invokeSetActiveCounter,
   activeCounterNumber,
   addItemToSavedCountersArray,
   setLocalSavedCountersArray,
   localSavedCountersArray,
   addCounter,
+  deleteSingleCounter,
 }) => {
   const materialColors = [
     "#EF5350",
@@ -44,7 +44,7 @@ const CountersPage = ({
   // console.log("counterpage has run");
   // console.log(localSavedCountersArray);
   return (
-    <div>
+    <div className="counters-wrap">
       {/* <Header text={"Counters"} /> */}
       {localSavedCountersArray.map((counterItem) => {
         nextColorIndex == materialColors.length
@@ -74,7 +74,11 @@ const CountersPage = ({
               />
             </span>
             <span>
-              <MdOutlineClose />
+              <MdOutlineClose
+                onClick={() => {
+                  deleteSingleCounter(counterItem.id);
+                }}
+              />
             </span>
           </div>
         );
@@ -87,7 +91,6 @@ const CountersPage = ({
           <PopUpBox
             setShowPopUpBox={setShowPopUpBox}
             setLocalSavedCountersArray={setLocalSavedCountersArray}
-            savedCountersArray={savedCountersArray}
             localSavedCountersArray={localSavedCountersArray}
             addCounter={addCounter}
           />

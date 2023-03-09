@@ -4,6 +4,7 @@ const PlusBtn = ({
   savedCountersArray,
   counterId,
   localSavedCountersArray,
+  saveArrayLocally,
 }) => {
   return (
     <div className="plus-svg-wrap">
@@ -16,11 +17,7 @@ const PlusBtn = ({
               counterItem.count = activeCounterNumber;
             }
           });
-
-          // localStorage.setItem(
-          //   "savedCountersArray",
-          //   JSON.stringify(savedCountersArray)
-          // );
+          saveArrayLocally(localSavedCountersArray);
         }}
         version="1.1"
         id="Capa_1"

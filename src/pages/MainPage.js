@@ -7,11 +7,12 @@ const MainPage = ({
   currentCount,
   counterName,
   savedCountersArray,
-  localSavedCountersArray,
+  saveArrayLocally,
   counterId,
   activeCounterName,
   setActiveCounterNumber,
   activeCounterNumber,
+  localSavedCountersArray,
 }) => {
   // const [activeCountNumber, setActiveCountNumber] = useState(currentCount);
 
@@ -25,6 +26,7 @@ const MainPage = ({
         activeCounterNumber={activeCounterNumber}
       />
       <PlusBtn
+        saveArrayLocally={saveArrayLocally}
         localSavedCountersArray={localSavedCountersArray}
         setActiveCounterNumber={setActiveCounterNumber}
         activeCounterNumber={activeCounterNumber}
