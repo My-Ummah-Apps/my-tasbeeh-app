@@ -28,7 +28,7 @@ body {
 
 .dhikr-type-wrap {
   position: relative;
-  background: #3949ab;
+  /* background: #3949ab; */
   padding-top: 7vh;
   text-align: center;
   font-size: 2rem;
@@ -49,13 +49,14 @@ body {
   left: 50%;
   top: 34%;
   /* border: 1px solid white; */
-  border-radius: 50vw;
-  padding: 3rem;
+  /* border-radius: 50vw; */
+  /* padding: 3rem; */
   transform: translate(-50%, 50%);
-  background: white;
-  color: var(--svg-color);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  z-index: 1;
+  /* background: white; */
+  /* color: var(--svg-color); */
+  color: black;
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  /* z-index: 1; */
 }
 
 /* .dhikr-type-wrap::after {
@@ -211,4 +212,52 @@ body {
 .nav-icon {
   font-size: 1.5rem;
   fill: var(--svg-color);
+}
+
+@keyframes growProgressBar {
+  0%,
+  33% {
+    --pgPercentage: 0;
+  }
+  100% {
+    --pgPercentage: var(--value);
+  }
+}
+
+@property --pgPercentage {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+div[role="progressbar"] {
+  --size: 10rem;
+  --fg: #369;
+  --bg: #def;
+  --pgPercentage: var(--value);
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  transform: translate(-50%, 50%);
+  animation: growProgressBar 3s 1 forwards;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+      closest-side,
+      white 80%,
+      transparent 0 99.9%,
+      white 0
+    ),
+    conic-gradient(var(--fg) calc(var(--pgPercentage) * 1%), var(--bg) 0);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: calc(var(--size) / 5);
+  color: var(--fg);
+}
+
+div[role="progressbar"]::before {
+  counter-reset: percentage var(--value);
+  content: counter(percentage);
 }

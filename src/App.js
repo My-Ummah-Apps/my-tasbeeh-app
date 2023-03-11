@@ -20,6 +20,26 @@ let counterId;
 let defaultArray;
 
 function App() {
+  const materialColors = [
+    "#EF5350",
+    "#EC407A",
+    "#AB47BC",
+    "#7E57C2",
+    "#5C6BC0",
+    "#42A5F5",
+    "#29B6F6",
+    "#26C6DA",
+    "#26A69A",
+    "#66BB6A",
+    "#9CCC65",
+    "#D4E157",
+    "#FFEE58",
+    "#FFCA28",
+    "#FFA726",
+    "#FF7043",
+    "#8D6E63",
+  ];
+
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
   const [activeCounterName, setActiveCounterName] = useState();
   const [activeCounterNumber, setActiveCounterNumber] = useState();
@@ -32,13 +52,19 @@ function App() {
   };
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("localSavedCountersArray"))) {
+    // if (JSON.parse(localStorage.getItem("localSavedCountersArray"))) {
+    if (
+      JSON.parse(localStorage.getItem("localSavedCountersArray")).length > 0
+    ) {
       console.log("local data exists");
       defaultArray = JSON.parse(
         localStorage.getItem("localSavedCountersArray")
       );
       console.log(localSavedCountersArray);
-    } else if (!JSON.parse(localStorage.getItem("localSavedCountersArray"))) {
+      // } else if (!JSON.parse(localStorage.getItem("localSavedCountersArray"))) {
+    } else if (
+      JSON.parse(localStorage.getItem("localSavedCountersArray")).length == 0
+    ) {
       console.log("local data does not exist");
       defaultArray = [
         {
@@ -78,11 +104,11 @@ function App() {
     // );
 
     defaultArray.findIndex((object) => {
-      // return object.isActive === true;
       if (object.isActive === true) {
         lastUsedCounterIndex = defaultArray.indexOf(object);
       } else {
         lastUsedCounterIndex = 0;
+
         console.log("true");
       }
     });
@@ -147,10 +173,13 @@ function App() {
   };
 
   const deleteSingleCounter = (id) => {
-    setLocalSavedCountersArray(
-      localSavedCountersArray.filter((counterItem) => counterItem.id !== id)
+    console.log(localSavedCountersArray[id]);
+    const filteredArray = localSavedCountersArray.filter(
+      (counterItem) => counterItem.id !== id
     );
-    saveArrayLocally(localSavedCountersArray);
+    setLocalSavedCountersArray(filteredArray);
+
+    saveArrayLocally(filteredArray);
   };
 
   // document.body.style = "background: #fff;";
@@ -179,6 +208,7 @@ function App() {
             path="CountersPage"
             element={
               <CountersPage
+                materialColors={materialColors}
                 localSavedCountersArray={localSavedCountersArray}
                 invokeSetActiveCounter={invokeSetActiveCounter}
                 resetSingleCounter={resetSingleCounter}

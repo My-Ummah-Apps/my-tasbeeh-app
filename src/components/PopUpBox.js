@@ -30,7 +30,7 @@ const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
         placeholder="Dhikr Name"
         required
       ></input>
-      <input type="text" placeholder="Daily Target (can be left blank)"></input>
+      <input type="text" placeholder="Daily Target (optional)"></input>
       <button onClick={closePopUpBox}>Cancel</button>
       <button onClick={submitCounter}>Submit</button>
     </form>

@@ -24,6 +24,7 @@ const MainPage = ({
       <CounterNameAndNumber
         activeCounterName={activeCounterName}
         activeCounterNumber={activeCounterNumber}
+        localSavedCountersArray={localSavedCountersArray}
       />
       <PlusBtn
         saveArrayLocally={saveArrayLocally}
