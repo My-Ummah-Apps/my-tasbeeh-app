@@ -5,12 +5,26 @@ const CounterNameAndNumber = ({
   localSavedCountersArray,
 }) => {
   let currentBackgroundColor;
+  let currentCounterTarget;
   localSavedCountersArray.map((counterItem) => {
     if (counterItem.isActive == true) {
       currentBackgroundColor = counterItem.color;
+      currentCounterTarget = counterItem.target;
     }
   });
-  console.log(currentBackgroundColor);
+  // console.log(currentBackgroundColor);
+  const styles = {
+    "--value": activeCounterNumber,
+    background: `radial-gradient(
+      closest-side,
+      white 80%,
+      transparent 0 99.9%,
+      white 0
+    ),
+    conic-gradient(var(--fg) calc(var(--pgPercentage) * ${
+      100 / currentCounterTarget
+    }%), var(--bg) 0)`,
+  };
   return (
     <div
       className="dhikr-type-wrap"
@@ -19,11 +33,8 @@ const CounterNameAndNumber = ({
       <h1 className="active-counter-name">{activeCounterName}</h1>
 
       <div className="progress-bar-wrap">
-        <div
-          role="progressbar"
-          style={{ "--value": activeCounterNumber }}
-        ></div>
-        <p style={{ fontSize: "0.7rem" }}>Target: 0</p>
+        <div role="progressbar" style={styles}></div>
+        <p>Target: {currentCounterTarget}</p>
       </div>
 
       {/* <h1 className="active-counter-number">{activeCounterNumber}</h1> */}

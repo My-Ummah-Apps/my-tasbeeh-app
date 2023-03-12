@@ -47,6 +47,7 @@ const CountersPage = ({
             >
               <p>{counterItem.counter}</p>
               <p>{counterItem.count}</p>
+              <p>{counterItem.target}</p>
             </div>
             <span>
               <MdOutlineRestartAlt

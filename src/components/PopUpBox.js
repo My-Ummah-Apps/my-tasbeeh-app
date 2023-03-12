@@ -7,8 +7,10 @@ const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
 
   const submitCounter = (e) => {
     e.preventDefault();
-
-    addCounter(dhikrInput);
+    targetInput
+      ? addCounter(dhikrInput, targetInput)
+      : addCounter(dhikrInput, 0);
+    // addCounter(dhikrInput);
     setDhikrName("");
     setShowPopUpBox(false);
   };
@@ -30,7 +32,13 @@ const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
         placeholder="Dhikr Name"
         required
       ></input>
-      <input type="text" placeholder="Daily Target (optional)"></input>
+      <input
+        onChange={(e) => {
+          setTarget(e.target.value);
+        }}
+        type="text"
+        placeholder="Daily Target (optional)"
+      ></input>
       <button onClick={closePopUpBox}>Cancel</button>
       <button onClick={submitCounter}>Submit</button>
     </form>

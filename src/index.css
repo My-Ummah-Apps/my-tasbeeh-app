@@ -214,7 +214,7 @@ body {
   fill: var(--svg-color);
 }
 
-@keyframes growProgressBar {
+/* @keyframes growProgressBar {
   0%,
   33% {
     --pgPercentage: 0;
@@ -222,7 +222,7 @@ body {
   100% {
     --pgPercentage: var(--value);
   }
-}
+} */
 
 @property --pgPercentage {
   syntax: "<number>";
@@ -239,22 +239,23 @@ div[role="progressbar"] {
   left: 50%;
   top: 34%;
   transform: translate(-50%, 50%);
-  animation: growProgressBar 3s 1 forwards;
+  /* animation: growProgressBar 3s 1 forwards; */
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: radial-gradient(
+  /* background: radial-gradient(
       closest-side,
       white 80%,
       transparent 0 99.9%,
       white 0
     ),
-    conic-gradient(var(--fg) calc(var(--pgPercentage) * 1%), var(--bg) 0);
+    conic-gradient(var(--fg) calc(var(--pgPercentage) * 10%), var(--bg) 0);
+
   font-family: Helvetica, Arial, sans-serif;
   font-size: calc(var(--size) / 5);
-  color: var(--fg);
+  color: var(--fg); */
 }
 
 div[role="progressbar"]::before {

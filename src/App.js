@@ -71,6 +71,7 @@ function App() {
           counter: "Alhumdulillah",
           count: 2000,
           isActive: true,
+          target: 10,
           id: 0,
         },
 
@@ -78,6 +79,7 @@ function App() {
           counter: "Subhanallah",
           count: 25,
           isActive: false,
+          target: 10,
           id: 1,
         },
 
@@ -85,6 +87,7 @@ function App() {
           counter: "Allahu-Akbar",
           count: 10,
           isActive: false,
+          target: 10,
           id: 2,
         },
 
@@ -92,6 +95,7 @@ function App() {
           counter: "Astagfirullah",
           count: 10,
           isActive: false,
+          target: 10,
           id: 3,
         },
       ];
@@ -123,13 +127,14 @@ function App() {
 
   const addItemToSavedCountersArray = () => {};
 
-  const addCounter = (counterToAdd) => {
+  const addCounter = (counterToAdd, target) => {
     console.log("addCounter fired");
     const randomlyGeneratedId = Math.floor(Math.random() * 10000) + 1;
     const newCounter = {
       counter: counterToAdd,
       count: 0,
       isActive: false,
+      target: target,
       id: randomlyGeneratedId,
     };
     const newArray = [...localSavedCountersArray, newCounter];
