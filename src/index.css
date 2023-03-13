@@ -231,13 +231,15 @@ body {
 }
 
 div[role="progressbar"] {
+  position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   --size: 10rem;
   --fg: #369;
   --bg: #def;
   --pgPercentage: var(--value);
   position: absolute;
   left: 50%;
-  top: 34%;
+  top: 30%;
   transform: translate(-50%, 50%);
   /* animation: growProgressBar 3s 1 forwards; */
   width: var(--size);
@@ -261,4 +263,12 @@ div[role="progressbar"] {
 div[role="progressbar"]::before {
   counter-reset: percentage var(--value);
   content: counter(percentage);
+}
+
+.target-text {
+  position: absolute;
+  left: 50%;
+  font-size: 0.7rem;
+  top: 250px;
+  transform: translateX(-50%);
 }

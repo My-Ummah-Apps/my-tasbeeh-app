@@ -22,17 +22,20 @@ const CountersPage = ({
   let nextColor;
 
   const [showPopUpBox, setShowPopUpBox] = useState(false);
+  const [counterNumber, setCounterNumber] = useState(0);
   // console.log("counterpage has run");
   // console.log(localSavedCountersArray);
   return (
     <div className="counters-wrap">
       {/* <Header text={"Counters"} /> */}
       {localSavedCountersArray.map((counterItem) => {
+        console.log(counterItem);
         nextColorIndex > materialColors.length
           ? (nextColorIndex = 0)
           : (nextColorIndex += 1);
         nextColor = materialColors[nextColorIndex];
         counterItem.color = nextColor;
+
         return (
           <div
             className="counter-page-single-counter"

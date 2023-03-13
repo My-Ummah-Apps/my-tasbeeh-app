@@ -21,9 +21,12 @@ const CounterNameAndNumber = ({
       transparent 0 99.9%,
       white 0
     ),
-    conic-gradient(var(--fg) calc(var(--pgPercentage) * ${
+    conic-gradient(${currentBackgroundColor} calc(var(--pgPercentage) * ${
       100 / currentCounterTarget
     }%), var(--bg) 0)`,
+
+    fontSize: "calc(var(--size) / 5)",
+    color: "var(--fg)",
   };
   return (
     <div
@@ -34,7 +37,7 @@ const CounterNameAndNumber = ({
 
       <div className="progress-bar-wrap">
         <div role="progressbar" style={styles}></div>
-        <p>Target: {currentCounterTarget}</p>
+        <p className="target-text">Target: {currentCounterTarget}</p>
       </div>
 
       {/* <h1 className="active-counter-number">{activeCounterNumber}</h1> */}
