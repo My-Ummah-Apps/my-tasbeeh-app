@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import {
   MdOutlineClose,
   MdOutlineRestartAlt,
@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import PopUpBox from "../components/PopUpBox";
 
 const CountersPage = ({
+  useForceUpdate,
   resetSingleCounter,
   invokeSetActiveCounter,
   activeCounterNumber,
@@ -23,13 +24,18 @@ const CountersPage = ({
 
   const [showPopUpBox, setShowPopUpBox] = useState(false);
   const [counterNumber, setCounterNumber] = useState(0);
-  // console.log("counterpage has run");
-  // console.log(localSavedCountersArray);
+
+  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  function handleClick() {
+    forceUpdate();
+  }
+
   return (
     <div className="counters-wrap">
       {/* <Header text={"Counters"} /> */}
       {localSavedCountersArray.map((counterItem) => {
-        console.log(counterItem);
+        console.log(localSavedCountersArray);
         nextColorIndex > materialColors.length
           ? (nextColorIndex = 0)
           : (nextColorIndex += 1);
@@ -56,6 +62,7 @@ const CountersPage = ({
               <MdOutlineRestartAlt
                 onClick={() => {
                   resetSingleCounter(counterItem.id);
+                  handleClick();
                 }}
               />
             </span>

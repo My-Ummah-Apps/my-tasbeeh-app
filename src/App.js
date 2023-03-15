@@ -163,30 +163,16 @@ function App() {
       // saveCountersArray();
     });
   };
-
+  // let testArray;
   const resetSingleCounter = (id) => {
-    let testArray = [...localSavedCountersArray];
-    setLocalSavedCountersArray(
-      testArray.map((counterItem1) => {
-        if (counterItem1.id == id) {
-          counterItem1.count = 0;
-          console.log(counterItem1);
-        }
-      })
-    );
-    console.log(localSavedCountersArray);
-    // localSavedCountersArray.map((counterItem) => {
-    //   // testArray = [...localSavedCountersArray, { count: 0 }];
-    //   // if (counterItem.id == id) {
-    //   //   counterItem.count = 0;
-    //   //   console.log(localSavedCountersArray);
-    //   //   setLocalSavedCountersArray(...localSavedCountersArray, )
-    //   //   // setActiveCounterNumber(0);
-    //   // }
-    // });
-    // setLocalSavedCountersArray(localSavedCountersArray);
-    // console.log(...localSavedCountersArray);
-    // setLocalSavedCountersArray(...localSavedCountersArray, );
+    localSavedCountersArray.map((counterItem1) => {
+      if (counterItem1.id == id) {
+        counterItem1.count = 0;
+        console.log(counterItem1);
+        setLocalSavedCountersArray(localSavedCountersArray);
+      }
+    });
+
     saveArrayLocally(localSavedCountersArray);
 
     console.log(localSavedCountersArray);
