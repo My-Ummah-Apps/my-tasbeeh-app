@@ -49,30 +49,32 @@ const CountersPage = ({
             style={{ backgroundColor: nextColor }}
           >
             <div
-              className="counter-and-count-wrap"
+              className="counter"
               onClick={() => {
                 invokeSetActiveCounter(counterItem.id);
               }}
             >
               <p>{counterItem.counter}</p>
+            </div>
+            <div className="stats-and-icons-wrap">
               <p>{counterItem.count}</p>
               <p>{counterItem.target}</p>
+              <span>
+                <MdOutlineRestartAlt
+                  onClick={() => {
+                    resetSingleCounter(counterItem.id);
+                    handleClick();
+                  }}
+                />
+              </span>
+              <span>
+                <MdOutlineClose
+                  onClick={() => {
+                    deleteSingleCounter(counterItem.id);
+                  }}
+                />
+              </span>
             </div>
-            <span>
-              <MdOutlineRestartAlt
-                onClick={() => {
-                  resetSingleCounter(counterItem.id);
-                  handleClick();
-                }}
-              />
-            </span>
-            <span>
-              <MdOutlineClose
-                onClick={() => {
-                  deleteSingleCounter(counterItem.id);
-                }}
-              />
-            </span>
           </div>
         );
       })}

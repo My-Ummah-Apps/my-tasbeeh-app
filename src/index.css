@@ -11,6 +11,11 @@
   --svg-color: #757575;
 }
 
+@font-face {
+  font-family: Roboto;
+  src: url(/src/font/Roboto-Regular.ttf);
+}
+
 body {
   overflow: hidden;
   /* background: #242428; */
@@ -19,7 +24,7 @@ body {
   width: 100vw;
   max-width: 800px;
   margin-inline: auto;
-  font-family: "Inter", sans-serif;
+  font-family: Roboto, sans-serif;
   font-weight: 400;
   user-select: none;
 }
@@ -95,10 +100,19 @@ body {
   overflow: scroll;
 }
 
-.counter-and-count-wrap {
-  width: 65%;
+.counter {
+  width: 70%;
+  padding-right: 0.5rem;
+  /* display: flex;
+  justify-content: space-between; */
+  word-wrap: anywhere;
+}
+
+.stats-and-icons-wrap {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
 
 .counter-page-single-counter {
@@ -120,10 +134,16 @@ body {
   right: 10%;
   bottom: 12%;
   font-size: 3rem;
-  border-radius: 50vw;
+  border-radius: 50%;
   cursor: pointer;
   background: #dbdddf;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 80px;
+  height: 80px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pop-up-box-wrap {

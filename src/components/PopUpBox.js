@@ -38,6 +38,7 @@ const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
         }}
         type="text"
         placeholder="Daily Target (optional)"
+        required
       ></input>
       <button onClick={closePopUpBox}>Cancel</button>
       <button onClick={submitCounter}>Submit</button>

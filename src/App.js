@@ -71,7 +71,7 @@ function App() {
           counter: "Alhumdulillah",
           count: 2000,
           isActive: true,
-          target: 10,
+          target: 100000,
           id: 0,
         },
 
@@ -79,7 +79,7 @@ function App() {
           counter: "Subhanallah",
           count: 25,
           isActive: false,
-          target: 10,
+          target: 100,
           id: 1,
         },
 
@@ -87,7 +87,7 @@ function App() {
           counter: "Allahu-Akbar",
           count: 10,
           isActive: false,
-          target: 10,
+          target: 100,
           id: 2,
         },
 
@@ -95,7 +95,7 @@ function App() {
           counter: "Astagfirullah",
           count: 10,
           isActive: false,
-          target: 10,
+          target: 100,
           id: 3,
         },
       ];
