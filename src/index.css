@@ -215,10 +215,11 @@ body {
 .navbar-wrap {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   position: fixed;
   bottom: 0;
   width: 100%;
-  border-top: 1px solid #fff;
+  border-top: 1px solid #f1eff7;
   padding: 0.5rem 0;
   box-shadow: 10px 5px 5px red;
 }
@@ -227,7 +228,6 @@ body {
   color: #fff;
   text-decoration: none;
   text-align: center;
-  margin-bottom: 0.5rem;
 }
 
 .nav-icon {

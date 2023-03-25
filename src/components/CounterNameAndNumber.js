@@ -19,7 +19,7 @@ const CounterNameAndNumber = ({
       closest-side,
       white 80%,
       transparent 0 99.9%,
-      white 0
+      transparent 0
     ),
     conic-gradient(${currentBackgroundColor} calc(var(--pgPercentage) * ${
       100 / currentCounterTarget
@@ -28,6 +28,7 @@ const CounterNameAndNumber = ({
     fontSize: "calc(var(--size) / 5)",
     color: "var(--fg)",
   };
+
   return (
     <div
       className="dhikr-type-wrap"

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
-import "./App.css";
 
 import PlusBtn from "./components/PlusBtn";
 import NavBar from "./components/NavBar";
@@ -54,6 +53,7 @@ function App() {
   useEffect(() => {
     // if (JSON.parse(localStorage.getItem("localSavedCountersArray"))) {
     if (
+      JSON.parse(localStorage.getItem("localSavedCountersArray")) &&
       JSON.parse(localStorage.getItem("localSavedCountersArray")).length > 0
     ) {
       console.log("local data exists");
@@ -63,6 +63,7 @@ function App() {
       console.log(localSavedCountersArray);
       // } else if (!JSON.parse(localStorage.getItem("localSavedCountersArray"))) {
     } else if (
+      !localStorage.getItem("localSavedCountersArray") ||
       JSON.parse(localStorage.getItem("localSavedCountersArray")).length == 0
     ) {
       console.log("local data does not exist");
