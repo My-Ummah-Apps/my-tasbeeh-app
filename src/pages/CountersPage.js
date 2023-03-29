@@ -3,6 +3,7 @@ import {
   MdOutlineClose,
   MdOutlineRestartAlt,
   MdAddCircleOutline,
+  MdModeEditOutline,
 } from "react-icons/md";
 import Header from "../components/Header";
 import PopUpBox from "../components/PopUpBox";
@@ -32,8 +33,16 @@ const CountersPage = ({
   }
 
   return (
-    <div className="counters-wrap">
+    <table className="counters-wrap">
       {/* <Header text={"Counters"} /> */}
+      <tr className="heading-table-row">
+        <th>Counter</th>
+        <th>Count</th>
+        <th>Target</th>
+        <th>Edit</th>
+        <th>Reset</th>
+        <th>Delete</th>
+      </tr>
       {localSavedCountersArray.map((counterItem) => {
         console.log(localSavedCountersArray);
         nextColorIndex > materialColors.length
@@ -43,39 +52,43 @@ const CountersPage = ({
         counterItem.color = nextColor;
 
         return (
-          <div
+          <tr
             className="counter-page-single-counter"
             key={counterItem.id}
             style={{ backgroundColor: nextColor }}
           >
-            <div
+            <td
               className="counter"
               onClick={() => {
                 invokeSetActiveCounter(counterItem.id);
               }}
             >
-              <p>{counterItem.counter}</p>
-            </div>
-            <div className="stats-and-icons-wrap">
-              <p>{counterItem.count}</p>
-              <p>{counterItem.target}</p>
-              <span>
-                <MdOutlineRestartAlt
-                  onClick={() => {
-                    resetSingleCounter(counterItem.id);
-                    handleClick();
-                  }}
-                />
-              </span>
-              <span>
-                <MdOutlineClose
-                  onClick={() => {
-                    deleteSingleCounter(counterItem.id);
-                  }}
-                />
-              </span>
-            </div>
-          </div>
+              <td className="counter-name-td" style={{ border: "none" }}>
+                {counterItem.counter}
+              </td>
+            </td>
+
+            <td>{counterItem.count}</td>
+            <td>{counterItem.target}</td>
+            <td>
+              <MdModeEditOutline />
+            </td>
+            <td>
+              <MdOutlineRestartAlt
+                onClick={() => {
+                  resetSingleCounter(counterItem.id);
+                  handleClick();
+                }}
+              />
+            </td>
+            <td>
+              <MdOutlineClose
+                onClick={() => {
+                  deleteSingleCounter(counterItem.id);
+                }}
+              />
+            </td>
+          </tr>
         );
       })}
       <span className="add-btn" onClick={() => setShowPopUpBox(true)}>
@@ -91,7 +104,7 @@ const CountersPage = ({
           />
         ) : null}
       </span>
-    </div>
+    </table>
   );
 };
 

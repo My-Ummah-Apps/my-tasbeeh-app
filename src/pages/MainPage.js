@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import Header from "../components/Header";
 import PlusBtn from "../components/PlusBtn";
+import { FaUndoAlt } from "react-icons/fa";
 
 const MainPage = ({
   currentCount,
@@ -20,7 +21,12 @@ const MainPage = ({
 
   return (
     <div>
-      {/* <Header text={"Tasbeeh"} /> */}
+      <FaUndoAlt
+        className="reset-icon"
+        onClick={() => {
+          setActiveCounterNumber(0); // Small bug here, this change doesn't reflect on counters page straight away
+        }}
+      />
       <CounterNameAndNumber
         activeCounterName={activeCounterName}
         activeCounterNumber={activeCounterNumber}

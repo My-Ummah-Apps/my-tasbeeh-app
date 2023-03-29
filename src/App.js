@@ -72,7 +72,7 @@ function App() {
           counter: "Alhumdulillah",
           count: 2000,
           isActive: true,
-          target: 100000,
+          target: 1000,
           id: 0,
         },
 

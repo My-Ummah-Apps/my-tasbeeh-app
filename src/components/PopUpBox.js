@@ -38,7 +38,15 @@ const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
           setTarget(e.target.value);
         }}
         type="text"
-        placeholder="Target"
+        placeholder="Target (Default: 0)"
+        required
+      ></input>
+      <input
+        onChange={(e) => {
+          setTarget(e.target.value);
+        }}
+        type="text"
+        placeholder="Counter Start (Default: 0)"
         required
       ></input>
       <button onClick={closePopUpBox}>Cancel</button>
