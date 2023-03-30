@@ -6,7 +6,8 @@ import {
   MdModeEditOutline,
 } from "react-icons/md";
 import Header from "../components/Header";
-import PopUpBox from "../components/PopUpBox";
+import PopUpBoxBlank from "../components/PopUpBoxBlank";
+import PopUpBoxFilled from "../components/PopUpBoxFilled";
 
 const CountersPage = ({
   useForceUpdate,
@@ -23,8 +24,13 @@ const CountersPage = ({
   let nextColorIndex = 0;
   let nextColor;
 
-  const [showPopUpBox, setShowPopUpBox] = useState(false);
+  const [showPopUpBoxBlank, setShowPopUpBoxBlank] = useState(false);
+  const [showPopUpBoxFilled, setShowPopUpBoxFilled] = useState(false);
   const [counterNumber, setCounterNumber] = useState(0);
+
+  const [currentCounterName, setCurrentCounterName] = useState(0);
+  const [currentCount, setcurrentCount] = useState(0);
+  const [currentCounterTarget, setCounterTarget] = useState(0);
 
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -71,7 +77,14 @@ const CountersPage = ({
             <td>{counterItem.count}</td>
             <td>{counterItem.target}</td>
             <td>
-              <MdModeEditOutline />
+              <MdModeEditOutline
+                onClick={(e) => {
+                  setCurrentCounterName(counterItem.counter);
+                  setcurrentCount(counterItem.count);
+                  setCounterTarget(counterItem.target);
+                  setShowPopUpBoxFilled(true);
+                }}
+              />
             </td>
             <td>
               <MdOutlineRestartAlt
@@ -91,13 +104,26 @@ const CountersPage = ({
           </tr>
         );
       })}
-      <span className="add-btn" onClick={() => setShowPopUpBox(true)}>
+      <span className="add-btn" onClick={() => setShowPopUpBoxBlank(true)}>
         +
       </span>
       <span>
-        {showPopUpBox ? (
-          <PopUpBox
-            setShowPopUpBox={setShowPopUpBox}
+        {showPopUpBoxBlank ? (
+          <PopUpBoxBlank
+            setShowPopUpBoxBlank={setShowPopUpBoxBlank}
+            setLocalSavedCountersArray={setLocalSavedCountersArray}
+            localSavedCountersArray={localSavedCountersArray}
+            addCounter={addCounter}
+          />
+        ) : null}
+      </span>
+      <span>
+        {showPopUpBoxFilled ? (
+          <PopUpBoxFilled
+            currentCounterName={currentCounterName}
+            currentCount={currentCount}
+            currentCounterTarget={currentCounterTarget}
+            setShowPopUpBoxFilled={setShowPopUpBoxFilled}
             setLocalSavedCountersArray={setLocalSavedCountersArray}
             localSavedCountersArray={localSavedCountersArray}
             addCounter={addCounter}

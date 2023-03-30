@@ -1,8 +1,14 @@
 import { useState } from "react";
 
-const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
+const PopUpBoxFilled = ({
+  setShowPopUpBoxFilled,
+  addCounter,
+  currentCounterName,
+  currentCount,
+  currentCounterTarget,
+}) => {
   const closePopUpBox = () => {
-    setShowPopUpBox(false);
+    setShowPopUpBoxFilled(false);
   };
 
   const submitCounter = (e) => {
@@ -13,13 +19,13 @@ const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
       : addCounter(dhikrInput, 0);
     // addCounter(dhikrInput);
     setDhikrName("");
-    setShowPopUpBox(false);
+    setShowPopUpBoxFilled(false);
   };
 
   //   const onSubmit = (e) => {
   //     e.preventDefault();
   //   };
-
+  console.log(currentCounterName);
   const [dhikrInput, setDhikrName] = useState("");
   const [targetInput, setTarget] = useState("");
 
@@ -30,7 +36,7 @@ const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
           setDhikrName(e.target.value);
         }}
         type="text"
-        placeholder="Dhikr Name"
+        value={currentCounterName}
         required
       ></input>
       <input
@@ -38,7 +44,7 @@ const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
           setTarget(e.target.value);
         }}
         type="text"
-        placeholder="Target (Default: 0)"
+        value={currentCount}
         required
       ></input>
       <input
@@ -46,7 +52,7 @@ const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
           setTarget(e.target.value);
         }}
         type="text"
-        placeholder="Counter Start (Default: 0)"
+        value={currentCounterTarget}
         required
       ></input>
       <button onClick={closePopUpBox}>Cancel</button>
@@ -55,4 +61,4 @@ const PopUpBox = ({ setShowPopUpBox, addCounter }) => {
   );
 };
 
-export default PopUpBox;
+export default PopUpBoxFilled;
