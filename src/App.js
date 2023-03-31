@@ -129,7 +129,6 @@ function App() {
   const addItemToSavedCountersArray = () => {};
 
   const addCounter = (counterToAdd, target) => {
-    console.log("addCounter fired");
     const randomlyGeneratedId = Math.floor(Math.random() * 10000) + 1;
     const newCounter = {
       counter: counterToAdd,
@@ -140,8 +139,22 @@ function App() {
     };
     const newArray = [...localSavedCountersArray, newCounter];
     setLocalSavedCountersArray(newArray);
-    console.log(newArray);
     saveArrayLocally(newArray);
+  };
+
+  const modifyTheCountersArray = (
+    id,
+    modifiedCounterName,
+    modifiedCount,
+    modifiedTarget
+  ) => {
+    const modifiedArray = localSavedCountersArray.map((counterItem) => {
+      if (counterItem.id == id) {
+      }
+    });
+    console.log(modifiedArray);
+    setLocalSavedCountersArray(modifiedArray);
+    saveArrayLocally(modifiedArray);
   };
 
   console.log(localSavedCountersArray);
@@ -222,6 +235,7 @@ function App() {
                 activeCounterName={activeCounterName}
                 activeCounterNumber={activeCounterNumber}
                 addItemToSavedCountersArray={addItemToSavedCountersArray}
+                modifyTheCountersArray={modifyTheCountersArray}
                 setLocalSavedCountersArray={setLocalSavedCountersArray}
                 addCounter={addCounter}
                 deleteSingleCounter={deleteSingleCounter}

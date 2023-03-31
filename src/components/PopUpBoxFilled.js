@@ -1,11 +1,13 @@
 import { useState } from "react";
 
 const PopUpBoxFilled = ({
+  modifyTheCountersArray,
   setShowPopUpBoxFilled,
   addCounter,
   currentCounterName,
   currentCount,
   currentCounterTarget,
+  currentCounterId,
 }) => {
   const closePopUpBox = () => {
     setShowPopUpBoxFilled(false);
@@ -13,12 +15,17 @@ const PopUpBoxFilled = ({
 
   const submitCounter = (e) => {
     e.preventDefault();
-    if (!targetInput || !dhikrInput) return;
+    if (!counterNameInput) return;
     targetInput
-      ? addCounter(dhikrInput, targetInput)
-      : addCounter(dhikrInput, 0);
-    // addCounter(dhikrInput);
-    setDhikrName("");
+      ? modifyTheCountersArray(
+          currentCounterId,
+          currentCounterName,
+          currentCount,
+          currentCounterTarget
+        )
+      : modifyTheCountersArray();
+
+    setCounterName("");
     setShowPopUpBoxFilled(false);
   };
 
@@ -26,17 +33,26 @@ const PopUpBoxFilled = ({
   //     e.preventDefault();
   //   };
   console.log(currentCounterName);
-  const [dhikrInput, setDhikrName] = useState("");
-  const [targetInput, setTarget] = useState("");
+  const [counterNameInput, setCounterName] = useState(currentCounterName);
+  const [currentCountInput, setcurrentCountInput] = useState(currentCount);
+  const [targetInput, setTarget] = useState(currentCounterTarget);
 
   return (
     <form className="pop-up-box-wrap">
       <input
         onChange={(e) => {
-          setDhikrName(e.target.value);
+          setCounterName(e.target.value);
         }}
         type="text"
-        value={currentCounterName}
+        value={counterNameInput}
+        required
+      ></input>
+      <input
+        onChange={(e) => {
+          setcurrentCountInput(e.target.value);
+        }}
+        type="text"
+        value={currentCountInput}
         required
       ></input>
       <input
@@ -44,15 +60,7 @@ const PopUpBoxFilled = ({
           setTarget(e.target.value);
         }}
         type="text"
-        value={currentCount}
-        required
-      ></input>
-      <input
-        onChange={(e) => {
-          setTarget(e.target.value);
-        }}
-        type="text"
-        value={currentCounterTarget}
+        value={targetInput}
         required
       ></input>
       <button onClick={closePopUpBox}>Cancel</button>

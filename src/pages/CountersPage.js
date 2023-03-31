@@ -15,6 +15,7 @@ const CountersPage = ({
   invokeSetActiveCounter,
   activeCounterNumber,
   addItemToSavedCountersArray,
+  modifyTheCountersArray,
   setLocalSavedCountersArray,
   localSavedCountersArray,
   addCounter,
@@ -31,6 +32,7 @@ const CountersPage = ({
   const [currentCounterName, setCurrentCounterName] = useState(0);
   const [currentCount, setcurrentCount] = useState(0);
   const [currentCounterTarget, setCounterTarget] = useState(0);
+  const [currentCounterId, setcurrentCounterId] = useState(0);
 
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -50,7 +52,7 @@ const CountersPage = ({
         <th>Delete</th>
       </tr>
       {localSavedCountersArray.map((counterItem) => {
-        console.log(localSavedCountersArray);
+        // console.log(localSavedCountersArray);
         nextColorIndex > materialColors.length
           ? (nextColorIndex = 0)
           : (nextColorIndex += 1);
@@ -82,6 +84,7 @@ const CountersPage = ({
                   setCurrentCounterName(counterItem.counter);
                   setcurrentCount(counterItem.count);
                   setCounterTarget(counterItem.target);
+                  setcurrentCounterId(counterItem.id);
                   setShowPopUpBoxFilled(true);
                 }}
               />
@@ -120,9 +123,11 @@ const CountersPage = ({
       <span>
         {showPopUpBoxFilled ? (
           <PopUpBoxFilled
+            modifyTheCountersArray={modifyTheCountersArray}
             currentCounterName={currentCounterName}
             currentCount={currentCount}
             currentCounterTarget={currentCounterTarget}
+            currentCounterId={currentCounterId}
             setShowPopUpBoxFilled={setShowPopUpBoxFilled}
             setLocalSavedCountersArray={setLocalSavedCountersArray}
             localSavedCountersArray={localSavedCountersArray}
