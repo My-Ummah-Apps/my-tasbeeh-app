@@ -70,15 +70,15 @@ function App() {
       defaultArray = [
         {
           counter: "Alhumdulillah",
-          count: 2000,
+          count: 0,
           isActive: true,
-          target: 1000,
+          target: 100,
           id: 0,
         },
 
         {
           counter: "Subhanallah",
-          count: 25,
+          count: 0,
           isActive: false,
           target: 100,
           id: 1,
@@ -86,7 +86,7 @@ function App() {
 
         {
           counter: "Allahu-Akbar",
-          count: 10,
+          count: 0,
           isActive: false,
           target: 100,
           id: 2,
@@ -94,7 +94,7 @@ function App() {
 
         {
           counter: "Astagfirullah",
-          count: 10,
+          count: 0,
           isActive: false,
           target: 100,
           id: 3,
@@ -148,13 +148,18 @@ function App() {
     modifiedCount,
     modifiedTarget
   ) => {
-    const modifiedArray = localSavedCountersArray.map((counterItem) => {
+    localSavedCountersArray.map((counterItem) => {
       if (counterItem.id == id) {
+        counterItem.counter = modifiedCounterName;
+        counterItem.count = Number(modifiedCount);
+        counterItem.target = Number(modifiedTarget);
+        console.log(modifiedCount);
+        console.log(counterItem);
       }
     });
-    console.log(modifiedArray);
-    setLocalSavedCountersArray(modifiedArray);
-    saveArrayLocally(modifiedArray);
+    console.log(localSavedCountersArray);
+    setLocalSavedCountersArray(localSavedCountersArray);
+    saveArrayLocally(localSavedCountersArray);
   };
 
   console.log(localSavedCountersArray);

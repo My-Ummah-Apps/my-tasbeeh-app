@@ -10,6 +10,8 @@ const CounterNameAndNumber = ({
     if (counterItem.isActive == true) {
       currentBackgroundColor = counterItem.color;
       currentCounterTarget = counterItem.target;
+      activeCounterName = counterItem.counter;
+      activeCounterNumber = counterItem.count;
     }
   });
   // console.log(currentBackgroundColor);

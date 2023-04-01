@@ -156,7 +156,9 @@ table {
   margin-top: 1rem; /* correct offset on first border spacing if desired */
   width: 100%;
   max-width: 100%;
-  overflow-x: auto;
+
+  table-layout: fixed;
+  overflow-wrap: break-word;
 }
 
 th {

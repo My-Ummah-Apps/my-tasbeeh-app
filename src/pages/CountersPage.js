@@ -93,6 +93,9 @@ const CountersPage = ({
               <MdOutlineRestartAlt
                 onClick={() => {
                   resetSingleCounter(counterItem.id);
+                  if (counterItem.isActive) {
+                    invokeSetActiveCounter(counterItem.id);
+                  }
                   handleClick();
                 }}
               />

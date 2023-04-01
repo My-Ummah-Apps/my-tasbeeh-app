@@ -21,12 +21,12 @@ const MainPage = ({
 
   return (
     <div>
-      <FaUndoAlt
+      {/* <FaUndoAlt
         className="reset-icon"
         onClick={() => {
           setActiveCounterNumber(0); // Small bug here, this change doesn't reflect on counters page straight away
         }}
-      />
+      /> */}
       <CounterNameAndNumber
         activeCounterName={activeCounterName}
         activeCounterNumber={activeCounterNumber}

@@ -16,26 +16,20 @@ const PopUpBoxFilled = ({
   const submitCounter = (e) => {
     e.preventDefault();
     if (!counterNameInput) return;
-    targetInput
-      ? modifyTheCountersArray(
-          currentCounterId,
-          currentCounterName,
-          currentCount,
-          currentCounterTarget
-        )
-      : modifyTheCountersArray();
+    modifyTheCountersArray(
+      currentCounterId,
+      counterNameInput,
+      currentCountInput,
+      currentTargetInput
+    );
 
-    setCounterName("");
+    // setCounterName("");
     setShowPopUpBoxFilled(false);
   };
 
-  //   const onSubmit = (e) => {
-  //     e.preventDefault();
-  //   };
-  console.log(currentCounterName);
   const [counterNameInput, setCounterName] = useState(currentCounterName);
   const [currentCountInput, setcurrentCountInput] = useState(currentCount);
-  const [targetInput, setTarget] = useState(currentCounterTarget);
+  const [currentTargetInput, setTarget] = useState(currentCounterTarget);
 
   return (
     <form className="pop-up-box-wrap">
@@ -45,22 +39,25 @@ const PopUpBoxFilled = ({
         }}
         type="text"
         value={counterNameInput}
+        placeholder="Counter Name"
         required
       ></input>
       <input
         onChange={(e) => {
           setcurrentCountInput(e.target.value);
         }}
-        type="text"
+        type="number"
         value={currentCountInput}
+        placeholder="Count"
         required
       ></input>
       <input
         onChange={(e) => {
           setTarget(e.target.value);
         }}
-        type="text"
-        value={targetInput}
+        type="number"
+        value={currentTargetInput}
+        placeholder="Target"
         required
       ></input>
       <button onClick={closePopUpBox}>Cancel</button>
