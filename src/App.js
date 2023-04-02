@@ -149,6 +149,10 @@ function App() {
     modifiedTarget
   ) => {
     localSavedCountersArray.map((counterItem) => {
+      if (counterItem.id == id && counterItem.isActive) {
+        // invokeSetActiveCounter(counterItem.id);
+        setActiveCounterNumber(Number(modifiedCount));
+      }
       if (counterItem.id == id) {
         counterItem.counter = modifiedCounterName;
         counterItem.count = Number(modifiedCount);
