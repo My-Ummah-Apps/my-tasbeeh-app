@@ -39,14 +39,14 @@ const CountersPage = ({
   function handleClick() {
     forceUpdate();
   }
-
+  console.log(localSavedCountersArray);
   return (
     <>
       <table className="counters-wrap">
         {/* <Header text={"Counters"} /> */}
         <thead>
           <tr className="heading-table-row">
-            <th colspan="2">Counter</th>
+            <th colSpan="2">Counter</th>
             <th>Count</th>
             <th>Target</th>
             <th>Edit</th>
@@ -55,7 +55,6 @@ const CountersPage = ({
           </tr>
         </thead>
         {localSavedCountersArray.map((counterItem) => {
-          // console.log(localSavedCountersArray);
           nextColorIndex > materialColors.length
             ? (nextColorIndex = 0)
             : (nextColorIndex += 1);
@@ -70,7 +69,7 @@ const CountersPage = ({
                 style={{ backgroundColor: nextColor }}
               >
                 <td
-                  colspan="2"
+                  colSpan="2"
                   className="counter"
                   onClick={() => {
                     invokeSetActiveCounter(counterItem.id);

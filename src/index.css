@@ -34,11 +34,13 @@ body {
 
 .dhikr-type-wrap {
   position: relative;
-  /* background: #3949ab; */
-  padding-top: 7vh;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   text-align: center;
   font-size: 2rem;
-  padding: 5rem 0 5rem 0;
 }
 
 .dhikr-type-wrap h1 {
@@ -155,7 +157,10 @@ table {
   /* overflow-wrap: break-word; */
 }
 
-th,
+thead tr {
+  /* text-align: left; */
+}
+
 td {
   padding: 0.2rem 0.2rem;
   text-align: center;
@@ -169,7 +174,7 @@ td:first-child {
 
 th {
   background: #2176ff;
-  padding: 0.9rem;
+  padding: 0.9rem 0;
   color: #fff;
 }
 
@@ -338,7 +343,7 @@ div[role="progressbar"] {
   --pgPercentage: var(--value);
   position: absolute;
   left: 50%;
-  top: 30%;
+  top: 36%;
   transform: translate(-50%, 50%);
   /* animation: growProgressBar 3s 1 forwards; */
   width: var(--size);
@@ -368,6 +373,6 @@ div[role="progressbar"]::before {
   position: absolute;
   left: 50%;
   font-size: 0.7rem;
-  top: 250px;
+  top: 110%;
   transform: translateX(-50%);
 }

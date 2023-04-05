@@ -1,4 +1,5 @@
 const CounterNameAndNumber = ({
+  counterNameFontSize,
   counterName,
   activeCounterNumber,
   activeCounterName,
@@ -31,12 +32,31 @@ const CounterNameAndNumber = ({
     color: "var(--fg)",
   };
 
+  const inputField = document.querySelector("#text-input");
+  const textElement = document.querySelector("#displayed-text");
+
+  const maxSize = 72;
+  const minSize = 12;
+  const maxLength = 100;
+
+  // inputField.addEventListener("input", () => {
+  //   const currentLength = inputField.value.length;
+  //   const fontSize =
+  //     maxSize - (currentLength * (maxSize - minSize)) / maxLength;
+  //   textElement.style.fontSize = `${fontSize}px`;
+  // });
+
   return (
     <div
       className="dhikr-type-wrap"
       style={{ backgroundColor: currentBackgroundColor }}
     >
-      <h1 className="active-counter-name">{activeCounterName}</h1>
+      <h1
+        className="active-counter-name"
+        style={{ fontSize: counterNameFontSize }}
+      >
+        {activeCounterName}
+      </h1>
 
       <div className="progress-bar-wrap">
         <div role="progressbar" style={styles}></div>

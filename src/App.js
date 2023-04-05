@@ -17,7 +17,7 @@ let counterName; // This is the prop that will be passed into the CounterNumber 
 let currentCount; // This is the prop that will be passed into the CounterNumber component
 let counterId;
 let defaultArray;
-
+console.log("APP STARTED");
 function App() {
   const materialColors = [
     "#EF5350",
@@ -167,7 +167,7 @@ function App() {
   };
 
   console.log(localSavedCountersArray);
-
+  const [counterNameFontSize, setCounterNameFontSize] = useState("3rem");
   const invokeSetActiveCounter = (id) => {
     localSavedCountersArray.map((counterItem) => {
       counterItem.isActive = false;
@@ -177,6 +177,12 @@ function App() {
         counterName = counterItem.counter;
         currentCount = counterItem.count;
         counterId = counterItem.id;
+        console.log(counterItem.counter.length);
+        // if (counterItem.counter.length < 14) {
+        //   setCounterNameFontSize("3rem");
+        // } else if (counterItem.counter.length > 14) {
+        //   setCounterNameFontSize("0.3rem");
+        // }
       }
 
       setActiveCounterName(counterName);
@@ -222,6 +228,7 @@ function App() {
             index
             element={
               <Main
+                counterNameFontSize={counterNameFontSize}
                 saveArrayLocally={saveArrayLocally}
                 currentCount={currentCount}
                 counterName={counterName}

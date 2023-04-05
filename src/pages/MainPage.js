@@ -5,6 +5,7 @@ import PlusBtn from "../components/PlusBtn";
 import { FaUndoAlt } from "react-icons/fa";
 
 const MainPage = ({
+  counterNameFontSize,
   currentCount,
   counterName,
   savedCountersArray,
@@ -28,6 +29,7 @@ const MainPage = ({
         }}
       /> */}
       <CounterNameAndNumber
+        counterNameFontSize={counterNameFontSize}
         activeCounterName={activeCounterName}
         activeCounterNumber={activeCounterNumber}
         localSavedCountersArray={localSavedCountersArray}
