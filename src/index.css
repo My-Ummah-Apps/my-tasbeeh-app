@@ -93,7 +93,9 @@ body {
 } */
 
 .plus-svg-wrap {
-  margin-top: 25vh;
+  /* margin-top: 31vh; */
+  position: relative;
+  top: 32vh;
   line-height: 0vw;
   color: #ced4e2;
   text-align: center;
@@ -343,7 +345,8 @@ div[role="progressbar"] {
   --pgPercentage: var(--value);
   position: absolute;
   left: 50%;
-  top: 36%;
+  /* top: 36%; */
+  top: 90px;
   transform: translate(-50%, 50%);
   /* animation: growProgressBar 3s 1 forwards; */
   width: var(--size);
