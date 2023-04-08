@@ -1,24 +1,19 @@
 import { useState, useEffect } from "react";
 import CounterNameAndNumber from "../components/CounterNameAndNumber";
-import Header from "../components/Header";
 import PlusBtn from "../components/PlusBtn";
-import { FaUndoAlt } from "react-icons/fa";
 
 const MainPage = ({
   counterNameFontSize,
-  currentCount,
-  counterName,
   savedCountersArray,
   saveArrayLocally,
   counterId,
   activeCounterName,
+  setActiveCounterName,
   setActiveCounterNumber,
   activeCounterNumber,
   localSavedCountersArray,
 }) => {
-  // const [activeCountNumber, setActiveCountNumber] = useState(currentCount);
-
-  // const [savedCountersArray, setSavedCountersArray] = useState(savedCountersArray);
+  // invokeSetActiveCounter(1);
 
   return (
     <div>
@@ -29,6 +24,8 @@ const MainPage = ({
         }}
       /> */}
       <CounterNameAndNumber
+        setActiveCounterName={setActiveCounterName}
+        setActiveCounterNumber={setActiveCounterNumber}
         counterNameFontSize={counterNameFontSize}
         activeCounterName={activeCounterName}
         activeCounterNumber={activeCounterNumber}

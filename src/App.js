@@ -40,8 +40,8 @@ function App() {
   ];
 
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
-  const [activeCounterName, setActiveCounterName] = useState();
-  const [activeCounterNumber, setActiveCounterNumber] = useState();
+  const [activeCounterName, setActiveCounterName] = useState("");
+  const [activeCounterNumber, setActiveCounterNumber] = useState(0);
 
   const saveArrayLocally = (arrayToSave) => {
     localStorage.setItem(
@@ -50,8 +50,11 @@ function App() {
     );
   };
 
+  let currentBackgroundColor;
+  let currentCounterTarget;
+
+  // localStorage.clear();
   useEffect(() => {
-    // if (JSON.parse(localStorage.getItem("localSavedCountersArray"))) {
     if (
       JSON.parse(localStorage.getItem("localSavedCountersArray")) &&
       JSON.parse(localStorage.getItem("localSavedCountersArray")).length > 0
@@ -61,7 +64,6 @@ function App() {
         localStorage.getItem("localSavedCountersArray")
       );
       console.log(localSavedCountersArray);
-      // } else if (!JSON.parse(localStorage.getItem("localSavedCountersArray"))) {
     } else if (
       !localStorage.getItem("localSavedCountersArray") ||
       JSON.parse(localStorage.getItem("localSavedCountersArray")).length == 0
@@ -71,6 +73,7 @@ function App() {
         {
           counter: "Alhumdulillah",
           count: 0,
+          color: "rgb(236, 64, 122)",
           isActive: true,
           target: 100,
           id: 0,
@@ -79,6 +82,7 @@ function App() {
         {
           counter: "Subhanallah",
           count: 0,
+          color: "rgb(171, 71, 188)",
           isActive: false,
           target: 100,
           id: 1,
@@ -87,6 +91,7 @@ function App() {
         {
           counter: "Allahu-Akbar",
           count: 0,
+          color: "rgb(126, 87, 194)",
           isActive: false,
           target: 100,
           id: 2,
@@ -95,34 +100,42 @@ function App() {
         {
           counter: "Astagfirullah",
           count: 0,
+          color: "rgb(92, 107, 192)",
           isActive: false,
           target: 100,
           id: 3,
         },
       ];
 
+      defaultArray.map((counterItem) => {
+        if (counterItem.isActive) {
+          // setActiveCounterName(counterItem.counter);
+          // setActiveCounterNumber(counterItem.count);
+          // saveArrayLocally(localSavedCountersArray);
+        }
+      });
+
       console.log(localSavedCountersArray);
+      // invokeSetActiveCounter(0);
       saveArrayLocally(defaultArray);
     }
-    // lastUsedCounterIndex = defaultArray.findIndex(
-    //   (object) => object.isActive === true
-    // );
 
     defaultArray.findIndex((object) => {
       if (object.isActive === true) {
         lastUsedCounterIndex = defaultArray.indexOf(object);
       } else {
         lastUsedCounterIndex = 0;
-
         console.log("true");
       }
     });
 
-    counterName = defaultArray[lastUsedCounterIndex].counter;
-    currentCount = defaultArray[lastUsedCounterIndex].count;
-    counterId = defaultArray[lastUsedCounterIndex].id;
-    setActiveCounterName(counterName);
-    setActiveCounterNumber(currentCount);
+    // counterName = defaultArray[lastUsedCounterIndex].counter;
+    // currentCount = defaultArray[lastUsedCounterIndex].count;
+    // counterId = defaultArray[lastUsedCounterIndex].id;
+    // activeCounterName = defaultArray[lastUsedCounterIndex].counter;
+    // invokeSetActiveCounter(defaultArray[lastUsedCounterIndex].id);
+    setActiveCounterName(defaultArray[lastUsedCounterIndex].counter);
+    setActiveCounterNumber(defaultArray[lastUsedCounterIndex].count);
     setLocalSavedCountersArray(defaultArray);
   }, []);
 
@@ -166,9 +179,9 @@ function App() {
     saveArrayLocally(localSavedCountersArray);
   };
 
-  console.log(localSavedCountersArray);
   const [counterNameFontSize, setCounterNameFontSize] = useState("3rem");
   const invokeSetActiveCounter = (id) => {
+    console.log("invokeSetActiveCounter fired");
     localSavedCountersArray.map((counterItem) => {
       counterItem.isActive = false;
 
@@ -219,6 +232,9 @@ function App() {
 
   // document.body.style = "background: #fff;";
 
+  // const [homePage, setHomePage] = useState(true);
+  const homePage = true;
+
   return (
     <BrowserRouter>
       <section className="App">
@@ -228,6 +244,8 @@ function App() {
             index
             element={
               <Main
+                setActiveCounterName={setActiveCounterName}
+                setActiveCounterNumber={setActiveCounterNumber}
                 counterNameFontSize={counterNameFontSize}
                 saveArrayLocally={saveArrayLocally}
                 currentCount={currentCount}

@@ -1,7 +1,6 @@
 const PlusBtn = ({
   setActiveCounterNumber,
   activeCounterNumber,
-  savedCountersArray,
   counterId,
   localSavedCountersArray,
   saveArrayLocally,
@@ -11,13 +10,17 @@ const PlusBtn = ({
       <svg
         onClick={() => {
           setActiveCounterNumber((activeCounterNumber += 1));
+          console.log(activeCounterNumber);
 
           localSavedCountersArray.map((counterItem) => {
             if (counterItem.id == counterId) {
               counterItem.count = activeCounterNumber;
+
+              console.log("true");
             }
           });
           saveArrayLocally(localSavedCountersArray);
+          console.log(localSavedCountersArray);
         }}
         version="1.1"
         id="Capa_1"

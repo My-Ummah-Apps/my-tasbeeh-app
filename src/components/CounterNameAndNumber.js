@@ -1,9 +1,10 @@
 const CounterNameAndNumber = ({
   counterNameFontSize,
-  counterName,
   activeCounterNumber,
   activeCounterName,
   localSavedCountersArray,
+  setActiveCounterName,
+  setActiveCounterNumber,
 }) => {
   let currentBackgroundColor;
   let currentCounterTarget;
@@ -13,9 +14,11 @@ const CounterNameAndNumber = ({
       currentCounterTarget = counterItem.target;
       activeCounterName = counterItem.counter;
       activeCounterNumber = counterItem.count;
+      // setActiveCounterName(counterItem.counter);
+      // setActiveCounterNumber(counterItem.count);
     }
   });
-  // console.log(currentBackgroundColor);
+
   const styles = {
     "--value": activeCounterNumber,
     background: `radial-gradient(
