@@ -42,6 +42,9 @@ function App() {
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
   const [activeCounterName, setActiveCounterName] = useState("");
   const [activeCounterNumber, setActiveCounterNumber] = useState(0);
+  const [activeCounterBackgroundColor, setActiveCounterBackgroundColor] =
+    useState("");
+  const [activeCounterTarget, setActiveCounterTarget] = useState("");
 
   const saveArrayLocally = (arrayToSave) => {
     localStorage.setItem(
@@ -55,6 +58,7 @@ function App() {
 
   // localStorage.clear();
   useEffect(() => {
+    console.log(localSavedCountersArray);
     if (
       JSON.parse(localStorage.getItem("localSavedCountersArray")) &&
       JSON.parse(localStorage.getItem("localSavedCountersArray")).length > 0
@@ -63,7 +67,7 @@ function App() {
       defaultArray = JSON.parse(
         localStorage.getItem("localSavedCountersArray")
       );
-      console.log(localSavedCountersArray);
+      console.log(defaultArray);
     } else if (
       !localStorage.getItem("localSavedCountersArray") ||
       JSON.parse(localStorage.getItem("localSavedCountersArray")).length == 0
@@ -115,30 +119,22 @@ function App() {
         }
       });
 
-      console.log(localSavedCountersArray);
-      // invokeSetActiveCounter(0);
       saveArrayLocally(defaultArray);
     }
 
     defaultArray.findIndex((object) => {
-      if (object.isActive === true) {
+      if (object.isActive == true) {
         lastUsedCounterIndex = defaultArray.indexOf(object);
+        setActiveCounterName(defaultArray[lastUsedCounterIndex].counter);
+        setActiveCounterNumber(defaultArray[lastUsedCounterIndex].count);
       } else {
         lastUsedCounterIndex = 0;
-        console.log("true");
       }
     });
 
-    // counterName = defaultArray[lastUsedCounterIndex].counter;
-    // currentCount = defaultArray[lastUsedCounterIndex].count;
-    // counterId = defaultArray[lastUsedCounterIndex].id;
-    // activeCounterName = defaultArray[lastUsedCounterIndex].counter;
-    // invokeSetActiveCounter(defaultArray[lastUsedCounterIndex].id);
-    setActiveCounterName(defaultArray[lastUsedCounterIndex].counter);
-    setActiveCounterNumber(defaultArray[lastUsedCounterIndex].count);
     setLocalSavedCountersArray(defaultArray);
+    saveArrayLocally(defaultArray);
   }, []);
-
   const addItemToSavedCountersArray = () => {};
 
   const addCounter = (counterToAdd, target) => {
@@ -170,8 +166,6 @@ function App() {
         counterItem.counter = modifiedCounterName;
         counterItem.count = Number(modifiedCount);
         counterItem.target = Number(modifiedTarget);
-        console.log(modifiedCount);
-        console.log(counterItem);
       }
     });
     console.log(localSavedCountersArray);
@@ -253,7 +247,6 @@ function App() {
                 localSavedCountersArray={localSavedCountersArray}
                 counterId={counterId}
                 activeCounterName={activeCounterName}
-                setActiveCounterNumber={setActiveCounterNumber}
                 activeCounterNumber={activeCounterNumber}
               />
             }
@@ -268,6 +261,8 @@ function App() {
                 resetSingleCounter={resetSingleCounter}
                 activeCounterName={activeCounterName}
                 activeCounterNumber={activeCounterNumber}
+                activeCounterBackgroundColor={activeCounterBackgroundColor}
+                activeCounterTarget={activeCounterTarget}
                 addItemToSavedCountersArray={addItemToSavedCountersArray}
                 modifyTheCountersArray={modifyTheCountersArray}
                 setLocalSavedCountersArray={setLocalSavedCountersArray}

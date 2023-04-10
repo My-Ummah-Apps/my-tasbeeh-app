@@ -1,26 +1,31 @@
 const CounterNameAndNumber = ({
   counterNameFontSize,
-  activeCounterNumber,
   activeCounterName,
+  activeCounterNumber,
+  activeCounterBackgroundColor,
+  activeCounterTarget,
   localSavedCountersArray,
   setActiveCounterName,
   setActiveCounterNumber,
 }) => {
+  let currentName;
+  let currentNumber;
   let currentBackgroundColor;
   let currentCounterTarget;
   localSavedCountersArray.map((counterItem) => {
     if (counterItem.isActive == true) {
       currentBackgroundColor = counterItem.color;
       currentCounterTarget = counterItem.target;
-      activeCounterName = counterItem.counter;
-      activeCounterNumber = counterItem.count;
+      currentName = counterItem.counter;
+      currentNumber = counterItem.count;
+      console.log(counterItem);
       // setActiveCounterName(counterItem.counter);
       // setActiveCounterNumber(counterItem.count);
     }
   });
-
+  console.log(activeCounterBackgroundColor);
   const styles = {
-    "--value": activeCounterNumber,
+    "--value": currentNumber,
     background: `radial-gradient(
       closest-side,
       white 80%,
@@ -58,7 +63,7 @@ const CounterNameAndNumber = ({
         className="active-counter-name"
         style={{ fontSize: counterNameFontSize }}
       >
-        {activeCounterName}
+        {currentName}
       </h1>
 
       <div className="progress-bar-wrap">

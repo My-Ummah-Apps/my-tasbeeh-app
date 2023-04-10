@@ -60,8 +60,10 @@ const PopUpBoxFilled = ({
         placeholder="Target"
         required
       ></input>
-      <button onClick={closePopUpBox}>Cancel</button>
-      <input type="submit" value="Submit" onClick={submitCounter}></input>
+      <div className="pop-up-box-buttons-wrap">
+        <button onClick={closePopUpBox}>Cancel</button>
+        <input type="submit" value="Submit" onClick={submitCounter}></input>
+      </div>
     </form>
   );
 };

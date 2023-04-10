@@ -246,13 +246,24 @@ td:last-child {
   padding: 0.5rem;
 }
 
+.pop-up-box-buttons-wrap {
+  text-align: end;
+}
+
 .pop-up-box-wrap button {
   color: #fff;
   border: 1px solid white;
   border-radius: 0.3rem;
-  margin: 1rem;
+  margin: 0.5rem;
   padding: 0.5rem;
   background: transparent;
+}
+
+.pop-up-box-buttons-wrap :nth-child(2) {
+  border: 1px solid white;
+  background: white;
+
+  border-radius: 0.3rem;
 }
 
 /* SETTINGS PAGE */

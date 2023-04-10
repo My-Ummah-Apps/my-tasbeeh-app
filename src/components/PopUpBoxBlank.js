@@ -41,8 +41,10 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter, counterItem }) => {
         placeholder="Target (Default: 0)"
         required
       ></input>
-      <button onClick={closePopUpBox}>Cancel</button>
-      <input type="submit" value="Submit" onClick={submitCounter}></input>
+      <div className="pop-up-box-buttons-wrap">
+        <button onClick={closePopUpBox}>Cancel</button>
+        <input type="submit" value="Submit" onClick={submitCounter}></input>
+      </div>
     </form>
   );
 };

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import PlusBtn from "../components/PlusBtn";
+import { FaUndoAlt, FaRegCircle } from "react-icons/fa";
 
 const MainPage = ({
   counterNameFontSize,
@@ -10,25 +11,28 @@ const MainPage = ({
   activeCounterName,
   setActiveCounterName,
   setActiveCounterNumber,
+  activeCounterBackgroundColor,
+  activeCounterTarget,
   activeCounterNumber,
   localSavedCountersArray,
 }) => {
-  // invokeSetActiveCounter(1);
-
   return (
     <div>
-      {/* <FaUndoAlt
-        className="reset-icon"
-        onClick={() => {
+      {/* <FaRegCircle className="fa-stack" />
+      <FaUndoAlt className="reset-icon fa-stack" /> */}
+
+      {/* onClick={() => {
           setActiveCounterNumber(0); // Small bug here, this change doesn't reflect on counters page straight away
-        }}
-      /> */}
+        }} */}
+
       <CounterNameAndNumber
         setActiveCounterName={setActiveCounterName}
         setActiveCounterNumber={setActiveCounterNumber}
         counterNameFontSize={counterNameFontSize}
         activeCounterName={activeCounterName}
         activeCounterNumber={activeCounterNumber}
+        activeCounterBackgroundColor={activeCounterBackgroundColor}
+        activeCounterTarget={activeCounterTarget}
         localSavedCountersArray={localSavedCountersArray}
       />
       <PlusBtn
