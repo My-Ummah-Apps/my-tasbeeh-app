@@ -12,6 +12,7 @@ const CounterNameAndNumber = ({
   let currentNumber;
   let currentBackgroundColor;
   let currentCounterTarget;
+  let textOverflowProperty;
   localSavedCountersArray.map((counterItem) => {
     if (counterItem.isActive == true) {
       currentBackgroundColor = counterItem.color;
@@ -19,6 +20,11 @@ const CounterNameAndNumber = ({
       currentName = counterItem.counter;
       currentNumber = counterItem.count;
       console.log(counterItem);
+      currentName.length > 20
+        ? (textOverflowProperty = "ellipsis")
+        : (textOverflowProperty = "clip");
+      console.log(textOverflowProperty);
+
       // setActiveCounterName(counterItem.counter);
       // setActiveCounterNumber(counterItem.count);
     }
@@ -61,7 +67,10 @@ const CounterNameAndNumber = ({
     >
       <h1
         className="active-counter-name"
-        style={{ fontSize: counterNameFontSize }}
+        style={{
+          fontSize: counterNameFontSize,
+          textOverflow: textOverflowProperty,
+        }}
       >
         {currentName}
       </h1>

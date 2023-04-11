@@ -185,11 +185,14 @@ function App() {
         currentCount = counterItem.count;
         counterId = counterItem.id;
         console.log(counterItem.counter.length);
-        // if (counterItem.counter.length < 14) {
-        //   setCounterNameFontSize("3rem");
-        // } else if (counterItem.counter.length > 14) {
-        //   setCounterNameFontSize("0.3rem");
-        // }
+
+        if (counterItem.counter.length < 14) {
+          setCounterNameFontSize("3rem");
+          console.log("setCounterNameFontSize(3rem)");
+        } else if (counterItem.counter.length > 14) {
+          setCounterNameFontSize("1.4rem");
+          console.log("setCounterNameFontSize(0.3rem)");
+        }
       }
 
       setActiveCounterName(counterName);
