@@ -7,7 +7,8 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter, counterItem }) => {
 
   const submitCounter = (e) => {
     e.preventDefault();
-    if (!targetInput || !dhikrInput) return;
+    // if (!targetInput || !dhikrInput) return;
+    if (!dhikrInput) return;
     targetInput
       ? addCounter(dhikrInput, targetInput)
       : addCounter(dhikrInput, 0);

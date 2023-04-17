@@ -16,7 +16,11 @@ const CounterNameAndNumber = ({
   localSavedCountersArray.map((counterItem) => {
     if (counterItem.isActive == true) {
       currentBackgroundColor = counterItem.color;
-      currentCounterTarget = counterItem.target;
+      // currentCounterTarget = counterItem.target;
+      counterItem.target == 0
+        ? (currentCounterTarget = 0.1)
+        : (currentCounterTarget = counterItem.target);
+
       currentName = counterItem.counter;
       currentNumber = counterItem.count;
       console.log(counterItem);
@@ -24,7 +28,7 @@ const CounterNameAndNumber = ({
         ? (textOverflowProperty = "ellipsis")
         : (textOverflowProperty = "clip");
       console.log(textOverflowProperty);
-
+      console.log(currentCounterTarget);
       // setActiveCounterName(counterItem.counter);
       // setActiveCounterNumber(counterItem.count);
     }
@@ -77,7 +81,9 @@ const CounterNameAndNumber = ({
 
       <div className="progress-bar-wrap">
         <div role="progressbar" style={styles}></div>
-        <p className="target-text">Target: {currentCounterTarget}</p>
+        <p className="target-text">
+          Target: {currentCounterTarget > 0.5 ? currentCounterTarget : 0}
+        </p>
       </div>
 
       {/* <h1 className="active-counter-number">{activeCounterNumber}</h1> */}
