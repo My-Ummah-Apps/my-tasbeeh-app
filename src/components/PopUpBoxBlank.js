@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter, counterItem }) => {
+const PopUpBoxBlank = ({
+  setShowPopUpBoxBlank,
+  addCounter,
+  counterItem,
+  nextColor,
+}) => {
   const closePopUpBox = () => {
     setShowPopUpBoxBlank(false);
   };
@@ -25,7 +30,46 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter, counterItem }) => {
   const [targetInput, setTarget] = useState("");
 
   return (
-    <form className="pop-up-box-wrap">
+    <div style={{ backgroundColor: nextColor }} class="login-box">
+      <form>
+        <div class="user-box">
+          <input
+            onChange={(e) => {
+              setDhikrName(e.target.value);
+            }}
+            type="text"
+            required
+          ></input>
+          <label>Dhikr Name</label>
+        </div>
+        <div class="user-box">
+          <input
+            onChange={(e) => {
+              setTarget(e.target.value);
+            }}
+            type="text"
+            required
+          ></input>
+          <label>Target (Default: 0)</label>
+        </div>
+        <div className="pop-up-box-buttons-wrap">
+          <button onClick={closePopUpBox}>Cancel</button>
+          <input
+            className="submit-input"
+            type="submit"
+            value="Submit"
+            onClick={submitCounter}
+          ></input>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default PopUpBoxBlank;
+
+{
+  /*  <form className="pop-up-box-wrap">
       <input
         onChange={(e) => {
           setDhikrName(e.target.value);
@@ -46,8 +90,5 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter, counterItem }) => {
         <button onClick={closePopUpBox}>Cancel</button>
         <input type="submit" value="Submit" onClick={submitCounter}></input>
       </div>
-    </form>
-  );
-};
-
-export default PopUpBoxBlank;
+    </form> */
+}

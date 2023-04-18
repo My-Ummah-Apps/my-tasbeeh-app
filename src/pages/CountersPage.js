@@ -122,6 +122,7 @@ const CountersPage = ({
       <div>
         {showPopUpBoxBlank ? (
           <PopUpBoxBlank
+            nextColor={nextColor}
             setShowPopUpBoxBlank={setShowPopUpBoxBlank}
             setLocalSavedCountersArray={setLocalSavedCountersArray}
             localSavedCountersArray={localSavedCountersArray}
