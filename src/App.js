@@ -202,7 +202,7 @@ function App() {
       // saveCountersArray();
     });
   };
-  // let testArray;
+
   const resetSingleCounter = (id) => {
     localSavedCountersArray.map((counterItem1) => {
       if (counterItem1.id == id) {
@@ -222,14 +222,14 @@ function App() {
     const filteredArray = localSavedCountersArray.filter(
       (counterItem) => counterItem.id !== id
     );
+    filteredArray[0].isActive = true;
+    setActiveCounterNumber(filteredArray[0].count);
     setLocalSavedCountersArray(filteredArray);
-
     saveArrayLocally(filteredArray);
   };
 
   // document.body.style = "background: #fff;";
 
-  // const [homePage, setHomePage] = useState(true);
   const homePage = true;
 
   return (
