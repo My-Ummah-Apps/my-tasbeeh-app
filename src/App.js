@@ -12,7 +12,7 @@ import SettingsPage from "./pages/SettingsPage";
 console.log("APP STARTED");
 let currentSelectedCounterIndex; // Stores the index of the current active counter
 let lastUsedCounterIndex; // Used in the two conditional statements immediately below when app is first loaded to grab the last used counter
-let individualCounterDiv; // Used within the createCounterList function, the savedCountersArray is looped through and items added to the DOM with this variable which holds a div
+// let individualCounterDiv; // Used within the createCounterList function, the savedCountersArray is looped through and items added to the DOM with this variable which holds a div
 let counterName; // This is the prop that will be passed into the CounterNumber component
 let currentCount; // This is the prop that will be passed into the CounterNumber component
 let counterId;
