@@ -9,7 +9,7 @@ import NavBar from "./components/NavBar";
 import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
-
+console.log("APP STARTED");
 let currentSelectedCounterIndex; // Stores the index of the current active counter
 let lastUsedCounterIndex; // Used in the two conditional statements immediately below when app is first loaded to grab the last used counter
 let individualCounterDiv; // Used within the createCounterList function, the savedCountersArray is looped through and items added to the DOM with this variable which holds a div
@@ -17,7 +17,7 @@ let counterName; // This is the prop that will be passed into the CounterNumber 
 let currentCount; // This is the prop that will be passed into the CounterNumber component
 let counterId;
 let defaultArray;
-console.log("APP STARTED");
+
 function App() {
   const materialColors = [
     "#EF5350",
@@ -185,14 +185,14 @@ function App() {
         currentCount = counterItem.count;
         counterId = counterItem.id;
         console.log(counterItem.counter.length);
-
-        if (counterItem.counter.length < 14) {
-          setCounterNameFontSize("3rem");
-          console.log("setCounterNameFontSize(3rem)");
-        } else if (counterItem.counter.length > 14) {
-          setCounterNameFontSize("1.4rem");
-          console.log("setCounterNameFontSize(0.3rem)");
-        }
+        setCounterNameFontSize("3rem");
+        // if (counterItem.counter.length < 14) {
+        //   setCounterNameFontSize("3rem");
+        //   console.log("setCounterNameFontSize(3rem)");
+        // } else if (counterItem.counter.length > 14) {
+        //   setCounterNameFontSize("2.4rem");
+        //   console.log("setCounterNameFontSize(0.3rem)");
+        // }
       }
 
       setActiveCounterName(counterName);

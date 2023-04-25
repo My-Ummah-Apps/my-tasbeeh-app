@@ -30,7 +30,7 @@ const PopUpBoxBlank = ({
   const [targetInput, setTarget] = useState("");
 
   return (
-    <div style={{ backgroundColor: nextColor }} class="login-box">
+    <div style={{ backgroundColor: "rgb(92, 107, 192)" }} class="login-box">
       <form>
         <div class="user-box">
           <input

@@ -18,6 +18,7 @@
 }
 
 body {
+  /* font-family: "Source Sans Pro", Helvetica, sans-serif; */
   overflow: hidden;
   /* background: #242428; */
   color: var(--text-color);
@@ -62,9 +63,12 @@ body {
 .active-counter-number {
   color: white;
   /* word-wrap: anywhere; */
-  width: 80%;
+  /* width: 80%; */
   /* white-space: break-spaces; */
   overflow: hidden;
+}
+
+.active-counter-name {
 }
 
 .active-counter-number {
@@ -117,8 +121,8 @@ body {
 
 .counters-wrap {
   /* font-size: 0.7rem; */
-  max-height: 75vh;
-  overflow: scroll;
+  /* max-height: 75vh; */
+  /* overflow: scroll; */
   padding: 0 1rem;
   font-size: clamp(0.7rem, -0.1182rem + 4.0909vw, 2.5rem);
 }
@@ -153,6 +157,11 @@ body {
   height: 50px;
 }
 
+.table-wrap {
+  height: 75vh;
+  overflow-y: scroll; /* add vertical scrolling */
+}
+
 table {
   border-collapse: separate;
   border-spacing: 0 10px;
@@ -160,6 +169,7 @@ table {
   width: 100%;
   max-width: 100%;
   table-layout: fixed;
+
   /* overflow-wrap: break-word; */
 }
 
@@ -399,7 +409,7 @@ div[role="progressbar"]::before {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 250px;
+  width: 300px;
   padding: 40px;
   transform: translate(-50%, -50%);
   /* background: rgba(0, 0, 0, 0.5); */
@@ -563,4 +573,65 @@ div[role="progressbar"]::before {
   margin-left: 1rem;
   padding: 0.5rem;
   background: transparent;
+}
+
+/* COUNTER TEXT AUTO SCROLL */
+.scroll {
+  position: relative;
+  width: 100vw;
+  /* height: 15%;
+  min-height: 150px; */
+  overflow: hidden;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.m-scroll {
+  overflow: hidden;
+  height: 100%;
+  white-space: nowrap;
+  animation: scrollText 6s infinite linear;
+  margin: 0;
+  font-size: 0;
+  display: inline-block;
+}
+
+.scroll span {
+  font-size: 50px;
+  display: inline-block;
+  min-width: 100vw;
+  margin: 0;
+  padding: 0;
+  padding-left: 2rem;
+  color: white;
+}
+
+@keyframes scrollText {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
 }

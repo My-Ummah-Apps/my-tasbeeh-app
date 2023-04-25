@@ -41,7 +41,7 @@ const CountersPage = ({
   }
   console.log(localSavedCountersArray);
   return (
-    <>
+    <div className="table-wrap">
       <table className="counters-wrap">
         {/* <Header text={"Counters"} /> */}
         <thead>
@@ -145,7 +145,7 @@ const CountersPage = ({
           />
         ) : null}
       </div>
-    </>
+    </div>
   );
 };
 

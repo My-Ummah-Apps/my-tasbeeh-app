@@ -1,3 +1,5 @@
+import { useRef, useEffect, useState } from "react";
+
 const CounterNameAndNumber = ({
   counterNameFontSize,
   activeCounterName,
@@ -24,7 +26,7 @@ const CounterNameAndNumber = ({
       currentName = counterItem.counter;
       currentNumber = counterItem.count;
       console.log(counterItem);
-      currentName.length > 20
+      currentName.length > 50
         ? (textOverflowProperty = "ellipsis")
         : (textOverflowProperty = "clip");
       console.log(textOverflowProperty);
@@ -50,34 +52,68 @@ const CounterNameAndNumber = ({
     color: "var(--fg)",
   };
 
-  const inputField = document.querySelector("#text-input");
-  const textElement = document.querySelector("#displayed-text");
+  const counterTextContainerRef = useRef(null);
+  const textRef = useRef(null);
 
-  const maxSize = 72;
-  const minSize = 12;
-  const maxLength = 100;
+  const [scroll, setScroll] = useState();
+  let classlol = "display-block";
 
-  // inputField.addEventListener("input", () => {
-  //   const currentLength = inputField.value.length;
-  //   const fontSize =
-  //     maxSize - (currentLength * (maxSize - minSize)) / maxLength;
-  //   textElement.style.fontSize = `${fontSize}px`;
-  // });
+  useEffect(() => {
+    const counterTextContainerWidth =
+      counterTextContainerRef.current.clientWidth;
+    const textWidth = textRef.current.clientWidth;
+    // const textWidth = 300;
+    // console.log(textRef.current.getBoundingClientRect());
+
+    setTimeout(() => {
+      if (textRef.current.clientWidth < counterTextContainerWidth) {
+        console.log("counterTextContainerWidth: " + counterTextContainerWidth);
+        console.log("textWidth: " + textWidth);
+        setScroll(false);
+        classlol = "display-block";
+        console.log("don't scroll!");
+      } else if (textRef.current.clientWidth > counterTextContainerWidth) {
+        console.log("counterTextContainerWidth: " + counterTextContainerWidth);
+        console.log("textWidth: " + textWidth);
+        setScroll(true);
+        classlol = "display-none";
+        console.log("scroll!");
+      }
+    }, 2000);
+  }, []);
+
+  const scrollingStyle = { color: "yellow" };
 
   return (
     <div
       className="dhikr-type-wrap"
       style={{ backgroundColor: currentBackgroundColor }}
+      ref={counterTextContainerRef}
     >
-      <h1
-        className="active-counter-name"
-        style={{
-          fontSize: counterNameFontSize,
-          textOverflow: textOverflowProperty,
-        }}
-      >
-        {currentName}
-      </h1>
+      <div className="counter-text-wrap" ref={textRef}>
+        <div className={scroll ? "scroll" : ""}>
+          <div className={scroll ? "m-scroll" : ""}>
+            <span
+              className="active-counter-name"
+              style={{
+                fontSize: counterNameFontSize,
+                textOverflow: textOverflowProperty,
+              }}
+            >
+              {currentName}
+            </span>
+            <span
+              className={scroll ? "active-counter-name" : "display-none"}
+              style={{
+                fontSize: counterNameFontSize,
+                textOverflow: textOverflowProperty,
+              }}
+            >
+              {currentName}
+            </span>
+          </div>
+        </div>
+      </div>
 
       <div className="progress-bar-wrap">
         <div role="progressbar" style={styles}></div>

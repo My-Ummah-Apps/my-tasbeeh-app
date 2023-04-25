@@ -5,10 +5,6 @@ const config: CapacitorConfig = {
   appName: 'My Tasbeeh App',
   webDir: 'build', 
   bundledWebRuntime: false,
-  server: {
-    "hostname": "192.168.242.129:3000",
-    "cleartext": true
-  }
 };
 
 export default config;
