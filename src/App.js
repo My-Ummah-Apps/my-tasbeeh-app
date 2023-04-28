@@ -9,7 +9,7 @@ import NavBar from "./components/NavBar";
 import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
-console.log("APP STARTED");
+
 let currentSelectedCounterIndex; // Stores the index of the current active counter
 let lastUsedCounterIndex; // Used in the two conditional statements immediately below when app is first loaded to grab the last used counter
 // let individualCounterDiv; // Used within the createCounterList function, the savedCountersArray is looped through and items added to the DOM with this variable which holds a div
@@ -32,7 +32,6 @@ function App() {
     "#66BB6A",
     "#9CCC65",
     "#D4E157",
-    "#FFEE58",
     "#FFCA28",
     "#FFA726",
     "#FF7043",
@@ -58,21 +57,17 @@ function App() {
 
   // localStorage.clear();
   useEffect(() => {
-    console.log(localSavedCountersArray);
     if (
       JSON.parse(localStorage.getItem("localSavedCountersArray")) &&
       JSON.parse(localStorage.getItem("localSavedCountersArray")).length > 0
     ) {
-      console.log("local data exists");
       defaultArray = JSON.parse(
         localStorage.getItem("localSavedCountersArray")
       );
-      console.log(defaultArray);
     } else if (
       !localStorage.getItem("localSavedCountersArray") ||
       JSON.parse(localStorage.getItem("localSavedCountersArray")).length == 0
     ) {
-      console.log("local data does not exist");
       defaultArray = [
         {
           counter: "Alhumdulillah",
@@ -125,6 +120,7 @@ function App() {
     defaultArray.findIndex((object) => {
       if (object.isActive == true) {
         lastUsedCounterIndex = defaultArray.indexOf(object);
+
         setActiveCounterName(defaultArray[lastUsedCounterIndex].counter);
         setActiveCounterNumber(defaultArray[lastUsedCounterIndex].count);
       } else {
@@ -168,14 +164,13 @@ function App() {
         counterItem.target = Number(modifiedTarget);
       }
     });
-    console.log(localSavedCountersArray);
+
     setLocalSavedCountersArray(localSavedCountersArray);
     saveArrayLocally(localSavedCountersArray);
   };
 
   const [counterNameFontSize, setCounterNameFontSize] = useState("3rem");
   const invokeSetActiveCounter = (id) => {
-    console.log("invokeSetActiveCounter fired");
     localSavedCountersArray.map((counterItem) => {
       counterItem.isActive = false;
 
@@ -184,7 +179,7 @@ function App() {
         counterName = counterItem.counter;
         currentCount = counterItem.count;
         counterId = counterItem.id;
-        console.log(counterItem.counter.length);
+
         setCounterNameFontSize("3rem");
         // if (counterItem.counter.length < 14) {
         //   setCounterNameFontSize("3rem");
@@ -207,18 +202,15 @@ function App() {
     localSavedCountersArray.map((counterItem1) => {
       if (counterItem1.id == id) {
         counterItem1.count = 0;
-        console.log(counterItem1);
+
         setLocalSavedCountersArray(localSavedCountersArray);
       }
     });
 
     saveArrayLocally(localSavedCountersArray);
-
-    console.log(localSavedCountersArray);
   };
 
   const deleteSingleCounter = (id) => {
-    console.log(localSavedCountersArray[id]);
     const filteredArray = localSavedCountersArray.filter(
       (counterItem) => counterItem.id !== id
     );

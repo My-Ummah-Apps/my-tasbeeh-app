@@ -4,7 +4,6 @@ const SettingsPage = () => {
   const changeThemeWhite = () => {
     document.body.style = "background: #fff;";
     // document.querySelector(".dhikr-type-wrap").style = "color:black;";
-    console.log(document.querySelector(".dhikr-type-wrap"));
   };
 
   const changeThemeBlack = () => {

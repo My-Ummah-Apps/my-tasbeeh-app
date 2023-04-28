@@ -25,17 +25,16 @@ const CounterNameAndNumber = ({
 
       currentName = counterItem.counter;
       currentNumber = counterItem.count;
-      console.log(counterItem);
+
       currentName.length > 50
         ? (textOverflowProperty = "ellipsis")
         : (textOverflowProperty = "clip");
-      console.log(textOverflowProperty);
-      console.log(currentCounterTarget);
+
       // setActiveCounterName(counterItem.counter);
       // setActiveCounterNumber(counterItem.count);
     }
   });
-  console.log(activeCounterBackgroundColor);
+
   const styles = {
     "--value": currentNumber,
     background: `radial-gradient(
@@ -57,32 +56,29 @@ const CounterNameAndNumber = ({
 
   const [scroll, setScroll] = useState();
   let classlol = "display-block";
+  let scrollingStyle = { overflow: "hidden" };
+  const [overflow, setOverflow] = useState({ overflow: "hidden" });
 
   useEffect(() => {
     const counterTextContainerWidth =
       counterTextContainerRef.current.clientWidth;
     const textWidth = textRef.current.clientWidth;
     // const textWidth = 300;
-    // console.log(textRef.current.getBoundingClientRect());
 
     setTimeout(() => {
       if (textRef.current.clientWidth < counterTextContainerWidth) {
-        console.log("counterTextContainerWidth: " + counterTextContainerWidth);
-        console.log("textWidth: " + textWidth);
         setScroll(false);
         classlol = "display-block";
-        console.log("don't scroll!");
+
+        setOverflow({ overflow: "unset" });
       } else if (textRef.current.clientWidth > counterTextContainerWidth) {
-        console.log("counterTextContainerWidth: " + counterTextContainerWidth);
-        console.log("textWidth: " + textWidth);
         setScroll(true);
         classlol = "display-none";
-        console.log("scroll!");
+
+        setOverflow({ overflow: "unset" });
       }
     }, 2000);
   }, []);
-
-  const scrollingStyle = { color: "yellow" };
 
   return (
     <div

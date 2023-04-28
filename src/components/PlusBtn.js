@@ -4,21 +4,18 @@ const PlusBtn = ({
   localSavedCountersArray,
   saveArrayLocally,
 }) => {
-  console.log(activeCounterNumber);
   return (
     <div className="plus-svg-wrap">
       <svg
         onClick={() => {
           setActiveCounterNumber((activeCounterNumber += 1));
-          console.log(activeCounterNumber);
+
           localSavedCountersArray.map((counterItem) => {
             if (counterItem.isActive == true) {
               counterItem.count = activeCounterNumber;
-              console.log(counterItem);
             }
           });
           saveArrayLocally(localSavedCountersArray);
-          console.log(localSavedCountersArray);
         }}
         version="1.1"
         id="Capa_1"

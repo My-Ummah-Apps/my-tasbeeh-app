@@ -62,10 +62,11 @@ body {
 .active-counter-name,
 .active-counter-number {
   color: white;
+
   /* word-wrap: anywhere; */
   /* width: 80%; */
   /* white-space: break-spaces; */
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .active-counter-name {
@@ -100,6 +101,10 @@ body {
   transform: skewY(-7deg);
 } */
 
+.counter-text-wrap {
+  /* overflow: hidden; */
+}
+
 .plus-svg-wrap {
   /* margin-top: 31vh; */
   position: relative;
@@ -133,7 +138,10 @@ body {
   justify-content: space-between; */
   /* white-space: nowrap; */
 
-  word-wrap: anywhere;
+  /* word-wrap: anywhere; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .stats-and-icons-wrap {
@@ -209,7 +217,7 @@ td {
   max-width: 100%;
   /* white-space: nowrap; */
   /* word-break: break-all; */
-  border: solid 1px white;
+  /* border: solid 1px rgba(255, 255, 255, 0); */
   border-style: solid none;
 }
 
@@ -328,8 +336,8 @@ td:last-child {
   bottom: 0;
   width: 100%;
   border-top: 1px solid #f1eff7;
-  padding: 0.5rem 0;
-  box-shadow: 10px 5px 5px red;
+  padding: 1rem 0;
+  box-shadow: 10px 5px 5px rgb(177, 177, 177);
 }
 
 .nav-link {
@@ -363,7 +371,7 @@ div[role="progressbar"] {
   position: relative;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   --size: 10rem;
-  --fg: #369;
+  --fg: var(--svg-color);
   --bg: #def;
   --pgPercentage: var(--value);
   position: absolute;
@@ -401,6 +409,7 @@ div[role="progressbar"]::before {
   font-size: 0.7rem;
   top: 110%;
   transform: translateX(-50%);
+  color: var(--svg-color);
 }
 
 /* POP UP BOXES */
@@ -634,4 +643,11 @@ input[type="number"] {
 
 .display-block {
   display: block;
+}
+
+.hide-overflow {
+  overflow: hidden;
+}
+.show-overflow {
+  overflow: unset;
 }

@@ -36,10 +36,12 @@ const CountersPage = ({
 
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
+  let border;
+
   function handleClick() {
     forceUpdate();
   }
-  console.log(localSavedCountersArray);
+
   return (
     <div className="table-wrap">
       <table className="counters-wrap">
@@ -60,6 +62,10 @@ const CountersPage = ({
             : (nextColorIndex += 1);
           nextColor = materialColors[nextColorIndex];
           counterItem.color = nextColor;
+
+          counterItem.isActive
+            ? (border = { border: " 1px solid white" })
+            : (border = { border: " 1px solid black" });
 
           return (
             <tbody>
