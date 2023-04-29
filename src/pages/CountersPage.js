@@ -41,7 +41,7 @@ const CountersPage = ({
   function handleClick() {
     forceUpdate();
   }
-
+  console.log(materialColors.length);
   return (
     <div className="table-wrap">
       <table className="counters-wrap">
@@ -57,11 +57,13 @@ const CountersPage = ({
           </tr>
         </thead>
         {localSavedCountersArray.map((counterItem) => {
-          nextColorIndex > materialColors.length
-            ? (nextColorIndex = 0)
-            : (nextColorIndex += 1);
           nextColor = materialColors[nextColorIndex];
           counterItem.color = nextColor;
+          nextColorIndex == materialColors.length - 1
+            ? (nextColorIndex = 0)
+            : (nextColorIndex += 1);
+          console.log(nextColorIndex);
+          console.log(materialColors[nextColorIndex]);
 
           counterItem.isActive
             ? (border = { border: " 1px solid white" })

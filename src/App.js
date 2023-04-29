@@ -31,13 +31,9 @@ function App() {
     "#26A69A",
     "#66BB6A",
     "#9CCC65",
-    "#D4E157",
-    "#FFCA28",
-    "#FFA726",
     "#FF7043",
-    "#8D6E63",
   ];
-
+  console.log(materialColors.length);
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
   const [activeCounterName, setActiveCounterName] = useState("");
   const [activeCounterNumber, setActiveCounterNumber] = useState(0);
