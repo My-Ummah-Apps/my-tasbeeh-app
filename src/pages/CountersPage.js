@@ -8,6 +8,7 @@ import {
 import Header from "../components/Header";
 import PopUpBoxBlank from "../components/PopUpBoxBlank";
 import PopUpBoxFilled from "../components/PopUpBoxFilled";
+import FAB from "../components/FAB";
 
 const CountersPage = ({
   useForceUpdate,
@@ -19,6 +20,7 @@ const CountersPage = ({
   setLocalSavedCountersArray,
   localSavedCountersArray,
   addCounter,
+  resetAllCounters,
   deleteSingleCounter,
   materialColors,
 }) => {
@@ -37,11 +39,11 @@ const CountersPage = ({
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
   let border;
-
+  console.log(localSavedCountersArray);
   function handleClick() {
     forceUpdate();
   }
-  console.log(materialColors.length);
+
   return (
     <div className="table-wrap">
       <table className="counters-wrap">
@@ -62,8 +64,6 @@ const CountersPage = ({
           nextColorIndex == materialColors.length - 1
             ? (nextColorIndex = 0)
             : (nextColorIndex += 1);
-          console.log(nextColorIndex);
-          console.log(materialColors[nextColorIndex]);
 
           counterItem.isActive
             ? (border = { border: " 1px solid white" })
@@ -124,9 +124,14 @@ const CountersPage = ({
           );
         })}
       </table>
-      <div className="add-btn" onClick={() => setShowPopUpBoxBlank(true)}>
+      {/* <div className="add-btn" onClick={() => setShowPopUpBoxBlank(true)}>
         +
-      </div>
+      </div> */}
+      <FAB
+        setShowPopUpBoxBlank={setShowPopUpBoxBlank}
+        resetAllCounters={resetAllCounters}
+      />
+
       <div>
         {showPopUpBoxBlank ? (
           <PopUpBoxBlank

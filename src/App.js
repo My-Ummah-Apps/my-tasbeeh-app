@@ -143,6 +143,16 @@ function App() {
     saveArrayLocally(newArray);
   };
 
+  const resetAllCounters = () => {
+    localSavedCountersArray.map((counterItem) => {
+      counterItem.count = 0;
+    });
+    setLocalSavedCountersArray(localSavedCountersArray);
+    saveArrayLocally(localSavedCountersArray);
+    setActiveCounterNumber(0);
+    console.log(localSavedCountersArray);
+  };
+  console.log(localSavedCountersArray);
   const modifyTheCountersArray = (
     id,
     modifiedCounterName,
@@ -258,6 +268,7 @@ function App() {
                 modifyTheCountersArray={modifyTheCountersArray}
                 setLocalSavedCountersArray={setLocalSavedCountersArray}
                 addCounter={addCounter}
+                resetAllCounters={resetAllCounters}
                 deleteSingleCounter={deleteSingleCounter}
               />
             }

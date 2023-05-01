@@ -82,39 +82,3 @@ const PopUpBoxFilled = ({
 };
 
 export default PopUpBoxFilled;
-
-// OLD FORM
-
-/*  <form className="pop-up-box-wrap">
-      <input
-        onChange={(e) => {
-          setCounterName(e.target.value);
-        }}
-        type="text"
-        value={counterNameInput}
-        placeholder="Counter Name"
-        required
-      ></input>
-      <input
-        onChange={(e) => {
-          setcurrentCountInput(e.target.value);
-        }}
-        type="number"
-        value={currentCountInput}
-        placeholder="Count"
-        required
-      ></input>
-      <input
-        onChange={(e) => {
-          setTarget(e.target.value);
-        }}
-        type="number"
-        value={currentTargetInput}
-        placeholder="Target"
-        required
-      ></input>
-      <div className="pop-up-box-buttons-wrap">
-        <button onClick={closePopUpBox}>Cancel</button>
-        <input type="submit" value="Submit" onClick={submitCounter}></input>
-      </div>
-    </form> */

@@ -10,6 +10,7 @@
   /* --text-color: #ced4e2; */
   --text-color: #000;
   --svg-color: #757575;
+  --secondary-color: #dbdddf;
 }
 
 @font-face {
@@ -152,7 +153,8 @@ body {
 }
 
 .counter-page-single-counter {
-  color: #fff;
+  /* color: #fff; */
+  color: #fff0;
   justify-content: space-between;
   margin: 1rem;
   border-radius: 0.5rem;
@@ -187,6 +189,7 @@ td {
   padding: 0.2rem 0.2rem;
   text-align: center;
   font-size: 0.8rem;
+  color: white;
 }
 
 td:first-child {
@@ -241,7 +244,7 @@ td:last-child {
   font-size: 3rem;
   border-radius: 50%;
   cursor: pointer;
-  background: #dbdddf;
+  background: var(--secondary-color);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 80px;
   height: 80px;
@@ -649,3 +652,5 @@ input[type="number"] {
 .show-overflow {
   overflow: unset;
 }
+
+/* FAB STYLES */
