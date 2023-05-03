@@ -2,7 +2,17 @@ import { Fab, Action } from "react-tiny-fab";
 import "react-tiny-fab/dist/styles.css";
 import { MdOutlineMenuOpen, MdAdd, MdOutlineRefresh } from "react-icons/md";
 
-const FAB = ({ setShowPopUpBoxBlank, resetAllCounters }) => {
+const FAB = ({
+  setShowPopUpBoxBlank,
+  resetAllCounters,
+  localSavedCountersArray,
+}) => {
+  //   const grabColor = localSavedCountersArray.find((counterItem) =>
+  //     counterItem.isActive == true ? counterItem.color : null
+  //   );
+  const fabColor = "rgb(239, 83, 80)";
+  //   console.log(grabColor.color);
+
   return (
     <Fab
       style={{
@@ -11,13 +21,16 @@ const FAB = ({ setShowPopUpBoxBlank, resetAllCounters }) => {
         transform: "rotate(-90deg)",
       }}
       mainButtonStyles={{
-        backgroundColor: "#dbdddf",
-        color: "black",
+        height: "70px",
+        width: "70px",
+        backgroundColor: fabColor,
+        color: "white",
         transform: "rotate(0deg)",
         fontSize: "1.5rem",
         boxShadow:
           "0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)",
       }}
+      actionButtonStyles={{}}
       icon={<MdAdd />}
     >
       // The Action components are the "buttons" that appear when the Fab is
@@ -26,7 +39,7 @@ const FAB = ({ setShowPopUpBoxBlank, resetAllCounters }) => {
       "text" prop // is the popup label that appears when the Action component
       is hovered.
       <Action
-        text="Add"
+        text="Add Dhikr"
         onClick={() => {
           setShowPopUpBoxBlank(true);
         }}
@@ -34,14 +47,9 @@ const FAB = ({ setShowPopUpBoxBlank, resetAllCounters }) => {
         {" "}
         <MdAdd />{" "}
       </Action>
-      <Action text="Refresh All" onClick={resetAllCounters}>
+      <Action text="Reset All" onClick={resetAllCounters}>
         <MdOutlineRefresh />{" "}
       </Action>
-      // Using a custom component for this one. See another example in
-      "example/src/index.js"
-      <div text="Foobar!">
-        <i className="fa fa-foo-bar-fa-foo" />
-      </div>
     </Fab>
   );
 };

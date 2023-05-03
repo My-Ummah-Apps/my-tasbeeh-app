@@ -130,6 +130,7 @@ const CountersPage = ({
       <FAB
         setShowPopUpBoxBlank={setShowPopUpBoxBlank}
         resetAllCounters={resetAllCounters}
+        localSavedCountersArray={localSavedCountersArray}
       />
 
       <div>
