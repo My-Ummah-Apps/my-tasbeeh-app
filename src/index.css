@@ -23,7 +23,7 @@ body {
   overflow: hidden;
   /* background: #242428; */
   color: var(--text-color);
-  height: 100%;
+  height: 100vh;
   width: 100vw;
   max-width: 1024px;
   margin-inline: auto;
@@ -88,19 +88,34 @@ body {
   /* z-index: 1; */
 }
 
-/* .dhikr-type-wrap::after {
+.dhikr-type-wrap::before {
   content: "";
   display: block;
   position: absolute;
   left: 0;
-  bottom: -63px;
+  bottom: -100px;
   right: 0;
   height: 25px;
   background: #fff;
+  background-size: auto;
   padding: 2rem;
   background-size: cover;
-  transform: skewY(-7deg);
-} */
+  transform: skewY(-16deg);
+}
+.dhikr-type-wrap::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -100px;
+  right: 0;
+  height: 25px;
+  background: #fff;
+  background-size: auto;
+  padding: 2rem;
+  background-size: cover;
+  transform: skewY(16deg);
+}
 
 .counter-text-wrap {
   /* overflow: hidden; */
@@ -117,7 +132,7 @@ body {
 
 .plus-svg {
   /* width: clamp(11.375rem, 5.625rem + 20vw, 16.875rem); */
-  width: 40vw;
+  width: 140px;
   fill: var(--svg-color);
   cursor: pointer;
   animation: fadeInUp 1000ms forwards;
@@ -370,33 +385,34 @@ td:last-child {
 
 div[role="progressbar"] {
   position: relative;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  --size: 10rem;
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  --size: 10.5rem;
   --fg: var(--svg-color);
   --bg: #def;
   --pgPercentage: var(--value);
   position: absolute;
   left: 50%;
-  /* top: 36%; */
-  top: 90px;
+  top: 36%;
+  top: 139px;
   transform: translate(-50%, 50%);
-  /* animation: growProgressBar 3s 1 forwards; */
+  animation: growProgressBar 3s 1 forwards;
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
   display: grid;
   place-items: center;
-  /* background: radial-gradient(
+  z-index: 1;
+  border: 12px solid white;
+  background: radial-gradient(
       closest-side,
       white 80%,
       transparent 0 99.9%,
       white 0
     ),
     conic-gradient(var(--fg) calc(var(--pgPercentage) * 10%), var(--bg) 0);
-
   font-family: Helvetica, Arial, sans-serif;
   font-size: calc(var(--size) / 5);
-  color: var(--fg); */
+  color: var(--fg);
 }
 
 div[role="progressbar"]::before {
@@ -408,9 +424,10 @@ div[role="progressbar"]::before {
   position: absolute;
   left: 50%;
   font-size: 0.7rem;
-  top: 110%;
+  top: 131%;
   transform: translateX(-50%);
   color: var(--svg-color);
+  z-index: 1;
 }
 
 /* POP UP BOXES */
@@ -654,6 +671,12 @@ input[type="number"] {
 }
 
 /* FAB STYLES - THESE ARE CUSTOM, OVERRIDING ANY STYLES FROM THE ACTUAL MINI-FAB STYLESSHEET */
+
+.rtf--ab,
+.rtf--mb {
+  box-shadow: none !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
 
 .rtf--ab__c {
   padding: 10rem !important;
