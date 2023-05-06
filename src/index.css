@@ -63,14 +63,10 @@ body {
 .active-counter-name,
 .active-counter-number {
   color: white;
-
-  /* word-wrap: anywhere; */
-  /* width: 80%; */
-  /* white-space: break-spaces; */
-  /* overflow: hidden; */
 }
 
 .active-counter-name {
+  /* transform: translateX(30%); */
 }
 
 .active-counter-number {
@@ -676,6 +672,9 @@ input[type="number"] {
 .rtf--mb {
   box-shadow: none !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  /* box-shadow: 2px 14px 31px -1px rgba(0, 0, 0, 0.74);
+  -webkit-box-shadow: 2px 14px 31px -1px rgba(0, 0, 0, 0.74);
+  -moz-box-shadow: 2px 14px 31px -1px rgba(0, 0, 0, 0.74); */
 }
 
 .rtf--ab__c {

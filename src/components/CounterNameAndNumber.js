@@ -63,22 +63,41 @@ const CounterNameAndNumber = ({
     const counterTextContainerWidth =
       counterTextContainerRef.current.clientWidth;
     const textWidth = textRef.current.clientWidth;
+    console.log(counterTextContainerRef);
+    console.log(textRef);
+    if (textRef.current.clientWidth < counterTextContainerWidth) {
+      console.log("textRef.current.clientWidth < counterTextContainerWidth");
+      console.log("textRef.current.clientWidth " + textRef.current.clientWidth);
+      console.log("counterTextContainerWidth " + counterTextContainerWidth);
+      setScroll(false);
+      classlol = "display-block";
+
+      setOverflow({ overflow: "unset" });
+    } else if (textRef.current.clientWidth > counterTextContainerWidth) {
+      console.log("textRef.current.clientWidth > counterTextContainerWidth");
+
+      setScroll(true);
+      classlol = "display-none";
+
+      setOverflow({ overflow: "unset" });
+    }
+
     // const textWidth = 300;
 
-    setTimeout(() => {
-      if (textRef.current.clientWidth < counterTextContainerWidth) {
-        setScroll(false);
-        classlol = "display-block";
+    // setTimeout(() => {
+    //   if (textRef.current.clientWidth < counterTextContainerWidth) {
+    //     setScroll(false);
+    //     classlol = "display-block";
 
-        setOverflow({ overflow: "unset" });
-      } else if (textRef.current.clientWidth > counterTextContainerWidth) {
-        setScroll(true);
-        classlol = "display-none";
+    //     setOverflow({ overflow: "unset" });
+    //   } else if (textRef.current.clientWidth > counterTextContainerWidth) {
+    //     setScroll(true);
+    //     classlol = "display-none";
 
-        setOverflow({ overflow: "unset" });
-      }
-    }, 1000);
-  }, []);
+    //     setOverflow({ overflow: "unset" });
+    //   }
+    // }, 1000);
+  }, [textRef.current]);
 
   return (
     <div
