@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@capacitor/android": "^4.7.1",
+    "@capacitor/app": "^4.1.1",
     "@capacitor/core": "^4.7.1",
     "@capacitor/ios": "^4.7.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -42,6 +43,6 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "^4.7.1"
+    "@capacitor/cli": "^5.0.1"
   }
 }
