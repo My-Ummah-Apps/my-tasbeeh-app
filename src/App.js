@@ -9,7 +9,7 @@ import NavBar from "./components/NavBar";
 import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
-
+console.log("APP LAUNCHED");
 let currentSelectedCounterIndex; // Stores the index of the current active counter
 let lastUsedCounterIndex; // Used in the two conditional statements immediately below when app is first loaded to grab the last used counter
 // let individualCounterDiv; // Used within the createCounterList function, the savedCountersArray is looped through and items added to the DOM with this variable which holds a div

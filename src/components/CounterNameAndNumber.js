@@ -2,16 +2,11 @@ import { useRef, useEffect, useState } from "react";
 
 const CounterNameAndNumber = ({
   counterNameFontSize,
-  activeCounterName,
-  activeCounterNumber,
-  activeCounterBackgroundColor,
-  activeCounterTarget,
   localSavedCountersArray,
-  setActiveCounterName,
   setActiveCounterNumber,
 }) => {
   let currentName;
-  let currentNumber;
+  let currentNumber = 0;
   let currentBackgroundColor;
   let currentCounterTarget;
   let textOverflowProperty;
@@ -25,7 +20,9 @@ const CounterNameAndNumber = ({
 
       currentName = counterItem.counter;
       currentNumber = counterItem.count;
+      // setActiveCounterNumber(counterItem.counter);
 
+      console.log(currentNumber);
       currentName.length > 50
         ? (textOverflowProperty = "ellipsis")
         : (textOverflowProperty = "clip");
