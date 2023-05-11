@@ -91,9 +91,9 @@ body {
   display: block;
   position: absolute;
   left: 0;
-  bottom: -100px;
   right: 0;
-  height: 25px;
+  bottom: -165px;
+  height: 84px;
   background: #fff;
   background-size: auto;
   padding: 2rem;
@@ -105,9 +105,9 @@ body {
   display: block;
   position: absolute;
   left: 0;
-  bottom: -100px;
   right: 0;
-  height: 25px;
+  bottom: -165px;
+  height: 84px;
   background: #fff;
   background-size: auto;
   padding: 2rem;
@@ -354,7 +354,6 @@ td:last-child {
   bottom: 0;
   width: 100%;
   border-top: 1px solid #f1eff7;
-  padding: 1rem 0;
   box-shadow: 10px 5px 5px rgb(177, 177, 177);
 }
 
@@ -362,6 +361,7 @@ td:last-child {
   color: #fff;
   text-decoration: none;
   text-align: center;
+  padding: 1rem 3rem 0 3rem;
 }
 
 .nav-icon {
@@ -788,4 +788,20 @@ input[type="number"] {
 
 .rtf--ab__c:nth-of-type(2) {
   padding-left: 7px !important;
+}
+
+/* DEVICE SPECIFIC STYLES */
+
+@supports (-webkit-touch-callout: none) {
+  /* CSS specific to iOS devices */
+  .navbar-wrap {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@supports not (-webkit-touch-callout: none) {
+  /* CSS for other than iOS devices */
+  .navbar-wrap {
+    padding-bottom: 1rem;
+  }
 }
