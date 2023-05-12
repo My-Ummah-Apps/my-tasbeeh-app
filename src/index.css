@@ -25,7 +25,7 @@ body {
   color: var(--text-color);
   height: 100vh;
   width: 100vw;
-  max-width: 1024px;
+  max-width: 700px;
   margin-inline: auto;
   font-family: Roboto, sans-serif;
   font-weight: 400;
@@ -175,8 +175,27 @@ body {
   padding: 1rem;
   text-align: left;
   cursor: pointer;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
   height: 50px;
+}
+
+.selected-counter {
+  position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 3rem;
+}
+
+.selected-counter-dot {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-self: center;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
 }
 
 .table-wrap {

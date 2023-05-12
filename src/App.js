@@ -185,22 +185,12 @@ function App() {
         counterName = counterItem.counter;
         currentCount = counterItem.count;
         counterId = counterItem.id;
-
+        console.log(counterItem);
         setCounterNameFontSize("3rem");
-        // if (counterItem.counter.length < 14) {
-        //   setCounterNameFontSize("3rem");
-        //   console.log("setCounterNameFontSize(3rem)");
-        // } else if (counterItem.counter.length > 14) {
-        //   setCounterNameFontSize("2.4rem");
-        //   console.log("setCounterNameFontSize(0.3rem)");
-        // }
       }
 
       setActiveCounterName(counterName);
       setActiveCounterNumber(currentCount);
-      saveArrayLocally(localSavedCountersArray);
-
-      // saveCountersArray();
     });
   };
 

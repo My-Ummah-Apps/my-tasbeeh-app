@@ -71,10 +71,24 @@ const CountersPage = ({
 
           return (
             <tbody>
+              {/* <span className="selected-counter-dot">
+                {counterItem.isActive ? "hello" : ""}
+              </span> */}
+              <span
+                className={`${
+                  counterItem.isActive ? "selected-counter-dot" : ""
+                }`}
+                style={{}}
+              ></span>
+
               <tr
-                className="counter-page-single-counter"
+                className={`counter-page-single-counter ${
+                  counterItem.isActive ? "selected-counter" : ""
+                }`}
                 key={counterItem.id}
-                style={{ backgroundColor: nextColor }}
+                style={{
+                  backgroundColor: nextColor,
+                }}
               >
                 <td
                   colSpan="2"
