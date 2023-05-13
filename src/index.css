@@ -144,7 +144,8 @@ body {
   /* max-height: 75vh; */
   /* overflow: scroll; */
   padding: 0 1rem;
-  font-size: clamp(0.7rem, -0.1182rem + 4.0909vw, 2.5rem);
+  /* font-size: clamp(0.7rem, -0.1182rem + 4.0909vw, 2.5rem); */
+  font-size: 1rem;
 }
 
 .counter {
@@ -177,25 +178,39 @@ body {
   cursor: pointer;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
   height: 50px;
+  /* left: 0px;*/
+  transition: left 0.3s ease-in;
 }
 
-.selected-counter {
+/* .selected-counter { */
+.counter-page-single-counter.active {
   position: relative;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 3rem;
+  /* bottom: 2px; */
+  left: 5px;
+  transition: box-shadow 0.3s ease;
+  transition: left 0.3s ease-in;
+}
+
+.counter-page-single-counter.not-active {
+  position: relative;
+  left: 0px;
+  transition: box-shadow 0.3s ease;
+  transition: left 0.3s ease-in;
 }
 
 .selected-counter-dot {
-  position: absolute;
+  /* position: absolute;
   left: 0;
   display: flex;
   align-self: center;
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: red;
+  background-color: red; */
 }
 
 .table-wrap {

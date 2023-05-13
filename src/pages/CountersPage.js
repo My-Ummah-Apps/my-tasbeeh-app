@@ -83,7 +83,7 @@ const CountersPage = ({
 
               <tr
                 className={`counter-page-single-counter ${
-                  counterItem.isActive ? "selected-counter" : ""
+                  counterItem.isActive ? "active" : "not-active"
                 }`}
                 key={counterItem.id}
                 style={{
