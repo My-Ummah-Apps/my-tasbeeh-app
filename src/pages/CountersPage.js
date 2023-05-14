@@ -102,8 +102,20 @@ const CountersPage = ({
                   </span>
                 </td>
 
-                <td>{counterItem.count}</td>
-                <td>{counterItem.target}</td>
+                <td
+                  onClick={() => {
+                    invokeSetActiveCounter(counterItem.id);
+                  }}
+                >
+                  {counterItem.count}
+                </td>
+                <td
+                  onClick={() => {
+                    invokeSetActiveCounter(counterItem.id);
+                  }}
+                >
+                  {counterItem.target}
+                </td>
                 <td>
                   <MdModeEditOutline
                     onClick={(e) => {

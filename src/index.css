@@ -19,9 +19,7 @@
 }
 
 body {
-  /* font-family: "Source Sans Pro", Helvetica, sans-serif; */
   overflow: hidden;
-  /* background: #242428; */
   color: var(--text-color);
   height: 100vh;
   width: 100vw;
@@ -68,22 +66,14 @@ body {
 }
 
 .active-counter-name {
-  /* transform: translateX(30%); */
 }
 
 .active-counter-number {
   position: absolute;
   left: 50%;
   top: 34%;
-  /* border: 1px solid white; */
-  /* border-radius: 50vw; */
-  /* padding: 3rem; */
   transform: translate(-50%, 50%);
-  /* background: white; */
-  /* color: var(--svg-color); */
   color: black;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-  /* z-index: 1; */
 }
 
 .dhikr-type-wrap::before {
@@ -116,11 +106,9 @@ body {
 }
 
 .counter-text-wrap {
-  /* overflow: hidden; */
 }
 
 .plus-svg-wrap {
-  /* margin-top: 31vh; */
   position: relative;
   top: 32vh;
   line-height: 0vw;
@@ -129,7 +117,6 @@ body {
 }
 
 .plus-svg {
-  /* width: clamp(11.375rem, 5.625rem + 20vw, 16.875rem); */
   width: 140px;
   fill: var(--svg-color);
   cursor: pointer;
@@ -140,21 +127,11 @@ body {
 /* COUNTERS PAGE */
 
 .counters-wrap {
-  /* font-size: 0.7rem; */
-  /* max-height: 75vh; */
-  /* overflow: scroll; */
   padding: 0 1rem;
-  /* font-size: clamp(0.7rem, -0.1182rem + 4.0909vw, 2.5rem); */
   font-size: 1rem;
 }
 
 .counter {
-  /* padding-right: 0.5rem; */
-  /* display: flex;
-  justify-content: space-between; */
-  /* white-space: nowrap; */
-
-  /* word-wrap: anywhere; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -168,7 +145,6 @@ body {
 }
 
 .counter-page-single-counter {
-  /* color: #fff; */
   color: #fff0;
   justify-content: space-between;
   margin: 1rem;
@@ -176,30 +152,25 @@ body {
   padding: 1rem;
   text-align: left;
   cursor: pointer;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
   height: 50px;
-  /* left: 0px;*/
   transition: left 0.3s ease-in;
 }
 
-/* .selected-counter { */
 .counter-page-single-counter.active {
   position: relative;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 3rem;
-  /* bottom: 2px; */
   left: 5px;
-  transition: box-shadow 0.3s ease;
-  transition: left 0.3s ease-in;
+  transition: left 0.3s ease-in, box-shadow 0.3s ease-in,
+    -webkit-box-shadow 0.3s ease-in;
 }
 
 .counter-page-single-counter.not-active {
   position: relative;
   left: 0px;
-  transition: box-shadow 0.3s ease;
-  transition: left 0.3s ease-in;
+  transition: left 0.3s ease-in, box-shadow 0.3s ease;
 }
 
 .selected-counter-dot {
@@ -223,7 +194,7 @@ body {
 
 table {
   border-collapse: separate;
-  border-spacing: 0 10px;
+  border-spacing: 0 7px;
   margin-top: 1rem; /* correct offset on first border spacing if desired */
   width: 100%;
   max-width: 100%;
@@ -826,10 +797,16 @@ input[type="number"] {
 
 /* DEVICE SPECIFIC STYLES */
 
+/* IOS */
 @supports (-webkit-touch-callout: none) {
   /* CSS specific to iOS devices */
   .navbar-wrap {
     padding-bottom: env(safe-area-inset-bottom);
+  }
+  .counter-page-single-counter {
+  }
+  .counter-page-single-counter.active {
+    filter: drop-shadow(0 0 5px black);
   }
 }
 
