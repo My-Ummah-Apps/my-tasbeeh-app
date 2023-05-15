@@ -35,6 +35,30 @@ body {
 
 /* MAIN PAGE */
 
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
 .dhikr-type-wrap {
   position: relative;
   height: 250px;
@@ -450,7 +474,7 @@ div[role="progressbar"]::before {
   /* background: rgba(0, 0, 0, 0.5); */
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
-  border-radius: 10px;
+  border-radius: 0 !important;
 }
 
 .login-box h2 {
@@ -472,6 +496,7 @@ div[role="progressbar"]::before {
   margin-bottom: 30px;
   border: none;
   border-bottom: 1px solid #fff;
+  border-radius: 0;
   outline: none;
   background: transparent;
 }
@@ -483,7 +508,8 @@ div[role="progressbar"]::before {
   font-size: 16px;
   color: #fff;
   pointer-events: none;
-  transition: 0.5s;
+  /* transition: 0.5s; */
+  transition: 0.5s top, 0.5s font-size;
 }
 
 .login-box .user-box input:focus ~ label,
@@ -503,7 +529,8 @@ div[role="progressbar"]::before {
   text-decoration: none;
   text-transform: uppercase;
   overflow: hidden;
-  transition: 0.5s;
+  /* transition: 0.5s; */
+  transition: 0.5s top, 0.5s font-size;
   margin-top: 40px;
   letter-spacing: 4px;
 }
@@ -806,7 +833,7 @@ input[type="number"] {
   .counter-page-single-counter {
   }
   .counter-page-single-counter.active {
-    filter: drop-shadow(0 0 5px black);
+    filter: drop-shadow(0 0 1px black);
   }
 }
 
