@@ -47,7 +47,8 @@ const PopUpBoxBlank = ({
             onChange={(e) => {
               setTarget(e.target.value);
             }}
-            type="text"
+            type="number"
+            pattern="[0-9]*"
             required
           ></input>
           <label>Target (Default: 0)</label>

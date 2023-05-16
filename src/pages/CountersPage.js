@@ -48,7 +48,7 @@ const CountersPage = ({
     <div className="table-wrap">
       <table className="counters-wrap">
         {/* <Header text={"Counters"} /> */}
-        <thead>
+        {/* <thead>
           <tr className="heading-table-row">
             <th colSpan="2">Counter</th>
             <th>Count</th>
@@ -57,7 +57,7 @@ const CountersPage = ({
             <th>Reset</th>
             <th>Delete</th>
           </tr>
-        </thead>
+        </thead> */}
         {localSavedCountersArray.map((counterItem) => {
           nextColor = materialColors[nextColorIndex];
           counterItem.color = nextColor;
@@ -101,21 +101,20 @@ const CountersPage = ({
                     {counterItem.counter}
                   </span>
                 </td>
-
                 <td
                   onClick={() => {
                     invokeSetActiveCounter(counterItem.id);
                   }}
                 >
-                  {counterItem.count}
+                  {counterItem.count} / {counterItem.target}
                 </td>
-                <td
+                {/* <td
                   onClick={() => {
                     invokeSetActiveCounter(counterItem.id);
                   }}
                 >
                   {counterItem.target}
-                </td>
+                </td> */}
                 <td>
                   <MdModeEditOutline
                     onClick={(e) => {
