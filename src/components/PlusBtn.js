@@ -1,11 +1,25 @@
+import { useEffect, useState } from "react";
+
 const PlusBtn = ({
   setActiveCounterNumber,
   activeCounterNumber,
   localSavedCountersArray,
   saveArrayLocally,
+  animationSeen,
 }) => {
+  // const [animationSeen, setAnimationSeen] = useState(false);
+
+  // useEffect(() => {
+  //   if (sessionStorage.getItem("animationSeen") == null) {
+  //     setAnimationSeen(true);
+  //     sessionStorage.setItem("animationSeen", "true");
+  //   }
+  // }, []);
+
   return (
-    <div className="plus-svg-wrap">
+    <div
+      className={`plus-svg-wrap ${animationSeen ? "fade-up-animation" : ""}`}
+    >
       <svg
         onClick={() => {
           setActiveCounterNumber((activeCounterNumber += 1));

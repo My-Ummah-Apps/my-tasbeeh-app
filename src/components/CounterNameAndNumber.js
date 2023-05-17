@@ -1,9 +1,9 @@
 import { useRef, useEffect, useState } from "react";
 
 const CounterNameAndNumber = ({
-  counterNameFontSize,
   localSavedCountersArray,
   setActiveCounterNumber,
+  animationSeen,
 }) => {
   let currentName;
   let currentNumber = 0;
@@ -13,22 +13,18 @@ const CounterNameAndNumber = ({
   localSavedCountersArray.map((counterItem) => {
     if (counterItem.isActive == true) {
       currentBackgroundColor = counterItem.color;
-      // currentCounterTarget = counterItem.target;
+
       counterItem.target == 0
         ? (currentCounterTarget = 0.1)
         : (currentCounterTarget = counterItem.target);
 
       currentName = counterItem.counter;
       currentNumber = counterItem.count;
-      // setActiveCounterNumber(counterItem.counter);
 
       console.log(currentNumber);
       currentName.length > 50
         ? (textOverflowProperty = "ellipsis")
         : (textOverflowProperty = "clip");
-
-      // setActiveCounterName(counterItem.counter);
-      // setActiveCounterNumber(counterItem.count);
     }
   });
 
@@ -52,48 +48,23 @@ const CounterNameAndNumber = ({
   const textRef = useRef(null);
 
   const [scroll, setScroll] = useState();
-  let classlol = "display-block";
+
   let scrollingStyle = { overflow: "hidden" };
   const [overflow, setOverflow] = useState({ overflow: "hidden" });
 
   useEffect(() => {
     const counterTextContainerWidth =
       counterTextContainerRef.current.clientWidth;
-    const textWidth = textRef.current.clientWidth;
-    console.log(counterTextContainerRef);
-    console.log(textRef);
+
     if (textRef.current.clientWidth < counterTextContainerWidth) {
-      console.log("textRef.current.clientWidth < counterTextContainerWidth");
-      console.log("textRef.current.clientWidth " + textRef.current.clientWidth);
-      console.log("counterTextContainerWidth " + counterTextContainerWidth);
       setScroll(false);
-      classlol = "display-block";
 
       setOverflow({ overflow: "unset" });
     } else if (textRef.current.clientWidth > counterTextContainerWidth) {
-      console.log("textRef.current.clientWidth > counterTextContainerWidth");
-
       setScroll(true);
-      classlol = "display-none";
 
       setOverflow({ overflow: "unset" });
     }
-
-    // const textWidth = 300;
-
-    // setTimeout(() => {
-    //   if (textRef.current.clientWidth < counterTextContainerWidth) {
-    //     setScroll(false);
-    //     classlol = "display-block";
-
-    //     setOverflow({ overflow: "unset" });
-    //   } else if (textRef.current.clientWidth > counterTextContainerWidth) {
-    //     setScroll(true);
-    //     classlol = "display-none";
-
-    //     setOverflow({ overflow: "unset" });
-    //   }
-    // }, 1000);
   }, [textRef.current]);
 
   return (
@@ -102,13 +73,19 @@ const CounterNameAndNumber = ({
       style={{ backgroundColor: currentBackgroundColor }}
       ref={counterTextContainerRef}
     >
-      <div className="counter-text-wrap" ref={textRef}>
+      {/* <div className="counter-text-wrap" ref={textRef}> */}
+      <div
+        className={`counter-text-wrap ${
+          animationSeen ? "fade-down-animation" : null
+        }`}
+        ref={textRef}
+      >
         <div className={scroll ? "scroll" : ""}>
           <div className={scroll ? "m-scroll" : ""}>
             <span
               className="active-counter-name"
               style={{
-                fontSize: counterNameFontSize,
+                fontSize: "3rem",
                 textOverflow: textOverflowProperty,
               }}
             >
@@ -117,7 +94,7 @@ const CounterNameAndNumber = ({
             <span
               className={scroll ? "active-counter-name" : "display-none"}
               style={{
-                fontSize: counterNameFontSize,
+                fontSize: "3rem",
                 textOverflow: textOverflowProperty,
               }}
             >

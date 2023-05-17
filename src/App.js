@@ -33,7 +33,7 @@ function App() {
     "#9CCC65",
     "#FF7043",
   ];
-  console.log(materialColors.length);
+
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
   const [activeCounterName, setActiveCounterName] = useState("");
   const [activeCounterNumber, setActiveCounterNumber] = useState(0);
@@ -47,6 +47,15 @@ function App() {
       JSON.stringify(arrayToSave)
     );
   };
+
+  const [animationSeen, setAnimationSeen] = useState(false);
+
+  useEffect(() => {
+    if (sessionStorage.getItem("animationSeen") == null) {
+      setAnimationSeen(true);
+      sessionStorage.setItem("animationSeen", "true");
+    }
+  }, []);
 
   let currentBackgroundColor;
   let currentCounterTarget;
@@ -175,7 +184,6 @@ function App() {
     saveArrayLocally(localSavedCountersArray);
   };
 
-  const [counterNameFontSize, setCounterNameFontSize] = useState("3rem");
   const invokeSetActiveCounter = (id) => {
     localSavedCountersArray.map((counterItem) => {
       counterItem.isActive = false;
@@ -185,10 +193,8 @@ function App() {
         counterName = counterItem.counter;
         currentCount = counterItem.count;
         counterId = counterItem.id;
-        console.log(counterItem);
-        setCounterNameFontSize("3rem");
       }
-
+      saveArrayLocally(localSavedCountersArray);
       setActiveCounterName(counterName);
       setActiveCounterNumber(currentCount);
     });
@@ -231,7 +237,6 @@ function App() {
               <Main
                 setActiveCounterName={setActiveCounterName}
                 setActiveCounterNumber={setActiveCounterNumber}
-                counterNameFontSize={counterNameFontSize}
                 saveArrayLocally={saveArrayLocally}
                 currentCount={currentCount}
                 counterName={counterName}
@@ -239,6 +244,7 @@ function App() {
                 counterId={counterId}
                 activeCounterName={activeCounterName}
                 activeCounterNumber={activeCounterNumber}
+                animationSeen={animationSeen}
               />
             }
           />

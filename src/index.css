@@ -144,8 +144,16 @@ body {
   width: 140px;
   fill: var(--svg-color);
   cursor: pointer;
+}
+
+.fade-up-animation {
   -webkit-animation: fadeInUp 1000ms forwards;
   animation: fadeInUp 1000ms forwards;
+}
+
+.fade-down-animation {
+  -webkit-animation: fadeInDown 1000ms forwards;
+  animation: fadeInDown 1000ms forwards;
 }
 
 /* COUNTERS PAGE */
