@@ -3,7 +3,6 @@ import { useState } from "react";
 const PopUpBoxFilled = ({
   modifyTheCountersArray,
   setShowPopUpBoxFilled,
-  addCounter,
   currentCounterName,
   currentCount,
   currentCounterTarget,
@@ -23,7 +22,6 @@ const PopUpBoxFilled = ({
       currentTargetInput
     );
 
-    // setCounterName("");
     setShowPopUpBoxFilled(false);
   };
 

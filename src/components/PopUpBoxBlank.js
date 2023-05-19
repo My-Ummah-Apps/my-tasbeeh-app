@@ -1,11 +1,6 @@
 import { useState } from "react";
 
-const PopUpBoxBlank = ({
-  setShowPopUpBoxBlank,
-  addCounter,
-  counterItem,
-  nextColor,
-}) => {
+const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter }) => {
   const closePopUpBox = () => {
     setShowPopUpBoxBlank(false);
   };

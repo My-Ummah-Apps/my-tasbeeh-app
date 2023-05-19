@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
 import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import PlusBtn from "../components/PlusBtn";
-import { FaUndoAlt, FaRegCircle } from "react-icons/fa";
 
 const MainPage = ({
   savedCountersArray,
@@ -14,7 +12,7 @@ const MainPage = ({
   activeCounterTarget,
   activeCounterNumber,
   localSavedCountersArray,
-  animationSeen,
+  showAnimation,
 }) => {
   return (
     <div>
@@ -33,7 +31,7 @@ const MainPage = ({
         activeCounterBackgroundColor={activeCounterBackgroundColor}
         activeCounterTarget={activeCounterTarget}
         localSavedCountersArray={localSavedCountersArray}
-        animationSeen={animationSeen}
+        showAnimation={showAnimation}
       />
       <PlusBtn
         saveArrayLocally={saveArrayLocally}
@@ -42,7 +40,7 @@ const MainPage = ({
         activeCounterNumber={activeCounterNumber}
         savedCountersArray={savedCountersArray}
         counterId={counterId}
-        animationSeen={animationSeen}
+        showAnimation={showAnimation}
       />
     </div>
   );

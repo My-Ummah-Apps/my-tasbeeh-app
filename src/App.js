@@ -1,16 +1,12 @@
-// Now need to figure out how to remove and add items
-
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 
-import PlusBtn from "./components/PlusBtn";
 import NavBar from "./components/NavBar";
 
 import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
-console.log("APP LAUNCHED");
-let currentSelectedCounterIndex; // Stores the index of the current active counter
+
 let lastUsedCounterIndex; // Used in the two conditional statements immediately below when app is first loaded to grab the last used counter
 // let individualCounterDiv; // Used within the createCounterList function, the savedCountersArray is looped through and items added to the DOM with this variable which holds a div
 let counterName; // This is the prop that will be passed into the CounterNumber component
@@ -37,9 +33,6 @@ function App() {
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
   const [activeCounterName, setActiveCounterName] = useState("");
   const [activeCounterNumber, setActiveCounterNumber] = useState(0);
-  const [activeCounterBackgroundColor, setActiveCounterBackgroundColor] =
-    useState("");
-  const [activeCounterTarget, setActiveCounterTarget] = useState("");
 
   const saveArrayLocally = (arrayToSave) => {
     localStorage.setItem(
@@ -48,19 +41,16 @@ function App() {
     );
   };
 
-  const [animationSeen, setAnimationSeen] = useState(false);
+  let showAnimation = "";
 
-  useEffect(() => {
-    if (sessionStorage.getItem("animationSeen") == null) {
-      setAnimationSeen(true);
-      sessionStorage.setItem("animationSeen", "true");
-    }
-  }, []);
+  if (sessionStorage.getItem("showAnimation") == null) {
+    showAnimation = true;
+    console.log("sessionStorage is null");
+    sessionStorage.setItem("showAnimation", "true");
+  }
 
-  let currentBackgroundColor;
-  let currentCounterTarget;
+  console.log(showAnimation);
 
-  // localStorage.clear();
   useEffect(() => {
     if (
       JSON.parse(localStorage.getItem("localSavedCountersArray")) &&
@@ -111,14 +101,6 @@ function App() {
         },
       ];
 
-      defaultArray.map((counterItem) => {
-        if (counterItem.isActive) {
-          // setActiveCounterName(counterItem.counter);
-          // setActiveCounterNumber(counterItem.count);
-          // saveArrayLocally(localSavedCountersArray);
-        }
-      });
-
       saveArrayLocally(defaultArray);
     }
 
@@ -159,9 +141,8 @@ function App() {
     setLocalSavedCountersArray(localSavedCountersArray);
     saveArrayLocally(localSavedCountersArray);
     setActiveCounterNumber(0);
-    console.log(localSavedCountersArray);
   };
-  console.log(localSavedCountersArray);
+
   const modifyTheCountersArray = (
     id,
     modifiedCounterName,
@@ -170,7 +151,6 @@ function App() {
   ) => {
     localSavedCountersArray.map((counterItem) => {
       if (counterItem.id == id && counterItem.isActive) {
-        // invokeSetActiveCounter(counterItem.id);
         setActiveCounterNumber(Number(modifiedCount));
       }
       if (counterItem.id == id) {
@@ -244,7 +224,7 @@ function App() {
                 counterId={counterId}
                 activeCounterName={activeCounterName}
                 activeCounterNumber={activeCounterNumber}
-                animationSeen={animationSeen}
+                showAnimation={showAnimation}
               />
             }
           />
@@ -258,14 +238,13 @@ function App() {
                 resetSingleCounter={resetSingleCounter}
                 activeCounterName={activeCounterName}
                 activeCounterNumber={activeCounterNumber}
-                activeCounterBackgroundColor={activeCounterBackgroundColor}
-                activeCounterTarget={activeCounterTarget}
                 addItemToSavedCountersArray={addItemToSavedCountersArray}
                 modifyTheCountersArray={modifyTheCountersArray}
                 setLocalSavedCountersArray={setLocalSavedCountersArray}
                 addCounter={addCounter}
                 resetAllCounters={resetAllCounters}
                 deleteSingleCounter={deleteSingleCounter}
+                showAnimation={showAnimation}
               />
             }
           />

@@ -186,34 +186,57 @@ body {
   cursor: pointer;
   height: 50px;
   transition: left 0.3s ease-in;
+  -webkit-transition: left 0.3s ease-in;
+  /* animation: slideLeft 0.3s ease-in forwards;
+  -webkit-animation: slideLeft 0.3s ease-in forwards; */
 }
 
 .counter-page-single-counter.active {
   position: relative;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgb(164 164 164 / 20%), 0 4px 8px 0 rgb(0 0 0 / 19%);
+  -webkit-box-shadow: 0 4px 8px 0 rgb(164 164 164 / 20%),
+    0 4px 8px 0 rgb(0 0 0 / 19%);
   padding: 3rem;
   left: 5px;
   transition: left 0.3s ease-in, box-shadow 0.3s ease-in,
     -webkit-box-shadow 0.3s ease-in;
+  -webkit-transition: left 0.3s ease-in;
+  /* animation: slideRight 0.3s ease-in forwards;
+  -webkit-animation: slideRight 0.3s ease-in forwards; */
 }
 
+@keyframes slideRight {
+  0% {
+    box-shadow: 0;
+    -webkit-box-shadow: 0;
+    transform: translateX(0%);
+  }
+
+  100% {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    transform: translateX(1.5%);
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    transform: translateX(1.5%);
+  }
+
+  100% {
+    box-shadow: 0;
+    transform: translateX(0%);
+  }
+}
 .counter-page-single-counter.not-active {
   position: relative;
   left: 0px;
   transition: left 0.3s ease-in, box-shadow 0.3s ease;
-}
-
-.selected-counter-dot {
-  /* position: absolute;
-  left: 0;
-  display: flex;
-  align-self: center;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: red; */
 }
 
 .table-wrap {
@@ -226,17 +249,13 @@ body {
 
 table {
   border-collapse: separate;
-  border-spacing: 0 7px;
+  border-spacing: 0 15px;
   margin-top: 1rem; /* correct offset on first border spacing if desired */
   width: 100%;
   max-width: 100%;
   table-layout: fixed;
 
   /* overflow-wrap: break-word; */
-}
-
-thead tr {
-  /* text-align: left; */
 }
 
 td {

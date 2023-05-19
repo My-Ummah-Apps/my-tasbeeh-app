@@ -2,20 +2,16 @@ import { useState, useReducer } from "react";
 import {
   MdOutlineClose,
   MdOutlineRestartAlt,
-  MdAddCircleOutline,
   MdModeEditOutline,
 } from "react-icons/md";
-import Header from "../components/Header";
+
 import PopUpBoxBlank from "../components/PopUpBoxBlank";
 import PopUpBoxFilled from "../components/PopUpBoxFilled";
 import FAB from "../components/FAB";
 
 const CountersPage = ({
-  useForceUpdate,
   resetSingleCounter,
   invokeSetActiveCounter,
-  activeCounterNumber,
-  addItemToSavedCountersArray,
   modifyTheCountersArray,
   setLocalSavedCountersArray,
   localSavedCountersArray,
@@ -23,13 +19,13 @@ const CountersPage = ({
   resetAllCounters,
   deleteSingleCounter,
   materialColors,
+  showAnimation,
 }) => {
   let nextColorIndex = 0;
   let nextColor;
 
   const [showPopUpBoxBlank, setShowPopUpBoxBlank] = useState(false);
   const [showPopUpBoxFilled, setShowPopUpBoxFilled] = useState(false);
-  const [counterNumber, setCounterNumber] = useState(0);
 
   const [currentCounterName, setCurrentCounterName] = useState(0);
   const [currentCount, setcurrentCount] = useState(0);
@@ -39,7 +35,7 @@ const CountersPage = ({
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
   let border;
-  console.log(localSavedCountersArray);
+
   function handleClick() {
     forceUpdate();
   }
@@ -47,17 +43,6 @@ const CountersPage = ({
   return (
     <div className="table-wrap">
       <table className="counters-wrap">
-        {/* <Header text={"Counters"} /> */}
-        {/* <thead>
-          <tr className="heading-table-row">
-            <th colSpan="2">Counter</th>
-            <th>Count</th>
-            <th>Target</th>
-            <th>Edit</th>
-            <th>Reset</th>
-            <th>Delete</th>
-          </tr>
-        </thead> */}
         {localSavedCountersArray.map((counterItem) => {
           nextColor = materialColors[nextColorIndex];
           counterItem.color = nextColor;
@@ -71,16 +56,6 @@ const CountersPage = ({
 
           return (
             <tbody>
-              {/* <span className="selected-counter-dot">
-                {counterItem.isActive ? "hello" : ""}
-              </span> */}
-              <span
-                className={`${
-                  counterItem.isActive ? "selected-counter-dot" : ""
-                }`}
-                style={{}}
-              ></span>
-
               <tr
                 className={`counter-page-single-counter ${
                   counterItem.isActive ? "active" : "not-active"
@@ -108,13 +83,7 @@ const CountersPage = ({
                 >
                   {counterItem.count} / {counterItem.target}
                 </td>
-                {/* <td
-                  onClick={() => {
-                    invokeSetActiveCounter(counterItem.id);
-                  }}
-                >
-                  {counterItem.target}
-                </td> */}
+
                 <td>
                   <MdModeEditOutline
                     onClick={(e) => {
@@ -149,9 +118,7 @@ const CountersPage = ({
           );
         })}
       </table>
-      {/* <div className="add-btn" onClick={() => setShowPopUpBoxBlank(true)}>
-        +
-      </div> */}
+
       <FAB
         setShowPopUpBoxBlank={setShowPopUpBoxBlank}
         resetAllCounters={resetAllCounters}

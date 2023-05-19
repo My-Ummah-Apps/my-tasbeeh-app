@@ -5,20 +5,11 @@ const PlusBtn = ({
   activeCounterNumber,
   localSavedCountersArray,
   saveArrayLocally,
-  animationSeen,
+  showAnimation,
 }) => {
-  // const [animationSeen, setAnimationSeen] = useState(false);
-
-  // useEffect(() => {
-  //   if (sessionStorage.getItem("animationSeen") == null) {
-  //     setAnimationSeen(true);
-  //     sessionStorage.setItem("animationSeen", "true");
-  //   }
-  // }, []);
-
   return (
     <div
-      className={`plus-svg-wrap ${animationSeen ? "fade-up-animation" : ""}`}
+      className={`plus-svg-wrap ${showAnimation ? "fade-up-animation" : null}`}
     >
       <svg
         onClick={() => {

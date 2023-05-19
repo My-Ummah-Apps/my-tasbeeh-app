@@ -1,10 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 
-const CounterNameAndNumber = ({
-  localSavedCountersArray,
-  setActiveCounterNumber,
-  animationSeen,
-}) => {
+const CounterNameAndNumber = ({ localSavedCountersArray, showAnimation }) => {
   let currentName;
   let currentNumber = 0;
   let currentBackgroundColor;
@@ -21,7 +17,6 @@ const CounterNameAndNumber = ({
       currentName = counterItem.counter;
       currentNumber = counterItem.count;
 
-      console.log(currentNumber);
       currentName.length > 50
         ? (textOverflowProperty = "ellipsis")
         : (textOverflowProperty = "clip");
@@ -76,7 +71,7 @@ const CounterNameAndNumber = ({
       {/* <div className="counter-text-wrap" ref={textRef}> */}
       <div
         className={`counter-text-wrap ${
-          animationSeen ? "fade-down-animation" : null
+          showAnimation ? "fade-down-animation" : null
         }`}
         ref={textRef}
       >

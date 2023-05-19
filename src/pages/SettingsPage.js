@@ -1,9 +1,6 @@
-import Header from "../components/Header";
-
 const SettingsPage = () => {
   const changeThemeWhite = () => {
     document.body.style = "background: #fff;";
-    // document.querySelector(".dhikr-type-wrap").style = "color:black;";
   };
 
   const changeThemeBlack = () => {
@@ -12,7 +9,6 @@ const SettingsPage = () => {
 
   return (
     <div className="settings-page-wrap">
-      {/* <Header text={"Settings"} /> */}
       <div className="theme-selection-wrap">
         <h1>Theme</h1>
         <div className="theme-blocks-container">
