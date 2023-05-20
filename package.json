@@ -43,6 +43,6 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "^5.0.1"
+    "@capacitor/cli": "^5.0.3"
   }
 }

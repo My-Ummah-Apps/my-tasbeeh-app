@@ -5,15 +5,20 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter }) => {
     setShowPopUpBoxBlank(false);
   };
 
+  const [alertColor, setAlertColor] = useState("#fff");
+
   const submitCounter = (e) => {
     e.preventDefault();
-    // if (!targetInput || !dhikrInput) return;
-    if (!dhikrInput) return;
+
+    if (!counterNameInput) {
+      setAlertColor("#efff00");
+      return;
+    }
     targetInput
-      ? addCounter(dhikrInput, targetInput)
-      : addCounter(dhikrInput, 0);
-    // addCounter(dhikrInput);
-    setDhikrName("");
+      ? addCounter(counterNameInput, targetInput)
+      : addCounter(counterNameInput, 0);
+    // addCounter(counterNameInput);
+    setCounterName("");
     setShowPopUpBoxBlank(false);
   };
 
@@ -21,7 +26,7 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter }) => {
   //     e.preventDefault();
   //   };
 
-  const [dhikrInput, setDhikrName] = useState("");
+  const [counterNameInput, setCounterName] = useState("");
   const [targetInput, setTarget] = useState("");
 
   return (
@@ -30,12 +35,13 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter }) => {
         <div class="user-box">
           <input
             onChange={(e) => {
-              setDhikrName(e.target.value);
+              setCounterName(e.target.value);
             }}
             type="text"
+            style={{ borderBottom: "1px solid" + alertColor }}
             required
           ></input>
-          <label>Dhikr Name</label>
+          <label style={{ color: alertColor }}>Dhikr Name</label>
         </div>
         <div class="user-box">
           <input
@@ -68,7 +74,7 @@ export default PopUpBoxBlank;
   /*  <form className="pop-up-box-wrap">
       <input
         onChange={(e) => {
-          setDhikrName(e.target.value);
+          setCounterName(e.target.value);
         }}
         type="text"
         placeholder="Dhikr Name"

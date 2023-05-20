@@ -12,9 +12,14 @@ const PopUpBoxFilled = ({
     setShowPopUpBoxFilled(false);
   };
 
+  const [alertColor, setAlertColor] = useState("#fff");
+
   const submitCounter = (e) => {
     e.preventDefault();
-    if (!counterNameInput) return;
+    if (!counterNameInput) {
+      setAlertColor("#efff00");
+      return;
+    }
     modifyTheCountersArray(
       currentCounterId,
       counterNameInput,
@@ -39,9 +44,10 @@ const PopUpBoxFilled = ({
             }}
             type="text"
             value={counterNameInput}
+            style={{ borderBottom: "1px solid" + alertColor }}
             required
           ></input>
-          <label>Dhikr Name</label>
+          <label style={{ color: alertColor }}>Dhikr Name</label>
         </div>
         <div class="user-box">
           <input
@@ -52,7 +58,7 @@ const PopUpBoxFilled = ({
             value={currentCountInput}
             required
           ></input>
-          <label>Count</label>
+          <label>Count (Default: 0)</label>
         </div>
         <div class="user-box">
           <input

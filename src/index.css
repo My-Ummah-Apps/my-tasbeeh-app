@@ -185,8 +185,10 @@ body {
   text-align: left;
   cursor: pointer;
   height: 50px;
-  transition: left 0.3s ease-in;
-  -webkit-transition: left 0.3s ease-in;
+  transition: left 0.3s ease-in, box-shadow 0.3s ease-in,
+    -webkit-box-shadow 0.3s ease-in;
+  -webkit-transition: left 0.3s ease-in, box-shadow 0.3s ease-in,
+    -webkit-box-shadow 0.3s ease-in;
   /* animation: slideLeft 0.3s ease-in forwards;
   -webkit-animation: slideLeft 0.3s ease-in forwards; */
 }
@@ -200,7 +202,8 @@ body {
   left: 5px;
   transition: left 0.3s ease-in, box-shadow 0.3s ease-in,
     -webkit-box-shadow 0.3s ease-in;
-  -webkit-transition: left 0.3s ease-in;
+  -webkit-transition: left 0.3s ease-in, box-shadow 0.3s ease-in,
+    -webkit-box-shadow 0.3s ease-in;
   /* animation: slideRight 0.3s ease-in forwards;
   -webkit-animation: slideRight 0.3s ease-in forwards; */
 }
@@ -501,7 +504,7 @@ div[role="progressbar"]::before {
   /* background: rgba(0, 0, 0, 0.5); */
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
-  border-radius: 0 !important;
+  border-radius: 10px !important;
 }
 
 .login-box h2 {
