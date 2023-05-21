@@ -48,15 +48,25 @@ body {
 }
 
 @keyframes fadeInUp {
-  0% {
+  /* 0% {
     opacity: 0;
     transform: translateY(10%);
+  }
+
+  25% {
+    opacity: 0;
+    transform: translateY(7%);
+  }
+
+  75% {
+    opacity: 0;
+    transform: translateY(3%);
   }
 
   100% {
     opacity: 1;
     transform: translateY(0%);
-  }
+  } */
 }
 
 .dhikr-type-wrap {
@@ -134,7 +144,8 @@ body {
 
 .plus-svg-wrap {
   position: relative;
-  top: 32vh;
+  /* top: 32vh; */
+  top: 187px;
   line-height: 0vw;
   color: #ced4e2;
   text-align: center;
@@ -147,13 +158,13 @@ body {
 }
 
 .fade-up-animation {
-  -webkit-animation: fadeInUp 1000ms forwards;
-  animation: fadeInUp 1000ms forwards;
+  -webkit-animation: fadeInUp 500ms ease-in forwards;
+  animation: fadeInUp 500ms ease-in forwards;
 }
 
 .fade-down-animation {
-  -webkit-animation: fadeInDown 1000ms forwards;
-  animation: fadeInDown 1000ms forwards;
+  -webkit-animation: fadeInDown 1000ms ease-in forwards;
+  animation: fadeInDown 1000ms ease-in forwards;
 }
 
 /* COUNTERS PAGE */

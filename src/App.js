@@ -41,15 +41,21 @@ function App() {
     );
   };
 
-  let showAnimation = "";
+  const [showAnimation, setShowAnimation] = useState(false);
 
-  if (sessionStorage.getItem("showAnimation") == null) {
-    showAnimation = true;
-    console.log("sessionStorage is null");
-    sessionStorage.setItem("showAnimation", "true");
-  }
+  useEffect(() => {
+    if (sessionStorage.getItem("showAnimation") == null) {
+      setShowAnimation(true);
+      console.log("sessionStorage is null");
+      sessionStorage.setItem("showAnimation", "no");
+    }
 
-  console.log(showAnimation);
+    setTimeout(() => {
+      if (sessionStorage.getItem("showAnimation") != null) {
+        setShowAnimation(false);
+      }
+    }, 4000);
+  }, []);
 
   useEffect(() => {
     if (
