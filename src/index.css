@@ -863,6 +863,35 @@ input[type="number"] {
   padding-left: 7px !important;
 }
 
+/* SETTINGS PAGE */
+
+.settings-page-wrap {
+}
+
+.individual-section-wrap {
+  position: relative;
+  background: #eff1f4;
+  margin: 5rem auto 0 auto;
+  width: 90%;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.individual-section-wrap div {
+  display: flex;
+  /* border-bottom: 1px solid black; */
+  padding: 1rem;
+}
+
+.icon {
+  margin-right: 1rem;
+}
+
+.chevron {
+  position: absolute;
+  right: 10px;
+}
+
 /* DEVICE SPECIFIC STYLES */
 
 /* IOS */

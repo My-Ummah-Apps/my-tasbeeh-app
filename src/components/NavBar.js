@@ -9,12 +9,12 @@ const NavBar = () => {
         <MdSettings className="nav-icon" />
       </NavLink>
 
-      <NavLink className="nav-link" to="/CountersPage">
-        <MdMenu className="nav-icon" />
-      </NavLink>
-
       <NavLink className="nav-link" to="/">
         <MdHome className="nav-icon" />
+      </NavLink>
+
+      <NavLink className="nav-link" to="/CountersPage">
+        <MdMenu className="nav-icon" />
       </NavLink>
     </div>
   );
