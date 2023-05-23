@@ -3,6 +3,8 @@ import {
   MdInfoOutline,
   MdOutlineStars,
   MdOutlineChevronRight,
+  MdVibration,
+  MdOutlineRestartAlt,
 } from "react-icons/md";
 
 const SettingsPage = () => {
@@ -10,8 +12,13 @@ const SettingsPage = () => {
     <div className="settings-page-wrap">
       <div className="individual-section-wrap">
         <div>
-          <MdOutlineStars className="icon" />
+          <MdVibration className="icon" />
           <p>Haptics</p>
+          <MdOutlineChevronRight className="chevron" />
+        </div>
+        <div>
+          <MdOutlineRestartAlt className="icon" />
+          <p>Auto Reset Count Daily</p>
           <MdOutlineChevronRight className="chevron" />
         </div>
       </div>
@@ -33,6 +40,9 @@ const SettingsPage = () => {
           <MdOutlineChevronRight className="chevron" />
         </div>
       </div>
+
+      <input type="checkbox" id="switch" />
+      <label htmlFor="switch">Toggle</label>
     </div>
   );
 };
