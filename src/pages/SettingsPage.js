@@ -7,6 +7,8 @@ import {
   MdOutlineRestartAlt,
 } from "react-icons/md";
 
+import "/node_modules/moretoggles/output/moretoggles.min.css";
+
 const SettingsPage = () => {
   return (
     <div className="settings-page-wrap">
@@ -14,12 +16,18 @@ const SettingsPage = () => {
         <div>
           <MdVibration className="icon" />
           <p>Haptics</p>
-          <MdOutlineChevronRight className="chevron" />
+          <span className="mt-ios">
+            <input id="1" type="checkbox" />
+            <label for="1"></label>
+          </span>
         </div>
         <div>
           <MdOutlineRestartAlt className="icon" />
           <p>Auto Reset Count Daily</p>
-          <MdOutlineChevronRight className="chevron" />
+          <span className="mt-ios">
+            <input id="2" type="checkbox" />
+            <label for="2"></label>
+          </span>
         </div>
       </div>
 
@@ -40,9 +48,6 @@ const SettingsPage = () => {
           <MdOutlineChevronRight className="chevron" />
         </div>
       </div>
-
-      <input type="checkbox" id="switch" />
-      <label htmlFor="switch">Toggle</label>
     </div>
   );
 };
