@@ -13,17 +13,21 @@ const SettingsPage = () => {
   return (
     <div className="settings-page-wrap">
       <div className="individual-section-wrap">
-        <div>
-          <MdVibration className="icon" />
-          <p>Haptics</p>
+        <div className="individual-row-wrap">
+          <div className="icon-and-text-wrap">
+            <MdVibration className="icon" />
+            <p>Haptics</p>
+          </div>
           <span className="mt-ios">
             <input id="1" type="checkbox" />
             <label for="1"></label>
           </span>
         </div>
-        <div>
-          <MdOutlineRestartAlt className="icon" />
-          <p>Auto Reset Count Daily</p>
+        <div className="individual-row-wrap">
+          <div className="icon-and-text-wrap">
+            <MdOutlineRestartAlt className="icon" />
+            <p>Auto Reset Count Daily</p>
+          </div>
           <span className="mt-ios">
             <input id="2" type="checkbox" />
             <label for="2"></label>

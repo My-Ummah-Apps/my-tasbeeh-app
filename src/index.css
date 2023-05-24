@@ -940,6 +940,7 @@ input[type="number"] {
 
 .individual-section-wrap div {
   display: flex;
+  align-items: center;
   /* border-bottom: 1px solid black; */
   padding: 1rem;
 }
@@ -954,10 +955,21 @@ input[type="number"] {
   transform: scale(0.2, 0.2);
 }
 
+.icon-and-text-wrap {
+  padding: 0 !important;
+}
+
+.individual-row-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* TOGGLE STYLING ON SETTINGS PAGE */
 
 .mt-ios {
-  transform: scale(0.6, 0.6);
+  /* transform: scale(0.6, 0.6); */
+  font-size: 8px;
 }
 
 /* DEVICE SPECIFIC STYLES */
