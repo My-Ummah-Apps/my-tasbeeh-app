@@ -136,6 +136,9 @@ function App() {
       id: randomlyGeneratedId,
     };
     const newArray = [...localSavedCountersArray, newCounter];
+    if (newArray.length == 1) {
+      newCounter.isActive = true;
+    }
     setLocalSavedCountersArray(newArray);
     saveArrayLocally(newArray);
   };
@@ -202,8 +205,11 @@ function App() {
     const filteredArray = localSavedCountersArray.filter(
       (counterItem) => counterItem.id !== id
     );
-    filteredArray[0].isActive = true;
-    setActiveCounterNumber(filteredArray[0].count);
+    // filteredArray.length > 0 ? (filteredArray[0].isActive = true) : null;
+    if (filteredArray.length > 0) {
+      filteredArray[0].isActive = true;
+      setActiveCounterNumber(filteredArray[0].count);
+    }
     setLocalSavedCountersArray(filteredArray);
     saveArrayLocally(filteredArray);
   };

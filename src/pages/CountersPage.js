@@ -84,27 +84,27 @@ const CountersPage = ({
                   {counterItem.count} / {counterItem.target}
                 </td>
 
-                <td>
-                  <MdModeEditOutline
-                    onClick={(e) => {
-                      setCurrentCounterName(counterItem.counter);
-                      setcurrentCount(counterItem.count);
-                      setCounterTarget(counterItem.target);
-                      setcurrentCounterId(counterItem.id);
-                      setShowPopUpBoxFilled(true);
-                    }}
-                  />
+                <td
+                  onClick={(e) => {
+                    setCurrentCounterName(counterItem.counter);
+                    setcurrentCount(counterItem.count);
+                    setCounterTarget(counterItem.target);
+                    setcurrentCounterId(counterItem.id);
+                    setShowPopUpBoxFilled(true);
+                  }}
+                >
+                  <MdModeEditOutline />
                 </td>
-                <td>
-                  <MdOutlineRestartAlt
-                    onClick={() => {
-                      resetSingleCounter(counterItem.id);
-                      if (counterItem.isActive) {
-                        invokeSetActiveCounter(counterItem.id);
-                      }
-                      handleClick();
-                    }}
-                  />
+                <td
+                  onClick={() => {
+                    resetSingleCounter(counterItem.id);
+                    if (counterItem.isActive) {
+                      invokeSetActiveCounter(counterItem.id);
+                    }
+                    handleClick();
+                  }}
+                >
+                  <MdOutlineRestartAlt />
                 </td>
                 <td>
                   <MdOutlineClose
