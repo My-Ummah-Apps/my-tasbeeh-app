@@ -2,6 +2,7 @@ import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import PlusBtn from "../components/PlusBtn";
 
 const MainPage = ({
+  haptics,
   savedCountersArray,
   saveArrayLocally,
   counterId,
@@ -34,6 +35,7 @@ const MainPage = ({
         showAnimation={showAnimation}
       />
       <PlusBtn
+        haptics={haptics}
         saveArrayLocally={saveArrayLocally}
         localSavedCountersArray={localSavedCountersArray}
         setActiveCounterNumber={setActiveCounterNumber}

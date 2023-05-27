@@ -42,8 +42,19 @@ function App() {
   };
 
   const [showAnimation, setShowAnimation] = useState(false);
+  const [haptics, setHaptics] = useState(localStorage.getItem("haptics"));
+  console.log("haptics in app.js is: " + haptics);
 
   useEffect(() => {
+    if (localStorage.getItem("haptics") == null) {
+      localStorage.setItem("haptics", false);
+      setHaptics(false);
+    }
+  });
+
+  useEffect(() => {
+    // if (localStorage.getItem())
+
     if (sessionStorage.getItem("showAnimation") == null) {
       setShowAnimation(true);
       console.log("sessionStorage is null");
@@ -216,11 +227,15 @@ function App() {
     <BrowserRouter>
       <section className="App">
         <Routes>
-          <Route path="SettingsPage" element={<SettingsPage />} />
+          <Route
+            path="SettingsPage"
+            element={<SettingsPage setHaptics={setHaptics} haptics={haptics} />}
+          />
           <Route
             index
             element={
               <Main
+                haptics={haptics}
                 setActiveCounterName={setActiveCounterName}
                 setActiveCounterNumber={setActiveCounterNumber}
                 saveArrayLocally={saveArrayLocally}

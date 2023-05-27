@@ -25,6 +25,7 @@ const hapticsSelectionEnd = async () => {
 };
 
 const PlusBtn = ({
+  haptics,
   setActiveCounterNumber,
   activeCounterNumber,
   localSavedCountersArray,
@@ -34,7 +35,9 @@ const PlusBtn = ({
   return (
     <div
       onClick={() => {
-        hapticsImpactMedium();
+        if (haptics == true || haptics == "true") {
+          hapticsImpactMedium();
+        }
       }}
       className={`plus-svg-wrap ${showAnimation ? "fade-up-animation" : null}`}
     >
