@@ -965,11 +965,17 @@ input[type="number"] {
   align-items: center;
 }
 
-/* TOGGLE STYLING ON SETTINGS PAGE */
+/* TOGGLE OVERRIDES AND STYLING ON SETTINGS PAGE */
 
 .mt-ios {
   /* transform: scale(0.6, 0.6); */
   font-size: 8px;
+}
+
+.mt-ios label,
+.mt-ios-blue label,
+.mt-ios-red label {
+  transition: 0.15s ease-in-out !important;
 }
 
 /* DEVICE SPECIFIC STYLES */

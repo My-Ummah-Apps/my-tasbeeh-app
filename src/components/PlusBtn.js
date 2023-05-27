@@ -35,7 +35,7 @@ const PlusBtn = ({
   return (
     <div
       onClick={() => {
-        if (haptics == true || haptics == "true") {
+        if (haptics == true) {
           hapticsImpactMedium();
         }
       }}

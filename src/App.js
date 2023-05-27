@@ -42,19 +42,20 @@ function App() {
   };
 
   const [showAnimation, setShowAnimation] = useState(false);
-  const [haptics, setHaptics] = useState(localStorage.getItem("haptics"));
+  const [haptics, setHaptics] = useState(
+    JSON.parse(localStorage.getItem("haptics"))
+  );
   console.log("haptics in app.js is: " + haptics);
 
   useEffect(() => {
     if (localStorage.getItem("haptics") == null) {
-      localStorage.setItem("haptics", false);
+      localStorage.setItem("haptics", JSON.stringify(false));
       setHaptics(false);
+      console.log(typeof haptics);
     }
   });
 
   useEffect(() => {
-    // if (localStorage.getItem())
-
     if (sessionStorage.getItem("showAnimation") == null) {
       setShowAnimation(true);
       console.log("sessionStorage is null");
