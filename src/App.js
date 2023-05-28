@@ -106,7 +106,7 @@ function App() {
           id: 3,
         },
         {
-          counter: "42A5F5",
+          counter: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
           count: 0,
           color: "5C6BC0",
           isActive: false,
@@ -144,14 +144,6 @@ function App() {
           isActive: false,
           target: 100,
           id: 8,
-        },
-        {
-          counter: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
-          count: 0,
-          color: "9CCC65",
-          isActive: false,
-          target: 100,
-          id: 9,
         },
       ];
 

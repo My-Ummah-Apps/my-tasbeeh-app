@@ -68,13 +68,13 @@ const CounterNameAndNumber = ({ localSavedCountersArray, showAnimation }) => {
       style={{ backgroundColor: currentBackgroundColor }}
       ref={counterTextContainerRef}
     >
-      {/* <div className="counter-text-wrap" ref={textRef}> */}
-      <div
+      <div className="counter-text-wrap" ref={textRef}>
+        {/* <div
         className={`counter-text-wrap ${
           showAnimation ? "fade-down-animation" : null
         }`}
         ref={textRef}
-      >
+      > */}
         <div className={scroll ? "scroll" : ""}>
           <div className={scroll ? "m-scroll" : ""}>
             <span

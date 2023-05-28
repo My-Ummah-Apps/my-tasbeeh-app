@@ -140,6 +140,7 @@ body {
 }
 
 .counter-text-wrap {
+  white-space: nowrap;
 }
 
 .plus-svg-wrap {
