@@ -73,7 +73,7 @@ function App() {
         {
           counter: "Alhumdulillah",
           count: 0,
-          color: "rgb(236, 64, 122)",
+          color: "#EF5350",
           isActive: true,
           target: 100,
           id: 0,
@@ -82,7 +82,7 @@ function App() {
         {
           counter: "Subhanallah",
           count: 0,
-          color: "rgb(171, 71, 188)",
+          color: "#EC407A",
           isActive: false,
           target: 100,
           id: 1,
@@ -91,7 +91,7 @@ function App() {
         {
           counter: "Allahu-Akbar",
           count: 0,
-          color: "rgb(126, 87, 194)",
+          color: "AB47BC",
           isActive: false,
           target: 100,
           id: 2,
@@ -100,10 +100,58 @@ function App() {
         {
           counter: "Astagfirullah",
           count: 0,
-          color: "rgb(92, 107, 192)",
+          color: "7E57C2",
           isActive: false,
           target: 100,
           id: 3,
+        },
+        {
+          counter: "42A5F5",
+          count: 0,
+          color: "5C6BC0",
+          isActive: false,
+          target: 100,
+          id: 4,
+        },
+        {
+          counter: "La hawla wa la quwwata illa billah",
+          count: 0,
+          color: "29B6F6",
+          isActive: false,
+          target: 100,
+          id: 5,
+        },
+        {
+          counter: "La ilaha illallah",
+          count: 0,
+          color: "26C6DA",
+          isActive: false,
+          target: 100,
+          id: 6,
+        },
+        {
+          counter: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
+          count: 0,
+          color: "26A69A",
+          isActive: false,
+          target: 100,
+          id: 7,
+        },
+        {
+          counter: "Subhan-Allahi wa bihamdih",
+          count: 0,
+          color: "66BB6A",
+          isActive: false,
+          target: 100,
+          id: 8,
+        },
+        {
+          counter: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
+          count: 0,
+          color: "9CCC65",
+          isActive: false,
+          target: 100,
+          id: 9,
         },
       ];
 
@@ -138,6 +186,7 @@ function App() {
     const newArray = [...localSavedCountersArray, newCounter];
     if (newArray.length == 1) {
       newCounter.isActive = true;
+      setActiveCounterNumber(0);
     }
     setLocalSavedCountersArray(newArray);
     saveArrayLocally(newArray);
@@ -205,18 +254,15 @@ function App() {
     const filteredArray = localSavedCountersArray.filter(
       (counterItem) => counterItem.id !== id
     );
-    // filteredArray.length > 0 ? (filteredArray[0].isActive = true) : null;
     if (filteredArray.length > 0) {
       filteredArray[0].isActive = true;
       setActiveCounterNumber(filteredArray[0].count);
     }
+    if (filteredArray.length == 0) {
+    }
     setLocalSavedCountersArray(filteredArray);
     saveArrayLocally(filteredArray);
   };
-
-  // document.body.style = "background: #fff;";
-
-  const homePage = true;
 
   return (
     <BrowserRouter>
