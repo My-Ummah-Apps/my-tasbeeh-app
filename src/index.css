@@ -144,12 +144,15 @@ body {
 }
 
 .plus-svg-wrap {
-  position: relative;
+  position: absolute;
   /* top: 32vh; */
-  top: 270px;
+  /* top: 270px; */
   line-height: 0vw;
   color: #ced4e2;
   text-align: center;
+  bottom: 17%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .plus-svg {
