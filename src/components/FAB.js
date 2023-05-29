@@ -16,7 +16,7 @@ const FAB = ({
   return (
     <Fab
       style={{
-        bottom: 80,
+        bottom: 10 + "%",
         right: 15,
         transform: "rotate(-90deg)",
       }}
