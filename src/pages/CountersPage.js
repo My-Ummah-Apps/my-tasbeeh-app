@@ -41,89 +41,88 @@ const CountersPage = ({
   }
 
   return (
-    <div className="table-wrap">
-      <table className="counters-wrap">
-        {localSavedCountersArray.map((counterItem) => {
-          nextColor = materialColors[nextColorIndex];
-          counterItem.color = nextColor;
-          nextColorIndex == materialColors.length - 1
-            ? (nextColorIndex = 0)
-            : (nextColorIndex += 1);
+    <>
+      <div className="table-wrap">
+        <table className="counters-wrap">
+          {localSavedCountersArray.map((counterItem) => {
+            nextColor = materialColors[nextColorIndex];
+            counterItem.color = nextColor;
+            nextColorIndex == materialColors.length - 1
+              ? (nextColorIndex = 0)
+              : (nextColorIndex += 1);
 
-          counterItem.isActive
-            ? (border = { border: " 1px solid white" })
-            : (border = { border: " 1px solid black" });
+            counterItem.isActive
+              ? (border = { border: " 1px solid white" })
+              : (border = { border: " 1px solid black" });
 
-          return (
-            <tbody>
-              <tr
-                className={`counter-page-single-counter ${
-                  counterItem.isActive ? "active" : "not-active"
-                }`}
-                key={counterItem.id}
-                style={{
-                  backgroundColor: nextColor,
-                }}
-              >
-                <td
-                  colSpan="2"
-                  className="counter"
-                  onClick={() => {
-                    invokeSetActiveCounter(counterItem.id);
+            return (
+              <tbody>
+                <tr
+                  className={`counter-page-single-counter ${
+                    counterItem.isActive ? "active" : "not-active"
+                  }`}
+                  key={counterItem.id}
+                  style={{
+                    backgroundColor: nextColor,
                   }}
                 >
-                  <span className="counter-name-td" style={{ border: "none" }}>
-                    {counterItem.counter}
-                  </span>
-                </td>
-                <td
-                  onClick={() => {
-                    invokeSetActiveCounter(counterItem.id);
-                  }}
-                >
-                  {counterItem.count} / {counterItem.target}
-                </td>
-
-                <td
-                  onClick={(e) => {
-                    setCurrentCounterName(counterItem.counter);
-                    setcurrentCount(counterItem.count);
-                    setCounterTarget(counterItem.target);
-                    setcurrentCounterId(counterItem.id);
-                    setShowPopUpBoxFilled(true);
-                  }}
-                >
-                  <MdModeEditOutline />
-                </td>
-                <td
-                  onClick={() => {
-                    resetSingleCounter(counterItem.id);
-                    if (counterItem.isActive) {
-                      invokeSetActiveCounter(counterItem.id);
-                    }
-                    handleClick();
-                  }}
-                >
-                  <MdOutlineRestartAlt />
-                </td>
-                <td>
-                  <MdOutlineClose
+                  <td
+                    colSpan="2"
+                    className="counter"
                     onClick={() => {
-                      deleteSingleCounter(counterItem.id);
+                      invokeSetActiveCounter(counterItem.id);
                     }}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          );
-        })}
-      </table>
+                  >
+                    <span
+                      className="counter-name-td"
+                      style={{ border: "none" }}
+                    >
+                      {counterItem.counter}
+                    </span>
+                  </td>
+                  <td
+                    onClick={() => {
+                      invokeSetActiveCounter(counterItem.id);
+                    }}
+                  >
+                    {counterItem.count} / {counterItem.target}
+                  </td>
 
-      <FAB
-        setShowPopUpBoxBlank={setShowPopUpBoxBlank}
-        resetAllCounters={resetAllCounters}
-        localSavedCountersArray={localSavedCountersArray}
-      />
+                  <td
+                    onClick={(e) => {
+                      setCurrentCounterName(counterItem.counter);
+                      setcurrentCount(counterItem.count);
+                      setCounterTarget(counterItem.target);
+                      setcurrentCounterId(counterItem.id);
+                      setShowPopUpBoxFilled(true);
+                    }}
+                  >
+                    <MdModeEditOutline />
+                  </td>
+                  <td
+                    onClick={() => {
+                      resetSingleCounter(counterItem.id);
+                      if (counterItem.isActive) {
+                        invokeSetActiveCounter(counterItem.id);
+                      }
+                      handleClick();
+                    }}
+                  >
+                    <MdOutlineRestartAlt />
+                  </td>
+                  <td>
+                    <MdOutlineClose
+                      onClick={() => {
+                        deleteSingleCounter(counterItem.id);
+                      }}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            );
+          })}
+        </table>
+      </div>
 
       <div>
         {showPopUpBoxBlank ? (
@@ -151,7 +150,12 @@ const CountersPage = ({
           />
         ) : null}
       </div>
-    </div>
+      <FAB
+        setShowPopUpBoxBlank={setShowPopUpBoxBlank}
+        resetAllCounters={resetAllCounters}
+        localSavedCountersArray={localSavedCountersArray}
+      />
+    </>
   );
 };
 

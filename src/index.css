@@ -258,17 +258,33 @@ body {
 }
 
 .table-wrap {
-  height: 75vh;
+  /* height: 75vh; */
   overflow-y: scroll; /* add vertical scrolling */
   /* FOR IPHONES */
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
+
+  height: 62vh;
+
+  position: fixed;
+  /* z-index: 0; */
+  top: 5%;
 }
 
+/* .table-wrap::before {
+  content: "hello";
+  position: absolute;
+  height: 20px;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+} */
+
 table {
+  /* margin-top: -3rem; */
   border-collapse: separate;
   border-spacing: 0 15px;
-  margin-top: 1rem; /* correct offset on first border spacing if desired */
+  /* margin-top: 1rem; correct offset on first border spacing if desired */
   width: 100%;
   max-width: 100%;
   table-layout: fixed;
@@ -435,7 +451,7 @@ td:last-child {
   color: #fff;
   text-decoration: none;
   text-align: center;
-  padding: 1rem 3rem 0 3rem;
+  padding: 1rem 3rem 0.5rem 3rem;
 }
 
 .nav-icon {
@@ -809,6 +825,24 @@ input[type="number"] {
 
 /* FAB STYLES - THESE ARE CUSTOM, OVERRIDING ANY STYLES FROM THE ACTUAL MINI-FAB STYLESSHEET */
 
+.fab-wrap {
+  position: absolute;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  bottom: 0;
+  height: 138px;
+  /* top: 468px; */
+  /* z-index: 2000; */
+  width: 100vw;
+}
+
+.rtf.closed,
+.rtf.open {
+  bottom: 10%;
+  right: 5%;
+}
+
 .rtf--ab,
 .rtf--mb {
   box-shadow: none !important;
@@ -840,7 +874,13 @@ input[type="number"] {
 .rtf--mb__c > span.always-show {
   /* transition:opacity .2s ease-in-out;
   opacity:.9 */
+
   display: block;
+}
+
+.rtf--mb__c {
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .rtf--ab__c > span {
@@ -880,6 +920,10 @@ input[type="number"] {
   .counter-page-single-counter.active {
     filter: drop-shadow(0 0 1px black);
   }
+  /* .rtf.closed,
+  .rtf.open {
+    bottom: 5%;
+  } */
 }
 
 @supports not (-webkit-touch-callout: none) {

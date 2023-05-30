@@ -16,8 +16,9 @@ const FAB = ({
   return (
     <Fab
       style={{
-        bottom: 10 + "%",
-        right: 15,
+        position: "absolute",
+        // bottom: 13 + "%",
+        // right: 5 + "%",
         transform: "rotate(-90deg)",
       }}
       mainButtonStyles={{
