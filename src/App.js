@@ -246,12 +246,16 @@ function App() {
     const filteredArray = localSavedCountersArray.filter(
       (counterItem) => counterItem.id !== id
     );
+    if (filteredArray.length == 0) {
+      alert("Atleast one counter must be saved");
+
+      return;
+    }
     if (filteredArray.length > 0) {
       filteredArray[0].isActive = true;
       setActiveCounterNumber(filteredArray[0].count);
     }
-    if (filteredArray.length == 0) {
-    }
+
     setLocalSavedCountersArray(filteredArray);
     saveArrayLocally(filteredArray);
   };

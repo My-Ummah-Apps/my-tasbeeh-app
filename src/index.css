@@ -89,7 +89,7 @@ body {
   top: 0;
   margin: 0.6rem;
   color: white;
-  z-index: 10;
+  z-index: 2;
   font-size: 1.5rem;
   cursor: pointer;
 }
@@ -536,6 +536,7 @@ div[role="progressbar"]::before {
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px !important;
+  /* z-index: 3; */
 }
 
 .login-box h2 {
@@ -570,7 +571,11 @@ div[role="progressbar"]::before {
   color: #fff;
   pointer-events: none;
   /* transition: 0.5s; */
-  transition: 0.5s top, 0.5s font-size;
+  /* transition: 0.5s top, 0.5s font-size; */
+  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s;
+  -ms-transition-duration: 0.4s;
+  -moz-transition-duration: 0.4s;
 }
 
 .login-box .user-box input:focus ~ label,
