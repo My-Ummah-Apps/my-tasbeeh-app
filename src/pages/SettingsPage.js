@@ -35,8 +35,11 @@ const SettingsPage = ({ setHaptics, haptics }) => {
       <div className="individual-section-wrap">
         <div className="individual-row-wrap">
           <div className="icon-and-text-wrap">
-            <MdVibration className="icon" />
-            <p>Haptics</p>
+            {/* <MdVibration className="icon" /> */}
+            <div className="text-wrap" style={{ display: "block" }}>
+              <h4>Haptic Vibration</h4>
+              <p>Set vibration on every increment</p>
+            </div>
           </div>
           <span className="mt-ios">
             <input id="1" type="checkbox" checked={haptics} />
@@ -71,18 +74,27 @@ const SettingsPage = ({ setHaptics, haptics }) => {
 
       <div className="individual-section-wrap">
         <div onClick={rateThisAppLink}>
-          <MdOutlineStars className="icon" />
-          <p>Rate This App</p>
+          {/* <MdOutlineStars className="icon" /> */}
+          <div className="text-wrap" style={{ display: "block" }}>
+            <h4>Write a review</h4>
+            <p>Rate us on the Play Store</p>
+          </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
         <div onClick={shareThisAppLink}>
-          <MdShare className="icon" />
-          <p>Share This App</p>
+          {/* <MdShare className="icon" /> */}
+          <div className="text-wrap" style={{ display: "block" }}>
+            <h4>Share</h4>
+            <p>Share application</p>
+          </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
         <div onClick={sendFeedbackLink}>
-          <MdOutlineFeedback className="icon" />
-          <p>Send Feedback</p>
+          {/* <MdOutlineFeedback className="icon" /> */}
+          <div className="text-wrap" style={{ display: "block" }}>
+            <h4>Feedback</h4>
+            <p>Send us your feedback</p>
+          </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
         {/* <div>

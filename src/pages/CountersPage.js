@@ -75,12 +75,13 @@ const CountersPage = ({
                   >
                     <span
                       className="counter-name-td"
-                      style={{ border: "none" }}
+                      style={{ border: "none", textAlign: "center" }}
                     >
                       {counterItem.counter}
                     </span>
                   </td>
                   <td
+                    style={{ textAlign: "center" }}
                     onClick={() => {
                       invokeSetActiveCounter(counterItem.id);
                     }}
@@ -89,6 +90,7 @@ const CountersPage = ({
                   </td>
 
                   <td
+                    style={{ textAlign: "center" }}
                     onClick={(e) => {
                       setCurrentCounterName(counterItem.counter);
                       setcurrentCount(counterItem.count);
@@ -100,6 +102,7 @@ const CountersPage = ({
                     <MdModeEditOutline />
                   </td>
                   <td
+                    style={{ textAlign: "center" }}
                     onClick={() => {
                       resetSingleCounter(counterItem.id);
                       if (counterItem.isActive) {
@@ -110,7 +113,7 @@ const CountersPage = ({
                   >
                     <MdOutlineRestartAlt />
                   </td>
-                  <td>
+                  <td style={{ textAlign: "center" }}>
                     <MdOutlineClose
                       onClick={() => {
                         deleteSingleCounter(counterItem.id);

@@ -218,6 +218,10 @@ body {
   text-overflow: ellipsis;
 }
 
+.counter-name-td {
+  padding-left: 0.5rem;
+}
+
 .stats-and-icons-wrap {
   display: flex;
   justify-content: space-around;
@@ -253,6 +257,10 @@ body {
     -webkit-box-shadow 0.3s ease-in;
   /* animation: slideRight 0.3s ease-in forwards;
   -webkit-animation: slideRight 0.3s ease-in forwards; */
+}
+
+MdModeEditOutline {
+  text-align: center;
 }
 
 @-webkit-keyframes slideRight {
@@ -355,7 +363,7 @@ table {
 
 td {
   padding: 0.2rem 0.2rem;
-  text-align: center;
+  /* text-align: center; */
   font-size: 0.8rem;
   color: white;
 }
@@ -990,8 +998,10 @@ input[type="number"] {
 .individual-section-wrap div {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   /* border-bottom: 1px solid black; */
-  padding: 1rem;
+  /* padding: 1rem; */
+  padding: 0.5rem 0.5rem;
 }
 
 .individual-section-wrap ul {
@@ -1005,10 +1015,23 @@ input[type="number"] {
   margin-right: 1rem;
 }
 
+.text-wrap {
+  align-self: center;
+}
+
+.text-wrap h4 {
+  margin-bottom: 0.5rem;
+}
+
+.text-wrap p {
+  font-size: 0.8rem;
+}
+
 .chevron {
   /* position: absolute;   */
+  transform: scale(1.5, 1.5);
   right: 10px;
-  transform: scale(0.2, 0.2);
+  /* transform: scale(0.2, 0.2); */
 }
 
 .icon-and-text-wrap {
