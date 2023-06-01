@@ -7,20 +7,28 @@ import {
   MdOutlineChevronRight,
   MdVibration,
   MdOutlineRestartAlt,
+  MdOutlineFeedback,
 } from "react-icons/md";
+
+import { Share } from "@capacitor/share";
 
 import "/node_modules/moretoggles/output/moretoggles.min.css";
 const SettingsPage = ({ setHaptics, haptics }) => {
-  console.log("haptics on settings page: " + haptics);
-  console.log(typeof haptics);
-
-  // let isChecked;
-  // if (haptics == "true" || haptics == true) {
-  //   isChecked = true;
-  // } else if (haptics == "false" || haptics == false) {
-  //   isChecked = false;
-  // }
-  // console.log("isChecked: " + isChecked);
+  const rateThisAppLink = () => {
+    window.location.href =
+      "https://play.google.com/store/apps/details?id=com.tasbeeh.my";
+  };
+  const shareThisAppLink = async () => {
+    await Share.share({
+      title: "",
+      text: "",
+      url: "https://play.google.com/store/apps/details?id=com.tasbeeh.my",
+      dialogTitle: "",
+    });
+  };
+  const sendFeedbackLink = () => {
+    window.location.href = "mailto: contact@myummahapps.com";
+  };
 
   return (
     <div className="settings-page-wrap">
@@ -49,7 +57,7 @@ const SettingsPage = ({ setHaptics, haptics }) => {
             ></label>
           </span>
         </div>
-        <div className="individual-row-wrap">
+        {/* <div className="individual-row-wrap">
           <div className="icon-and-text-wrap">
             <MdOutlineRestartAlt className="icon" />
             <p>Auto Reset Count Daily</p>
@@ -58,25 +66,30 @@ const SettingsPage = ({ setHaptics, haptics }) => {
             <input id="2" type="checkbox" />
             <label for="2"></label>
           </span>
-        </div>
+        </div> */}
       </div>
 
       <div className="individual-section-wrap">
-        <div>
+        <div onClick={rateThisAppLink}>
           <MdOutlineStars className="icon" />
           <p>Rate This App</p>
           <MdOutlineChevronRight className="chevron" />
         </div>
-        <div>
+        <div onClick={shareThisAppLink}>
           <MdShare className="icon" />
           <p>Share This App</p>
           <MdOutlineChevronRight className="chevron" />
         </div>
-        <div>
+        <div onClick={sendFeedbackLink}>
+          <MdOutlineFeedback className="icon" />
+          <p>Send Feedback</p>
+          <MdOutlineChevronRight className="chevron" />
+        </div>
+        {/* <div>
           <MdInfoOutline className="icon" />
           <p>Info</p>
           <MdOutlineChevronRight className="chevron" />
-        </div>
+        </div> */}
       </div>
     </div>
   );

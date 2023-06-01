@@ -945,6 +945,13 @@ input[type="number"] {
   padding: 1rem;
 }
 
+.individual-section-wrap ul {
+}
+
+.individual-section-wrap ul li {
+  list-style-type: none;
+}
+
 .icon {
   margin-right: 1rem;
 }
