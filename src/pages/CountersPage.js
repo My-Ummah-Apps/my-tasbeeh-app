@@ -113,12 +113,13 @@ const CountersPage = ({
                   >
                     <MdOutlineRestartAlt />
                   </td>
-                  <td style={{ textAlign: "center" }}>
-                    <MdOutlineClose
-                      onClick={() => {
-                        deleteSingleCounter(counterItem.id);
-                      }}
-                    />
+                  <td
+                    onClick={() => {
+                      deleteSingleCounter(counterItem.id);
+                    }}
+                    style={{ textAlign: "center" }}
+                  >
+                    <MdOutlineClose />
                   </td>
                 </tr>
               </tbody>

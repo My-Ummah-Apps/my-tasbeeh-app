@@ -25,7 +25,8 @@ body {
   width: 100vw;
   max-width: 700px;
   margin-inline: auto;
-  font-family: Roboto, sans-serif;
+  /* font-family: Roboto, sans-serif; */
+  font-family: sans-serif;
   font-weight: 400;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -992,7 +993,7 @@ input[type="number"] {
   margin: 5rem auto 0 auto;
   width: 90%;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
 .individual-section-wrap div {
@@ -1001,7 +1002,14 @@ input[type="number"] {
   justify-content: space-between;
   /* border-bottom: 1px solid black; */
   /* padding: 1rem; */
-  padding: 0.5rem 0.5rem;
+  /* padding: 0.5rem 0.5rem; */
+  margin: 0.5rem 0.5rem;
+}
+
+.review-wrap,
+.share-wrap {
+  /* border-bottom: 1px solid #eaeaea;  */
+  border-bottom: 1px solid #e3e3e3;
 }
 
 .individual-section-wrap ul {
@@ -1019,12 +1027,15 @@ input[type="number"] {
   align-self: center;
 }
 
-.text-wrap h4 {
-  margin-bottom: 0.5rem;
-}
-
 .text-wrap p {
   font-size: 0.8rem;
+  font-weight: 300;
+}
+
+.text-wrap p:first-of-type {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: normal;
 }
 
 .chevron {

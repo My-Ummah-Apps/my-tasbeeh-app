@@ -27,7 +27,8 @@ const SettingsPage = ({ setHaptics, haptics }) => {
     });
   };
   const sendFeedbackLink = () => {
-    window.location.href = "mailto: contact@myummahapps.com";
+    window.location.href =
+      "mailto: contact@myummahapps.com?subject=MyTasbeehApp Feedback";
   };
 
   return (
@@ -37,7 +38,7 @@ const SettingsPage = ({ setHaptics, haptics }) => {
           <div className="icon-and-text-wrap">
             {/* <MdVibration className="icon" /> */}
             <div className="text-wrap" style={{ display: "block" }}>
-              <h4>Haptic Vibration</h4>
+              <p>Haptic Vibration</p>
               <p>Set vibration on every increment</p>
             </div>
           </div>
@@ -73,18 +74,18 @@ const SettingsPage = ({ setHaptics, haptics }) => {
       </div>
 
       <div className="individual-section-wrap">
-        <div onClick={rateThisAppLink}>
+        <div className="review-wrap" onClick={rateThisAppLink}>
           {/* <MdOutlineStars className="icon" /> */}
           <div className="text-wrap" style={{ display: "block" }}>
-            <h4>Write a review</h4>
+            <p>Write a review</p>
             <p>Rate us on the Play Store</p>
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
-        <div onClick={shareThisAppLink}>
+        <div className="share-wrap" onClick={shareThisAppLink}>
           {/* <MdShare className="icon" /> */}
           <div className="text-wrap" style={{ display: "block" }}>
-            <h4>Share</h4>
+            <p>Share</p>
             <p>Share application</p>
           </div>
           <MdOutlineChevronRight className="chevron" />
@@ -92,7 +93,7 @@ const SettingsPage = ({ setHaptics, haptics }) => {
         <div onClick={sendFeedbackLink}>
           {/* <MdOutlineFeedback className="icon" /> */}
           <div className="text-wrap" style={{ display: "block" }}>
-            <h4>Feedback</h4>
+            <p>Feedback</p>
             <p>Send us your feedback</p>
           </div>
           <MdOutlineChevronRight className="chevron" />
