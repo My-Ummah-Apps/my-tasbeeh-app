@@ -1007,7 +1007,9 @@ input[type="number"] {
 }
 
 .review-wrap,
-.share-wrap {
+.share-wrap,
+.feedback-wrap,
+.source-code-wrap {
   /* border-bottom: 1px solid #eaeaea;  */
   border-bottom: 1px solid #e3e3e3;
 }
@@ -1042,6 +1044,7 @@ input[type="number"] {
   /* position: absolute;   */
   transform: scale(1.5, 1.5);
   right: 10px;
+  color: #b5b5b5;
   /* transform: scale(0.2, 0.2); */
 }
 

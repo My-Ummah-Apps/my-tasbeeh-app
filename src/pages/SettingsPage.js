@@ -31,6 +31,15 @@ const SettingsPage = ({ setHaptics, haptics }) => {
       "mailto: contact@myummahapps.com?subject=MyTasbeehApp Feedback";
   };
 
+  const sourceCodeLink = () => {
+    window.location.href = "https://github.com/My-Ummah-Apps/my-tasbeeh-app";
+  };
+
+  const privacyPolicyLink = () => {
+    window.location.href =
+      "https://sites.google.com/view/mytasbeehprivacypolicy/home";
+  };
+
   return (
     <div className="settings-page-wrap">
       <div className="individual-section-wrap">
@@ -90,11 +99,27 @@ const SettingsPage = ({ setHaptics, haptics }) => {
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
-        <div onClick={sendFeedbackLink}>
+        <div className="feedback-wrap" onClick={sendFeedbackLink}>
           {/* <MdOutlineFeedback className="icon" /> */}
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Feedback</p>
             <p>Send us your feedback</p>
+          </div>
+          <MdOutlineChevronRight className="chevron" />
+        </div>
+        <div className="source-code-wrap" onClick={sourceCodeLink}>
+          {/* <MdOutlineFeedback className="icon" /> */}
+          <div className="text-wrap" style={{ display: "block" }}>
+            <p>Source Code</p>
+            <p>View source code on Github</p>
+          </div>
+          <MdOutlineChevronRight className="chevron" />
+        </div>
+        <div onClick={privacyPolicyLink}>
+          {/* <MdOutlineFeedback className="icon" /> */}
+          <div className="text-wrap" style={{ display: "block" }}>
+            <p>Privacy Policy</p>
+            <p>View privacy policy</p>
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
