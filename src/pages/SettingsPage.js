@@ -14,10 +14,6 @@ import { Share } from "@capacitor/share";
 
 import "/node_modules/moretoggles/output/moretoggles.min.css";
 const SettingsPage = ({ setHaptics, haptics }) => {
-  const rateThisAppLink = () => {
-    window.location.href =
-      "https://play.google.com/store/apps/details?id=com.tasbeeh.my";
-  };
   const shareThisAppLink = async () => {
     await Share.share({
       title: "",
@@ -26,18 +22,9 @@ const SettingsPage = ({ setHaptics, haptics }) => {
       dialogTitle: "",
     });
   };
-  const sendFeedbackLink = () => {
-    window.location.href =
-      "mailto: contact@myummahapps.com?subject=MyTasbeehApp Feedback";
-  };
 
-  const sourceCodeLink = () => {
-    window.location.href = "https://github.com/My-Ummah-Apps/my-tasbeeh-app";
-  };
-
-  const privacyPolicyLink = () => {
-    window.location.href =
-      "https://sites.google.com/view/mytasbeehprivacypolicy/home";
+  const link = (url) => {
+    window.location.href = url;
   };
 
   return (
@@ -83,7 +70,14 @@ const SettingsPage = ({ setHaptics, haptics }) => {
       </div>
 
       <div className="individual-section-wrap">
-        <div className="review-wrap" onClick={rateThisAppLink}>
+        <div
+          className="review-wrap"
+          onClick={() => {
+            link(
+              "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
+            );
+          }}
+        >
           {/* <MdOutlineStars className="icon" /> */}
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Write a review</p>
@@ -99,7 +93,14 @@ const SettingsPage = ({ setHaptics, haptics }) => {
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
-        <div className="feedback-wrap" onClick={sendFeedbackLink}>
+        <div
+          className="feedback-wrap"
+          onClick={() => {
+            link(
+              "mailto: contact@myummahapps.com?subject=MyTasbeehApp Feedback"
+            );
+          }}
+        >
           {/* <MdOutlineFeedback className="icon" /> */}
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Feedback</p>
@@ -107,7 +108,12 @@ const SettingsPage = ({ setHaptics, haptics }) => {
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
-        <div className="source-code-wrap" onClick={sourceCodeLink}>
+        <div
+          className="source-code-wrap"
+          onClick={() => {
+            link("https://github.com/My-Ummah-Apps/my-tasbeeh-app");
+          }}
+        >
           {/* <MdOutlineFeedback className="icon" /> */}
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Source Code</p>
@@ -115,11 +121,27 @@ const SettingsPage = ({ setHaptics, haptics }) => {
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
-        <div onClick={privacyPolicyLink}>
+        <div
+          onClick={() => {
+            link("https://myummahapps.com/");
+          }}
+        >
+          {/* <MdOutlineFeedback className="icon" /> */}
+          <div className="text-wrap" style={{ display: "block" }}>
+            <p>Website</p>
+            <p>Visit our website</p>
+          </div>
+          <MdOutlineChevronRight className="chevron" />
+        </div>
+        <div
+          onClick={() => {
+            link("https://sites.google.com/view/mytasbeehprivacypolicy/home");
+          }}
+        >
           {/* <MdOutlineFeedback className="icon" /> */}
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Privacy Policy</p>
-            <p>View privacy policy</p>
+            <p>View our privacy policy</p>
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
