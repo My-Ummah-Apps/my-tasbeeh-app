@@ -46,9 +46,13 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter }) => {
         <div class="user-box">
           <input
             onChange={(e) => {
+              if (!Number(e.target.value)) {
+                return;
+              }
               setTarget(e.target.value);
             }}
-            type="number"
+            maxLength={5}
+            type="text"
             pattern="[0-9]*"
             required
           ></input>

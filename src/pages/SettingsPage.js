@@ -108,19 +108,19 @@ const SettingsPage = ({ setHaptics, haptics }) => {
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
-        <div
+        {/* <div
           className="source-code-wrap"
           onClick={() => {
             link("https://github.com/My-Ummah-Apps/my-tasbeeh-app");
           }}
         >
-          {/* <MdOutlineFeedback className="icon" /> */}
+          <MdOutlineFeedback className="icon" />
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Source Code</p>
             <p>View source code on Github</p>
           </div>
           <MdOutlineChevronRight className="chevron" />
-        </div>
+        </div> */}
         <div
           onClick={() => {
             link("https://myummahapps.com/");
@@ -133,18 +133,18 @@ const SettingsPage = ({ setHaptics, haptics }) => {
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
-        <div
+        {/* <div
           onClick={() => {
             link("https://sites.google.com/view/mytasbeehprivacypolicy/home");
           }}
         >
-          {/* <MdOutlineFeedback className="icon" /> */}
+          <MdOutlineFeedback className="icon" />
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Privacy Policy</p>
             <p>View our privacy policy</p>
           </div>
           <MdOutlineChevronRight className="chevron" />
-        </div>
+        </div> */}
         {/* <div>
           <MdInfoOutline className="icon" />
           <p>Info</p>
