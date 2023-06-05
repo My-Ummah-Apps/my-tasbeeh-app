@@ -45,13 +45,20 @@ function App() {
   const [haptics, setHaptics] = useState(
     JSON.parse(localStorage.getItem("haptics"))
   );
-  console.log("haptics in app.js is: " + haptics);
+
+  const [dailyCounterReset, setDailyCounterReset] = useState(
+    JSON.parse(localStorage.getItem("dailyCounterReset"))
+  );
 
   useEffect(() => {
     if (localStorage.getItem("haptics") == null) {
       localStorage.setItem("haptics", JSON.stringify(false));
       setHaptics(false);
-      console.log(typeof haptics);
+    }
+
+    if (localStorage.getItem("dailyCounterReset") == null) {
+      localStorage.setItem("dailyCounterReset", JSON.stringify(false));
+      setDailyCounterReset(false);
     }
   });
 
@@ -278,7 +285,14 @@ function App() {
         <Routes>
           <Route
             path="SettingsPage"
-            element={<SettingsPage setHaptics={setHaptics} haptics={haptics} />}
+            element={
+              <SettingsPage
+                setHaptics={setHaptics}
+                haptics={haptics}
+                setDailyCounterReset={setDailyCounterReset}
+                dailyCounterReset={dailyCounterReset}
+              />
+            }
           />
           <Route
             index
