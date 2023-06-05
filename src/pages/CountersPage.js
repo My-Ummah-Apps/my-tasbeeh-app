@@ -10,6 +10,7 @@ import PopUpBoxFilled from "../components/PopUpBoxFilled";
 import FAB from "../components/FAB";
 
 const CountersPage = ({
+  activeBackgroundColor,
   resetSingleCounter,
   invokeSetActiveCounter,
   modifyTheCountersArray,
@@ -39,9 +40,13 @@ const CountersPage = ({
   function handleClick() {
     forceUpdate();
   }
-
+  console.log(activeBackgroundColor);
   return (
     <>
+      <div className="header-wrap">
+        {/* <h2 style={{ backgroundColor: activeBackgroundColor }}>Tasbeehat</h2> */}
+        <p>Tasbeehat</p>
+      </div>
       <div className="table-wrap">
         <table className="counters-wrap">
           {localSavedCountersArray.map((counterItem) => {

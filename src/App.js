@@ -33,6 +33,7 @@ function App() {
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
   const [activeCounterName, setActiveCounterName] = useState("");
   const [activeCounterNumber, setActiveCounterNumber] = useState(0);
+  const [activeBackgroundColor, setActiveBackgroundColor] = useState("");
 
   const saveArrayLocally = (arrayToSave) => {
     localStorage.setItem(
@@ -235,6 +236,7 @@ function App() {
         counterName = counterItem.counter;
         currentCount = counterItem.count;
         counterId = counterItem.id;
+        setActiveBackgroundColor(counterItem.color);
       }
       saveArrayLocally(localSavedCountersArray);
       setActiveCounterName(counterName);
@@ -302,6 +304,7 @@ function App() {
             path="CountersPage"
             element={
               <CountersPage
+                activeBackgroundColor={activeBackgroundColor}
                 materialColors={materialColors}
                 localSavedCountersArray={localSavedCountersArray}
                 invokeSetActiveCounter={invokeSetActiveCounter}

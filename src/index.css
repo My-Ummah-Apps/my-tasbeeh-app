@@ -338,7 +338,19 @@ MdModeEditOutline {
 
   position: fixed;
   /* z-index: 0; */
-  top: 5%;
+  top: 10%;
+}
+
+.header-wrap {
+  height: 10vh;
+  width: 100vw;
+  color: black;
+  display: flex;
+}
+
+.header-wrap p {
+  text-align: left;
+  align-self: center;
 }
 
 /* .table-wrap::before {
@@ -498,11 +510,11 @@ td:last-child {
 
 /* HEADER */
 
-.header-wrap {
+/* .header-wrap {
   text-align: left;
   background: #2176ff;
   padding: 1rem;
-}
+} */
 
 /* NAVBAR */
 
