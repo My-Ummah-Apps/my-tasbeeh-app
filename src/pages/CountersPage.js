@@ -45,7 +45,7 @@ const CountersPage = ({
     <>
       <div className="header-wrap">
         {/* <h2 style={{ backgroundColor: activeBackgroundColor }}>Tasbeehat</h2> */}
-        <p>Tasbeehat</p>
+        {/* <p>Tasbeehat</p> */}
       </div>
       <div className="table-wrap">
         <table className="counters-wrap">
