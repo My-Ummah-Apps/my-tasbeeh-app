@@ -50,8 +50,6 @@ function App() {
     JSON.parse(localStorage.getItem("dailyCounterReset"))
   );
 
-  // console.log(new Date());
-
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
 
   console.log(lastLaunchDate);
