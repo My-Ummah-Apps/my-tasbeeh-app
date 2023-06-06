@@ -1,15 +1,35 @@
 import { useState, useReducer } from "react";
+
+import React from "react";
+import ReactDOM from "react-dom";
+import Modal from "react-modal";
+
 import {
   MdOutlineClose,
   MdOutlineRestartAlt,
   MdModeEditOutline,
 } from "react-icons/md";
 
+import { RiEditBoxLine } from "react-icons/ri";
+
 import PopUpBoxBlank from "../components/PopUpBoxBlank";
 import PopUpBoxFilled from "../components/PopUpBoxFilled";
 import FAB from "../components/FAB";
 
-const CountersPage = ({
+// ReactModal.setAppElement("#root");
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+function CountersPage({
   activeBackgroundColor,
   resetSingleCounter,
   invokeSetActiveCounter,
@@ -21,7 +41,18 @@ const CountersPage = ({
   deleteSingleCounter,
   materialColors,
   showAnimation,
-}) => {
+}) {
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function handleOpenModal() {
+    setIsOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsOpen(false);
+  }
+
   let nextColorIndex = 0;
   let nextColor;
 
@@ -43,9 +74,55 @@ const CountersPage = ({
   console.log(activeBackgroundColor);
   return (
     <>
-      <div className="header-wrap">
-        {/* <h2 style={{ backgroundColor: activeBackgroundColor }}>Tasbeehat</h2> */}
-        <p>Tasbeehat</p>
+      <button onClick={handleOpenModal}>Trigger Modal</button>
+      <Modal
+        // isOpen={showModal}
+        contentLabel="onRequestClose Example"
+        onRequestClose={handleCloseModal}
+      >
+        <p>Modal text!</p>
+        <button onClick={handleCloseModal}>Close Modal</button>
+      </Modal>
+      <div className="counters-wrap">
+        {localSavedCountersArray.map((counterItem) => {
+          nextColor = materialColors[nextColorIndex];
+          counterItem.color = nextColor;
+          nextColorIndex == materialColors.length - 1
+            ? (nextColorIndex = 0)
+            : (nextColorIndex += 1);
+          return (
+            <div
+              className="single-counter"
+              style={{
+                backgroundColor: nextColor,
+              }}
+              onClick={() => {
+                invokeSetActiveCounter(counterItem.id);
+              }}
+            >
+              <div className="single-counter-name-and-count-wrap">
+                <div className="single-counter-counter-name">
+                  {counterItem.counter}
+                </div>
+                <div>
+                  {counterItem.count} / {counterItem.target}
+                </div>
+              </div>
+              <div
+                className="edit-btn-wrap"
+                onClick={(e) => {
+                  setCurrentCounterName(counterItem.counter);
+                  setcurrentCount(counterItem.count);
+                  setCounterTarget(counterItem.target);
+                  setcurrentCounterId(counterItem.id);
+                  setShowPopUpBoxFilled(true);
+                }}
+              >
+                <RiEditBoxLine />
+              </div>
+            </div>
+          );
+        })}
       </div>
       <div className="table-wrap">
         <table className="counters-wrap">
@@ -166,6 +243,6 @@ const CountersPage = ({
       />
     </>
   );
-};
+}
 
 export default CountersPage;

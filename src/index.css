@@ -327,7 +327,35 @@ MdModeEditOutline {
   transition: left 0.3s ease-in, box-shadow 0.3s ease;
 }
 
+.counters-wrap {
+  position: fixed;
+  top: 5%;
+  height: 62vh;
+  overflow-y: scroll;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.single-counter {
+  color: #fff;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.single-counter-counter-name {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.single-counter-name-and-count-wrap {
+}
+
 .table-wrap {
+  display: none;
   /* height: 75vh; */
   overflow-y: scroll; /* add vertical scrolling */
   /* FOR IPHONES */
