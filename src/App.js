@@ -46,13 +46,42 @@ function App() {
   const [haptics, setHaptics] = useState(
     JSON.parse(localStorage.getItem("haptics"))
   );
-  console.log("haptics in app.js is: " + haptics);
+
+  const [dailyCounterReset, setDailyCounterReset] = useState(
+    JSON.parse(localStorage.getItem("dailyCounterReset"))
+  );
+
+  const [lastLaunchDate, setLastLaunchDate] = useState(null);
+
+  console.log(lastLaunchDate);
+
+  useEffect(() => {
+    const storedDate = localStorage.getItem("lastLaunchDate");
+    // const storedDate = "03/06/2023";
+    const currentDate = new Date().toLocaleDateString();
+
+    console.log(storedDate);
+    console.log(currentDate);
+
+    if (storedDate !== currentDate && dailyCounterReset == true) {
+      // Reset your variable or perform any other actions
+      resetAllCounters();
+      console.log("It is a new day! All counters have been reset");
+    }
+
+    setLastLaunchDate(currentDate);
+    localStorage.setItem("lastLaunchDate", currentDate);
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem("haptics") == null) {
       localStorage.setItem("haptics", JSON.stringify(false));
       setHaptics(false);
-      console.log(typeof haptics);
+    }
+
+    if (localStorage.getItem("dailyCounterReset") == null) {
+      localStorage.setItem("dailyCounterReset", JSON.stringify(false));
+      setDailyCounterReset(false);
     }
   });
 
@@ -280,7 +309,14 @@ function App() {
         <Routes>
           <Route
             path="SettingsPage"
-            element={<SettingsPage setHaptics={setHaptics} haptics={haptics} />}
+            element={
+              <SettingsPage
+                setHaptics={setHaptics}
+                haptics={haptics}
+                setDailyCounterReset={setDailyCounterReset}
+                dailyCounterReset={dailyCounterReset}
+              />
+            }
           />
           <Route
             index

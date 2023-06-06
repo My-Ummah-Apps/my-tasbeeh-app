@@ -1002,7 +1002,7 @@ input[type="number"] {
 .individual-section-wrap {
   position: relative;
   background: #eff1f4;
-  margin: 5rem auto 0 auto;
+  margin: 0 auto 2rem auto;
   width: 90%;
   border-radius: 0.5rem;
   box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.2);
