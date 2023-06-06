@@ -50,6 +50,30 @@ function App() {
     JSON.parse(localStorage.getItem("dailyCounterReset"))
   );
 
+  // console.log(new Date());
+
+  const [lastLaunchDate, setLastLaunchDate] = useState(null);
+
+  console.log(lastLaunchDate);
+
+  useEffect(() => {
+    const storedDate = localStorage.getItem("lastLaunchDate");
+    // const storedDate = "03/06/2023";
+    const currentDate = new Date().toLocaleDateString();
+
+    console.log(storedDate);
+    console.log(currentDate);
+
+    if (storedDate !== currentDate && dailyCounterReset == true) {
+      // Reset your variable or perform any other actions
+      resetAllCounters();
+      console.log("It is a new day! All counters have been reset");
+    }
+
+    setLastLaunchDate(currentDate);
+    localStorage.setItem("lastLaunchDate", currentDate);
+  }, []);
+
   useEffect(() => {
     if (localStorage.getItem("haptics") == null) {
       localStorage.setItem("haptics", JSON.stringify(false));
