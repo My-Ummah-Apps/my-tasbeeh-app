@@ -54,7 +54,7 @@ const SettingsPage = ({
         <div className="individual-row-wrap">
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Auto Reset Count</p>
-            <p>Counter will be reset daily</p>
+            <p>Counters will be reset daily</p>
           </div>
           <span className="mt-ios">
             <input id="2" type="checkbox" checked={dailyCounterReset} />
