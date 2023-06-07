@@ -6,6 +6,7 @@ const FAB = ({
   setShowPopUpBoxBlank,
   resetAllCounters,
   localSavedCountersArray,
+  handleOpenModal,
 }) => {
   //   const grabColor = localSavedCountersArray.find((counterItem) =>
   //     counterItem.isActive == true ? counterItem.color : null
@@ -42,7 +43,7 @@ const FAB = ({
       <Action
         text="Add Dhikr"
         onClick={() => {
-          setShowPopUpBoxBlank(true);
+          handleOpenModal();
         }}
       >
         {" "}

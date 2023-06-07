@@ -42,16 +42,39 @@ function CountersPage({
   materialColors,
   showAnimation,
 }) {
+  const [modal, setModal] = useState("");
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
-  function handleOpenModal() {
-    setIsOpen(true);
+  const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
   }
 
-  function handleCloseModal() {
+  function closeModal() {
     setIsOpen(false);
   }
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+
+    // setShowPopUpBoxFilled(true);
+  };
+
+  const handleOpenModal2 = () => {
+    setShowModal2(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleCloseModal2 = () => {
+    setShowModal2(false);
+  };
 
   let nextColorIndex = 0;
   let nextColor;
@@ -74,14 +97,34 @@ function CountersPage({
   console.log(activeBackgroundColor);
   return (
     <>
-      <button onClick={handleOpenModal}>Trigger Modal</button>
+      <Modal modal={modal} isOpen={showModal} onRequestClose={handleCloseModal}>
+        <PopUpBoxFilled
+          modifyTheCountersArray={modifyTheCountersArray}
+          currentCounterName={currentCounterName}
+          currentCount={currentCount}
+          currentCounterTarget={currentCounterTarget}
+          currentCounterId={currentCounterId}
+          setShowPopUpBoxFilled={setShowPopUpBoxFilled}
+          setLocalSavedCountersArray={setLocalSavedCountersArray}
+          localSavedCountersArray={localSavedCountersArray}
+          addCounter={addCounter}
+        />
+      </Modal>
       <Modal
-        // isOpen={showModal}
-        contentLabel="onRequestClose Example"
-        onRequestClose={handleCloseModal}
+        handleCloseModal={handleCloseModal2}
+        closeTimeoutMS={2000}
+        modal={modal}
+        isOpen={showModal2}
+        contentLabel="Modal #2 Global Style Override Example"
+        onRequestClose={handleCloseModal2}
       >
-        <p>Modal text!</p>
-        <button onClick={handleCloseModal}>Close Modal</button>
+        <PopUpBoxBlank
+          nextColor={nextColor}
+          setShowPopUpBoxBlank={setShowPopUpBoxBlank}
+          setLocalSavedCountersArray={setLocalSavedCountersArray}
+          localSavedCountersArray={localSavedCountersArray}
+          addCounter={addCounter}
+        />
       </Modal>
       <div className="counters-wrap">
         {localSavedCountersArray.map((counterItem) => {
@@ -104,7 +147,7 @@ function CountersPage({
                 <div className="single-counter-counter-name">
                   {counterItem.counter}
                 </div>
-                <div>
+                <div className="single-counter-count">
                   {counterItem.count} / {counterItem.target}
                 </div>
               </div>
@@ -115,100 +158,17 @@ function CountersPage({
                   setcurrentCount(counterItem.count);
                   setCounterTarget(counterItem.target);
                   setcurrentCounterId(counterItem.id);
-                  setShowPopUpBoxFilled(true);
+                  // setShowPopUpBoxFilled(true);
+                  handleOpenModal();
                 }}
               >
-                <RiEditBoxLine />
+                <MdModeEditOutline />
               </div>
             </div>
           );
         })}
       </div>
-      <div className="table-wrap">
-        <table className="counters-wrap">
-          {localSavedCountersArray.map((counterItem) => {
-            nextColor = materialColors[nextColorIndex];
-            counterItem.color = nextColor;
-            nextColorIndex == materialColors.length - 1
-              ? (nextColorIndex = 0)
-              : (nextColorIndex += 1);
-
-            counterItem.isActive
-              ? (border = { border: " 1px solid white" })
-              : (border = { border: " 1px solid black" });
-
-            return (
-              <tbody>
-                <tr
-                  className={`counter-page-single-counter ${
-                    counterItem.isActive ? "active" : "not-active"
-                  }`}
-                  key={counterItem.id}
-                  style={{
-                    backgroundColor: nextColor,
-                  }}
-                >
-                  <td
-                    colSpan="2"
-                    className="counter"
-                    onClick={() => {
-                      invokeSetActiveCounter(counterItem.id);
-                    }}
-                  >
-                    <span
-                      className="counter-name-td"
-                      style={{ border: "none", textAlign: "center" }}
-                    >
-                      {counterItem.counter}
-                    </span>
-                  </td>
-                  <td
-                    style={{ textAlign: "center" }}
-                    onClick={() => {
-                      invokeSetActiveCounter(counterItem.id);
-                    }}
-                  >
-                    {counterItem.count} / {counterItem.target}
-                  </td>
-
-                  <td
-                    style={{ textAlign: "center" }}
-                    onClick={(e) => {
-                      setCurrentCounterName(counterItem.counter);
-                      setcurrentCount(counterItem.count);
-                      setCounterTarget(counterItem.target);
-                      setcurrentCounterId(counterItem.id);
-                      setShowPopUpBoxFilled(true);
-                    }}
-                  >
-                    <MdModeEditOutline />
-                  </td>
-                  <td
-                    style={{ textAlign: "center" }}
-                    onClick={() => {
-                      resetSingleCounter(counterItem.id);
-                      if (counterItem.isActive) {
-                        invokeSetActiveCounter(counterItem.id);
-                      }
-                      handleClick();
-                    }}
-                  >
-                    <MdOutlineRestartAlt />
-                  </td>
-                  <td
-                    onClick={() => {
-                      deleteSingleCounter(counterItem.id);
-                    }}
-                    style={{ textAlign: "center" }}
-                  >
-                    <MdOutlineClose />
-                  </td>
-                </tr>
-              </tbody>
-            );
-          })}
-        </table>
-      </div>
+      <div className="table-wrap"></div>
 
       <div>
         {showPopUpBoxBlank ? (
@@ -237,6 +197,7 @@ function CountersPage({
         ) : null}
       </div>
       <FAB
+        handleOpenModal={handleOpenModal}
         setShowPopUpBoxBlank={setShowPopUpBoxBlank}
         resetAllCounters={resetAllCounters}
         localSavedCountersArray={localSavedCountersArray}

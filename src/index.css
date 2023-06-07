@@ -328,6 +328,7 @@ MdModeEditOutline {
 }
 
 .counters-wrap {
+  width: 100%;
   position: fixed;
   top: 5%;
   height: 62vh;
@@ -336,10 +337,14 @@ MdModeEditOutline {
     env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
+.single-counter-name-and-count-wrap {
+  width: 70%;
+}
+
 .single-counter {
   color: #fff;
   margin: 1rem;
-  padding: 1rem;
+  padding: 0.7rem;
   border-radius: 1rem;
   display: flex;
   justify-content: space-between;
@@ -347,11 +352,19 @@ MdModeEditOutline {
 }
 
 .single-counter-counter-name {
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.single-counter-name-and-count-wrap {
+.single-counter-count {
+  font-size: 0.8rem;
+}
+
+.edit-btn-wrap {
+  margin-right: 0.5rem;
 }
 
 .table-wrap {
