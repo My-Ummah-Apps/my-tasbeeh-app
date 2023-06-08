@@ -24,7 +24,10 @@ const SettingsPage = ({
   console.log("dailyReset Counter is: " + dailyCounterReset);
   return (
     <div className="settings-page-wrap">
-      <div className="individual-section-wrap" style={{ marginTop: "5rem" }}>
+      <div className="settings-page-header">
+        <p>Settings</p>
+      </div>
+      <div className="individual-section-wrap" style={{ marginTop: "3rem" }}>
         <div className="individual-row-wrap">
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Haptic Vibration</p>

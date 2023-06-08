@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter }) => {
-  const closePopUpBox = () => {
-    setShowPopUpBoxBlank(false);
-  };
-
+function PopUpBoxBlank({
+  setShowPopUpBoxBlank,
+  addCounter,
+  handleCloseModal2,
+}) {
   const [alertColor, setAlertColor] = useState("#fff");
 
   const submitCounter = (e) => {
@@ -19,20 +19,18 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter }) => {
       : addCounter(counterNameInput, 0);
     // addCounter(counterNameInput);
     setCounterName("");
-    setShowPopUpBoxBlank(false);
+    // setShowPopUpBoxBlank(false);
+    handleCloseModal2();
   };
-
-  //   const onSubmit = (e) => {
-  //     e.preventDefault();
-  //   };
 
   const [counterNameInput, setCounterName] = useState("");
   const [targetInput, setTarget] = useState("");
 
   return (
-    <div style={{ backgroundColor: "rgb(92, 107, 192)" }} class="login-box">
+    <div className="form-wrap">
       <form>
-        <div class="user-box">
+        <div className="dhikr-name-input-wrap">
+          <p>Dhikr Name</p>
           <input
             onChange={(e) => {
               setCounterName(e.target.value);
@@ -41,9 +39,10 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter }) => {
             style={{ borderBottom: "1px solid" + alertColor }}
             required
           ></input>
-          <label style={{ color: alertColor }}>Dhikr Name</label>
+          {/* <label style={{ color: alertColor }}>Dhikr Name</label> */}
         </div>
-        <div class="user-box">
+        <div className="target-input-wrap">
+          <p>Target</p>
           <input
             onChange={(e) => {
               if (!Number(e.target.value)) {
@@ -51,26 +50,26 @@ const PopUpBoxBlank = ({ setShowPopUpBoxBlank, addCounter }) => {
               }
               setTarget(e.target.value);
             }}
+            placeholder="0"
             maxLength={5}
             type="text"
             pattern="[0-9]*"
             required
           ></input>
-          <label>Target (Default: 0)</label>
+          {/* <label>Target (Default: 0)</label> */}
         </div>
         <div className="pop-up-box-buttons-wrap">
-          <button onClick={closePopUpBox}>Cancel</button>
           <input
-            className="submit-input"
+            className="save-btn"
             type="submit"
-            value="Submit"
+            value="Save"
             onClick={submitCounter}
           ></input>
         </div>
       </form>
     </div>
   );
-};
+}
 
 export default PopUpBoxBlank;
 

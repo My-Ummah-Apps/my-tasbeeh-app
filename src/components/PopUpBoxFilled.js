@@ -7,11 +7,8 @@ const PopUpBoxFilled = ({
   currentCount,
   currentCounterTarget,
   currentCounterId,
+  handleCloseModal,
 }) => {
-  const closePopUpBox = () => {
-    setShowPopUpBoxFilled(false);
-  };
-
   const [alertColor, setAlertColor] = useState("#fff");
 
   const submitCounter = (e) => {
@@ -27,7 +24,8 @@ const PopUpBoxFilled = ({
       currentTargetInput
     );
 
-    setShowPopUpBoxFilled(false);
+    // setShowPopUpBoxFilled(false);
+    handleCloseModal();
   };
 
   const [counterNameInput, setCounterName] = useState(currentCounterName);
@@ -35,9 +33,10 @@ const PopUpBoxFilled = ({
   const [currentTargetInput, setTarget] = useState(currentCounterTarget);
 
   return (
-    <div style={{ backgroundColor: "rgb(92, 107, 192)" }} class="login-box">
-      <form>
-        <div class="user-box">
+    <div style={{ backgroundColor: "rgb(92, 107, 192)" }} className="">
+      <form className="form-wrap">
+        <div className="dhikr-name-input-wrap">
+          <p>Dhikr Name</p>
           <input
             onChange={(e) => {
               setCounterName(e.target.value);
@@ -47,9 +46,9 @@ const PopUpBoxFilled = ({
             style={{ borderBottom: "1px solid" + alertColor }}
             required
           ></input>
-          <label style={{ color: alertColor }}>Dhikr Name</label>
         </div>
-        <div class="user-box">
+        <div className="current-count-input-wrap">
+          <p>Current Count</p>
           <input
             onChange={(e) => {
               setcurrentCountInput(e.target.value);
@@ -58,9 +57,9 @@ const PopUpBoxFilled = ({
             value={currentCountInput}
             required
           ></input>
-          <label>Count (Default: 0)</label>
         </div>
-        <div class="user-box">
+        <div className="target-input-wrap">
+          <p>Target</p>
           <input
             onChange={(e) => {
               setTarget(e.target.value);
@@ -69,14 +68,12 @@ const PopUpBoxFilled = ({
             value={currentTargetInput}
             required
           ></input>
-          <label>Target (Default: 0)</label>
         </div>
         <div className="pop-up-box-buttons-wrap">
-          <button onClick={closePopUpBox}>Cancel</button>
           <input
-            className="submit-input"
+            className="save-btn"
             type="submit"
-            value="Submit"
+            value="Save"
             onClick={submitCounter}
           ></input>
         </div>

@@ -8,6 +8,7 @@ import {
   MdOutlineClose,
   MdOutlineRestartAlt,
   MdModeEditOutline,
+  MdAdd,
 } from "react-icons/md";
 
 import { RiEditBoxLine } from "react-icons/ri";
@@ -17,6 +18,20 @@ import PopUpBoxFilled from "../components/PopUpBoxFilled";
 import FAB from "../components/FAB";
 
 // ReactModal.setAppElement("#root");
+
+// Override default Modal styles
+Modal.defaultStyles.content.border = "none";
+Modal.defaultStyles.content.position = "absolute";
+Modal.defaultStyles.content.inset = "15% 50% 50% 50%";
+Modal.defaultStyles.content.background = "#f4f4f4";
+Modal.defaultStyles.content.overflow = "none";
+Modal.defaultStyles.content.borderRadius = "20px";
+Modal.defaultStyles.content.padding = "0";
+Modal.defaultStyles.content.height = "45%";
+Modal.defaultStyles.content.zIndex = "10000";
+
+Modal.defaultStyles.content.marginInline = "auto";
+Modal.defaultStyles.content.width = "80%";
 
 const customStyles = {
   content: {
@@ -54,14 +69,8 @@ function CountersPage({
     subtitle.style.color = "#f00";
   }
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-
   const handleOpenModal = () => {
     setShowModal(true);
-
-    // setShowPopUpBoxFilled(true);
   };
 
   const handleOpenModal2 = () => {
@@ -97,8 +106,19 @@ function CountersPage({
   console.log(activeBackgroundColor);
   return (
     <>
-      <Modal modal={modal} isOpen={showModal} onRequestClose={handleCloseModal}>
+      <div className="counters-page-header">
+        {/* <div></div> */}
+        <p>Counters</p>
+        <MdAdd onClick={handleOpenModal2} />
+      </div>
+      <Modal
+        closeTimeoutMS={1000}
+        modal={modal}
+        isOpen={showModal}
+        onRequestClose={handleCloseModal}
+      >
         <PopUpBoxFilled
+          handleCloseModal={handleCloseModal}
           modifyTheCountersArray={modifyTheCountersArray}
           currentCounterName={currentCounterName}
           currentCount={currentCount}
@@ -111,16 +131,17 @@ function CountersPage({
         />
       </Modal>
       <Modal
-        handleCloseModal={handleCloseModal2}
-        closeTimeoutMS={2000}
+        // handleCloseModal={handleCloseModal2}
         modal={modal}
         isOpen={showModal2}
-        contentLabel="Modal #2 Global Style Override Example"
         onRequestClose={handleCloseModal2}
+        closeTimeoutMS={1000}
+        contentLabel="Modal #2 Global Style Override Example"
       >
         <PopUpBoxBlank
           nextColor={nextColor}
-          setShowPopUpBoxBlank={setShowPopUpBoxBlank}
+          handleCloseModal2={handleCloseModal2}
+          // setShowPopUpBoxBlank={setShowPopUpBoxBlank}
           setLocalSavedCountersArray={setLocalSavedCountersArray}
           localSavedCountersArray={localSavedCountersArray}
           addCounter={addCounter}
@@ -197,7 +218,7 @@ function CountersPage({
         ) : null}
       </div>
       <FAB
-        handleOpenModal={handleOpenModal}
+        handleOpenModal2={handleOpenModal2}
         setShowPopUpBoxBlank={setShowPopUpBoxBlank}
         resetAllCounters={resetAllCounters}
         localSavedCountersArray={localSavedCountersArray}

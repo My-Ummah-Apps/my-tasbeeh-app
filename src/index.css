@@ -328,13 +328,21 @@ MdModeEditOutline {
 }
 
 .counters-wrap {
-  width: 100%;
+  /* width: 100%;
   position: fixed;
-  top: 5%;
-  height: 62vh;
+  top: 12%;
+  height: 68vh;
+  overflow-y: scroll;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left); */
+  width: 100%;
+  position: relative;
+  top: 23%;
+  height: 68vh;
   overflow-y: scroll;
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
+  margin-top: 1rem;
 }
 
 .single-counter-name-and-count-wrap {
@@ -343,9 +351,9 @@ MdModeEditOutline {
 
 .single-counter {
   color: #fff;
-  margin: 1rem;
+  margin: 0.5rem;
   padding: 0.7rem;
-  border-radius: 1rem;
+  border-radius: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -360,7 +368,7 @@ MdModeEditOutline {
 }
 
 .single-counter-count {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 .edit-btn-wrap {
@@ -382,8 +390,8 @@ MdModeEditOutline {
   top: 10%;
 }
 
-.header-wrap {
-  height: 10vh;
+/* .header-wrap {
+  height: 15vh;
   width: 100vw;
   color: black;
   display: flex;
@@ -392,7 +400,7 @@ MdModeEditOutline {
 .header-wrap p {
   text-align: left;
   align-self: center;
-}
+} */
 
 /* .table-wrap::before {
   content: "hello";
@@ -519,43 +527,40 @@ td:last-child {
 
 /* SETTINGS PAGE */
 
-.theme-selection-wrap {
-  margin-top: 3rem;
-
-  padding: 1rem;
+.settings-page-header,
+.counters-page-header {
+  /* width: 100%; */
+  position: relative;
+  /* text-align: center; */
+  height: 7vh;
+  background-color: rgb(126, 87, 194);
+  color: white;
+  /* display: flex;
+  align-items: end; */
+  /* justify-content: space-between; */
 }
 
-.theme-selection-wrap > * {
-  padding: 1rem;
+.settings-page-header p,
+.counters-page-header p,
+.counters-page-header svg {
+  font-size: 1.2rem;
+  /* margin-bottom: 0.5rem; */
 }
 
-.theme-blocks-container {
-  display: flex;
-  justify-content: space-around;
+.counters-page-header p {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.white-theme-block,
-.black-theme-block {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
+.counters-page-header svg {
+  font-size: 1.5rem;
+  position: absolute;
+  right: 10px;
+  transform: translate(50%, -50%);
+  /* margin-right: 0.5rem; */
 }
-
-.white-theme-block {
-  background-color: #fff;
-}
-
-.black-theme-block {
-  background-color: #000;
-}
-
-/* HEADER */
-
-/* .header-wrap {
-  text-align: left;
-  background: #2176ff;
-  padding: 1rem;
-} */
 
 /* NAVBAR */
 
@@ -647,6 +652,44 @@ div[role="progressbar"]::before {
 }
 
 /* POP UP BOXES */
+
+Modal {
+}
+
+.form-wrap {
+  background: #f4f4f4;
+  padding: 1rem;
+}
+
+.dhikr-name-input-wrap {
+  /* text-align: center; */
+  margin-bottom: 0.5rem;
+}
+
+.target-input-wrap {
+  /* text-align: center; */
+}
+
+.dhikr-name-input-wrap p,
+.target-input-wrap p,
+.current-count-input-wrap p {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.form-wrap input {
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.save-btn {
+  margin-top: 1rem;
+}
+
+/* OLD POP UP BOX STYLING BELOW */
 
 .login-box {
   position: absolute;
@@ -967,8 +1010,9 @@ input[type="number"] {
 
 .rtf.closed,
 .rtf.open {
-  bottom: 15%;
+  bottom: 10%;
   right: 5%;
+  display: none;
 }
 
 .rtf--ab,
@@ -1033,6 +1077,10 @@ input[type="number"] {
 
 .rtf--ab__c:nth-of-type(2) {
   padding-left: 7px !important;
+}
+
+.rtf {
+  z-index: -1;
 }
 
 /* SETTINGS PAGE */
@@ -1124,6 +1172,24 @@ input[type="number"] {
   transition: 0.15s ease-in-out !important;
 }
 
+/* MODAL */
+
+.ReactModal__Overlay {
+  opacity: 0;
+  /* transform: translateY(600px); */
+  transition: all 250ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  /* transform: translateY(0px); */
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+  /* transform: translateY(-600px); */
+}
+
 /* DEVICE SPECIFIC STYLES */
 
 /* IOS */
@@ -1138,10 +1204,11 @@ input[type="number"] {
     -webkit-filter: drop-shadow(0 0 1px black);
     filter: drop-shadow(0 0 1px black);
   }
-  /* .rtf.closed,
-  .rtf.open {
-    bottom: 5%;
-  } */
+
+  .settings-page-header,
+  .counters-page-header {
+    height: 10vh;
+  }
 }
 
 @supports not (-webkit-touch-callout: none) {
