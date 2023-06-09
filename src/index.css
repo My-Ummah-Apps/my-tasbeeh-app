@@ -32,6 +32,9 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  /* padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left); */
+  /* padding-top: constant(safe-area-inset-top); */
 }
 
 /* MAIN PAGE */
@@ -208,11 +211,6 @@ body {
 
 /* COUNTERS PAGE */
 
-.counters-wrap {
-  padding: 0 1rem;
-  font-size: 1rem;
-}
-
 .counter {
   white-space: nowrap;
   overflow: hidden;
@@ -328,21 +326,11 @@ MdModeEditOutline {
 }
 
 .counters-wrap {
-  /* width: 100%;
-  position: fixed;
-  top: 12%;
-  height: 68vh;
-  overflow-y: scroll;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left); */
   width: 100%;
-  position: relative;
-  top: 23%;
-  height: 68vh;
+  /* position: relative; */
+  /* top: 23%; */
+  height: 80vh;
   overflow-y: scroll;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
-  margin-top: 1rem;
 }
 
 .single-counter-name-and-count-wrap {
@@ -533,8 +521,10 @@ td:last-child {
   position: relative;
   /* text-align: center; */
   height: 7vh;
-  background-color: rgb(126, 87, 194);
-  color: white;
+  /* background-color: rgb(126, 87, 194); */
+  background: white;
+  color: black;
+  border-bottom: 1px solid rgb(221, 221, 221);
   /* display: flex;
   align-items: end; */
   /* justify-content: space-between; */
@@ -543,28 +533,33 @@ td:last-child {
 .settings-page-header p,
 .counters-page-header p,
 .counters-page-header svg {
+  position: absolute;
+  top: 50%;
   font-size: 1.2rem;
+
   /* margin-bottom: 0.5rem; */
 }
 
-.counters-page-header p {
-  position: absolute;
+.counters-page-header p,
+.settings-page-header p {
   left: 50%;
-  top: 50%;
+
   transform: translate(-50%, -50%);
 }
 
 .counters-page-header svg {
   font-size: 1.5rem;
-  position: absolute;
-  right: 10px;
+
+  right: 20px;
   transform: translate(50%, -50%);
+
   /* margin-right: 0.5rem; */
 }
 
 /* NAVBAR */
 
 .navbar-wrap {
+  padding-bottom: env(safe-area-inset-bottom);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -573,6 +568,7 @@ td:last-child {
   width: 100%;
   border-top: 1px solid #f1eff7;
   box-shadow: 10px 5px 5px rgb(177, 177, 177);
+  background: #fff;
 }
 
 .nav-link {
@@ -1085,7 +1081,10 @@ input[type="number"] {
 
 /* SETTINGS PAGE */
 
-.settings-page-wrap {
+.settings-page-wrap,
+.counters-page-wrap {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .individual-section-wrap {
@@ -1196,7 +1195,7 @@ input[type="number"] {
 @supports (-webkit-touch-callout: none) {
   /* CSS specific to iOS devices */
   .navbar-wrap {
-    padding-bottom: env(safe-area-inset-bottom);
+    /* padding-bottom: env(safe-area-inset-bottom); */
   }
   .counter-page-single-counter {
   }
@@ -1207,7 +1206,14 @@ input[type="number"] {
 
   .settings-page-header,
   .counters-page-header {
-    height: 10vh;
+    height: 6vh;
+  }
+
+  .settings-page-header p,
+  .counters-page-header p,
+  .settings-page-header svg,
+  .counters-page-header svg {
+    /* margin-top: 1rem; */
   }
 }
 

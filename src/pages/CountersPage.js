@@ -22,7 +22,8 @@ import FAB from "../components/FAB";
 // Override default Modal styles
 Modal.defaultStyles.content.border = "none";
 Modal.defaultStyles.content.position = "absolute";
-Modal.defaultStyles.content.inset = "15% 50% 50% 50%";
+// Modal.defaultStyles.content.inset = "15% 50% 50% 50%";
+Modal.defaultStyles.content.inset = "15% 50% 50% 10%";
 Modal.defaultStyles.content.background = "#f4f4f4";
 Modal.defaultStyles.content.overflow = "none";
 Modal.defaultStyles.content.borderRadius = "20px";
@@ -105,7 +106,7 @@ function CountersPage({
   }
   console.log(activeBackgroundColor);
   return (
-    <>
+    <div className="counters-page-wrap">
       <div className="counters-page-header">
         {/* <div></div> */}
         <p>Counters</p>
@@ -223,7 +224,7 @@ function CountersPage({
         resetAllCounters={resetAllCounters}
         localSavedCountersArray={localSavedCountersArray}
       />
-    </>
+    </div>
   );
 }
 
