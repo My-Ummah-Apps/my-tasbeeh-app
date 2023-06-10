@@ -33,72 +33,71 @@ const PopUpBoxFilled = ({
   const [currentTargetInput, setTarget] = useState(currentCounterTarget);
 
   return (
-    <div style={{ backgroundColor: "rgb(92, 107, 192)" }} className="">
-      <form className="form-wrap">
-        <div className="dhikr-name-input-wrap">
-          <p>Dhikr Name</p>
-          <input
-            onChange={(e) => {
-              setCounterName(e.target.value);
-            }}
-            type="text"
-            value={counterNameInput}
-            style={{ borderBottom: "1px solid" + alertColor }}
-            required
-          ></input>
-        </div>
-        <div className="current-count-input-wrap">
-          <p>Current Count</p>
-          <input
-            onChange={(e) => {
-              setcurrentCountInput(e.target.value);
-            }}
-            type="number"
-            value={currentCountInput}
-            required
-          ></input>
-        </div>
-        <div className="target-input-wrap">
-          <p>Target</p>
-          <input
-            onChange={(e) => {
-              setTarget(e.target.value);
-            }}
-            type="number"
-            value={currentTargetInput}
-            required
-          ></input>
-        </div>
-        <div className="pop-up-box-buttons-wrap">
-          <input
-            className="save-btn"
-            type="submit"
-            value="Save"
-            onClick={submitCounter}
-          ></input>
-          <input
-            className="reset-btn"
-            type="submit"
-            value="Reset"
-            onClick={(e) => {
-              resetSingleCounter(currentCounterId);
-              e.preventDefault();
-              setcurrentCountInput(0);
-            }}
-          ></input>
-          <input
-            className="delete-btn"
-            type="submit"
-            value="Delete"
-            onClick={(e) => {
-              deleteSingleCounter(currentCounterId);
-              e.preventDefault();
-              handleCloseModal();
-            }}
-          ></input>
-        </div>
-      </form>
-    </div>
+    <form className="form-wrap">
+      <div className="dhikr-name-input-wrap">
+        <p>Dhikr Name</p>
+        <input
+          onChange={(e) => {
+            setCounterName(e.target.value);
+          }}
+          type="text"
+          value={counterNameInput}
+          style={{ borderBottom: "1px solid" + alertColor }}
+          required
+        ></input>
+      </div>
+      <div className="current-count-input-wrap">
+        <p>Current Count</p>
+        <input
+          onChange={(e) => {
+            setcurrentCountInput(e.target.value);
+          }}
+          type="number"
+          value={currentCountInput}
+          required
+        ></input>
+      </div>
+      <div className="target-input-wrap">
+        <p>Target</p>
+        <input
+          onChange={(e) => {
+            setTarget(e.target.value);
+          }}
+          type="number"
+          value={currentTargetInput}
+          required
+        ></input>
+      </div>
+      <div className="pop-up-box-buttons-wrap">
+        <input
+          className="save-btn"
+          type="button"
+          value="Save"
+          onClick={submitCounter}
+        ></input>
+        <div className="pop-up-box-buttons-wrap-border"></div>
+        <input
+          className="reset-btn"
+          type="button"
+          value="Reset"
+          onClick={(e) => {
+            resetSingleCounter(currentCounterId);
+            e.preventDefault();
+            setcurrentCountInput(0);
+          }}
+        ></input>
+        <input
+          className="delete-btn"
+          type="button"
+          value="Delete"
+          onClick={(e) => {
+            deleteSingleCounter(currentCounterId);
+            e.preventDefault();
+            handleCloseModal();
+          }}
+        ></input>
+      </div>
+    </form>
   );
 };
 

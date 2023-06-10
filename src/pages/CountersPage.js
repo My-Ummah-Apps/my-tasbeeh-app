@@ -20,12 +20,16 @@ import PopUpBoxFilled from "../components/PopUpBoxFilled";
 Modal.defaultStyles.content.border = "none";
 Modal.defaultStyles.content.position = "absolute";
 // Modal.defaultStyles.content.inset = "15% 50% 50% 50%";
-Modal.defaultStyles.content.inset = "15% 50% 50% 10%";
+Modal.defaultStyles.content.inset = "10% 50% 50% 10%";
+// Modal.defaultStyles.content.top = "50%";
+// Modal.defaultStyles.content.right = "50%";
+// Modal.defaultStyles.content.transform = "translate(50%, -50%)";
+
 Modal.defaultStyles.content.background = "#f4f4f4";
 Modal.defaultStyles.content.overflow = "none";
 Modal.defaultStyles.content.borderRadius = "20px";
 Modal.defaultStyles.content.padding = "0";
-Modal.defaultStyles.content.height = "45%";
+// Modal.defaultStyles.content.height = "45%";
 Modal.defaultStyles.content.zIndex = "10000";
 
 Modal.defaultStyles.content.marginInline = "auto";
