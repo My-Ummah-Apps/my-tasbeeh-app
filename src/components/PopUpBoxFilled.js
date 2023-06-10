@@ -2,15 +2,16 @@ import { useState } from "react";
 
 const PopUpBoxFilled = ({
   modifyTheCountersArray,
-  setShowPopUpBoxFilled,
   currentCounterName,
   currentCount,
   currentCounterTarget,
   currentCounterId,
   handleCloseModal,
+  resetSingleCounter,
+  deleteSingleCounter,
+  setcurrentCount,
 }) => {
   const [alertColor, setAlertColor] = useState("#fff");
-
   const submitCounter = (e) => {
     e.preventDefault();
     if (!counterNameInput) {
@@ -24,7 +25,6 @@ const PopUpBoxFilled = ({
       currentTargetInput
     );
 
-    // setShowPopUpBoxFilled(false);
     handleCloseModal();
   };
 
@@ -75,6 +75,26 @@ const PopUpBoxFilled = ({
             type="submit"
             value="Save"
             onClick={submitCounter}
+          ></input>
+          <input
+            className="reset-btn"
+            type="submit"
+            value="Reset"
+            onClick={(e) => {
+              resetSingleCounter(currentCounterId);
+              e.preventDefault();
+              setcurrentCountInput(0);
+            }}
+          ></input>
+          <input
+            className="delete-btn"
+            type="submit"
+            value="Delete"
+            onClick={(e) => {
+              deleteSingleCounter(currentCounterId);
+              e.preventDefault();
+              handleCloseModal();
+            }}
           ></input>
         </div>
       </form>

@@ -11,11 +11,8 @@ import {
   MdAdd,
 } from "react-icons/md";
 
-import { RiEditBoxLine } from "react-icons/ri";
-
 import PopUpBoxBlank from "../components/PopUpBoxBlank";
 import PopUpBoxFilled from "../components/PopUpBoxFilled";
-import FAB from "../components/FAB";
 
 // ReactModal.setAppElement("#root");
 
@@ -100,6 +97,7 @@ function CountersPage({
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
   let border;
+  let counterId;
 
   function handleClick() {
     forceUpdate();
@@ -108,7 +106,6 @@ function CountersPage({
   return (
     <div className="counters-page-wrap">
       <div className="counters-page-header">
-        {/* <div></div> */}
         <p>Counters</p>
         <MdAdd onClick={handleOpenModal2} />
       </div>
@@ -129,6 +126,9 @@ function CountersPage({
           setLocalSavedCountersArray={setLocalSavedCountersArray}
           localSavedCountersArray={localSavedCountersArray}
           addCounter={addCounter}
+          resetSingleCounter={resetSingleCounter}
+          deleteSingleCounter={deleteSingleCounter}
+          setcurrentCount={setcurrentCount}
         />
       </Modal>
       <Modal
@@ -152,78 +152,58 @@ function CountersPage({
         {localSavedCountersArray.map((counterItem) => {
           nextColor = materialColors[nextColorIndex];
           counterItem.color = nextColor;
+          // counterItem.width = "50%";
+
           nextColorIndex == materialColors.length - 1
             ? (nextColorIndex = 0)
             : (nextColorIndex += 1);
           return (
-            <div
-              className="single-counter"
-              style={{
-                backgroundColor: nextColor,
-              }}
-              onClick={() => {
-                invokeSetActiveCounter(counterItem.id);
-              }}
-            >
-              <div className="single-counter-name-and-count-wrap">
-                <div className="single-counter-counter-name">
-                  {counterItem.counter}
-                </div>
-                <div className="single-counter-count">
-                  {counterItem.count} / {counterItem.target}
-                </div>
-              </div>
+            <>
               <div
-                className="edit-btn-wrap"
-                onClick={(e) => {
-                  setCurrentCounterName(counterItem.counter);
-                  setcurrentCount(counterItem.count);
-                  setCounterTarget(counterItem.target);
-                  setcurrentCounterId(counterItem.id);
-                  // setShowPopUpBoxFilled(true);
-                  handleOpenModal();
+                className="single-counter"
+                style={{
+                  //  This style is to do with turning each counter into a progress bar
+                  // backgroundColor: nextColor + 50,
+                  backgroundColor: nextColor,
+                }}
+                onClick={() => {
+                  invokeSetActiveCounter(counterItem.id);
                 }}
               >
-                <MdModeEditOutline />
+                <div className="single-counter-name-and-count-wrap">
+                  <div className="single-counter-counter-name">
+                    {counterItem.counter}
+                  </div>
+                  <div className="single-counter-count">
+                    {counterItem.count} / {counterItem.target}
+                  </div>
+                </div>
+                <div
+                  className="edit-btn-wrap"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentCounterName(counterItem.counter);
+                    setcurrentCount(counterItem.count);
+                    setCounterTarget(counterItem.target);
+                    setcurrentCounterId(counterItem.id);
+                    handleOpenModal();
+                  }}
+                >
+                  <MdModeEditOutline />
+                </div>
+                {/* This style is to do with turning each counter into a progress bar */}
+                {/* <div
+                  className="single-counter-overlay"
+                  style={{
+                    backgroundColor: nextColor,
+                    width: (counterItem.count / counterItem.target) * 100 + "%",
+                  }}
+                ></div> */}
               </div>
-            </div>
+            </>
           );
         })}
       </div>
-      <div className="table-wrap"></div>
-
-      <div>
-        {showPopUpBoxBlank ? (
-          <PopUpBoxBlank
-            nextColor={nextColor}
-            setShowPopUpBoxBlank={setShowPopUpBoxBlank}
-            setLocalSavedCountersArray={setLocalSavedCountersArray}
-            localSavedCountersArray={localSavedCountersArray}
-            addCounter={addCounter}
-          />
-        ) : null}
-      </div>
-      <div>
-        {showPopUpBoxFilled ? (
-          <PopUpBoxFilled
-            modifyTheCountersArray={modifyTheCountersArray}
-            currentCounterName={currentCounterName}
-            currentCount={currentCount}
-            currentCounterTarget={currentCounterTarget}
-            currentCounterId={currentCounterId}
-            setShowPopUpBoxFilled={setShowPopUpBoxFilled}
-            setLocalSavedCountersArray={setLocalSavedCountersArray}
-            localSavedCountersArray={localSavedCountersArray}
-            addCounter={addCounter}
-          />
-        ) : null}
-      </div>
-      <FAB
-        handleOpenModal2={handleOpenModal2}
-        setShowPopUpBoxBlank={setShowPopUpBoxBlank}
-        resetAllCounters={resetAllCounters}
-        localSavedCountersArray={localSavedCountersArray}
-      />
     </div>
   );
 }

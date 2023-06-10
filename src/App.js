@@ -291,6 +291,7 @@ function App() {
   };
 
   const deleteSingleCounter = (id) => {
+    // e.preventDefault();
     const filteredArray = localSavedCountersArray.filter(
       (counterItem) => counterItem.id !== id
     );
