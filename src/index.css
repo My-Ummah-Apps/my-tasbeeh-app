@@ -393,7 +393,8 @@ MdModeEditOutline {
 }
 
 .edit-btn-wrap {
-  margin-right: 0.5rem;
+  margin: -1rem;
+  padding: 1rem 1.5rem;
 }
 
 .add-btn {
@@ -488,11 +489,12 @@ MdModeEditOutline {
 
 .counters-page-header svg {
   font-size: 1.5rem;
-
-  right: 20px;
+  width: 15%;
+  right: 28px;
   transform: translate(50%, -50%);
-
-  /* margin-right: 0.5rem; */
+  height: 100%;
+  width: 18%;
+  padding: 0 1.2rem 0 1.2rem;
 }
 
 /* NAVBAR */
@@ -593,7 +595,7 @@ Modal {
 
 .form-wrap {
   background: #f4f4f4;
-  padding: 1rem;
+  padding: 0.5rem 1rem 1rem 1rem;
   border-radius: 0.7rem;
   box-shadow: 0 3px 20px rgba(142, 142, 142, 0.6);
   /* height: 100%; */

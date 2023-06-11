@@ -137,7 +137,6 @@ function CountersPage({
         />
       </Modal>
       <Modal
-        // handleCloseModal={handleCloseModal2}
         modal={modal}
         isOpen={showModal2}
         onRequestClose={handleCloseModal2}
@@ -147,7 +146,6 @@ function CountersPage({
         <PopUpBoxBlank
           nextColor={nextColor}
           handleCloseModal2={handleCloseModal2}
-          // setShowPopUpBoxBlank={setShowPopUpBoxBlank}
           setLocalSavedCountersArray={setLocalSavedCountersArray}
           localSavedCountersArray={localSavedCountersArray}
           addCounter={addCounter}
