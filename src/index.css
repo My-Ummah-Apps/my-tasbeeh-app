@@ -586,7 +586,7 @@ div[role="progressbar"]::before {
   z-index: 1;
 }
 
-/* POP UP BOXES */
+/* FORMS */
 
 Modal {
 }
@@ -596,6 +596,12 @@ Modal {
   padding: 1rem;
   border-radius: 0.7rem;
   box-shadow: 0 3px 20px rgba(142, 142, 142, 0.6);
+  /* height: 100%; */
+  display: block;
+  overflow: auto;
+  width: 100%;
+  margin-inline: auto;
+  overflow: scroll;
 }
 
 .dhikr-name-input-wrap {
