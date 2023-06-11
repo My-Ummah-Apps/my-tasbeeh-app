@@ -2,23 +2,13 @@ import { Fab, Action } from "react-tiny-fab";
 import "react-tiny-fab/dist/styles.css";
 import { MdOutlineMenuOpen, MdAdd, MdOutlineRefresh } from "react-icons/md";
 
-const FAB = ({
-  setShowPopUpBoxBlank,
-  resetAllCounters,
-  localSavedCountersArray,
-}) => {
-  //   const grabColor = localSavedCountersArray.find((counterItem) =>
-  //     counterItem.isActive == true ? counterItem.color : null
-  //   );
+const FAB = ({ resetAllCounters, handleOpenModal2 }) => {
   const fabColor = "rgb(239, 83, 80)";
-  //   console.log(grabColor.color);
 
   return (
     <Fab
       style={{
         position: "absolute",
-        // bottom: 13 + "%",
-        // right: 5 + "%",
         transform: "rotate(-90deg)",
       }}
       mainButtonStyles={{
@@ -42,7 +32,7 @@ const FAB = ({
       <Action
         text="Add Dhikr"
         onClick={() => {
-          setShowPopUpBoxBlank(true);
+          handleOpenModal2();
         }}
       >
         {" "}

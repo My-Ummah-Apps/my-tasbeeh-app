@@ -32,6 +32,9 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  /* padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left); */
+  /* padding-top: constant(safe-area-inset-top); */
 }
 
 /* MAIN PAGE */
@@ -208,11 +211,6 @@ body {
 
 /* COUNTERS PAGE */
 
-.counters-wrap {
-  padding: 0 1rem;
-  font-size: 1rem;
-}
-
 .counter {
   white-space: nowrap;
   overflow: hidden;
@@ -327,102 +325,76 @@ MdModeEditOutline {
   transition: left 0.3s ease-in, box-shadow 0.3s ease;
 }
 
-.table-wrap {
-  /* height: 75vh; */
-  overflow-y: scroll; /* add vertical scrolling */
-  /* FOR IPHONES */
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
-
-  height: 62vh;
-
-  position: fixed;
-  /* z-index: 0; */
-  top: 10%;
-}
-
-.header-wrap {
-  height: 10vh;
-  width: 100vw;
-  color: black;
-  display: flex;
-}
-
-.header-wrap p {
-  text-align: left;
-  align-self: center;
-}
-
-/* .table-wrap::before {
-  content: "hello";
-  position: absolute;
-  height: 20px;
+.counters-wrap {
   width: 100%;
-  z-index: 1000;
-  background-color: white;
+  height: 80vh;
+  overflow-y: scroll;
+}
+
+.single-counter-name-and-count-wrap {
+  width: 70%;
+  /* margin-left: 0.7rem; */
+}
+/* This style is to do with turning each counter into a progress bar */
+/* .single-counter-name-and-count-wrap,
+.edit-btn-wrap {
+  position: relative;
+  z-index: 1;
+} */
+/* This style is to do with turning each counter into a progress bar */
+
+/* .single-counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  width: 95%;
+
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+  margin: 0.5rem auto;
+  padding: 0.7rem 0;
 } */
 
-table {
-  /* margin-top: -3rem; */
-  border-collapse: separate;
-  border-spacing: 0 15px;
-  /* margin-top: 1rem; correct offset on first border spacing if desired */
-  width: 100%;
+.single-counter {
+  color: #fff;
+  margin: 0.5rem;
+  padding: 0.7rem;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* This style is to do with turning each counter into a progress bar */
+.single-counter-overlay {
+  position: absolute;
+  min-width: 10%;
   max-width: 100%;
-  table-layout: fixed;
+  /* border-radius: 35% 65% 100% 0% / 0% 100% 0% 100%; */
+  border-radius: 0.5rem;
+  height: 100%;
 
-  /* overflow-wrap: break-word; */
-}
-
-td {
-  padding: 0.2rem 0.2rem;
-  /* text-align: center; */
-  font-size: 0.8rem;
-  color: white;
+  opacity: 0.7;
+  overflow: hidden;
 }
 
-td:first-child {
-  /* min-width: 200px; */
-  /* text-align: left; */
+.single-counter-counter-name {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-th {
-  background: transparent;
-  padding: 0.9rem 0;
-  color: #ffffff;
+.single-counter-count {
+  font-size: 0.7rem;
 }
 
-th:first-child {
-  /* border-left-style: solid;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px; */
-}
-th:last-child {
-  /* border-right-style: solid;
-  border-bottom-right-radius: 10px;
-  border-top-right-radius: 10px; */
-}
-
-td {
-  max-width: 100%;
-  /* white-space: nowrap; */
-  /* word-break: break-all; */
-  /* border: solid 1px rgba(255, 255, 255, 0); */
-  border-style: solid none;
-}
-
-td:first-child {
-  border-left-style: solid;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-td:last-child {
-  border-right-style: solid;
-  border-bottom-right-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.heading-table-row {
+.edit-btn-wrap {
+  margin: -1rem;
+  padding: 1rem 1.5rem;
 }
 
 .add-btn {
@@ -460,8 +432,13 @@ td:last-child {
 
 .pop-up-box-buttons-wrap {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: end;
+  margin-top: 1rem;
+}
+
+.pop-up-box-buttons-wrap input {
+  margin: 0.4rem;
 }
 
 .pop-up-box-wrap button {
@@ -478,47 +455,52 @@ td:last-child {
 
 /* SETTINGS PAGE */
 
-.theme-selection-wrap {
-  margin-top: 3rem;
-
-  padding: 1rem;
+.settings-page-header,
+.counters-page-header {
+  /* width: 100%; */
+  position: relative;
+  /* text-align: center; */
+  height: 7vh;
+  /* background-color: rgb(126, 87, 194); */
+  background: white;
+  color: black;
+  border-bottom: 1px solid rgb(221, 221, 221);
+  /* display: flex;
+  align-items: end; */
+  /* justify-content: space-between; */
 }
 
-.theme-selection-wrap > * {
-  padding: 1rem;
+.settings-page-header p,
+.counters-page-header p,
+.counters-page-header svg {
+  position: absolute;
+  top: 50%;
+  font-size: 1.2rem;
+
+  /* margin-bottom: 0.5rem; */
 }
 
-.theme-blocks-container {
-  display: flex;
-  justify-content: space-around;
+.counters-page-header p,
+.settings-page-header p {
+  left: 50%;
+
+  transform: translate(-50%, -50%);
 }
 
-.white-theme-block,
-.black-theme-block {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
+.counters-page-header svg {
+  font-size: 1.5rem;
+  width: 15%;
+  right: 28px;
+  transform: translate(50%, -50%);
+  height: 100%;
+  width: 18%;
+  padding: 0 1.2rem 0 1.2rem;
 }
-
-.white-theme-block {
-  background-color: #fff;
-}
-
-.black-theme-block {
-  background-color: #000;
-}
-
-/* HEADER */
-
-/* .header-wrap {
-  text-align: left;
-  background: #2176ff;
-  padding: 1rem;
-} */
 
 /* NAVBAR */
 
 .navbar-wrap {
+  padding-bottom: env(safe-area-inset-bottom);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -527,6 +509,7 @@ td:last-child {
   width: 100%;
   border-top: 1px solid #f1eff7;
   box-shadow: 10px 5px 5px rgb(177, 177, 177);
+  background: #fff;
 }
 
 .nav-link {
@@ -605,231 +588,74 @@ div[role="progressbar"]::before {
   z-index: 1;
 }
 
-/* POP UP BOXES */
+/* FORMS */
 
-.login-box {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  padding: 40px;
-  transform: translate(-50%, -50%);
-  /* background: rgba(0, 0, 0, 0.5); */
-  box-sizing: border-box;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
-  border-radius: 10px !important;
-  /* z-index: 3; */
+Modal {
 }
 
-.login-box h2 {
-  margin: 0 0 30px;
-  padding: 0;
-  color: #fff;
-  text-align: center;
-}
-
-.login-box .user-box {
-  position: relative;
-}
-
-.login-box .user-box input {
-  width: 100%;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 1px solid #fff;
-  border-radius: 0;
-  outline: none;
-  background: transparent;
-}
-.login-box .user-box label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  pointer-events: none;
-  /* transition: 0.5s; */
-  /* transition: 0.5s top, 0.5s font-size; */
-  transition-duration: 0.4s;
-  -webkit-transition-duration: 0.4s;
-  -ms-transition-duration: 0.4s;
-  -moz-transition-duration: 0.4s;
-}
-
-.login-box .user-box input:focus ~ label,
-.login-box .user-box input:valid ~ label {
-  top: -20px;
-  left: 0;
-  color: #fff;
-  font-size: 12px;
-}
-
-.login-box form a {
-  position: relative;
-  display: inline-block;
-  padding: 10px 20px;
-  color: #03e9f4;
-  font-size: 16px;
-  text-decoration: none;
-  text-transform: uppercase;
-  overflow: hidden;
-  /* transition: 0.5s; */
-  transition: 0.5s top, 0.5s font-size;
-  margin-top: 40px;
-  letter-spacing: 4px;
-}
-
-.login-box a:hover {
-  background: #03e9f4;
-  color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
-    0 0 100px #03e9f4;
-}
-
-.login-box a span {
-  position: absolute;
+.form-wrap {
+  background: #f4f4f4;
+  padding: 0.5rem 1rem 1rem 1rem;
+  border-radius: 0.7rem;
+  box-shadow: 0 3px 20px rgba(142, 142, 142, 0.6);
+  /* height: 100%; */
   display: block;
-}
-
-.login-box a span:nth-child(1) {
-  top: 0;
-  left: -100%;
+  overflow: auto;
   width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #03e9f4);
-  -webkit-animation: btn-anim1 1s linear infinite;
-  animation: btn-anim1 1s linear infinite;
+  margin-inline: auto;
+  overflow: scroll;
 }
 
-@-webkit-keyframes btn-anim1 {
-  0% {
-    left: -100%;
-  }
-  50%,
-  100% {
-    left: 100%;
-  }
+.dhikr-name-input-wrap {
+  /* text-align: center; */
+  margin-bottom: 0.5rem;
 }
 
-@keyframes btn-anim1 {
-  0% {
-    left: -100%;
-  }
-  50%,
-  100% {
-    left: 100%;
-  }
+.target-input-wrap {
+  /* text-align: center; */
 }
 
-.login-box a span:nth-child(2) {
-  top: -100%;
-  right: 0;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(180deg, transparent, #03e9f4);
-  -webkit-animation: btn-anim2 1s linear infinite;
-  animation: btn-anim2 1s linear infinite;
-  -webkit-animation-delay: 0.25s;
-  animation-delay: 0.25s;
-}
-
-@-webkit-keyframes btn-anim2 {
-  0% {
-    top: -100%;
-  }
-  50%,
-  100% {
-    top: 100%;
-  }
-}
-
-@keyframes btn-anim2 {
-  0% {
-    top: -100%;
-  }
-  50%,
-  100% {
-    top: 100%;
-  }
-}
-
-.login-box a span:nth-child(3) {
-  bottom: 0;
-  right: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(270deg, transparent, #03e9f4);
-  -webkit-animation: btn-anim3 1s linear infinite;
-  animation: btn-anim3 1s linear infinite;
-  -webkit-animation-delay: 0.5s;
-  animation-delay: 0.5s;
-}
-
-@-webkit-keyframes btn-anim3 {
-  0% {
-    right: -100%;
-  }
-  50%,
-  100% {
-    right: 100%;
-  }
-}
-
-@keyframes btn-anim3 {
-  0% {
-    right: -100%;
-  }
-  50%,
-  100% {
-    right: 100%;
-  }
-}
-
-.login-box a span:nth-child(4) {
-  bottom: -100%;
-  left: 0;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(360deg, transparent, #03e9f4);
-  -webkit-animation: btn-anim4 1s linear infinite;
-  animation: btn-anim4 1s linear infinite;
-  -webkit-animation-delay: 0.75s;
-  animation-delay: 0.75s;
-}
-
-@-webkit-keyframes btn-anim4 {
-  0% {
-    bottom: -100%;
-  }
-  50%,
-  100% {
-    bottom: 100%;
-  }
-}
-
-@keyframes btn-anim4 {
-  0% {
-    bottom: -100%;
-  }
-  50%,
-  100% {
-    bottom: 100%;
-  }
-}
-
-.login-box button,
-.submit-input {
+.delete-btn {
+  background: #f44336;
   color: #fff;
-  border: 1px solid white;
-  border-radius: 0.3rem;
-  margin-left: 1rem;
-  padding: 0.5rem;
-  background: transparent;
+}
+
+.dhikr-name-input-wrap p,
+.target-input-wrap p,
+.current-count-input-wrap p {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.form-wrap input {
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 100%;
+  text-align: center;
+  margin-inline: auto;
+}
+
+.save-btn,
+.reset-btn,
+.delete-btn {
+  /* border-radius: 2rem; */
+}
+
+.save-btn {
+  background-color: #6060ff;
+  color: #fff;
+  margin-top: 1rem;
+}
+
+.pop-up-box-buttons-wrap-border {
+  border: 1px solid rgb(223, 223, 223);
+  margin: 2rem 0 2rem 0;
+}
+
+.reset-btn {
+  /* background-color: #f4f4f4; */
+  color: #000;
 }
 
 /* COUNTER TEXT AUTO SCROLL */
@@ -926,8 +752,9 @@ input[type="number"] {
 
 .rtf.closed,
 .rtf.open {
-  bottom: 15%;
+  bottom: 10%;
   right: 5%;
+  display: none;
 }
 
 .rtf--ab,
@@ -994,9 +821,16 @@ input[type="number"] {
   padding-left: 7px !important;
 }
 
+.rtf {
+  z-index: -1;
+}
+
 /* SETTINGS PAGE */
 
-.settings-page-wrap {
+.settings-page-wrap,
+.counters-page-wrap {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .individual-section-wrap {
@@ -1083,13 +917,31 @@ input[type="number"] {
   transition: 0.15s ease-in-out !important;
 }
 
+/* MODAL */
+
+.ReactModal__Overlay {
+  opacity: 0;
+  /* transform: translateY(600px); */
+  transition: all 250ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  /* transform: translateY(0px); */
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+  /* transform: translateY(-600px); */
+}
+
 /* DEVICE SPECIFIC STYLES */
 
 /* IOS */
 @supports (-webkit-touch-callout: none) {
   /* CSS specific to iOS devices */
   .navbar-wrap {
-    padding-bottom: env(safe-area-inset-bottom);
+    /* padding-bottom: env(safe-area-inset-bottom); */
   }
   .counter-page-single-counter {
   }
@@ -1097,10 +949,18 @@ input[type="number"] {
     -webkit-filter: drop-shadow(0 0 1px black);
     filter: drop-shadow(0 0 1px black);
   }
-  /* .rtf.closed,
-  .rtf.open {
-    bottom: 5%;
-  } */
+
+  .settings-page-header,
+  .counters-page-header {
+    height: 6vh;
+  }
+
+  .settings-page-header p,
+  .counters-page-header p,
+  .settings-page-header svg,
+  .counters-page-header svg {
+    /* margin-top: 1rem; */
+  }
 }
 
 @supports not (-webkit-touch-callout: none) {

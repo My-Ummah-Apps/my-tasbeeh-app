@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
+import { StatusBar, Style } from "@capacitor/status-bar";
 
 import NavBar from "./components/NavBar";
 
 import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
+
+// StatusBar.setBackgroundColor({
+//   color: "#00363A",
+// });
 
 let lastUsedCounterIndex; // Used in the two conditional statements immediately below when app is first loaded to grab the last used counter
 // let individualCounterDiv; // Used within the createCounterList function, the savedCountersArray is looped through and items added to the DOM with this variable which holds a div
@@ -286,6 +291,7 @@ function App() {
   };
 
   const deleteSingleCounter = (id) => {
+    // e.preventDefault();
     const filteredArray = localSavedCountersArray.filter(
       (counterItem) => counterItem.id !== id
     );
