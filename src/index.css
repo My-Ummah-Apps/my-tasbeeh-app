@@ -673,6 +673,12 @@ Modal {
   /* background-color: #f4f4f4; */
   color: #000;
 }
+.counter-text-wrap * {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
 
 /* COUNTER TEXT AUTO SCROLL */
 .scroll {
@@ -680,14 +686,14 @@ Modal {
   width: 100vw;
   /* height: 15%;
   min-height: 150px; */
-  overflow: hidden;
-  z-index: 1;
+  /* overflow: hidden; */
+  z-index: 2;
   margin: 0;
   padding: 0;
 }
 
 .m-scroll {
-  overflow: hidden;
+  /* overflow: hidden; */
   height: 100%;
   white-space: nowrap;
   -webkit-animation: scrollText 6s infinite linear;
