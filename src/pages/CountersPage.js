@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import Modal from "react-modal";
 
 import { MdModeEditOutline, MdAdd } from "react-icons/md";
+import { FaPen } from "react-icons/fa";
 
 import PopUpBoxBlank from "../components/PopUpBoxBlank";
 import PopUpBoxFilled from "../components/PopUpBoxFilled";
@@ -160,9 +161,8 @@ function CountersPage({
               <div
                 className="single-counter"
                 style={{
-                  //  This style is to do with turning each counter into a progress bar
-                  backgroundColor: nextColor + "60",
-                  color: "black",
+                  backgroundColor: nextColor + "99",
+                  // color: "black",
                   // backgroundColor: nextColor,
                 }}
                 onClick={() => {
@@ -188,9 +188,10 @@ function CountersPage({
                     handleOpenModal();
                   }}
                 >
-                  <MdModeEditOutline />
+                  {/* <MdModeEditOutline /> */}
+                  <FaPen />
                 </div>
-                {/* This style is to do with turning each counter into a progress bar */}
+
                 <div
                   className="single-counter-overlay"
                   style={{
