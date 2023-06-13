@@ -99,13 +99,14 @@ function CountersPage({
   function handleClick() {
     forceUpdate();
   }
-  console.log(activeBackgroundColor);
+
   return (
     <div className="counters-page-wrap">
       <div className="counters-page-header">
-        <p>Counters</p>
+        <p>Adhkar</p>
         <MdAdd onClick={handleOpenModal2} />
       </div>
+
       <Modal
         closeTimeoutMS={1000}
         modal={modal}
@@ -169,11 +170,11 @@ function CountersPage({
                 }}
               >
                 <div className="single-counter-name-and-count-wrap">
-                  <div className="single-counter-counter-name">
-                    {counterItem.counter}
-                  </div>
                   <div className="single-counter-count">
                     {counterItem.count} / {counterItem.target}
+                  </div>
+                  <div className="single-counter-counter-name">
+                    {counterItem.counter}
                   </div>
                 </div>
                 <div
