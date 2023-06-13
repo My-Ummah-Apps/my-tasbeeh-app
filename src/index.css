@@ -19,6 +19,8 @@
 }
 
 body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
   overflow: hidden;
   color: var(--text-color);
   height: 100vh;
@@ -35,6 +37,10 @@ body {
   /* padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left); */
   /* padding-top: constant(safe-area-inset-top); */
+}
+
+.body::-webkit-scrollbar {
+  display: none;
 }
 
 /* MAIN PAGE */
@@ -329,6 +335,7 @@ MdModeEditOutline {
   width: 100%;
   height: 80vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .single-counter-name-and-count-wrap {
@@ -336,31 +343,31 @@ MdModeEditOutline {
   /* margin-left: 0.7rem; */
 }
 /* This style is to do with turning each counter into a progress bar */
-/* .single-counter-name-and-count-wrap,
+.single-counter-name-and-count-wrap,
 .edit-btn-wrap {
   position: relative;
   z-index: 1;
-} */
+}
 /* This style is to do with turning each counter into a progress bar */
 
-/* .single-counter {
+.single-counter {
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
   width: 95%;
-
   border-radius: 0.5rem;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
+  /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
   position: relative;
   margin: 0.5rem auto;
   padding: 0.7rem 0;
-} */
+}
 
 .single-counter {
   color: #fff;
-  margin: 0.5rem;
-  padding: 0.7rem;
+  margin: 1rem auto;
+  /* padding: 1rem; */
   border-radius: 14px;
   display: flex;
   justify-content: space-between;
@@ -372,17 +379,18 @@ MdModeEditOutline {
   position: absolute;
   min-width: 10%;
   max-width: 100%;
-  /* border-radius: 35% 65% 100% 0% / 0% 100% 0% 100%; */
-  border-radius: 0.5rem;
-  height: 100%;
 
-  opacity: 0.7;
+  /* border-radius: 35% 65% 100% 0% / 0% 100% 0% 100%; */
+  /* border-radius: 24% 24% 24% 24% / 0% 45% 41% 0%; */
+  border-radius: 1rem;
+  height: 100%;
+  opacity: 0.8;
   overflow: hidden;
 }
 
 .single-counter-counter-name {
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+  /* margin-top: 1rem; */
+  font-size: 1.3rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -392,8 +400,15 @@ MdModeEditOutline {
   font-size: 0.7rem;
 }
 
+.single-counter-counter-name,
+.single-counter-count {
+  margin-left: 1.5rem;
+  padding: 0.5rem 0;
+  font-weight: lighter;
+}
+
 .edit-btn-wrap {
-  margin: -1rem;
+  margin: -1rem -0.7rem -1rem -1rem;
   padding: 1rem 1.5rem;
 }
 
@@ -510,6 +525,7 @@ MdModeEditOutline {
   border-top: 1px solid #f1eff7;
   box-shadow: 10px 5px 5px rgb(177, 177, 177);
   background: #fff;
+  z-index: 1;
 }
 
 .nav-link {
@@ -657,6 +673,12 @@ Modal {
   /* background-color: #f4f4f4; */
   color: #000;
 }
+.counter-text-wrap * {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
 
 /* COUNTER TEXT AUTO SCROLL */
 .scroll {
@@ -664,14 +686,14 @@ Modal {
   width: 100vw;
   /* height: 15%;
   min-height: 150px; */
-  overflow: hidden;
-  z-index: 1;
+  /* overflow: hidden; */
+  z-index: 2;
   margin: 0;
   padding: 0;
 }
 
 .m-scroll {
-  overflow: hidden;
+  /* overflow: hidden; */
   height: 100%;
   white-space: nowrap;
   -webkit-animation: scrollText 6s infinite linear;
@@ -838,6 +860,7 @@ input[type="number"] {
 
 .ReactModal__Overlay--after-open {
   opacity: 1;
+  z-index: 1;
   /* transform: translateY(0px); */
 }
 

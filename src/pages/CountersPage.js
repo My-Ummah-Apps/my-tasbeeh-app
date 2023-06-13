@@ -4,12 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Modal from "react-modal";
 
-import {
-  MdOutlineClose,
-  MdOutlineRestartAlt,
-  MdModeEditOutline,
-  MdAdd,
-} from "react-icons/md";
+import { MdModeEditOutline, MdAdd } from "react-icons/md";
 
 import PopUpBoxBlank from "../components/PopUpBoxBlank";
 import PopUpBoxFilled from "../components/PopUpBoxFilled";
@@ -20,21 +15,14 @@ import PopUpBoxFilled from "../components/PopUpBoxFilled";
 Modal.defaultStyles.content.border = "none";
 Modal.defaultStyles.content.position = "absolute";
 Modal.defaultStyles.content.inset = "50% 0% 0% 50%";
-// Modal.defaultStyles.content.inset = "10% 50% 50% 10%";
-// Modal.defaultStyles.content.top = "50%";
-// Modal.defaultStyles.content.left = "50%";
 Modal.defaultStyles.content.transform = "translate(-50%, -50%)";
-
 Modal.defaultStyles.content.background = "#f4f4f4";
 Modal.defaultStyles.content.overflow = "none";
 Modal.defaultStyles.content.borderRadius = "20px";
 Modal.defaultStyles.content.padding = "0";
 Modal.defaultStyles.content.height = "fit-content";
 Modal.defaultStyles.content.zIndex = "10000";
-
-// Modal.defaultStyles.content.marginInline = "auto";
 Modal.defaultStyles.content.width = "80%";
-// Modal.defaultStyles.content.height = "auto";
 
 const customStyles = {
   content: {
@@ -60,6 +48,10 @@ function CountersPage({
   materialColors,
   showAnimation,
 }) {
+  function singleCounterStyles(count, target) {
+    return count > 0 ? (count / target) * 100 + "%" : "100%";
+  }
+
   const [modal, setModal] = useState("");
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -107,13 +99,14 @@ function CountersPage({
   function handleClick() {
     forceUpdate();
   }
-  console.log(activeBackgroundColor);
+
   return (
     <div className="counters-page-wrap">
       <div className="counters-page-header">
-        <p>Counters</p>
+        <p>Adhkar</p>
         <MdAdd onClick={handleOpenModal2} />
       </div>
+
       <Modal
         closeTimeoutMS={1000}
         modal={modal}
@@ -155,6 +148,8 @@ function CountersPage({
         {localSavedCountersArray.map((counterItem) => {
           nextColor = materialColors[nextColorIndex];
           counterItem.color = nextColor;
+          let count = counterItem.count;
+          let target = counterItem.target;
           // counterItem.width = "50%";
 
           nextColorIndex == materialColors.length - 1
@@ -166,19 +161,20 @@ function CountersPage({
                 className="single-counter"
                 style={{
                   //  This style is to do with turning each counter into a progress bar
-                  // backgroundColor: nextColor + 50,
-                  backgroundColor: nextColor,
+                  backgroundColor: nextColor + "60",
+                  color: "black",
+                  // backgroundColor: nextColor,
                 }}
                 onClick={() => {
                   invokeSetActiveCounter(counterItem.id);
                 }}
               >
                 <div className="single-counter-name-and-count-wrap">
-                  <div className="single-counter-counter-name">
-                    {counterItem.counter}
-                  </div>
                   <div className="single-counter-count">
                     {counterItem.count} / {counterItem.target}
+                  </div>
+                  <div className="single-counter-counter-name">
+                    {counterItem.counter}
                   </div>
                 </div>
                 <div
@@ -195,13 +191,14 @@ function CountersPage({
                   <MdModeEditOutline />
                 </div>
                 {/* This style is to do with turning each counter into a progress bar */}
-                {/* <div
+                <div
                   className="single-counter-overlay"
                   style={{
                     backgroundColor: nextColor,
                     width: (counterItem.count / counterItem.target) * 100 + "%",
+                    // width: singleCounterStyles(count, target),
                   }}
-                ></div> */}
+                ></div>
               </div>
             </>
           );

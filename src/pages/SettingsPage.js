@@ -21,7 +21,7 @@ const SettingsPage = ({
   const link = (url) => {
     window.location.href = url;
   };
-  console.log("dailyReset Counter is: " + dailyCounterReset);
+
   return (
     <div className="settings-page-wrap">
       <div className="settings-page-header">
