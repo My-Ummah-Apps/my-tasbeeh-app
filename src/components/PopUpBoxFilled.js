@@ -34,7 +34,7 @@ const PopUpBoxFilled = ({
 
   return (
     <form className="form-wrap">
-      <div className="dhikr-name-input-wrap">
+      <div className="counter-name-input-wrap">
         <p>Dhikr Name</p>
         <input
           onChange={(e) => {
@@ -46,56 +46,59 @@ const PopUpBoxFilled = ({
           required
         ></input>
       </div>
-      <div className="current-count-input-wrap">
-        <p>Current Count</p>
-        <input
-          onChange={(e) => {
-            setcurrentCountInput(e.target.value);
-          }}
-          type="number"
-          value={currentCountInput}
-          required
-        ></input>
-      </div>
-      <div className="target-input-wrap">
-        <p>Target</p>
-        <input
-          onChange={(e) => {
-            setTarget(e.target.value);
-          }}
-          type="number"
-          value={currentTargetInput}
-          required
-        ></input>
+      <div className="count-and-target-input-wrap">
+        <div className="current-count-input-wrap">
+          <p>Current Count</p>
+          <input
+            onChange={(e) => {
+              setcurrentCountInput(e.target.value);
+            }}
+            type="number"
+            value={currentCountInput}
+            required
+          ></input>
+        </div>
+        <div className="target-input-wrap">
+          <p>Target</p>
+          <input
+            onChange={(e) => {
+              setTarget(e.target.value);
+            }}
+            type="number"
+            value={currentTargetInput}
+            required
+          ></input>
+        </div>
       </div>
       <div className="pop-up-box-buttons-wrap">
-        <input
-          className="save-btn"
-          type="button"
-          value="Save"
-          onClick={submitCounter}
-        ></input>
-        <div className="pop-up-box-buttons-wrap-border"></div>
-        <input
-          className="reset-btn"
-          type="button"
-          value="Reset"
-          onClick={(e) => {
-            resetSingleCounter(currentCounterId);
-            e.preventDefault();
-            setcurrentCountInput(0);
-          }}
-        ></input>
-        <input
-          className="delete-btn"
-          type="button"
-          value="Delete"
-          onClick={(e) => {
-            deleteSingleCounter(currentCounterId);
-            e.preventDefault();
-            handleCloseModal();
-          }}
-        ></input>
+        <div className="reset-delete-and-save-btn-wrap">
+          <input
+            className="delete-btn"
+            type="button"
+            value="Delete"
+            onClick={(e) => {
+              deleteSingleCounter(currentCounterId);
+              e.preventDefault();
+              handleCloseModal();
+            }}
+          ></input>
+          <input
+            className="reset-btn"
+            type="button"
+            value="Reset"
+            onClick={(e) => {
+              resetSingleCounter(currentCounterId);
+              e.preventDefault();
+              setcurrentCountInput(0);
+            }}
+          ></input>
+          <input
+            className="save-btn"
+            type="button"
+            value="Save"
+            onClick={submitCounter}
+          ></input>
+        </div>
       </div>
     </form>
   );

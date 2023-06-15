@@ -23,7 +23,7 @@ Modal.defaultStyles.content.borderRadius = "20px";
 Modal.defaultStyles.content.padding = "0";
 Modal.defaultStyles.content.height = "fit-content";
 Modal.defaultStyles.content.zIndex = "10000";
-Modal.defaultStyles.content.width = "80%";
+Modal.defaultStyles.content.width = "85%";
 
 const customStyles = {
   content: {
@@ -162,6 +162,7 @@ function CountersPage({
                 className="single-counter"
                 style={{
                   backgroundColor: nextColor + "99",
+                  // backgroundColor: nextColor + "FF",
                   // color: "black",
                   // backgroundColor: nextColor,
                 }}

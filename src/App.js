@@ -297,7 +297,6 @@ function App() {
     );
     if (filteredArray.length == 0) {
       alert("Atleast one counter must be saved");
-
       return;
     }
     if (filteredArray.length > 0) {

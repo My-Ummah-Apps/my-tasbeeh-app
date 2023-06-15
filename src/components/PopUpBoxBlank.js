@@ -29,7 +29,7 @@ function PopUpBoxBlank({
   return (
     <div className="form-wrap">
       <form>
-        <div className="dhikr-name-input-wrap">
+        <div className="counter-name-input-wrap">
           <p>Dhikr Name</p>
           <input
             onChange={(e) => {

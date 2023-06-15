@@ -31,9 +31,10 @@ const CounterNameAndNumber = ({ localSavedCountersArray, showAnimation }) => {
       transparent 0 99.9%,
       transparent 0
     ),
-    conic-gradient(${currentBackgroundColor} calc(var(--pgPercentage) * ${
-      100 / currentCounterTarget
-    }%), var(--bg) 0)`,
+    conic-gradient(${
+      // currentBackgroundColor + "E5"
+      currentBackgroundColor + "FF"
+    } calc(var(--pgPercentage) * ${100 / currentCounterTarget}%), var(--bg) 0)`,
 
     fontSize: "calc(var(--size) / 5)",
     color: "var(--fg)",
@@ -64,8 +65,12 @@ const CounterNameAndNumber = ({ localSavedCountersArray, showAnimation }) => {
 
   return (
     <div
-      className="dhikr-type-wrap"
-      style={{ backgroundColor: currentBackgroundColor }}
+      className="counter-type-wrap"
+      style={{
+        // backgroundColor: currentBackgroundColor + "99",
+        backgroundColor: currentBackgroundColor + "FF",
+        // position: "relative",
+      }}
       ref={counterTextContainerRef}
     >
       <div className="counter-text-wrap" ref={textRef}>
@@ -98,6 +103,10 @@ const CounterNameAndNumber = ({ localSavedCountersArray, showAnimation }) => {
           </div>
         </div>
       </div>
+      <div
+        className="main-counter-overlay"
+        style={{ backgroundColor: currentBackgroundColor }}
+      ></div>
 
       <div className="progress-bar-wrap">
         <div role="progressbar" style={styles}></div>
