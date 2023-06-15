@@ -87,8 +87,8 @@ const PopUpBoxFilled = ({
             type="button"
             value="Reset"
             onClick={(e) => {
-              resetSingleCounter(currentCounterId);
               e.preventDefault();
+              resetSingleCounter(currentCounterId);
               setcurrentCountInput(0);
             }}
           ></input>

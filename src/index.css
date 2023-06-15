@@ -200,16 +200,18 @@ body {
   z-index: 1;
 }
 
-.plus-svg-wrap {
+.increment-btn {
   position: absolute;
-  /* top: 32vh; */
-  /* top: 270px; */
-  line-height: 0vw;
-  color: #ced4e2;
-  text-align: center;
   bottom: 17%;
   left: 50%;
   transform: translateX(-50%);
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+
+  line-height: 0vw;
+  color: #ced4e2;
+  text-align: center;
   z-index: 1;
 }
 
@@ -375,18 +377,8 @@ MdModeEditOutline {
   box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
   position: relative;
-  margin: 0.5rem auto;
   padding: 0.7rem 0;
-}
-
-.single-counter {
-  color: #fff;
   margin: 1rem auto;
-  /* padding: 1rem; */
-  border-radius: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 /* This style is to do with turning each counter into a progress bar */

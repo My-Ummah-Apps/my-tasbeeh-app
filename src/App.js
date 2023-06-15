@@ -282,7 +282,7 @@ function App() {
     localSavedCountersArray.map((counterItem1) => {
       if (counterItem1.id == id) {
         counterItem1.count = 0;
-
+        setActiveCounterNumber(0);
         setLocalSavedCountersArray(localSavedCountersArray);
       }
     });
@@ -338,6 +338,9 @@ function App() {
                 activeCounterName={activeCounterName}
                 activeCounterNumber={activeCounterNumber}
                 showAnimation={showAnimation}
+                setActiveBackgroundColor={setActiveBackgroundColor}
+                activeBackgroundColor={activeBackgroundColor}
+                resetSingleCounter={resetSingleCounter}
               />
             }
           />

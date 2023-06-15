@@ -1,44 +1,34 @@
 import { useRef, useEffect, useState } from "react";
+import { FaPen } from "react-icons/fa";
 
-const CounterNameAndNumber = ({ localSavedCountersArray, showAnimation }) => {
+import { VscDebugRestart } from "react-icons/vsc";
+
+const CounterNameAndNumber = ({
+  localSavedCountersArray,
+  showAnimation,
+  setActiveBackgroundColor,
+  activeBackgroundColor,
+  resetSingleCounter,
+}) => {
   let currentName;
   let currentNumber = 0;
-  let currentBackgroundColor;
   let currentCounterTarget;
+  let currentCounterId;
   let textOverflowProperty;
   localSavedCountersArray.map((counterItem) => {
     if (counterItem.isActive == true) {
-      currentBackgroundColor = counterItem.color;
-
-      counterItem.target == 0
-        ? (currentCounterTarget = 0.1)
-        : (currentCounterTarget = counterItem.target);
+      setActiveBackgroundColor(counterItem.color);
 
       currentName = counterItem.counter;
+      currentCounterTarget = counterItem.target;
       currentNumber = counterItem.count;
+      currentCounterId = counterItem.id;
 
       currentName.length > 50
         ? (textOverflowProperty = "ellipsis")
         : (textOverflowProperty = "clip");
     }
   });
-
-  const styles = {
-    "--value": currentNumber,
-    background: `radial-gradient(
-      closest-side,
-      white 80%,
-      transparent 0 99.9%,
-      transparent 0
-    ),
-    conic-gradient(${
-      // currentBackgroundColor + "E5"
-      currentBackgroundColor + "FF"
-    } calc(var(--pgPercentage) * ${100 / currentCounterTarget}%), var(--bg) 0)`,
-
-    fontSize: "calc(var(--size) / 5)",
-    color: "var(--fg)",
-  };
 
   const counterTextContainerRef = useRef(null);
   const textRef = useRef(null);
@@ -64,77 +54,85 @@ const CounterNameAndNumber = ({ localSavedCountersArray, showAnimation }) => {
   }, [textRef.current]);
 
   return (
-    <div
-      className="counter-type-wrap"
-      style={{
-        // backgroundColor: currentBackgroundColor + "99",
-        backgroundColor: currentBackgroundColor + "FF",
-        // position: "relative",
-      }}
-      ref={counterTextContainerRef}
-    >
-      <div className="counter-text-wrap" ref={textRef}>
-        {/* <div
+    <>
+      <div
+        className="single-counter"
+        style={{
+          // backgroundColor: nextColor + "99",
+          // backgroundColor: nextColor + "FF",
+          // color: "black",
+          backgroundColor: activeBackgroundColor + "99",
+        }}
+      >
+        <div className="single-counter-name-and-count-wrap">
+          <div className="single-counter-count">
+            {currentNumber} / {currentCounterTarget}
+          </div>
+          <div className="single-counter-counter-name">{currentName}</div>
+        </div>
+        <div
+          className="edit-btn-wrap"
+          onClick={(e) => {
+            e.stopPropagation();
+            resetSingleCounter(currentCounterId);
+          }}
+        >
+          <VscDebugRestart />
+        </div>
+
+        <div
+          className="single-counter-overlay"
+          style={{
+            backgroundColor: activeBackgroundColor,
+            width: (currentNumber / currentCounterTarget) * 100 + "%",
+
+            // width: singleCounterStyles(count, target),
+          }}
+        ></div>
+      </div>
+      <div
+        className="counter-type-wrap"
+        style={{
+          // backgroundColor: activeBackgroundColor + "99",
+          backgroundColor: activeBackgroundColor + "FF",
+        }}
+        ref={counterTextContainerRef}
+      >
+        <div className="counter-text-wrap" ref={textRef}>
+          {/* <div
         className={`counter-text-wrap ${
           showAnimation ? "fade-down-animation" : null
         }`}
         ref={textRef}
       > */}
-        <div className={scroll ? "scroll" : ""}>
-          <div className={scroll ? "m-scroll" : ""}>
-            <span
-              className="active-counter-name"
-              style={{
-                fontSize: "3rem",
-                textOverflow: textOverflowProperty,
-              }}
-            >
-              {currentName}
-            </span>
-            <span
-              className={scroll ? "active-counter-name" : "display-none"}
-              style={{
-                fontSize: "3rem",
-                textOverflow: textOverflowProperty,
-              }}
-            >
-              {currentName}
-            </span>
+          <div className={scroll ? "scroll" : ""}>
+            <div className={scroll ? "m-scroll" : ""}>
+              <span
+                className="active-counter-name"
+                style={{
+                  fontSize: "3rem",
+                  textOverflow: textOverflowProperty,
+                }}
+              >
+                {currentName}
+              </span>
+              <span
+                className={scroll ? "active-counter-name" : "display-none"}
+                style={{
+                  fontSize: "3rem",
+                  textOverflow: textOverflowProperty,
+                }}
+              >
+                {currentName}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        className="main-counter-overlay"
-        style={{ backgroundColor: currentBackgroundColor }}
-      ></div>
 
-      <div className="progress-bar-wrap">
-        <div role="progressbar" style={styles}></div>
-        <p className="target-text">
-          Target: {currentCounterTarget > 0.5 ? currentCounterTarget : 0}
-        </p>
+        {/* <h1 className="active-counter-number">{activeCounterNumber}</h1> */}
       </div>
-
-      {/* <h1 className="active-counter-number">{activeCounterNumber}</h1> */}
-    </div>
+    </>
   );
 };
 
 export default CounterNameAndNumber;
-
-{
-  /* <svg
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        width="160px"
-        height="160px"
-      >
-        <defs>
-          <linearGradient id="GradientColor">
-            <stop offset="0%" stopColor="#e91e63" />
-            <stop offset="100%" stopColor="#673ab7" />
-          </linearGradient>
-        </defs>
-        <circle cx="80" cy="80" r="70" strokeLinecap="round" />
-      </svg> */
-}
