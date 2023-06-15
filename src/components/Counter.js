@@ -12,7 +12,7 @@ const Counter = ({
 }) => {
   return (
     <div
-      className="single-counter"
+      className="single-counter-wrap"
       style={{
         backgroundColor: nextColor + "99",
         // backgroundColor: nextColor + "FF",

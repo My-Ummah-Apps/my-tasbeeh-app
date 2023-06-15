@@ -56,22 +56,44 @@ const CounterNameAndNumber = ({
   return (
     <>
       <div
-        className="single-counter"
+        className="single-counter-wrap"
         style={{
-          // backgroundColor: nextColor + "99",
-          // backgroundColor: nextColor + "FF",
-          // color: "black",
           backgroundColor: activeBackgroundColor + "99",
+          boxShadow: `0px 5px 20px ${activeBackgroundColor}`,
         }}
       >
-        <div className="single-counter-name-and-count-wrap">
+        <div
+          className="single-counter-name-and-count-wrap"
+          ref={counterTextContainerRef}
+        >
           <div className="single-counter-count">
             {currentNumber} / {currentCounterTarget}
           </div>
-          <div className="single-counter-counter-name">{currentName}</div>
+          <div className="single-counter-counter-name" ref={textRef}>
+            <div className={scroll ? "scroll" : ""}>
+              <div className={scroll ? "m-scroll" : ""}>
+                <span
+                  className="active-counter-name"
+                  style={{
+                    textOverflow: textOverflowProperty,
+                  }}
+                >
+                  {currentName}
+                </span>
+                <span
+                  className={scroll ? "active-counter-name" : "display-none"}
+                  style={{
+                    textOverflow: textOverflowProperty,
+                  }}
+                >
+                  {currentName}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
         <div
-          className="edit-btn-wrap"
+          className="reset-btn-wrap"
           onClick={(e) => {
             e.stopPropagation();
             resetSingleCounter(currentCounterId);
@@ -90,43 +112,13 @@ const CounterNameAndNumber = ({
           }}
         ></div>
       </div>
-      <div
-        className="counter-type-wrap"
-        style={{
-          // backgroundColor: activeBackgroundColor + "99",
-          backgroundColor: activeBackgroundColor + "FF",
-        }}
-        ref={counterTextContainerRef}
-      >
+      {/* Remove below code */}
+      <div className="counter-type-wrap" ref={counterTextContainerRef}>
         <div className="counter-text-wrap" ref={textRef}>
-          {/* <div
-        className={`counter-text-wrap ${
-          showAnimation ? "fade-down-animation" : null
-        }`}
-        ref={textRef}
-      > */}
-          <div className={scroll ? "scroll" : ""}>
-            <div className={scroll ? "m-scroll" : ""}>
-              <span
-                className="active-counter-name"
-                style={{
-                  fontSize: "3rem",
-                  textOverflow: textOverflowProperty,
-                }}
-              >
-                {currentName}
-              </span>
-              <span
-                className={scroll ? "active-counter-name" : "display-none"}
-                style={{
-                  fontSize: "3rem",
-                  textOverflow: textOverflowProperty,
-                }}
-              >
-                {currentName}
-              </span>
-            </div>
-          </div>
+          <span className="active-counter-name">{currentName}</span>
+          <span className={scroll ? "active-counter-name" : "display-none"}>
+            {currentName}
+          </span>
         </div>
 
         {/* <h1 className="active-counter-number">{activeCounterNumber}</h1> */}

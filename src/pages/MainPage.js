@@ -7,11 +7,11 @@ const MainPage = ({
   saveArrayLocally,
   counterId,
   activeCounterName,
+  activeCounterTarget,
+  activeCounterNumber,
   setActiveCounterName,
   setActiveCounterNumber,
   activeCounterBackgroundColor,
-  activeCounterTarget,
-  activeCounterNumber,
   localSavedCountersArray,
   showAnimation,
   setActiveBackgroundColor,
@@ -19,7 +19,10 @@ const MainPage = ({
   resetSingleCounter,
 }) => {
   return (
-    <div>
+    <div className="main-page-wrap">
+      <div className="home-page-header">
+        <p>Home</p>
+      </div>
       {/* <FaRegCircle className="fa-stack" />
       <FaUndoAlt className="reset-icon fa-stack" /> */}
       {/* onClick={() => {
@@ -45,6 +48,7 @@ const MainPage = ({
         localSavedCountersArray={localSavedCountersArray}
         setActiveCounterNumber={setActiveCounterNumber}
         activeCounterNumber={activeCounterNumber}
+        activeCounterTarget={activeCounterTarget}
         savedCountersArray={savedCountersArray}
         counterId={counterId}
         showAnimation={showAnimation}

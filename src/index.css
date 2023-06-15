@@ -114,6 +114,7 @@ body {
 }
 
 .counter-type-wrap {
+  display: none;
   position: relative;
   height: 250px;
   display: flex;
@@ -165,36 +166,6 @@ body {
   color: black;
 }
 
-.counter-type-wrap::before {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -165px;
-  height: 84px;
-  background: #fff;
-  background-size: auto;
-  padding: 2rem;
-  background-size: cover;
-  transform: skewY(-16deg);
-  z-index: 1;
-}
-.counter-type-wrap::after {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -165px;
-  height: 84px;
-  background: #fff;
-  background-size: auto;
-  padding: 2rem;
-  background-size: cover;
-  transform: skewY(16deg);
-}
-
 .counter-text-wrap {
   white-space: nowrap;
   z-index: 1;
@@ -202,11 +173,11 @@ body {
 
 .increment-btn {
   position: absolute;
-  bottom: 17%;
+  bottom: 25%;
   left: 50%;
   transform: translateX(-50%);
-  height: 200px;
-  width: 200px;
+  height: 250px;
+  width: 250px;
   border-radius: 50%;
 
   line-height: 0vw;
@@ -219,6 +190,12 @@ body {
   width: 140px;
   fill: var(--svg-color);
   cursor: pointer;
+}
+
+.plus-svg-wrap {
+  margin-top: 3.55rem;
+  font-size: 9rem;
+  color: #fff;
 }
 
 .fade-up-animation {
@@ -356,24 +333,23 @@ MdModeEditOutline {
 }
 
 .single-counter-name-and-count-wrap {
-  width: 70%;
-  /* margin-left: 0.7rem; */
+  width: 85%;
 }
-/* This style is to do with turning each counter into a progress bar */
+
 .single-counter-name-and-count-wrap,
 .edit-btn-wrap {
   position: relative;
   z-index: 1;
 }
-/* This style is to do with turning each counter into a progress bar */
 
-.single-counter {
+.single-counter-wrap {
+  font-size: 1.3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
   width: 95%;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
   position: relative;
@@ -384,7 +360,7 @@ MdModeEditOutline {
 /* This style is to do with turning each counter into a progress bar */
 .single-counter-overlay {
   position: absolute;
-  min-width: 10%;
+  min-width: 5%;
   max-width: 100%;
   /* border-radius: 35% 65% 100% 0% / 0% 100% 0% 100%; */
   /* border-radius: 24% 24% 24% 24% / 0% 45% 41% 0%; */
@@ -392,6 +368,7 @@ MdModeEditOutline {
   height: 100%;
   /* opacity: 0.8; */
   overflow: hidden;
+
   /* transition: max-width 3s forward; */
 }
 
@@ -415,10 +392,18 @@ MdModeEditOutline {
   font-weight: 400;
 }
 
-.edit-btn-wrap {
+.edit-btn-wrap,
+.reset-btn-wrap {
   margin: -1rem -0.7rem -1rem -1rem;
   padding: 1rem 1.5rem;
   font-size: 0.8rem;
+}
+
+.reset-btn-wrap {
+  font-size: 1.3rem;
+  margin: -1rem -0.7rem -1rem -1rem;
+  padding: 1rem 1.5rem;
+  z-index: 1;
 }
 
 .add-btn {
@@ -480,34 +465,28 @@ MdModeEditOutline {
 /* SETTINGS PAGE */
 
 .settings-page-header,
-.counters-page-header {
-  /* width: 100%; */
+.counters-page-header,
+.home-page-header {
   position: relative;
-  /* text-align: center; */
   height: 7vh;
-  /* background-color: rgb(126, 87, 194); */
   background: white;
   color: black;
   border-bottom: 1px solid rgb(221, 221, 221);
-  /* display: flex;
-  align-items: end; */
-  /* justify-content: space-between; */
 }
 
 .settings-page-header p,
 .counters-page-header p,
+.home-page-header p,
 .counters-page-header svg {
   position: absolute;
   top: 50%;
   font-size: 1.2rem;
-
-  /* margin-bottom: 0.5rem; */
 }
 
 .counters-page-header p,
-.settings-page-header p {
+.settings-page-header p,
+.home-page-header p {
   left: 50%;
-
   transform: translate(-50%, -50%);
 }
 
@@ -746,7 +725,7 @@ Modal {
 }
 
 .scroll span {
-  font-size: 50px;
+  font-size: 1.5rem;
   display: inline-block;
   min-width: 100vw;
   margin: 0;
@@ -803,7 +782,8 @@ input[type="number"] {
 /* SETTINGS PAGE */
 
 .settings-page-wrap,
-.counters-page-wrap {
+.counters-page-wrap,
+.main-page-wrap {
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
@@ -927,7 +907,8 @@ input[type="number"] {
   }
 
   .settings-page-header,
-  .counters-page-header {
+  .counters-page-header,
+  .home-page-header {
     height: 6vh;
   }
 

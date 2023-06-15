@@ -1,4 +1,7 @@
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
+import { MdAdd } from "react-icons/md";
+
+import { useState } from "react";
 
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
@@ -24,15 +27,22 @@ const hapticsSelectionEnd = async () => {
   await Haptics.selectionEnd();
 };
 
-const PlusBtn = ({
+function PlusBtn({
   haptics,
   setActiveCounterNumber,
   activeCounterNumber,
+  activeCounterTarget,
   localSavedCountersArray,
   saveArrayLocally,
   showAnimation,
   activeBackgroundColor,
-}) => {
+}) {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
+
   const setCounterAndHaptics = () => {
     setActiveCounterNumber((activeCounterNumber += 1));
 
@@ -47,16 +57,30 @@ const PlusBtn = ({
       hapticsImpactMedium();
     }
   };
-  console.log(activeBackgroundColor);
+
   return (
     <div
-      style={{ backgroundColor: activeBackgroundColor }}
+      style={{
+        backgroundColor: `${activeBackgroundColor}`,
+        boxShadow: isClicked
+          ? `0px 0px 10px ${activeBackgroundColor}`
+          : `0px 0px 20px ${activeBackgroundColor}`,
+      }}
       onClick={() => {
         setCounterAndHaptics();
+        handleClick();
       }}
       className={`increment-btn ${showAnimation ? "fade-up-animation" : null}`}
-    ></div>
+    >
+      {/* <div className="plus-btn-number-and-target-wrap">
+        <div>{activeCounterNumber}</div>
+        <div>{activeCounterTarget}</div>
+      </div> */}
+      <div className="plus-svg-wrap">
+        <MdAdd />
+      </div>
+    </div>
   );
-};
+}
 
 export default PlusBtn;
