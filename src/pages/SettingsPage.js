@@ -4,6 +4,7 @@ import { Share } from "@capacitor/share";
 
 import "/node_modules/moretoggles/output/moretoggles.min.css";
 const SettingsPage = ({
+  device,
   setHaptics,
   haptics,
   setDailyCounterReset,
@@ -88,20 +89,22 @@ const SettingsPage = ({
       </div>
 
       <div className="individual-section-wrap">
-        <div
-          className="review-wrap"
-          onClick={() => {
-            link(
-              "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
-            );
-          }}
-        >
-          <div className="text-wrap" style={{ display: "block" }}>
-            <p>Write a review</p>
-            <p>Rate us on the Play Store</p>
+        {device == "android" ? (
+          <div
+            className="review-wrap"
+            onClick={() => {
+              link(
+                "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
+              );
+            }}
+          >
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Write a review</p>
+              <p>Rate us on the Play Store</p>
+            </div>
+            <MdOutlineChevronRight className="chevron" />
           </div>
-          <MdOutlineChevronRight className="chevron" />
-        </div>
+        ) : null}
         <div className="share-wrap" onClick={shareThisAppLink}>
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Share</p>

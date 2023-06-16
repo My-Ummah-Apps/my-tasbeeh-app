@@ -3,13 +3,13 @@ import { FaPen } from "react-icons/fa";
 
 import { VscDebugRestart } from "react-icons/vsc";
 
-const CounterNameAndNumber = ({
+function CounterNameAndNumber({
   localSavedCountersArray,
   showAnimation,
   setActiveBackgroundColor,
   activeBackgroundColor,
   resetSingleCounter,
-}) => {
+}) {
   let currentName;
   let currentNumber = 0;
   let currentCounterTarget;
@@ -36,7 +36,7 @@ const CounterNameAndNumber = ({
   const [scroll, setScroll] = useState();
 
   let scrollingStyle = { overflow: "hidden" };
-  const [overflow, setOverflow] = useState({ overflow: "hidden" });
+  // const [overflow, setOverflow] = useState({ overflow: "hidden" });
 
   useEffect(() => {
     const counterTextContainerWidth =
@@ -45,30 +45,33 @@ const CounterNameAndNumber = ({
     if (textRef.current.clientWidth < counterTextContainerWidth) {
       setScroll(false);
 
-      setOverflow({ overflow: "unset" });
+      // setOverflow({ overflow: "unset" });
     } else if (textRef.current.clientWidth > counterTextContainerWidth) {
       setScroll(true);
 
-      setOverflow({ overflow: "unset" });
+      // setOverflow({ overflow: "unset" });
     }
   }, [textRef.current]);
 
   return (
     <>
       <div
-        className="single-counter-wrap"
+        className="single-counter-wrap remove-counter-blinking"
+        ref={counterTextContainerRef}
         style={{
           backgroundColor: activeBackgroundColor + "99",
-          boxShadow: `0px 5px 20px ${activeBackgroundColor}`,
+          // boxShadow: `0px 5px 20px ${activeBackgroundColor}`,
+          boxShadow: `0px 7px 29px 0px ${activeBackgroundColor}`,
         }}
       >
-        <div
-          className="single-counter-name-and-count-wrap"
-          ref={counterTextContainerRef}
-        >
+        <div className="single-counter-name-and-count-wrap">
           <div className="single-counter-count">
-            {currentNumber} / {currentCounterTarget}
+            {/* {currentNumber} / {currentCounterTarget} */}
+            {currentNumber <= currentCounterTarget
+              ? Math.floor((currentNumber / currentCounterTarget) * 100) + "%"
+              : "100%"}
           </div>
+
           <div className="single-counter-counter-name" ref={textRef}>
             <div className={scroll ? "scroll" : ""}>
               <div className={scroll ? "m-scroll" : ""}>
@@ -113,18 +116,16 @@ const CounterNameAndNumber = ({
         ></div>
       </div>
       {/* Remove below code */}
-      <div className="counter-type-wrap" ref={counterTextContainerRef}>
-        <div className="counter-text-wrap" ref={textRef}>
-          <span className="active-counter-name">{currentName}</span>
-          <span className={scroll ? "active-counter-name" : "display-none"}>
-            {currentName}
-          </span>
+      <div
+        className="counter-type-wrap"
+        style={{ position: "absolute", opacity: 0 }}
+      >
+        <div ref={textRef}>
+          <span>{currentName}</span>
         </div>
-
-        {/* <h1 className="active-counter-number">{activeCounterNumber}</h1> */}
       </div>
     </>
   );
-};
+}
 
 export default CounterNameAndNumber;

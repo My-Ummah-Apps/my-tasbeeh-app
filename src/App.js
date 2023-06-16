@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
+import { Device } from "@capacitor/device";
+import { Capacitor } from "@capacitor/core";
 
 import NavBar from "./components/NavBar";
 
@@ -34,6 +36,20 @@ function App() {
     "#9CCC65",
     "#FF7043",
   ];
+  const [device, setDevice] = useState("");
+  const logDeviceInfo = async () => {
+    const info = await Device.getInfo();
+
+    if (info.operatingSystem == "ios") {
+      setDevice("ios");
+    } else if (info.operatingSystem == "android") {
+      setDevice("android");
+    }
+  };
+
+  useEffect(() => {
+    logDeviceInfo();
+  }, []);
 
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
   const [activeCounterName, setActiveCounterName] = useState("");
@@ -58,15 +74,10 @@ function App() {
 
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
 
-  console.log(lastLaunchDate);
-
   useEffect(() => {
     const storedDate = localStorage.getItem("lastLaunchDate");
     // const storedDate = "03/06/2023";
     const currentDate = new Date().toLocaleDateString();
-
-    console.log(storedDate);
-    console.log(currentDate);
 
     if (storedDate !== currentDate && dailyCounterReset == true) {
       // Reset your variable or perform any other actions
@@ -316,6 +327,7 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
+                device={device}
                 setHaptics={setHaptics}
                 haptics={haptics}
                 setDailyCounterReset={setDailyCounterReset}

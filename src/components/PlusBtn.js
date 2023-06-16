@@ -37,6 +37,15 @@ function PlusBtn({
   showAnimation,
   activeBackgroundColor,
 }) {
+  let currentNumber;
+  let currentCounterTarget;
+  localSavedCountersArray.map((counterItem) => {
+    if (counterItem.isActive == true) {
+      currentNumber = counterItem.count;
+      currentCounterTarget = counterItem.target;
+    }
+  });
+
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
@@ -59,27 +68,32 @@ function PlusBtn({
   };
 
   return (
-    <div
+    <button
       style={{
         backgroundColor: `${activeBackgroundColor}`,
-        boxShadow: isClicked
-          ? `0px 0px 10px ${activeBackgroundColor}`
-          : `0px 0px 20px ${activeBackgroundColor}`,
+        boxShadow: `0px 0px 10px ${activeBackgroundColor}`,
+        // boxShadow: isClicked
+        //   ? `0px 0px 10px ${activeBackgroundColor}`
+        //   : `0px 0px 20px ${activeBackgroundColor}`,
       }}
       onClick={() => {
         setCounterAndHaptics();
         handleClick();
+        if (currentNumber == currentCounterTarget) {
+          console.log("activeCounterNumber == activeCounterTarget");
+          hapticsVibrate();
+        }
       }}
       className={`increment-btn ${showAnimation ? "fade-up-animation" : null}`}
     >
-      {/* <div className="plus-btn-number-and-target-wrap">
-        <div>{activeCounterNumber}</div>
-        <div>{activeCounterTarget}</div>
-      </div> */}
-      <div className="plus-svg-wrap">
-        <MdAdd />
+      <div className="increment-btn-number-and-target-wrap">
+        <div className="increment-btn-number">{currentNumber}</div>
+        <div className="increment-btn-target">of {currentCounterTarget}</div>
       </div>
-    </div>
+      {/* <div className="plus-svg-wrap">
+        <MdAdd />
+      </div> */}
+    </button>
   );
 }
 

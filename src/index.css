@@ -114,25 +114,11 @@ body {
 }
 
 .counter-type-wrap {
-  display: none;
-  position: relative;
-  height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   font-size: 2rem;
-
-  /* opacity: 0.6; */
-}
-
-.main-counter-overlay {
-  /* position: absolute;
-  height: 250px;
-  width: 100%;
-  opacity: 0.8;
-  overflow: hidden;
-  color: #fff; */
 }
 
 .counter-type-wrap h1 {
@@ -167,35 +153,47 @@ body {
 }
 
 .counter-text-wrap {
-  white-space: nowrap;
-  z-index: 1;
+  /* white-space: nowrap;
+  z-index: 1; */
 }
 
 .increment-btn {
   position: absolute;
-  bottom: 25%;
+  bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
-  height: 250px;
-  width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 300px;
+  margin: 5rem auto;
   border-radius: 50%;
-
   line-height: 0vw;
   color: #ced4e2;
-  text-align: center;
   z-index: 1;
+  text-align: center;
+  border: none;
 }
 
-.plus-svg {
-  width: 140px;
-  fill: var(--svg-color);
-  cursor: pointer;
-}
+/* .increment-btn:active {
+  background: red;
+  box-shadow: 0px 0px 20px;
+  font-size: 2rem;
+} */
 
-.plus-svg-wrap {
-  margin-top: 3.55rem;
-  font-size: 9rem;
+.increment-btn-number-and-target-wrap {
   color: #fff;
+  margin-top: 4rem;
+}
+
+.increment-btn-number {
+  font-size: 8rem;
+}
+
+.increment-btn-target {
+  font-size: 1.5rem;
+  margin-top: 5rem;
 }
 
 .fade-up-animation {
@@ -694,7 +692,7 @@ Modal {
   /* background-color: #f4f4f4; */
   color: #000;
 }
-.counter-text-wrap * {
+.remove-counter-blinking * {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform-style: preserve-3d;
@@ -910,13 +908,6 @@ input[type="number"] {
   .counters-page-header,
   .home-page-header {
     height: 6vh;
-  }
-
-  .settings-page-header p,
-  .counters-page-header p,
-  .settings-page-header svg,
-  .counters-page-header svg {
-    /* margin-top: 1rem; */
   }
 }
 

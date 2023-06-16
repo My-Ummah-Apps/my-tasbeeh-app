@@ -23,11 +23,6 @@ const MainPage = ({
       <div className="home-page-header">
         <p>Home</p>
       </div>
-      {/* <FaRegCircle className="fa-stack" />
-      <FaUndoAlt className="reset-icon fa-stack" /> */}
-      {/* onClick={() => {
-          setActiveCounterNumber(0); // Small bug here, this change doesn't reflect on counters page straight away
-        }} */}
 
       <CounterNameAndNumber
         resetSingleCounter={resetSingleCounter}

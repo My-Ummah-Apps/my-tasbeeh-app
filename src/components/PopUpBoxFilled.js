@@ -48,7 +48,7 @@ const PopUpBoxFilled = ({
       </div>
       <div className="count-and-target-input-wrap">
         <div className="current-count-input-wrap">
-          <p>Current Count</p>
+          <p>Count</p>
           <input
             onChange={(e) => {
               setcurrentCountInput(e.target.value);
