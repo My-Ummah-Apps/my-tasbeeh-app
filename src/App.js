@@ -10,6 +10,22 @@ import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 
+const setStatusBarStyleDark = async () => {
+  await StatusBar.setStyle({ style: Style.Dark });
+};
+
+const setStatusBarStyleLight = async () => {
+  await StatusBar.setStyle({ style: Style.Light });
+};
+
+const hideStatusBar = async () => {
+  await StatusBar.hide();
+};
+
+const showStatusBar = async () => {
+  await StatusBar.show();
+};
+
 // StatusBar.setBackgroundColor({
 //   color: "#00363A",
 // });
