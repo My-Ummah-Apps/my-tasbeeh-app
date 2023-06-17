@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const PopUpBoxFilled = ({
+const FormFilled = ({
   modifyTheCountersArray,
   currentCounterName,
   currentCount,
@@ -104,4 +104,4 @@ const PopUpBoxFilled = ({
   );
 };
 
-export default PopUpBoxFilled;
+export default FormFilled;

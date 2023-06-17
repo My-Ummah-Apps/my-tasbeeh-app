@@ -1,10 +1,6 @@
 import { useState } from "react";
 
-function PopUpBoxBlank({
-  setShowPopUpBoxBlank,
-  addCounter,
-  handleCloseModal2,
-}) {
+function FormBlank({ setShowPopUpBoxBlank, addCounter, handleCloseModal2 }) {
   const [alertColor, setAlertColor] = useState("#fff");
 
   const submitCounter = (e) => {
@@ -71,7 +67,7 @@ function PopUpBoxBlank({
   );
 }
 
-export default PopUpBoxBlank;
+export default FormBlank;
 
 {
   /*  <form className="pop-up-box-wrap">

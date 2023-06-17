@@ -6,8 +6,8 @@ import Modal from "react-modal";
 
 import { MdModeEditOutline, MdAdd } from "react-icons/md";
 
-import PopUpBoxBlank from "../components/PopUpBoxBlank";
-import PopUpBoxFilled from "../components/PopUpBoxFilled";
+import FormBlank from "../components/FormBlank";
+import FormFilled from "../components/FormFilled";
 import Counter from "../components/Counter";
 
 // ReactModal.setAppElement("#root");
@@ -114,7 +114,7 @@ function CountersPage({
         isOpen={showModal}
         onRequestClose={handleCloseModal}
       >
-        <PopUpBoxFilled
+        <FormFilled
           handleCloseModal={handleCloseModal}
           modifyTheCountersArray={modifyTheCountersArray}
           currentCounterName={currentCounterName}
@@ -137,7 +137,7 @@ function CountersPage({
         closeTimeoutMS={1000}
         contentLabel="Modal #2 Global Style Override Example"
       >
-        <PopUpBoxBlank
+        <FormBlank
           nextColor={nextColor}
           handleCloseModal2={handleCloseModal2}
           setLocalSavedCountersArray={setLocalSavedCountersArray}

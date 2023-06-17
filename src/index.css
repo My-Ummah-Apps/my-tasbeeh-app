@@ -6,11 +6,55 @@
 }
 
 :root {
-  --box-background-color: #282a2e;
-  /* --text-color: #ced4e2; */
-  --text-color: #000;
+  /* --body-bg-color: #f2f1f6; */
+  --body-bg-color: #f4f4f4;
   --svg-color: #757575;
-  --secondary-color: #dbdddf;
+  --header-and-nav-bg-color: #f4f4f4;
+  --text-color-settings-page: #000;
+  --setings-page-boxes-bg-color: #eff1f4;
+  --counters-page-single-counter-box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
+  --border-header-and-nav: #d5d5d5;
+}
+
+.radio-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radio-label {
+  margin-left: 10px;
+}
+
+.radio-input {
+  /* Hide the default radio button */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Customize the appearance when the radio button is checked */
+.radio-input:checked {
+  background-color: #000;
+}
+
+/* DARK MODE */
+
+body.dark {
+  /* Dark mode variables go here */
+  --body-bg-color: #121212;
+  --header-and-nav-bg-color: black;
+  --text-color: #fff;
+  --setings-page-boxes-bg-color: #2f2f2f;
+  --svg-color: #e1e1e1;
+  --counters-page-single-counter-box-shadow: hsl(232, 11%, 15%);
+  --border-header-and-nav: #444;
 }
 
 @font-face {
@@ -34,6 +78,7 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  background: var(--body-bg-color);
   /* padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left); */
   /* padding-top: constant(safe-area-inset-top); */
@@ -348,7 +393,7 @@ MdModeEditOutline {
   color: white;
   width: 95%;
   border-radius: 1rem;
-  box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
+  box-shadow: var(--counters-page-single-counter-box-shadow);
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
   position: relative;
   padding: 0.7rem 0;
@@ -465,11 +510,12 @@ MdModeEditOutline {
 .settings-page-header,
 .counters-page-header,
 .home-page-header {
+  background: var(--header-and-nav-bg-color);
   position: relative;
   height: 7vh;
-  background: white;
-  color: black;
-  border-bottom: 1px solid rgb(221, 221, 221);
+  /* background: white; */
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-header-and-nav);
 }
 
 .settings-page-header p,
@@ -498,6 +544,19 @@ MdModeEditOutline {
   padding: 0 1.2rem 0 1.2rem;
 }
 
+.theme-options-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.theme-options-wrap div {
+  padding: 1.5rem;
+  width: 100%;
+  text-align: center;
+}
+
 /* NAVBAR */
 
 .navbar-wrap {
@@ -508,9 +567,9 @@ MdModeEditOutline {
   position: fixed;
   bottom: 0;
   width: 100%;
-  border-top: 1px solid #f1eff7;
+  border-top: 1px solid var(--border-header-and-nav);
   box-shadow: 10px 5px 5px rgb(177, 177, 177);
-  background: #fff;
+  background: var(--header-and-nav-bg-color);
   z-index: 1;
 }
 
@@ -787,8 +846,9 @@ input[type="number"] {
 }
 
 .individual-section-wrap {
+  color: var(--text-color);
   position: relative;
-  background: #eff1f4;
+  background: var(--setings-page-boxes-bg-color);
   margin: 0 auto 2rem auto;
   width: 90%;
   border-radius: 0.5rem;

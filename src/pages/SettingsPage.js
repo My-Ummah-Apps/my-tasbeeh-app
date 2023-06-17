@@ -1,15 +1,53 @@
+import { useState } from "react";
+import React from "react";
+import Modal from "react-modal";
 import { MdOutlineChevronRight } from "react-icons/md";
 
 import { Share } from "@capacitor/share";
-
 import "/node_modules/moretoggles/output/moretoggles.min.css";
+import PopUpBox from "../components/PopUpBox";
+
+// Override default Modal styles
+Modal.defaultStyles.content.border = "none";
+Modal.defaultStyles.content.position = "absolute";
+Modal.defaultStyles.content.inset = "50% 0% 0% 50%";
+Modal.defaultStyles.content.transform = "translate(-50%, -50%)";
+Modal.defaultStyles.content.background = "#f4f4f4";
+Modal.defaultStyles.content.overflow = "none";
+Modal.defaultStyles.content.borderRadius = "20px";
+Modal.defaultStyles.content.padding = "0";
+Modal.defaultStyles.content.height = "fit-content";
+Modal.defaultStyles.content.zIndex = "10000";
+Modal.defaultStyles.content.width = "85%";
+
 const SettingsPage = ({
   device,
   setHaptics,
   haptics,
   setDailyCounterReset,
   dailyCounterReset,
+  activeBackgroundColor,
+  theme,
+  setTheme,
 }) => {
+  const [formTheme, setFormTheme] = useState(false);
+
+  let subtitle;
+  const [showModal, setShowModal] = useState(false);
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   const shareThisAppLink = async () => {
     await Share.share({
       title: "",
@@ -28,6 +66,37 @@ const SettingsPage = ({
       <div className="settings-page-header">
         <p>Settings</p>
       </div>
+
+      <div className="individual-section-wrap">
+        <div
+          className="theme-wrap"
+          onClick={() => {
+            handleOpenModal();
+            setFormTheme(true);
+          }}
+        >
+          <div className="text-wrap" style={{ display: "block" }}>
+            <p>Theme</p>
+            <p>Set app theme (Light / Dark / System)</p>
+          </div>
+          <MdOutlineChevronRight className="chevron" />
+        </div>
+      </div>
+
+      <Modal
+        isOpen={showModal}
+        onRequestClose={handleCloseModal}
+        closeTimeoutMS={1000}
+        contentLabel="Modal #2 Global Style Override Example"
+      >
+        <PopUpBox
+          formTheme={formTheme}
+          activeBackgroundColor={activeBackgroundColor}
+          theme={theme}
+          setTheme={setTheme}
+        />
+      </Modal>
+
       <div className="individual-section-wrap" style={{ marginTop: "3rem" }}>
         <div className="individual-row-wrap">
           <div className="text-wrap" style={{ display: "block" }}>
@@ -37,6 +106,11 @@ const SettingsPage = ({
           <span className="mt-ios">
             <input id="1" type="checkbox" checked={haptics} />
             <label
+              style={
+                {
+                  // boxShadow: `inset 0 0 0 1.5em ${activeBackgroundColor},0 0 0 .1875em ${activeBackgroundColor}`,
+                }
+              }
               for="1"
               onClick={(e) => {
                 if (JSON.parse(localStorage.getItem("haptics")) == true) {

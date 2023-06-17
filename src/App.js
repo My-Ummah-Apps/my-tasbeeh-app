@@ -10,6 +10,7 @@ import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 
+// STATUS BAR FUNCTIONALITY
 const setStatusBarStyleDark = async () => {
   await StatusBar.setStyle({ style: Style.Dark });
 };
@@ -87,6 +88,45 @@ function App() {
   const [dailyCounterReset, setDailyCounterReset] = useState(
     JSON.parse(localStorage.getItem("dailyCounterReset"))
   );
+
+  const [theme, setTheme] = useState(JSON.parse(localStorage.getItem("theme")));
+
+  // DARK MODE FUNCTIONALITY
+  // Use matchMedia to check the user preference
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+  toggleDarkTheme(prefersDark.matches);
+
+  // Listen for changes to the prefers-color-scheme media query
+  prefersDark.addEventListener("change", (mediaQuery) =>
+    toggleDarkTheme(mediaQuery.matches)
+  );
+
+  // Add or remove the "dark" class based on if the media query matches
+  function toggleDarkTheme(shouldAdd) {
+    document.body.classList.toggle("dark", shouldAdd);
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem("theme") == null) {
+      toggleDarkTheme();
+      localStorage.setItem("theme", JSON.stringify("system"));
+    }
+
+    if (JSON.parse(localStorage.getItem("theme")) == "system") {
+      toggleDarkTheme();
+
+      console.log("useEffect has run, system theme selected");
+    } else if (JSON.parse(localStorage.getItem("theme")) == "dark") {
+      toggleDarkTheme();
+
+      console.log("useEffect has run, dark theme selected");
+    } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
+      console.log("useEffect has run, light theme selected");
+
+      toggleDarkTheme();
+    }
+  }, [theme]);
 
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
 
@@ -348,6 +388,9 @@ function App() {
                 haptics={haptics}
                 setDailyCounterReset={setDailyCounterReset}
                 dailyCounterReset={dailyCounterReset}
+                activeBackgroundColor={activeBackgroundColor}
+                theme={theme}
+                setTheme={setTheme}
               />
             }
           />
