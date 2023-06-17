@@ -91,20 +91,21 @@ function App() {
 
   const [theme, setTheme] = useState(JSON.parse(localStorage.getItem("theme")));
 
-  // DARK MODE FUNCTIONALITY
-  // Use matchMedia to check the user preference
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+  // // DARK MODE FUNCTIONALITY
+  // // Use matchMedia to check the user preference
+  // const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-  toggleDarkTheme(prefersDark.matches);
+  // toggleDarkTheme(prefersDark.matches);
 
-  // Listen for changes to the prefers-color-scheme media query
-  prefersDark.addEventListener("change", (mediaQuery) =>
-    toggleDarkTheme(mediaQuery.matches)
-  );
+  // // Listen for changes to the prefers-color-scheme media query
+  // prefersDark.addEventListener("change", (mediaQuery) =>
+  //   toggleDarkTheme(mediaQuery.matches)
+  // );
 
   // Add or remove the "dark" class based on if the media query matches
   function toggleDarkTheme(shouldAdd) {
     document.body.classList.toggle("dark", shouldAdd);
+    console.log(shouldAdd);
   }
 
   useEffect(() => {
@@ -114,17 +115,30 @@ function App() {
     }
 
     if (JSON.parse(localStorage.getItem("theme")) == "system") {
-      toggleDarkTheme();
+      // Use matchMedia to check the user preference
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+      // Listen for changes to the prefers-color-scheme media query
+      prefersDark.addEventListener("change", (mediaQuery) =>
+        toggleDarkTheme(mediaQuery.matches)
+      );
+
+      // Add or remove the "dark" class based on if the media query matches
+      function toggleDarkTheme(shouldAdd) {
+        document.body.classList.toggle("dark");
+      }
+
+      toggleDarkTheme(prefersDark.matches);
 
       console.log("useEffect has run, system theme selected");
     } else if (JSON.parse(localStorage.getItem("theme")) == "dark") {
-      toggleDarkTheme();
-
+      // toggleDarkTheme();
+      document.body.classList.add("dark");
       console.log("useEffect has run, dark theme selected");
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
       console.log("useEffect has run, light theme selected");
-
-      toggleDarkTheme();
+      document.body.classList.remove("dark");
+      // toggleDarkTheme();
     }
   }, [theme]);
 

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import React from "react";
 
-const PopUpBox = ({ formTheme, setTheme, activeBackgroundColor }) => {
+const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
   if (formTheme) {
     return (
       <div className="theme-options-wrap">
         <div
+          style={{ backgroundColor: theme == "dark" ? "blue" : null }}
           onClick={() => {
             setTheme("dark");
             localStorage.setItem("theme", JSON.stringify("dark"));
@@ -15,6 +16,7 @@ const PopUpBox = ({ formTheme, setTheme, activeBackgroundColor }) => {
           Dark
         </div>
         <div
+          style={{ backgroundColor: theme == "light" ? "blue" : null }}
           onClick={() => {
             setTheme("light");
             localStorage.setItem("theme", JSON.stringify("light"));
@@ -24,6 +26,7 @@ const PopUpBox = ({ formTheme, setTheme, activeBackgroundColor }) => {
           Light
         </div>
         <div
+          style={{ backgroundColor: theme == "system" ? "blue" : null }}
           onClick={() => {
             setTheme("system");
             localStorage.setItem("theme", JSON.stringify("system"));

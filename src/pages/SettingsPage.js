@@ -77,7 +77,7 @@ const SettingsPage = ({
         >
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Theme</p>
-            <p>Set app theme (Light / Dark / System)</p>
+            <p>Current Theme: {theme}</p>
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div>
@@ -91,8 +91,8 @@ const SettingsPage = ({
       >
         <PopUpBox
           formTheme={formTheme}
-          activeBackgroundColor={activeBackgroundColor}
           theme={theme}
+          activeBackgroundColor={activeBackgroundColor}
           setTheme={setTheme}
         />
       </Modal>
