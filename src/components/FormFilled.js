@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { VscDebugRestart } from "react-icons/vsc";
-import { MdOutlinePlaylistRemove } from "react-icons/md";
+import { MdOutlinePlaylistRemove, MdOutlineRestartAlt } from "react-icons/md";
 
 const FormFilled = ({
   activeBackgroundColor,
@@ -45,7 +45,8 @@ const FormFilled = ({
             handleCloseModal();
           }}
         />
-        <VscDebugRestart
+        {/* <VscDebugRestart */}
+        <MdOutlineRestartAlt
           onClick={(e) => {
             e.preventDefault();
             resetSingleCounter(currentCounterId);

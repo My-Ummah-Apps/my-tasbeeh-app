@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { FaPen } from "react-icons/fa";
 
 import { VscDebugRestart } from "react-icons/vsc";
+import { MdOutlineRestartAlt } from "react-icons/md";
 
 function CounterNameAndNumber({
   localSavedCountersArray,
@@ -102,7 +103,8 @@ function CounterNameAndNumber({
             resetSingleCounter(currentCounterId);
           }}
         >
-          <VscDebugRestart />
+          <MdOutlineRestartAlt />
+          {/* <VscDebugRestart /> */}
         </div>
 
         <div

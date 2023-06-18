@@ -5,8 +5,9 @@ import { MdOutlineChevronRight } from "react-icons/md";
 import Switch from "react-ios-switch";
 
 import { Share } from "@capacitor/share";
-import "/node_modules/moretoggles/output/moretoggles.min.css";
+// import "/node_modules/moretoggles/output/moretoggles.min.css";
 import PopUpBox from "../components/PopUpBox";
+import { act } from "react-dom/test-utils";
 
 // Override default Modal styles
 Modal.defaultStyles.content.border = "none";
@@ -107,14 +108,22 @@ const SettingsPage = ({
             <p>Set vibration on every increment</p>
           </div>
           <Switch
-            checked={undefined}
+            checked={haptics}
             className={undefined}
             disabled={undefined}
             handleColor="white"
             name={undefined}
             offColor="white"
-            onChange={() => {}}
-            onColor="rgb(76, 217, 100)"
+            onChange={(e) => {
+              if (JSON.parse(localStorage.getItem("haptics")) == true) {
+                setHaptics(false);
+                localStorage.setItem("haptics", JSON.stringify(false));
+              } else if (JSON.parse(localStorage.getItem("haptics")) == false) {
+                setHaptics(true);
+                localStorage.setItem("haptics", JSON.stringify(true));
+              }
+            }}
+            onColor={activeBackgroundColor}
             pendingOffColor={undefined}
             pendingOnColor={undefined}
             readOnly={undefined}
@@ -149,7 +158,36 @@ const SettingsPage = ({
             <p>Auto Reset Count</p>
             <p>Counters will be reset daily</p>
           </div>
-          <span className="mt-ios">
+          <Switch
+            checked={dailyCounterReset}
+            className={undefined}
+            disabled={undefined}
+            handleColor="white"
+            name={undefined}
+            offColor="white"
+            onChange={(e) => {
+              if (
+                JSON.parse(localStorage.getItem("dailyCounterReset")) == true
+              ) {
+                setDailyCounterReset(false);
+                localStorage.setItem(
+                  "dailyCounterReset",
+                  JSON.stringify(false)
+                );
+              } else if (
+                JSON.parse(localStorage.getItem("dailyCounterReset")) == false
+              ) {
+                setDailyCounterReset(true);
+                localStorage.setItem("dailyCounterReset", JSON.stringify(true));
+              }
+            }}
+            onColor={activeBackgroundColor}
+            pendingOffColor={undefined}
+            pendingOnColor={undefined}
+            readOnly={undefined}
+            style={undefined}
+          />
+          {/* <span className="mt-ios">
             <input id="2" type="checkbox" checked={dailyCounterReset} />
             <label
               for="2"
@@ -173,7 +211,7 @@ const SettingsPage = ({
                 }
               }}
             ></label>
-          </span>
+          </span> */}
         </div>
       </div>
 
