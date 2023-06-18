@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import Modal from "react-modal";
 import { MdOutlineChevronRight } from "react-icons/md";
+import Switch from "react-ios-switch";
 
 import { Share } from "@capacitor/share";
 import "/node_modules/moretoggles/output/moretoggles.min.css";
@@ -105,7 +106,21 @@ const SettingsPage = ({
             <p>Haptic Vibration</p>
             <p>Set vibration on every increment</p>
           </div>
-          <span className="mt-ios">
+          <Switch
+            checked={undefined}
+            className={undefined}
+            disabled={undefined}
+            handleColor="white"
+            name={undefined}
+            offColor="white"
+            onChange={() => {}}
+            onColor="rgb(76, 217, 100)"
+            pendingOffColor={undefined}
+            pendingOnColor={undefined}
+            readOnly={undefined}
+            style={undefined}
+          />
+          {/* <span className="mt-ios">
             <input id="1" type="checkbox" checked={haptics} />
             <label
               style={
@@ -127,7 +142,7 @@ const SettingsPage = ({
                 }
               }}
             ></label>
-          </span>
+          </span> */}
         </div>
         <div className="individual-row-wrap">
           <div className="text-wrap" style={{ display: "block" }}>
