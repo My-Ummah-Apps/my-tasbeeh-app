@@ -110,41 +110,42 @@ function App() {
   let prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
   useEffect(() => {
     if (localStorage.getItem("theme") == null) {
-      localStorage.setItem("theme", JSON.stringify("system"));
+      localStorage.setItem("theme", JSON.stringify("dark"));
     }
+    // System theme functionality removed for now until bugs are fixed
+    // if (JSON.parse(localStorage.getItem("theme")) == "system") {
+    //   // Use matchMedia to check the user preference
 
-    if (JSON.parse(localStorage.getItem("theme")) == "system") {
-      // Use matchMedia to check the user preference
+    //   console.log("prefersDark value is:");
+    //   console.log(prefersDark);
 
-      console.log("prefersDark value is:");
-      console.log(prefersDark);
+    //   prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-      prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+    //   // Add or remove the "dark" class based on if the media query matches
+    //   function toggleDarkTheme(boolean) {
+    //     if (boolean == true) {
+    //       console.log("boolean true");
+    //       document.body.classList.add("dark");
+    //       // StatusBar.setStyle({ style: Style.Light });
+    //     } else if (boolean == false) {
+    //       console.log("boolean false");
+    //       document.body.classList.remove("dark");
+    //       // StatusBar.setStyle({ style: Style.Dark });
+    //     }
+    //   }
 
-      // Add or remove the "dark" class based on if the media query matches
-      function toggleDarkTheme(boolean) {
-        if (boolean == true) {
-          console.log("boolean true");
-          document.body.classList.add("dark");
-          // StatusBar.setStyle({ style: Style.Light });
-        } else if (boolean == false) {
-          console.log("boolean false");
-          document.body.classList.remove("dark");
-          // StatusBar.setStyle({ style: Style.Dark });
-        }
-      }
+    //   // Listen for changes to the prefers-color-scheme media query
+    //   prefersDark.addEventListener("change", (mediaQuery) => {
+    //     console.log("mediaQuery is:");
+    //     console.log(mediaQuery.matches);
+    //     return toggleDarkTheme(mediaQuery.matches);
+    //   });
 
-      // Listen for changes to the prefers-color-scheme media query
-      prefersDark.addEventListener("change", (mediaQuery) => {
-        console.log("mediaQuery is:");
-        console.log(mediaQuery.matches);
-        return toggleDarkTheme(mediaQuery.matches);
-      });
+    //   toggleDarkTheme(prefersDark.matches);
 
-      toggleDarkTheme(prefersDark.matches);
-
-      console.log("useEffect has run, system theme selected");
-    } else if (JSON.parse(localStorage.getItem("theme")) == "dark") {
+    //   console.log("useEffect has run, system theme selected");
+    // }
+    if (JSON.parse(localStorage.getItem("theme")) == "dark") {
       // toggleDarkTheme();
       document.body.classList.add("dark");
       console.log("useEffect has run, dark theme selected");
@@ -297,6 +298,7 @@ function App() {
 
         setActiveCounterName(defaultArray[lastUsedCounterIndex].counter);
         setActiveCounterNumber(defaultArray[lastUsedCounterIndex].count);
+        setActiveBackgroundColor(defaultArray[lastUsedCounterIndex].color);
       } else {
         lastUsedCounterIndex = 0;
       }

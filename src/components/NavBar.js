@@ -21,7 +21,7 @@ const NavBar = ({ activeBackgroundColor }) => {
       >
         <BsFillNutFill
           className="nav-icon"
-          color={activePage == "settings" ? activeBackgroundColor : ""}
+          color={activePage == "settings" ? activeBackgroundColor : "grey"}
         />
       </NavLink>
 
@@ -35,7 +35,7 @@ const NavBar = ({ activeBackgroundColor }) => {
         <div>
           <BsFillHouseDoorFill
             className="nav-icon"
-            color={activePage == "home" ? activeBackgroundColor : ""}
+            color={activePage == "home" ? activeBackgroundColor : "grey"}
           />
         </div>
       </NavLink>
@@ -49,7 +49,7 @@ const NavBar = ({ activeBackgroundColor }) => {
       >
         <BsList
           className="nav-icon"
-          color={activePage == "counters" ? activeBackgroundColor : ""}
+          color={activePage == "counters" ? activeBackgroundColor : "grey"}
         />
       </NavLink>
     </div>

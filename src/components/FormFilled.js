@@ -43,7 +43,7 @@ const FormFilled = ({
           }}
           type="text"
           value={counterNameInput}
-          style={{ borderBottom: "1px solid" + alertColor }}
+          // style={{ borderBottom: "1px solid" + alertColor }}
           required
         ></input>
       </div>
@@ -87,7 +87,7 @@ const FormFilled = ({
           <input
             className="form-filled-save-btn"
             type="button"
-            value="Save"
+            value="Done"
             onClick={submitCounter}
           ></input>
         </div>

@@ -29,7 +29,7 @@ const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
         >
           Light
         </div>
-        <div
+        {/* <div
           style={{
             backgroundColor: theme == "system" ? activeBackgroundColor : null,
           }}
@@ -40,7 +40,7 @@ const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
           }}
         >
           System
-        </div>
+        </div> */}
       </div>
     );
   }

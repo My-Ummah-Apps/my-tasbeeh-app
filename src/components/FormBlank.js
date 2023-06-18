@@ -34,7 +34,6 @@ function FormBlank({ setShowPopUpBoxBlank, addCounter, handleCloseModal2 }) {
               }}
               placeholder="Alhumdulillah"
               type="text"
-              style={{ borderBottom: "1px solid" + alertColor }}
               required
             ></input>
             {/* <label style={{ color: alertColor }}>Dhikr Name</label> */}
@@ -61,7 +60,7 @@ function FormBlank({ setShowPopUpBoxBlank, addCounter, handleCloseModal2 }) {
           <input
             className="form-blank-save-btn"
             type="submit"
-            value="Save"
+            value="Done"
             onClick={submitCounter}
           ></input>
         </div>

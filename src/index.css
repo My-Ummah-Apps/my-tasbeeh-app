@@ -10,7 +10,7 @@
   --body-bg-color: #f4f4f4;
   --svg-color: #757575;
   --header-and-nav-bg-color: #f4f4f4;
-  --text-color-settings-page: #000;
+  --text-color-primary-dark: #000;
   --setings-page-boxes-bg-color: #eff1f4;
   --settings-page-borders: #e3e3e3;
   --counters-page-single-counter-box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
@@ -24,13 +24,13 @@ body.dark {
   /* Dark mode variables go here */
   --body-bg-color: #121212;
   --header-and-nav-bg-color: black;
-  --text-color: #fff;
+  --text-color-primary: #fff;
   --setings-page-boxes-bg-color: #2f2f2f;
   --settings-page-borders: #595959;
   --svg-color: #e1e1e1;
   --counters-page-single-counter-box-shadow: hsl(232, 11%, 15%);
   /* --border-header-and-nav: #444; */
-  --border-header-and-nav: none;
+  --border-header-and-nav: #747474;
   --form-wrap-bg-color: #2f2f2f;
 }
 
@@ -43,7 +43,7 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   overflow: hidden;
-  color: var(--text-color);
+  color: var(--text-color-primary);
   height: 100vh;
   width: 100vw;
   max-width: 700px;
@@ -55,7 +55,8 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background: var(--body-bg-color);
+  background-color: var(--body-bg-color);
+
   /* padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left); */
   /* padding-top: constant(safe-area-inset-top); */
@@ -491,7 +492,7 @@ MdModeEditOutline {
   position: relative;
   height: 7vh;
   /* background: white; */
-  color: var(--text-color);
+  color: var(--text-color-primary);
   border-bottom: 1px solid var(--border-header-and-nav);
 }
 
@@ -526,6 +527,9 @@ MdModeEditOutline {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  background: var(--form-wrap-bg-color);
+  border-radius: 2rem;
+  overflow: hidden;
 }
 
 .theme-options-wrap div {
@@ -635,6 +639,13 @@ div[role="progressbar"]::before {
 Modal {
 }
 
+input[type="text"],
+input[type="number"] {
+  padding: 1rem;
+  background: #3e3e3e;
+  color: var(--text-color);
+}
+
 .form-wrap {
   background: var(--form-wrap-bg-color);
   padding: 0.5rem 1rem 1rem 1rem;
@@ -682,7 +693,7 @@ Modal {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 1.5rem auto;
+  margin: 1rem auto 0.5rem auto;
   width: 100%;
   text-align: center;
 }
@@ -877,13 +888,14 @@ input[type="number"] {
 }
 
 .individual-section-wrap {
-  color: var(--text-color);
+  color: var(--text-color-primary);
   position: relative;
   background: var(--setings-page-boxes-bg-color);
-  margin: 0 auto 2rem auto;
+  margin: 3rem auto 2rem auto;
   width: 90%;
   border-radius: 0.5rem;
-  box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0px 5px 0 rgba(132, 132, 132, 0.2);
+  padding: 0.1rem 0;
 }
 
 .individual-section-wrap div {
@@ -900,6 +912,7 @@ input[type="number"] {
   margin-top: 3rem;
 }
 
+.haptic-wrap,
 .review-wrap,
 .share-wrap,
 .feedback-wrap,
@@ -921,6 +934,7 @@ input[type="number"] {
 
 .text-wrap {
   align-self: center;
+  color: var(--text-color-primary);
 }
 
 .text-wrap p {
@@ -1011,4 +1025,63 @@ input[type="number"] {
   .navbar-wrap {
     padding-bottom: 1rem;
   }
+}
+
+.form-switch {
+  display: inline-block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.form-switch i {
+  position: relative;
+  display: inline-block;
+  /* margin-right: 0.5rem; */
+  width: 46px;
+  height: 26px;
+  background-color: #e6e6e6;
+  border-radius: 23px;
+  vertical-align: text-bottom;
+  transition: all 0.3s linear;
+}
+.form-switch i::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 42px;
+  height: 22px;
+  background-color: #fff;
+  border-radius: 11px;
+  transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
+  transition: all 0.25s linear;
+}
+.form-switch i::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  background-color: #fff;
+  border-radius: 11px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
+  transform: translate3d(2px, 2px, 0);
+  transition: all 0.2s ease-in-out;
+}
+.form-switch:active i::after {
+  width: 28px;
+  transform: translate3d(2px, 2px, 0);
+}
+.form-switch:active input:checked + i::after {
+  transform: translate3d(16px, 2px, 0);
+}
+.form-switch input {
+  display: none;
+}
+.form-switch input:checked + i {
+  background-color: #4bd763;
+}
+.form-switch input:checked + i::before {
+  transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0);
+}
+.form-switch input:checked + i::after {
+  transform: translate3d(22px, 2px, 0);
 }
