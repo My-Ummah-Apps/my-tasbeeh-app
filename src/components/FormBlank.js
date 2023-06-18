@@ -59,7 +59,7 @@ function FormBlank({ setShowPopUpBoxBlank, addCounter, handleCloseModal2 }) {
         </div>
         <div className="pop-up-box-buttons-wrap">
           <input
-            className="save-btn"
+            className="form-blank-save-btn"
             type="submit"
             value="Save"
             onClick={submitCounter}

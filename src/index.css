@@ -467,7 +467,7 @@ MdModeEditOutline {
 }
 
 .pop-up-box-buttons-wrap input {
-  margin: 0.4rem;
+  /* margin: 0.4rem; */
 }
 
 .pop-up-box-wrap button {
@@ -550,6 +550,10 @@ MdModeEditOutline {
   z-index: 1;
 }
 
+.navbar svg {
+  font-size: 1.5rem;
+}
+
 .nav-link {
   color: #fff;
   text-decoration: none;
@@ -559,7 +563,7 @@ MdModeEditOutline {
 
 .nav-icon {
   font-size: 1.5rem;
-  fill: var(--svg-color);
+  /* fill: var(--svg-color); */
 }
 
 /* @keyframes growProgressBar {
@@ -695,22 +699,8 @@ Modal {
   margin-inline: auto;
 }
 
-.delete-btn {
-  background: #f44336;
-  color: #fff;
-}
-
 .count-and-target-input-wrap {
   display: flex;
-}
-
-.count-and-target-input-wrap input {
-  /* width: 40%; */
-}
-
-.count-and-target-input-wrap input,
-.count-and-target-input-wrap p {
-  /* width: 90%; */
 }
 
 .current-count-input-wrap input,
@@ -735,8 +725,6 @@ Modal {
 .form-wrap input {
   border: none;
   border-radius: 1rem;
-  padding: 1rem;
-  /* width: 100%; */
   text-align: center;
   margin-inline: auto;
 }
@@ -747,9 +735,24 @@ Modal {
   /* border-radius: 2rem; */
 }
 
-.save-btn {
+.form-blank input {
+  padding: 1rem;
+}
+
+.form-blank p {
+  font-size: 0.7rem;
+}
+
+.form-blank-save-btn,
+.form-filled-save-btn {
   background-color: #6060ff;
   color: #fff;
+}
+
+.delete-btn {
+  background: #f44336;
+  color: #fff;
+  width: 100%;
   margin-top: 1rem;
 }
 
@@ -758,24 +761,32 @@ Modal {
   margin: 2rem 0 2rem 0;
 }
 
-.reset-delete-and-save-btn-wrap {
-  display: flex;
-  margin-top: 1rem;
+.remove-counter-blinking * {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
 
-.reset-delete-and-save-btn-wrap input {
-  width: 30%;
+.reset-and-save-btn-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgb(216, 216, 216);
+}
+
+.reset-and-save-btn-wrap input {
+  width: 45%;
 }
 
 .reset-btn {
   /* background-color: #f4f4f4; */
   color: #000;
 }
-.remove-counter-blinking * {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
+
+.form-filled input {
+  padding: 1rem;
 }
 
 /* COUNTER TEXT AUTO SCROLL */

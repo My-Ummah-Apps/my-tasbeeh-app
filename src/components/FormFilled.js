@@ -72,17 +72,7 @@ const FormFilled = ({
         </div>
       </div>
       <div className="pop-up-box-buttons-wrap">
-        <div className="reset-delete-and-save-btn-wrap">
-          <input
-            className="delete-btn"
-            type="button"
-            value="Delete"
-            onClick={(e) => {
-              deleteSingleCounter(currentCounterId);
-              e.preventDefault();
-              handleCloseModal();
-            }}
-          ></input>
+        <div className="reset-and-save-btn-wrap">
           <input
             className="reset-btn"
             type="button"
@@ -93,13 +83,25 @@ const FormFilled = ({
               setcurrentCountInput(0);
             }}
           ></input>
+
           <input
-            className="save-btn"
+            className="form-filled-save-btn"
             type="button"
             value="Save"
             onClick={submitCounter}
           ></input>
         </div>
+
+        <input
+          className="delete-btn"
+          type="button"
+          value="Delete"
+          onClick={(e) => {
+            deleteSingleCounter(currentCounterId);
+            e.preventDefault();
+            handleCloseModal();
+          }}
+        ></input>
       </div>
     </form>
   );

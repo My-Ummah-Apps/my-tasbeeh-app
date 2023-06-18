@@ -6,7 +6,9 @@ const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
     return (
       <div className="theme-options-wrap">
         <div
-          style={{ backgroundColor: theme == "dark" ? "blue" : null }}
+          style={{
+            backgroundColor: theme == "dark" ? activeBackgroundColor : null,
+          }}
           onClick={() => {
             setTheme("dark");
             localStorage.setItem("theme", JSON.stringify("dark"));
@@ -16,7 +18,9 @@ const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
           Dark
         </div>
         <div
-          style={{ backgroundColor: theme == "light" ? "blue" : null }}
+          style={{
+            backgroundColor: theme == "light" ? activeBackgroundColor : null,
+          }}
           onClick={() => {
             setTheme("light");
             localStorage.setItem("theme", JSON.stringify("light"));
@@ -26,7 +30,9 @@ const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
           Light
         </div>
         <div
-          style={{ backgroundColor: theme == "system" ? "blue" : null }}
+          style={{
+            backgroundColor: theme == "system" ? activeBackgroundColor : null,
+          }}
           onClick={() => {
             setTheme("system");
             localStorage.setItem("theme", JSON.stringify("system"));

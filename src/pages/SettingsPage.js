@@ -106,11 +106,10 @@ const SettingsPage = ({
           <span className="mt-ios">
             <input id="1" type="checkbox" checked={haptics} />
             <label
-              style={
-                {
-                  // boxShadow: `inset 0 0 0 1.5em ${activeBackgroundColor},0 0 0 .1875em ${activeBackgroundColor}`,
-                }
-              }
+              style={{
+                // boxShadow: `inset 0 0 0 1.5em ${activeBackgroundColor},0 0 0 .1875em ${activeBackgroundColor}`,
+                boxShadow: `0 0 0 .1875em transparent,0 .375em .375em ${activeBackgroundColor}`,
+              }}
               for="1"
               onClick={(e) => {
                 if (JSON.parse(localStorage.getItem("haptics")) == true) {

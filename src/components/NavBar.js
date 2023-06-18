@@ -1,20 +1,56 @@
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { IconContext } from "react-icons";
+import { FaHome } from "react-icons/fa";
+import { GrHomeRounded } from "react-icons/gr";
+import { BsFillHouseDoorFill, BsList, BsFillNutFill } from "react-icons/bs";
 
 import { MdSettings, MdHome, MdMenu } from "react-icons/md";
 
-const NavBar = () => {
+const NavBar = ({ activeBackgroundColor }) => {
+  const [activePage, setActivePage] = useState("home");
+
   return (
     <div className="navbar-wrap">
-      <NavLink className="nav-link" to="/SettingsPage">
-        <MdSettings className="nav-icon" />
+      <NavLink
+        onClick={() => {
+          setActivePage("settings");
+        }}
+        className="nav-link"
+        to="/SettingsPage"
+      >
+        <BsFillNutFill
+          className="nav-icon"
+          color={activePage == "settings" ? activeBackgroundColor : ""}
+        />
       </NavLink>
 
-      <NavLink className="nav-link" to="/">
-        <MdHome className="nav-icon" />
+      <NavLink
+        onClick={() => {
+          setActivePage("home");
+        }}
+        className="nav-link"
+        to="/"
+      >
+        <div>
+          <BsFillHouseDoorFill
+            className="nav-icon"
+            color={activePage == "home" ? activeBackgroundColor : ""}
+          />
+        </div>
       </NavLink>
 
-      <NavLink className="nav-link" to="/CountersPage">
-        <MdMenu className="nav-icon" />
+      <NavLink
+        onClick={() => {
+          setActivePage("counters");
+        }}
+        className="nav-link"
+        to="/CountersPage"
+      >
+        <BsList
+          className="nav-icon"
+          color={activePage == "counters" ? activeBackgroundColor : ""}
+        />
       </NavLink>
     </div>
   );

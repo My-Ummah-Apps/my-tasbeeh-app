@@ -126,11 +126,11 @@ function App() {
         if (boolean == true) {
           console.log("boolean true");
           document.body.classList.add("dark");
-          StatusBar.setStyle({ style: Style.Light });
+          // StatusBar.setStyle({ style: Style.Light });
         } else if (boolean == false) {
           console.log("boolean false");
           document.body.classList.remove("dark");
-          StatusBar.setStyle({ style: Style.Dark });
+          // StatusBar.setStyle({ style: Style.Dark });
         }
       }
 
@@ -466,7 +466,7 @@ function App() {
         </Routes>
       </section>
 
-      <NavBar />
+      <NavBar activeBackgroundColor={activeBackgroundColor} />
     </BrowserRouter>
   );
 }
