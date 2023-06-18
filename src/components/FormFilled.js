@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { VscDebugRestart } from "react-icons/vsc";
+import { MdOutlinePlaylistRemove } from "react-icons/md";
 
 const FormFilled = ({
+  activeBackgroundColor,
   modifyTheCountersArray,
   currentCounterName,
   currentCount,
@@ -34,10 +37,26 @@ const FormFilled = ({
 
   return (
     <form className="form-wrap form-filled">
+      <div className="form-filled-icons-wrap">
+        <MdOutlinePlaylistRemove
+          onClick={(e) => {
+            deleteSingleCounter(currentCounterId);
+            e.preventDefault();
+            handleCloseModal();
+          }}
+        />
+        <VscDebugRestart
+          onClick={(e) => {
+            e.preventDefault();
+            resetSingleCounter(currentCounterId);
+            setcurrentCountInput(0);
+          }}
+        />
+      </div>
       <div className="form-filled-counter-name-input-wrap">
         <p>Dhikr Name</p>
         <input
-          className="form-filled-name-input"
+          className="form-filled-name-input form-input"
           onChange={(e) => {
             setCounterName(e.target.value);
           }}
@@ -51,6 +70,7 @@ const FormFilled = ({
         <div className="current-count-input-wrap">
           <p>Count</p>
           <input
+            className="form-input"
             onChange={(e) => {
               setcurrentCountInput(e.target.value);
             }}
@@ -62,6 +82,7 @@ const FormFilled = ({
         <div className="target-input-wrap">
           <p>Target</p>
           <input
+            className="form-input"
             onChange={(e) => {
               setTarget(e.target.value);
             }}
@@ -73,6 +94,16 @@ const FormFilled = ({
       </div>
       <div className="pop-up-box-buttons-wrap">
         <div className="reset-and-save-btn-wrap">
+          {/* <input
+            className="delete-btn"
+            type="button"
+            value="Delete"
+            onClick={(e) => {
+              deleteSingleCounter(currentCounterId);
+              e.preventDefault();
+              handleCloseModal();
+            }}
+          ></input>
           <input
             className="reset-btn"
             type="button"
@@ -82,26 +113,23 @@ const FormFilled = ({
               resetSingleCounter(currentCounterId);
               setcurrentCountInput(0);
             }}
-          ></input>
-
-          <input
-            className="form-filled-save-btn"
-            type="button"
-            value="Done"
-            onClick={submitCounter}
-          ></input>
+          ></input> */}
         </div>
-
-        <input
-          className="delete-btn"
+        {/* <input
+          className="form-filled-save-btn"
           type="button"
-          value="Delete"
-          onClick={(e) => {
-            deleteSingleCounter(currentCounterId);
-            e.preventDefault();
-            handleCloseModal();
-          }}
-        ></input>
+          value="Save"
+          onClick={submitCounter}
+        ></input> */}
+        <div
+          className="form-filled-save-btn"
+          style={{ backgroundColor: activeBackgroundColor }}
+          // type="button"
+          // value="Save"
+          onClick={submitCounter}
+        >
+          Done
+        </div>
       </div>
     </form>
   );

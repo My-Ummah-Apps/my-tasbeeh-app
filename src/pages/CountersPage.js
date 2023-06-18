@@ -115,6 +115,7 @@ function CountersPage({
         onRequestClose={handleCloseModal}
       >
         <FormFilled
+          activeBackgroundColor={activeBackgroundColor}
           handleCloseModal={handleCloseModal}
           modifyTheCountersArray={modifyTheCountersArray}
           currentCounterName={currentCounterName}
@@ -138,6 +139,7 @@ function CountersPage({
         contentLabel="Modal #2 Global Style Override Example"
       >
         <FormBlank
+          activeBackgroundColor={activeBackgroundColor}
           nextColor={nextColor}
           handleCloseModal2={handleCloseModal2}
           setLocalSavedCountersArray={setLocalSavedCountersArray}

@@ -10,12 +10,14 @@
   --body-bg-color: #f4f4f4;
   --svg-color: #757575;
   --header-and-nav-bg-color: #f4f4f4;
-  --text-color-primary-dark: #000;
+  --text-color-primary: #000;
+  --text-color-secondary: #ffffff;
   --setings-page-boxes-bg-color: #eff1f4;
   --settings-page-borders: #e3e3e3;
   --counters-page-single-counter-box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
   --border-header-and-nav: #d5d5d5;
   --form-wrap-bg-color: #f4f4f4;
+  --form-input-bg-color: #fbfbfb;
 }
 
 /* DARK MODE */
@@ -32,6 +34,7 @@ body.dark {
   /* --border-header-and-nav: #444; */
   --border-header-and-nav: #747474;
   --form-wrap-bg-color: #2f2f2f;
+  --form-input-bg-color: #3e3e3e;
 }
 
 @font-face {
@@ -642,14 +645,14 @@ Modal {
 input[type="text"],
 input[type="number"] {
   padding: 1rem;
-  background: #3e3e3e;
+  background: var(--form-input-bg-color);
   color: var(--text-color);
 }
 
 .form-wrap {
   background: var(--form-wrap-bg-color);
-  padding: 0.5rem 1rem 1rem 1rem;
-  border-radius: 0.7rem;
+  padding: 0.5rem 0 0 0;
+  border-radius: 1.5rem;
   box-shadow: 0 3px 20px rgba(142, 142, 142, 0.6);
   /* height: 100%; */
   display: block;
@@ -657,6 +660,20 @@ input[type="number"] {
   width: 100%;
   margin-inline: auto;
   overflow: scroll;
+  font-size: 0.8rem;
+}
+
+.form-filled-icons-wrap {
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #5b5b5b;
+}
+
+.form-filled-icons-wrap svg {
+  padding: 4px;
+  font-size: 2rem;
 }
 
 .form-blank .save-btn {
@@ -698,6 +715,18 @@ input[type="number"] {
   text-align: center;
 }
 
+.form-filled-dhikr-name-and-reset-icon-wrap {
+  display: flex;
+}
+
+.form-filled-dhikr-name-and-reset-icon-wrap p {
+  text-align: center;
+}
+
+.form-filled-reset-icon {
+  margin-bottom: 2rem;
+}
+
 .form-blank-target-input-wrap {
 }
 
@@ -705,11 +734,16 @@ input[type="number"] {
   margin-bottom: 1rem;
 }
 
+.form-input {
+  border-radius: 0.8rem;
+}
+
 .form-filled-name-input {
   width: 95%;
   margin-inline: auto;
 }
 
+.form-filled-name-input,
 .count-and-target-input-wrap {
   display: flex;
 }
@@ -727,27 +761,18 @@ input[type="number"] {
 
 .counter-name-input-wrap p,
 .target-input-wrap p,
-.current-count-input-wrap p {
+.current-count-input-wrap p,
+.form-filled-dhikr-name-and-reset-icon-wrap p {
   text-align: center;
   margin: 1rem 0;
-  font-size: 0.8rem;
+  /* font-size: 0.8rem; */
 }
 
 .form-wrap input {
   border: none;
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   text-align: center;
   margin-inline: auto;
-}
-
-.save-btn,
-.reset-btn,
-.delete-btn {
-  /* border-radius: 2rem; */
-}
-
-.form-blank input {
-  padding: 1rem;
 }
 
 .form-blank p {
@@ -756,8 +781,10 @@ input[type="number"] {
 
 .form-blank-save-btn,
 .form-filled-save-btn {
-  background-color: #6060ff;
+  /* background-color: #6060ff; */
   color: #fff;
+  text-align: center;
+  padding: 1.5rem;
 }
 
 .delete-btn {
@@ -784,7 +811,7 @@ input[type="number"] {
   justify-content: space-between;
   margin-top: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgb(216, 216, 216);
+  /* border-bottom: 1px solid rgb(216, 216, 216); */
 }
 
 .reset-and-save-btn-wrap input {

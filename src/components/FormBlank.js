@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-function FormBlank({ setShowPopUpBoxBlank, addCounter, handleCloseModal2 }) {
+function FormBlank({
+  activeBackgroundColor,
+  setShowPopUpBoxBlank,
+  addCounter,
+  handleCloseModal2,
+}) {
   const [alertColor, setAlertColor] = useState("#fff");
 
   const submitCounter = (e) => {
@@ -29,6 +34,7 @@ function FormBlank({ setShowPopUpBoxBlank, addCounter, handleCloseModal2 }) {
           <div className="form-blank-name-and-target-wrap">
             <p>Dhikr Name</p>
             <input
+              className="form-input"
               onChange={(e) => {
                 setCounterName(e.target.value);
               }}
@@ -41,6 +47,7 @@ function FormBlank({ setShowPopUpBoxBlank, addCounter, handleCloseModal2 }) {
           <div className="form-blank-target-input-wrap">
             <p>Target</p>
             <input
+              className="form-input"
               onChange={(e) => {
                 if (!Number(e.target.value)) {
                   return;
@@ -57,12 +64,13 @@ function FormBlank({ setShowPopUpBoxBlank, addCounter, handleCloseModal2 }) {
           </div>
         </div>
         <div className="pop-up-box-buttons-wrap">
-          <input
+          <div
             className="form-blank-save-btn"
-            type="submit"
-            value="Done"
             onClick={submitCounter}
-          ></input>
+            style={{ backgroundColor: activeBackgroundColor }}
+          >
+            Save
+          </div>
         </div>
       </form>
     </div>
