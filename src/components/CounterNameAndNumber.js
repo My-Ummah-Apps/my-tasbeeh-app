@@ -59,7 +59,7 @@ function CounterNameAndNumber({
         className="single-counter-wrap remove-counter-blinking"
         ref={counterTextContainerRef}
         style={{
-          backgroundColor: activeBackgroundColor + "99",
+          backgroundColor: activeBackgroundColor + "BF",
           // boxShadow: `0px 5px 20px ${activeBackgroundColor}`,
           boxShadow: `0px 7px 29px 0px ${activeBackgroundColor}`,
         }}

@@ -14,7 +14,7 @@ const Counter = ({
     <div
       className="single-counter-wrap"
       style={{
-        backgroundColor: nextColor + "99",
+        backgroundColor: nextColor + "BF",
         // backgroundColor: nextColor + "FF",
         // color: "black",
         // backgroundColor: nextColor,

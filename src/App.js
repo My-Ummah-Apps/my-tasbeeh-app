@@ -103,30 +103,43 @@ function App() {
   // );
 
   // Add or remove the "dark" class based on if the media query matches
-  function toggleDarkTheme(shouldAdd) {
-    document.body.classList.toggle("dark", shouldAdd);
-    console.log(shouldAdd);
-  }
-
+  // function toggleDarkTheme(shouldAdd) {
+  //   document.body.classList.toggle("dark", shouldAdd);
+  //   console.log(shouldAdd);
+  // }
+  let prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
   useEffect(() => {
     if (localStorage.getItem("theme") == null) {
-      toggleDarkTheme();
       localStorage.setItem("theme", JSON.stringify("system"));
     }
 
     if (JSON.parse(localStorage.getItem("theme")) == "system") {
       // Use matchMedia to check the user preference
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-      // Listen for changes to the prefers-color-scheme media query
-      prefersDark.addEventListener("change", (mediaQuery) =>
-        toggleDarkTheme(mediaQuery.matches)
-      );
+      console.log("prefersDark value is:");
+      console.log(prefersDark);
+
+      prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
       // Add or remove the "dark" class based on if the media query matches
-      function toggleDarkTheme(shouldAdd) {
-        document.body.classList.toggle("dark");
+      function toggleDarkTheme(boolean) {
+        if (boolean == true) {
+          console.log("boolean true");
+          document.body.classList.add("dark");
+          StatusBar.setStyle({ style: Style.Light });
+        } else if (boolean == false) {
+          console.log("boolean false");
+          document.body.classList.remove("dark");
+          StatusBar.setStyle({ style: Style.Dark });
+        }
       }
+
+      // Listen for changes to the prefers-color-scheme media query
+      prefersDark.addEventListener("change", (mediaQuery) => {
+        console.log("mediaQuery is:");
+        console.log(mediaQuery.matches);
+        return toggleDarkTheme(mediaQuery.matches);
+      });
 
       toggleDarkTheme(prefersDark.matches);
 
@@ -140,7 +153,7 @@ function App() {
       document.body.classList.remove("dark");
       // toggleDarkTheme();
     }
-  }, [theme]);
+  }, [theme, prefersDark]);
 
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
 

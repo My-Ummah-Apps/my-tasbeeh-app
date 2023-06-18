@@ -33,10 +33,11 @@ const FormFilled = ({
   const [currentTargetInput, setTarget] = useState(currentCounterTarget);
 
   return (
-    <form className="form-wrap">
-      <div className="counter-name-input-wrap">
+    <form className="form-wrap form-filled">
+      <div className="form-filled-counter-name-input-wrap">
         <p>Dhikr Name</p>
         <input
+          className="form-filled-name-input"
           onChange={(e) => {
             setCounterName(e.target.value);
           }}

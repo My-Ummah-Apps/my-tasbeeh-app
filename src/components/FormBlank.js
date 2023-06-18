@@ -23,36 +23,39 @@ function FormBlank({ setShowPopUpBoxBlank, addCounter, handleCloseModal2 }) {
   const [targetInput, setTarget] = useState("");
 
   return (
-    <div className="form-wrap">
+    <div className="form-wrap form-blank">
       <form>
-        <div className="counter-name-input-wrap">
-          <p>Dhikr Name</p>
-          <input
-            onChange={(e) => {
-              setCounterName(e.target.value);
-            }}
-            type="text"
-            style={{ borderBottom: "1px solid" + alertColor }}
-            required
-          ></input>
-          {/* <label style={{ color: alertColor }}>Dhikr Name</label> */}
-        </div>
-        <div className="target-input-wrap">
-          <p>Target</p>
-          <input
-            onChange={(e) => {
-              if (!Number(e.target.value)) {
-                return;
-              }
-              setTarget(e.target.value);
-            }}
-            placeholder="0"
-            maxLength={5}
-            type="text"
-            pattern="[0-9]*"
-            required
-          ></input>
-          {/* <label>Target (Default: 0)</label> */}
+        <div className="form-blank-counter-name-input-wrap">
+          <div className="form-blank-name-and-target-wrap">
+            <p>Dhikr Name</p>
+            <input
+              onChange={(e) => {
+                setCounterName(e.target.value);
+              }}
+              placeholder="Alhumdulillah"
+              type="text"
+              style={{ borderBottom: "1px solid" + alertColor }}
+              required
+            ></input>
+            {/* <label style={{ color: alertColor }}>Dhikr Name</label> */}
+          </div>
+          <div className="form-blank-target-input-wrap">
+            <p>Target</p>
+            <input
+              onChange={(e) => {
+                if (!Number(e.target.value)) {
+                  return;
+                }
+                setTarget(e.target.value);
+              }}
+              placeholder="0"
+              maxLength={5}
+              type="text"
+              pattern="[0-9]*"
+              required
+            ></input>
+            {/* <label>Target (Default: 0)</label> */}
+          </div>
         </div>
         <div className="pop-up-box-buttons-wrap">
           <input
