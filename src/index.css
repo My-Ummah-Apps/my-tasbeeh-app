@@ -22,6 +22,7 @@
   --border-header-and-nav: none;
   --form-wrap-bg-color: #f4f4f4;
   --form-input-bg-color: #fbfbfb;
+  --settings-page-box-shadow: 0 0px 5px 0 rgba(132, 132, 132, 0.2);
 }
 
 /* DARK MODE */
@@ -41,6 +42,7 @@ body.dark {
   --border-header-and-nav: none;
   --form-wrap-bg-color: #2f2f2f;
   --form-input-bg-color: #3e3e3e;
+  --settings-page-box-shadow: none;
 }
 
 @font-face {
@@ -580,60 +582,6 @@ MdModeEditOutline {
   /* fill: var(--text-color); */
 }
 
-/* @keyframes growProgressBar {
-  0%,
-  33% {
-    --pgPercentage: 0;
-  }
-  100% {
-    --pgPercentage: var(--value);
-  }
-} */
-
-@property --pgPercentage {
-  syntax: "<number>";
-  inherits: false;
-  initial-value: 0;
-}
-
-div[role="progressbar"] {
-  position: relative;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-  --size: 10.5rem;
-  --fg: var(--svg-color);
-  --bg: #def;
-  --pgPercentage: var(--value);
-  position: absolute;
-  left: 50%;
-  top: 36%;
-  top: 139px;
-  transform: translate(-50%, 50%);
-  -webkit-animation: growProgressBar 3s 1 forwards;
-  animation: growProgressBar 3s 1 forwards;
-  width: var(--size);
-  height: var(--size);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  z-index: 1;
-  border: 12px solid white;
-  background: radial-gradient(
-      closest-side,
-      white 80%,
-      transparent 0 99.9%,
-      white 0
-    ),
-    conic-gradient(var(--fg) calc(var(--pgPercentage) * 10%), var(--bg) 0);
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: calc(var(--size) / 5);
-  color: var(--fg);
-}
-
-div[role="progressbar"]::before {
-  counter-reset: percentage var(--value);
-  content: counter(percentage);
-}
-
 .target-text {
   position: absolute;
   left: 50%;
@@ -914,16 +862,19 @@ input[type="number"] {
 .main-page-wrap {
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
+  height: 100vh;
+  overflow-y: scroll;
+  padding-bottom: 20vh;
 }
 
 .individual-section-wrap {
   color: var(--text-color-primary);
   position: relative;
   background: var(--setings-page-boxes-bg-color);
-  margin: 3rem auto 2rem auto;
+  margin: 1rem auto 2rem auto;
   width: 90%;
   border-radius: 0.5rem;
-  box-shadow: 0 0px 5px 0 rgba(132, 132, 132, 0.2);
+  box-shadow: var(--settings-page-box-shadow);
   padding: 0.1rem 0;
 }
 

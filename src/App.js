@@ -148,10 +148,13 @@ function App() {
     if (JSON.parse(localStorage.getItem("theme")) == "dark") {
       // toggleDarkTheme();
       document.body.classList.add("dark");
+      setStatusBarStyleDark();
+
       console.log("useEffect has run, dark theme selected");
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
       console.log("useEffect has run, light theme selected");
       document.body.classList.remove("dark");
+      setStatusBarStyleLight();
       // toggleDarkTheme();
     }
   }, [theme, prefersDark]);
