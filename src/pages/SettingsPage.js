@@ -80,7 +80,8 @@ const SettingsPage = ({
           <div className="text-wrap" style={{ display: "block" }}>
             <p>Theme</p>
             <p>
-              Current Theme: {theme.charAt(0).toUpperCase() + theme.slice(1)}
+              Current Theme: {theme}
+              {/* Current Theme: {theme.charAt(0).toUpperCase() + theme.slice(1)} */}
             </p>
           </div>
           <MdOutlineChevronRight className="chevron" />

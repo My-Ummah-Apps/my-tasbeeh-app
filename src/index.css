@@ -7,15 +7,19 @@
 
 :root {
   /* --body-bg-color: #f2f1f6; */
-  --body-bg-color: #f4f4f4;
+  /* --body-bg-color: #f4f4f4; */
+  --body-bg-color: rgb(237, 237, 237);
   --svg-color: #757575;
-  --header-and-nav-bg-color: #f4f4f4;
+  /* --header-and-nav-bg-color: #f4f4f4; */
+  --header-bg-color: rgb(237, 237, 237);
+  --nav-bg-color: #fff;
   --text-color-primary: #000;
   --text-color-secondary: #ffffff;
   --setings-page-boxes-bg-color: #eff1f4;
   --settings-page-borders: #e3e3e3;
   --counters-page-single-counter-box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
-  --border-header-and-nav: #d5d5d5;
+  /* --border-header-and-nav: #d5d5d5; */
+  --border-header-and-nav: none;
   --form-wrap-bg-color: #f4f4f4;
   --form-input-bg-color: #fbfbfb;
 }
@@ -24,15 +28,17 @@
 
 body.dark {
   /* Dark mode variables go here */
-  --body-bg-color: #121212;
-  --header-and-nav-bg-color: black;
+  --body-bg-color: #242424;
+  --nav-bg-color: #000;
+  --header-bg-color: #242424;
   --text-color-primary: #fff;
   --setings-page-boxes-bg-color: #2f2f2f;
   --settings-page-borders: #595959;
   --svg-color: #e1e1e1;
   --counters-page-single-counter-box-shadow: hsl(232, 11%, 15%);
-  /* --border-header-and-nav: #444; */
-  --border-header-and-nav: #747474;
+
+  /* --border-header-and-nav: #747474; */
+  --border-header-and-nav: none;
   --form-wrap-bg-color: #2f2f2f;
   --form-input-bg-color: #3e3e3e;
 }
@@ -200,6 +206,7 @@ body {
   z-index: 1;
   text-align: center;
   border: none;
+  box-shadow: var(--counters-page-single-counter-box-shadow);
 }
 
 /* .increment-btn:active {
@@ -350,9 +357,10 @@ MdModeEditOutline {
 
 .counters-wrap {
   width: 100%;
-  height: 80vh;
+  height: 95vh;
   overflow-y: scroll;
   overflow-x: hidden;
+  padding-bottom: 20vh;
   /* padding-bottom: 100px; */
 }
 
@@ -490,7 +498,7 @@ MdModeEditOutline {
 .settings-page-header,
 .counters-page-header,
 .home-page-header {
-  background: var(--header-and-nav-bg-color);
+  background: var(--header-bg-color);
   position: relative;
   height: 7vh;
   /* background: white; */
@@ -552,7 +560,7 @@ MdModeEditOutline {
   width: 100%;
   border-top: 1px solid var(--border-header-and-nav);
   box-shadow: 10px 5px 5px rgb(177, 177, 177);
-  background: var(--header-and-nav-bg-color);
+  background: var(--nav-bg-color);
   z-index: 1;
 }
 
@@ -561,7 +569,7 @@ MdModeEditOutline {
 }
 
 .nav-link {
-  color: #fff;
+  /* color: var(--text-color); */
   text-decoration: none;
   text-align: center;
   padding: 1rem 3rem 0.5rem 3rem;
@@ -569,7 +577,7 @@ MdModeEditOutline {
 
 .nav-icon {
   font-size: 1.5rem;
-  /* fill: var(--svg-color); */
+  /* fill: var(--text-color); */
 }
 
 /* @keyframes growProgressBar {
