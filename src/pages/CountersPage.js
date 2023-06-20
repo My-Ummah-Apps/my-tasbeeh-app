@@ -10,22 +10,17 @@ import FormBlank from "../components/FormBlank";
 import FormFilled from "../components/FormFilled";
 import Counter from "../components/Counter";
 
-// ReactModal.setAppElement("#root");
-
 // Override default Modal styles
 Modal.defaultStyles.content.border = "none";
 Modal.defaultStyles.content.position = "absolute";
 Modal.defaultStyles.content.inset = "50% 0% 0% 50%";
 Modal.defaultStyles.content.transform = "translate(-50%, -50%)";
-// Modal.defaultStyles.content.background = "#f4f4f4";
 Modal.defaultStyles.content.overflow = "none";
 Modal.defaultStyles.content.borderRadius = "20px";
 Modal.defaultStyles.content.padding = "0";
 Modal.defaultStyles.content.height = "fit-content";
 Modal.defaultStyles.content.zIndex = "10000";
 Modal.defaultStyles.content.width = "85%";
-
-// Modal.defaultStyles.overlay.backgroundColor = "rgba(123, 123, 123, 0.84)";
 
 const customStyles = {
   content: {
@@ -39,6 +34,8 @@ const customStyles = {
 };
 
 function CountersPage({
+  modalStyles,
+  modalBgColor,
   activeBackgroundColor,
   resetSingleCounter,
   invokeSetActiveCounter,
@@ -106,6 +103,7 @@ function CountersPage({
       </div>
 
       <Modal
+        style={modalStyles}
         class="modal-custom-properties"
         closeTimeoutMS={1000}
         isOpen={showModal}
@@ -128,6 +126,7 @@ function CountersPage({
         />
       </Modal>
       <Modal
+        style={modalStyles}
         isOpen={showModal2}
         onRequestClose={handleCloseModal2}
         closeTimeoutMS={1000}

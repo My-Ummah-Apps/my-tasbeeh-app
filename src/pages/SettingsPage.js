@@ -24,6 +24,8 @@ Modal.defaultStyles.content.width = "85%";
 // Modal.defaultStyles.content.background = "blue";
 
 const SettingsPage = ({
+  modalStyles,
+  modalBgColor,
   device,
   setHaptics,
   haptics,
@@ -72,14 +74,7 @@ const SettingsPage = ({
       </div>
 
       <Modal
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.75) !important",
-          },
-          content: {
-            backgroundColor: "rgba(0, 0, 0, 0.75) !important",
-          },
-        }}
+        style={modalStyles}
         isOpen={showModal}
         onRequestClose={handleCloseModal}
         closeTimeoutMS={1000}

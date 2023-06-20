@@ -22,6 +22,7 @@
   --border-header-and-nav: none;
   --form-wrap-bg-color: #f4f4f4;
   --form-input-bg-color: #fbfbfb;
+  --form-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.6);
   --settings-page-box-shadow: 0 0px 5px 0 rgba(132, 132, 132, 0.2);
 }
 
@@ -42,6 +43,7 @@ body.dark {
   --border-header-and-nav: none;
   --form-wrap-bg-color: #2f2f2f;
   --form-input-bg-color: #3e3e3e;
+  --form-box-shadow: none;
   --settings-page-box-shadow: none;
 }
 
@@ -621,7 +623,7 @@ input[type="number"] {
   background: var(--form-wrap-bg-color);
   padding: 0.5rem 0 0 0;
   border-radius: 1.5rem;
-  box-shadow: 0 3px 20px rgba(142, 142, 142, 0.6);
+
   /* height: 100%; */
   display: block;
   overflow: auto;
@@ -629,6 +631,11 @@ input[type="number"] {
   margin-inline: auto;
   overflow: scroll;
   font-size: 0.8rem;
+}
+
+.form-wrap,
+.theme-options-wrap {
+  box-shadow: var(--form-box-shadow);
 }
 
 .form-filled-icons-wrap {
@@ -733,7 +740,6 @@ input[type="number"] {
 
 .form-wrap input {
   border: none;
-  /* border-radius: 1rem; */
   text-align: center;
   margin-inline: auto;
 }

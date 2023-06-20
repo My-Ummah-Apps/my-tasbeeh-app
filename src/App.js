@@ -87,6 +87,16 @@ function App() {
   );
 
   const [theme, setTheme] = useState(JSON.parse(localStorage.getItem("theme")));
+  const [modalStyles, setModalStyles] = useState({
+    overlay: {
+      backgroundColor: "rgba(53, 53, 53, 0.75)",
+      boxShadow: "none",
+    },
+    content: {
+      backgroundColor: "rgba(53, 53, 53, 0.75)",
+      boxShadow: "none",
+    },
+  });
 
   // // DARK MODE FUNCTIONALITY
   // // Use matchMedia to check the user preference
@@ -107,6 +117,7 @@ function App() {
 
   // let prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
   let prefersDark;
+  const [modalBgColor, setModalBgColor] = useState("");
   useEffect(() => {
     prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
     if (localStorage.getItem("theme") == null) {
@@ -148,6 +159,17 @@ function App() {
     if (JSON.parse(localStorage.getItem("theme")) == "dark") {
       // toggleDarkTheme();
       document.body.classList.add("dark");
+      // setModalBgColor("rgba(53, 53, 53, 0.75)");
+      setModalStyles({
+        overlay: {
+          backgroundColor: "rgba(53, 53, 53, 0.75)",
+          // boxShadow: "none !important",
+        },
+        content: {
+          backgroundColor: "rgba(53, 53, 53, 0.75)",
+          // boxShadow: "none !important",
+        },
+      });
       if (device == "ios") {
         setStatusBarStyleDark();
       }
@@ -159,6 +181,17 @@ function App() {
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
       console.log("useEffect has run, light theme selected");
       document.body.classList.remove("dark");
+      // setModalBgColor("rgba(255, 255, 255, 0.75)");
+      setModalStyles({
+        overlay: {
+          backgroundColor: "rgba(98, 98, 98, 0.75)",
+          // boxShadow: "none",
+        },
+        content: {
+          backgroundColor: "rgba(98, 98, 98, 0.75)",
+          // boxShadow: "none",
+        },
+      });
       if (device == "ios") {
         setStatusBarStyleLight();
       }
@@ -425,6 +458,8 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
+                modalStyles={modalStyles}
+                modalBgColor={modalBgColor}
                 device={device}
                 setHaptics={setHaptics}
                 haptics={haptics}
@@ -461,6 +496,8 @@ function App() {
             path="CountersPage"
             element={
               <CountersPage
+                modalStyles={modalStyles}
+                modalBgColor={modalBgColor}
                 activeBackgroundColor={activeBackgroundColor}
                 materialColors={materialColors}
                 localSavedCountersArray={localSavedCountersArray}
