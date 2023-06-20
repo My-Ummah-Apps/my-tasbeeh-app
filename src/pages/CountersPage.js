@@ -84,9 +84,6 @@ function CountersPage({
   let nextColorIndex = 0;
   let nextColor;
 
-  const [showPopUpBoxBlank, setShowPopUpBoxBlank] = useState(false);
-  const [showPopUpBoxFilled, setShowPopUpBoxFilled] = useState(false);
-
   const [currentCounterName, setCurrentCounterName] = useState(0);
   const [currentCount, setcurrentCount] = useState(0);
   const [currentCounterTarget, setCounterTarget] = useState(0);
@@ -122,7 +119,6 @@ function CountersPage({
           currentCount={currentCount}
           currentCounterTarget={currentCounterTarget}
           currentCounterId={currentCounterId}
-          setShowPopUpBoxFilled={setShowPopUpBoxFilled}
           setLocalSavedCountersArray={setLocalSavedCountersArray}
           localSavedCountersArray={localSavedCountersArray}
           addCounter={addCounter}
