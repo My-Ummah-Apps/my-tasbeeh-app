@@ -18,7 +18,7 @@ function CounterNameAndNumber({
   let textOverflowProperty;
   localSavedCountersArray.map((counterItem) => {
     if (counterItem.isActive == true) {
-      setActiveBackgroundColor(counterItem.color);
+      // setActiveBackgroundColor(counterItem.color);
 
       currentName = counterItem.counter;
       currentCounterTarget = counterItem.target;

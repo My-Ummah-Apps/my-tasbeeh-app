@@ -147,26 +147,21 @@ function CountersPage({
         {localSavedCountersArray.map((counterItem) => {
           nextColor = materialColors[nextColorIndex];
           counterItem.color = nextColor;
-          let count = counterItem.count;
-          let target = counterItem.target;
-          // counterItem.width = "50%";
-
           nextColorIndex == materialColors.length - 1
             ? (nextColorIndex = 0)
             : (nextColorIndex += 1);
           return (
-            <>
-              <Counter
-                nextColor={nextColor}
-                invokeSetActiveCounter={invokeSetActiveCounter}
-                counterItem={counterItem}
-                setCurrentCounterName={setCurrentCounterName}
-                setcurrentCount={setcurrentCount}
-                setCounterTarget={setCounterTarget}
-                setcurrentCounterId={setcurrentCounterId}
-                handleOpenModal={handleOpenModal}
-              />
-            </>
+            <Counter
+              key={counterItem.id}
+              nextColor={nextColor}
+              invokeSetActiveCounter={invokeSetActiveCounter}
+              counterItem={counterItem}
+              setCurrentCounterName={setCurrentCounterName}
+              setcurrentCount={setcurrentCount}
+              setCounterTarget={setCounterTarget}
+              setcurrentCounterId={setcurrentCounterId}
+              handleOpenModal={handleOpenModal}
+            />
           );
         })}
       </div>

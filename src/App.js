@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { Device } from "@capacitor/device";
-import { Capacitor } from "@capacitor/core";
+
+import { v4 as uuidv4 } from "uuid";
 
 import NavBar from "./components/NavBar";
 
@@ -228,7 +229,7 @@ function App() {
           color: "#EF5350",
           isActive: true,
           target: 100,
-          id: 0,
+          id: uuidv4(),
         },
 
         {
@@ -237,7 +238,7 @@ function App() {
           color: "#EC407A",
           isActive: false,
           target: 100,
-          id: 1,
+          id: uuidv4(),
         },
 
         {
@@ -246,7 +247,7 @@ function App() {
           color: "AB47BC",
           isActive: false,
           target: 100,
-          id: 2,
+          id: uuidv4(),
         },
 
         {
@@ -255,7 +256,7 @@ function App() {
           color: "7E57C2",
           isActive: false,
           target: 100,
-          id: 3,
+          id: uuidv4(),
         },
         {
           counter: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
@@ -263,7 +264,7 @@ function App() {
           color: "5C6BC0",
           isActive: false,
           target: 100,
-          id: 4,
+          id: uuidv4(),
         },
         {
           counter: "La hawla wa la quwwata illa billah",
@@ -271,7 +272,7 @@ function App() {
           color: "29B6F6",
           isActive: false,
           target: 100,
-          id: 5,
+          id: uuidv4(),
         },
         {
           counter: "La ilaha illallah",
@@ -279,7 +280,7 @@ function App() {
           color: "26C6DA",
           isActive: false,
           target: 100,
-          id: 6,
+          id: uuidv4(),
         },
         {
           counter: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
@@ -287,7 +288,7 @@ function App() {
           color: "26A69A",
           isActive: false,
           target: 100,
-          id: 7,
+          id: uuidv4(),
         },
         {
           counter: "Subhan-Allahi wa bihamdih",
@@ -295,7 +296,7 @@ function App() {
           color: "66BB6A",
           isActive: false,
           target: 100,
-          id: 8,
+          id: uuidv4(),
         },
       ];
 
@@ -320,13 +321,12 @@ function App() {
   const addItemToSavedCountersArray = () => {};
 
   const addCounter = (counterToAdd, target) => {
-    const randomlyGeneratedId = Math.floor(Math.random() * 10000) + 1;
     const newCounter = {
       counter: counterToAdd,
       count: 0,
       isActive: false,
       target: target,
-      id: randomlyGeneratedId,
+      id: uuidv4(),
     };
     const newArray = [...localSavedCountersArray, newCounter];
     if (newArray.length == 1) {
