@@ -363,7 +363,6 @@ MdModeEditOutline {
   overflow-y: scroll;
   overflow-x: hidden;
   padding-bottom: 20vh;
-  /* padding-bottom: 100px; */
 }
 
 .single-counter-name-and-count-wrap {
@@ -501,15 +500,25 @@ MdModeEditOutline {
 
 /* SETTINGS PAGE */
 
+.settings-page-options-and-info-wrap {
+  width: 100%;
+  height: 95vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-bottom: 20vh;
+}
+
 .settings-page-header,
 .counters-page-header,
 .home-page-header {
   background: var(--header-bg-color);
   position: relative;
   height: 7vh;
-  /* background: white; */
   color: var(--text-color-primary);
   border-bottom: 1px solid var(--border-header-and-nav);
+  /* position: sticky;
+  top: 0;
+  z-index: 1; */
 }
 
 .settings-page-header p,
@@ -866,8 +875,8 @@ input[type="number"] {
 .main-page-wrap {
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
-  height: 100vh;
-  overflow-y: scroll;
+  /* height: 100vh; */
+  /* overflow-y: scroll; */
   overflow-x: hidden;
   padding-bottom: 20vh;
 }
@@ -996,12 +1005,6 @@ input[type="number"] {
   .counter-page-single-counter.active {
     -webkit-filter: drop-shadow(0 0 1px black);
     filter: drop-shadow(0 0 1px black);
-  }
-
-  .settings-page-header,
-  .counters-page-header,
-  .home-page-header {
-    height: 6vh;
   }
 }
 

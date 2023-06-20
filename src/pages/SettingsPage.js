@@ -70,25 +70,6 @@ const SettingsPage = ({
         <p>Settings</p>
       </div>
 
-      <div className="individual-section-wrap">
-        <div
-          className="theme-wrap"
-          onClick={() => {
-            handleOpenModal();
-            setFormTheme(true);
-          }}
-        >
-          <div className="text-wrap" style={{ display: "block" }}>
-            <p>Theme</p>
-            <p>
-              Current Theme: {theme}
-              {/* Current Theme: {theme.charAt(0).toUpperCase() + theme.slice(1)} */}
-            </p>
-          </div>
-          <MdOutlineChevronRight className="chevron" />
-        </div>
-      </div>
-
       <Modal
         style={{
           overlay: {
@@ -128,35 +109,56 @@ const SettingsPage = ({
         />
       </Modal>
 
-      <div className="individual-section-wrap" style={{ marginTop: "3rem" }}>
-        <div className="individual-row-wrap haptic-wrap">
-          <div className="text-wrap" style={{ display: "block" }}>
-            <p>Haptic Vibration</p>
-            <p>Set vibration on every increment</p>
-          </div>
-          <Switch
-            checked={haptics}
-            className={undefined}
-            disabled={undefined}
-            handleColor="white"
-            name={undefined}
-            offColor="white"
-            onChange={(e) => {
-              if (JSON.parse(localStorage.getItem("haptics")) == true) {
-                setHaptics(false);
-                localStorage.setItem("haptics", JSON.stringify(false));
-              } else if (JSON.parse(localStorage.getItem("haptics")) == false) {
-                setHaptics(true);
-                localStorage.setItem("haptics", JSON.stringify(true));
-              }
+      <div className="settings-page-options-and-info-wrap">
+        <div className="individual-section-wrap">
+          <div
+            className="theme-wrap"
+            onClick={() => {
+              handleOpenModal();
+              setFormTheme(true);
             }}
-            onColor={activeBackgroundColor}
-            pendingOffColor={undefined}
-            pendingOnColor={undefined}
-            readOnly={undefined}
-            style={undefined}
-          />
-          {/* <span className="mt-ios">
+          >
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Theme</p>
+              <p>
+                Current Theme: {theme}
+                {/* Current Theme: {theme.charAt(0).toUpperCase() + theme.slice(1)} */}
+              </p>
+            </div>
+            <MdOutlineChevronRight className="chevron" />
+          </div>
+        </div>
+        <div className="individual-section-wrap" style={{ marginTop: "3rem" }}>
+          <div className="individual-row-wrap haptic-wrap">
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Haptic Vibration</p>
+              <p>Set vibration on every increment</p>
+            </div>
+            <Switch
+              checked={haptics}
+              className={undefined}
+              disabled={undefined}
+              handleColor="white"
+              name={undefined}
+              offColor="white"
+              onChange={(e) => {
+                if (JSON.parse(localStorage.getItem("haptics")) == true) {
+                  setHaptics(false);
+                  localStorage.setItem("haptics", JSON.stringify(false));
+                } else if (
+                  JSON.parse(localStorage.getItem("haptics")) == false
+                ) {
+                  setHaptics(true);
+                  localStorage.setItem("haptics", JSON.stringify(true));
+                }
+              }}
+              onColor={activeBackgroundColor}
+              pendingOffColor={undefined}
+              pendingOnColor={undefined}
+              readOnly={undefined}
+              style={undefined}
+            />
+            {/* <span className="mt-ios">
             <input id="1" type="checkbox" checked={haptics} />
             <label
               style={
@@ -179,42 +181,45 @@ const SettingsPage = ({
               }}
             ></label>
           </span> */}
-        </div>
-        <div className="individual-row-wrap">
-          <div className="text-wrap" style={{ display: "block" }}>
-            <p>Auto Reset Count</p>
-            <p>Counters will be reset daily</p>
           </div>
-          <Switch
-            checked={dailyCounterReset}
-            className={undefined}
-            disabled={undefined}
-            handleColor="white"
-            name={undefined}
-            offColor="white"
-            onChange={(e) => {
-              if (
-                JSON.parse(localStorage.getItem("dailyCounterReset")) == true
-              ) {
-                setDailyCounterReset(false);
-                localStorage.setItem(
-                  "dailyCounterReset",
-                  JSON.stringify(false)
-                );
-              } else if (
-                JSON.parse(localStorage.getItem("dailyCounterReset")) == false
-              ) {
-                setDailyCounterReset(true);
-                localStorage.setItem("dailyCounterReset", JSON.stringify(true));
-              }
-            }}
-            onColor={activeBackgroundColor}
-            pendingOffColor={undefined}
-            pendingOnColor={undefined}
-            readOnly={undefined}
-            style={undefined}
-          />
-          {/* <span className="mt-ios">
+          <div className="individual-row-wrap">
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Auto Reset Count</p>
+              <p>Counters will be reset daily</p>
+            </div>
+            <Switch
+              checked={dailyCounterReset}
+              className={undefined}
+              disabled={undefined}
+              handleColor="white"
+              name={undefined}
+              offColor="white"
+              onChange={(e) => {
+                if (
+                  JSON.parse(localStorage.getItem("dailyCounterReset")) == true
+                ) {
+                  setDailyCounterReset(false);
+                  localStorage.setItem(
+                    "dailyCounterReset",
+                    JSON.stringify(false)
+                  );
+                } else if (
+                  JSON.parse(localStorage.getItem("dailyCounterReset")) == false
+                ) {
+                  setDailyCounterReset(true);
+                  localStorage.setItem(
+                    "dailyCounterReset",
+                    JSON.stringify(true)
+                  );
+                }
+              }}
+              onColor={activeBackgroundColor}
+              pendingOffColor={undefined}
+              pendingOnColor={undefined}
+              readOnly={undefined}
+              style={undefined}
+            />
+            {/* <span className="mt-ios">
             <input id="2" type="checkbox" checked={dailyCounterReset} />
             <label
               for="2"
@@ -239,48 +244,48 @@ const SettingsPage = ({
               }}
             ></label>
           </span> */}
+          </div>
         </div>
-      </div>
 
-      <div className="individual-section-wrap">
-        {device == "android" ? (
+        <div className="individual-section-wrap">
+          {device == "android" ? (
+            <div
+              className="review-wrap"
+              onClick={() => {
+                link(
+                  "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
+                );
+              }}
+            >
+              <div className="text-wrap" style={{ display: "block" }}>
+                <p>Write a review</p>
+                <p>Rate us on the Play Store</p>
+              </div>
+              <MdOutlineChevronRight className="chevron" />
+            </div>
+          ) : null}
+          <div className="share-wrap" onClick={shareThisAppLink}>
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Share</p>
+              <p>Share application</p>
+            </div>
+            <MdOutlineChevronRight className="chevron" />
+          </div>
           <div
-            className="review-wrap"
+            className="feedback-wrap"
             onClick={() => {
               link(
-                "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
+                "mailto: contact@myummahapps.com?subject=MyTasbeehApp Feedback"
               );
             }}
           >
             <div className="text-wrap" style={{ display: "block" }}>
-              <p>Write a review</p>
-              <p>Rate us on the Play Store</p>
+              <p>Feedback</p>
+              <p>Send us your feedback</p>
             </div>
             <MdOutlineChevronRight className="chevron" />
           </div>
-        ) : null}
-        <div className="share-wrap" onClick={shareThisAppLink}>
-          <div className="text-wrap" style={{ display: "block" }}>
-            <p>Share</p>
-            <p>Share application</p>
-          </div>
-          <MdOutlineChevronRight className="chevron" />
-        </div>
-        <div
-          className="feedback-wrap"
-          onClick={() => {
-            link(
-              "mailto: contact@myummahapps.com?subject=MyTasbeehApp Feedback"
-            );
-          }}
-        >
-          <div className="text-wrap" style={{ display: "block" }}>
-            <p>Feedback</p>
-            <p>Send us your feedback</p>
-          </div>
-          <MdOutlineChevronRight className="chevron" />
-        </div>
-        {/* <div
+          {/* <div
           className="source-code-wrap"
           onClick={() => {
             link("https://github.com/My-Ummah-Apps/my-tasbeeh-app");
@@ -293,18 +298,18 @@ const SettingsPage = ({
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div> */}
-        <div
-          onClick={() => {
-            link("https://myummahapps.com/");
-          }}
-        >
-          <div className="text-wrap" style={{ display: "block" }}>
-            <p>Website</p>
-            <p>Visit our website</p>
+          <div
+            onClick={() => {
+              link("https://myummahapps.com/");
+            }}
+          >
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Website</p>
+              <p>Visit our website</p>
+            </div>
+            <MdOutlineChevronRight className="chevron" />
           </div>
-          <MdOutlineChevronRight className="chevron" />
-        </div>
-        {/* <div
+          {/* <div
           onClick={() => {
             link("https://sites.google.com/view/mytasbeehprivacypolicy/home");
           }}
@@ -316,11 +321,12 @@ const SettingsPage = ({
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div> */}
-        {/* <div>
+          {/* <div>
           <MdInfoOutline className="icon" />
           <p>Info</p>
           <MdOutlineChevronRight className="chevron" />
         </div> */}
+        </div>
       </div>
     </div>
   );
