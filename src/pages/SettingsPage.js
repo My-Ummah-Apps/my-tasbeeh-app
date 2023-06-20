@@ -14,13 +14,14 @@ Modal.defaultStyles.content.border = "none";
 Modal.defaultStyles.content.position = "absolute";
 Modal.defaultStyles.content.inset = "50% 0% 0% 50%";
 Modal.defaultStyles.content.transform = "translate(-50%, -50%)";
-Modal.defaultStyles.content.background = "#f4f4f4";
+// Modal.defaultStyles.content.background = "#f4f4f4";
 Modal.defaultStyles.content.overflow = "none";
 Modal.defaultStyles.content.borderRadius = "20px";
 Modal.defaultStyles.content.padding = "0";
 Modal.defaultStyles.content.height = "fit-content";
 Modal.defaultStyles.content.zIndex = "10000";
 Modal.defaultStyles.content.width = "85%";
+// Modal.defaultStyles.content.background = "blue";
 
 const SettingsPage = ({
   device,
@@ -89,6 +90,31 @@ const SettingsPage = ({
       </div>
 
       <Modal
+        style={{
+          overlay: {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.75) !important",
+          },
+          content: {
+            position: "absolute",
+            top: "40px",
+            left: "40px",
+            right: "40px",
+            bottom: "40px",
+            border: "1px solid #ccc",
+            background: "#fff",
+            overflow: "auto",
+            WebkitOverflowScrolling: "touch",
+            borderRadius: "4px",
+            outline: "none",
+            padding: "20px",
+            backgroundColor: "rgba(0, 0, 0, 0.75) !important",
+          },
+        }}
         isOpen={showModal}
         onRequestClose={handleCloseModal}
         closeTimeoutMS={1000}

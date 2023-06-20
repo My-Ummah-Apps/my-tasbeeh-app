@@ -391,19 +391,23 @@ MdModeEditOutline {
   margin: 1rem auto;
 }
 
+/* .single-counter-wrap::before {
+  content: "";
+  position: absolute;
+  min-width: 5%;
+  border-radius: 1rem;
+  height: 100%;
+  overflow: hidden;
+} */
+
 /* This style is to do with turning each counter into a progress bar */
 .single-counter-overlay {
   position: absolute;
   min-width: 5%;
   max-width: 100%;
-  /* border-radius: 35% 65% 100% 0% / 0% 100% 0% 100%; */
-  /* border-radius: 24% 24% 24% 24% / 0% 45% 41% 0%; */
   border-radius: 1rem;
   height: 100%;
-  /* opacity: 0.8; */
   overflow: hidden;
-
-  /* transition: max-width 3s forward; */
 }
 
 .single-counter-counter-name {
@@ -1064,4 +1068,8 @@ input[type="number"] {
 }
 .form-switch input:checked + i::after {
   transform: translate3d(22px, 2px, 0);
+}
+
+.ReactModal__Overlay ReactModal__Overlay--after-open {
+  background-color: 50px 50px 50px #000 !important;
 }

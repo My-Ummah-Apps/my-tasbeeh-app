@@ -27,10 +27,6 @@ const showStatusBar = async () => {
   await StatusBar.show();
 };
 
-// StatusBar.setBackgroundColor({
-//   color: "#00363A",
-// });
-
 let lastUsedCounterIndex; // Used in the two conditional statements immediately below when app is first loaded to grab the last used counter
 // let individualCounterDiv; // Used within the createCounterList function, the savedCountersArray is looped through and items added to the DOM with this variable which holds a div
 let counterName; // This is the prop that will be passed into the CounterNumber component
@@ -148,13 +144,24 @@ function App() {
     if (JSON.parse(localStorage.getItem("theme")) == "dark") {
       // toggleDarkTheme();
       document.body.classList.add("dark");
-      setStatusBarStyleDark();
+      if (device == "ios") {
+        setStatusBarStyleDark();
+      }
+      if (device == "android") {
+        StatusBar.setStyle({ style: Style.Dark });
+      }
 
       console.log("useEffect has run, dark theme selected");
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
       console.log("useEffect has run, light theme selected");
       document.body.classList.remove("dark");
-      setStatusBarStyleLight();
+      if (device == "ios") {
+        setStatusBarStyleLight();
+      }
+      if (device == "android") {
+        // StatusBar.setStyle({ style: Style.Dark });
+        StatusBar.setBackgroundColor({ color: "#000" });
+      }
       // toggleDarkTheme();
     }
   }, [theme, prefersDark]);

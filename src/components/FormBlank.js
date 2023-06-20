@@ -38,7 +38,7 @@ function FormBlank({
               onChange={(e) => {
                 setCounterName(e.target.value);
               }}
-              placeholder="Alhumdulillah"
+              placeholder="Dhikr"
               type="text"
               required
             ></input>

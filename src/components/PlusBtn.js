@@ -81,7 +81,7 @@ function PlusBtn({
         handleClick();
         if (currentNumber == currentCounterTarget) {
           console.log("activeCounterNumber == activeCounterTarget");
-          hapticsVibrate();
+          // hapticsVibrate();
         }
       }}
       className={`increment-btn ${showAnimation ? "fade-up-animation" : null}`}
