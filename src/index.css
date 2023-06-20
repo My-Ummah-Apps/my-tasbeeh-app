@@ -868,6 +868,7 @@ input[type="number"] {
     env(safe-area-inset-bottom) env(safe-area-inset-left);
   height: 100vh;
   overflow-y: scroll;
+  overflow-x: hidden;
   padding-bottom: 20vh;
 }
 
