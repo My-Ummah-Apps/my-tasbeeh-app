@@ -1074,6 +1074,6 @@ input[type="number"] {
   transform: translate3d(22px, 2px, 0);
 }
 
-.ReactModal__Body--open {
+/* .ReactModal__Body--open {
   background: 50px 50px 50px rgba(62, 62, 62, 0.84) !important;
-}
+} */
