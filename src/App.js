@@ -104,8 +104,11 @@ function App() {
   //   document.body.classList.toggle("dark", shouldAdd);
   //   console.log(shouldAdd);
   // }
-  let prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+  // let prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+  let prefersDark;
   useEffect(() => {
+    prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
     if (localStorage.getItem("theme") == null) {
       localStorage.setItem("theme", JSON.stringify("dark"));
     }

@@ -17,13 +17,15 @@ Modal.defaultStyles.content.border = "none";
 Modal.defaultStyles.content.position = "absolute";
 Modal.defaultStyles.content.inset = "50% 0% 0% 50%";
 Modal.defaultStyles.content.transform = "translate(-50%, -50%)";
-Modal.defaultStyles.content.background = "#f4f4f4";
+// Modal.defaultStyles.content.background = "#f4f4f4";
 Modal.defaultStyles.content.overflow = "none";
 Modal.defaultStyles.content.borderRadius = "20px";
 Modal.defaultStyles.content.padding = "0";
 Modal.defaultStyles.content.height = "fit-content";
 Modal.defaultStyles.content.zIndex = "10000";
 Modal.defaultStyles.content.width = "85%";
+
+// Modal.defaultStyles.overlay.backgroundColor = "rgba(123, 123, 123, 0.84)";
 
 const customStyles = {
   content: {
@@ -53,9 +55,7 @@ function CountersPage({
     return count > 0 ? (count / target) * 100 + "%" : "100%";
   }
 
-  const [modal, setModal] = useState("");
   let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -97,7 +97,7 @@ function CountersPage({
   function handleClick() {
     forceUpdate();
   }
-
+  Modal.setAppElement("#root");
   return (
     <div className="counters-page-wrap">
       <div className="counters-page-header">
@@ -106,8 +106,8 @@ function CountersPage({
       </div>
 
       <Modal
+        class="modal-custom-properties"
         closeTimeoutMS={1000}
-        modal={modal}
         isOpen={showModal}
         onRequestClose={handleCloseModal}
       >
@@ -128,7 +128,6 @@ function CountersPage({
         />
       </Modal>
       <Modal
-        modal={modal}
         isOpen={showModal2}
         onRequestClose={handleCloseModal2}
         closeTimeoutMS={1000}

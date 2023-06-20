@@ -63,6 +63,7 @@ const SettingsPage = ({
   const link = (url) => {
     window.location.href = url;
   };
+  Modal.setAppElement("#root");
 
   return (
     <div className="settings-page-wrap">
