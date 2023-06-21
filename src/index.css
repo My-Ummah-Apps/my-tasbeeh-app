@@ -378,18 +378,21 @@ MdModeEditOutline {
 }
 
 .single-counter-wrap {
+  position: relative;
   font-size: 1.3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
   width: 95%;
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   box-shadow: var(--counters-page-single-counter-box-shadow);
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
   position: relative;
   padding: 0.7rem 0;
   margin: 1rem auto;
+  /* clip-path: circle(70% at 50% 50%); */
+  clip-path: inset(0% 0% 0% 0% round 10px);
 }
 
 /* .single-counter-wrap::before {
@@ -399,14 +402,16 @@ MdModeEditOutline {
   border-radius: 1rem;
   height: 100%;
   overflow: hidden;
+  z-index: 100;
+  background: blue;
 } */
 
 /* This style is to do with turning each counter into a progress bar */
 .single-counter-overlay {
   position: absolute;
-  min-width: 5%;
+  /* min-width: 5%; */
   max-width: 100%;
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   height: 100%;
   overflow: hidden;
 }
