@@ -177,9 +177,9 @@ function App() {
         StatusBar.setStyle({ style: Style.Dark });
       }
 
-      console.log("useEffect has run, dark theme selected");
+      // console.log("useEffect has run, dark theme selected");
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
-      console.log("useEffect has run, light theme selected");
+      // console.log("useEffect has run, light theme selected");
       document.body.classList.remove("dark");
       // setModalBgColor("rgba(255, 255, 255, 0.75)");
       setModalStyles({
@@ -213,7 +213,7 @@ function App() {
     if (storedDate !== currentDate && dailyCounterReset == true) {
       // Reset your variable or perform any other actions
       resetAllCounters();
-      console.log("It is a new day! All counters have been reset");
+      // console.log("It is a new day! All counters have been reset");
     }
 
     setLastLaunchDate(currentDate);
@@ -222,8 +222,8 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("haptics") == null) {
-      localStorage.setItem("haptics", JSON.stringify(false));
-      setHaptics(false);
+      localStorage.setItem("haptics", JSON.stringify(true));
+      setHaptics(true);
     }
 
     if (localStorage.getItem("dailyCounterReset") == null) {
@@ -235,7 +235,7 @@ function App() {
   useEffect(() => {
     if (sessionStorage.getItem("showAnimation") == null) {
       setShowAnimation(true);
-      console.log("sessionStorage is null");
+      // console.log("sessionStorage is null");
       sessionStorage.setItem("showAnimation", "no");
     }
 

@@ -15,7 +15,7 @@
   --nav-bg-color: #fff;
   --text-color-primary: #000;
   --text-color-secondary: #ffffff;
-  --setings-page-boxes-bg-color: #eff1f4;
+  --setings-page-boxes-bg-color: #f7f7f7;
   --settings-page-borders: #e3e3e3;
   --counters-page-single-counter-box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
   /* --border-header-and-nav: #d5d5d5; */
@@ -37,7 +37,7 @@ body.dark {
   --setings-page-boxes-bg-color: #2f2f2f;
   --settings-page-borders: #595959;
   --svg-color: #e1e1e1;
-  --counters-page-single-counter-box-shadow: hsl(232, 11%, 15%);
+  --counters-page-single-counter-box-shadow: none;
 
   /* --border-header-and-nav: #747474; */
   --border-header-and-nav: none;
@@ -377,6 +377,10 @@ MdModeEditOutline {
   z-index: 1;
 }
 
+.single-counter-wrap-parent {
+  filter: drop-shadow(0px 10px 5px rgba(0, 0, 0, 0.1));
+}
+
 .single-counter-wrap {
   position: relative;
   font-size: 1.3rem;
@@ -430,7 +434,7 @@ MdModeEditOutline {
 
 .single-counter-counter-name,
 .single-counter-count {
-  margin-left: 1.5rem;
+  margin-left: 0.7rem;
   padding: 0.5rem 0;
   /* font-weight: lighter; */
   font-weight: 400;

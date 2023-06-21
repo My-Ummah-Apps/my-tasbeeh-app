@@ -55,7 +55,7 @@ function CounterNameAndNumber({
   }, [textRef.current]);
 
   return (
-    <>
+    <div className="single-counter-wrap-parent">
       <div
         className="single-counter-wrap remove-counter-blinking"
         ref={counterTextContainerRef}
@@ -126,7 +126,7 @@ function CounterNameAndNumber({
           <span>{currentName}</span>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
