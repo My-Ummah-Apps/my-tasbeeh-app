@@ -46,6 +46,7 @@ function CountersPage({
   deleteSingleCounter,
   materialColors,
   showAnimation,
+  setActivePage,
 }) {
   function singleCounterStyles(count, target) {
     return count > 0 ? (count / target) * 100 + "%" : "100%";
@@ -149,6 +150,7 @@ function CountersPage({
             : (nextColorIndex += 1);
           return (
             <Counter
+              setActivePage={setActivePage}
               key={counterItem.id}
               nextColor={nextColor}
               invokeSetActiveCounter={invokeSetActiveCounter}

@@ -50,6 +50,7 @@ function App() {
     "#9CCC65",
     "#FF7043",
   ];
+  const [activePage, setActivePage] = useState("home");
   const [device, setDevice] = useState("");
   const logDeviceInfo = async () => {
     const info = await Device.getInfo();
@@ -496,6 +497,7 @@ function App() {
             path="CountersPage"
             element={
               <CountersPage
+                setActivePage={setActivePage}
                 modalStyles={modalStyles}
                 modalBgColor={modalBgColor}
                 activeBackgroundColor={activeBackgroundColor}
@@ -518,7 +520,11 @@ function App() {
         </Routes>
       </section>
 
-      <NavBar activeBackgroundColor={activeBackgroundColor} />
+      <NavBar
+        activeBackgroundColor={activeBackgroundColor}
+        setActivePage={setActivePage}
+        activePage={activePage}
+      />
     </BrowserRouter>
   );
 }

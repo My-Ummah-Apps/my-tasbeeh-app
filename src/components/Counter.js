@@ -10,6 +10,7 @@ const Counter = ({
   setCounterTarget,
   setcurrentCounterId,
   handleOpenModal,
+  setActivePage,
 }) => {
   return (
     <div className="single-counter-wrap-parent">
@@ -26,7 +27,13 @@ const Counter = ({
         }}
       >
         <div className="single-counter-name-and-count-wrap">
-          <Link to="/" style={{ color: "#fff", textDecoration: "none" }}>
+          <Link
+            onClick={() => {
+              setActivePage("home");
+            }}
+            to="/"
+            style={{ color: "#fff", textDecoration: "none" }}
+          >
             <div className="single-counter-count">
               {counterItem.count} / {counterItem.target}
             </div>

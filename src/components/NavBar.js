@@ -7,9 +7,7 @@ import { BsFillHouseDoorFill, BsList, BsFillNutFill } from "react-icons/bs";
 
 import { MdSettings, MdHome, MdMenu } from "react-icons/md";
 
-const NavBar = ({ activeBackgroundColor }) => {
-  const [activePage, setActivePage] = useState("home");
-
+const NavBar = ({ activeBackgroundColor, setActivePage, activePage }) => {
   return (
     <div className="navbar-wrap">
       <NavLink
