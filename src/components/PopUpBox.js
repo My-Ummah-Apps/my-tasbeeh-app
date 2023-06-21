@@ -12,7 +12,7 @@ const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
           onClick={() => {
             setTheme("dark");
             localStorage.setItem("theme", JSON.stringify("dark"));
-            console.log("dark selected");
+            // console.log("dark selected");
           }}
         >
           Dark
@@ -24,7 +24,7 @@ const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
           onClick={() => {
             setTheme("light");
             localStorage.setItem("theme", JSON.stringify("light"));
-            console.log("light selected");
+            // console.log("light selected");
           }}
         >
           Light

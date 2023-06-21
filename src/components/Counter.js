@@ -1,4 +1,5 @@
 import { FaPen } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Counter = ({
   nextColor,
@@ -25,13 +26,17 @@ const Counter = ({
         }}
       >
         <div className="single-counter-name-and-count-wrap">
-          <div className="single-counter-count">
-            {counterItem.count} / {counterItem.target}
-          </div>
-          <div className="single-counter-counter-name">
-            {counterItem.counter}
-          </div>
+          <Link to="/" style={{ color: "#fff", textDecoration: "none" }}>
+            <div className="single-counter-count">
+              {counterItem.count} / {counterItem.target}
+            </div>
+
+            <div className="single-counter-counter-name">
+              {counterItem.counter}
+            </div>
+          </Link>
         </div>
+
         <div
           className="edit-btn-wrap"
           onClick={(e) => {
