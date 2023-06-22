@@ -81,7 +81,7 @@ body {
 
 /* MAIN PAGE */
 
-@-webkit-keyframes fadeInDown {
+/* @-webkit-keyframes fadeInDown {
   0% {
     opacity: 0;
     transform: translateY(-10%);
@@ -91,12 +91,12 @@ body {
     opacity: 1;
     transform: translateY(0%);
   }
-}
+} */
 
 @keyframes fadeInDown {
   0% {
     opacity: 0;
-    transform: translateY(-10%);
+    transform: translateY(-1%);
   }
 
   100% {
@@ -414,10 +414,24 @@ MdModeEditOutline {
 /* This style is to do with turning each counter into a progress bar */
 .single-counter-overlay {
   position: absolute;
-  /* min-width: 5%; */
   max-width: 100%;
-  /* border-radius: 1rem; */
   height: 100%;
+  overflow: hidden;
+}
+
+@keyframes counterWidthAnimation {
+  0% {
+    max-width: 0;
+  }
+  100% {
+    max-width: 100%;
+  }
+}
+
+.width-animation {
+  animation-name: counterWidthAnimation;
+  animation-duration: 1s;
+  animation-direction: forwards;
   overflow: hidden;
 }
 
@@ -471,6 +485,13 @@ MdModeEditOutline {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
 }
 
 .pop-up-box-wrap {
@@ -891,8 +912,6 @@ input[type="number"] {
 .main-page-wrap {
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
-  /* height: 100vh; */
-  /* overflow-y: scroll; */
   overflow-x: hidden;
   padding-bottom: 20vh;
 }

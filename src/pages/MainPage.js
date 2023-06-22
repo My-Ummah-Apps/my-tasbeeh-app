@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import PlusBtn from "../components/PlusBtn";
 
@@ -13,7 +14,6 @@ const MainPage = ({
   setActiveCounterNumber,
   activeCounterBackgroundColor,
   localSavedCountersArray,
-  showAnimation,
   setActiveBackgroundColor,
   activeBackgroundColor,
   resetSingleCounter,
@@ -32,7 +32,6 @@ const MainPage = ({
         activeCounterNumber={activeCounterNumber}
         activeCounterTarget={activeCounterTarget}
         localSavedCountersArray={localSavedCountersArray}
-        showAnimation={showAnimation}
         setActiveBackgroundColor={setActiveBackgroundColor}
         activeBackgroundColor={activeBackgroundColor}
       />
@@ -46,7 +45,6 @@ const MainPage = ({
         activeCounterTarget={activeCounterTarget}
         savedCountersArray={savedCountersArray}
         counterId={counterId}
-        showAnimation={showAnimation}
       />
     </div>
   );

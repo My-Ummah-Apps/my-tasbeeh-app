@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { VscDebugRestart } from "react-icons/vsc";
 import { MdOutlinePlaylistRemove, MdOutlineRestartAlt } from "react-icons/md";
 
@@ -14,13 +14,35 @@ const FormFilled = ({
   deleteSingleCounter,
   setcurrentCount,
 }) => {
-  const [alertColor, setAlertColor] = useState("#fff");
+  const counterNameField = useRef(null);
+  const counterCountField = useRef(null);
+  const counterTargetField = useRef(null);
   const submitCounter = (e) => {
     e.preventDefault();
-    if (!counterNameInput) {
-      setAlertColor("#efff00");
+    if (!counterNameInput || !currentCountInput || currentTargetInput == 0) {
+      console.log("A field is empty");
+      if (!counterNameInput) {
+        counterNameField.current.style.border = "1px solid red";
+        console.log("!counterNameInput");
+      } else {
+        counterNameField.current.style.border = "none";
+      }
+      if (!currentCountInput) {
+        counterCountField.current.style.border = "1px solid red";
+        console.log("!counterCountField");
+      } else {
+        counterCountField.current.style.border = "none";
+      }
+      if (currentTargetInput == 0) {
+        counterTargetField.current.style.border = "1px solid red";
+        console.log("!counterTargetField");
+      } else {
+        counterTargetField.current.style.border = "none";
+      }
+
       return;
     }
+
     modifyTheCountersArray(
       currentCounterId,
       counterNameInput,
@@ -57,6 +79,7 @@ const FormFilled = ({
       <div className="form-filled-counter-name-input-wrap">
         <p>Dhikr Name</p>
         <input
+          ref={counterNameField}
           className="form-filled-name-input form-input"
           onChange={(e) => {
             setCounterName(e.target.value);
@@ -71,6 +94,7 @@ const FormFilled = ({
         <div className="current-count-input-wrap">
           <p>Count</p>
           <input
+            ref={counterCountField}
             className="form-input"
             onChange={(e) => {
               setcurrentCountInput(e.target.value);
@@ -83,6 +107,7 @@ const FormFilled = ({
         <div className="target-input-wrap">
           <p>Target</p>
           <input
+            ref={counterTargetField}
             className="form-input"
             onChange={(e) => {
               setTarget(e.target.value);
@@ -94,39 +119,10 @@ const FormFilled = ({
         </div>
       </div>
       <div className="pop-up-box-buttons-wrap">
-        <div className="reset-and-save-btn-wrap">
-          {/* <input
-            className="delete-btn"
-            type="button"
-            value="Delete"
-            onClick={(e) => {
-              deleteSingleCounter(currentCounterId);
-              e.preventDefault();
-              handleCloseModal();
-            }}
-          ></input>
-          <input
-            className="reset-btn"
-            type="button"
-            value="Reset"
-            onClick={(e) => {
-              e.preventDefault();
-              resetSingleCounter(currentCounterId);
-              setcurrentCountInput(0);
-            }}
-          ></input> */}
-        </div>
-        {/* <input
-          className="form-filled-save-btn"
-          type="button"
-          value="Save"
-          onClick={submitCounter}
-        ></input> */}
+        <div className="reset-and-save-btn-wrap"></div>
         <div
           className="form-filled-save-btn"
           style={{ backgroundColor: activeBackgroundColor }}
-          // type="button"
-          // value="Save"
           onClick={submitCounter}
         >
           Done

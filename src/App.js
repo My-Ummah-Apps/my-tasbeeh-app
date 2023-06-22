@@ -78,7 +78,6 @@ function App() {
     );
   };
 
-  const [showAnimation, setShowAnimation] = useState(false);
   const [haptics, setHaptics] = useState(
     JSON.parse(localStorage.getItem("haptics"))
   );
@@ -122,7 +121,7 @@ function App() {
   useEffect(() => {
     prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
     if (localStorage.getItem("theme") == null) {
-      localStorage.setItem("theme", JSON.stringify("dark"));
+      localStorage.setItem("theme", JSON.stringify("light"));
     }
     // System theme functionality removed for now until bugs are fixed
     // if (JSON.parse(localStorage.getItem("theme")) == "system") {
@@ -232,20 +231,9 @@ function App() {
       setDailyCounterReset(false);
     }
   });
-
-  useEffect(() => {
-    if (sessionStorage.getItem("showAnimation") == null) {
-      setShowAnimation(true);
-      // console.log("sessionStorage is null");
-      sessionStorage.setItem("showAnimation", "no");
-    }
-
-    setTimeout(() => {
-      if (sessionStorage.getItem("showAnimation") != null) {
-        setShowAnimation(false);
-      }
-    }, 4000);
-  }, []);
+  const [isFirstLaunch, setIsFirstLaunch] = useState(
+    sessionStorage.getItem("isFirstLaunch")
+  );
 
   useEffect(() => {
     if (
@@ -486,7 +474,6 @@ function App() {
                 counterId={counterId}
                 activeCounterName={activeCounterName}
                 activeCounterNumber={activeCounterNumber}
-                showAnimation={showAnimation}
                 setActiveBackgroundColor={setActiveBackgroundColor}
                 activeBackgroundColor={activeBackgroundColor}
                 resetSingleCounter={resetSingleCounter}
@@ -513,7 +500,6 @@ function App() {
                 addCounter={addCounter}
                 resetAllCounters={resetAllCounters}
                 deleteSingleCounter={deleteSingleCounter}
-                showAnimation={showAnimation}
               />
             }
           />

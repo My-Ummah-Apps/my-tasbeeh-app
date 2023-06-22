@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function FormBlank({
   activeBackgroundColor,
@@ -7,17 +7,30 @@ function FormBlank({
   handleCloseModal2,
 }) {
   const [alertColor, setAlertColor] = useState("#fff");
+  const counterField = useRef(null);
+  const counterTargetField = useRef(null);
 
   const submitCounter = (e) => {
     e.preventDefault();
 
-    if (!counterNameInput) {
-      setAlertColor("#efff00");
+    if (!counterNameInput || !counterTargetInput) {
+      if (!counterNameInput) {
+        counterField.current.style.border = "1px solid red";
+      } else {
+        counterField.current.style.border = "none";
+      }
+      if (!counterTargetInput == 0) {
+        counterTargetField.current.style.border = "1px solid red";
+      } else {
+        counterTargetField.current.style.border = "none";
+      }
+
       return;
     }
-    targetInput
-      ? addCounter(counterNameInput, targetInput)
-      : addCounter(counterNameInput, 0);
+    addCounter(counterNameInput, counterTargetInput);
+    // counterTargetInput
+    //   ? addCounter(counterNameInput, counterTargetInput)
+    //   : addCounter(counterNameInput, 100);
     // addCounter(counterNameInput);
     setCounterName("");
     // setShowPopUpBoxBlank(false);
@@ -25,7 +38,7 @@ function FormBlank({
   };
 
   const [counterNameInput, setCounterName] = useState("");
-  const [targetInput, setTarget] = useState("");
+  const [counterTargetInput, setCounterTargetInput] = useState("");
 
   return (
     <div className="form-wrap form-blank">
@@ -34,11 +47,12 @@ function FormBlank({
           <div className="form-blank-name-and-target-wrap">
             <p>Dhikr Name</p>
             <input
+              ref={counterField}
               className="form-input"
               onChange={(e) => {
                 setCounterName(e.target.value);
               }}
-              placeholder="Dhikr"
+              // placeholder="Dhikr"
               type="text"
               required
             ></input>
@@ -47,12 +61,13 @@ function FormBlank({
           <div className="form-blank-target-input-wrap">
             <p>Target</p>
             <input
+              ref={counterTargetField}
               className="form-input"
               onChange={(e) => {
                 if (!Number(e.target.value)) {
                   return;
                 }
-                setTarget(e.target.value);
+                setCounterTargetInput(e.target.value);
               }}
               placeholder="0"
               maxLength={5}
@@ -78,28 +93,3 @@ function FormBlank({
 }
 
 export default FormBlank;
-
-{
-  /*  <form className="pop-up-box-wrap">
-      <input
-        onChange={(e) => {
-          setCounterName(e.target.value);
-        }}
-        type="text"
-        placeholder="Dhikr Name"
-        required
-      ></input>
-      <input
-        onChange={(e) => {
-          setTarget(e.target.value);
-        }}
-        type="text"
-        placeholder="Target (Default: 0)"
-        required
-      ></input>
-      <div className="pop-up-box-buttons-wrap">
-        <button onClick={closePopUpBox}>Cancel</button>
-        <input type="submit" value="Submit" onClick={submitCounter}></input>
-      </div>
-    </form> */
-}

@@ -45,7 +45,6 @@ function CountersPage({
   resetAllCounters,
   deleteSingleCounter,
   materialColors,
-  showAnimation,
   setActivePage,
 }) {
   function singleCounterStyles(count, target) {
@@ -94,9 +93,10 @@ function CountersPage({
   function handleClick() {
     forceUpdate();
   }
+  //  ${showAnimation ? "fade-down-animation" : null}
   Modal.setAppElement("#root");
   return (
-    <div className="counters-page-wrap">
+    <div className={`counters-page-wrap`}>
       <div className="counters-page-header">
         <p>Adhkar</p>
         <MdAdd onClick={handleOpenModal2} />

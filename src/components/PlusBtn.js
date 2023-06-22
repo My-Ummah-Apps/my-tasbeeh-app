@@ -34,7 +34,6 @@ function PlusBtn({
   activeCounterTarget,
   localSavedCountersArray,
   saveArrayLocally,
-  showAnimation,
   activeBackgroundColor,
 }) {
   let currentNumber;
@@ -84,7 +83,8 @@ function PlusBtn({
           // hapticsVibrate();
         }
       }}
-      className={`increment-btn ${showAnimation ? "fade-up-animation" : null}`}
+      //       ${showAnimation ? "fade-up-animation" : null}
+      className={`increment-btn`}
     >
       <div className="increment-btn-number-and-target-wrap">
         <div className="increment-btn-number">{currentNumber}</div>

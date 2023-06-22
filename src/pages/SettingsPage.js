@@ -6,7 +6,7 @@ import Switch from "react-ios-switch";
 
 import { Share } from "@capacitor/share";
 // import "/node_modules/moretoggles/output/moretoggles.min.css";
-import PopUpBox from "../components/PopUpBox";
+import PopUpBox from "../components/ThemeOptions";
 import { act } from "react-dom/test-utils";
 
 // Override default Modal styles

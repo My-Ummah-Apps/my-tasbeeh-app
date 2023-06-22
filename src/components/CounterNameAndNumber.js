@@ -6,11 +6,23 @@ import { MdOutlineRestartAlt } from "react-icons/md";
 
 function CounterNameAndNumber({
   localSavedCountersArray,
-  showAnimation,
   setActiveBackgroundColor,
   activeBackgroundColor,
   resetSingleCounter,
 }) {
+  // const [showAnimation, setShowAnimation] = useState(
+  //   sessionStorage.getItem("showAnimationMainPageCounter")
+  // );
+  // useEffect(() => {
+  //   if (sessionStorage.getItem("showAnimationMainPageCounter") == "false") {
+  //     setShowAnimation(false);
+  //   } else if (sessionStorage.getItem("showAnimationMainPageCounter") == null) {
+  //     setShowAnimation(true);
+
+  //     sessionStorage.setItem("showAnimationMainPageCounter", "false");
+  //   }
+  // }, []);
+
   let currentName;
   let currentNumber = 0;
   let currentCounterTarget;
@@ -53,11 +65,13 @@ function CounterNameAndNumber({
       // setOverflow({ overflow: "unset" });
     }
   }, [textRef.current]);
+  // ${showAnimation ? "fade-down-animation" : ""}
 
   return (
     <div className="single-counter-wrap-parent">
       <div
-        className="single-counter-wrap remove-counter-blinking"
+        className={`single-counter-wrap remove-counter-blinking 
+          `}
         ref={counterTextContainerRef}
         style={{
           backgroundColor: activeBackgroundColor + "BF",
@@ -67,7 +81,6 @@ function CounterNameAndNumber({
       >
         <div className="single-counter-name-and-count-wrap">
           <div className="single-counter-count">
-            {/* {currentNumber} / {currentCounterTarget} */}
             {currentNumber <= currentCounterTarget
               ? Math.floor((currentNumber / currentCounterTarget) * 100) + "%"
               : "100%"}
@@ -108,13 +121,14 @@ function CounterNameAndNumber({
         </div>
 
         <div
-          className="single-counter-overlay"
           style={{
             backgroundColor: activeBackgroundColor,
             width: (currentNumber / currentCounterTarget) * 100 + "%",
 
             // width: singleCounterStyles(count, target),
           }}
+          // ${showAnimation ? "width-animation" : ""}
+          className={`single-counter-overlay`}
         ></div>
       </div>
       {/* Remove below code */}
