@@ -20,6 +20,7 @@
   --counters-page-single-counter-box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
   /* --border-header-and-nav: #d5d5d5; */
   --border-header-and-nav: none;
+  --border-form: #d5d5d5;
   --form-wrap-bg-color: #f4f4f4;
   --form-input-bg-color: #fbfbfb;
   --form-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.6);
@@ -40,6 +41,7 @@ body.dark {
   --counters-page-single-counter-box-shadow: none;
 
   /* --border-header-and-nav: #747474; */
+  --border-form: #747474;
   --border-header-and-nav: none;
   --form-wrap-bg-color: #2f2f2f;
   --form-input-bg-color: #3e3e3e;
@@ -674,7 +676,7 @@ input[type="number"] {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--border-header-and-nav);
+  /* border-bottom: 1px solid var(--border-form); */
 }
 
 .form-filled-icons-wrap svg {
@@ -688,7 +690,7 @@ input[type="number"] {
 
 .form-blank input {
   width: 100%;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.2rem 0;
 }
 
 .form-blank .save-btn {
@@ -717,7 +719,7 @@ input[type="number"] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 1rem auto 0.5rem auto;
+  margin: 0.5rem auto 0rem auto;
   width: 100%;
   text-align: center;
 }
@@ -787,6 +789,20 @@ input[type="number"] {
   padding: 1.5rem;
 }
 
+.form-alert-styles {
+  margin: 0.5rem 0;
+  color: red;
+  font-size: 0.7rem;
+}
+
+.form-show-alert {
+  visibility: visible;
+}
+
+.form-hide-alert {
+  visibility: hidden;
+}
+
 .delete-btn {
   background: #f44336;
   color: #fff;
@@ -809,8 +825,7 @@ input[type="number"] {
 .reset-and-save-btn-wrap {
   display: flex;
   justify-content: space-between;
-  margin-top: 1rem;
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
   /* border-bottom: 1px solid rgb(216, 216, 216); */
 }
 

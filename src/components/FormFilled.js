@@ -17,27 +17,32 @@ const FormFilled = ({
   const counterNameField = useRef(null);
   const counterCountField = useRef(null);
   const counterTargetField = useRef(null);
+  const showTargetAlert = useRef(null);
+  const showCountAlert = useRef(null);
+  const showNameAlert = useRef(null);
+
   const submitCounter = (e) => {
     e.preventDefault();
-    if (!counterNameInput || !currentCountInput || currentTargetInput == 0) {
-      console.log("A field is empty");
-      if (!counterNameInput) {
-        counterNameField.current.style.border = "1px solid red";
-        console.log("!counterNameInput");
+
+    if (
+      !counterNameInput ||
+      currentCountInput.length == 0 ||
+      currentTargetInput == 0
+    ) {
+      if (counterNameInput.length == 0) {
+        showNameAlert.current.style.visibility = "visible";
       } else {
-        counterNameField.current.style.border = "none";
+        showNameAlert.current.style.visibility = "hidden";
       }
-      if (!currentCountInput) {
-        counterCountField.current.style.border = "1px solid red";
-        console.log("!counterCountField");
+      if (currentCountInput.length == 0) {
+        showCountAlert.current.style.visibility = "visible";
       } else {
-        counterCountField.current.style.border = "none";
+        showCountAlert.current.style.visibility = "hidden";
       }
       if (currentTargetInput == 0) {
-        counterTargetField.current.style.border = "1px solid red";
-        console.log("!counterTargetField");
+        showTargetAlert.current.style.visibility = "visible";
       } else {
-        counterTargetField.current.style.border = "none";
+        showTargetAlert.current.style.visibility = "hidden";
       }
 
       return;
@@ -55,7 +60,7 @@ const FormFilled = ({
 
   const [counterNameInput, setCounterName] = useState(currentCounterName);
   const [currentCountInput, setcurrentCountInput] = useState(currentCount);
-  const [currentTargetInput, setTarget] = useState(currentCounterTarget);
+  const [currentTargetInput, setCurrentTarget] = useState(currentCounterTarget);
 
   return (
     <form className="form-wrap form-filled">
@@ -82,13 +87,20 @@ const FormFilled = ({
           ref={counterNameField}
           className="form-filled-name-input form-input"
           onChange={(e) => {
+            if (/\d/.test(e.target.value)) return;
             setCounterName(e.target.value);
           }}
           type="text"
           value={counterNameInput}
-          // style={{ borderBottom: "1px solid" + alertColor }}
           required
         ></input>
+        <div
+          ref={showNameAlert}
+          className={`form-alert-styles`}
+          style={{ visibility: "hidden" }}
+        >
+          Please enter a name
+        </div>
       </div>
       <div className="count-and-target-input-wrap">
         <div className="current-count-input-wrap">
@@ -96,26 +108,44 @@ const FormFilled = ({
           <input
             ref={counterCountField}
             className="form-input"
+            maxLength={5}
             onChange={(e) => {
+              if (/[a-zA-Z]/.test(e.target.value)) return;
               setcurrentCountInput(e.target.value);
             }}
-            type="number"
+            type="text"
             value={currentCountInput}
             required
           ></input>
+          <div
+            ref={showCountAlert}
+            className={`form-alert-styles`}
+            style={{ visibility: "hidden" }}
+          >
+            Please enter a number
+          </div>
         </div>
         <div className="target-input-wrap">
           <p>Target</p>
           <input
             ref={counterTargetField}
             className="form-input"
+            maxLength={5}
             onChange={(e) => {
-              setTarget(e.target.value);
+              if (/[a-zA-Z]/.test(e.target.value)) return;
+              setCurrentTarget(e.target.value);
             }}
-            type="number"
+            type="text"
             value={currentTargetInput}
             required
           ></input>
+          <div
+            ref={showTargetAlert}
+            className={`form-alert-styles`}
+            style={{ visibility: "hidden" }}
+          >
+            Target must be above 0
+          </div>
         </div>
       </div>
       <div className="pop-up-box-buttons-wrap">

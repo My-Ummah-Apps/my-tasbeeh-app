@@ -6,23 +6,38 @@ function FormBlank({
   addCounter,
   handleCloseModal2,
 }) {
-  const [alertColor, setAlertColor] = useState("#fff");
   const counterField = useRef(null);
   const counterTargetField = useRef(null);
 
+  const showNameAlert = useRef(null);
+  const showTargetAlert = useRef(null);
+
+  const [counterNameInput, setCounterName] = useState("");
+  const [counterTargetInput, setCounterTargetInput] = useState("");
+
   const submitCounter = (e) => {
     e.preventDefault();
-
-    if (!counterNameInput || !counterTargetInput) {
-      if (!counterNameInput) {
-        counterField.current.style.border = "1px solid red";
+    console.log(counterTargetInput);
+    if (
+      counterNameInput.length == 0 ||
+      counterTargetInput == 0 ||
+      counterTargetInput.length == 0 ||
+      !counterTargetInput
+    ) {
+      console.log(counterTargetInput.length);
+      if (counterNameInput.length == 0) {
+        showNameAlert.current.style.visibility = "visible";
       } else {
-        counterField.current.style.border = "none";
+        showNameAlert.current.style.visibility = "hidden";
       }
-      if (!counterTargetInput == 0) {
-        counterTargetField.current.style.border = "1px solid red";
+      if (
+        counterTargetInput == 0 ||
+        counterTargetInput.length == 0 ||
+        !counterTargetInput
+      ) {
+        showTargetAlert.current.style.visibility = "visible";
       } else {
-        counterTargetField.current.style.border = "none";
+        showTargetAlert.current.style.visibility = "hidden";
       }
 
       return;
@@ -33,12 +48,8 @@ function FormBlank({
     //   : addCounter(counterNameInput, 100);
     // addCounter(counterNameInput);
     setCounterName("");
-    // setShowPopUpBoxBlank(false);
     handleCloseModal2();
   };
-
-  const [counterNameInput, setCounterName] = useState("");
-  const [counterTargetInput, setCounterTargetInput] = useState("");
 
   return (
     <div className="form-wrap form-blank">
@@ -50,13 +61,19 @@ function FormBlank({
               ref={counterField}
               className="form-input"
               onChange={(e) => {
+                if (/\d/.test(e.target.value)) return;
                 setCounterName(e.target.value);
               }}
-              // placeholder="Dhikr"
               type="text"
               required
             ></input>
-            {/* <label style={{ color: alertColor }}>Dhikr Name</label> */}
+            <div
+              ref={showNameAlert}
+              className={`form-alert-styles`}
+              style={{ visibility: "hidden" }}
+            >
+              Please enter a name
+            </div>
           </div>
           <div className="form-blank-target-input-wrap">
             <p>Target</p>
@@ -64,18 +81,22 @@ function FormBlank({
               ref={counterTargetField}
               className="form-input"
               onChange={(e) => {
-                if (!Number(e.target.value)) {
-                  return;
-                }
+                if (/[a-zA-Z]/.test(e.target.value)) return;
                 setCounterTargetInput(e.target.value);
+                console.log(e.target.value);
               }}
-              placeholder="0"
               maxLength={5}
               type="text"
               pattern="[0-9]*"
               required
             ></input>
-            {/* <label>Target (Default: 0)</label> */}
+            <div
+              ref={showTargetAlert}
+              className={`form-alert-styles`}
+              style={{ visibility: "hidden" }}
+            >
+              Target must be above 0
+            </div>
           </div>
         </div>
         <div className="pop-up-box-buttons-wrap">

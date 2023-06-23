@@ -123,7 +123,11 @@ function CounterNameAndNumber({
         <div
           style={{
             backgroundColor: activeBackgroundColor,
-            width: (currentNumber / currentCounterTarget) * 100 + "%",
+
+            width:
+              currentCounterTarget > 0
+                ? (currentNumber / currentCounterTarget) * 100 + "%"
+                : "100%",
 
             // width: singleCounterStyles(count, target),
           }}
