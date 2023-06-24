@@ -464,6 +464,7 @@ function App() {
             index
             element={
               <Main
+                setHaptics={setHaptics}
                 haptics={haptics}
                 setActiveCounterName={setActiveCounterName}
                 setActiveCounterNumber={setActiveCounterNumber}

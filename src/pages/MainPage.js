@@ -3,6 +3,7 @@ import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import PlusBtn from "../components/PlusBtn";
 
 const MainPage = ({
+  setHaptics,
   haptics,
   savedCountersArray,
   saveArrayLocally,
@@ -37,6 +38,7 @@ const MainPage = ({
       />
       <PlusBtn
         activeBackgroundColor={activeBackgroundColor}
+        setHaptics={setHaptics}
         haptics={haptics}
         saveArrayLocally={saveArrayLocally}
         localSavedCountersArray={localSavedCountersArray}

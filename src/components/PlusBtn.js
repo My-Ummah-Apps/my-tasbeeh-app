@@ -12,22 +12,12 @@ const hapticsImpactLight = async () => {
 };
 
 const hapticsVibrate = async () => {
-  await Haptics.vibrate();
-};
-
-const hapticsSelectionStart = async () => {
-  await Haptics.selectionStart();
-};
-
-const hapticsSelectionChanged = async () => {
-  await Haptics.selectionChanged();
-};
-
-const hapticsSelectionEnd = async () => {
-  await Haptics.selectionEnd();
+  console.log("hapticsVibrate");
+  await Haptics.vibrate({ duration: 1000 });
 };
 
 function PlusBtn({
+  setHaptics,
   haptics,
   setActiveCounterNumber,
   activeCounterNumber,
@@ -61,8 +51,23 @@ function PlusBtn({
     });
     saveArrayLocally(localSavedCountersArray);
 
+    if (currentNumber == currentCounterTarget - 1) {
+      console.log("activeCounterNumber == activeCounterTarget");
+
+      if (haptics == true) {
+        setHaptics(false);
+        console.log("setHaptics(false)");
+        setTimeout(() => {
+          setHaptics(true);
+          console.log("setHaptics(true)");
+        }, 1100);
+      }
+      hapticsVibrate();
+    }
+
     if (haptics == true) {
       hapticsImpactMedium();
+      console.log("hapticsImpactMedium()");
     }
   };
 
@@ -78,10 +83,6 @@ function PlusBtn({
       onClick={() => {
         setCounterAndHaptics();
         handleClick();
-        if (currentNumber == currentCounterTarget) {
-          console.log("activeCounterNumber == activeCounterTarget");
-          // hapticsVibrate();
-        }
       }}
       //       ${showAnimation ? "fade-up-animation" : null}
       className={`increment-btn`}
