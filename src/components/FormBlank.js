@@ -17,14 +17,13 @@ function FormBlank({
 
   const submitCounter = (e) => {
     e.preventDefault();
-    console.log(counterTargetInput);
+
     if (
       counterNameInput.length == 0 ||
       counterTargetInput == 0 ||
       counterTargetInput.length == 0 ||
       !counterTargetInput
     ) {
-      console.log(counterTargetInput.length);
       if (counterNameInput.length == 0) {
         showNameAlert.current.style.visibility = "visible";
       } else {

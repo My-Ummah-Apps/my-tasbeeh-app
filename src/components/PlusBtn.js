@@ -12,7 +12,6 @@ const hapticsImpactLight = async () => {
 };
 
 const hapticsVibrate = async () => {
-  console.log("hapticsVibrate");
   await Haptics.vibrate({ duration: 1000 });
 };
 
@@ -52,22 +51,19 @@ function PlusBtn({
     saveArrayLocally(localSavedCountersArray);
 
     if (currentNumber == currentCounterTarget - 1) {
-      console.log("activeCounterNumber == activeCounterTarget");
-
       if (haptics == true) {
         setHaptics(false);
-        console.log("setHaptics(false)");
+
         setTimeout(() => {
           setHaptics(true);
-          console.log("setHaptics(true)");
         }, 1100);
       }
       hapticsVibrate();
+      return;
     }
 
     if (haptics == true) {
       hapticsImpactMedium();
-      console.log("hapticsImpactMedium()");
     }
   };
 

@@ -29,21 +29,33 @@ const FormFilled = ({
       currentCountInput.length == 0 ||
       currentTargetInput == 0
     ) {
-      if (counterNameInput.length == 0) {
-        showNameAlert.current.style.visibility = "visible";
-      } else {
-        showNameAlert.current.style.visibility = "hidden";
-      }
-      if (currentCountInput.length == 0) {
-        showCountAlert.current.style.visibility = "visible";
-      } else {
-        showCountAlert.current.style.visibility = "hidden";
-      }
-      if (currentTargetInput == 0) {
-        showTargetAlert.current.style.visibility = "visible";
-      } else {
-        showTargetAlert.current.style.visibility = "hidden";
-      }
+      counterNameInput.length == 0
+        ? (showNameAlert.current.style.visibility = "visible")
+        : (showNameAlert.current.style.visibility = "hidden");
+
+      currentCountInput.length == 0
+        ? (showCountAlert.current.style.visibility = "visible")
+        : (showCountAlert.current.style.visibility = "hidden");
+
+      currentTargetInput == 0
+        ? (showTargetAlert.current.style.visibility = "visible")
+        : (showTargetAlert.current.style.visibility = "hidden");
+
+      // if (counterNameInput.length == 0) {
+      //   showNameAlert.current.style.visibility = "visible";
+      // } else {
+      //   showNameAlert.current.style.visibility = "hidden";
+      // }
+      // if (currentCountInput.length == 0) {
+      //   showCountAlert.current.style.visibility = "visible";
+      // } else {
+      //   showCountAlert.current.style.visibility = "hidden";
+      // }
+      // if (currentTargetInput == 0) {
+      //   showTargetAlert.current.style.visibility = "visible";
+      // } else {
+      //   showTargetAlert.current.style.visibility = "hidden";
+      // }
 
       return;
     }
