@@ -3,6 +3,9 @@ import React from "react";
 import Modal from "react-modal";
 import { MdOutlineChevronRight } from "react-icons/md";
 import Switch from "react-ios-switch";
+// import {LocalNotifications, LocalNotificationEnabledResult, LocalNotificationActionPerformed, LocalNotification, Device, ScheduleOptions} from "@capacitor/core";
+import { LocalNotifications } from "@capacitor/local-notifications";
+// const {LocalNotifications} = Plugins;
 
 import { Share } from "@capacitor/share";
 // import "/node_modules/moretoggles/output/moretoggles.min.css";
@@ -35,6 +38,45 @@ const SettingsPage = ({
   theme,
   setTheme,
 }) => {
+
+const ngOnInit = async () => {
+
+  await LocalNotifications.requestPermissions();
+
+}
+
+ngOnInit()
+
+const scheduleBasic = async () => {
+
+  await LocalNotifications.schedule({
+    notifications: [
+
+    {
+      title: 'hello',
+      body: 'this is your reminder!',
+      id: 1,
+      extra: {
+        data: 'this is extra data'
+      },
+      schedule: {at: new Date(Date.now() + 1000 * 3)}
+    }
+
+    ]
+  }
+  
+  )
+
+
+}
+
+const scheduleAdvanced = async () => {
+
+  
+
+}
+
+
   const [formTheme, setFormTheme] = useState(false);
 
   let subtitle;
@@ -102,6 +144,24 @@ const SettingsPage = ({
               <p>
                 Current Theme: {theme == "light" ? "Light" : "Dark"}
                 {/* Current Theme: {theme.charAt(0).toUpperCase() + theme.slice(1)} */}
+              </p>
+            </div>
+            <MdOutlineChevronRight className="chevron" />
+          </div>
+        </div>
+        <div className="individual-section-wrap">
+          <div
+            className="theme-wrap"
+            onClick={() => {
+              // handleOpenModal();
+
+            }}
+          >
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Notifications</p>
+              <p>
+                Set Notifications
+
               </p>
             </div>
             <MdOutlineChevronRight className="chevron" />
@@ -277,6 +337,7 @@ const SettingsPage = ({
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div> */}
+        <button onClick={scheduleBasic}>Click</button>
           <div
             onClick={() => {
               link("https://myummahapps.com/");
@@ -307,6 +368,7 @@ const SettingsPage = ({
         </div> */}
         </div>
       </div>
+      
     </div>
   );
 };
