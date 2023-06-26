@@ -3,13 +3,16 @@ import React from "react";
 import Modal from "react-modal";
 import { MdOutlineChevronRight } from "react-icons/md";
 import Switch from "react-ios-switch";
+import NotificationOptions from "../components/NotificationOptions";
+
 // import {LocalNotifications, LocalNotificationEnabledResult, LocalNotificationActionPerformed, LocalNotification, Device, ScheduleOptions} from "@capacitor/core";
-import { LocalNotifications } from "@capacitor/local-notifications";
+
 // const {LocalNotifications} = Plugins;
 
 import { Share } from "@capacitor/share";
 // import "/node_modules/moretoggles/output/moretoggles.min.css";
-import PopUpBox from "../components/ThemeOptions";
+import ThemeOptions from "../components/ThemeOptions";
+
 import { act } from "react-dom/test-utils";
 
 // Override default Modal styles
@@ -27,6 +30,8 @@ Modal.defaultStyles.content.width = "85%";
 // Modal.defaultStyles.content.background = "blue";
 
 const SettingsPage = ({
+  setSimpleNotifications,
+  simpleNotifications,
   modalStyles,
   modalBgColor,
   device,
@@ -38,62 +43,32 @@ const SettingsPage = ({
   theme,
   setTheme,
 }) => {
-
-const ngOnInit = async () => {
-
-  await LocalNotifications.requestPermissions();
-
-}
-
-ngOnInit()
-
-const scheduleBasic = async () => {
-
-  await LocalNotifications.schedule({
-    notifications: [
-
-    {
-      title: 'hello',
-      body: 'this is your reminder!',
-      id: 1,
-      extra: {
-        data: 'this is extra data'
-      },
-      schedule: {at: new Date(Date.now() + 1000 * 3)}
-    }
-
-    ]
-  }
-  
-  )
-
-
-}
-
-const scheduleAdvanced = async () => {
-
-  
-
-}
-
-
   const [formTheme, setFormTheme] = useState(false);
 
   let subtitle;
   const [showModal, setShowModal] = useState(false);
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
+  const [showModal2, setShowModal2] = useState(false);
 
   const handleOpenModal = () => {
     setShowModal(true);
   };
 
+  const handleOpenModal2 = () => {
+    setShowModal2(true);
+  };
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+  const handleCloseModal2 = () => {
+    setShowModal2(false);
+  };
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
 
   const shareThisAppLink = async () => {
     await Share.share({
@@ -122,11 +97,25 @@ const scheduleAdvanced = async () => {
         closeTimeoutMS={1000}
         contentLabel="Modal #2 Global Style Override Example"
       >
-        <PopUpBox
+        <ThemeOptions
           formTheme={formTheme}
           theme={theme}
           activeBackgroundColor={activeBackgroundColor}
           setTheme={setTheme}
+        />
+      </Modal>
+
+      <Modal
+        style={modalStyles}
+        isOpen={showModal2}
+        onRequestClose={handleCloseModal2}
+        closeTimeoutMS={1000}
+        contentLabel="Modal #2 Global Style Override Example"
+      >
+        <NotificationOptions
+          setSimpleNotifications={setSimpleNotifications}
+          simpleNotifications={simpleNotifications}
+          activeBackgroundColor={activeBackgroundColor}
         />
       </Modal>
 
@@ -151,18 +140,14 @@ const scheduleAdvanced = async () => {
         </div>
         <div className="individual-section-wrap">
           <div
-            className="theme-wrap"
+            className="notifications-wrap"
             onClick={() => {
-              // handleOpenModal();
-
+              handleOpenModal2();
             }}
           >
             <div className="text-wrap" style={{ display: "block" }}>
               <p>Notifications</p>
-              <p>
-                Set Notifications
-
-              </p>
+              <p>Set Notifications</p>
             </div>
             <MdOutlineChevronRight className="chevron" />
           </div>
@@ -337,7 +322,11 @@ const scheduleAdvanced = async () => {
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div> */}
-        <button onClick={scheduleBasic}>Click</button>
+          <button
+          // onClick={scheduleBasic}
+          >
+            Click
+          </button>
           <div
             onClick={() => {
               link("https://myummahapps.com/");
@@ -368,7 +357,6 @@ const scheduleAdvanced = async () => {
         </div> */}
         </div>
       </div>
-      
     </div>
   );
 };

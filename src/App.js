@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { Device } from "@capacitor/device";
+import { LocalNotifications } from "@capacitor/local-notifications";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,6 +11,42 @@ import NavBar from "./components/NavBar";
 import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
+
+const NotificationOptions = ({ activeBackgroundColor }) => {
+  const ngOnInit = async () => {
+    await LocalNotifications.requestPermissions();
+  };
+
+  ngOnInit();
+};
+
+const scheduleBasic = async () => {
+  await LocalNotifications.schedule({
+    notifications: [
+      {
+        title: "hello",
+        body: "this is your reminder!",
+        id: 1,
+        extra: {
+          data: "this is extra data",
+        },
+        // schedule: {at: new Date(Date.now() + 1000 * 3)}
+        schedule: {
+          allowWhileIdle: true,
+          every: "day",
+          on: {
+            hour: 21,
+            minute: 43,
+          },
+        },
+      },
+    ],
+  });
+};
+
+scheduleBasic();
+
+const scheduleAdvanced = async () => {};
 
 // STATUS BAR FUNCTIONALITY
 const setStatusBarStyleDark = async () => {
@@ -77,6 +114,10 @@ function App() {
       JSON.stringify(arrayToSave)
     );
   };
+
+  const [simpleNotifications, setSimpleNotifications] = useState(
+    JSON.parse(localStorage.getItem("simple-notifications"))
+  );
 
   const [haptics, setHaptics] = useState(
     JSON.parse(localStorage.getItem("haptics"))
@@ -229,6 +270,11 @@ function App() {
     if (localStorage.getItem("dailyCounterReset") == null) {
       localStorage.setItem("dailyCounterReset", JSON.stringify(false));
       setDailyCounterReset(false);
+    }
+
+    if (localStorage.getItem("simple-notifications") == null) {
+      localStorage.setItem("simple-notifications", JSON.stringify(false));
+      setSimpleNotifications(false);
     }
   });
   const [isFirstLaunch, setIsFirstLaunch] = useState(
@@ -447,6 +493,8 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
+                setSimpleNotifications={setSimpleNotifications}
+                simpleNotifications={simpleNotifications}
                 modalStyles={modalStyles}
                 modalBgColor={modalBgColor}
                 device={device}

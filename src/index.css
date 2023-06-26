@@ -956,6 +956,29 @@ input[type="number"] {
   margin-top: 3rem;
 }
 
+.notification-options-wrap {
+
+  background: var(--form-wrap-bg-color);
+  
+
+}
+
+.notifications-heading {
+
+  text-align: center;
+  padding-top: 2rem;
+
+}
+
+.individual-notification-option-wrap {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+
+}
+
 .haptic-wrap,
 .review-wrap,
 .share-wrap,
