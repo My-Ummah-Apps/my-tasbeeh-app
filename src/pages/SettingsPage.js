@@ -30,8 +30,11 @@ Modal.defaultStyles.content.width = "85%";
 // Modal.defaultStyles.content.background = "blue";
 
 const SettingsPage = ({
-  setSimpleNotifications,
-  simpleNotifications,
+  changeThreeHourlyNotificationState,
+  setThreeHourlyNotifications,
+  morningNotification,
+  setMorningNotification,
+  threeHourlyNotifications,
   modalStyles,
   modalBgColor,
   device,
@@ -113,8 +116,13 @@ const SettingsPage = ({
         contentLabel="Modal #2 Global Style Override Example"
       >
         <NotificationOptions
-          setSimpleNotifications={setSimpleNotifications}
-          simpleNotifications={simpleNotifications}
+          changeThreeHourlyNotificationState={
+            changeThreeHourlyNotificationState
+          }
+          setThreeHourlyNotifications={setThreeHourlyNotifications}
+          threeHourlyNotifications={threeHourlyNotifications}
+          setMorningNotification={setMorningNotification}
+          morningNotification={morningNotification}
           activeBackgroundColor={activeBackgroundColor}
         />
       </Modal>

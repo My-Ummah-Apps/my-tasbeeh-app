@@ -12,41 +12,93 @@ import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 
-const NotificationOptions = ({ activeBackgroundColor }) => {
-  const ngOnInit = async () => {
-    await LocalNotifications.requestPermissions();
-  };
-
-  ngOnInit();
+const ngOnInit = async () => {
+  await LocalNotifications.requestPermissions();
 };
 
-const scheduleBasic = async () => {
+ngOnInit();
+
+// schedule: { at: new Date(Date.now() + 1000 * 3) },
+// schedule: {
+//   allowWhileIdle: true,
+//   foreground: true, // iOS only
+//   every: "day",
+//   on: {
+//     hour: 18,
+//     minute: 32,
+//   },
+// },
+
+const scheduleThreeHourlyNotifications = async () => {
   await LocalNotifications.schedule({
     notifications: [
       {
         title: "hello",
         body: "this is your reminder!",
         id: 1,
-        extra: {
-          data: "this is extra data",
-        },
-        // schedule: {at: new Date(Date.now() + 1000 * 3)}
         schedule: {
-          allowWhileIdle: true,
-          every: "day",
-          on: {
-            hour: 21,
-            minute: 43,
-          },
+          repeats: true,
+          every: 3 * 60 * 60,
         },
       },
     ],
   });
 };
 
-scheduleBasic();
-
-const scheduleAdvanced = async () => {};
+const scheduleMorningNotifications = async () => {
+  const morningTime = new Date();
+  morningTime.setHours(21, 49, 0, 0); // Set to 9:00 AM
+  await LocalNotifications.schedule({
+    notifications: [
+      {
+        title: "Morning Notification",
+        body: "This is a notification that occurs every morning.",
+        id: 2,
+        schedule: {
+          at: morningTime,
+          repeats: true,
+          every: "day",
+        },
+      },
+    ],
+  });
+};
+const scheduleAfternoonNotification = async () => {
+  const morningTime = new Date();
+  morningTime.setHours(21, 49, 0, 0); // Set to 9:00 AM
+  await LocalNotifications.schedule({
+    notifications: [
+      {
+        title: "Morning Notification",
+        body: "This is a notification that occurs every morning.",
+        id: 2,
+        schedule: {
+          at: morningTime,
+          repeats: true,
+          every: "day",
+        },
+      },
+    ],
+  });
+};
+const scheduleEveningNotification = async () => {
+  const morningTime = new Date();
+  morningTime.setHours(21, 49, 0, 0); // Set to 9:00 AM
+  await LocalNotifications.schedule({
+    notifications: [
+      {
+        title: "Morning Notification",
+        body: "This is a notification that occurs every morning.",
+        id: 2,
+        schedule: {
+          at: morningTime,
+          repeats: true,
+          every: "day",
+        },
+      },
+    ],
+  });
+};
 
 // STATUS BAR FUNCTIONALITY
 const setStatusBarStyleDark = async () => {
@@ -103,6 +155,82 @@ function App() {
     logDeviceInfo();
   }, []);
 
+  const [threeHourlyNotifications, setThreeHourlyNotifications] = useState(
+    JSON.parse(localStorage.getItem("three-hourly-notifications"))
+  );
+
+  const [morningNotification, setMorningNotification] = useState(
+    JSON.parse(localStorage.getItem("morning-notification"))
+  );
+
+  const [afternoonNotification, setAfternoonNotification] = useState(
+    JSON.parse(localStorage.getItem("afternoon-notification"))
+  );
+
+  const [eveningNotification, setEveningNotification] = useState(
+    JSON.parse(localStorage.getItem("evening-notification"))
+  );
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("three-hourly-notifications") == null ||
+      localStorage.getItem("three-hourly-notifications") == "false"
+    ) {
+      localStorage.setItem("three-hourly-notifications", JSON.stringify(false));
+      setThreeHourlyNotifications(false);
+      LocalNotifications.cancel({ notifications: [{ id: 1 }] });
+    } else if (localStorage.getItem("three-hourly-notifications") == "true") {
+      localStorage.setItem("three-hourly-notifications", JSON.stringify(true));
+      setThreeHourlyNotifications(true);
+      scheduleThreeHourlyNotifications();
+    }
+  }, [threeHourlyNotifications]);
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("morning-notification") == null ||
+      localStorage.getItem("morning-notification") == "false"
+    ) {
+      localStorage.setItem("morning-notification", JSON.stringify(false));
+      setMorningNotification(false);
+      LocalNotifications.cancel({ notifications: [{ id: 2 }] });
+    } else if (localStorage.getItem("morning-notification") == "true") {
+      localStorage.setItem("morning-notification", JSON.stringify(true));
+      setMorningNotification(true);
+      scheduleMorningNotifications();
+    }
+  }, [morningNotification]);
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("afternoon-notification") == null ||
+      localStorage.getItem("afternoon-notification") == "false"
+    ) {
+      localStorage.setItem("afternoon-notification", JSON.stringify(false));
+      setAfternoonNotification(false);
+      LocalNotifications.cancel({ notifications: [{ id: 3 }] });
+    } else if (localStorage.getItem("afternoon-notification") == "true") {
+      localStorage.setItem("afternoon-notification", JSON.stringify(true));
+      setAfternoonNotification(true);
+      scheduleAfternoonNotifications();
+    }
+  }, [afternoonNotification]);
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("evening-notification") == null ||
+      localStorage.getItem("evening-notification") == "false"
+    ) {
+      localStorage.setItem("evening-notification", JSON.stringify(false));
+      setEveningNotification(false);
+      LocalNotifications.cancel({ notifications: [{ id: 4 }] });
+    } else if (localStorage.getItem("evening-notification") == "true") {
+      localStorage.setItem("evening-notification", JSON.stringify(true));
+      setEveningNotification(true);
+      scheduleEveningNotifications();
+    }
+  }, [eveningNotification]);
+
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
   const [activeCounterName, setActiveCounterName] = useState("");
   const [activeCounterNumber, setActiveCounterNumber] = useState(0);
@@ -114,10 +242,6 @@ function App() {
       JSON.stringify(arrayToSave)
     );
   };
-
-  const [simpleNotifications, setSimpleNotifications] = useState(
-    JSON.parse(localStorage.getItem("simple-notifications"))
-  );
 
   const [haptics, setHaptics] = useState(
     JSON.parse(localStorage.getItem("haptics"))
@@ -246,15 +370,18 @@ function App() {
 
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
 
+  const changeThreeHourlyNotificationState = (booleanValue) => {
+    // setThreeHourlyNotifications(booleanValue);
+    // console.log(booleanValue);
+  };
+
   useEffect(() => {
     const storedDate = localStorage.getItem("lastLaunchDate");
-    // const storedDate = "03/06/2023";
     const currentDate = new Date().toLocaleDateString();
 
     if (storedDate !== currentDate && dailyCounterReset == true) {
       // Reset your variable or perform any other actions
       resetAllCounters();
-      // console.log("It is a new day! All counters have been reset");
     }
 
     setLastLaunchDate(currentDate);
@@ -270,11 +397,6 @@ function App() {
     if (localStorage.getItem("dailyCounterReset") == null) {
       localStorage.setItem("dailyCounterReset", JSON.stringify(false));
       setDailyCounterReset(false);
-    }
-
-    if (localStorage.getItem("simple-notifications") == null) {
-      localStorage.setItem("simple-notifications", JSON.stringify(false));
-      setSimpleNotifications(false);
     }
   });
   const [isFirstLaunch, setIsFirstLaunch] = useState(
@@ -493,8 +615,13 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
-                setSimpleNotifications={setSimpleNotifications}
-                simpleNotifications={simpleNotifications}
+                changeThreeHourlyNotificationState={
+                  changeThreeHourlyNotificationState
+                }
+                setThreeHourlyNotifications={setThreeHourlyNotifications}
+                threeHourlyNotifications={threeHourlyNotifications}
+                setMorningNotification={setMorningNotification}
+                morningNotification={morningNotification}
                 modalStyles={modalStyles}
                 modalBgColor={modalBgColor}
                 device={device}
