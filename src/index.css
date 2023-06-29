@@ -1016,6 +1016,17 @@ input[type="number"] {
   font-weight: normal;
 }
 
+.reset-adkhar-text-wrap {
+  border-top: 1px solid lightgray;
+}
+
+.reset-adkhar-text-wrap p {
+  font-size: 0.8rem;
+  margin: 0 0.5rem;
+  padding: 1rem 0 0.5rem 0;
+  color: red;
+}
+
 .chevron {
   /* position: absolute;   */
   transform: scale(1.5, 1.5);

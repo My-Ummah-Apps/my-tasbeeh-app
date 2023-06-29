@@ -56,7 +56,7 @@ const scheduleMorningNotifications = async () => {
     notifications: [
       {
         title: "Morning Reminder",
-        body: "Therefore remember Me. I will remember you. (Quran 2:152)",
+        body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
         id: 2,
         schedule: {
           allowWhileIdle: true,
@@ -75,7 +75,7 @@ const scheduleAfternoonNotification = async () => {
     notifications: [
       {
         title: "Afternoon Reminder",
-        body: `“And remember Allah much, that you may be successful. (Quran 62:10)”`,
+        body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
         id: 3,
         schedule: {
           allowWhileIdle: true,
@@ -93,7 +93,7 @@ const scheduleEveningNotification = async () => {
     notifications: [
       {
         title: "Evening Reminder",
-        body: `"And the remembrance of Allah is greater. (Quran 29:45)"`,
+        body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
         id: 4,
         schedule: {
           allowWhileIdle: true,
@@ -625,6 +625,7 @@ function App() {
                 changeThreeHourlyNotificationState={
                   changeThreeHourlyNotificationState
                 }
+                resetAllCounters={resetAllCounters}
                 setMorningNotification={setMorningNotification}
                 morningNotification={morningNotification}
                 afternoonNotification={afternoonNotification}

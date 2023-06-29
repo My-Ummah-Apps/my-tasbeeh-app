@@ -30,6 +30,7 @@ Modal.defaultStyles.content.width = "90%";
 // Modal.defaultStyles.content.background = "blue";
 
 const SettingsPage = ({
+  resetAllCounters,
   changeThreeHourlyNotificationState,
   setThreeHourlyNotifications,
   morningNotification,
@@ -224,8 +225,8 @@ const SettingsPage = ({
           </div>
           <div className="individual-row-wrap">
             <div className="text-wrap" style={{ display: "block" }}>
-              <p>Auto Reset Count</p>
-              <p>Counters will be reset daily</p>
+              <p>Auto Reset Adhkar</p>
+              <p>Adhkar will be reset daily</p>
             </div>
             <Switch
               checked={dailyCounterReset}
@@ -284,6 +285,9 @@ const SettingsPage = ({
               }}
             ></label>
           </span> */}
+          </div>
+          <div className="reset-adkhar-text-wrap" onClick={resetAllCounters}>
+            <p>Clear all Adhkar</p>
           </div>
         </div>
 
