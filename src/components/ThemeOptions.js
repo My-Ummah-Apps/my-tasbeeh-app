@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+import Switch from "react-ios-switch";
 
 const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
   if (formTheme) {

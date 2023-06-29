@@ -10,16 +10,22 @@ const NotificationOptions = ({
   threeHourlyNotifications,
   setMorningNotification,
   morningNotification,
+  afternoonNotification,
+  setAfternoonNotification,
+  eveningNotification,
+  setEveningNotification,
   activeBackgroundColor,
   changeThreeHourlyNotificationState,
 }) => {
   return (
     <div className="notification-options-wrap">
-      <p className="notifications-heading">Notifications</p>
-      <div className="individual-notification-option-wrap">
+      {/* <p className="notifications-heading">Notifications</p> */}
+      {/* <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Three Hourly Notifications</p>
-          <p>Receive notifications every two hours</p>
+          <p className="notificatiions-options-sub-text">
+            Receive notifications every three hours
+          </p>
         </div>
         <Switch
           checked={threeHourlyNotifications}
@@ -58,11 +64,13 @@ const NotificationOptions = ({
           readOnly={undefined}
           style={undefined}
         />
-      </div>
+      </div> */}
       <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Morning</p>
-          <p>Receiving notifications every morning</p>
+          <p className="notificatiions-options-sub-text">
+            Receive notifications every morning
+          </p>
         </div>
         <Switch
           checked={morningNotification}
@@ -105,16 +113,43 @@ const NotificationOptions = ({
       <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Afternoon</p>
-          <p>Receiving notifications every afternoon</p>
+          <p className="notificatiions-options-sub-text">
+            Receive notifications every afternoon
+          </p>
         </div>
         <Switch
-          //   checked={}
+          checked={afternoonNotification}
           className={undefined}
           disabled={undefined}
           handleColor="white"
           name={undefined}
           offColor="white"
-          onChange={(e) => {}}
+          onChange={(e) => {
+            if (
+              JSON.parse(localStorage.getItem("afternoon-notification")) == true
+            ) {
+              console.log(
+                "localStorage.getItem(afternoon-notification) == true"
+              );
+              setAfternoonNotification(false);
+              localStorage.setItem(
+                "afternoon-notification",
+                JSON.stringify(false)
+              );
+            } else if (
+              JSON.parse(localStorage.getItem("afternoon-notification")) ==
+              false
+            ) {
+              console.log(
+                "localStorage.getItem(afternoon-notification) == false"
+              );
+              setAfternoonNotification(true);
+              localStorage.setItem(
+                "afternoon-notification",
+                JSON.stringify(true)
+              );
+            }
+          }}
           onColor={activeBackgroundColor}
           pendingOffColor={undefined}
           pendingOnColor={undefined}
@@ -125,16 +160,40 @@ const NotificationOptions = ({
       <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Evening</p>
-          <p>Receiving notifications every evening</p>
+          <p className="notificatiions-options-sub-text">
+            Receive notifications every evening
+          </p>
         </div>
         <Switch
-          //   checked={}
+          checked={eveningNotification}
           className={undefined}
           disabled={undefined}
           handleColor="white"
           name={undefined}
           offColor="white"
-          onChange={(e) => {}}
+          onChange={(e) => {
+            if (
+              JSON.parse(localStorage.getItem("evening-notification")) == true
+            ) {
+              console.log("localStorage.getItem(evening-notification) == true");
+              setEveningNotification(false);
+              localStorage.setItem(
+                "evening-notification",
+                JSON.stringify(false)
+              );
+            } else if (
+              JSON.parse(localStorage.getItem("evening-notification")) == false
+            ) {
+              console.log(
+                "localStorage.getItem(evening-notification) == false"
+              );
+              setEveningNotification(true);
+              localStorage.setItem(
+                "evening-notification",
+                JSON.stringify(true)
+              );
+            }
+          }}
           onColor={activeBackgroundColor}
           pendingOffColor={undefined}
           pendingOnColor={undefined}

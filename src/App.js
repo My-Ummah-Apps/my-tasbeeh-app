@@ -30,32 +30,32 @@ ngOnInit();
 // },
 
 const scheduleThreeHourlyNotifications = async () => {
-  await LocalNotifications.schedule({
-    notifications: [
-      {
-        title: "hello",
-        body: "this is your reminder!",
-        id: 1,
-        schedule: {
-          repeats: true,
-          every: 3 * 60 * 60,
-        },
-      },
-    ],
-  });
+  // await LocalNotifications.schedule({
+  //   notifications: [
+  //     {
+  //       title: "hello",
+  //       body: "this is your three hourly reminder!",
+  //       id: 1,
+  //       schedule: {
+  //         repeats: true,
+  //         every: 3 * 60 * 60,
+  //       },
+  //     },
+  //   ],
+  // });
 };
 
 const scheduleMorningNotifications = async () => {
-  const morningTime = new Date();
-  morningTime.setHours(21, 49, 0, 0); // Set to 9:00 AM
   await LocalNotifications.schedule({
     notifications: [
       {
-        title: "Morning Notification",
-        body: "This is a notification that occurs every morning.",
+        title: "Morning Reminder",
+        body: "Therefore remember Me. I will remember you. (Quran 2:152)",
         id: 2,
         schedule: {
-          at: morningTime,
+          allowWhileIdle: true,
+          foreground: true, // iOS only
+          on: { hour: 9, minute: 44 },
           repeats: true,
           every: "day",
         },
@@ -65,15 +65,17 @@ const scheduleMorningNotifications = async () => {
 };
 const scheduleAfternoonNotification = async () => {
   const morningTime = new Date();
-  morningTime.setHours(21, 49, 0, 0); // Set to 9:00 AM
+
   await LocalNotifications.schedule({
     notifications: [
       {
-        title: "Morning Notification",
-        body: "This is a notification that occurs every morning.",
-        id: 2,
+        title: "Afternoon Reminder",
+        body: `“And remember Allah much, that you may be successful. (Quran 62:10)”`,
+        id: 3,
         schedule: {
-          at: morningTime,
+          allowWhileIdle: true,
+          foreground: true, // iOS only
+          on: { hour: 15, minute: 0 },
           repeats: true,
           every: "day",
         },
@@ -83,15 +85,17 @@ const scheduleAfternoonNotification = async () => {
 };
 const scheduleEveningNotification = async () => {
   const morningTime = new Date();
-  morningTime.setHours(21, 49, 0, 0); // Set to 9:00 AM
+
   await LocalNotifications.schedule({
     notifications: [
       {
-        title: "Morning Notification",
-        body: "This is a notification that occurs every morning.",
-        id: 2,
+        title: "Evening Reminder",
+        body: `"And the remembrance of Allah is greater. (Quran 29:45)"`,
+        id: 4,
         schedule: {
-          at: morningTime,
+          allowWhileIdle: true,
+          foreground: true, // iOS only
+          on: { hour: 19, minute: 0 },
           repeats: true,
           every: "day",
         },
@@ -171,20 +175,20 @@ function App() {
     JSON.parse(localStorage.getItem("evening-notification"))
   );
 
-  useEffect(() => {
-    if (
-      localStorage.getItem("three-hourly-notifications") == null ||
-      localStorage.getItem("three-hourly-notifications") == "false"
-    ) {
-      localStorage.setItem("three-hourly-notifications", JSON.stringify(false));
-      setThreeHourlyNotifications(false);
-      LocalNotifications.cancel({ notifications: [{ id: 1 }] });
-    } else if (localStorage.getItem("three-hourly-notifications") == "true") {
-      localStorage.setItem("three-hourly-notifications", JSON.stringify(true));
-      setThreeHourlyNotifications(true);
-      scheduleThreeHourlyNotifications();
-    }
-  }, [threeHourlyNotifications]);
+  // useEffect(() => {
+  //   if (
+  //     localStorage.getItem("three-hourly-notifications") == null ||
+  //     localStorage.getItem("three-hourly-notifications") == "false"
+  //   ) {
+  //     localStorage.setItem("three-hourly-notifications", JSON.stringify(false));
+  //     setThreeHourlyNotifications(false);
+  //     LocalNotifications.cancel({ notifications: [{ id: 1 }] });
+  //   } else if (localStorage.getItem("three-hourly-notifications") == "true") {
+  //     localStorage.setItem("three-hourly-notifications", JSON.stringify(true));
+  //     setThreeHourlyNotifications(true);
+  //     scheduleThreeHourlyNotifications();
+  //   }
+  // }, [threeHourlyNotifications]);
 
   useEffect(() => {
     if (
@@ -212,7 +216,7 @@ function App() {
     } else if (localStorage.getItem("afternoon-notification") == "true") {
       localStorage.setItem("afternoon-notification", JSON.stringify(true));
       setAfternoonNotification(true);
-      scheduleAfternoonNotifications();
+      scheduleAfternoonNotification();
     }
   }, [afternoonNotification]);
 
@@ -227,7 +231,7 @@ function App() {
     } else if (localStorage.getItem("evening-notification") == "true") {
       localStorage.setItem("evening-notification", JSON.stringify(true));
       setEveningNotification(true);
-      scheduleEveningNotifications();
+      scheduleEveningNotification();
     }
   }, [eveningNotification]);
 
@@ -618,10 +622,14 @@ function App() {
                 changeThreeHourlyNotificationState={
                   changeThreeHourlyNotificationState
                 }
-                setThreeHourlyNotifications={setThreeHourlyNotifications}
-                threeHourlyNotifications={threeHourlyNotifications}
                 setMorningNotification={setMorningNotification}
                 morningNotification={morningNotification}
+                afternoonNotification={afternoonNotification}
+                setAfternoonNotification={setAfternoonNotification}
+                eveningNotification={eveningNotification}
+                setEveningNotification={setEveningNotification}
+                setThreeHourlyNotifications={setThreeHourlyNotifications}
+                threeHourlyNotifications={threeHourlyNotifications}
                 modalStyles={modalStyles}
                 modalBgColor={modalBgColor}
                 device={device}

@@ -382,6 +382,7 @@ MdModeEditOutline {
 
 .single-counter-wrap-parent {
   filter: drop-shadow(0px 10px 5px rgba(0, 0, 0, 0.1));
+  /* filter: drop-shadow(0px 40px 5px rgba(0, 0, 0, 0.1)); */
 }
 
 .single-counter-wrap {
@@ -957,26 +958,26 @@ input[type="number"] {
 }
 
 .notification-options-wrap {
-
   background: var(--form-wrap-bg-color);
-  
-
+  border-radius: 1rem;
+  box-shadow: var(--form-box-shadow);
 }
 
 .notifications-heading {
-
   text-align: center;
   padding-top: 2rem;
-
 }
 
 .individual-notification-option-wrap {
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
+  padding: 1.5rem 1rem;
+}
 
+.notificatiions-options-sub-text {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
 }
 
 .haptic-wrap,

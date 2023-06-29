@@ -26,7 +26,7 @@ Modal.defaultStyles.content.borderRadius = "2rem";
 Modal.defaultStyles.content.padding = "0";
 Modal.defaultStyles.content.height = "fit-content";
 Modal.defaultStyles.content.zIndex = "10000";
-Modal.defaultStyles.content.width = "85%";
+Modal.defaultStyles.content.width = "90%";
 // Modal.defaultStyles.content.background = "blue";
 
 const SettingsPage = ({
@@ -34,6 +34,10 @@ const SettingsPage = ({
   setThreeHourlyNotifications,
   morningNotification,
   setMorningNotification,
+  afternoonNotification,
+  setAfternoonNotification,
+  eveningNotification,
+  setEveningNotification,
   threeHourlyNotifications,
   modalStyles,
   modalBgColor,
@@ -123,6 +127,10 @@ const SettingsPage = ({
           threeHourlyNotifications={threeHourlyNotifications}
           setMorningNotification={setMorningNotification}
           morningNotification={morningNotification}
+          afternoonNotification={afternoonNotification}
+          setAfternoonNotification={setAfternoonNotification}
+          eveningNotification={eveningNotification}
+          setEveningNotification={setEveningNotification}
           activeBackgroundColor={activeBackgroundColor}
         />
       </Modal>
@@ -160,7 +168,7 @@ const SettingsPage = ({
             <MdOutlineChevronRight className="chevron" />
           </div>
         </div>
-        <div className="individual-section-wrap" style={{ marginTop: "3rem" }}>
+        <div className="individual-section-wrap">
           <div className="individual-row-wrap haptic-wrap">
             <div className="text-wrap" style={{ display: "block" }}>
               <p>Haptic Vibration</p>
@@ -330,11 +338,6 @@ const SettingsPage = ({
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div> */}
-          <button
-          // onClick={scheduleBasic}
-          >
-            Click
-          </button>
           <div
             onClick={() => {
               link("https://myummahapps.com/");
