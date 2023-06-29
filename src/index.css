@@ -947,14 +947,14 @@ input[type="number"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* border-bottom: 1px solid black; */
-  /* padding: 1rem; */
   /* padding: 0.5rem 0.5rem; */
-  margin: 0.5rem 0.5rem;
+  /* margin: 0.5rem 0.5rem; */
+  padding: 0.5rem 0;
+  margin: 0 0.5rem;
 }
 
 .theme-wrap {
-  margin-top: 3rem;
+  /* margin-top: 3rem; */
 }
 
 .notification-options-wrap {
@@ -1017,7 +1017,7 @@ input[type="number"] {
 }
 
 .reset-adkhar-text-wrap {
-  border-top: 1px solid lightgray;
+  border-top: 1px solid var(--settings-page-borders);
 }
 
 .reset-adkhar-text-wrap p {

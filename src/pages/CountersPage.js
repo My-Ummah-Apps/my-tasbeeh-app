@@ -105,7 +105,7 @@ function CountersPage({
       <Modal
         style={modalStyles}
         class="modal-custom-properties"
-        closeTimeoutMS={1000}
+        closeTimeoutMS={250}
         isOpen={showModal}
         onRequestClose={handleCloseModal}
       >
@@ -129,7 +129,7 @@ function CountersPage({
         style={modalStyles}
         isOpen={showModal2}
         onRequestClose={handleCloseModal2}
-        closeTimeoutMS={1000}
+        closeTimeoutMS={250}
         contentLabel="Modal #2 Global Style Override Example"
       >
         <FormBlank

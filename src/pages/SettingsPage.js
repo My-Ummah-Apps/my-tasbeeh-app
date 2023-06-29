@@ -102,7 +102,7 @@ const SettingsPage = ({
         style={modalStyles}
         isOpen={showModal}
         onRequestClose={handleCloseModal}
-        closeTimeoutMS={1000}
+        closeTimeoutMS={250}
         contentLabel="Modal #2 Global Style Override Example"
       >
         <ThemeOptions
@@ -117,7 +117,7 @@ const SettingsPage = ({
         style={modalStyles}
         isOpen={showModal2}
         onRequestClose={handleCloseModal2}
-        closeTimeoutMS={1000}
+        closeTimeoutMS={250}
         contentLabel="Modal #2 Global Style Override Example"
       >
         <NotificationOptions
