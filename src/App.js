@@ -45,6 +45,12 @@ const scheduleThreeHourlyNotifications = async () => {
   // });
 };
 
+LocalNotifications.createChannel({
+  id: "1",
+  name: "Notification",
+  description: "General Notification",
+});
+
 const scheduleMorningNotifications = async () => {
   await LocalNotifications.schedule({
     notifications: [
@@ -55,17 +61,16 @@ const scheduleMorningNotifications = async () => {
         schedule: {
           allowWhileIdle: true,
           foreground: true, // iOS only
-          on: { hour: 9, minute: 44 },
+          on: { hour: 7, minute: 0 },
           repeats: true,
           every: "day",
         },
+        channelId: "1",
       },
     ],
   });
 };
 const scheduleAfternoonNotification = async () => {
-  const morningTime = new Date();
-
   await LocalNotifications.schedule({
     notifications: [
       {
@@ -84,8 +89,6 @@ const scheduleAfternoonNotification = async () => {
   });
 };
 const scheduleEveningNotification = async () => {
-  const morningTime = new Date();
-
   await LocalNotifications.schedule({
     notifications: [
       {
@@ -425,7 +428,7 @@ function App() {
           count: 0,
           color: "#EF5350",
           isActive: true,
-          target: 100,
+          target: 50,
           id: uuidv4(),
         },
 
@@ -434,7 +437,7 @@ function App() {
           count: 0,
           color: "#EC407A",
           isActive: false,
-          target: 100,
+          target: 50,
           id: uuidv4(),
         },
 
@@ -443,7 +446,7 @@ function App() {
           count: 0,
           color: "AB47BC",
           isActive: false,
-          target: 100,
+          target: 50,
           id: uuidv4(),
         },
 
@@ -452,7 +455,7 @@ function App() {
           count: 0,
           color: "7E57C2",
           isActive: false,
-          target: 100,
+          target: 50,
           id: uuidv4(),
         },
         {
@@ -460,7 +463,7 @@ function App() {
           count: 0,
           color: "5C6BC0",
           isActive: false,
-          target: 100,
+          target: 50,
           id: uuidv4(),
         },
         {
@@ -468,7 +471,7 @@ function App() {
           count: 0,
           color: "29B6F6",
           isActive: false,
-          target: 100,
+          target: 50,
           id: uuidv4(),
         },
         {
@@ -476,7 +479,7 @@ function App() {
           count: 0,
           color: "26C6DA",
           isActive: false,
-          target: 100,
+          target: 50,
           id: uuidv4(),
         },
         {
@@ -484,7 +487,7 @@ function App() {
           count: 0,
           color: "26A69A",
           isActive: false,
-          target: 100,
+          target: 50,
           id: uuidv4(),
         },
         {
@@ -492,7 +495,7 @@ function App() {
           count: 0,
           color: "66BB6A",
           isActive: false,
-          target: 100,
+          target: 50,
           id: uuidv4(),
         },
       ];

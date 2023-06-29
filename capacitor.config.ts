@@ -15,11 +15,11 @@ const config: CapacitorConfig = {
       "resizeOnFullScreen": true
       
     },
-    LocalNotifications: {
-      smallIcon: "logo192",
-      iconColor: "#488AFF",
-      sound: "beep.wav"
-    }
+    // LocalNotifications: {
+    //   smallIcon: "logo192",
+    //   iconColor: "#488AFF",
+    //   sound: "beep.wav"
+    // }
     
   },
 
