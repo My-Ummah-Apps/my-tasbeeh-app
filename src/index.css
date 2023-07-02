@@ -534,6 +534,43 @@ button:focus {
 .pop-up-box-buttons-wrap :nth-child(2) {
 }
 
+/* RESET ALL ALERT BOX STYLES */
+
+.reset-all-alert-box-wrap {
+  background: var(--form-wrap-bg-color);
+  padding: 0.5rem 0 0 0;
+  border-radius: 1.5rem;
+  height: 100%;
+  display: block;
+  overflow: auto;
+  width: 100%;
+  margin-inline: auto;
+  overflow: scroll;
+  font-size: 1rem;
+}
+
+.reset-all-counters-alert-box-options-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.reset-all-alert-box-text {
+  padding: 2rem;
+  text-align: center;
+}
+
+.reset-all-counters-alert-box-options-wrap div {
+  color: #fff;
+  text-align: center;
+  padding: 1.5rem;
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+.reset-all-counters-alert-box-options-wrap-yes-btn {
+}
+
 /* SETTINGS PAGE */
 
 .settings-page-options-and-info-wrap {
@@ -668,7 +705,8 @@ input[type="number"] {
 }
 
 .form-wrap,
-.theme-options-wrap {
+.theme-options-wrap,
+.reset-all-alert-box-wrap {
   box-shadow: var(--form-box-shadow);
 }
 

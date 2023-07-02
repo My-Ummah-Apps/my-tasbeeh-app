@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { MdOutlineChevronRight } from "react-icons/md";
 import Switch from "react-ios-switch";
 import NotificationOptions from "../components/NotificationOptions";
+import ResetAllCountersAlert from "../components/ResetAllCountersAlert";
 
 // import {LocalNotifications, LocalNotificationEnabledResult, LocalNotificationActionPerformed, LocalNotification, Device, ScheduleOptions} from "@capacitor/core";
 
@@ -56,6 +57,7 @@ const SettingsPage = ({
   let subtitle;
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [showModal3, setShowModal3] = useState(false);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -65,12 +67,20 @@ const SettingsPage = ({
     setShowModal2(true);
   };
 
+  const handleOpenModal3 = () => {
+    setShowModal3(true);
+  };
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
   const handleCloseModal2 = () => {
     setShowModal2(false);
+  };
+
+  const handleCloseModal3 = () => {
+    setShowModal3(false);
   };
 
   function afterOpenModal() {
@@ -286,8 +296,26 @@ const SettingsPage = ({
             ></label>
           </span> */}
           </div>
-          <div className="reset-adkhar-text-wrap" onClick={resetAllCounters}>
-            <p>Clear all Adhkar</p>
+          <div className="reset-adkhar-text-wrap">
+            <p
+              onClick={() => {
+                handleOpenModal3(true);
+              }}
+            >
+              Clear all Adhkar
+            </p>
+            <Modal
+              style={modalStyles}
+              isOpen={showModal3}
+              onRequestClose={handleCloseModal3}
+              closeTimeoutMS={250}
+              contentLabel="Modal #2 Global Style Override Example"
+            >
+              <ResetAllCountersAlert
+                resetAllCounters={resetAllCounters}
+                handleCloseModal3={handleCloseModal3}
+              />
+            </Modal>
           </div>
         </div>
 
