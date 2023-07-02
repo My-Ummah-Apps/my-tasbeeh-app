@@ -5,6 +5,7 @@ import { MdOutlineChevronRight } from "react-icons/md";
 import Switch from "react-ios-switch";
 import NotificationOptions from "../components/NotificationOptions";
 import ResetAllCountersAlert from "../components/ResetAllCountersAlert";
+import AboutUs from "../components/AboutUs";
 
 // import {LocalNotifications, LocalNotificationEnabledResult, LocalNotificationActionPerformed, LocalNotification, Device, ScheduleOptions} from "@capacitor/core";
 
@@ -58,6 +59,7 @@ const SettingsPage = ({
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
+  const [showModal4, setShowModal4] = useState(false);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -71,6 +73,10 @@ const SettingsPage = ({
     setShowModal3(true);
   };
 
+  const handleOpenModal4 = () => {
+    setShowModal4(true);
+  };
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -81,6 +87,10 @@ const SettingsPage = ({
 
   const handleCloseModal3 = () => {
     setShowModal3(false);
+  };
+
+  const handleCloseModal4 = () => {
+    setShowModal4(false);
   };
 
   function afterOpenModal() {
@@ -299,7 +309,7 @@ const SettingsPage = ({
           <div className="reset-adkhar-text-wrap">
             <p
               onClick={() => {
-                handleOpenModal3(true);
+                handleOpenModal3();
               }}
             >
               Clear all Adhkar
@@ -371,6 +381,7 @@ const SettingsPage = ({
           <MdOutlineChevronRight className="chevron" />
         </div> */}
           <div
+            className="website-wrap"
             onClick={() => {
               link("https://myummahapps.com/");
             }}
@@ -393,11 +404,27 @@ const SettingsPage = ({
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div> */}
-          {/* <div>
-          <MdInfoOutline className="icon" />
-          <p>Info</p>
-          <MdOutlineChevronRight className="chevron" />
-        </div> */}
+          <div
+            onClick={() => {
+              handleOpenModal4();
+            }}
+          >
+            {/* <div className="icon" /> */}
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>About</p>
+              <p>About us</p>
+            </div>
+            <MdOutlineChevronRight className="chevron" />
+          </div>
+          <Modal
+            style={modalStyles}
+            isOpen={showModal4}
+            onRequestClose={handleCloseModal4}
+            closeTimeoutMS={250}
+            contentLabel="Modal #2 Global Style Override Example"
+          >
+            <AboutUs />
+          </Modal>
         </div>
       </div>
     </div>

@@ -558,6 +558,7 @@ button:focus {
 .reset-all-alert-box-text {
   padding: 2rem;
   text-align: center;
+  line-height: 22px;
 }
 
 .reset-all-counters-alert-box-options-wrap div {
@@ -1022,6 +1023,7 @@ input[type="number"] {
 .review-wrap,
 .share-wrap,
 .feedback-wrap,
+.website-wrap,
 .source-code-wrap {
   /* border-bottom: 1px solid #eaeaea;  */
   border-bottom: 1px solid var(--settings-page-borders);
@@ -1061,7 +1063,7 @@ input[type="number"] {
 .reset-adkhar-text-wrap p {
   font-size: 0.8rem;
   margin: 0 0.5rem;
-  padding: 1rem 0 0.5rem 0;
+  padding: 0.5rem 0 0.5rem 0;
   color: red;
 }
 
@@ -1081,6 +1083,47 @@ input[type="number"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.about-us-modal {
+  height: 60vh;
+  background: var(--form-wrap-bg-color);
+  padding: 0.5rem 0 0 0;
+  border-radius: 1rem;
+  /* display: block; */
+  /* overflow: auto;
+  width: 100%; */
+  /* margin-inline: auto; */
+  /* overflow: scroll; */
+  font-size: 1rem;
+}
+
+.about-us-modal img {
+  margin: 2rem 0 1rem 0;
+}
+
+.about-us-modal p {
+  padding: 1rem;
+  line-height: 20px;
+  font-size: 0.8rem;
+}
+
+.image-and-text-wrap {
+  text-align: center;
+}
+
+.privacy-policy-link-wrap {
+  text-align: center;
+  font-size: 0.8rem;
+  background: grey;
+  width: 60%;
+  margin: 0.5rem auto 0 auto;
+  /* padding: 1rem; */
+  border-radius: 0.5rem;
+}
+
+.privacy-policy-link-wrap p {
+  color: #fff;
 }
 
 /* TOGGLE OVERRIDES AND STYLING ON SETTINGS PAGE */
