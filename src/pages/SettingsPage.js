@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import Modal from "react-modal";
 import { MdOutlineChevronRight } from "react-icons/md";
@@ -54,8 +54,10 @@ const SettingsPage = ({
   setTheme,
 }) => {
   const [formTheme, setFormTheme] = useState(false);
+  const [darkTheme, setDarkTheme] = useState(false);
 
   let subtitle;
+
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
@@ -118,7 +120,7 @@ const SettingsPage = ({
         <p>Settings</p>
       </div>
 
-      <Modal
+      {/* <Modal
         style={modalStyles}
         isOpen={showModal}
         onRequestClose={handleCloseModal}
@@ -131,7 +133,8 @@ const SettingsPage = ({
           activeBackgroundColor={activeBackgroundColor}
           setTheme={setTheme}
         />
-      </Modal>
+      
+      </Modal> */}
 
       <Modal
         style={modalStyles}
@@ -172,7 +175,31 @@ const SettingsPage = ({
                 {/* Current Theme: {theme.charAt(0).toUpperCase() + theme.slice(1)} */}
               </p>
             </div>
-            <MdOutlineChevronRight className="chevron" />
+            {/* <MdOutlineChevronRight className="chevron" /> */}
+            <Switch
+              checked={theme == "light" ? false : true}
+              className={undefined}
+              disabled={undefined}
+              handleColor="white"
+              name={undefined}
+              offColor="white"
+              onChange={(e) => {
+                if (theme == "light") {
+                  setTheme("dark");
+                  setDarkTheme(true);
+                  localStorage.setItem("theme", JSON.stringify("dark"));
+                } else if (theme == "dark") {
+                  setTheme("light");
+                  setDarkTheme(false);
+                  localStorage.setItem("theme", JSON.stringify("light"));
+                }
+              }}
+              onColor={activeBackgroundColor}
+              pendingOffColor={undefined}
+              pendingOnColor={undefined}
+              readOnly={undefined}
+              style={undefined}
+            />
           </div>
         </div>
         <div className="individual-section-wrap">

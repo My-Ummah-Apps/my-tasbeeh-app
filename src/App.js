@@ -84,6 +84,7 @@ const scheduleAfternoonNotification = async () => {
           repeats: true,
           every: "day",
         },
+        channelId: "1",
       },
     ],
   });
@@ -102,6 +103,7 @@ const scheduleEveningNotification = async () => {
           repeats: true,
           every: "day",
         },
+        channelId: "1",
       },
     ],
   });
