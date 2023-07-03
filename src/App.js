@@ -16,7 +16,7 @@ const ngOnInit = async () => {
   await LocalNotifications.requestPermissions();
 };
 
-ngOnInit();
+// ngOnInit();
 
 // schedule: { at: new Date(Date.now() + 1000 * 3) },
 // schedule: {
@@ -65,7 +65,7 @@ const scheduleMorningNotifications = async () => {
           repeats: true,
           every: "day",
         },
-        channelId: "1",
+        // channelId: "1",
       },
     ],
   });
@@ -84,7 +84,7 @@ const scheduleAfternoonNotification = async () => {
           repeats: true,
           every: "day",
         },
-        channelId: "1",
+        // channelId: "1",
       },
     ],
   });
@@ -103,7 +103,7 @@ const scheduleEveningNotification = async () => {
           repeats: true,
           every: "day",
         },
-        channelId: "1",
+        // channelId: "1",
       },
     ],
   });
@@ -162,6 +162,8 @@ function App() {
 
   useEffect(() => {
     logDeviceInfo();
+    console.log("hey this is logDeviceInfo");
+    console.log(device);
   }, []);
 
   const [threeHourlyNotifications, setThreeHourlyNotifications] = useState(
@@ -331,6 +333,15 @@ function App() {
     //   console.log("useEffect has run, system theme selected");
     // }
     if (JSON.parse(localStorage.getItem("theme")) == "dark") {
+      console.log("STORED THEME IS DARK!");
+      console.log(device);
+      if (device == "ios") {
+        console.log("IOS DETECTED, SETTING DARK STATUS BAR BACKGROUND");
+        setStatusBarStyleDark();
+      }
+      if (device == "android") {
+        StatusBar.setStyle({ style: Style.Dark });
+      }
       // toggleDarkTheme();
       document.body.classList.add("dark");
       // setModalBgColor("rgba(53, 53, 53, 0.75)");
@@ -344,35 +355,27 @@ function App() {
           // boxShadow: "none !important",
         },
       });
-      if (device == "ios") {
-        setStatusBarStyleDark();
-      }
-      if (device == "android") {
-        StatusBar.setStyle({ style: Style.Dark });
-      }
-
-      // console.log("useEffect has run, dark theme selected");
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
-      // console.log("useEffect has run, light theme selected");
-      document.body.classList.remove("dark");
-      // setModalBgColor("rgba(255, 255, 255, 0.75)");
-      setModalStyles({
-        overlay: {
-          backgroundColor: "rgba(98, 98, 98, 0.75)",
-          // boxShadow: "none",
-        },
-        content: {
-          backgroundColor: "rgba(98, 98, 98, 0.75)",
-          // boxShadow: "none",
-        },
-      });
+      console.log("STORED THEME IS LIGHT!");
       if (device == "ios") {
+        console.log("IOS DETECTED, SETTING LIGHT STATUS BAR BACKGROUND");
         setStatusBarStyleLight();
       }
       if (device == "android") {
         // StatusBar.setStyle({ style: Style.Dark });
         StatusBar.setBackgroundColor({ color: "#000" });
       }
+      document.body.classList.remove("dark");
+      // setModalBgColor("rgba(255, 255, 255, 0.75)");
+      setModalStyles({
+        overlay: {
+          backgroundColor: "rgba(98, 98, 98, 0.75)",
+        },
+        content: {
+          backgroundColor: "rgba(98, 98, 98, 0.75)",
+        },
+      });
+
       // toggleDarkTheme();
     }
   }, [theme, prefersDark]);
@@ -381,7 +384,6 @@ function App() {
 
   const changeThreeHourlyNotificationState = (booleanValue) => {
     // setThreeHourlyNotifications(booleanValue);
-    // console.log(booleanValue);
   };
 
   useEffect(() => {

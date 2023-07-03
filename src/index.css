@@ -1086,23 +1086,17 @@ input[type="number"] {
 }
 
 .about-us-modal {
-  height: 60vh;
   background: var(--form-wrap-bg-color);
-  padding: 0.5rem 0 0 0;
+  padding: 2rem 0;
   border-radius: 1rem;
-  /* display: block; */
-  /* overflow: auto;
-  width: 100%; */
-  /* margin-inline: auto; */
-  /* overflow: scroll; */
   font-size: 1rem;
 }
 
 .about-us-modal img {
-  margin: 2rem 0 1rem 0;
+  margin: 0 0 1rem 0;
 }
 
-.about-us-modal p {
+.about-us-organisation-text {
   padding: 1rem;
   line-height: 20px;
   font-size: 0.8rem;
@@ -1116,14 +1110,30 @@ input[type="number"] {
   text-align: center;
   font-size: 0.8rem;
   background: grey;
-  width: 60%;
+  width: 50%;
   margin: 0.5rem auto 0 auto;
-  /* padding: 1rem; */
+  padding: 1rem 0.5rem;
   border-radius: 0.5rem;
 }
 
 .privacy-policy-link-wrap p {
   color: #fff;
+}
+
+.attribution-wrap {
+  text-align: center;
+  font-size: 0.8rem;
+  margin: 2.5rem 1rem 0 1rem;
+}
+
+.attribution-wrap p:first-of-type {
+  margin-bottom: 0.5rem;
+}
+
+.attribution-wrap a {
+  text-decoration: underline;
+  font-size: 0.7rem;
+  color: inherit;
 }
 
 /* TOGGLE OVERRIDES AND STYLING ON SETTINGS PAGE */

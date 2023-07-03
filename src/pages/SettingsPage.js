@@ -169,9 +169,10 @@ const SettingsPage = ({
             }}
           >
             <div className="text-wrap" style={{ display: "block" }}>
-              <p>Theme</p>
+              <p>Dark Theme</p>
               <p>
-                Current Theme: {theme == "light" ? "Light" : "Dark"}
+                Toggle between Light / Dark Theme
+                {/* Current Theme: {theme == "light" ? "Light" : "Dark"} */}
                 {/* Current Theme: {theme.charAt(0).toUpperCase() + theme.slice(1)} */}
               </p>
             </div>

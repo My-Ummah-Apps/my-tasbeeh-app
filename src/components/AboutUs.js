@@ -1,5 +1,3 @@
-// import logo from "./src/pics/My-Ummah-Apps-72ppi.png"; // Tell Webpack this JS file uses this image
-
 const link = (url) => {
   window.location.href = url;
 };
@@ -9,16 +7,16 @@ const AboutUs = () => {
     <div className="about-us-modal">
       <div className="image-and-text-wrap">
         <img
-          src="/src/pics/My-Ummah-Apps-72ppi.png"
-          height="100"
-          width="100"
+          src="/images/My-Ummah-Apps-72ppi.png"
+          height="50"
+          width="auto"
           alt=""
         />
 
-        <p>
-          MyUmmahApps Ltd, founded in 2023, is an organization driven by a
-          passionate commitment to empower the Muslim community through
-          cutting-edge Open Source mobile applications.{" "}
+        <p className="about-us-organisation-text">
+          MyUmmahApps Ltd is an organization driven by a passionate commitment
+          to empower the Muslim community through cutting-edge Open Source
+          mobile applications.{" "}
         </p>
       </div>
       <div
@@ -28,6 +26,15 @@ const AboutUs = () => {
         }}
       >
         <p> View App Privacy Policy</p>
+      </div>
+      <div className="attribution-wrap">
+        <p>App Icon by: </p>
+        <a
+          href="https://www.flaticon.com/free-icons/number"
+          title="number icons"
+        >
+          Zane Priedite - Flaticon
+        </a>
       </div>
     </div>
   );
