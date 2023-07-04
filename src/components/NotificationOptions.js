@@ -1,9 +1,22 @@
 import Switch from "react-ios-switch";
 import { LocalNotifications } from "@capacitor/local-notifications";
+import { useState, useEffect } from "react";
 
-const test = () => {
-  console.log("triggered");
+let requestPermission;
+let checkPermission;
+// const requestNotificationPermission = async () => {
+//   requestPermission = await LocalNotifications.requestPermissions();
+//   checkPermission = await LocalNotifications.checkPermissions();
+// };
+
+const requestNotificationPermission = () => {
+  requestPermission = LocalNotifications.requestPermissions();
+  // checkPermission = LocalNotifications.checkPermissions();
 };
+
+// checkPermission = await LocalNotifications.checkPermissions();
+// console.log(checkPermission.display);
+// checkPermission.display will give: "granted", "denied" or "prompt", not see "prompt" on iOS thus far
 
 const NotificationOptions = ({
   setThreeHourlyNotifications,
@@ -17,6 +30,20 @@ const NotificationOptions = ({
   activeBackgroundColor,
   changeThreeHourlyNotificationState,
 }) => {
+  // useEffect(() => {
+  //   // requestPermission = LocalNotifications.requestPermissions();
+  //   checkPermission = LocalNotifications.checkPermissions();
+  //   if (checkPermission.display == false) {
+  //     setMorningNotification(false);
+  //     setAfternoonNotification(false);
+  //     setEveningNotification(false);
+  //   }
+  // }, []);
+
+  const [notificationsPermissionStatus, setNotificationsPermissionStatus] =
+    useState(checkPermission);
+  // console.log(notificationsStatus);
+
   return (
     <div className="notification-options-wrap">
       {/* <p className="notifications-heading">Notifications</p> */}
@@ -74,17 +101,20 @@ const NotificationOptions = ({
         </div>
         <Switch
           checked={morningNotification}
+          // checked={
+          //   checkPermission.display == "granted" ? morningNotification : false
+          // }
           className={undefined}
           disabled={undefined}
           handleColor="white"
           name={undefined}
           offColor="white"
           onChange={(e) => {
-            console.log(morningNotification);
+            requestNotificationPermission();
+
             if (
               JSON.parse(localStorage.getItem("morning-notification")) == true
             ) {
-              console.log("localStorage.getItem(morning-notification) == true");
               setMorningNotification(false);
               localStorage.setItem(
                 "morning-notification",
@@ -93,9 +123,6 @@ const NotificationOptions = ({
             } else if (
               JSON.parse(localStorage.getItem("morning-notification")) == false
             ) {
-              console.log(
-                "localStorage.getItem(morning-notification) == false"
-              );
               setMorningNotification(true);
               localStorage.setItem(
                 "morning-notification",
@@ -125,12 +152,13 @@ const NotificationOptions = ({
           name={undefined}
           offColor="white"
           onChange={(e) => {
+            requestNotificationPermission();
             if (
               JSON.parse(localStorage.getItem("afternoon-notification")) == true
             ) {
-              console.log(
-                "localStorage.getItem(afternoon-notification) == true"
-              );
+              // console.log(
+              //   "localStorage.getItem(afternoon-notification) == true"
+              // );
               setAfternoonNotification(false);
               localStorage.setItem(
                 "afternoon-notification",
@@ -140,9 +168,9 @@ const NotificationOptions = ({
               JSON.parse(localStorage.getItem("afternoon-notification")) ==
               false
             ) {
-              console.log(
-                "localStorage.getItem(afternoon-notification) == false"
-              );
+              // console.log(
+              //   "localStorage.getItem(afternoon-notification) == false"
+              // );
               setAfternoonNotification(true);
               localStorage.setItem(
                 "afternoon-notification",
@@ -172,10 +200,11 @@ const NotificationOptions = ({
           name={undefined}
           offColor="white"
           onChange={(e) => {
+            requestNotificationPermission();
             if (
               JSON.parse(localStorage.getItem("evening-notification")) == true
             ) {
-              console.log("localStorage.getItem(evening-notification) == true");
+              // console.log("localStorage.getItem(evening-notification) == true");
               setEveningNotification(false);
               localStorage.setItem(
                 "evening-notification",
@@ -183,10 +212,12 @@ const NotificationOptions = ({
               );
             } else if (
               JSON.parse(localStorage.getItem("evening-notification")) == false
+              //    &&
+              // checkPermission.display == true
             ) {
-              console.log(
-                "localStorage.getItem(evening-notification) == false"
-              );
+              // console.log(
+              //   "localStorage.getItem(evening-notification) == false"
+              // );
               setEveningNotification(true);
               localStorage.setItem(
                 "evening-notification",

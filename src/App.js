@@ -12,10 +12,6 @@ import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 
-const ngOnInit = async () => {
-  await LocalNotifications.requestPermissions();
-};
-
 // ngOnInit();
 
 // schedule: { at: new Date(Date.now() + 1000 * 3) },
@@ -80,7 +76,7 @@ const scheduleAfternoonNotification = async () => {
         schedule: {
           allowWhileIdle: true,
           foreground: true, // iOS only
-          on: { hour: 15, minute: 0 },
+          on: { hour: 22, minute: 50 },
           repeats: true,
           every: "day",
         },
@@ -96,12 +92,18 @@ const scheduleEveningNotification = async () => {
         title: "Evening Reminder",
         body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
         id: 4,
+        // schedule: {
+        //   allowWhileIdle: true,
+        //   foreground: true, // iOS only
+        //   // on: { hour: 18, minute: 55 },
+        //   at: { hour: 22, minute: 43 },
+        //   repeats: true,
+        //   every: "day",
+        // },
         schedule: {
-          allowWhileIdle: true,
-          foreground: true, // iOS only
-          on: { hour: 19, minute: 0 },
           repeats: true,
           every: "day",
+          at: { hour: 22, minute: 49 },
         },
         // channelId: "1",
       },
@@ -162,8 +164,8 @@ function App() {
 
   useEffect(() => {
     logDeviceInfo();
-    console.log("hey this is logDeviceInfo");
-    console.log(device);
+
+    // console.log(device);
   }, []);
 
   const [threeHourlyNotifications, setThreeHourlyNotifications] = useState(
@@ -333,10 +335,10 @@ function App() {
     //   console.log("useEffect has run, system theme selected");
     // }
     if (JSON.parse(localStorage.getItem("theme")) == "dark") {
-      console.log("STORED THEME IS DARK!");
-      console.log(device);
+      // console.log("STORED THEME IS DARK!");
+      // console.log(device);
       if (device == "ios") {
-        console.log("IOS DETECTED, SETTING DARK STATUS BAR BACKGROUND");
+        // console.log("IOS DETECTED, SETTING DARK STATUS BAR BACKGROUND");
         setStatusBarStyleDark();
       }
       if (device == "android") {
@@ -356,9 +358,9 @@ function App() {
         },
       });
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
-      console.log("STORED THEME IS LIGHT!");
+      // console.log("STORED THEME IS LIGHT!");
       if (device == "ios") {
-        console.log("IOS DETECTED, SETTING LIGHT STATUS BAR BACKGROUND");
+        // console.log("IOS DETECTED, SETTING LIGHT STATUS BAR BACKGROUND");
         setStatusBarStyleLight();
       }
       if (device == "android") {

@@ -43,7 +43,8 @@ body.dark {
   /* --border-header-and-nav: #747474; */
   --border-form: #747474;
   --border-header-and-nav: none;
-  --form-wrap-bg-color: #2f2f2f;
+  /* --form-wrap-bg-color: #2f2f2f; */
+  --form-wrap-bg-color: #272727;
   --form-input-bg-color: #3e3e3e;
   --form-box-shadow: none;
   --settings-page-box-shadow: none;
@@ -1093,7 +1094,7 @@ input[type="number"] {
 }
 
 .about-us-modal img {
-  margin: 0 0 1rem 0;
+  /* margin: 0 0 1rem 0; */
 }
 
 .about-us-organisation-text {

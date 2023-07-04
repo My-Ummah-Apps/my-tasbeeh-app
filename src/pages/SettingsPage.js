@@ -136,29 +136,6 @@ const SettingsPage = ({
       
       </Modal> */}
 
-      <Modal
-        style={modalStyles}
-        isOpen={showModal2}
-        onRequestClose={handleCloseModal2}
-        closeTimeoutMS={250}
-        contentLabel="Modal #2 Global Style Override Example"
-      >
-        <NotificationOptions
-          changeThreeHourlyNotificationState={
-            changeThreeHourlyNotificationState
-          }
-          setThreeHourlyNotifications={setThreeHourlyNotifications}
-          threeHourlyNotifications={threeHourlyNotifications}
-          setMorningNotification={setMorningNotification}
-          morningNotification={morningNotification}
-          afternoonNotification={afternoonNotification}
-          setAfternoonNotification={setAfternoonNotification}
-          eveningNotification={eveningNotification}
-          setEveningNotification={setEveningNotification}
-          activeBackgroundColor={activeBackgroundColor}
-        />
-      </Modal>
-
       <div className="settings-page-options-and-info-wrap">
         <div className="individual-section-wrap">
           <div
@@ -216,6 +193,28 @@ const SettingsPage = ({
             </div>
             <MdOutlineChevronRight className="chevron" />
           </div>
+          <Modal
+            style={modalStyles}
+            isOpen={showModal2}
+            onRequestClose={handleCloseModal2}
+            closeTimeoutMS={250}
+            contentLabel="Modal #2 Global Style Override Example"
+          >
+            <NotificationOptions
+              changeThreeHourlyNotificationState={
+                changeThreeHourlyNotificationState
+              }
+              setThreeHourlyNotifications={setThreeHourlyNotifications}
+              threeHourlyNotifications={threeHourlyNotifications}
+              setMorningNotification={setMorningNotification}
+              morningNotification={morningNotification}
+              afternoonNotification={afternoonNotification}
+              setAfternoonNotification={setAfternoonNotification}
+              eveningNotification={eveningNotification}
+              setEveningNotification={setEveningNotification}
+              activeBackgroundColor={activeBackgroundColor}
+            />
+          </Modal>
         </div>
         <div className="individual-section-wrap">
           <div className="individual-row-wrap haptic-wrap">

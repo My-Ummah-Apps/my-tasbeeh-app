@@ -82,7 +82,7 @@ function FormBlank({
               onChange={(e) => {
                 if (/[a-zA-Z]/.test(e.target.value)) return;
                 setCounterTargetInput(e.target.value);
-                console.log(e.target.value);
+                // console.log(e.target.value);
               }}
               maxLength={5}
               type="text"
