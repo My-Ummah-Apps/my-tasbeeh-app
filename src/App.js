@@ -48,67 +48,68 @@ LocalNotifications.createChannel({
 });
 
 const scheduleMorningNotifications = async () => {
-  await LocalNotifications.schedule({
-    notifications: [
-      {
-        title: "Morning Reminder",
-        body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
-        id: 2,
-        schedule: {
-          allowWhileIdle: true,
-          foreground: true, // iOS only
-          on: { hour: 7, minute: 0 },
-          repeats: true,
-          every: "day",
-        },
-        // channelId: "1",
-      },
-    ],
-  });
+  // await LocalNotifications.schedule({
+  //   notifications: [
+  //     {
+  //       title: "Morning Reminder",
+  //       body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
+  //       id: 2,
+  //       // schedule: {
+  //       //   allowWhileIdle: true,
+  //       //   foreground: true, // iOS only
+  //       //   on: { hour: 7, minute: 0 },
+  //       //   repeats: true,
+  //       //   every: "day",
+  //       // },
+  //       // schedule: { at: new Date(Date.now() + 1000 * 3) },
+  //       // channelId: "1",
+  //     },
+  //   ],
+  // });
 };
 const scheduleAfternoonNotification = async () => {
-  await LocalNotifications.schedule({
-    notifications: [
-      {
-        title: "Afternoon Reminder",
-        body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
-        id: 3,
-        schedule: {
-          allowWhileIdle: true,
-          foreground: true, // iOS only
-          on: { hour: 22, minute: 50 },
-          repeats: true,
-          every: "day",
-        },
-        // channelId: "1",
-      },
-    ],
-  });
+  // await LocalNotifications.schedule({
+  //   notifications: [
+  //     {
+  //       title: "Afternoon Reminder",
+  //       body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
+  //       id: 3,
+  //       schedule: {
+  //         allowWhileIdle: true,
+  //         foreground: true, // iOS only
+  //         on: { hour: 22, minute: 50 },
+  //         repeats: true,
+  //         every: "day",
+  //       },
+  //       // channelId: "1",
+  //     },
+  //   ],
+  // });
 };
 const scheduleEveningNotification = async () => {
-  await LocalNotifications.schedule({
-    notifications: [
-      {
-        title: "Evening Reminder",
-        body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
-        id: 4,
-        // schedule: {
-        //   allowWhileIdle: true,
-        //   foreground: true, // iOS only
-        //   // on: { hour: 18, minute: 55 },
-        //   at: { hour: 22, minute: 43 },
-        //   repeats: true,
-        //   every: "day",
-        // },
-        schedule: {
-          repeats: true,
-          every: "day",
-          at: { hour: 22, minute: 49 },
-        },
-        // channelId: "1",
-      },
-    ],
-  });
+  // await LocalNotifications.schedule({
+  //   notifications: [
+  //     {
+  //       title: "Evening Reminder",
+  //       body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
+  //       id: 4,
+  //       // schedule: {
+  //       //   allowWhileIdle: true,
+  //       //   foreground: true, // iOS only
+  //       //   // on: { hour: 18, minute: 55 },
+  //       //   at: { hour: 22, minute: 43 },
+  //       //   repeats: true,
+  //       //   every: "day",
+  //       // },
+  //       schedule: {
+  //         repeats: true,
+  //         every: "day",
+  //         at: { hour: 22, minute: 49 },
+  //       },
+  //       // channelId: "1",
+  //     },
+  //   ],
+  // });
 };
 
 // STATUS BAR FUNCTIONALITY
@@ -265,6 +266,7 @@ function App() {
   );
 
   const [theme, setTheme] = useState(JSON.parse(localStorage.getItem("theme")));
+
   const [modalStyles, setModalStyles] = useState({
     overlay: {
       backgroundColor: "rgba(53, 53, 53, 0.75)",
@@ -300,6 +302,7 @@ function App() {
     prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
     if (localStorage.getItem("theme") == null) {
       localStorage.setItem("theme", JSON.stringify("light"));
+      setTheme("light");
     }
     // System theme functionality removed for now until bugs are fixed
     // if (JSON.parse(localStorage.getItem("theme")) == "system") {

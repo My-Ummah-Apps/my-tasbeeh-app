@@ -101,10 +101,17 @@ const SettingsPage = ({
   }
 
   const shareThisAppLink = async () => {
+    let link;
+    if (device == "ios") {
+      link = "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967";
+    } else if (device == "android") {
+      link = "https://play.google.com/store/apps/details?id=com.tasbeeh.my";
+    }
+
     await Share.share({
       title: "",
       text: "",
-      url: "https://play.google.com/store/apps/details?id=com.tasbeeh.my",
+      url: link,
       dialogTitle: "",
     });
   };
@@ -156,6 +163,7 @@ const SettingsPage = ({
             {/* <MdOutlineChevronRight className="chevron" /> */}
             <Switch
               checked={theme == "light" ? false : true}
+              // checked={darkTheme}
               className={undefined}
               disabled={undefined}
               handleColor="white"
@@ -180,7 +188,7 @@ const SettingsPage = ({
             />
           </div>
         </div>
-        <div className="individual-section-wrap">
+        <div className="individual-section-wrap" style={{ display: "none" }}>
           <div
             className="notifications-wrap"
             onClick={() => {
@@ -369,6 +377,22 @@ const SettingsPage = ({
               <div className="text-wrap" style={{ display: "block" }}>
                 <p>Write a review</p>
                 <p>Rate us on the Play Store</p>
+              </div>
+              <MdOutlineChevronRight className="chevron" />
+            </div>
+          ) : null}
+          {device == "ios" ? (
+            <div
+              className="review-wrap"
+              onClick={() => {
+                link(
+                  "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967"
+                );
+              }}
+            >
+              <div className="text-wrap" style={{ display: "block" }}>
+                <p>Write a review</p>
+                <p>Rate us on the App Store</p>
               </div>
               <MdOutlineChevronRight className="chevron" />
             </div>

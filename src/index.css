@@ -541,7 +541,7 @@ button:focus {
   background: var(--form-wrap-bg-color);
   padding: 0.5rem 0 0 0;
   border-radius: 1.5rem;
-  height: 100%;
+  /* height: 100%; */
   display: block;
   overflow: auto;
   width: 100%;
@@ -1107,18 +1107,27 @@ input[type="number"] {
   text-align: center;
 }
 
-.privacy-policy-link-wrap {
+.links-wrap {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.privacy-policy-link-wrap,
+.open-source-link-wrap {
   text-align: center;
   font-size: 0.8rem;
   background: grey;
-  width: 50%;
+  width: 40%;
   margin: 0.5rem auto 0 auto;
-  padding: 1rem 0.5rem;
+  padding: 0.5rem 0.5rem;
   border-radius: 0.5rem;
 }
 
-.privacy-policy-link-wrap p {
+.privacy-policy-link-wrap p,
+.open-source-link-wrap {
   color: #fff;
+  line-height: 18px;
 }
 
 .attribution-wrap {

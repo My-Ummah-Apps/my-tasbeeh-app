@@ -9,14 +9,44 @@ let checkPermission;
 //   checkPermission = await LocalNotifications.checkPermissions();
 // };
 
-const requestNotificationPermission = () => {
-  requestPermission = LocalNotifications.requestPermissions();
-  // checkPermission = LocalNotifications.checkPermissions();
+// checkNotificationPermissionStatus();
+
+let toggleAllNotificationsOff;
+
+const initialNotificationPermissionsCheck = async () => {
+  const checkInitialPermission = await LocalNotifications.checkPermissions();
+
+  if (
+    checkInitialPermission.display == "denied" ||
+    checkInitialPermission.display == "prompt"
+  ) {
+    toggleAllNotificationsOff();
+  }
 };
 
-// checkPermission = await LocalNotifications.checkPermissions();
-// console.log(checkPermission.display);
-// checkPermission.display will give: "granted", "denied" or "prompt", not see "prompt" on iOS thus far
+// initialNotificationPermissionsCheck();
+
+const checkNotificationPermissionStatus = async () => {
+  try {
+    checkPermission = await LocalNotifications.checkPermissions();
+    console.log("checkPermission.display:");
+    console.log(checkPermission.display);
+  } catch (err) {
+    console.log(err);
+  }
+
+  // checkPermission.display will give: "granted", "denied", "prompt" or "prompt-with-rationale", not seen "prompt" on iOS thus far
+};
+
+const requestNotificationPermission = async () => {
+  try {
+    requestPermission = await LocalNotifications.requestPermissions();
+    // console.log("requestPermission.display:");
+    // console.log(requestPermission.display);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const NotificationOptions = ({
   setThreeHourlyNotifications,
@@ -30,19 +60,27 @@ const NotificationOptions = ({
   activeBackgroundColor,
   changeThreeHourlyNotificationState,
 }) => {
+  toggleAllNotificationsOff = () => {
+    console.log("toggleAllNotificationsOff executed");
+    setMorningNotification(false);
+    setAfternoonNotification(false);
+    setEveningNotification(false);
+  };
+  // let morningToggle;
   // useEffect(() => {
-  //   // requestPermission = LocalNotifications.requestPermissions();
-  //   checkPermission = LocalNotifications.checkPermissions();
-  //   if (checkPermission.display == false) {
-  //     setMorningNotification(false);
-  //     setAfternoonNotification(false);
-  //     setEveningNotification(false);
-  //   }
-  // }, []);
+  //   console.log("morningNotification within useEffect:");
+  //   console.log(morningNotification);
+  //   morningNotification == true
+  //     ? (morningToggle = true)
+  //     : (morningToggle = false);
+  // }, [morningNotification]);
+
+  // checkNotificationPermissionStatus();
 
   const [notificationsPermissionStatus, setNotificationsPermissionStatus] =
-    useState(checkPermission);
-  // console.log(notificationsStatus);
+    useState("");
+
+  // console.log(notificationsPermissionStatus);
 
   return (
     <div className="notification-options-wrap">
@@ -101,17 +139,30 @@ const NotificationOptions = ({
         </div>
         <Switch
           checked={morningNotification}
-          // checked={
-          //   checkPermission.display == "granted" ? morningNotification : false
-          // }
+          // checked={morningNotification == true ? true : false}
           className={undefined}
           disabled={undefined}
           handleColor="white"
           name={undefined}
           offColor="white"
           onChange={(e) => {
+            // checkNotificationPermissionStatus();
             requestNotificationPermission();
+            // console.log("onChange: checkpermission: ");
+            // console.log(checkPermission.display);
+            // if (checkPermission.display == "denied") {
+            //   setMorningNotification(false);
 
+            //   // alert("Please enable notifications in system settings");
+            //   console.log("YO HELLO DENIED!!!");
+            //   return;
+            // }
+            // if (checkPermission.display != "granted") {
+            //   setMorningNotification(false);
+            //   return;
+            // }
+
+            // if (checkPermission.display == "granted") {
             if (
               JSON.parse(localStorage.getItem("morning-notification")) == true
             ) {
@@ -129,6 +180,11 @@ const NotificationOptions = ({
                 JSON.stringify(true)
               );
             }
+            // }
+            // else if (checkPermission.display == "denied") {
+            //   alert("Please turn on notifications");
+            //   setMorningNotification(false);
+            // }
           }}
           onColor={activeBackgroundColor}
           pendingOffColor={undefined}
@@ -152,30 +208,35 @@ const NotificationOptions = ({
           name={undefined}
           offColor="white"
           onChange={(e) => {
-            requestNotificationPermission();
-            if (
-              JSON.parse(localStorage.getItem("afternoon-notification")) == true
-            ) {
-              // console.log(
-              //   "localStorage.getItem(afternoon-notification) == true"
-              // );
-              setAfternoonNotification(false);
-              localStorage.setItem(
-                "afternoon-notification",
-                JSON.stringify(false)
-              );
-            } else if (
-              JSON.parse(localStorage.getItem("afternoon-notification")) ==
-              false
-            ) {
-              // console.log(
-              //   "localStorage.getItem(afternoon-notification) == false"
-              // );
-              setAfternoonNotification(true);
-              localStorage.setItem(
-                "afternoon-notification",
-                JSON.stringify(true)
-              );
+            // requestNotificationPermission();
+            if (checkPermission.display == "granted") {
+              if (
+                JSON.parse(localStorage.getItem("afternoon-notification")) ==
+                true
+              ) {
+                // console.log(
+                //   "localStorage.getItem(afternoon-notification) == true"
+                // );
+                setAfternoonNotification(false);
+                localStorage.setItem(
+                  "afternoon-notification",
+                  JSON.stringify(false)
+                );
+              } else if (
+                JSON.parse(localStorage.getItem("afternoon-notification")) ==
+                false
+              ) {
+                // console.log(
+                //   "localStorage.getItem(afternoon-notification) == false"
+                // );
+                setAfternoonNotification(true);
+                localStorage.setItem(
+                  "afternoon-notification",
+                  JSON.stringify(true)
+                );
+              } else if (checkPermission.display == "denied") {
+                alert("Please turn on notifications");
+              }
             }
           }}
           onColor={activeBackgroundColor}
@@ -200,29 +261,34 @@ const NotificationOptions = ({
           name={undefined}
           offColor="white"
           onChange={(e) => {
-            requestNotificationPermission();
-            if (
-              JSON.parse(localStorage.getItem("evening-notification")) == true
-            ) {
-              // console.log("localStorage.getItem(evening-notification) == true");
-              setEveningNotification(false);
-              localStorage.setItem(
-                "evening-notification",
-                JSON.stringify(false)
-              );
-            } else if (
-              JSON.parse(localStorage.getItem("evening-notification")) == false
-              //    &&
-              // checkPermission.display == true
-            ) {
-              // console.log(
-              //   "localStorage.getItem(evening-notification) == false"
-              // );
-              setEveningNotification(true);
-              localStorage.setItem(
-                "evening-notification",
-                JSON.stringify(true)
-              );
+            // requestNotificationPermission();
+            if (checkPermission.display == "granted") {
+              if (
+                JSON.parse(localStorage.getItem("evening-notification")) == true
+              ) {
+                // console.log("localStorage.getItem(evening-notification) == true");
+                setEveningNotification(false);
+                localStorage.setItem(
+                  "evening-notification",
+                  JSON.stringify(false)
+                );
+              } else if (
+                JSON.parse(localStorage.getItem("evening-notification")) ==
+                false
+                //    &&
+                // checkPermission.display == true
+              ) {
+                // console.log(
+                //   "localStorage.getItem(evening-notification) == false"
+                // );
+                setEveningNotification(true);
+                localStorage.setItem(
+                  "evening-notification",
+                  JSON.stringify(true)
+                );
+              } else if (checkPermission.display == "denied") {
+                alert("Please turn on notifications");
+              }
             }
           }}
           onColor={activeBackgroundColor}

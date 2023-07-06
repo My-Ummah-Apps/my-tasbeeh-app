@@ -19,13 +19,23 @@ const AboutUs = () => {
           mobile applications.{" "}
         </p>
       </div>
-      <div
-        className="privacy-policy-link-wrap"
-        onClick={() => {
-          link("https://sites.google.com/view/mytasbeehprivacypolicy/home");
-        }}
-      >
-        <p> View App Privacy Policy</p>
+      <div className="links-wrap">
+        <div
+          className="privacy-policy-link-wrap"
+          onClick={() => {
+            link("https://sites.google.com/view/mytasbeehprivacypolicy/home");
+          }}
+        >
+          <p> View App Privacy Policy</p>
+        </div>
+        <div
+          className="open-source-link-wrap"
+          onClick={() => {
+            link("https://github.com/My-Ummah-Apps/my-tasbeeh-app");
+          }}
+        >
+          <p> View App Source Code</p>
+        </div>
       </div>
       <div className="attribution-wrap">
         <p>App Icon by: </p>
