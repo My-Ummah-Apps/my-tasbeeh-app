@@ -382,8 +382,11 @@ MdModeEditOutline {
 }
 
 .single-counter-wrap-parent {
-  filter: drop-shadow(0px 10px 5px rgba(0, 0, 0, 0.1));
-  /* filter: drop-shadow(0px 40px 5px rgba(0, 0, 0, 0.1)); */
+  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.2));
+  /* filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.23)); */
+  /* For some reason the below doesn't work on main page but works on counters page */
+  /* filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.2))
+    drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.14)); */
 }
 
 .single-counter-wrap {
@@ -401,7 +404,8 @@ MdModeEditOutline {
   /* padding: 0.7rem 0; */
   margin: 1rem auto;
   /* clip-path: circle(70% at 50% 50%); */
-  clip-path: inset(0% 0% 0% 0% round 10px);
+  /* clip-path: inset(0% 0% 0% 0% round 10px); */
+  clip-path: inset(0% 0% 0% 0% round 16px);
 }
 
 /* .single-counter-wrap::before {
@@ -1116,19 +1120,21 @@ input[type="number"] {
 .privacy-policy-link-wrap,
 .open-source-link-wrap {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   background: grey;
   width: 40%;
   margin: 0.5rem auto 0 auto;
   padding: 0.5rem 0.5rem;
   border-radius: 0.5rem;
+  color: #fff;
+  line-height: 16px;
 }
 
-.privacy-policy-link-wrap p,
+/* .privacy-policy-link-wrap p,
 .open-source-link-wrap {
   color: #fff;
   line-height: 18px;
-}
+} */
 
 .attribution-wrap {
   text-align: center;

@@ -16,7 +16,7 @@ const AboutUs = () => {
         <p className="about-us-organisation-text">
           MyUmmahApps Ltd is an organization driven by a passionate commitment
           to empower the Muslim community through cutting-edge Open Source
-          mobile applications.{" "}
+          Mobile Applications.{" "}
         </p>
       </div>
       <div className="links-wrap">
