@@ -1,6 +1,9 @@
 import { useState, useRef } from "react";
+import { RateApp } from "capacitor-rate-app";
 
 function FormBlank({
+  showReviewPrompt,
+  reviewPrompt,
   activeBackgroundColor,
   setShowPopUpBoxBlank,
   addCounter,
@@ -48,6 +51,13 @@ function FormBlank({
     // addCounter(counterNameInput);
     setCounterName("");
     handleCloseModal2();
+    // Ask for review
+    if (reviewPrompt) {
+      RateApp.requestReview();
+      showReviewPrompt(false);
+      let launchCount = 0;
+      localStorage.setItem("launch-count", JSON.stringify(launchCount));
+    }
   };
 
   return (
@@ -79,14 +89,13 @@ function FormBlank({
             <input
               ref={counterTargetField}
               className="form-input"
+              maxLength={5}
               onChange={(e) => {
                 if (/[a-zA-Z]/.test(e.target.value)) return;
                 setCounterTargetInput(e.target.value);
-                // console.log(e.target.value);
               }}
-              maxLength={5}
               type="text"
-              pattern="[0-9]*"
+              // pattern="[0-9]*"
               required
             ></input>
             <div

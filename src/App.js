@@ -200,6 +200,25 @@ function App() {
   //   }
   // }, [threeHourlyNotifications]);
 
+  const [reviewPrompt, showReviewPrompt] = useState(false);
+
+  useEffect(() => {
+    let launchCount = localStorage.getItem("launch-count");
+
+    if (launchCount == null) {
+      launchCount = 1;
+      localStorage.setItem("launch-count", JSON.stringify(launchCount));
+    } else if (launchCount != null) {
+      let launchCountNumber = Number(launchCount);
+      launchCount = launchCountNumber + 0.5;
+      localStorage.setItem("launch-count", JSON.stringify(launchCount));
+    }
+    // if (launchCount == 1.5 || launchCount % 5 === 0) {
+    if (launchCount > 2) {
+      showReviewPrompt(true);
+    }
+  }, []);
+
   useEffect(() => {
     if (
       localStorage.getItem("morning-notification") == null ||
@@ -681,6 +700,8 @@ function App() {
             path="CountersPage"
             element={
               <CountersPage
+                showReviewPrompt={showReviewPrompt}
+                reviewPrompt={reviewPrompt}
                 setActivePage={setActivePage}
                 modalStyles={modalStyles}
                 modalBgColor={modalBgColor}

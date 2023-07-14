@@ -1,8 +1,16 @@
 import { useState, useRef } from "react";
 import { VscDebugRestart } from "react-icons/vsc";
-import { MdOutlinePlaylistRemove, MdOutlineRestartAlt } from "react-icons/md";
+import {
+  MdOutlinePlaylistRemove,
+  MdOutlineRestartAlt,
+  MdDeleteOutline,
+} from "react-icons/md";
+
+import { RateApp } from "capacitor-rate-app";
 
 const FormFilled = ({
+  showReviewPrompt,
+  reviewPrompt,
   activeBackgroundColor,
   modifyTheCountersArray,
   currentCounterName,
@@ -14,6 +22,8 @@ const FormFilled = ({
   deleteSingleCounter,
   setcurrentCount,
 }) => {
+  console.log("reviewPrompt: ");
+  console.log(reviewPrompt);
   const counterNameField = useRef(null);
   const counterCountField = useRef(null);
   const counterTargetField = useRef(null);
@@ -68,6 +78,13 @@ const FormFilled = ({
     );
 
     handleCloseModal();
+    // Ask for review
+    if (reviewPrompt) {
+      RateApp.requestReview();
+      showReviewPrompt(false);
+      let launchCount = 0;
+      localStorage.setItem("launch-count", JSON.stringify(launchCount));
+    }
   };
 
   const [counterNameInput, setCounterName] = useState(currentCounterName);
@@ -77,7 +94,8 @@ const FormFilled = ({
   return (
     <form className="form-wrap form-filled">
       <div className="form-filled-icons-wrap">
-        <MdOutlinePlaylistRemove
+        {/* <MdOutlinePlaylistRemove */}
+        <MdDeleteOutline
           onClick={(e) => {
             deleteSingleCounter(currentCounterId);
             e.preventDefault();
@@ -122,11 +140,12 @@ const FormFilled = ({
             className="form-input"
             maxLength={5}
             onChange={(e) => {
-              if (/[a-zA-Z]/.test(e.target.value)) return;
+              // if (/[a-zA-Z]/.test(e.target.value)) return;
               setcurrentCountInput(e.target.value);
             }}
             type="text"
             value={currentCountInput}
+            // pattern="[0-9]*"
             required
           ></input>
           <div
@@ -149,6 +168,7 @@ const FormFilled = ({
             }}
             type="text"
             value={currentTargetInput}
+            // pattern="[0-9]*"
             required
           ></input>
           <div
