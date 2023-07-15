@@ -1,5 +1,5 @@
 import { CapacitorConfig } from '@capacitor/cli';
-import { KeyboardResize, KeyboardStyle, Keyboard } from '@capacitor/keyboard';
+import { KeyboardResize, Keyboard } from '@capacitor/keyboard';
 
 
 
@@ -13,7 +13,6 @@ const config: CapacitorConfig = {
     Keyboard: {
       resize: KeyboardResize.Native,
       resizeOnFullScreen: true
-      
     },
     // LocalNotifications: {
     //   smallIcon: "logo192",
@@ -37,5 +36,7 @@ const config: CapacitorConfig = {
 };
 
 Keyboard.setScroll({isDisabled: false})
+Keyboard.setAccessoryBarVisible({isVisible: true})
+// Keyboard.setScroll({isDisabled: true})
 
 export default config;

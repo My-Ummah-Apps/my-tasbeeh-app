@@ -1169,6 +1169,7 @@ input[type="number"] {
 
 .ReactModal__Overlay {
   opacity: 0;
+  /* height: 0 !important; */
   /* transform: translateY(600px); */
   transition: all 250ms ease-in-out;
 }
@@ -1176,12 +1177,18 @@ input[type="number"] {
 .ReactModal__Overlay--after-open {
   opacity: 1;
   z-index: 1;
+
   /* transform: translateY(0px); */
 }
 
 .ReactModal__Overlay--before-close {
   opacity: 0;
   /* transform: translateY(-600px); */
+}
+
+.ReactModal__Content--after-open {
+  /* height: 0 !important; */
+  /* inset: 25% 0% 0% 50% !important; */
 }
 
 /* DEVICE SPECIFIC STYLES */

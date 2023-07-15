@@ -22,8 +22,8 @@ const FormFilled = ({
   deleteSingleCounter,
   setcurrentCount,
 }) => {
-  console.log("reviewPrompt: ");
-  console.log(reviewPrompt);
+  // console.log("reviewPrompt: ");
+  // console.log(reviewPrompt);
   const counterNameField = useRef(null);
   const counterCountField = useRef(null);
   const counterTargetField = useRef(null);
@@ -114,13 +114,19 @@ const FormFilled = ({
       <div className="form-filled-counter-name-input-wrap">
         <p>Dhikr Name</p>
         <input
+          onClick={(event) => {
+            const input = event.target;
+            input.selectionStart = input.value.length;
+            input.selectionEnd = input.value.length;
+            input.focus();
+          }}
           ref={counterNameField}
           className="form-filled-name-input form-input"
           onChange={(e) => {
             if (/\d/.test(e.target.value)) return;
             setCounterName(e.target.value);
           }}
-          type="text"
+          // type="text"
           value={counterNameInput}
           required
         ></input>
@@ -136,14 +142,20 @@ const FormFilled = ({
         <div className="current-count-input-wrap">
           <p>Count</p>
           <input
+            onClick={(event) => {
+              const input = event.target;
+              input.selectionStart = input.value.length;
+              input.selectionEnd = input.value.length;
+              input.focus();
+            }}
             ref={counterCountField}
             className="form-input"
             maxLength={5}
             onChange={(e) => {
-              // if (/[a-zA-Z]/.test(e.target.value)) return;
+              if (/[a-zA-Z]/.test(e.target.value)) return;
               setcurrentCountInput(e.target.value);
             }}
-            type="text"
+            // type="text"
             value={currentCountInput}
             // pattern="[0-9]*"
             required
@@ -159,6 +171,12 @@ const FormFilled = ({
         <div className="target-input-wrap">
           <p>Target</p>
           <input
+            onClick={(event) => {
+              const input = event.target;
+              input.selectionStart = input.value.length;
+              input.selectionEnd = input.value.length;
+              input.focus();
+            }}
             ref={counterTargetField}
             className="form-input"
             maxLength={5}
@@ -166,7 +184,7 @@ const FormFilled = ({
               if (/[a-zA-Z]/.test(e.target.value)) return;
               setCurrentTarget(e.target.value);
             }}
-            type="text"
+            // type="text"
             value={currentTargetInput}
             // pattern="[0-9]*"
             required
