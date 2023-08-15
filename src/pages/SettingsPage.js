@@ -7,15 +7,19 @@ import NotificationOptions from "../components/NotificationOptions";
 import ResetAllCountersAlert from "../components/ResetAllCountersAlert";
 import AboutUs from "../components/AboutUs";
 
+import { Purchases } from "@awesome-cordova-plugins/purchases";
+
+// Purchases.setDebugLogsEnabled(true);
 // import {LocalNotifications, LocalNotificationEnabledResult, LocalNotificationActionPerformed, LocalNotification, Device, ScheduleOptions} from "@capacitor/core";
 
 // const {LocalNotifications} = Plugins;
 
 import { Share } from "@capacitor/share";
 // import "/node_modules/moretoggles/output/moretoggles.min.css";
-import ThemeOptions from "../components/ThemeOptions";
+// import ThemeOptions from "../components/ThemeOptions";
 
-import { act } from "react-dom/test-utils";
+// import { act } from "react-dom/test-utils";
+// import { debug } from "console";
 
 // Override default Modal styles
 Modal.defaultStyles.content.border = "none";
@@ -32,6 +36,7 @@ Modal.defaultStyles.content.width = "90%";
 // Modal.defaultStyles.content.background = "blue";
 
 const SettingsPage = ({
+  products,
   resetAllCounters,
   changeThreeHourlyNotificationState,
   setThreeHourlyNotifications,
@@ -53,6 +58,9 @@ const SettingsPage = ({
   theme,
   setTheme,
 }) => {
+  console.log("PRODUCTS ON SETTINGS PAGE:");
+  console.log(products);
+
   const [formTheme, setFormTheme] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
 
@@ -115,7 +123,6 @@ const SettingsPage = ({
       dialogTitle: "",
     });
   };
-
   const link = (url) => {
     window.location.href = url;
   };
@@ -144,7 +151,47 @@ const SettingsPage = ({
       </Modal> */}
 
       <div className="settings-page-options-and-info-wrap">
+        <div
+          className="medium-tip-wrap"
+          onClick={() => {
+            console.log("CLICKED");
+
+            Purchases.purchaseProduct(
+              "insert_product_id_here",
+              ({ productIdentifier, customerInfo }) => {
+                console.log("SUCCESS");
+                console.log(productIdentifier);
+                console.log(customerInfo);
+              },
+              ({ error, userCancelled }) => {
+                // Error making purchase
+                console.log("ERROR HAS OCCURRRED: ");
+                console.log(error);
+              },
+              null
+              // Purchases.PURCHASE_TYPE.INAPP
+            );
+          }}
+        >
+          {products.map((item) => {
+            return (
+              <div>
+                <p>{item.title}</p>
+                <p>{item.price}</p>
+              </div>
+            );
+          })}
+          {/* <p>{mediumTipTitle}</p>
+          <p>{mediumTipPrice}</p> */}
+          {/* {products.map((product) => (
+              <li>
+                <h3>{product.description}</h3>
+                <p>{product.priceString}</p>
+              </li>
+            ))} */}
+        </div>
         <div className="individual-section-wrap">
+          {/* <div>{products.priceString}</div> */}
           <div
             className="theme-wrap"
             onClick={() => {

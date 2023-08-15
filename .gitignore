@@ -17,6 +17,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 
 
 npm-debug.log*
@@ -32,3 +33,4 @@ yarn-error.log*
 android/file.pem
 android/my-tasbeeh-app-keystore
 android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png
+/secrets

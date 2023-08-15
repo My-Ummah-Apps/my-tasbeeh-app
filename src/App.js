@@ -12,6 +12,43 @@ import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 
+import { Purchases } from "@awesome-cordova-plugins/purchases";
+
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+  console.log("ONDEVICEREADY FIRED");
+
+  Purchases.setDebugLogsEnabled(true);
+
+  if (window.cordova.platformId === "ios") {
+    Purchases.configureWith({
+      apiKey: process.env.REACT_APP_APPLE_APIKEY,
+    });
+
+    fetchProducts();
+  } else if (window.cordova.platformId === "android") {
+    Purchases.configureWith({
+      apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
+    });
+  }
+}
+
+let products;
+
+async function fetchProducts() {
+  const productsArray = [process.env.REACT_APP_ST, process.env.REACT_APP_MT];
+  console.log("TESTING");
+  console.log(process.env.REACT_APP_ST);
+  try {
+    const fetchedProducts = await Purchases.getProducts(productsArray, "inapp");
+    console.log("Fetched products:", fetchedProducts);
+    products = fetchedProducts;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+}
+
 // ngOnInit();
 
 // schedule: { at: new Date(Date.now() + 1000 * 3) },
@@ -650,6 +687,7 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
+                products={products}
                 changeThreeHourlyNotificationState={
                   changeThreeHourlyNotificationState
                 }

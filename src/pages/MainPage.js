@@ -24,7 +24,6 @@ const MainPage = ({
       <div className="home-page-header">
         <p>Home</p>
       </div>
-
       <CounterNameAndNumber
         resetSingleCounter={resetSingleCounter}
         setActiveCounterName={setActiveCounterName}
