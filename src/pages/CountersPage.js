@@ -35,8 +35,6 @@ const customStyles = {
 };
 
 function CountersPage({
-  showReviewPrompt,
-  reviewPrompt,
   modalStyles,
   modalBgColor,
   activeBackgroundColor,
@@ -114,8 +112,6 @@ function CountersPage({
         onRequestClose={handleCloseModal}
       >
         <FormFilled
-          showReviewPrompt={showReviewPrompt}
-          reviewPrompt={reviewPrompt}
           activeBackgroundColor={activeBackgroundColor}
           handleCloseModal={handleCloseModal}
           modifyTheCountersArray={modifyTheCountersArray}
@@ -139,8 +135,6 @@ function CountersPage({
         contentLabel="Modal #2 Global Style Override Example"
       >
         <FormBlank
-          showReviewPrompt={showReviewPrompt}
-          reviewPrompt={reviewPrompt}
           activeBackgroundColor={activeBackgroundColor}
           nextColor={nextColor}
           handleCloseModal2={handleCloseModal2}

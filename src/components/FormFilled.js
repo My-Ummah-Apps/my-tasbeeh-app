@@ -6,11 +6,7 @@ import {
   MdDeleteOutline,
 } from "react-icons/md";
 
-import { RateApp } from "capacitor-rate-app";
-
 const FormFilled = ({
-  showReviewPrompt,
-  reviewPrompt,
   activeBackgroundColor,
   modifyTheCountersArray,
   currentCounterName,
@@ -22,8 +18,6 @@ const FormFilled = ({
   deleteSingleCounter,
   setcurrentCount,
 }) => {
-  // console.log("reviewPrompt: ");
-  // console.log(reviewPrompt);
   const counterNameField = useRef(null);
   const counterCountField = useRef(null);
   const counterTargetField = useRef(null);
@@ -78,13 +72,6 @@ const FormFilled = ({
     );
 
     handleCloseModal();
-    // Ask for review
-    if (reviewPrompt) {
-      RateApp.requestReview();
-      showReviewPrompt(false);
-      let launchCount = 0;
-      localStorage.setItem("launch-count", JSON.stringify(launchCount));
-    }
   };
 
   const [counterNameInput, setCounterName] = useState(currentCounterName);

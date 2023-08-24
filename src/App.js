@@ -17,7 +17,7 @@ import { Purchases } from "@awesome-cordova-plugins/purchases";
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-  console.log("ONDEVICEREADY FIRED");
+  // console.log("ONDEVICEREADY FIRED");
 
   Purchases.setDebugLogsEnabled(true);
 
@@ -25,27 +25,34 @@ function onDeviceReady() {
     Purchases.configureWith({
       apiKey: process.env.REACT_APP_APPLE_APIKEY,
     });
-
-    fetchProducts();
   } else if (window.cordova.platformId === "android") {
     Purchases.configureWith({
       apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
     });
   }
+  fetchProducts();
 }
 
 let products;
 
 async function fetchProducts() {
-  const productsArray = [process.env.REACT_APP_ST, process.env.REACT_APP_MT];
-  console.log("TESTING");
-  console.log(process.env.REACT_APP_ST);
+  const productsArray = [
+    process.env.REACT_APP_ST,
+    process.env.REACT_APP_MT,
+    process.env.REACT_APP_LT,
+    process.env.REACT_APP_XLT,
+  ];
+
   try {
     const fetchedProducts = await Purchases.getProducts(productsArray, "inapp");
-    console.log("Fetched products:", fetchedProducts);
+    // console.log("Fetched products:", fetchedProducts);
+    fetchedProducts.sort(function (a, b) {
+      return a.price - b.price;
+    });
+
     products = fetchedProducts;
   } catch (error) {
-    console.error("Error fetching products:", error);
+    // console.error("Error fetching products:", error);
   }
 }
 
@@ -251,7 +258,7 @@ function App() {
       localStorage.setItem("launch-count", JSON.stringify(launchCount));
     }
     // if (launchCount == 1.5 || launchCount % 5 === 0) {
-    if (launchCount > 2) {
+    if (launchCount > 5) {
       showReviewPrompt(true);
     }
   }, []);
@@ -717,6 +724,8 @@ function App() {
             index
             element={
               <Main
+                showReviewPrompt={showReviewPrompt}
+                reviewPrompt={reviewPrompt}
                 setHaptics={setHaptics}
                 haptics={haptics}
                 setActiveCounterName={setActiveCounterName}
@@ -738,8 +747,6 @@ function App() {
             path="CountersPage"
             element={
               <CountersPage
-                showReviewPrompt={showReviewPrompt}
-                reviewPrompt={reviewPrompt}
                 setActivePage={setActivePage}
                 modalStyles={modalStyles}
                 modalBgColor={modalBgColor}

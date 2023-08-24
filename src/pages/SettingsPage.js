@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import React from "react";
 import Modal from "react-modal";
 import { MdOutlineChevronRight } from "react-icons/md";
+import { FaHandHoldingHeart } from "react-icons/fa";
+// import { FaJar } from "react-icons/fa6";
+// import { GiMasonJar } from "react-icons/gi";
 import Switch from "react-ios-switch";
 import NotificationOptions from "../components/NotificationOptions";
 import ResetAllCountersAlert from "../components/ResetAllCountersAlert";
@@ -9,7 +12,6 @@ import AboutUs from "../components/AboutUs";
 
 import { Purchases } from "@awesome-cordova-plugins/purchases";
 
-// Purchases.setDebugLogsEnabled(true);
 // import {LocalNotifications, LocalNotificationEnabledResult, LocalNotificationActionPerformed, LocalNotification, Device, ScheduleOptions} from "@capacitor/core";
 
 // const {LocalNotifications} = Plugins;
@@ -19,7 +21,6 @@ import { Share } from "@capacitor/share";
 // import ThemeOptions from "../components/ThemeOptions";
 
 // import { act } from "react-dom/test-utils";
-// import { debug } from "console";
 
 // Override default Modal styles
 Modal.defaultStyles.content.border = "none";
@@ -58,8 +59,10 @@ const SettingsPage = ({
   theme,
   setTheme,
 }) => {
-  console.log("PRODUCTS ON SETTINGS PAGE:");
-  console.log(products);
+  // console.log("PRODUCTS ON SETTINGS PAGE:");
+  // console.log(products);
+
+  const loadingIconRef = useRef(null);
 
   const [formTheme, setFormTheme] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
@@ -70,6 +73,8 @@ const SettingsPage = ({
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
   const [showModal4, setShowModal4] = useState(false);
+  const [showModal5, setShowModal5] = useState(false);
+  const [showModal6, setShowModal6] = useState(false);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -85,6 +90,14 @@ const SettingsPage = ({
 
   const handleOpenModal4 = () => {
     setShowModal4(true);
+  };
+
+  const handleOpenModal5 = () => {
+    setShowModal5(true);
+  };
+
+  const handleOpenModal6 = () => {
+    setShowModal6(true);
   };
 
   const handleCloseModal = () => {
@@ -103,9 +116,59 @@ const SettingsPage = ({
     setShowModal4(false);
   };
 
+  const handleCloseModal5 = () => {
+    setShowModal5(false);
+  };
+
+  const handleCloseModal6 = () => {
+    setShowModal6(false);
+  };
+
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
     subtitle.style.color = "#f00";
+  }
+
+  async function triggerPurchase(tipAmount) {
+    // console.log("PURCHASE CLICKED...");
+
+    try {
+      const { customerInfo, productIdentifier } =
+        await Purchases.purchaseProduct(tipAmount);
+      // console.log("PURCHASE SUCCESSFULL");
+      // console.log(customerInfo);
+      // console.log(productIdentifier);
+
+      handleCloseModal6();
+    } catch (e) {
+      // if (!e.userCancelled) {
+      // console.log("ERROR HAS OCCURRED");
+      // console.log(e);
+      // console.log(e.userCancelled);
+
+      handleCloseModal6();
+      // }
+    }
+
+    // Purchases.purchaseProduct(
+    //   tipAmount,
+    //   ({ productIdentifier, customerInfo }) => {
+    //     console.log("SUCCESS");
+    //     console.log(productIdentifier);
+    //     console.log(customerInfo);
+    //     loadingIconRef.current.style.display = "none";
+    //   },
+    //   ({ error, userCancelled }) => {
+    //     // Error making purchase
+    //     console.log("ERROR HAS OCCURRED: ");
+    //     console.log(error);
+    //     console.log(userCancelled);
+    //     loadingIconRef.current.style.display = "none";
+    //   },
+    //   null
+
+    //   // Purchases.PURCHASE_TYPE.INAPP
+    // );
   }
 
   const shareThisAppLink = async () => {
@@ -151,47 +214,110 @@ const SettingsPage = ({
       </Modal> */}
 
       <div className="settings-page-options-and-info-wrap">
-        <div
-          className="medium-tip-wrap"
-          onClick={() => {
-            console.log("CLICKED");
-
-            Purchases.purchaseProduct(
-              "insert_product_id_here",
-              ({ productIdentifier, customerInfo }) => {
-                console.log("SUCCESS");
-                console.log(productIdentifier);
-                console.log(customerInfo);
-              },
-              ({ error, userCancelled }) => {
-                // Error making purchase
-                console.log("ERROR HAS OCCURRRED: ");
-                console.log(error);
-              },
-              null
-              // Purchases.PURCHASE_TYPE.INAPP
-            );
-          }}
-        >
-          {products.map((item) => {
-            return (
-              <div>
-                <p>{item.title}</p>
-                <p>{item.price}</p>
+        <div className="individual-section-wrap">
+          <div
+            className="support-box-wrap"
+            onClick={() => {
+              handleOpenModal5();
+            }}
+          >
+            <div className="support-box-icon-and-text-wrap">
+              {/* <FaJar */}
+              <FaHandHoldingHeart
+                style={{
+                  fontSize: "32px",
+                  color: activeBackgroundColor,
+                }}
+              />
+              <div className="support-box-text-wrap">
+                <p className="support-main-text-heading">Contribute</p>
+                <p className="support-sub-text">Support our work</p>
               </div>
-            );
-          })}
-          {/* <p>{mediumTipTitle}</p>
-          <p>{mediumTipPrice}</p> */}
-          {/* {products.map((product) => (
-              <li>
-                <h3>{product.description}</h3>
-                <p>{product.priceString}</p>
-              </li>
-            ))} */}
+            </div>
+            <MdOutlineChevronRight className="chevron" />
+          </div>
+          <Modal
+            style={modalStyles}
+            isOpen={showModal5}
+            onRequestClose={handleCloseModal5}
+            closeTimeoutMS={250}
+            contentLabel="Modal #2 Global Style Override Example"
+          >
+            <div className="tip-box-wrap">
+              {/* <div> */}
+              <p
+                className="tip-jar-box-first-line-of-text tip-jar-box-text"
+                style={{
+                  backgroundColor: activeBackgroundColor,
+                }}
+              ></p>
+
+              <p
+                className="tip-jar-box-text"
+                style={{
+                  backgroundColor: activeBackgroundColor,
+                }}
+              >
+                MyUmmahApps Ltd provides free, open source applications for the
+                Muslim community, these apps contain no ads.
+              </p>
+
+              <p
+                className="tip-jar-box-text"
+                style={{
+                  backgroundColor: activeBackgroundColor,
+                }}
+              >
+                {" "}
+                Your support will help us continue serving the Ummah in this
+                endeavor.
+              </p>
+
+              <p
+                className="tip-jar-box-text"
+                style={{
+                  backgroundColor: activeBackgroundColor,
+                }}
+              >
+                {" "}
+                May Allah reward you.
+              </p>
+
+              {/* </div> */}
+              {products.map((item) => {
+                return (
+                  <div
+                    className="tip-wrap"
+                    onClick={() => {
+                      triggerPurchase(item.identifier);
+
+                      handleOpenModal6();
+                    }}
+                  >
+                    <p>{item.title}</p>
+                    <p>{item.priceString}</p>
+                  </div>
+                );
+              })}
+              <Modal
+                style={modalStyles}
+                isOpen={showModal6}
+                // onRequestClose={handleCloseModal5}
+                closeTimeoutMS={250}
+                contentLabel="Modal #2 Global Style Override Example"
+              >
+                {" "}
+                <div class="lds-ellipsis">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </Modal>
+            </div>
+          </Modal>
         </div>
         <div className="individual-section-wrap">
-          {/* <div>{products.priceString}</div> */}
           <div
             className="theme-wrap"
             onClick={() => {

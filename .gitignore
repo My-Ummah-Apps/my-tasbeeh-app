@@ -34,3 +34,5 @@ android/file.pem
 android/my-tasbeeh-app-keystore
 android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png
 /secrets
+/src/components/TipJar.tsx
+

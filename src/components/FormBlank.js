@@ -1,9 +1,6 @@
 import { useState, useRef } from "react";
-import { RateApp } from "capacitor-rate-app";
 
 function FormBlank({
-  showReviewPrompt,
-  reviewPrompt,
   activeBackgroundColor,
   setShowPopUpBoxBlank,
   addCounter,
@@ -51,13 +48,6 @@ function FormBlank({
     // addCounter(counterNameInput);
     setCounterName("");
     handleCloseModal2();
-    // Ask for review
-    if (reviewPrompt) {
-      RateApp.requestReview();
-      showReviewPrompt(false);
-      let launchCount = 0;
-      localStorage.setItem("launch-count", JSON.stringify(launchCount));
-    }
   };
 
   return (

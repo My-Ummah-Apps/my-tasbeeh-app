@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import PlusBtn from "../components/PlusBtn";
+import { RateApp } from "capacitor-rate-app";
 
 const MainPage = ({
+  showReviewPrompt,
+  reviewPrompt,
   setHaptics,
   haptics,
   savedCountersArray,
@@ -19,6 +22,12 @@ const MainPage = ({
   activeBackgroundColor,
   resetSingleCounter,
 }) => {
+  if (reviewPrompt) {
+    RateApp.requestReview();
+    showReviewPrompt(false);
+    let launchCount = 0;
+    localStorage.setItem("launch-count", JSON.stringify(launchCount));
+  }
   return (
     <div className="main-page-wrap">
       <div className="home-page-header">
