@@ -33,7 +33,7 @@ function onDeviceReady() {
   fetchProducts();
 }
 
-let products;
+let fetchedProducts;
 
 async function fetchProducts() {
   const productsArray = [
@@ -44,13 +44,14 @@ async function fetchProducts() {
   ];
 
   try {
-    const fetchedProducts = await Purchases.getProducts(productsArray, "inapp");
+    fetchedProducts = await Purchases.getProducts(productsArray, "inapp");
     // console.log("Fetched products:", fetchedProducts);
     fetchedProducts.sort(function (a, b) {
       return a.price - b.price;
     });
-
-    products = fetchedProducts;
+    // console.log("PRODUCTS ARE:");
+    // console.log(fetchedProducts);
+    // products = fetchedProducts;
   } catch (error) {
     // console.error("Error fetching products:", error);
   }
@@ -248,17 +249,19 @@ function App() {
 
   useEffect(() => {
     let launchCount = localStorage.getItem("launch-count");
-
-    if (launchCount == null) {
+    if (launchCount > 14) {
+      launchCount = 0;
+    } else if (launchCount == null) {
       launchCount = 1;
-      localStorage.setItem("launch-count", JSON.stringify(launchCount));
     } else if (launchCount != null) {
       let launchCountNumber = Number(launchCount);
-      launchCount = launchCountNumber + 0.5;
-      localStorage.setItem("launch-count", JSON.stringify(launchCount));
+      launchCount = launchCountNumber + 1;
     }
-    // if (launchCount == 1.5 || launchCount % 5 === 0) {
-    if (launchCount > 5) {
+    localStorage.setItem("launch-count", JSON.stringify(launchCount));
+    // console.log("AMOUNT OF TIMES APP HAS BEEN LAUNCHED:");
+    // console.log(launchCount);
+
+    if (launchCount == 3 || launchCount == 8 || launchCount == 14) {
       showReviewPrompt(true);
     }
   }, []);
@@ -694,7 +697,7 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
-                products={products}
+                fetchedProducts={fetchedProducts}
                 changeThreeHourlyNotificationState={
                   changeThreeHourlyNotificationState
                 }

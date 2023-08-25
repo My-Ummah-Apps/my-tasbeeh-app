@@ -12,11 +12,12 @@ import AboutUs from "../components/AboutUs";
 
 import { Purchases } from "@awesome-cordova-plugins/purchases";
 
+import { Share } from "@capacitor/share";
+
 // import {LocalNotifications, LocalNotificationEnabledResult, LocalNotificationActionPerformed, LocalNotification, Device, ScheduleOptions} from "@capacitor/core";
 
 // const {LocalNotifications} = Plugins;
 
-import { Share } from "@capacitor/share";
 // import "/node_modules/moretoggles/output/moretoggles.min.css";
 // import ThemeOptions from "../components/ThemeOptions";
 
@@ -36,8 +37,49 @@ Modal.defaultStyles.content.zIndex = "10000";
 Modal.defaultStyles.content.width = "90%";
 // Modal.defaultStyles.content.background = "blue";
 
+// function onDeviceReady() {
+//   // console.log("ONDEVICEREADY FIRED");
+
+//   Purchases.setDebugLogsEnabled(true);
+
+//   if (window.cordova.platformId === "ios") {
+//     Purchases.configureWith({
+//       apiKey: process.env.REACT_APP_APPLE_APIKEY,
+//     });
+//   } else if (window.cordova.platformId === "android") {
+//     Purchases.configureWith({
+//       apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
+//     });
+//   }
+//   fetchProducts();
+// }
+
+// let fetchedProducts;
+
+// async function fetchProducts() {
+//   const productsArray = [
+//     process.env.REACT_APP_ST,
+//     process.env.REACT_APP_MT,
+//     process.env.REACT_APP_LT,
+//     process.env.REACT_APP_XLT,
+//   ];
+
+//   try {
+//     fetchedProducts = await Purchases.getProducts(productsArray, "inapp");
+//     // console.log("Fetched products:", fetchedProducts);
+//     fetchedProducts.sort(function (a, b) {
+//       return a.price - b.price;
+//     });
+//     console.log("PRODUCTS ARE:");
+//     console.log(fetchedProducts);
+//     // products = fetchedProducts;
+//   } catch (error) {
+//     // console.error("Error fetching products:", error);
+//   }
+// }
+
 const SettingsPage = ({
-  products,
+  fetchedProducts,
   resetAllCounters,
   changeThreeHourlyNotificationState,
   setThreeHourlyNotifications,
@@ -59,8 +101,8 @@ const SettingsPage = ({
   theme,
   setTheme,
 }) => {
-  // console.log("PRODUCTS ON SETTINGS PAGE:");
-  // console.log(products);
+  // console.log("fetchedProducts ON SETTINGS PAGE:");
+  // console.log(fetchedProducts);
 
   const loadingIconRef = useRef(null);
 
@@ -149,26 +191,6 @@ const SettingsPage = ({
       handleCloseModal6();
       // }
     }
-
-    // Purchases.purchaseProduct(
-    //   tipAmount,
-    //   ({ productIdentifier, customerInfo }) => {
-    //     console.log("SUCCESS");
-    //     console.log(productIdentifier);
-    //     console.log(customerInfo);
-    //     loadingIconRef.current.style.display = "none";
-    //   },
-    //   ({ error, userCancelled }) => {
-    //     // Error making purchase
-    //     console.log("ERROR HAS OCCURRED: ");
-    //     console.log(error);
-    //     console.log(userCancelled);
-    //     loadingIconRef.current.style.display = "none";
-    //   },
-    //   null
-
-    //   // Purchases.PURCHASE_TYPE.INAPP
-    // );
   }
 
   const shareThisAppLink = async () => {
@@ -259,7 +281,7 @@ const SettingsPage = ({
                 }}
               >
                 MyUmmahApps Ltd provides free, open source applications for the
-                Muslim community, these apps contain no ads.
+                Muslim community, these applications contain no ads.
               </p>
 
               <p
@@ -284,7 +306,7 @@ const SettingsPage = ({
               </p>
 
               {/* </div> */}
-              {products.map((item) => {
+              {fetchedProducts.map((item) => {
                 return (
                   <div
                     className="tip-wrap"
