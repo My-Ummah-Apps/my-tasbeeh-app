@@ -35,48 +35,6 @@ Modal.defaultStyles.content.padding = "0";
 Modal.defaultStyles.content.height = "fit-content";
 Modal.defaultStyles.content.zIndex = "10000";
 Modal.defaultStyles.content.width = "90%";
-// Modal.defaultStyles.content.background = "blue";
-
-// function onDeviceReady() {
-//   // console.log("ONDEVICEREADY FIRED");
-
-//   Purchases.setDebugLogsEnabled(true);
-
-//   if (window.cordova.platformId === "ios") {
-//     Purchases.configureWith({
-//       apiKey: process.env.REACT_APP_APPLE_APIKEY,
-//     });
-//   } else if (window.cordova.platformId === "android") {
-//     Purchases.configureWith({
-//       apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
-//     });
-//   }
-//   fetchProducts();
-// }
-
-// let fetchedProducts;
-
-// async function fetchProducts() {
-//   const productsArray = [
-//     process.env.REACT_APP_ST,
-//     process.env.REACT_APP_MT,
-//     process.env.REACT_APP_LT,
-//     process.env.REACT_APP_XLT,
-//   ];
-
-//   try {
-//     fetchedProducts = await Purchases.getProducts(productsArray, "inapp");
-//     // console.log("Fetched products:", fetchedProducts);
-//     fetchedProducts.sort(function (a, b) {
-//       return a.price - b.price;
-//     });
-//     console.log("PRODUCTS ARE:");
-//     console.log(fetchedProducts);
-//     // products = fetchedProducts;
-//   } catch (error) {
-//     // console.error("Error fetching products:", error);
-//   }
-// }
 
 const SettingsPage = ({
   fetchedProducts,
@@ -306,21 +264,22 @@ const SettingsPage = ({
               </p>
 
               {/* </div> */}
-              {fetchedProducts.map((item) => {
-                return (
-                  <div
-                    className="tip-wrap"
-                    onClick={() => {
-                      triggerPurchase(item.identifier);
+              {fetchedProducts &&
+                fetchedProducts.map((item) => {
+                  return (
+                    <div
+                      className="tip-wrap"
+                      onClick={() => {
+                        triggerPurchase(item.identifier);
 
-                      handleOpenModal6();
-                    }}
-                  >
-                    <p>{item.title}</p>
-                    <p>{item.priceString}</p>
-                  </div>
-                );
-              })}
+                        handleOpenModal6();
+                      }}
+                    >
+                      <p>{item.title}</p>
+                      <p>{item.priceString}</p>
+                    </div>
+                  );
+                })}
               <Modal
                 style={modalStyles}
                 isOpen={showModal6}

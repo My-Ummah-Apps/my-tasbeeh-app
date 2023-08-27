@@ -25,16 +25,6 @@ const MainPage = ({
   if (reviewPrompt) {
     RateApp.requestReview();
     showReviewPrompt(false);
-    // let launchCount = localStorage.getItem("launch-count");
-    // let launchCountNumber = Number(launchCount);
-    // if (launchCountNumber > 14) {
-    //   launchCount = 0;
-    // }
-    // else if (launchCountNumber < 15) {
-    //     launchCount = launchCountNumber + 1;
-    //   }
-
-    // localStorage.setItem("launch-count", JSON.stringify(launchCount));
   }
   return (
     <div className="main-page-wrap">
