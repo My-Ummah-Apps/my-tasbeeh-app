@@ -62,6 +62,12 @@ const SettingsPage = ({
   // console.log("fetchedProducts ON SETTINGS PAGE:");
   // console.log(fetchedProducts);
 
+  const [iapProducts, setIapProducts] = useState(fetchedProducts);
+
+  useEffect(() => {
+    setIapProducts(fetchedProducts);
+  }, [fetchedProducts]);
+
   const loadingIconRef = useRef(null);
 
   const [formTheme, setFormTheme] = useState(false);
@@ -264,8 +270,10 @@ const SettingsPage = ({
               </p>
 
               {/* </div> */}
-              {fetchedProducts &&
-                fetchedProducts.map((item) => {
+              {/* {fetchedProducts &&
+                fetchedProducts.map((item) => { */}
+              {iapProducts &&
+                iapProducts.map((item) => {
                   return (
                     <div
                       className="tip-wrap"

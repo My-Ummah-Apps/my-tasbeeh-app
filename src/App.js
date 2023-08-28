@@ -51,9 +51,8 @@ async function fetchProducts() {
     });
     // console.log("PRODUCTS ARE:");
     // console.log(fetchedProducts);
-    // products = fetchedProducts;
   } catch (error) {
-    // console.error("Error fetching products:", error);
+    console.error("Error fetching products:", error);
   }
 }
 
