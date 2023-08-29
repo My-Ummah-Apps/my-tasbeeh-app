@@ -64,8 +64,6 @@ const SettingsPage = ({
   console.log("fetchedProducts ON SETTINGS PAGE:");
   console.log(iapProducts);
 
-  // const [iapProducts, setIapProducts] = useState(null);
-
   const loadingIconRef = useRef(null);
 
   const [formTheme, setFormTheme] = useState(false);
