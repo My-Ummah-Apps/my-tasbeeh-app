@@ -14,48 +14,6 @@ import SettingsPage from "./pages/SettingsPage";
 
 import { Purchases } from "@awesome-cordova-plugins/purchases";
 
-document.addEventListener("deviceready", onDeviceReady, false);
-
-function onDeviceReady() {
-  // console.log("ONDEVICEREADY FIRED");
-
-  Purchases.setDebugLogsEnabled(true);
-
-  if (window.cordova.platformId === "ios") {
-    Purchases.configureWith({
-      apiKey: process.env.REACT_APP_APPLE_APIKEY,
-    });
-  } else if (window.cordova.platformId === "android") {
-    Purchases.configureWith({
-      apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
-    });
-  }
-  fetchProducts();
-}
-
-let fetchedProducts;
-
-async function fetchProducts() {
-  const productsArray = [
-    process.env.REACT_APP_ST,
-    process.env.REACT_APP_MT,
-    process.env.REACT_APP_LT,
-    process.env.REACT_APP_XLT,
-  ];
-
-  try {
-    fetchedProducts = await Purchases.getProducts(productsArray, "inapp");
-    // console.log("Fetched products:", fetchedProducts);
-    fetchedProducts.sort(function (a, b) {
-      return a.price - b.price;
-    });
-    // console.log("PRODUCTS ARE:");
-    // console.log(fetchedProducts);
-  } catch (error) {
-    console.error("Error fetching products:", error);
-  }
-}
-
 // ngOnInit();
 
 // schedule: { at: new Date(Date.now() + 1000 * 3) },
@@ -181,6 +139,78 @@ let counterId;
 let defaultArray;
 
 function App() {
+  let fetchedProducts;
+  const [iapProducts, setIapProducts] = useState(null);
+  document.addEventListener("deviceready", onDeviceReady, false);
+
+  function onDeviceReady() {
+    // console.log("ONDEVICEREADY FIRED");
+
+    Purchases.setDebugLogsEnabled(true);
+
+    if (window.cordova.platformId === "ios") {
+      Purchases.configureWith({
+        apiKey: process.env.REACT_APP_APPLE_APIKEY,
+      });
+    } else if (window.cordova.platformId === "android") {
+      Purchases.configureWith({
+        apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
+      });
+    }
+    // fetchProducts();
+  }
+
+  const productsArray = [
+    process.env.REACT_APP_ST,
+    process.env.REACT_APP_MT,
+    process.env.REACT_APP_LT,
+    process.env.REACT_APP_XLT,
+  ];
+
+  // async function fetchProducts() {
+  //   const productsArray = [
+  //     process.env.REACT_APP_ST,
+  //     process.env.REACT_APP_MT,
+  //     process.env.REACT_APP_LT,
+  //     process.env.REACT_APP_XLT,
+  //   ];
+
+  //   try {
+  //     // fetchedProducts = await Purchases.getProducts(productsArray, "inapp");
+  //     setIapProducts(await Purchases.getProducts(productsArray, "inapp"));
+  //     console.log("PRODUCTS RECEIVED");
+  //     console.log(fetchedProducts);
+  //     fetchedProducts.sort(function (a, b) {
+  //       return a.price - b.price;
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching products:", error);
+  //   }
+  // }
+
+  useEffect(() => {
+    (async () => {
+      const fetchedProducts = await Purchases.getProducts(
+        productsArray,
+        "inapp"
+      );
+      fetchedProducts.sort(function (a, b) {
+        return a.price - b.price;
+      });
+      setIapProducts(fetchedProducts);
+    })();
+
+    return () => {
+      // this now gets called when the component unmounts
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   console.log("FETCHEDPRODUCTS WITHIN USEEFFECT in APP.JS");
+  //   console.log(iapProducts);
+  //   setIapProducts(fetchedProducts);
+  // }, [fetchedProducts]);
+
   const materialColors = [
     "#EF5350",
     "#EC407A",
@@ -696,7 +726,9 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
-                fetchedProducts={fetchedProducts}
+                // fetchedProducts={fetchedProducts}
+                setIapProducts={setIapProducts}
+                iapProducts={iapProducts}
                 changeThreeHourlyNotificationState={
                   changeThreeHourlyNotificationState
                 }

@@ -37,7 +37,9 @@ Modal.defaultStyles.content.zIndex = "10000";
 Modal.defaultStyles.content.width = "90%";
 
 const SettingsPage = ({
-  fetchedProducts,
+  // fetchedProducts,
+  setIapProducts,
+  iapProducts,
   resetAllCounters,
   changeThreeHourlyNotificationState,
   setThreeHourlyNotifications,
@@ -59,14 +61,10 @@ const SettingsPage = ({
   theme,
   setTheme,
 }) => {
-  // console.log("fetchedProducts ON SETTINGS PAGE:");
-  // console.log(fetchedProducts);
+  console.log("fetchedProducts ON SETTINGS PAGE:");
+  console.log(iapProducts);
 
-  const [iapProducts, setIapProducts] = useState(fetchedProducts);
-
-  useEffect(() => {
-    setIapProducts(fetchedProducts);
-  }, [fetchedProducts]);
+  // const [iapProducts, setIapProducts] = useState(null);
 
   const loadingIconRef = useRef(null);
 
