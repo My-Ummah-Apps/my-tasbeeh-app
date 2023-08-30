@@ -266,9 +266,10 @@ const SettingsPage = ({
               </p>
 
               {/* </div> */}
-              {/* {fetchedProducts &&
-                fetchedProducts.map((item) => { */}
-              {iapProducts &&
+
+              {!iapProducts ? (
+                <p style={{ padding: "2rem" }}>Loading...</p>
+              ) : (
                 iapProducts.map((item) => {
                   return (
                     <div
@@ -283,7 +284,8 @@ const SettingsPage = ({
                       <p>{item.priceString}</p>
                     </div>
                   );
-                })}
+                })
+              )}
               <Modal
                 style={modalStyles}
                 isOpen={showModal6}
