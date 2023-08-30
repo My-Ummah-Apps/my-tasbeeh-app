@@ -37,8 +37,6 @@ Modal.defaultStyles.content.zIndex = "10000";
 Modal.defaultStyles.content.width = "90%";
 
 const SettingsPage = ({
-  // fetchedProducts,
-  setIapProducts,
   iapProducts,
   resetAllCounters,
   changeThreeHourlyNotificationState,

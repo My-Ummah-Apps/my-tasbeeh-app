@@ -726,8 +726,6 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
-                // fetchedProducts={fetchedProducts}
-                setIapProducts={setIapProducts}
                 iapProducts={iapProducts}
                 changeThreeHourlyNotificationState={
                   changeThreeHourlyNotificationState
