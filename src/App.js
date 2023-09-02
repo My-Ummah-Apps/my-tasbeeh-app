@@ -50,24 +50,24 @@ LocalNotifications.createChannel({
 });
 
 const scheduleMorningNotifications = async () => {
-  // await LocalNotifications.schedule({
-  //   notifications: [
-  //     {
-  //       title: "Morning Reminder",
-  //       body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
-  //       id: 2,
-  //       // schedule: {
-  //       //   allowWhileIdle: true,
-  //       //   foreground: true, // iOS only
-  //       //   on: { hour: 7, minute: 0 },
-  //       //   repeats: true,
-  //       //   every: "day",
-  //       // },
-  //       // schedule: { at: new Date(Date.now() + 1000 * 3) },
-  //       // channelId: "1",
-  //     },
-  //   ],
-  // });
+  await LocalNotifications.schedule({
+    notifications: [
+      {
+        title: "Morning Reminder",
+        body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
+        id: 2,
+        schedule: {
+          allowWhileIdle: true,
+          foreground: true, // iOS only
+          on: { hour: 14, minute: 51 },
+          repeats: true,
+          every: "day",
+        },
+        // schedule: { at: new Date(Date.now() + 1000 * 3) },
+        // channelId: "1",
+      },
+    ],
+  });
 };
 const scheduleAfternoonNotification = async () => {
   // await LocalNotifications.schedule({

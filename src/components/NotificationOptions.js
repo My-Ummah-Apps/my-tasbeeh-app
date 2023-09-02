@@ -2,52 +2,6 @@ import Switch from "react-ios-switch";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { useState, useEffect } from "react";
 
-let requestPermission;
-let checkPermission;
-// const requestNotificationPermission = async () => {
-//   requestPermission = await LocalNotifications.requestPermissions();
-//   checkPermission = await LocalNotifications.checkPermissions();
-// };
-
-// checkNotificationPermissionStatus();
-
-let toggleAllNotificationsOff;
-
-const initialNotificationPermissionsCheck = async () => {
-  const checkInitialPermission = await LocalNotifications.checkPermissions();
-
-  if (
-    checkInitialPermission.display == "denied" ||
-    checkInitialPermission.display == "prompt"
-  ) {
-    toggleAllNotificationsOff();
-  }
-};
-
-// initialNotificationPermissionsCheck();
-
-const checkNotificationPermissionStatus = async () => {
-  try {
-    checkPermission = await LocalNotifications.checkPermissions();
-    console.log("checkPermission.display:");
-    console.log(checkPermission.display);
-  } catch (err) {
-    console.log(err);
-  }
-
-  // checkPermission.display will give: "granted", "denied", "prompt" or "prompt-with-rationale", not seen "prompt" on iOS thus far
-};
-
-const requestNotificationPermission = async () => {
-  try {
-    requestPermission = await LocalNotifications.requestPermissions();
-    // console.log("requestPermission.display:");
-    // console.log(requestPermission.display);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 const NotificationOptions = ({
   setThreeHourlyNotifications,
   threeHourlyNotifications,
@@ -66,6 +20,54 @@ const NotificationOptions = ({
     setAfternoonNotification(false);
     setEveningNotification(false);
   };
+
+  let requestPermission;
+  let checkPermission;
+
+  const [notificationPermission, setNotificationPermission] = useState(null);
+
+  const checkNotificationPermissionStatus = async () => {
+    try {
+      checkPermission = await LocalNotifications.checkPermissions();
+      console.log("checkPermission.display:");
+      console.log(checkPermission.display);
+      if (requestPermission.display) {
+        setNotificationPermission(true);
+      } else if (
+        requestPermission.display == "false" ||
+        requestPermission.display == "prompt"
+      ) {
+        setNotificationPermission(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+    // checkPermission.display will give: "granted", "denied", "prompt" or "prompt-with-rationale", not seen "prompt" on iOS thus far
+  };
+
+  checkNotificationPermissionStatus();
+
+  const requestNotificationPermission = async () => {
+    try {
+      requestPermission = await LocalNotifications.requestPermissions();
+      // console.log("requestPermission.display:");
+      // console.log(requestPermission.display);
+      if (requestPermission.display) {
+        setMorningNotification(true);
+      } else if (
+        requestPermission.display == "false" ||
+        requestPermission.display == "prompt"
+      ) {
+        setMorningNotification(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  let toggleAllNotificationsOff;
+
   // let morningToggle;
   // useEffect(() => {
   //   console.log("morningNotification within useEffect:");
@@ -146,23 +148,13 @@ const NotificationOptions = ({
           name={undefined}
           offColor="white"
           onChange={(e) => {
-            // checkNotificationPermissionStatus();
-            requestNotificationPermission();
-            // console.log("onChange: checkpermission: ");
-            // console.log(checkPermission.display);
-            // if (checkPermission.display == "denied") {
-            //   setMorningNotification(false);
+            if (
+              JSON.parse(localStorage.getItem("morning-notification")) == false
+            ) {
+              requestNotificationPermission();
+              console.log("REQUEST PERMISSION HAS RUN!");
+            }
 
-            //   // alert("Please enable notifications in system settings");
-            //   console.log("YO HELLO DENIED!!!");
-            //   return;
-            // }
-            // if (checkPermission.display != "granted") {
-            //   setMorningNotification(false);
-            //   return;
-            // }
-
-            // if (checkPermission.display == "granted") {
             if (
               JSON.parse(localStorage.getItem("morning-notification")) == true
             ) {
@@ -174,13 +166,13 @@ const NotificationOptions = ({
             } else if (
               JSON.parse(localStorage.getItem("morning-notification")) == false
             ) {
-              setMorningNotification(true);
+              // setMorningNotification(true);
               localStorage.setItem(
                 "morning-notification",
                 JSON.stringify(true)
               );
             }
-            // }
+
             // else if (checkPermission.display == "denied") {
             //   alert("Please turn on notifications");
             //   setMorningNotification(false);

@@ -59,8 +59,8 @@ const SettingsPage = ({
   theme,
   setTheme,
 }) => {
-  console.log("fetchedProducts ON SETTINGS PAGE:");
-  console.log(iapProducts);
+  // console.log("fetchedProducts ON SETTINGS PAGE:");
+  // console.log(iapProducts);
 
   const loadingIconRef = useRef(null);
 
@@ -130,11 +130,33 @@ const SettingsPage = ({
   }
 
   async function triggerPurchase(tipAmount) {
-    // console.log("PURCHASE CLICKED...");
+    console.log("PURCHASE CLICKED...");
 
     try {
+      // if (device == "ios") {
       const { customerInfo, productIdentifier } =
         await Purchases.purchaseProduct(tipAmount);
+      // }
+      // if (device == "android") {
+      //   Purchases.purchaseProduct(
+      //     tipAmount,
+      //     null,
+      //     Purchases.PURCHASE_TYPE.INAPP
+      //   );
+
+      //   //   Purchases.purchaseProduct(
+      //   //     tipAmount,
+      //   //     ({ productIdentifier, customerInfo }) => {},
+      //   //     ({ error, userCancelled }) => {
+      //   //       // Error making purchase
+      //   //       console.log("ERROR HAS OCCURRED");
+      //   //       console.log(error);
+      //   //     },
+      //   //     null
+      //   //     // Purchases.PURCHASE_TYPE.INAPP
+      //   //   );
+      // }
+
       // console.log("PURCHASE SUCCESSFULL");
       // console.log(customerInfo);
       // console.log(productIdentifier);
@@ -142,8 +164,8 @@ const SettingsPage = ({
       handleCloseModal6();
     } catch (e) {
       // if (!e.userCancelled) {
-      // console.log("ERROR HAS OCCURRED");
-      // console.log(e);
+      console.log("ERROR HAS OCCURRED");
+      console.log(e);
       // console.log(e.userCancelled);
 
       handleCloseModal6();
@@ -304,6 +326,42 @@ const SettingsPage = ({
         </div>
         <div className="individual-section-wrap">
           <div
+            className="notifications-wrap"
+            onClick={() => {
+              handleOpenModal2();
+            }}
+          >
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Notifications</p>
+              <p>Set Notifications</p>
+            </div>
+            <MdOutlineChevronRight className="chevron" />
+          </div>
+          <Modal
+            style={modalStyles}
+            isOpen={showModal2}
+            onRequestClose={handleCloseModal2}
+            closeTimeoutMS={250}
+            contentLabel="Modal #2 Global Style Override Example"
+          >
+            <NotificationOptions
+              changeThreeHourlyNotificationState={
+                changeThreeHourlyNotificationState
+              }
+              setThreeHourlyNotifications={setThreeHourlyNotifications}
+              threeHourlyNotifications={threeHourlyNotifications}
+              setMorningNotification={setMorningNotification}
+              morningNotification={morningNotification}
+              afternoonNotification={afternoonNotification}
+              setAfternoonNotification={setAfternoonNotification}
+              eveningNotification={eveningNotification}
+              setEveningNotification={setEveningNotification}
+              activeBackgroundColor={activeBackgroundColor}
+            />
+          </Modal>
+        </div>
+        <div className="individual-section-wrap">
+          <div
             className="theme-wrap"
             onClick={() => {
               handleOpenModal();
@@ -346,42 +404,7 @@ const SettingsPage = ({
             />
           </div>
         </div>
-        <div className="individual-section-wrap" style={{ display: "none" }}>
-          <div
-            className="notifications-wrap"
-            onClick={() => {
-              handleOpenModal2();
-            }}
-          >
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>Notifications</p>
-              <p>Set Notifications</p>
-            </div>
-            <MdOutlineChevronRight className="chevron" />
-          </div>
-          <Modal
-            style={modalStyles}
-            isOpen={showModal2}
-            onRequestClose={handleCloseModal2}
-            closeTimeoutMS={250}
-            contentLabel="Modal #2 Global Style Override Example"
-          >
-            <NotificationOptions
-              changeThreeHourlyNotificationState={
-                changeThreeHourlyNotificationState
-              }
-              setThreeHourlyNotifications={setThreeHourlyNotifications}
-              threeHourlyNotifications={threeHourlyNotifications}
-              setMorningNotification={setMorningNotification}
-              morningNotification={morningNotification}
-              afternoonNotification={afternoonNotification}
-              setAfternoonNotification={setAfternoonNotification}
-              eveningNotification={eveningNotification}
-              setEveningNotification={setEveningNotification}
-              activeBackgroundColor={activeBackgroundColor}
-            />
-          </Modal>
-        </div>
+
         <div className="individual-section-wrap">
           <div className="individual-row-wrap haptic-wrap">
             <div className="text-wrap" style={{ display: "block" }}>
