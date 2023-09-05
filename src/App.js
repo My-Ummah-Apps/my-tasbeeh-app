@@ -141,24 +141,24 @@ let defaultArray;
 function App() {
   let fetchedProducts;
   const [iapProducts, setIapProducts] = useState(null);
-  document.addEventListener("deviceready", onDeviceReady, false);
+  // document.addEventListener("deviceready", onDeviceReady, false);
+  // TURN BACK ON FOR PROD!
+  // function onDeviceReady() {
+  //   // console.log("ONDEVICEREADY FIRED");
 
-  function onDeviceReady() {
-    // console.log("ONDEVICEREADY FIRED");
+  //   Purchases.setDebugLogsEnabled(true);
 
-    Purchases.setDebugLogsEnabled(true);
-
-    if (window.cordova.platformId === "ios") {
-      Purchases.configureWith({
-        apiKey: process.env.REACT_APP_APPLE_APIKEY,
-      });
-    } else if (window.cordova.platformId === "android") {
-      Purchases.configureWith({
-        apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
-      });
-    }
-    // fetchProducts();
-  }
+  //   if (window.cordova.platformId === "ios") {
+  //     Purchases.configureWith({
+  //       apiKey: process.env.REACT_APP_APPLE_APIKEY,
+  //     });
+  //   } else if (window.cordova.platformId === "android") {
+  //     Purchases.configureWith({
+  //       apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
+  //     });
+  //   }
+  //   // fetchProducts();
+  // }
 
   const productsArray = [
     process.env.REACT_APP_ST,
@@ -187,23 +187,23 @@ function App() {
   //     console.error("Error fetching products:", error);
   //   }
   // }
+  // TURN THIS BACK ON FOR PROD!
+  // useEffect(() => {
+  //   (async () => {
+  //     const fetchedProducts = await Purchases.getProducts(
+  //       productsArray,
+  //       "inapp"
+  //     );
+  //     fetchedProducts.sort(function (a, b) {
+  //       return a.price - b.price;
+  //     });
+  //     setIapProducts(fetchedProducts);
+  //   })();
 
-  useEffect(() => {
-    (async () => {
-      const fetchedProducts = await Purchases.getProducts(
-        productsArray,
-        "inapp"
-      );
-      fetchedProducts.sort(function (a, b) {
-        return a.price - b.price;
-      });
-      setIapProducts(fetchedProducts);
-    })();
-
-    return () => {
-      // this now gets called when the component unmounts
-    };
-  }, []);
+  //   return () => {
+  //     // this now gets called when the component unmounts
+  //   };
+  // }, []);
 
   // useEffect(() => {
   //   console.log("FETCHEDPRODUCTS WITHIN USEEFFECT in APP.JS");

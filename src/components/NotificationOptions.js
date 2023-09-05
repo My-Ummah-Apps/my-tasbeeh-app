@@ -23,73 +23,66 @@ const NotificationOptions = ({
 
   let requestPermission;
   let checkPermission;
-
-  const [notificationPermission, setNotificationPermission] = useState(null);
+  let userNotificationPermission;
 
   useEffect(() => {
     // checkPermission.display will give: "granted", "denied", "prompt" or "prompt-with-rationale", not seen "prompt" on iOS thus far
     (async () => {
       checkPermission = await LocalNotifications.checkPermissions();
+      userNotificationPermission = checkPermission.display;
+
+      console.log("userNotificationPermission:");
+      console.log(userNotificationPermission);
       console.log("checkPermission.display:");
-      console.log(checkPermission);
+      console.log(checkPermission.display);
+
       if (
         checkPermission.display == "denied" ||
         checkPermission.display == "prompt" ||
         checkPermission.display == "prompt-with-rationale"
       ) {
-        console.log("CHECKPERMISSION.DISPLAY IS DENIED OR PROMPT");
-        setNotificationPermission(false);
+        console.log("checkPermission.display IS DENIED OR PROMPT");
+
         setMorningNotification(false);
         setAfternoonNotification(false);
         setEveningNotification(false);
+        localStorage.setItem("morning-notification", JSON.stringify(false));
         console.log("MORNING NOTIFICATION STATE:");
         console.log(morningNotification);
       } else if (checkPermission.display == "granted") {
-        setNotificationPermission(true);
       }
     })();
 
     return () => {
       // this now gets called when the component unmounts
     };
-  }, []);
+  });
 
-  // useEffect(() => {
-  //   checkNotificationPermissionStatus();
-  // }, []);
+  const requestPermissionFunction = async () => {
+    // if (checkPermission.display == "denied") {
+    //   setMorningNotification(false);
+    //   setAfternoonNotification(false);
+    //   setEveningNotification(false);
+    //   alert(
+    //     "Hey you denied initial permission, now go into settings and allow them!"
+    //   );
+    //   return;
+    // }
 
-  const requestNotificationPermission = async () => {
-    if (checkPermission == "denied") {
+    requestPermission = await LocalNotifications.requestPermissions();
+    console.log("checkPermission.display:");
+    console.log(requestPermission.display);
+    if (requestPermission.display == "granted") {
+      setMorningNotification(true);
+      console.log("REQUEST GRANTED WITHIN REQUESTPERMISSION!");
+    } else if (requestPermission.display == "denied") {
       setMorningNotification(false);
       setAfternoonNotification(false);
       setEveningNotification(false);
-      alert(
-        "Hey you denied initial permission, now go into settings and allow them!"
-      );
-      return;
-    }
-
-    try {
-      requestPermission = await LocalNotifications.requestPermissions();
-      console.log("requestPermission.display:");
-      console.log(requestPermission.display);
-      if (requestPermission.display == "granted") {
-        setMorningNotification(true);
-        console.log("REQUEST GRANTED WITHIN REQUESTPERMISSION!");
-      } else if (requestPermission.display == "denied") {
-        alert(
-          "Hey you denied initial permission, now go into settings and allow them!"
-        );
-        setMorningNotification(false);
-        setAfternoonNotification(false);
-        setEveningNotification(false);
-      } else if (requestPermission.display == "prompt") {
-        setMorningNotification(false);
-        setAfternoonNotification(false);
-        setEveningNotification(false);
-      }
-    } catch (err) {
-      console.log(err);
+    } else if (requestPermission.display == "prompt") {
+      setMorningNotification(false);
+      setAfternoonNotification(false);
+      setEveningNotification(false);
     }
   };
 
@@ -103,8 +96,6 @@ const NotificationOptions = ({
   //     ? (morningToggle = true)
   //     : (morningToggle = false);
   // }, [morningNotification]);
-
-  // checkNotificationPermissionStatus();
 
   const [notificationsPermissionStatus, setNotificationsPermissionStatus] =
     useState("");
@@ -168,23 +159,29 @@ const NotificationOptions = ({
         </div>
         <Switch
           checked={morningNotification}
-          // checked={morningNotification == true ? true : false}
           className={undefined}
           disabled={undefined}
           handleColor="white"
           name={undefined}
           offColor="white"
           onChange={(e) => {
+            console.log("MORNING TOGGLE CLICKED");
+            if (userNotificationPermission == "denied") {
+              alert(
+                "Hey you denied initial permission, now go into settings and allow them!"
+              );
+              return;
+            }
             if (
               JSON.parse(localStorage.getItem("morning-notification")) == false
             ) {
-              requestNotificationPermission();
+              requestPermissionFunction();
               console.log("REQUEST PERMISSION HAS RUN!");
             }
-
             if (
               JSON.parse(localStorage.getItem("morning-notification")) == true
             ) {
+              console.log("MORNING TOGGLE TURNED OFF");
               setMorningNotification(false);
               localStorage.setItem(
                 "morning-notification",
@@ -193,6 +190,7 @@ const NotificationOptions = ({
             } else if (
               JSON.parse(localStorage.getItem("morning-notification")) == false
             ) {
+              console.log("MORNING TOGGLE TURNED ON");
               // setMorningNotification(true);
               localStorage.setItem(
                 "morning-notification",
@@ -227,7 +225,6 @@ const NotificationOptions = ({
           name={undefined}
           offColor="white"
           onChange={(e) => {
-            // requestNotificationPermission();
             if (checkPermission.display == "granted") {
               if (
                 JSON.parse(localStorage.getItem("afternoon-notification")) ==
@@ -280,7 +277,6 @@ const NotificationOptions = ({
           name={undefined}
           offColor="white"
           onChange={(e) => {
-            // requestNotificationPermission();
             if (checkPermission.display == "granted") {
               if (
                 JSON.parse(localStorage.getItem("evening-notification")) == true
