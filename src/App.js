@@ -56,62 +56,62 @@ const scheduleMorningNotifications = async () => {
         title: "Morning Reminder",
         body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
         id: 2,
-        schedule: {
-          allowWhileIdle: true,
-          foreground: true, // iOS only
-          on: { hour: 14, minute: 51 },
-          repeats: true,
-          every: "day",
-        },
+        // schedule: {
+        //   allowWhileIdle: true,
+        //   foreground: true, // iOS only
+        //   on: { hour: 14, minute: 51 },
+        //   repeats: true,
+        //   every: "day",
+        // },
         // schedule: { at: new Date(Date.now() + 1000 * 3) },
+        schedule: {
+          repeats: true,
+          every: 0.3 * 60,
+        },
         // channelId: "1",
       },
     ],
   });
 };
 const scheduleAfternoonNotification = async () => {
-  // await LocalNotifications.schedule({
-  //   notifications: [
-  //     {
-  //       title: "Afternoon Reminder",
-  //       body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
-  //       id: 3,
-  //       schedule: {
-  //         allowWhileIdle: true,
-  //         foreground: true, // iOS only
-  //         on: { hour: 22, minute: 50 },
-  //         repeats: true,
-  //         every: "day",
-  //       },
-  //       // channelId: "1",
-  //     },
-  //   ],
-  // });
+  await LocalNotifications.schedule({
+    notifications: [
+      {
+        title: "Afternoon Reminder",
+        body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
+        id: 3,
+        // schedule: {
+        //   allowWhileIdle: true,
+        //   foreground: true, // iOS only
+        //   on: { hour: 22, minute: 50 },
+        //   repeats: true,
+        //   every: "day",
+        // },
+        schedule: { at: new Date(Date.now() + 1000 * 10) },
+        // channelId: "1",
+      },
+    ],
+  });
 };
 const scheduleEveningNotification = async () => {
-  // await LocalNotifications.schedule({
-  //   notifications: [
-  //     {
-  //       title: "Evening Reminder",
-  //       body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
-  //       id: 4,
-  //       // schedule: {
-  //       //   allowWhileIdle: true,
-  //       //   foreground: true, // iOS only
-  //       //   // on: { hour: 18, minute: 55 },
-  //       //   at: { hour: 22, minute: 43 },
-  //       //   repeats: true,
-  //       //   every: "day",
-  //       // },
-  //       schedule: {
-  //         repeats: true,
-  //         every: "day",
-  //         at: { hour: 22, minute: 49 },
-  //       },
-  //       // channelId: "1",
-  //     },
-  //   ],
-  // });
+  await LocalNotifications.schedule({
+    notifications: [
+      {
+        title: "Evening Reminder",
+        body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
+        id: 4,
+        // schedule: {
+        //   allowWhileIdle: true,
+        //   foreground: true, // iOS only
+        //   on: { hour: 22, minute: 50 },
+        //   repeats: true,
+        //   every: "day",
+        // },
+        schedule: { at: new Date(Date.now() + 1000 * 15) },
+        // channelId: "1",
+      },
+    ],
+  });
 };
 
 // STATUS BAR FUNCTIONALITY

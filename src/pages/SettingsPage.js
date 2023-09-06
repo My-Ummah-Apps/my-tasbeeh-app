@@ -11,8 +11,8 @@ import ResetAllCountersAlert from "../components/ResetAllCountersAlert";
 import AboutUs from "../components/AboutUs";
 
 import { Purchases } from "@awesome-cordova-plugins/purchases";
-
 import { Share } from "@capacitor/share";
+import { LocalNotifications } from "@capacitor/local-notifications";
 
 // import {LocalNotifications, LocalNotificationEnabledResult, LocalNotificationActionPerformed, LocalNotification, Device, ScheduleOptions} from "@capacitor/core";
 
@@ -61,13 +61,6 @@ const SettingsPage = ({
 }) => {
   // console.log("fetchedProducts ON SETTINGS PAGE:");
   // console.log(iapProducts);
-
-  const loadingIconRef = useRef(null);
-
-  const [formTheme, setFormTheme] = useState(false);
-  const [darkTheme, setDarkTheme] = useState(false);
-
-  let subtitle;
 
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -128,6 +121,108 @@ const SettingsPage = ({
     // references are now sync'd and can be accessed.
     subtitle.style.color = "#f00";
   }
+
+  let requestPermission;
+  let checkPermission;
+  let userNotificationPermission;
+
+  async function checkNotificationPermissions() {
+    checkPermission = await LocalNotifications.checkPermissions();
+    userNotificationPermission = checkPermission.display;
+
+    console.log("userNotificationPermission:");
+    console.log(userNotificationPermission);
+    console.log("checkPermission.display:");
+    console.log(checkPermission.display);
+
+    if (userNotificationPermission == "denied") {
+      alert(
+        "Hey you denied initial permission, now go into settings and allow them!"
+      );
+      return;
+    } else if (checkPermission.display == "granted") {
+      handleOpenModal2();
+      console.log("MODAL OPENED");
+    } else if (
+      // checkPermission.display == "denied" ||
+      checkPermission.display == "prompt" ||
+      checkPermission.display == "prompt-with-rationale"
+    ) {
+      requestPermissionFunction();
+      console.log("checkPermission.display IS PROMPT");
+      setMorningNotification(false);
+      setAfternoonNotification(false);
+      setEveningNotification(false);
+      localStorage.setItem("morning-notification", JSON.stringify(false));
+      console.log("MORNING NOTIFICATION STATE:");
+      console.log(morningNotification);
+    }
+  }
+
+  // useEffect(() => {
+  //   checkNotificationPermissions();
+  //   // checkPermission.display will give: "granted", "denied", "prompt" or "prompt-with-rationale", not seen "prompt" on iOS thus far
+  //   // (async () => {
+  //   //   checkPermission = await LocalNotifications.checkPermissions();
+  //   //   userNotificationPermission = checkPermission.display;
+  //   //   console.log("userNotificationPermission:");
+  //   //   console.log(userNotificationPermission);
+  //   //   console.log("checkPermission.display:");
+  //   //   console.log(checkPermission.display);
+  //   //   if (
+  //   //     checkPermission.display == "denied" ||
+  //   //     checkPermission.display == "prompt" ||
+  //   //     checkPermission.display == "prompt-with-rationale"
+  //   //   ) {
+  //   //     console.log("checkPermission.display IS DENIED OR PROMPT");
+  //   //     setMorningNotification(false);
+  //   //     setAfternoonNotification(false);
+  //   //     setEveningNotification(false);
+  //   //     localStorage.setItem("morning-notification", JSON.stringify(false));
+  //   //     console.log("MORNING NOTIFICATION STATE:");
+  //   //     console.log(morningNotification);
+  //   //   } else if (checkPermission.display == "granted") {
+  //   //   }
+  //   // })();
+  //   // return () => {
+  //   //   // this now gets called when the component unmounts
+  //   // };
+  // });
+
+  const requestPermissionFunction = async () => {
+    // if (checkPermission.display == "denied") {
+    //   setMorningNotification(false);
+    //   setAfternoonNotification(false);
+    //   setEveningNotification(false);
+    //   alert(
+    //     "Hey you denied initial permission, now go into settings and allow them!"
+    //   );
+    //   return;
+    // }
+
+    requestPermission = await LocalNotifications.requestPermissions();
+    console.log("checkPermission.display:");
+    console.log(requestPermission.display);
+    if (requestPermission.display == "granted") {
+      // setMorningNotification(true);
+      console.log("REQUEST GRANTED WITHIN REQUESTPERMISSION!");
+    } else if (requestPermission.display == "denied") {
+      setMorningNotification(false);
+      setAfternoonNotification(false);
+      setEveningNotification(false);
+    } else if (requestPermission.display == "prompt") {
+      setMorningNotification(false);
+      setAfternoonNotification(false);
+      setEveningNotification(false);
+    }
+  };
+
+  const loadingIconRef = useRef(null);
+
+  const [formTheme, setFormTheme] = useState(false);
+  const [darkTheme, setDarkTheme] = useState(false);
+
+  let subtitle;
 
   async function triggerPurchase(tipAmount) {
     console.log("PURCHASE CLICKED...");
@@ -328,7 +423,8 @@ const SettingsPage = ({
           <div
             className="notifications-wrap"
             onClick={() => {
-              handleOpenModal2();
+              checkNotificationPermissions();
+              // handleOpenModal2();
             }}
           >
             <div className="text-wrap" style={{ display: "block" }}>
