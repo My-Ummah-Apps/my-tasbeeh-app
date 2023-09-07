@@ -75,6 +75,7 @@ const SettingsPage = ({
 
   const handleOpenModal2 = () => {
     setShowModal2(true);
+    console.log("MODAL OPENED");
   };
 
   const handleOpenModal3 = () => {
@@ -99,6 +100,7 @@ const SettingsPage = ({
 
   const handleCloseModal2 = () => {
     setShowModal2(false);
+    console.log("MODAL CLOSED");
   };
 
   const handleCloseModal3 = () => {
@@ -141,7 +143,6 @@ const SettingsPage = ({
       );
       return;
     } else if (checkPermission.display == "granted") {
-      console.log("MODAL OPENED");
       handleOpenModal2();
     } else if (
       // checkPermission.display == "denied" ||
@@ -188,8 +189,6 @@ const SettingsPage = ({
   let subtitle;
 
   async function triggerPurchase(tipAmount) {
-    console.log("PURCHASE CLICKED...");
-
     try {
       // if (device == "ios") {
       const { customerInfo, productIdentifier } =
@@ -404,11 +403,11 @@ const SettingsPage = ({
             contentLabel="Modal #2 Global Style Override Example"
           >
             <NotificationOptions
-              changeThreeHourlyNotificationState={
-                changeThreeHourlyNotificationState
-              }
-              setThreeHourlyNotifications={setThreeHourlyNotifications}
-              threeHourlyNotifications={threeHourlyNotifications}
+              // changeThreeHourlyNotificationState={
+              //   changeThreeHourlyNotificationState
+              // }
+              // setThreeHourlyNotifications={setThreeHourlyNotifications}
+              // threeHourlyNotifications={threeHourlyNotifications}
               setMorningNotification={setMorningNotification}
               morningNotification={morningNotification}
               afternoonNotification={afternoonNotification}

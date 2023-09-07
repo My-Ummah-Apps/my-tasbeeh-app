@@ -14,14 +14,12 @@ const NotificationOptions = ({
   activeBackgroundColor,
   changeThreeHourlyNotificationState,
 }) => {
-  toggleAllNotificationsOff = () => {
+  const toggleAllNotificationsOff = () => {
     console.log("toggleAllNotificationsOff executed");
     setMorningNotification(false);
     setAfternoonNotification(false);
     setEveningNotification(false);
   };
-
-  let toggleAllNotificationsOff;
 
   const [notificationsPermissionStatus, setNotificationsPermissionStatus] =
     useState("");

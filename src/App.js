@@ -56,13 +56,15 @@ const scheduleMorningNotifications = async () => {
         title: "Morning Reminder",
         body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
         id: 2,
-        schedule: {
-          allowWhileIdle: true,
-          foreground: true, // iOS only
-          on: { hour: 9, minute: 34 },
-          repeats: true,
-          every: "day",
-        },
+        // schedule: {
+        //   allowWhileIdle: true,
+        //   foreground: true, // iOS only
+        //   // on: { hour: 10, minute: 16 }, // THIS WORKS ON IOS
+
+        //   repeats: true,
+        //   every: "day",
+        // },
+        schedule: { on: new Date(Date.now() + 1000 * 10) },
         // schedule: { at: new Date(Date.now() + 1000 * 3) },
         // schedule: {
         //   repeats: true,
@@ -83,7 +85,7 @@ const scheduleAfternoonNotification = async () => {
         schedule: {
           allowWhileIdle: true,
           foreground: true, // iOS only
-          on: { hour: 9, minute: 35 },
+          on: { hour: 10, minute: 17 }, // THIS WORKS ON IOS
           repeats: true,
           every: "day",
         },
@@ -103,7 +105,7 @@ const scheduleEveningNotification = async () => {
         schedule: {
           allowWhileIdle: true,
           foreground: true, // iOS only
-          on: { hour: 9, minute: 36 },
+          on: { hour: 10, minute: 18 }, // THIS WORKS ON IOS
           repeats: true,
           every: "day",
         },

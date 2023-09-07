@@ -14,11 +14,11 @@ const config: CapacitorConfig = {
       resize: KeyboardResize.Native,
       resizeOnFullScreen: true
     },
-    // LocalNotifications: {
-    //   smallIcon: "logo192",
-    //   iconColor: "#488AFF",
-    //   sound: "beep.wav"
-    // }
+    LocalNotifications: {
+      smallIcon: "ic_launcher_round",
+      iconColor: "#488AFF",
+      // sound: "beep.wav"
+    }
     
   },
 
