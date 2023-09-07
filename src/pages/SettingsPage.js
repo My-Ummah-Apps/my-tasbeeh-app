@@ -141,13 +141,14 @@ const SettingsPage = ({
       );
       return;
     } else if (checkPermission.display == "granted") {
-      handleOpenModal2();
       console.log("MODAL OPENED");
+      handleOpenModal2();
     } else if (
       // checkPermission.display == "denied" ||
       checkPermission.display == "prompt" ||
       checkPermission.display == "prompt-with-rationale"
     ) {
+      handleOpenModal2();
       requestPermissionFunction();
       console.log("checkPermission.display IS PROMPT");
       setMorningNotification(false);
@@ -159,54 +160,16 @@ const SettingsPage = ({
     }
   }
 
-  // useEffect(() => {
-  //   checkNotificationPermissions();
-  //   // checkPermission.display will give: "granted", "denied", "prompt" or "prompt-with-rationale", not seen "prompt" on iOS thus far
-  //   // (async () => {
-  //   //   checkPermission = await LocalNotifications.checkPermissions();
-  //   //   userNotificationPermission = checkPermission.display;
-  //   //   console.log("userNotificationPermission:");
-  //   //   console.log(userNotificationPermission);
-  //   //   console.log("checkPermission.display:");
-  //   //   console.log(checkPermission.display);
-  //   //   if (
-  //   //     checkPermission.display == "denied" ||
-  //   //     checkPermission.display == "prompt" ||
-  //   //     checkPermission.display == "prompt-with-rationale"
-  //   //   ) {
-  //   //     console.log("checkPermission.display IS DENIED OR PROMPT");
-  //   //     setMorningNotification(false);
-  //   //     setAfternoonNotification(false);
-  //   //     setEveningNotification(false);
-  //   //     localStorage.setItem("morning-notification", JSON.stringify(false));
-  //   //     console.log("MORNING NOTIFICATION STATE:");
-  //   //     console.log(morningNotification);
-  //   //   } else if (checkPermission.display == "granted") {
-  //   //   }
-  //   // })();
-  //   // return () => {
-  //   //   // this now gets called when the component unmounts
-  //   // };
-  // });
-
   const requestPermissionFunction = async () => {
-    // if (checkPermission.display == "denied") {
-    //   setMorningNotification(false);
-    //   setAfternoonNotification(false);
-    //   setEveningNotification(false);
-    //   alert(
-    //     "Hey you denied initial permission, now go into settings and allow them!"
-    //   );
-    //   return;
-    // }
-
     requestPermission = await LocalNotifications.requestPermissions();
     console.log("checkPermission.display:");
     console.log(requestPermission.display);
     if (requestPermission.display == "granted") {
+      handleOpenModal2();
       // setMorningNotification(true);
       console.log("REQUEST GRANTED WITHIN REQUESTPERMISSION!");
     } else if (requestPermission.display == "denied") {
+      handleCloseModal2();
       setMorningNotification(false);
       setAfternoonNotification(false);
       setEveningNotification(false);
