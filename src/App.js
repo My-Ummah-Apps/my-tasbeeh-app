@@ -59,13 +59,14 @@ const scheduleMorningNotifications = async () => {
         // schedule: {
         //   allowWhileIdle: true,
         //   foreground: true, // iOS only
-        //   // on: { hour: 10, minute: 16 }, // THIS WORKS ON IOS
+        //   // on: { hour: 9, minute: 2 }, // THIS WORKS ON IOS
+        //   // at: { hour: 9, minute: 7 },
 
         //   repeats: true,
         //   every: "day",
         // },
-        schedule: { on: new Date(Date.now() + 1000 * 10) },
-        // schedule: { at: new Date(Date.now() + 1000 * 3) },
+
+        schedule: { on: new Date(Date.now() + 1000 * 3) },
         // schedule: {
         //   repeats: true,
         //   every: 0.3 * 60,
@@ -85,7 +86,7 @@ const scheduleAfternoonNotification = async () => {
         schedule: {
           allowWhileIdle: true,
           foreground: true, // iOS only
-          on: { hour: 10, minute: 17 }, // THIS WORKS ON IOS
+          on: { hour: 9, minute: 3 }, // THIS WORKS ON IOS
           repeats: true,
           every: "day",
         },
@@ -105,7 +106,7 @@ const scheduleEveningNotification = async () => {
         schedule: {
           allowWhileIdle: true,
           foreground: true, // iOS only
-          on: { hour: 10, minute: 18 }, // THIS WORKS ON IOS
+          on: { hour: 9, minute: 4 }, // THIS WORKS ON IOS
           repeats: true,
           every: "day",
         },

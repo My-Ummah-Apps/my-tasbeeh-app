@@ -15,16 +15,12 @@ const config: CapacitorConfig = {
       resizeOnFullScreen: true
     },
     LocalNotifications: {
-      smallIcon: "ic_launcher_round",
-      iconColor: "#488AFF",
+      smallIcon: "res:///ic_stat_five",
+      // iconColor: "#ff000",
       // sound: "beep.wav"
     }
     
   },
-
-  
-
-
 
   // "ios": {
   //   "contentInset": "always"
