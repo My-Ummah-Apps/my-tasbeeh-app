@@ -56,22 +56,16 @@ const scheduleMorningNotifications = async () => {
         title: "Morning Reminder",
         body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
         id: 2,
-        // schedule: {
-        //   allowWhileIdle: true,
-        //   foreground: true, // iOS only
-        //   // on: { hour: 9, minute: 2 }, // THIS WORKS ON IOS
-        //   // at: { hour: 9, minute: 7 },
+        schedule: {
+          on: { hour: 7, minute: 0 }, // THIS WORKS ON IOS
+          allowWhileIdle: true,
+          foreground: true, // iOS only
+          repeats: true,
+          // every: "day", // This was causing notifications to not fire on android
+        },
 
-        //   repeats: true,
-        //   every: "day",
-        // },
-
-        schedule: { on: new Date(Date.now() + 1000 * 3) },
-        // schedule: {
-        //   repeats: true,
-        //   every: 0.3 * 60,
-        // },
-        // channelId: "1",
+        // schedule: { on: new Date(Date.now() + 1000 * 3) },
+        // schedule: { on: { hour: 9, minute: 11 } },
       },
     ],
   });
@@ -86,9 +80,9 @@ const scheduleAfternoonNotification = async () => {
         schedule: {
           allowWhileIdle: true,
           foreground: true, // iOS only
-          on: { hour: 9, minute: 3 }, // THIS WORKS ON IOS
+          on: { hour: 14, minute: 0 }, // THIS WORKS ON IOS
           repeats: true,
-          every: "day",
+          // every: "day", // This was causing notifications to not fire on android
         },
         // schedule: { at: new Date(Date.now() + 1000 * 10) },
         // channelId: "1",
@@ -106,9 +100,9 @@ const scheduleEveningNotification = async () => {
         schedule: {
           allowWhileIdle: true,
           foreground: true, // iOS only
-          on: { hour: 9, minute: 4 }, // THIS WORKS ON IOS
+          on: { hour: 19, minute: 0 }, // THIS WORKS ON IOS
           repeats: true,
-          every: "day",
+          // every: "day", // This was causing notifications to not fire on android
         },
         // schedule: { at: new Date(Date.now() + 1000 * 15) },
         // channelId: "1",
