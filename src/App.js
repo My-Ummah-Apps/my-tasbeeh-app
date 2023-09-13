@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { Device } from "@capacitor/device";
 import { LocalNotifications } from "@capacitor/local-notifications";
+import { SplashScreen } from "@capacitor/splash-screen";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -13,6 +14,14 @@ import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 
 import { Purchases } from "@awesome-cordova-plugins/purchases";
+
+// window.addEventListener("DOMContentLoaded", () => {
+//   setTimeout(() => {
+//     SplashScreen.hide({
+//       fadeOutDuration: 250,
+//     });
+//   }, 2000);
+// });
 
 LocalNotifications.createChannel({
   id: "1",
@@ -103,6 +112,9 @@ function App() {
 
   function onDeviceReady() {
     // console.log("ONDEVICEREADY FIRED");
+    // setTimeout(() => {
+    //   SplashScreen.hide();
+    // }, 500);
 
     Purchases.setDebugLogsEnabled(true);
 
