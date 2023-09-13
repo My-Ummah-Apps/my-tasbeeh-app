@@ -14,35 +14,6 @@ import SettingsPage from "./pages/SettingsPage";
 
 import { Purchases } from "@awesome-cordova-plugins/purchases";
 
-// ngOnInit();
-
-// schedule: { at: new Date(Date.now() + 1000 * 3) },
-// schedule: {
-//   allowWhileIdle: true,
-//   foreground: true, // iOS only
-//   every: "day",
-//   on: {
-//     hour: 18,
-//     minute: 32,
-//   },
-// },
-
-const scheduleThreeHourlyNotifications = async () => {
-  // await LocalNotifications.schedule({
-  //   notifications: [
-  //     {
-  //       title: "hello",
-  //       body: "this is your three hourly reminder!",
-  //       id: 1,
-  //       schedule: {
-  //         repeats: true,
-  //         every: 3 * 60 * 60,
-  //       },
-  //     },
-  //   ],
-  // });
-};
-
 LocalNotifications.createChannel({
   id: "1",
   name: "Notification",
@@ -61,11 +32,7 @@ const scheduleMorningNotifications = async () => {
           allowWhileIdle: true,
           foreground: true, // iOS only
           repeats: true,
-          // every: "day", // This was causing notifications to not fire on android
         },
-
-        // schedule: { on: new Date(Date.now() + 1000 * 3) },
-        // schedule: { on: { hour: 9, minute: 11 } },
       },
     ],
   });
@@ -82,10 +49,7 @@ const scheduleAfternoonNotification = async () => {
           foreground: true, // iOS only
           on: { hour: 14, minute: 0 }, // THIS WORKS ON IOS
           repeats: true,
-          // every: "day", // This was causing notifications to not fire on android
         },
-        // schedule: { at: new Date(Date.now() + 1000 * 10) },
-        // channelId: "1",
       },
     ],
   });
@@ -102,10 +66,7 @@ const scheduleEveningNotification = async () => {
           foreground: true, // iOS only
           on: { hour: 19, minute: 0 }, // THIS WORKS ON IOS
           repeats: true,
-          // every: "day", // This was causing notifications to not fire on android
         },
-        // schedule: { at: new Date(Date.now() + 1000 * 15) },
-        // channelId: "1",
       },
     ],
   });
@@ -154,7 +115,6 @@ function App() {
         apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
       });
     }
-    // fetchProducts();
   }
 
   const productsArray = [
@@ -163,27 +123,6 @@ function App() {
     process.env.REACT_APP_LT,
     process.env.REACT_APP_XLT,
   ];
-
-  // async function fetchProducts() {
-  //   const productsArray = [
-  //     process.env.REACT_APP_ST,
-  //     process.env.REACT_APP_MT,
-  //     process.env.REACT_APP_LT,
-  //     process.env.REACT_APP_XLT,
-  //   ];
-
-  //   try {
-  //     // fetchedProducts = await Purchases.getProducts(productsArray, "inapp");
-  //     setIapProducts(await Purchases.getProducts(productsArray, "inapp"));
-  //     console.log("PRODUCTS RECEIVED");
-  //     console.log(fetchedProducts);
-  //     fetchedProducts.sort(function (a, b) {
-  //       return a.price - b.price;
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching products:", error);
-  //   }
-  // }
 
   useEffect(() => {
     (async () => {
@@ -198,15 +137,9 @@ function App() {
     })();
 
     return () => {
-      // this now gets called when the component unmounts
+      // this will now get called when the component unmounts
     };
   }, []);
-
-  // useEffect(() => {
-  //   console.log("FETCHEDPRODUCTS WITHIN USEEFFECT in APP.JS");
-  //   console.log(iapProducts);
-  //   setIapProducts(fetchedProducts);
-  // }, [fetchedProducts]);
 
   const materialColors = [
     "#EF5350",
@@ -256,21 +189,6 @@ function App() {
     JSON.parse(localStorage.getItem("evening-notification"))
   );
 
-  // useEffect(() => {
-  //   if (
-  //     localStorage.getItem("three-hourly-notifications") == null ||
-  //     localStorage.getItem("three-hourly-notifications") == "false"
-  //   ) {
-  //     localStorage.setItem("three-hourly-notifications", JSON.stringify(false));
-  //     setThreeHourlyNotifications(false);
-  //     LocalNotifications.cancel({ notifications: [{ id: 1 }] });
-  //   } else if (localStorage.getItem("three-hourly-notifications") == "true") {
-  //     localStorage.setItem("three-hourly-notifications", JSON.stringify(true));
-  //     setThreeHourlyNotifications(true);
-  //     scheduleThreeHourlyNotifications();
-  //   }
-  // }, [threeHourlyNotifications]);
-
   const [reviewPrompt, showReviewPrompt] = useState(false);
 
   useEffect(() => {
@@ -284,8 +202,6 @@ function App() {
       launchCount = launchCountNumber + 1;
     }
     localStorage.setItem("launch-count", JSON.stringify(launchCount));
-    // console.log("AMOUNT OF TIMES APP HAS BEEN LAUNCHED:");
-    // console.log(launchCount);
 
     if (launchCount == 3 || launchCount == 8 || launchCount == 14) {
       showReviewPrompt(true);

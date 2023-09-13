@@ -88,6 +88,7 @@ const NotificationOptions = ({
           offColor="white"
           onChange={(e) => {
             console.log("MORNING TOGGLE CLICKED");
+            // e.preventDefault();
 
             if (
               JSON.parse(localStorage.getItem("morning-notification")) == true

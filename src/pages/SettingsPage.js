@@ -138,9 +138,7 @@ const SettingsPage = ({
     console.log(checkPermission.display);
 
     if (userNotificationPermission == "denied") {
-      alert(
-        "Hey you denied initial permission, now go into settings and allow them!"
-      );
+      alert("Please turn notifications back on from within system settings");
       return;
     } else if (checkPermission.display == "granted") {
       handleOpenModal2();
