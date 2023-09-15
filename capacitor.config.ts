@@ -17,7 +17,11 @@ const config: CapacitorConfig = {
     LocalNotifications: {
       smallIcon: "res:///ic_stat_five",
     },
+    SplashScreen: {
 
+      "launchAutoHide": false,
+
+    }
     
   },
 

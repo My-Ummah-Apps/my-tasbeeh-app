@@ -15,13 +15,13 @@ import SettingsPage from "./pages/SettingsPage";
 
 import { Purchases } from "@awesome-cordova-plugins/purchases";
 
-// window.addEventListener("DOMContentLoaded", () => {
-//   setTimeout(() => {
-//     SplashScreen.hide({
-//       fadeOutDuration: 250,
-//     });
-//   }, 2000);
-// });
+window.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    SplashScreen.hide({
+      fadeOutDuration: 250,
+    });
+  }, 500);
+});
 
 LocalNotifications.createChannel({
   id: "1",
