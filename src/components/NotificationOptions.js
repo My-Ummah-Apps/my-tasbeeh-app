@@ -3,8 +3,6 @@ import { LocalNotifications } from "@capacitor/local-notifications";
 import { useState, useEffect } from "react";
 
 const NotificationOptions = ({
-  setThreeHourlyNotifications,
-  threeHourlyNotifications,
   setMorningNotification,
   morningNotification,
   afternoonNotification,
@@ -12,66 +10,9 @@ const NotificationOptions = ({
   eveningNotification,
   setEveningNotification,
   activeBackgroundColor,
-  changeThreeHourlyNotificationState,
 }) => {
-  const toggleAllNotificationsOff = () => {
-    console.log("toggleAllNotificationsOff executed");
-    setMorningNotification(false);
-    setAfternoonNotification(false);
-    setEveningNotification(false);
-  };
-
-  const [notificationsPermissionStatus, setNotificationsPermissionStatus] =
-    useState("");
-
   return (
     <div className="notification-options-wrap">
-      {/* <p className="notifications-heading">Notifications</p> */}
-      {/* <div className="individual-notification-option-wrap">
-        <div className="individual-notification-text-wrap">
-          <p>Three Hourly Notifications</p>
-          <p className="notificatiions-options-sub-text">
-            Receive notifications every three hours
-          </p>
-        </div>
-        <Switch
-          checked={threeHourlyNotifications}
-          className={undefined}
-          disabled={undefined}
-          handleColor="white"
-          name={undefined}
-          offColor="white"
-          onChange={(e) => {
-            if (
-              JSON.parse(localStorage.getItem("three-hourly-notifications")) ==
-              true
-            ) {
-              setThreeHourlyNotifications(false);
-              // changeThreeHourlyNotificationState(false);
-              localStorage.setItem(
-                "three-hourly-notifications",
-                JSON.stringify(false)
-              );
-            } else if (
-              JSON.parse(localStorage.getItem("three-hourly-notifications")) ==
-              false
-            ) {
-              setThreeHourlyNotifications(true);
-              // changeThreeHourlyNotificationState(true);
-              localStorage.setItem(
-                "three-hourly-notifications",
-                JSON.stringify(true)
-              );
-              // scheduleThreeHourlyNotifications();
-            }
-          }}
-          onColor={activeBackgroundColor}
-          pendingOffColor={undefined}
-          pendingOnColor={undefined}
-          readOnly={undefined}
-          style={undefined}
-        />
-      </div> */}
       <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Morning</p>
@@ -86,9 +27,8 @@ const NotificationOptions = ({
           handleColor="white"
           name={undefined}
           offColor="white"
-          onChange={(e) => {
+          onChange={() => {
             console.log("MORNING TOGGLE CLICKED");
-            // e.preventDefault();
 
             if (
               JSON.parse(localStorage.getItem("morning-notification")) == true

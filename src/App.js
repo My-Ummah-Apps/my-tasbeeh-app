@@ -185,10 +185,6 @@ function App() {
     // console.log(device);
   }, []);
 
-  const [threeHourlyNotifications, setThreeHourlyNotifications] = useState(
-    JSON.parse(localStorage.getItem("three-hourly-notifications"))
-  );
-
   const [morningNotification, setMorningNotification] = useState(
     JSON.parse(localStorage.getItem("morning-notification"))
   );
@@ -406,10 +402,6 @@ function App() {
   }, [theme, prefersDark]);
 
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
-
-  const changeThreeHourlyNotificationState = (booleanValue) => {
-    // setThreeHourlyNotifications(booleanValue);
-  };
 
   useEffect(() => {
     const storedDate = localStorage.getItem("lastLaunchDate");
@@ -652,9 +644,6 @@ function App() {
             element={
               <SettingsPage
                 iapProducts={iapProducts}
-                changeThreeHourlyNotificationState={
-                  changeThreeHourlyNotificationState
-                }
                 resetAllCounters={resetAllCounters}
                 setMorningNotification={setMorningNotification}
                 morningNotification={morningNotification}
@@ -662,8 +651,6 @@ function App() {
                 setAfternoonNotification={setAfternoonNotification}
                 eveningNotification={eveningNotification}
                 setEveningNotification={setEveningNotification}
-                setThreeHourlyNotifications={setThreeHourlyNotifications}
-                threeHourlyNotifications={threeHourlyNotifications}
                 modalStyles={modalStyles}
                 modalBgColor={modalBgColor}
                 device={device}

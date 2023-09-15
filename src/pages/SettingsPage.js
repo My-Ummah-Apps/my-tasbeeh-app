@@ -39,15 +39,12 @@ Modal.defaultStyles.content.width = "90%";
 const SettingsPage = ({
   iapProducts,
   resetAllCounters,
-  changeThreeHourlyNotificationState,
-  setThreeHourlyNotifications,
   morningNotification,
   setMorningNotification,
   afternoonNotification,
   setAfternoonNotification,
   eveningNotification,
   setEveningNotification,
-  threeHourlyNotifications,
   modalStyles,
   modalBgColor,
   device,
@@ -75,7 +72,7 @@ const SettingsPage = ({
 
   const handleOpenModal2 = () => {
     setShowModal2(true);
-    console.log("MODAL OPENED");
+    console.log("NOTIFICATION MODAL OPENED");
   };
 
   const handleOpenModal3 = () => {
@@ -100,7 +97,7 @@ const SettingsPage = ({
 
   const handleCloseModal2 = () => {
     setShowModal2(false);
-    console.log("MODAL CLOSED");
+    console.log("NOTIFICATION MODAL CLOSED");
   };
 
   const handleCloseModal3 = () => {
@@ -132,10 +129,10 @@ const SettingsPage = ({
     checkPermission = await LocalNotifications.checkPermissions();
     userNotificationPermission = checkPermission.display;
 
-    console.log("userNotificationPermission:");
-    console.log(userNotificationPermission);
-    console.log("checkPermission.display:");
-    console.log(checkPermission.display);
+    // console.log("userNotificationPermission:");
+    // console.log(userNotificationPermission);
+    // console.log("checkPermission.display:");
+    // console.log(checkPermission.display);
 
     if (userNotificationPermission == "denied") {
       alert("Please turn notifications back on from within system settings");
@@ -389,7 +386,7 @@ const SettingsPage = ({
           >
             <div className="text-wrap" style={{ display: "block" }}>
               <p>Notifications</p>
-              <p>Set Notifications</p>
+              <p>Set Morning, Afternoon & Evening Notifications</p>
             </div>
             <MdOutlineChevronRight className="chevron" />
           </div>
@@ -401,11 +398,6 @@ const SettingsPage = ({
             contentLabel="Modal #2 Global Style Override Example"
           >
             <NotificationOptions
-              // changeThreeHourlyNotificationState={
-              //   changeThreeHourlyNotificationState
-              // }
-              // setThreeHourlyNotifications={setThreeHourlyNotifications}
-              // threeHourlyNotifications={threeHourlyNotifications}
               setMorningNotification={setMorningNotification}
               morningNotification={morningNotification}
               afternoonNotification={afternoonNotification}
