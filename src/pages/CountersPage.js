@@ -36,7 +36,6 @@ const customStyles = {
 
 function CountersPage({
   modalStyles,
-  modalBgColor,
   activeBackgroundColor,
   resetSingleCounter,
   invokeSetActiveCounter,

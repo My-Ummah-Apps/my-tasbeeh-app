@@ -13,15 +13,7 @@ import AboutUs from "../components/AboutUs";
 import { Purchases } from "@awesome-cordova-plugins/purchases";
 import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
-
-// import {LocalNotifications, LocalNotificationEnabledResult, LocalNotificationActionPerformed, LocalNotification, Device, ScheduleOptions} from "@capacitor/core";
-
-// const {LocalNotifications} = Plugins;
-
-// import "/node_modules/moretoggles/output/moretoggles.min.css";
 // import ThemeOptions from "../components/ThemeOptions";
-
-// import { act } from "react-dom/test-utils";
 
 // Override default Modal styles
 Modal.defaultStyles.content.border = "none";
@@ -37,6 +29,8 @@ Modal.defaultStyles.content.zIndex = "10000";
 Modal.defaultStyles.content.width = "90%";
 
 const SettingsPage = ({
+  setStatusBarStyleDark,
+  setStatusBarStyleLight,
   iapProducts,
   resetAllCounters,
   morningNotification,
@@ -46,7 +40,7 @@ const SettingsPage = ({
   eveningNotification,
   setEveningNotification,
   modalStyles,
-  modalBgColor,
+
   device,
   setHaptics,
   haptics,
@@ -386,7 +380,7 @@ const SettingsPage = ({
           >
             <div className="text-wrap" style={{ display: "block" }}>
               <p>Notifications</p>
-              <p>Set Morning, Afternoon & Evening Notifications</p>
+              <p>Set Notifications</p>
             </div>
             <MdOutlineChevronRight className="chevron" />
           </div>
@@ -435,10 +429,12 @@ const SettingsPage = ({
               offColor="white"
               onChange={(e) => {
                 if (theme == "light") {
+                  // setStatusBarStyleDark();
                   setTheme("dark");
                   setDarkTheme(true);
                   localStorage.setItem("theme", JSON.stringify("dark"));
                 } else if (theme == "dark") {
+                  // setStatusBarStyleLight();
                   setTheme("light");
                   setDarkTheme(false);
                   localStorage.setItem("theme", JSON.stringify("light"));

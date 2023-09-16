@@ -112,9 +112,15 @@ function App() {
 
   function onDeviceReady() {
     // console.log("ONDEVICEREADY FIRED");
-    // setTimeout(() => {
-    //   SplashScreen.hide();
-    // }, 500);
+    // const checkDevice = async () => {
+    //   const info = await Device.getInfo();
+    //   if (info.operatingSystem == "ios") {
+    //   }
+    //   if (info.operatingSystem == "android") {
+    //     StatusBar.setOverlaysWebView({ overlay: true });
+    //   }
+    // };
+    // checkDevice();
 
     Purchases.setDebugLogsEnabled(true);
 
@@ -313,7 +319,7 @@ function App() {
 
   // let prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
   let prefersDark;
-  const [modalBgColor, setModalBgColor] = useState("");
+
   useEffect(() => {
     prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
     if (localStorage.getItem("theme") == null) {
@@ -354,18 +360,18 @@ function App() {
     //   console.log("useEffect has run, system theme selected");
     // }
     if (JSON.parse(localStorage.getItem("theme")) == "dark") {
-      // console.log("STORED THEME IS DARK!");
-      // console.log(device);
-      if (device == "ios") {
-        // console.log("IOS DETECTED, SETTING DARK STATUS BAR BACKGROUND");
-        setStatusBarStyleDark();
-      }
-      if (device == "android") {
-        StatusBar.setStyle({ style: Style.Dark });
-      }
+      console.log("STORED THEME IS DARK!");
+      setStatusBarStyleDark();
+      StatusBar.setBackgroundColor({ color: "#000" });
+      // if (device == "ios") {
+      //   console.log("IOS DETECTED, SETTING DARK STATUS BAR BACKGROUND");
+      //   // setStatusBarStyleDark();
+      // } else if (device == "android") {
+      //   // StatusBar.setStyle({ style: Style.Dark });
+      // }
       // toggleDarkTheme();
       document.body.classList.add("dark");
-      // setModalBgColor("rgba(53, 53, 53, 0.75)");
+
       setModalStyles({
         overlay: {
           backgroundColor: "rgba(53, 53, 53, 0.75)",
@@ -377,17 +383,18 @@ function App() {
         },
       });
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
-      // console.log("STORED THEME IS LIGHT!");
-      if (device == "ios") {
-        // console.log("IOS DETECTED, SETTING LIGHT STATUS BAR BACKGROUND");
-        setStatusBarStyleLight();
-      }
-      if (device == "android") {
-        // StatusBar.setStyle({ style: Style.Dark });
-        StatusBar.setBackgroundColor({ color: "#000" });
-      }
+      console.log("STORED THEME IS LIGHT!");
+      setStatusBarStyleLight();
+      StatusBar.setBackgroundColor({ color: "#fff" });
+      // if (device == "ios") {
+      //   // console.log("IOS DETECTED, SETTING LIGHT STATUS BAR BACKGROUND");
+      //   setStatusBarStyleLight();
+      // } else if (device == "android") {
+      //   // StatusBar.setStyle({ style: Style.Dark });
+      //   StatusBar.setBackgroundColor({ color: "#000" })                                                                                                                                                                                                                                                                                                                                                                  ;
+      // }
       document.body.classList.remove("dark");
-      // setModalBgColor("rgba(255, 255, 255, 0.75)");
+
       setModalStyles({
         overlay: {
           backgroundColor: "rgba(98, 98, 98, 0.75)",
@@ -643,6 +650,8 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
+                setStatusBarStyleDark={setStatusBarStyleDark}
+                setStatusBarStyleLight={setStatusBarStyleLight}
                 iapProducts={iapProducts}
                 resetAllCounters={resetAllCounters}
                 setMorningNotification={setMorningNotification}
@@ -652,7 +661,6 @@ function App() {
                 eveningNotification={eveningNotification}
                 setEveningNotification={setEveningNotification}
                 modalStyles={modalStyles}
-                modalBgColor={modalBgColor}
                 device={device}
                 setHaptics={setHaptics}
                 haptics={haptics}
@@ -693,7 +701,6 @@ function App() {
               <CountersPage
                 setActivePage={setActivePage}
                 modalStyles={modalStyles}
-                modalBgColor={modalBgColor}
                 activeBackgroundColor={activeBackgroundColor}
                 materialColors={materialColors}
                 localSavedCountersArray={localSavedCountersArray}
