@@ -179,44 +179,47 @@ const SettingsPage = ({
 
   async function triggerPurchase(tipAmount) {
     try {
-      // if (device == "ios") {
-      const { customerInfo, productIdentifier } =
-        await Purchases.purchaseProduct(tipAmount);
-      // }
-      // if (device == "android") {
-      //   Purchases.purchaseProduct(
-      //     tipAmount,
-      //     null,
-      //     Purchases.PURCHASE_TYPE.INAPP
-      //   );
-
-      //   //   Purchases.purchaseProduct(
-      //   //     tipAmount,
-      //   //     ({ productIdentifier, customerInfo }) => {},
-      //   //     ({ error, userCancelled }) => {
-      //   //       // Error making purchase
-      //   //       console.log("ERROR HAS OCCURRED");
-      //   //       console.log(error);
-      //   //     },
-      //   //     null
-      //   //     // Purchases.PURCHASE_TYPE.INAPP
-      //   //   );
-      // }
-
-      // console.log("PURCHASE SUCCESSFULL");
-      // console.log(customerInfo);
-      // console.log(productIdentifier);
-
-      handleCloseModal6();
+      if (device == "ios") {
+        const { customerInfo, productIdentifier } =
+          await Purchases.purchaseProduct(tipAmount);
+      }
     } catch (e) {
       // if (!e.userCancelled) {
-      console.log("ERROR HAS OCCURRED");
+      console.log("ERROR HAS OCCURRED:");
       console.log(e);
       // console.log(e.userCancelled);
 
       handleCloseModal6();
       // }
     }
+
+    if (device == "android") {
+      // Purchases.purchaseProduct(
+      //   tipAmount,
+      //   null,
+      //   Purchases.PURCHASE_TYPE.INAPP
+      // );
+
+      // await Purchases.purchaseProduct(
+      //   tipAmount,
+      //   ({ productIdentifier, customerInfo }) => {},
+      //   ({ error, userCancelled }) => {
+      //     // Error making purchase
+      //     console.log("ERROR HAS OCCURRED:");
+      //     console.log(error);
+      //   },
+      //   null,
+      //   Purchases.PURCHASE_TYPE.INAPP
+      // );
+
+      await Purchases.purchaseProduct(tipAmount);
+    }
+
+    // console.log("PURCHASE SUCCESSFULL");
+    // console.log(customerInfo);
+    // console.log(productIdentifier);
+
+    handleCloseModal6();
   }
 
   const shareThisAppLink = async () => {
@@ -342,7 +345,6 @@ const SettingsPage = ({
                       className="tip-wrap"
                       onClick={() => {
                         triggerPurchase(item.identifier);
-
                         handleOpenModal6();
                       }}
                     >
