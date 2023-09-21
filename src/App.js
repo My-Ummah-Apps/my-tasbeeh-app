@@ -14,6 +14,7 @@ import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 
 import { Purchases } from "@awesome-cordova-plugins/purchases";
+// import { Purchases } from "cordova-plugin-purchase";
 
 window.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {

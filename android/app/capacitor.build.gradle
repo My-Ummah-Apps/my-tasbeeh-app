@@ -19,7 +19,7 @@ dependencies {
     implementation project(':capacitor-status-bar')
     implementation project(':capacitor-rate-app')
     implementation "com.android.billingclient:billing:5.0.0"
-    implementation "com.revenuecat.purchases:purchases-hybrid-common:5.6.0"
+    implementation "com.revenuecat.purchases:purchases-hybrid-common:6.1.2"
     implementation "androidx.annotation:annotation:[1.4.0]"
 }
 apply from: "../../node_modules/cordova-annotated-plugin-android/build.gradle"
