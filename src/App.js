@@ -323,7 +323,11 @@ function App() {
     if (localStorage.getItem("theme") == null) {
       localStorage.setItem("theme", JSON.stringify("light"));
       setTheme("light");
+      if (device == "android") {
+        StatusBar.setBackgroundColor({ color: "#EDEDED" });
+      }
     }
+
     // System theme functionality removed for now until bugs are fixed
     // if (JSON.parse(localStorage.getItem("theme")) == "system") {
     //   // Use matchMedia to check the user preference
@@ -360,7 +364,10 @@ function App() {
     if (JSON.parse(localStorage.getItem("theme")) == "dark") {
       console.log("STORED THEME IS DARK!");
       setStatusBarStyleDark();
-      StatusBar.setBackgroundColor({ color: "#000" });
+      if (device == "android") {
+        StatusBar.setBackgroundColor({ color: "#242424" });
+      }
+
       // if (device == "ios") {
       //   console.log("IOS DETECTED, SETTING DARK STATUS BAR BACKGROUND");
       //   // setStatusBarStyleDark();
@@ -383,7 +390,10 @@ function App() {
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
       console.log("STORED THEME IS LIGHT!");
       setStatusBarStyleLight();
-      StatusBar.setBackgroundColor({ color: "#fff" });
+      if (device == "android") {
+        StatusBar.setBackgroundColor({ color: "#EDEDED" });
+      }
+
       // if (device == "ios") {
       //   // console.log("IOS DETECTED, SETTING LIGHT STATUS BAR BACKGROUND");
       //   setStatusBarStyleLight();
