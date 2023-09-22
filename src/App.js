@@ -99,10 +99,9 @@ const showStatusBar = async () => {
   await StatusBar.show();
 };
 
-let lastUsedCounterIndex; // Used in the two conditional statements immediately below when app is first loaded to grab the last used counter
-// let individualCounterDiv; // Used within the createCounterList function, the savedCountersArray is looped through and items added to the DOM with this variable which holds a div
-let counterName; // This is the prop that will be passed into the CounterNumber component
-let currentCount; // This is the prop that will be passed into the CounterNumber component
+let lastUsedCounterIndex;
+let counterName;
+let currentCount;
 let counterId;
 let defaultArray;
 
@@ -156,7 +155,7 @@ function App() {
     })();
 
     return () => {
-      // this will now get called when the component unmounts
+      // Not required right now, but if needed this will get called when the component unmounts
     };
   }, []);
 
@@ -188,8 +187,6 @@ function App() {
 
   useEffect(() => {
     logDeviceInfo();
-
-    // console.log(device);
   }, []);
 
   const [morningNotification, setMorningNotification] = useState(
