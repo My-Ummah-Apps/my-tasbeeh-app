@@ -30,8 +30,6 @@ Modal.defaultStyles.content.zIndex = "10000";
 Modal.defaultStyles.content.width = "90%";
 
 const SettingsPage = ({
-  setStatusBarStyleDark,
-  setStatusBarStyleLight,
   iapProducts,
   resetAllCounters,
   morningNotification,
@@ -140,13 +138,11 @@ const SettingsPage = ({
     ) {
       handleOpenModal2();
       requestPermissionFunction();
-      console.log("checkPermission.display IS PROMPT");
+
       setMorningNotification(false);
       setAfternoonNotification(false);
       setEveningNotification(false);
       localStorage.setItem("morning-notification", JSON.stringify(false));
-      console.log("MORNING NOTIFICATION STATE:");
-      console.log(morningNotification);
     }
   }
 
@@ -157,7 +153,6 @@ const SettingsPage = ({
     if (requestPermission.display == "granted") {
       handleOpenModal2();
       // setMorningNotification(true);
-      console.log("REQUEST GRANTED WITHIN REQUESTPERMISSION!");
     } else if (requestPermission.display == "denied") {
       handleCloseModal2();
       setMorningNotification(false);
@@ -173,7 +168,6 @@ const SettingsPage = ({
   const loadingIconRef = useRef(null);
 
   const [formTheme, setFormTheme] = useState(false);
-  const [darkTheme, setDarkTheme] = useState(false);
 
   let subtitle;
 
@@ -443,7 +437,6 @@ const SettingsPage = ({
             {/* <MdOutlineChevronRight className="chevron" /> */}
             <Switch
               checked={theme == "light" ? false : true}
-              // checked={darkTheme}
               className={undefined}
               disabled={undefined}
               handleColor="white"
@@ -451,14 +444,10 @@ const SettingsPage = ({
               offColor="white"
               onChange={(e) => {
                 if (theme == "light") {
-                  // setStatusBarStyleDark();
                   setTheme("dark");
-                  setDarkTheme(true);
                   localStorage.setItem("theme", JSON.stringify("dark"));
                 } else if (theme == "dark") {
-                  // setStatusBarStyleLight();
                   setTheme("light");
-                  setDarkTheme(false);
                   localStorage.setItem("theme", JSON.stringify("light"));
                 }
               }}

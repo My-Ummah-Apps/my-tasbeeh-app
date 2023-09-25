@@ -91,14 +91,6 @@ const setStatusBarStyleLight = async () => {
   await StatusBar.setStyle({ style: Style.Light });
 };
 
-const hideStatusBar = async () => {
-  await StatusBar.hide();
-};
-
-const showStatusBar = async () => {
-  await StatusBar.show();
-};
-
 let lastUsedCounterIndex;
 let counterName;
 let currentCount;
@@ -106,11 +98,14 @@ let counterId;
 let defaultArray;
 
 function App() {
-  let fetchedProducts;
   const [iapProducts, setIapProducts] = useState(null);
   document.addEventListener("deviceready", onDeviceReady, false);
 
   function onDeviceReady() {
+    // if (device == "android") {
+    //   console.log("DEVICE IS ANDROID SETTINGS STATUS BAR COLOR TO WHITE");
+    //   StatusBar.setBackgroundColor({ color: "#EDEDED" });
+    // }
     // console.log("ONDEVICEREADY FIRED");
     // const checkDevice = async () => {
     //   const info = await Device.getInfo();
@@ -316,15 +311,18 @@ function App() {
   // }
 
   // let prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-  let prefersDark;
+  // let prefersDark;
 
   useEffect(() => {
-    prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+    console.log("CHECKING LOCAL STORAGE THEME...");
+    // prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
     if (localStorage.getItem("theme") == null) {
       localStorage.setItem("theme", JSON.stringify("light"));
       setTheme("light");
+      StatusBar.setBackgroundColor({ color: "#EDEDED" });
       if (device == "android") {
-        StatusBar.setBackgroundColor({ color: "#EDEDED" });
+        // StatusBar.setBackgroundColor({ color: "#EDEDED" });
+        // setStatusBarStyleLight();
       }
     }
 
@@ -361,46 +359,35 @@ function App() {
 
     //   console.log("useEffect has run, system theme selected");
     // }
-    if (JSON.parse(localStorage.getItem("theme")) == "dark") {
+    else if (JSON.parse(localStorage.getItem("theme")) == "dark") {
       console.log("STORED THEME IS DARK!");
       setStatusBarStyleDark();
+      setTheme("dark");
+      StatusBar.setBackgroundColor({ color: "#242424" });
       if (device == "android") {
-        StatusBar.setBackgroundColor({ color: "#242424" });
+        // StatusBar.setBackgroundColor({ color: "#242424" });
       }
 
-      // if (device == "ios") {
-      //   console.log("IOS DETECTED, SETTING DARK STATUS BAR BACKGROUND");
-      //   // setStatusBarStyleDark();
-      // } else if (device == "android") {
-      //   // StatusBar.setStyle({ style: Style.Dark });
-      // }
-      // toggleDarkTheme();
       document.body.classList.add("dark");
 
       setModalStyles({
         overlay: {
           backgroundColor: "rgba(53, 53, 53, 0.75)",
-          // boxShadow: "none !important",
         },
         content: {
           backgroundColor: "rgba(53, 53, 53, 0.75)",
-          // boxShadow: "none !important",
         },
       });
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
       console.log("STORED THEME IS LIGHT!");
       setStatusBarStyleLight();
+      setTheme("light");
+      StatusBar.setBackgroundColor({ color: "#EDEDED" });
       if (device == "android") {
-        StatusBar.setBackgroundColor({ color: "#EDEDED" });
+        console.log("DEVICE IS ANDROID SETTINGS STATUS BAR COLOR TO WHITE");
+        // StatusBar.setBackgroundColor({ color: "#EDEDED" });
       }
 
-      // if (device == "ios") {
-      //   // console.log("IOS DETECTED, SETTING LIGHT STATUS BAR BACKGROUND");
-      //   setStatusBarStyleLight();
-      // } else if (device == "android") {
-      //   // StatusBar.setStyle({ style: Style.Dark });
-      //   StatusBar.setBackgroundColor({ color: "#000" })                                                                                                                                                                                                                                                                                                                                                                  ;
-      // }
       document.body.classList.remove("dark");
 
       setModalStyles({
@@ -411,10 +398,8 @@ function App() {
           backgroundColor: "rgba(98, 98, 98, 0.75)",
         },
       });
-
-      // toggleDarkTheme();
     }
-  }, [theme, prefersDark]);
+  }, [theme]);
 
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
 
@@ -423,7 +408,7 @@ function App() {
     const currentDate = new Date().toLocaleDateString();
 
     if (storedDate !== currentDate && dailyCounterReset == true) {
-      // Reset your variable or perform any other actions
+      // Reset variable or perform any other actions
       resetAllCounters();
     }
 
@@ -442,9 +427,6 @@ function App() {
       setDailyCounterReset(false);
     }
   });
-  const [isFirstLaunch, setIsFirstLaunch] = useState(
-    sessionStorage.getItem("isFirstLaunch")
-  );
 
   useEffect(() => {
     if (
@@ -658,8 +640,6 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
-                setStatusBarStyleDark={setStatusBarStyleDark}
-                setStatusBarStyleLight={setStatusBarStyleLight}
                 iapProducts={iapProducts}
                 resetAllCounters={resetAllCounters}
                 setMorningNotification={setMorningNotification}
