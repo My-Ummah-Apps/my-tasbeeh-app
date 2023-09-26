@@ -17,11 +17,71 @@ import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
 
 window.addEventListener("DOMContentLoaded", () => {
+  // STATUS BAR FUNCTIONALITY
+  const setStatusBarStyleDark = async () => {
+    await StatusBar.setStyle({ style: Style.Dark });
+  };
+
+  const setStatusBarStyleLight = async () => {
+    await StatusBar.setStyle({ style: Style.Light });
+  };
+
+  console.log("CHECKING LOCAL STORAGE THEME...");
+  let statusBarThemeColor;
+  if (localStorage.getItem("theme") == null) {
+    localStorage.setItem("theme", JSON.stringify("light"));
+    setStatusBarStyleLight();
+    statusBarThemeColor = "#EDEDED";
+  } else if (JSON.parse(localStorage.getItem("theme")) == "dark") {
+    console.log("STORED THEME IS DARK!");
+    setStatusBarStyleDark();
+    statusBarThemeColor = "#242424";
+    document.body.classList.add("dark");
+  } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
+    console.log("STORED THEME IS LIGHT!");
+    setStatusBarStyleLight();
+    statusBarThemeColor = "#EDEDED";
+    document.body.classList.remove("dark");
+
+    // setModalStyles({
+    //   overlay: {
+    //     backgroundColor: "rgba(98, 98, 98, 0.75)",
+    //   },
+    //   content: {
+    //     backgroundColor: "rgba(98, 98, 98, 0.75)",
+    //   },
+    // });
+
+    //  setModalStyles({
+    //   overlay: {
+    //     backgroundColor: "rgba(53, 53, 53, 0.75)",
+    //   },
+    //   content: {
+    //     backgroundColor: "rgba(53, 53, 53, 0.75)",
+    //   },
+    // });
+  }
+
   setTimeout(() => {
     SplashScreen.hide({
       fadeOutDuration: 250,
     });
   }, 500);
+  setTimeout(() => {
+    StatusBar.setBackgroundColor({ color: statusBarThemeColor });
+  }, 1000);
+  const checkDevice = async () => {
+    const info = await Device.getInfo();
+    if (info.operatingSystem == "ios") {
+      return;
+    } else if (info.operatingSystem == "android") {
+      console.log("ANDROID YO");
+      // setTimeout(() => {
+      //   StatusBar.setBackgroundColor({ color: statusBarThemeColor });
+      // }, 750);
+    }
+  };
+  checkDevice();
 });
 
 LocalNotifications.createChannel({
@@ -82,15 +142,6 @@ const scheduleEveningNotification = async () => {
   });
 };
 
-// STATUS BAR FUNCTIONALITY
-const setStatusBarStyleDark = async () => {
-  await StatusBar.setStyle({ style: Style.Dark });
-};
-
-const setStatusBarStyleLight = async () => {
-  await StatusBar.setStyle({ style: Style.Light });
-};
-
 let lastUsedCounterIndex;
 let counterName;
 let currentCount;
@@ -129,6 +180,17 @@ function App() {
       });
     }
   }
+
+  const [modalStyles, setModalStyles] = useState({
+    overlay: {
+      backgroundColor: "rgba(53, 53, 53, 0.75)",
+      boxShadow: "none",
+    },
+    content: {
+      backgroundColor: "rgba(53, 53, 53, 0.75)",
+      boxShadow: "none",
+    },
+  });
 
   const productsArray = [
     process.env.REACT_APP_ST,
@@ -279,127 +341,6 @@ function App() {
   const [dailyCounterReset, setDailyCounterReset] = useState(
     JSON.parse(localStorage.getItem("dailyCounterReset"))
   );
-
-  const [theme, setTheme] = useState(JSON.parse(localStorage.getItem("theme")));
-
-  const [modalStyles, setModalStyles] = useState({
-    overlay: {
-      backgroundColor: "rgba(53, 53, 53, 0.75)",
-      boxShadow: "none",
-    },
-    content: {
-      backgroundColor: "rgba(53, 53, 53, 0.75)",
-      boxShadow: "none",
-    },
-  });
-
-  // // DARK MODE FUNCTIONALITY
-  // // Use matchMedia to check the user preference
-  // const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-
-  // toggleDarkTheme(prefersDark.matches);
-
-  // // Listen for changes to the prefers-color-scheme media query
-  // prefersDark.addEventListener("change", (mediaQuery) =>
-  //   toggleDarkTheme(mediaQuery.matches)
-  // );
-
-  // Add or remove the "dark" class based on if the media query matches
-  // function toggleDarkTheme(shouldAdd) {
-  //   document.body.classList.toggle("dark", shouldAdd);
-  //   console.log(shouldAdd);
-  // }
-
-  // let prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-  // let prefersDark;
-
-  useEffect(() => {
-    console.log("CHECKING LOCAL STORAGE THEME...");
-    // prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-    if (localStorage.getItem("theme") == null) {
-      localStorage.setItem("theme", JSON.stringify("light"));
-      setTheme("light");
-      StatusBar.setBackgroundColor({ color: "#EDEDED" });
-      if (device == "android") {
-        // StatusBar.setBackgroundColor({ color: "#EDEDED" });
-        // setStatusBarStyleLight();
-      }
-    }
-
-    // System theme functionality removed for now until bugs are fixed
-    // if (JSON.parse(localStorage.getItem("theme")) == "system") {
-    //   // Use matchMedia to check the user preference
-
-    //   console.log("prefersDark value is:");
-    //   console.log(prefersDark);
-
-    //   prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-
-    //   // Add or remove the "dark" class based on if the media query matches
-    //   function toggleDarkTheme(boolean) {
-    //     if (boolean == true) {
-    //       console.log("boolean true");
-    //       document.body.classList.add("dark");
-    //       // StatusBar.setStyle({ style: Style.Light });
-    //     } else if (boolean == false) {
-    //       console.log("boolean false");
-    //       document.body.classList.remove("dark");
-    //       // StatusBar.setStyle({ style: Style.Dark });
-    //     }
-    //   }
-
-    //   // Listen for changes to the prefers-color-scheme media query
-    //   prefersDark.addEventListener("change", (mediaQuery) => {
-    //     console.log("mediaQuery is:");
-    //     console.log(mediaQuery.matches);
-    //     return toggleDarkTheme(mediaQuery.matches);
-    //   });
-
-    //   toggleDarkTheme(prefersDark.matches);
-
-    //   console.log("useEffect has run, system theme selected");
-    // }
-    else if (JSON.parse(localStorage.getItem("theme")) == "dark") {
-      console.log("STORED THEME IS DARK!");
-      setStatusBarStyleDark();
-      setTheme("dark");
-      StatusBar.setBackgroundColor({ color: "#242424" });
-      if (device == "android") {
-        // StatusBar.setBackgroundColor({ color: "#242424" });
-      }
-
-      document.body.classList.add("dark");
-
-      setModalStyles({
-        overlay: {
-          backgroundColor: "rgba(53, 53, 53, 0.75)",
-        },
-        content: {
-          backgroundColor: "rgba(53, 53, 53, 0.75)",
-        },
-      });
-    } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
-      console.log("STORED THEME IS LIGHT!");
-      setStatusBarStyleLight();
-      setTheme("light");
-      StatusBar.setBackgroundColor({ color: "#EDEDED" });
-      if (device == "android") {
-        console.log("DEVICE IS ANDROID SETTINGS STATUS BAR COLOR TO WHITE");
-        // StatusBar.setBackgroundColor({ color: "#EDEDED" });
-      }
-
-      document.body.classList.remove("dark");
-
-      setModalStyles({
-        overlay: {
-          backgroundColor: "rgba(98, 98, 98, 0.75)",
-        },
-        content: {
-          backgroundColor: "rgba(98, 98, 98, 0.75)",
-        },
-      });
-    }
-  }, [theme]);
 
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
 
@@ -655,8 +596,6 @@ function App() {
                 setDailyCounterReset={setDailyCounterReset}
                 dailyCounterReset={dailyCounterReset}
                 activeBackgroundColor={activeBackgroundColor}
-                theme={theme}
-                setTheme={setTheme}
               />
             }
           />

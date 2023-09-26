@@ -14,6 +14,7 @@ import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { PURCHASE_TYPE } from "cordova-plugin-purchases";
 import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
+import { StatusBar, Style } from "@capacitor/status-bar";
 // import ThemeOptions from "../components/ThemeOptions";
 
 // Override default Modal styles
@@ -45,11 +46,18 @@ const SettingsPage = ({
   setDailyCounterReset,
   dailyCounterReset,
   activeBackgroundColor,
-  theme,
-  setTheme,
 }) => {
   // console.log("fetchedProducts ON SETTINGS PAGE:");
   // console.log(iapProducts);
+
+  const [theme, setTheme] = useState(JSON.parse(localStorage.getItem("theme")));
+  console.log("INITIAL THEME IS:");
+  console.log(theme);
+  useEffect(() => {
+    setTheme(JSON.parse(localStorage.getItem("theme")));
+    console.log("THEME IS:");
+    console.log(theme);
+  }, [theme]);
 
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -445,10 +453,16 @@ const SettingsPage = ({
               onChange={(e) => {
                 if (theme == "light") {
                   setTheme("dark");
+                  StatusBar.setBackgroundColor({ color: "#242424" });
+                  console.log("THEME SWITCHED TO LIGHT");
                   localStorage.setItem("theme", JSON.stringify("dark"));
+                  document.body.classList.add("dark");
                 } else if (theme == "dark") {
                   setTheme("light");
+                  StatusBar.setBackgroundColor({ color: "#EDEDED" });
+                  console.log("THEME SWITCHED TO DARK");
                   localStorage.setItem("theme", JSON.stringify("light"));
+                  document.body.classList.remove("dark");
                 }
               }}
               onColor={activeBackgroundColor}
