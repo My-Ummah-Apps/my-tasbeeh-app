@@ -692,16 +692,14 @@ Modal {
 input[type="text"],
 input[type="number"] {
   padding: 1rem;
-  background: var(--form-input-bg-color);
-  color: var(--text-color);
+  /* background: var(--form-input-bg-color);
+  color: var(--text-color); */
 }
 
 .form-wrap {
   background: var(--form-wrap-bg-color);
   padding: 0.5rem 0 0 0;
   border-radius: 1.5rem;
-
-  /* height: 100%; */
   display: block;
   overflow: auto;
   width: 100%;
@@ -784,6 +782,8 @@ input[type="number"] {
 
 .form-input {
   border-radius: 0.8rem;
+  background: var(--form-input-bg-color);
+  color: var(--text-color);
 }
 
 .form-filled-name-input {

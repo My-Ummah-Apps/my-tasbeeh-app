@@ -67,18 +67,25 @@ window.addEventListener("DOMContentLoaded", () => {
       fadeOutDuration: 250,
     });
   }, 500);
-  setTimeout(() => {
-    StatusBar.setBackgroundColor({ color: statusBarThemeColor });
-  }, 1000);
+
   const checkDevice = async () => {
     const info = await Device.getInfo();
+    console.log("OPERATING SYSTEM IS:");
+    console.log(info.operatingSystem);
     if (info.operatingSystem == "ios") {
       return;
     } else if (info.operatingSystem == "android") {
-      console.log("ANDROID YO");
-      // setTimeout(() => {
-      //   StatusBar.setBackgroundColor({ color: statusBarThemeColor });
-      // }, 750);
+      console.log("DEVICE IS ANDROID");
+      setTimeout(() => {
+        if (statusBarThemeColor == "#EDEDED") {
+          StatusBar.setStyle({ style: Style.Light });
+          console.log("statusbar is light");
+        } else if (statusBarThemeColor == "#242424") {
+          console.log("statusbar is dark");
+          StatusBar.setStyle({ style: Style.Dark });
+        }
+        StatusBar.setBackgroundColor({ color: statusBarThemeColor });
+      }, 1000);
     }
   };
   checkDevice();

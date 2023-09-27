@@ -454,12 +454,14 @@ const SettingsPage = ({
                 if (theme == "light") {
                   setTheme("dark");
                   StatusBar.setBackgroundColor({ color: "#242424" });
+                  StatusBar.setStyle({ style: Style.Dark });
                   console.log("THEME SWITCHED TO LIGHT");
                   localStorage.setItem("theme", JSON.stringify("dark"));
                   document.body.classList.add("dark");
                 } else if (theme == "dark") {
                   setTheme("light");
                   StatusBar.setBackgroundColor({ color: "#EDEDED" });
+                  StatusBar.setStyle({ style: Style.Light });
                   console.log("THEME SWITCHED TO DARK");
                   localStorage.setItem("theme", JSON.stringify("light"));
                   document.body.classList.remove("dark");
