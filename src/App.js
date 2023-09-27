@@ -42,24 +42,6 @@ window.addEventListener("DOMContentLoaded", () => {
     setStatusBarStyleLight();
     statusBarThemeColor = "#EDEDED";
     document.body.classList.remove("dark");
-
-    // setModalStyles({
-    //   overlay: {
-    //     backgroundColor: "rgba(98, 98, 98, 0.75)",
-    //   },
-    //   content: {
-    //     backgroundColor: "rgba(98, 98, 98, 0.75)",
-    //   },
-    // });
-
-    //  setModalStyles({
-    //   overlay: {
-    //     backgroundColor: "rgba(53, 53, 53, 0.75)",
-    //   },
-    //   content: {
-    //     backgroundColor: "rgba(53, 53, 53, 0.75)",
-    //   },
-    // });
   }
 
   setTimeout(() => {
