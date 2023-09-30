@@ -24,7 +24,7 @@
     "capacitor-rate-app": "^4.0.3",
     "cordova-annotated-plugin-android": "^1.0.4",
     "cordova-plugin-purchase": "^13.6.0",
-    "cordova-plugin-purchases": "^4.7.1",
+    "cordova-plugin-purchases": "^4.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",

@@ -4,6 +4,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { Device } from "@capacitor/device";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
+import { Capacitor } from "@capacitor/core";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -16,47 +17,55 @@ import SettingsPage from "./pages/SettingsPage";
 import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
 
+let device;
+const checkDevice = () => {
+  device = Device.getInfo();
+};
+checkDevice();
+
 window.addEventListener("DOMContentLoaded", () => {
-  // STATUS BAR FUNCTIONALITY
-  const setStatusBarStyleDark = async () => {
-    await StatusBar.setStyle({ style: Style.Dark });
-  };
+  if (Capacitor.isNativePlatform()) {
+    console.log("STATUS BAR HAS RUN");
+    // STATUS BAR FUNCTIONALITY
 
-  const setStatusBarStyleLight = async () => {
-    await StatusBar.setStyle({ style: Style.Light });
-  };
+    const setStatusBarStyleDark = async () => {
+      await StatusBar.setStyle({ style: Style.Dark });
+    };
 
-  console.log("CHECKING LOCAL STORAGE THEME...");
-  let statusBarThemeColor;
-  if (localStorage.getItem("theme") == null) {
-    localStorage.setItem("theme", JSON.stringify("light"));
-    setStatusBarStyleLight();
-    statusBarThemeColor = "#EDEDED";
-  } else if (JSON.parse(localStorage.getItem("theme")) == "dark") {
-    console.log("STORED THEME IS DARK!");
-    setStatusBarStyleDark();
-    statusBarThemeColor = "#242424";
-    document.body.classList.add("dark");
-  } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
-    console.log("STORED THEME IS LIGHT!");
-    setStatusBarStyleLight();
-    statusBarThemeColor = "#EDEDED";
-    document.body.classList.remove("dark");
-  }
+    const setStatusBarStyleLight = async () => {
+      await StatusBar.setStyle({ style: Style.Light });
+    };
 
-  setTimeout(() => {
-    SplashScreen.hide({
-      fadeOutDuration: 250,
-    });
-  }, 500);
+    console.log("CHECKING LOCAL STORAGE THEME...");
+    let statusBarThemeColor;
+    if (localStorage.getItem("theme") == null) {
+      localStorage.setItem("theme", JSON.stringify("light"));
+      setStatusBarStyleLight();
+      statusBarThemeColor = "#EDEDED";
+    } else if (JSON.parse(localStorage.getItem("theme")) == "dark") {
+      console.log("STORED THEME IS DARK!");
+      setStatusBarStyleDark();
+      statusBarThemeColor = "#242424";
+      document.body.classList.add("dark");
+    } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
+      console.log("STORED THEME IS LIGHT!");
+      setStatusBarStyleLight();
+      statusBarThemeColor = "#EDEDED";
+      document.body.classList.remove("dark");
+    }
 
-  const checkDevice = async () => {
-    const info = await Device.getInfo();
-    console.log("OPERATING SYSTEM IS:");
-    console.log(info.operatingSystem);
-    if (info.operatingSystem == "ios") {
+    setTimeout(() => {
+      SplashScreen.hide({
+        fadeOutDuration: 250,
+      });
+    }, 500);
+
+    // const checkDevice = async () => {
+    //   const info = await Device.getInfo();
+
+    if (device.operatingSystem == "ios") {
       return;
-    } else if (info.operatingSystem == "android") {
+    } else if (device.operatingSystem == "android") {
       console.log("DEVICE IS ANDROID");
       setTimeout(() => {
         if (statusBarThemeColor == "#EDEDED") {
@@ -69,67 +78,74 @@ window.addEventListener("DOMContentLoaded", () => {
         StatusBar.setBackgroundColor({ color: statusBarThemeColor });
       }, 1000);
     }
+    // };
+    // checkDevice();
+  }
+});
+
+let scheduleMorningNotifications;
+let scheduleAfternoonNotification;
+let scheduleEveningNotification;
+
+if (Capacitor.isNativePlatform()) {
+  LocalNotifications.createChannel({
+    id: "1",
+    name: "Notification",
+    description: "General Notification",
+  });
+
+  scheduleMorningNotifications = async () => {
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: "Morning Reminder",
+          body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
+          id: 2,
+          schedule: {
+            on: { hour: 7, minute: 0 }, // THIS WORKS ON IOS
+            allowWhileIdle: true,
+            foreground: true, // iOS only
+            repeats: true,
+          },
+        },
+      ],
+    });
   };
-  checkDevice();
-});
-
-LocalNotifications.createChannel({
-  id: "1",
-  name: "Notification",
-  description: "General Notification",
-});
-
-const scheduleMorningNotifications = async () => {
-  await LocalNotifications.schedule({
-    notifications: [
-      {
-        title: "Morning Reminder",
-        body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
-        id: 2,
-        schedule: {
-          on: { hour: 7, minute: 0 }, // THIS WORKS ON IOS
-          allowWhileIdle: true,
-          foreground: true, // iOS only
-          repeats: true,
+  scheduleAfternoonNotification = async () => {
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: "Afternoon Reminder",
+          body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
+          id: 3,
+          schedule: {
+            allowWhileIdle: true,
+            foreground: true, // iOS only
+            on: { hour: 14, minute: 0 }, // THIS WORKS ON IOS
+            repeats: true,
+          },
         },
-      },
-    ],
-  });
-};
-const scheduleAfternoonNotification = async () => {
-  await LocalNotifications.schedule({
-    notifications: [
-      {
-        title: "Afternoon Reminder",
-        body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
-        id: 3,
-        schedule: {
-          allowWhileIdle: true,
-          foreground: true, // iOS only
-          on: { hour: 14, minute: 0 }, // THIS WORKS ON IOS
-          repeats: true,
+      ],
+    });
+  };
+  scheduleEveningNotification = async () => {
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: "Evening Reminder",
+          body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
+          id: 4,
+          schedule: {
+            allowWhileIdle: true,
+            foreground: true, // iOS only
+            on: { hour: 19, minute: 0 }, // THIS WORKS ON IOS
+            repeats: true,
+          },
         },
-      },
-    ],
-  });
-};
-const scheduleEveningNotification = async () => {
-  await LocalNotifications.schedule({
-    notifications: [
-      {
-        title: "Evening Reminder",
-        body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
-        id: 4,
-        schedule: {
-          allowWhileIdle: true,
-          foreground: true, // iOS only
-          on: { hour: 19, minute: 0 }, // THIS WORKS ON IOS
-          repeats: true,
-        },
-      },
-    ],
-  });
-};
+      ],
+    });
+  };
+}
 
 let lastUsedCounterIndex;
 let counterName;
@@ -159,11 +175,11 @@ function App() {
 
     Purchases.setDebugLogsEnabled(true);
 
-    if (window.cordova.platformId === "ios") {
+    if (device.operatingSystem === "ios") {
       Purchases.configureWith({
         apiKey: process.env.REACT_APP_APPLE_APIKEY,
       });
-    } else if (window.cordova.platformId === "android") {
+    } else if (device.operatingSystem === "android") {
       Purchases.configureWith({
         apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
       });
@@ -189,20 +205,22 @@ function App() {
   ];
 
   useEffect(() => {
-    (async () => {
-      const fetchedProducts = await Purchases.getProducts(
-        productsArray,
-        "inapp"
-      );
-      fetchedProducts.sort(function (a, b) {
-        return a.price - b.price;
-      });
-      setIapProducts(fetchedProducts);
-    })();
+    if (Capacitor.isNativePlatform()) {
+      (async () => {
+        const fetchedProducts = await Purchases.getProducts(
+          productsArray,
+          "inapp"
+        );
+        fetchedProducts.sort(function (a, b) {
+          return a.price - b.price;
+        });
+        setIapProducts(fetchedProducts);
+      })();
 
-    return () => {
-      // Not required right now, but if needed this will get called when the component unmounts
-    };
+      return () => {
+        // Not required right now, but if needed this will get called when the component unmounts
+      };
+    }
   }, []);
 
   const materialColors = [
@@ -221,19 +239,24 @@ function App() {
   ];
   const [activePage, setActivePage] = useState("home");
   const [device, setDevice] = useState("");
-  const logDeviceInfo = async () => {
-    const info = await Device.getInfo();
+  if (device.operatingSystem == "ios") {
+    setDevice("ios");
+  } else if (device.operatingSystem == "android") {
+    setDevice("android");
+  }
+  // const logDeviceInfo = async () => {
+  //   const info = await Device.getInfo();
 
-    if (info.operatingSystem == "ios") {
-      setDevice("ios");
-    } else if (info.operatingSystem == "android") {
-      setDevice("android");
-    }
-  };
+  //   if (info.operatingSystem == "ios") {
+  //     setDevice("ios");
+  //   } else if (info.operatingSystem == "android") {
+  //     setDevice("android");
+  //   }
+  // };
 
-  useEffect(() => {
-    logDeviceInfo();
-  }, []);
+  // useEffect(() => {
+  //   logDeviceInfo();
+  // }, []);
 
   const [morningNotification, setMorningNotification] = useState(
     JSON.parse(localStorage.getItem("morning-notification"))
@@ -267,47 +290,53 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (
-      localStorage.getItem("morning-notification") == null ||
-      localStorage.getItem("morning-notification") == "false"
-    ) {
-      localStorage.setItem("morning-notification", JSON.stringify(false));
-      setMorningNotification(false);
-      LocalNotifications.cancel({ notifications: [{ id: 2 }] });
-    } else if (localStorage.getItem("morning-notification") == "true") {
-      localStorage.setItem("morning-notification", JSON.stringify(true));
-      setMorningNotification(true);
-      scheduleMorningNotifications();
+    if (Capacitor.isNativePlatform()) {
+      if (
+        localStorage.getItem("morning-notification") == null ||
+        localStorage.getItem("morning-notification") == "false"
+      ) {
+        localStorage.setItem("morning-notification", JSON.stringify(false));
+        setMorningNotification(false);
+        LocalNotifications.cancel({ notifications: [{ id: 2 }] });
+      } else if (localStorage.getItem("morning-notification") == "true") {
+        localStorage.setItem("morning-notification", JSON.stringify(true));
+        setMorningNotification(true);
+        scheduleMorningNotifications();
+      }
     }
   }, [morningNotification]);
 
   useEffect(() => {
-    if (
-      localStorage.getItem("afternoon-notification") == null ||
-      localStorage.getItem("afternoon-notification") == "false"
-    ) {
-      localStorage.setItem("afternoon-notification", JSON.stringify(false));
-      setAfternoonNotification(false);
-      LocalNotifications.cancel({ notifications: [{ id: 3 }] });
-    } else if (localStorage.getItem("afternoon-notification") == "true") {
-      localStorage.setItem("afternoon-notification", JSON.stringify(true));
-      setAfternoonNotification(true);
-      scheduleAfternoonNotification();
+    if (Capacitor.isNativePlatform()) {
+      if (
+        localStorage.getItem("afternoon-notification") == null ||
+        localStorage.getItem("afternoon-notification") == "false"
+      ) {
+        localStorage.setItem("afternoon-notification", JSON.stringify(false));
+        setAfternoonNotification(false);
+        LocalNotifications.cancel({ notifications: [{ id: 3 }] });
+      } else if (localStorage.getItem("afternoon-notification") == "true") {
+        localStorage.setItem("afternoon-notification", JSON.stringify(true));
+        setAfternoonNotification(true);
+        scheduleAfternoonNotification();
+      }
     }
   }, [afternoonNotification]);
 
   useEffect(() => {
-    if (
-      localStorage.getItem("evening-notification") == null ||
-      localStorage.getItem("evening-notification") == "false"
-    ) {
-      localStorage.setItem("evening-notification", JSON.stringify(false));
-      setEveningNotification(false);
-      LocalNotifications.cancel({ notifications: [{ id: 4 }] });
-    } else if (localStorage.getItem("evening-notification") == "true") {
-      localStorage.setItem("evening-notification", JSON.stringify(true));
-      setEveningNotification(true);
-      scheduleEveningNotification();
+    if (Capacitor.isNativePlatform()) {
+      if (
+        localStorage.getItem("evening-notification") == null ||
+        localStorage.getItem("evening-notification") == "false"
+      ) {
+        localStorage.setItem("evening-notification", JSON.stringify(false));
+        setEveningNotification(false);
+        LocalNotifications.cancel({ notifications: [{ id: 4 }] });
+      } else if (localStorage.getItem("evening-notification") == "true") {
+        localStorage.setItem("evening-notification", JSON.stringify(true));
+        setEveningNotification(true);
+        scheduleEveningNotification();
+      }
     }
   }, [eveningNotification]);
 

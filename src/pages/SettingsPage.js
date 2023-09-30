@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import React from "react";
 import Modal from "react-modal";
+import { Capacitor } from "@capacitor/core";
 import { MdOutlineChevronRight } from "react-icons/md";
 import { FaHandHoldingHeart } from "react-icons/fa";
 // import { FaJar } from "react-icons/fa6";
@@ -195,44 +196,41 @@ const SettingsPage = ({
       // }
     }
 
-    if (device == "android") {
-      // Purchases.purchaseProduct(
-      //   tipAmount,
-      //   null,
-      //   Purchases.PURCHASE_TYPE.INAPP
-      // );
-
-      // await Purchases.purchaseProduct(
-      //   tipAmount,
-      //   ({ productIdentifier, customerInfo }) => {},
-      //   ({ error, userCancelled }) => {
-      //     // Error making purchase
-      //     console.log("ERROR HAS OCCURRED:");
-      //     console.log(error);
-      //   },
-      //   null,
-      //   Purchases.PURCHASE_TYPE.INAPP
-      // );
-
-      try {
-        await Purchases.purchaseProduct(
-          tipAmount,
-          ({ productIdentifier, customerInfo }) => {},
-          ({ error, userCancelled }) => {
-            // Error making purchase
-            console.log("ERROR HAS OCCURRED:");
-            console.log(error);
-          },
-          null,
-          Purchases.PURCHASE_TYPE.INAPP
-        );
-      } catch (e) {
-        console.log("ERROR OCCURRED:");
-        console.log(e);
-        console.log("Purchases.PURCHASE_TYPE.INAPP is:");
-        console.log(Purchases.PURCHASE_TYPE.INAPP);
-      }
-    }
+    // if (device == "android") {
+    //   try {
+    //     await Purchases.purchaseProduct(
+    //       tipAmount,
+    //       null,
+    //       Purchases.PURCHASE_TYPE.INAPP
+    //     );
+    //   } catch (e) {
+    //     console.log("ERROR");
+    //     console.log(e);
+    //     console.log(Purchases.PURCHASE_TYPE.INAPP);
+    //   }
+    // }
+    // try {
+    //   await Purchases.purchaseProduct(
+    //     tipAmount,
+    //     ({ productIdentifier, customerInfo }) => {
+    //       // console.log("productIdentifier and customerInfo:");
+    //       // console.log(productIdentifier);
+    //       // console.log(customerInfo);
+    //     },
+    //     ({ error, userCancelled }) => {
+    //       // Error making purchase
+    //       console.log("ERROR HAS OCCURRED:");
+    //       console.log(error);
+    //     },
+    //     null,
+    //     Purchases.PURCHASE_TYPE.INAPP
+    //   );
+    // } catch (e) {
+    //   console.log("ERROR OCCURRED:");
+    //   console.log(e);
+    //   console.log("Purchases.PURCHASE_TYPE.INAPP is:");
+    //   console.log(Purchases.PURCHASE_TYPE.INAPP);
+    // }
 
     // console.log("PURCHASE SUCCESSFULL");
     // console.log(customerInfo);
@@ -393,39 +391,41 @@ const SettingsPage = ({
               </div>
             </Modal>
           </div>
-        ) : null}
-        <div className="individual-section-wrap">
-          <div
-            className="notifications-wrap"
-            onClick={() => {
-              checkNotificationPermissions();
-              // handleOpenModal2();
-            }}
-          >
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>Notifications</p>
-              <p>Set Notifications</p>
+        ) : null}{" "}
+        {Capacitor.isNativePlatform() ? (
+          <div className="individual-section-wrap">
+            <div
+              className="notifications-wrap"
+              onClick={() => {
+                checkNotificationPermissions();
+                // handleOpenModal2();
+              }}
+            >
+              <div className="text-wrap" style={{ display: "block" }}>
+                <p>Notifications</p>
+                <p>Set Notifications</p>
+              </div>
+              <MdOutlineChevronRight className="chevron" />
             </div>
-            <MdOutlineChevronRight className="chevron" />
+            <Modal
+              style={modalStyles}
+              isOpen={showModal2}
+              onRequestClose={handleCloseModal2}
+              closeTimeoutMS={250}
+              contentLabel="Modal #2 Global Style Override Example"
+            >
+              <NotificationOptions
+                setMorningNotification={setMorningNotification}
+                morningNotification={morningNotification}
+                afternoonNotification={afternoonNotification}
+                setAfternoonNotification={setAfternoonNotification}
+                eveningNotification={eveningNotification}
+                setEveningNotification={setEveningNotification}
+                activeBackgroundColor={activeBackgroundColor}
+              />
+            </Modal>
           </div>
-          <Modal
-            style={modalStyles}
-            isOpen={showModal2}
-            onRequestClose={handleCloseModal2}
-            closeTimeoutMS={250}
-            contentLabel="Modal #2 Global Style Override Example"
-          >
-            <NotificationOptions
-              setMorningNotification={setMorningNotification}
-              morningNotification={morningNotification}
-              afternoonNotification={afternoonNotification}
-              setAfternoonNotification={setAfternoonNotification}
-              eveningNotification={eveningNotification}
-              setEveningNotification={setEveningNotification}
-              activeBackgroundColor={activeBackgroundColor}
-            />
-          </Modal>
-        </div>
+        ) : null}
         <div className="individual-section-wrap">
           <div
             className="theme-wrap"
@@ -453,15 +453,21 @@ const SettingsPage = ({
               onChange={(e) => {
                 if (theme == "light") {
                   setTheme("dark");
-                  StatusBar.setBackgroundColor({ color: "#242424" });
-                  StatusBar.setStyle({ style: Style.Dark });
+                  if (Capacitor.isNativePlatform()) {
+                    StatusBar.setBackgroundColor({ color: "#242424" });
+                    StatusBar.setStyle({ style: Style.Dark });
+                  }
+
                   console.log("THEME SWITCHED TO LIGHT");
                   localStorage.setItem("theme", JSON.stringify("dark"));
                   document.body.classList.add("dark");
                 } else if (theme == "dark") {
                   setTheme("light");
-                  StatusBar.setBackgroundColor({ color: "#EDEDED" });
-                  StatusBar.setStyle({ style: Style.Light });
+                  if (Capacitor.isNativePlatform()) {
+                    StatusBar.setBackgroundColor({ color: "#EDEDED" });
+                    StatusBar.setStyle({ style: Style.Light });
+                  }
+
                   console.log("THEME SWITCHED TO DARK");
                   localStorage.setItem("theme", JSON.stringify("light"));
                   document.body.classList.remove("dark");
@@ -475,7 +481,6 @@ const SettingsPage = ({
             />
           </div>
         </div>
-
         <div className="individual-section-wrap">
           <div className="individual-row-wrap haptic-wrap">
             <div className="text-wrap" style={{ display: "block" }}>
@@ -615,7 +620,6 @@ const SettingsPage = ({
             </Modal>
           </div>
         </div>
-
         <div className="individual-section-wrap">
           {device == "android" ? (
             <div
@@ -649,13 +653,15 @@ const SettingsPage = ({
               <MdOutlineChevronRight className="chevron" />
             </div>
           ) : null}
-          <div className="share-wrap" onClick={shareThisAppLink}>
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>Share</p>
-              <p>Share application</p>
+          {Capacitor.isNativePlatform() ? (
+            <div className="share-wrap" onClick={shareThisAppLink}>
+              <div className="text-wrap" style={{ display: "block" }}>
+                <p>Share</p>
+                <p>Share application</p>
+              </div>
+              <MdOutlineChevronRight className="chevron" />
             </div>
-            <MdOutlineChevronRight className="chevron" />
-          </div>
+          ) : null}
           <div
             className="feedback-wrap"
             onClick={() => {
@@ -707,18 +713,21 @@ const SettingsPage = ({
           </div>
           <MdOutlineChevronRight className="chevron" />
         </div> */}
-          <div
-            onClick={() => {
-              handleOpenModal4();
-            }}
-          >
-            {/* <div className="icon" /> */}
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>About</p>
-              <p>About us</p>
+          {Capacitor.isNativePlatform() ? (
+            <div
+              onClick={() => {
+                handleOpenModal4();
+              }}
+            >
+              {/* <div className="icon" /> */}
+
+              <div className="text-wrap" style={{ display: "block" }}>
+                <p>About</p>
+                <p>About us</p>
+              </div>
+              <MdOutlineChevronRight className="chevron" />
             </div>
-            <MdOutlineChevronRight className="chevron" />
-          </div>
+          ) : null}
           <Modal
             style={modalStyles}
             isOpen={showModal4}
