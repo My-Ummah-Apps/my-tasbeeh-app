@@ -609,13 +609,12 @@ function App() {
             }
           />
         </Routes>
+        <NavBar
+          activeBackgroundColor={activeBackgroundColor}
+          setActivePage={setActivePage}
+          activePage={activePage}
+        />
       </section>
-
-      <NavBar
-        activeBackgroundColor={activeBackgroundColor}
-        setActivePage={setActivePage}
-        activePage={activePage}
-      />
     </BrowserRouter>
   );
 }
