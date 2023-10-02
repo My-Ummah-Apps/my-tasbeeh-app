@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { Device } from "@capacitor/device";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
@@ -16,12 +15,6 @@ import SettingsPage from "./pages/SettingsPage";
 
 import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
-
-let device;
-const checkDevice = () => {
-  device = Device.getInfo();
-};
-checkDevice();
 
 window.addEventListener("DOMContentLoaded", () => {
   if (Capacitor.isNativePlatform()) {
@@ -60,13 +53,9 @@ window.addEventListener("DOMContentLoaded", () => {
       });
     }, 500);
 
-    // const checkDevice = async () => {
-    //   const info = await Device.getInfo();
-
-    if (device.operatingSystem == "ios") {
+    if (Capacitor.getPlatform() == "ios") {
       return;
-    } else if (device.operatingSystem == "android") {
-      console.log("DEVICE IS ANDROID");
+    } else if (Capacitor.getPlatform() == "android") {
       setTimeout(() => {
         if (statusBarThemeColor == "#EDEDED") {
           StatusBar.setStyle({ style: Style.Light });
@@ -78,8 +67,6 @@ window.addEventListener("DOMContentLoaded", () => {
         StatusBar.setBackgroundColor({ color: statusBarThemeColor });
       }, 1000);
     }
-    // };
-    // checkDevice();
   }
 });
 
@@ -158,28 +145,14 @@ function App() {
   document.addEventListener("deviceready", onDeviceReady, false);
 
   function onDeviceReady() {
-    // if (device == "android") {
-    //   console.log("DEVICE IS ANDROID SETTINGS STATUS BAR COLOR TO WHITE");
-    //   StatusBar.setBackgroundColor({ color: "#EDEDED" });
-    // }
-    // console.log("ONDEVICEREADY FIRED");
-    // const checkDevice = async () => {
-    //   const info = await Device.getInfo();
-    //   if (info.operatingSystem == "ios") {
-    //   }
-    //   if (info.operatingSystem == "android") {
-    //     StatusBar.setOverlaysWebView({ overlay: true });
-    //   }
-    // };
-    // checkDevice();
-
     Purchases.setDebugLogsEnabled(true);
 
-    if (device.operatingSystem === "ios") {
+    if (Capacitor.getPlatform() === "ios") {
       Purchases.configureWith({
         apiKey: process.env.REACT_APP_APPLE_APIKEY,
       });
-    } else if (device.operatingSystem === "android") {
+      console.log("IOS DETECTED, API SET");
+    } else if (Capacitor.getPlatform() === "android") {
       Purchases.configureWith({
         apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
       });
@@ -238,25 +211,6 @@ function App() {
     "#FF7043",
   ];
   const [activePage, setActivePage] = useState("home");
-  const [device, setDevice] = useState("");
-  if (device.operatingSystem == "ios") {
-    setDevice("ios");
-  } else if (device.operatingSystem == "android") {
-    setDevice("android");
-  }
-  // const logDeviceInfo = async () => {
-  //   const info = await Device.getInfo();
-
-  //   if (info.operatingSystem == "ios") {
-  //     setDevice("ios");
-  //   } else if (info.operatingSystem == "android") {
-  //     setDevice("android");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   logDeviceInfo();
-  // }, []);
 
   const [morningNotification, setMorningNotification] = useState(
     JSON.parse(localStorage.getItem("morning-notification"))
@@ -608,7 +562,6 @@ function App() {
                 eveningNotification={eveningNotification}
                 setEveningNotification={setEveningNotification}
                 modalStyles={modalStyles}
-                device={device}
                 setHaptics={setHaptics}
                 haptics={haptics}
                 setDailyCounterReset={setDailyCounterReset}

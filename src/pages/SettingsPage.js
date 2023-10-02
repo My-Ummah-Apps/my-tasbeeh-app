@@ -41,7 +41,7 @@ const SettingsPage = ({
   eveningNotification,
   setEveningNotification,
   modalStyles,
-  device,
+
   setHaptics,
   haptics,
   setDailyCounterReset,
@@ -182,7 +182,7 @@ const SettingsPage = ({
 
   async function triggerPurchase(tipAmount) {
     try {
-      if (device == "ios") {
+      if (Capacitor.getPlatform() == "ios") {
         const { customerInfo, productIdentifier } =
           await Purchases.purchaseProduct(tipAmount);
       }
@@ -241,9 +241,9 @@ const SettingsPage = ({
 
   const shareThisAppLink = async () => {
     let link;
-    if (device == "ios") {
+    if (Capacitor.getPlatform() == "ios") {
       link = "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967";
-    } else if (device == "android") {
+    } else if (Capacitor.getPlatform() == "android") {
       link = "https://play.google.com/store/apps/details?id=com.tasbeeh.my";
     }
 
@@ -282,7 +282,7 @@ const SettingsPage = ({
       </Modal> */}
 
       <div className="settings-page-options-and-info-wrap">
-        {device == "ios" ? (
+        {Capacitor.getPlatform() == "ios" ? (
           <div className="individual-section-wrap">
             <div
               className="support-box-wrap"
@@ -621,7 +621,7 @@ const SettingsPage = ({
           </div>
         </div>
         <div className="individual-section-wrap">
-          {device == "android" ? (
+          {Capacitor.getPlatform() == "android" ? (
             <div
               className="review-wrap"
               onClick={() => {
@@ -637,7 +637,7 @@ const SettingsPage = ({
               <MdOutlineChevronRight className="chevron" />
             </div>
           ) : null}
-          {device == "ios" ? (
+          {Capacitor.getPlatform() == "ios" ? (
             <div
               className="review-wrap"
               onClick={() => {
@@ -666,7 +666,7 @@ const SettingsPage = ({
             className="feedback-wrap"
             onClick={() => {
               link(
-                "mailto: contact@myummahapps.com?subject=MyTasbeehApp Feedback"
+                "mailto: contact@myummahapps.com?subject=My Tasbeeh App Feedback"
               );
             }}
           >
@@ -676,19 +676,6 @@ const SettingsPage = ({
             </div>
             <MdOutlineChevronRight className="chevron" />
           </div>
-          {/* <div
-          className="source-code-wrap"
-          onClick={() => {
-            link("https://github.com/My-Ummah-Apps/my-tasbeeh-app");
-          }}
-        >
-          <MdOutlineFeedback className="icon" />
-          <div className="text-wrap" style={{ display: "block" }}>
-            <p>Source Code</p>
-            <p>View source code on Github</p>
-          </div>
-          <MdOutlineChevronRight className="chevron" />
-        </div> */}
           <div
             className="website-wrap"
             onClick={() => {
@@ -701,26 +688,12 @@ const SettingsPage = ({
             </div>
             <MdOutlineChevronRight className="chevron" />
           </div>
-          {/* <div
-          onClick={() => {
-            link("https://sites.google.com/view/mytasbeehprivacypolicy/home");
-          }}
-        >
-          <MdOutlineFeedback className="icon" />
-          <div className="text-wrap" style={{ display: "block" }}>
-            <p>Privacy Policy</p>
-            <p>View our privacy policy</p>
-          </div>
-          <MdOutlineChevronRight className="chevron" />
-        </div> */}
           {Capacitor.isNativePlatform() ? (
             <div
               onClick={() => {
                 handleOpenModal4();
               }}
             >
-              {/* <div className="icon" /> */}
-
               <div className="text-wrap" style={{ display: "block" }}>
                 <p>About</p>
                 <p>About us</p>
