@@ -45,22 +45,6 @@ const FormFilled = ({
         ? (showTargetAlert.current.style.visibility = "visible")
         : (showTargetAlert.current.style.visibility = "hidden");
 
-      // if (counterNameInput.length == 0) {
-      //   showNameAlert.current.style.visibility = "visible";
-      // } else {
-      //   showNameAlert.current.style.visibility = "hidden";
-      // }
-      // if (currentCountInput.length == 0) {
-      //   showCountAlert.current.style.visibility = "visible";
-      // } else {
-      //   showCountAlert.current.style.visibility = "hidden";
-      // }
-      // if (currentTargetInput == 0) {
-      //   showTargetAlert.current.style.visibility = "visible";
-      // } else {
-      //   showTargetAlert.current.style.visibility = "hidden";
-      // }
-
       return;
     }
 
@@ -81,7 +65,6 @@ const FormFilled = ({
   return (
     <form className="form-wrap form-filled">
       <div className="form-filled-icons-wrap">
-        {/* <MdOutlinePlaylistRemove */}
         <MdDeleteOutline
           onClick={(e) => {
             deleteSingleCounter(currentCounterId);
@@ -89,7 +72,7 @@ const FormFilled = ({
             handleCloseModal();
           }}
         />
-        {/* <VscDebugRestart */}
+
         <MdOutlineRestartAlt
           onClick={(e) => {
             e.preventDefault();

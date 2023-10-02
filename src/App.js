@@ -18,7 +18,6 @@ import { Purchases } from "@awesome-cordova-plugins/purchases";
 
 window.addEventListener("DOMContentLoaded", () => {
   if (Capacitor.isNativePlatform()) {
-    console.log("STATUS BAR HAS RUN");
     // STATUS BAR FUNCTIONALITY
 
     const setStatusBarStyleDark = async () => {
@@ -29,19 +28,16 @@ window.addEventListener("DOMContentLoaded", () => {
       await StatusBar.setStyle({ style: Style.Light });
     };
 
-    console.log("CHECKING LOCAL STORAGE THEME...");
     let statusBarThemeColor;
     if (localStorage.getItem("theme") == null) {
       localStorage.setItem("theme", JSON.stringify("light"));
       setStatusBarStyleLight();
       statusBarThemeColor = "#EDEDED";
     } else if (JSON.parse(localStorage.getItem("theme")) == "dark") {
-      console.log("STORED THEME IS DARK!");
       setStatusBarStyleDark();
       statusBarThemeColor = "#242424";
       document.body.classList.add("dark");
     } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
-      console.log("STORED THEME IS LIGHT!");
       setStatusBarStyleLight();
       statusBarThemeColor = "#EDEDED";
       document.body.classList.remove("dark");
@@ -59,9 +55,7 @@ window.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         if (statusBarThemeColor == "#EDEDED") {
           StatusBar.setStyle({ style: Style.Light });
-          console.log("statusbar is light");
         } else if (statusBarThemeColor == "#242424") {
-          console.log("statusbar is dark");
           StatusBar.setStyle({ style: Style.Dark });
         }
         StatusBar.setBackgroundColor({ color: statusBarThemeColor });
@@ -75,11 +69,11 @@ let scheduleAfternoonNotification;
 let scheduleEveningNotification;
 
 if (Capacitor.isNativePlatform()) {
-  LocalNotifications.createChannel({
-    id: "1",
-    name: "Notification",
-    description: "General Notification",
-  });
+  // LocalNotifications.createChannel({
+  //   id: "1",
+  //   name: "Notification",
+  //   description: "General Notification",
+  // });
 
   scheduleMorningNotifications = async () => {
     await LocalNotifications.schedule({
@@ -87,7 +81,7 @@ if (Capacitor.isNativePlatform()) {
         {
           title: "Morning Reminder",
           body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
-          id: 2,
+          id: 1,
           schedule: {
             on: { hour: 7, minute: 0 }, // THIS WORKS ON IOS
             allowWhileIdle: true,
@@ -151,7 +145,6 @@ function App() {
       Purchases.configureWith({
         apiKey: process.env.REACT_APP_APPLE_APIKEY,
       });
-      console.log("IOS DETECTED, API SET");
     } else if (Capacitor.getPlatform() === "android") {
       Purchases.configureWith({
         apiKey: process.env.REACT_APP_GOOGLE_APIKEY,

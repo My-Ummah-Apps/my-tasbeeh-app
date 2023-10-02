@@ -48,16 +48,10 @@ const SettingsPage = ({
   dailyCounterReset,
   activeBackgroundColor,
 }) => {
-  // console.log("fetchedProducts ON SETTINGS PAGE:");
-  // console.log(iapProducts);
-
   const [theme, setTheme] = useState(JSON.parse(localStorage.getItem("theme")));
-  console.log("INITIAL THEME IS:");
-  console.log(theme);
+
   useEffect(() => {
     setTheme(JSON.parse(localStorage.getItem("theme")));
-    console.log("THEME IS:");
-    console.log(theme);
   }, [theme]);
 
   const [showModal, setShowModal] = useState(false);
@@ -73,7 +67,6 @@ const SettingsPage = ({
 
   const handleOpenModal2 = () => {
     setShowModal2(true);
-    console.log("NOTIFICATION MODAL OPENED");
   };
 
   const handleOpenModal3 = () => {
@@ -98,7 +91,6 @@ const SettingsPage = ({
 
   const handleCloseModal2 = () => {
     setShowModal2(false);
-    console.log("NOTIFICATION MODAL CLOSED");
   };
 
   const handleCloseModal3 = () => {
@@ -130,11 +122,6 @@ const SettingsPage = ({
     checkPermission = await LocalNotifications.checkPermissions();
     userNotificationPermission = checkPermission.display;
 
-    // console.log("userNotificationPermission:");
-    // console.log(userNotificationPermission);
-    // console.log("checkPermission.display:");
-    // console.log(checkPermission.display);
-
     if (userNotificationPermission == "denied") {
       alert("Please turn notifications back on from within system settings");
       return;
@@ -157,8 +144,7 @@ const SettingsPage = ({
 
   const requestPermissionFunction = async () => {
     requestPermission = await LocalNotifications.requestPermissions();
-    console.log("checkPermission.display:");
-    console.log(requestPermission.display);
+
     if (requestPermission.display == "granted") {
       handleOpenModal2();
       // setMorningNotification(true);
@@ -458,7 +444,6 @@ const SettingsPage = ({
                     StatusBar.setStyle({ style: Style.Dark });
                   }
 
-                  console.log("THEME SWITCHED TO LIGHT");
                   localStorage.setItem("theme", JSON.stringify("dark"));
                   document.body.classList.add("dark");
                 } else if (theme == "dark") {
@@ -468,7 +453,6 @@ const SettingsPage = ({
                     StatusBar.setStyle({ style: Style.Light });
                   }
 
-                  console.log("THEME SWITCHED TO DARK");
                   localStorage.setItem("theme", JSON.stringify("light"));
                   document.body.classList.remove("dark");
                 }
