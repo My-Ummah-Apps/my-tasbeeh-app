@@ -1,8 +1,10 @@
 # My Tasbeeh App
 
-My Tasbeeh App is a tally counting application, it helps keep track of multiple tallies, users can create, modify and delete tallies, the application has other features such as dark / light mode, notifications and so on.
+My Tasbeeh App is a tally counting application built using web technologies (HTML, CSS, Javascript), it uses the module bundler Vite, this helps with using CapacitorJS plugins such as the notifications and splashscreen plugins.
 
-This application is licensed under MIT license.
+CapacitorJS is used overall to allow this web application to be installed onto mobile devices (Android & iOS) as a native application.
+
+My Tasbeeh App is a tally counting application, it helps keep track of multiple tallies at the same time, users can create, modify and delete tallies, the application has other features such as dark / light mode, notifications and so on.
 
 # Getting Started with Create React App
 
@@ -74,3 +76,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### License
+
+This project is licensed under the MIT License.
