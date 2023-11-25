@@ -1,10 +1,8 @@
 # My Tasbeeh App
 
-My Tasbeeh App is a tally counting application built using web technologies (HTML, CSS, Javascript), it uses the module bundler Vite, this helps with using CapacitorJS plugins such as the notifications and splashscreen plugins.
+My Tasbeeh App is a tally counting application built using ReactJS, it helps keep track of multiple tallies at the same time, users can create, modify and delete tallies, the application has other features such as dark / light mode, notifications and so on (some features are available on the mobile app versions only).
 
-CapacitorJS is used overall to allow this web application to be installed onto mobile devices (Android & iOS) as a native application.
-
-My Tasbeeh App is a tally counting application, it helps keep track of multiple tallies at the same time, users can create, modify and delete tallies, the application has other features such as dark / light mode, notifications and so on.
+The native runtime CapacitorJS is used to allow this web application to be installed onto mobile devices (Android & iOS) as a native application and it also allows for device API's to be used (such as notifications).
 
 # Getting Started with Create React App
 
