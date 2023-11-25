@@ -658,7 +658,7 @@ button:focus {
   /* position: sticky; */
   bottom: 0;
   width: 100%;
-  /* max-width: 700px; */
+  max-width: 700px;
   border-top: 1px solid var(--border-header-and-nav);
   /* box-shadow: 10px 5px 5px rgb(177, 177, 177); */
   background: var(--nav-bg-color);
