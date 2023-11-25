@@ -1,3 +1,9 @@
+# My Tasbeeh App
+
+My Tasbeeh App is a tally counting application, it helps keep track of multiple tallies, users can create, modify and delete tallies, the application has other features such as dark / light mode, notifications and so on.
+
+This application is licensed under MIT license.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -180,20 +180,19 @@ const SettingsPage = ({
       handleCloseModal6();
       // }
     }
-
-    // if (device == "android") {
-    //   try {
-    //     await Purchases.purchaseProduct(
-    //       tipAmount,
-    //       null,
-    //       Purchases.PURCHASE_TYPE.INAPP
-    //     );
-    //   } catch (e) {
-    //     console.log("ERROR");
-    //     console.log(e);
-    //     console.log(Purchases.PURCHASE_TYPE.INAPP);
-    //   }
-    // }
+    try {
+      if (Capacitor.getPlatform() == "android") {
+        await Purchases.purchaseProduct(
+          tipAmount,
+          null,
+          Purchases.PURCHASE_TYPE.INAPP
+        );
+      }
+    } catch (e) {
+      console.log("ERROR");
+      console.log(e);
+      console.log(Purchases.PURCHASE_TYPE.INAPP);
+    }
     // try {
     //   await Purchases.purchaseProduct(
     //     tipAmount,
@@ -267,116 +266,116 @@ const SettingsPage = ({
       </Modal> */}
 
       <div className="settings-page-options-and-info-wrap">
-        {Capacitor.getPlatform() == "ios" ? (
-          <div className="individual-section-wrap">
-            <div
-              className="support-box-wrap"
-              onClick={() => {
-                handleOpenModal5();
-              }}
-            >
-              <div className="support-box-icon-and-text-wrap">
-                {/* <FaJar */}
-                <FaHandHoldingHeart
-                  style={{
-                    fontSize: "32px",
-                    color: activeBackgroundColor,
-                  }}
-                />
-                <div className="support-box-text-wrap">
-                  <p className="support-main-text-heading">Contribute</p>
-                  <p className="support-sub-text">Support our work</p>
-                </div>
+        {/* {Capacitor.getPlatform() == "ios" ? ( */}
+        <div className="individual-section-wrap">
+          <div
+            className="support-box-wrap"
+            onClick={() => {
+              handleOpenModal5();
+            }}
+          >
+            <div className="support-box-icon-and-text-wrap">
+              {/* <FaJar */}
+              <FaHandHoldingHeart
+                style={{
+                  fontSize: "32px",
+                  color: activeBackgroundColor,
+                }}
+              />
+              <div className="support-box-text-wrap">
+                <p className="support-main-text-heading">Contribute</p>
+                <p className="support-sub-text">Support our work</p>
               </div>
-              <MdOutlineChevronRight className="chevron" />
             </div>
-
-            <Modal
-              style={modalStyles}
-              isOpen={showModal5}
-              onRequestClose={handleCloseModal5}
-              closeTimeoutMS={250}
-              contentLabel="Modal #2 Global Style Override Example"
-            >
-              <div className="tip-box-wrap">
-                {/* <div> */}
-                <p
-                  className="tip-jar-box-first-line-of-text tip-jar-box-text"
-                  style={{
-                    backgroundColor: activeBackgroundColor,
-                  }}
-                ></p>
-
-                <p
-                  className="tip-jar-box-text"
-                  style={{
-                    backgroundColor: activeBackgroundColor,
-                  }}
-                >
-                  MyUmmahApps Ltd provides free, open source applications for
-                  the Muslim community, these applications contain no ads.
-                </p>
-
-                <p
-                  className="tip-jar-box-text"
-                  style={{
-                    backgroundColor: activeBackgroundColor,
-                  }}
-                >
-                  {" "}
-                  Your support will help us continue serving the Ummah in this
-                  endeavor.
-                </p>
-
-                <p
-                  className="tip-jar-box-text"
-                  style={{
-                    backgroundColor: activeBackgroundColor,
-                  }}
-                >
-                  {" "}
-                  May Allah reward you.
-                </p>
-
-                {/* </div> */}
-
-                {!iapProducts ? (
-                  <p style={{ padding: "2rem" }}>Loading...</p>
-                ) : (
-                  iapProducts.map((item) => {
-                    return (
-                      <div
-                        className="tip-wrap"
-                        onClick={() => {
-                          triggerPurchase(item.identifier);
-                          handleOpenModal6();
-                        }}
-                      >
-                        <p>{item.title}</p>
-                        <p>{item.priceString}</p>
-                      </div>
-                    );
-                  })
-                )}
-                <Modal
-                  style={modalStyles}
-                  isOpen={showModal6}
-                  // onRequestClose={handleCloseModal5}
-                  closeTimeoutMS={250}
-                  contentLabel="Modal #2 Global Style Override Example"
-                >
-                  {" "}
-                  <div class="lds-ellipsis">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                  </div>
-                </Modal>
-              </div>
-            </Modal>
+            <MdOutlineChevronRight className="chevron" />
           </div>
-        ) : null}{" "}
+
+          <Modal
+            style={modalStyles}
+            isOpen={showModal5}
+            onRequestClose={handleCloseModal5}
+            closeTimeoutMS={250}
+            contentLabel="Modal #2 Global Style Override Example"
+          >
+            <div className="tip-box-wrap">
+              {/* <div> */}
+              <p
+                className="tip-jar-box-first-line-of-text tip-jar-box-text"
+                style={{
+                  backgroundColor: activeBackgroundColor,
+                }}
+              ></p>
+
+              <p
+                className="tip-jar-box-text"
+                style={{
+                  backgroundColor: activeBackgroundColor,
+                }}
+              >
+                MyUmmahApps Ltd provides free, open source applications for the
+                Muslim community, these applications contain no ads.
+              </p>
+
+              <p
+                className="tip-jar-box-text"
+                style={{
+                  backgroundColor: activeBackgroundColor,
+                }}
+              >
+                {" "}
+                Your support will help us continue serving the Ummah in this
+                endeavor.
+              </p>
+
+              <p
+                className="tip-jar-box-text"
+                style={{
+                  backgroundColor: activeBackgroundColor,
+                }}
+              >
+                {" "}
+                May Allah reward you.
+              </p>
+
+              {/* </div> */}
+
+              {!iapProducts ? (
+                <p style={{ padding: "2rem" }}>Loading...</p>
+              ) : (
+                iapProducts.map((item) => {
+                  return (
+                    <div
+                      className="tip-wrap"
+                      onClick={() => {
+                        triggerPurchase(item.identifier);
+                        handleOpenModal6();
+                      }}
+                    >
+                      <p>{item.title}</p>
+                      <p>{item.priceString}</p>
+                    </div>
+                  );
+                })
+              )}
+              <Modal
+                style={modalStyles}
+                isOpen={showModal6}
+                // onRequestClose={handleCloseModal5}
+                closeTimeoutMS={250}
+                contentLabel="Modal #2 Global Style Override Example"
+              >
+                {" "}
+                <div class="lds-ellipsis">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </Modal>
+            </div>
+          </Modal>
+        </div>
+        {/* ) : null}{" "} */}
         {Capacitor.isNativePlatform() ? (
           <div className="individual-section-wrap">
             <div
