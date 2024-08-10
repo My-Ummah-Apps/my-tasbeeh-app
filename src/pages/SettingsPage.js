@@ -11,7 +11,7 @@ import NotificationOptions from "../components/NotificationOptions";
 import ResetAllCountersAlert from "../components/ResetAllCountersAlert";
 import AboutUs from "../components/AboutUs";
 
-import { Purchases } from "@awesome-cordova-plugins/purchases";
+// import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { PURCHASE_TYPE } from "cordova-plugin-purchases";
 import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
@@ -32,7 +32,7 @@ Modal.defaultStyles.content.zIndex = "10000";
 Modal.defaultStyles.content.width = "90%";
 
 const SettingsPage = ({
-  iapProducts,
+  // iapProducts,
   resetAllCounters,
   morningNotification,
   setMorningNotification,
@@ -133,7 +133,6 @@ const SettingsPage = ({
     ) {
       handleOpenModal2();
       requestPermissionFunction();
-
       setMorningNotification(false);
       setAfternoonNotification(false);
       setEveningNotification(false);
@@ -165,63 +164,63 @@ const SettingsPage = ({
 
   let subtitle;
 
-  async function triggerPurchase(tipAmount) {
-    try {
-      if (Capacitor.getPlatform() == "ios") {
-        const { customerInfo, productIdentifier } =
-          await Purchases.purchaseProduct(tipAmount);
-      }
-    } catch (e) {
-      // if (!e.userCancelled) {
-      console.log("ERROR HAS OCCURRED:");
-      console.log(e);
-      // console.log(e.userCancelled);
+  // async function triggerPurchase(tipAmount) {
+  //   try {
+  //     if (Capacitor.getPlatform() == "ios") {
+  //       const { customerInfo, productIdentifier } =
+  //         await Purchases.purchaseProduct(tipAmount);
+  //     }
+  //   } catch (e) {
+  //     // if (!e.userCancelled) {
+  //     console.log("ERROR HAS OCCURRED:");
+  //     console.log(e);
+  //     // console.log(e.userCancelled);
 
-      handleCloseModal6();
-      // }
-    }
-    try {
-      if (Capacitor.getPlatform() == "android") {
-        await Purchases.purchaseProduct(
-          tipAmount,
-          null,
-          Purchases.PURCHASE_TYPE.INAPP
-        );
-      }
-    } catch (e) {
-      console.log("ERROR");
-      console.log(e);
-      console.log(Purchases.PURCHASE_TYPE.INAPP);
-    }
-    // try {
-    //   await Purchases.purchaseProduct(
-    //     tipAmount,
-    //     ({ productIdentifier, customerInfo }) => {
-    //       // console.log("productIdentifier and customerInfo:");
-    //       // console.log(productIdentifier);
-    //       // console.log(customerInfo);
-    //     },
-    //     ({ error, userCancelled }) => {
-    //       // Error making purchase
-    //       console.log("ERROR HAS OCCURRED:");
-    //       console.log(error);
-    //     },
-    //     null,
-    //     Purchases.PURCHASE_TYPE.INAPP
-    //   );
-    // } catch (e) {
-    //   console.log("ERROR OCCURRED:");
-    //   console.log(e);
-    //   console.log("Purchases.PURCHASE_TYPE.INAPP is:");
-    //   console.log(Purchases.PURCHASE_TYPE.INAPP);
-    // }
+  //     handleCloseModal6();
+  //     // }
+  //   }
+  //   try {
+  //     if (Capacitor.getPlatform() == "android") {
+  //       await Purchases.purchaseProduct(
+  //         tipAmount,
+  //         null,
+  //         Purchases.PURCHASE_TYPE.INAPP
+  //       );
+  //     }
+  //   } catch (e) {
+  //     console.log("ERROR");
+  //     console.log(e);
+  //     console.log(Purchases.PURCHASE_TYPE.INAPP);
+  //   }
+  //   // try {
+  //   //   await Purchases.purchaseProduct(
+  //   //     tipAmount,
+  //   //     ({ productIdentifier, customerInfo }) => {
+  //   //       // console.log("productIdentifier and customerInfo:");
+  //   //       // console.log(productIdentifier);
+  //   //       // console.log(customerInfo);
+  //   //     },
+  //   //     ({ error, userCancelled }) => {
+  //   //       // Error making purchase
+  //   //       console.log("ERROR HAS OCCURRED:");
+  //   //       console.log(error);
+  //   //     },
+  //   //     null,
+  //   //     Purchases.PURCHASE_TYPE.INAPP
+  //   //   );
+  //   // } catch (e) {
+  //   //   console.log("ERROR OCCURRED:");
+  //   //   console.log(e);
+  //   //   console.log("Purchases.PURCHASE_TYPE.INAPP is:");
+  //   //   console.log(Purchases.PURCHASE_TYPE.INAPP);
+  //   // }
 
-    // console.log("PURCHASE SUCCESSFULL");
-    // console.log(customerInfo);
-    // console.log(productIdentifier);
+  //   // console.log("PURCHASE SUCCESSFULL");
+  //   // console.log(customerInfo);
+  //   // console.log(productIdentifier);
 
-    handleCloseModal6();
-  }
+  //   handleCloseModal6();
+  // }
 
   const shareThisAppLink = async () => {
     let link;
@@ -262,12 +261,10 @@ const SettingsPage = ({
           activeBackgroundColor={activeBackgroundColor}
           setTheme={setTheme}
         />
-      
       </Modal> */}
 
       <div className="settings-page-options-and-info-wrap">
-        {/* {Capacitor.getPlatform() == "ios" ? ( */}
-        <div className="individual-section-wrap">
+        {/* <div className="individual-section-wrap">
           <div
             className="support-box-wrap"
             onClick={() => {
@@ -275,7 +272,6 @@ const SettingsPage = ({
             }}
           >
             <div className="support-box-icon-and-text-wrap">
-              {/* <FaJar */}
               <FaHandHoldingHeart
                 style={{
                   fontSize: "32px",
@@ -298,7 +294,6 @@ const SettingsPage = ({
             contentLabel="Modal #2 Global Style Override Example"
           >
             <div className="tip-box-wrap">
-              {/* <div> */}
               <p
                 className="tip-jar-box-first-line-of-text tip-jar-box-text"
                 style={{
@@ -337,8 +332,6 @@ const SettingsPage = ({
                 May Allah reward you.
               </p>
 
-              {/* </div> */}
-
               {!iapProducts ? (
                 <p style={{ padding: "2rem" }}>Loading...</p>
               ) : (
@@ -375,14 +368,13 @@ const SettingsPage = ({
             </div>
           </Modal>
         </div>
-        {/* ) : null}{" "} */}
+
         {Capacitor.isNativePlatform() ? (
           <div className="individual-section-wrap">
             <div
               className="notifications-wrap"
               onClick={() => {
                 checkNotificationPermissions();
-                // handleOpenModal2();
               }}
             >
               <div className="text-wrap" style={{ display: "block" }}>
@@ -409,7 +401,7 @@ const SettingsPage = ({
               />
             </Modal>
           </div>
-        ) : null}
+        ) : null} */}
         <div className="individual-section-wrap">
           <div
             className="theme-wrap"

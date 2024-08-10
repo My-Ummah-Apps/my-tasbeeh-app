@@ -13,7 +13,7 @@ import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 
-import { Purchases } from "@awesome-cordova-plugins/purchases";
+// import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -135,22 +135,22 @@ let counterId;
 let defaultArray;
 
 function App() {
-  const [iapProducts, setIapProducts] = useState(null);
-  document.addEventListener("deviceready", onDeviceReady, false);
+  // const [iapProducts, setIapProducts] = useState(null);
+  // document.addEventListener("deviceready", onDeviceReady, false);
 
-  function onDeviceReady() {
-    Purchases.setDebugLogsEnabled(true);
+  // function onDeviceReady() {
+  //   Purchases.setDebugLogsEnabled(true);
 
-    if (Capacitor.getPlatform() === "ios") {
-      Purchases.configureWith({
-        apiKey: process.env.REACT_APP_APPLE_APIKEY,
-      });
-    } else if (Capacitor.getPlatform() === "android") {
-      Purchases.configureWith({
-        apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
-      });
-    }
-  }
+  //   if (Capacitor.getPlatform() === "ios") {
+  //     Purchases.configureWith({
+  //       apiKey: process.env.REACT_APP_APPLE_APIKEY,
+  //     });
+  //   } else if (Capacitor.getPlatform() === "android") {
+  //     Purchases.configureWith({
+  //       apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
+  //     });
+  //   }
+  // }
 
   const [modalStyles, setModalStyles] = useState({
     overlay: {
@@ -170,24 +170,24 @@ function App() {
     process.env.REACT_APP_XLT,
   ];
 
-  useEffect(() => {
-    if (Capacitor.isNativePlatform()) {
-      (async () => {
-        const fetchedProducts = await Purchases.getProducts(
-          productsArray,
-          "inapp"
-        );
-        fetchedProducts.sort(function (a, b) {
-          return a.price - b.price;
-        });
-        setIapProducts(fetchedProducts);
-      })();
+  // useEffect(() => {
+  //   if (Capacitor.isNativePlatform()) {
+  //     (async () => {
+  //       const fetchedProducts = await Purchases.getProducts(
+  //         productsArray,
+  //         "inapp"
+  //       );
+  //       fetchedProducts.sort(function (a, b) {
+  //         return a.price - b.price;
+  //       });
+  //       setIapProducts(fetchedProducts);
+  //     })();
 
-      return () => {
-        // Not required right now, but if needed this will get called when the component unmounts
-      };
-    }
-  }, []);
+  //     return () => {
+  //       // Not required right now, but if needed this will get called when the component unmounts
+  //     };
+  //   }
+  // }, []);
 
   const materialColors = [
     "#EF5350",
@@ -546,7 +546,7 @@ function App() {
             path="SettingsPage"
             element={
               <SettingsPage
-                iapProducts={iapProducts}
+                // iapProducts={iapProducts}
                 resetAllCounters={resetAllCounters}
                 setMorningNotification={setMorningNotification}
                 morningNotification={morningNotification}

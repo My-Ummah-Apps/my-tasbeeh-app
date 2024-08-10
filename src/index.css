@@ -279,8 +279,12 @@ body {
   text-align: left;
   cursor: pointer;
   height: 50px;
-  transition: left 0.3s ease-in, box-shadow 0.3s ease-in;
-  -webkit-transition: left 0.3s ease-in, box-shadow 0.3s ease-in,
+  transition:
+    left 0.3s ease-in,
+    box-shadow 0.3s ease-in;
+  -webkit-transition:
+    left 0.3s ease-in,
+    box-shadow 0.3s ease-in,
     -webkit-box-shadow 0.3s ease-in;
   /* animation: slideLeft 0.3s ease-in forwards;
   -webkit-animation: slideLeft 0.3s ease-in forwards; */
@@ -288,13 +292,20 @@ body {
 
 .counter-page-single-counter.active {
   position: relative;
-  box-shadow: 0 4px 8px 0 rgb(164 164 164 / 20%), 0 4px 8px 0 rgb(0 0 0 / 19%);
-  -webkit-box-shadow: 0 4px 8px 0 rgb(164 164 164 / 20%),
+  box-shadow:
+    0 4px 8px 0 rgb(164 164 164 / 20%),
+    0 4px 8px 0 rgb(0 0 0 / 19%);
+  -webkit-box-shadow:
+    0 4px 8px 0 rgb(164 164 164 / 20%),
     0 4px 8px 0 rgb(0 0 0 / 19%);
   padding: 3rem;
   left: 5px;
-  transition: left 0.3s ease-in, box-shadow 0.3s ease-in;
-  -webkit-transition: left 0.3s ease-in, box-shadow 0.3s ease-in,
+  transition:
+    left 0.3s ease-in,
+    box-shadow 0.3s ease-in;
+  -webkit-transition:
+    left 0.3s ease-in,
+    box-shadow 0.3s ease-in,
     -webkit-box-shadow 0.3s ease-in;
   /* animation: slideRight 0.3s ease-in forwards;
   -webkit-animation: slideRight 0.3s ease-in forwards; */
@@ -312,8 +323,11 @@ MdModeEditOutline {
   }
 
   100% {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
       0 4px 8px 0 rgba(0, 0, 0, 0.19);
     transform: translateX(1.5%);
   }
@@ -327,8 +341,11 @@ MdModeEditOutline {
   }
 
   100% {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
       0 4px 8px 0 rgba(0, 0, 0, 0.19);
     transform: translateX(1.5%);
   }
@@ -336,8 +353,11 @@ MdModeEditOutline {
 
 @-webkit-keyframes slideLeft {
   0% {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
       0 4px 8px 0 rgba(0, 0, 0, 0.19);
     transform: translateX(1.5%);
   }
@@ -350,8 +370,11 @@ MdModeEditOutline {
 
 @keyframes slideLeft {
   0% {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
       0 4px 8px 0 rgba(0, 0, 0, 0.19);
     transform: translateX(1.5%);
   }
@@ -364,7 +387,9 @@ MdModeEditOutline {
 .counter-page-single-counter.not-active {
   position: relative;
   left: 0px;
-  transition: left 0.3s ease-in, box-shadow 0.3s ease;
+  transition:
+    left 0.3s ease-in,
+    box-shadow 0.3s ease;
 }
 
 .counters-wrap {
@@ -491,7 +516,9 @@ MdModeEditOutline {
   border-radius: 50%;
   cursor: pointer;
   background: var(--secondary-color);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 80px;
   height: 80px;
   text-align: center;
