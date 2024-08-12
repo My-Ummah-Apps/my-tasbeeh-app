@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@awesome-cordova-plugins/core": "^6.4.0",
+    "@capacitor-community/in-app-review": "^6.0.0",
     "@capacitor/android": "^6.0.0",
     "@capacitor/app": "^6.0.0",
     "@capacitor/core": "^6.0.0",
@@ -18,7 +19,6 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "capacitor-rate-app": "^4.0.3",
     "cordova-annotated-plugin-android": "^1.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

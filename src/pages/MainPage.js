@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import PlusBtn from "../components/PlusBtn";
-import { RateApp } from "capacitor-rate-app";
+// import { RateApp } from "capacitor-rate-app";
+import { InAppReview } from "@capacitor-community/in-app-review";
 
 const MainPage = ({
   showReviewPrompt,
@@ -23,7 +24,8 @@ const MainPage = ({
   resetSingleCounter,
 }) => {
   if (reviewPrompt) {
-    RateApp.requestReview();
+    // RateApp.requestReview();
+    InAppReview.requestReview();
     showReviewPrompt(false);
   }
   return (
