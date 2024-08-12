@@ -1,8 +1,6 @@
 import { CapacitorConfig } from '@capacitor/cli';
 import { KeyboardResize, Keyboard } from '@capacitor/keyboard';
 
-
-
 const config: CapacitorConfig = {
   appId: 'com.tasbeeh.my',
   appName: 'My Tasbeeh App',
