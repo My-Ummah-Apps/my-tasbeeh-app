@@ -7,6 +7,10 @@ const config: CapacitorConfig = {
   webDir: 'build', 
   bundledWebRuntime: false,
 
+  server: {
+    androidScheme: "http"
+  },
+
   plugins: {
     Keyboard: {
       resize: KeyboardResize.Native,
