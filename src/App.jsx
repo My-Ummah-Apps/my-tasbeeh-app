@@ -163,12 +163,12 @@ function App() {
     },
   });
 
-  const productsArray = [
-    process.env.REACT_APP_ST,
-    process.env.REACT_APP_MT,
-    process.env.REACT_APP_LT,
-    process.env.REACT_APP_XLT,
-  ];
+  // const productsArray = [
+  //   process.env.REACT_APP_ST,
+  //   process.env.REACT_APP_MT,
+  //   process.env.REACT_APP_LT,
+  //   process.env.REACT_APP_XLT,
+  // ];
 
   // useEffect(() => {
   //   if (Capacitor.isNativePlatform()) {
