@@ -17,12 +17,10 @@ function FormBlank({
   const showNameAlert = useRef<HTMLDivElement>(null);
   const showTargetAlert = useRef<HTMLDivElement>(null);
 
-  const [counterNameInput, setCounterName] = useState("");
+  const [counterNameInput, setCounterName] = useState<string>("");
   const [counterTargetInput, setCounterTargetInput] = useState<string>("");
 
   const submitCounter = (e: React.MouseEvent<HTMLDivElement>): void => {
-    console.log(e);
-
     e.preventDefault();
 
     if (
