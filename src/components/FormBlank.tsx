@@ -1,51 +1,54 @@
 import { useState, useRef } from "react";
 
+interface FormBlankProps {
+  activeBackgroundColor: string;
+  addCounter: (counterNameInput: string, counterTargetInput: string) => void;
+  handleCloseModal2: () => void;
+}
+
 function FormBlank({
   activeBackgroundColor,
-  setShowPopUpBoxBlank,
   addCounter,
   handleCloseModal2,
-}) {
+}: FormBlankProps) {
   const counterField = useRef(null);
   const counterTargetField = useRef(null);
 
-  const showNameAlert = useRef(null);
-  const showTargetAlert = useRef(null);
+  const showNameAlert = useRef<HTMLDivElement>(null);
+  const showTargetAlert = useRef<HTMLDivElement>(null);
 
   const [counterNameInput, setCounterName] = useState("");
-  const [counterTargetInput, setCounterTargetInput] = useState("");
+  const [counterTargetInput, setCounterTargetInput] = useState<string>("");
 
-  const submitCounter = (e) => {
+  const submitCounter = (e: React.MouseEvent<HTMLDivElement>): void => {
+    console.log(e);
+
     e.preventDefault();
 
     if (
-      counterNameInput.length == 0 ||
-      counterTargetInput == 0 ||
-      counterTargetInput.length == 0 ||
+      counterNameInput.length === 0 ||
+      counterTargetInput === "0" ||
+      counterTargetInput.length === 0 ||
       !counterTargetInput
     ) {
-      if (counterNameInput.length == 0) {
-        showNameAlert.current.style.visibility = "visible";
+      if (counterNameInput.length === 0) {
+        showNameAlert.current!.style.visibility = "visible";
       } else {
-        showNameAlert.current.style.visibility = "hidden";
+        showNameAlert.current!.style.visibility = "hidden";
       }
       if (
-        counterTargetInput == 0 ||
-        counterTargetInput.length == 0 ||
+        counterTargetInput === "0" ||
+        counterTargetInput.length === 0 ||
         !counterTargetInput
       ) {
-        showTargetAlert.current.style.visibility = "visible";
+        showTargetAlert.current!.style.visibility = "visible";
       } else {
-        showTargetAlert.current.style.visibility = "hidden";
+        showTargetAlert.current!.style.visibility = "hidden";
       }
 
       return;
     }
     addCounter(counterNameInput, counterTargetInput);
-    // counterTargetInput
-    //   ? addCounter(counterNameInput, counterTargetInput)
-    //   : addCounter(counterNameInput, 100);
-    // addCounter(counterNameInput);
     setCounterName("");
     handleCloseModal2();
   };
