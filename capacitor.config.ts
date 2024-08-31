@@ -1,43 +1,36 @@
-import { CapacitorConfig } from '@capacitor/cli';
-import { KeyboardResize, Keyboard } from '@capacitor/keyboard';
+import { CapacitorConfig } from "@capacitor/cli";
+import { KeyboardResize, Keyboard } from "@capacitor/keyboard";
 
 const config: CapacitorConfig = {
-  appId: 'com.tasbeeh.my',
-  appName: 'My Tasbeeh App',
-  webDir: 'build', 
+  appId: "com.tasbeeh.my",
+  appName: "My Tasbeeh App",
+  webDir: "dist",
   bundledWebRuntime: false,
 
   server: {
-    androidScheme: "http"
+    androidScheme: "http",
   },
 
   plugins: {
     Keyboard: {
       resize: KeyboardResize.Native,
-      resizeOnFullScreen: true
+      resizeOnFullScreen: true,
     },
     LocalNotifications: {
       smallIcon: "res:///ic_stat_five",
     },
     SplashScreen: {
-
-      "launchAutoHide": false,
-
-    }
-    
+      launchAutoHide: false,
+    },
   },
 
   // "ios": {
   //   "contentInset": "always"
   // }
-
-
-
-
 };
 
-Keyboard.setScroll({isDisabled: false})
-Keyboard.setAccessoryBarVisible({isVisible: true})
+Keyboard.setScroll({ isDisabled: false });
+Keyboard.setAccessoryBarVisible({ isVisible: true });
 // Keyboard.setScroll({isDisabled: true})
 
 export default config;

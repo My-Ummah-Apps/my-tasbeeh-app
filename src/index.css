@@ -731,9 +731,10 @@ input[type="number"] {
 }
 
 .form-wrap {
+  height: 100%;
   background: var(--form-wrap-bg-color);
   padding: 0.5rem 0 0 0;
-  border-radius: 1.5rem;
+  /* border-radius: 1.5rem; */
   display: block;
   overflow: auto;
   width: 100%;
@@ -742,7 +743,6 @@ input[type="number"] {
   font-size: 0.8rem;
 }
 
-.form-wrap,
 .theme-options-wrap,
 .reset-all-alert-box-wrap,
 .tip-box-wrap {
@@ -762,18 +762,9 @@ input[type="number"] {
   font-size: 2rem;
 }
 
-.form-blank .save-btn {
-  margin-inline: unset;
-}
-
 .form-blank input {
   width: 100%;
   margin: 0 0 0.2rem 0;
-}
-
-.form-blank .save-btn {
-  width: 90%;
-  margin-inline: auto;
 }
 
 .form-blank-counter-name-input-wrap {
@@ -851,6 +842,10 @@ input[type="number"] {
   /* font-size: 0.8rem; */
 }
 
+.react-modal-sheet-container {
+  background-color: var(--form-wrap-bg-color) !important;
+}
+
 .form-wrap input {
   border: none;
   text-align: center;
@@ -863,10 +858,13 @@ input[type="number"] {
 
 .form-blank-save-btn,
 .form-filled-save-btn {
-  /* background-color: #6060ff; */
   color: #fff;
   text-align: center;
   padding: 1.5rem;
+  border-radius: 1.5rem;
+  width: 90%;
+  margin-inline: auto;
+  margin-bottom: 1rem;
 }
 
 .form-alert-styles {

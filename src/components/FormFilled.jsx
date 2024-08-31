@@ -63,54 +63,27 @@ const FormFilled = ({
   const [currentTargetInput, setCurrentTarget] = useState(currentCounterTarget);
 
   return (
-    <form className="form-wrap form-filled">
-      <div className="form-filled-icons-wrap">
-        <MdDeleteOutline
-          onClick={(e) => {
-            deleteSingleCounter(currentCounterId);
-            e.preventDefault();
-            setIsFormFilledSheetOpen(false);
-          }}
-        />
+    <>
+      <form className="form-wrap form-filled">
+        <div className="form-filled-icons-wrap">
+          <MdDeleteOutline
+            onClick={(e) => {
+              deleteSingleCounter(currentCounterId);
+              e.preventDefault();
+              setIsFormFilledSheetOpen(false);
+            }}
+          />
 
-        <MdOutlineRestartAlt
-          onClick={(e) => {
-            e.preventDefault();
-            resetSingleCounter(currentCounterId);
-            setcurrentCountInput(0);
-          }}
-        />
-      </div>
-      <div className="form-filled-counter-name-input-wrap">
-        <p>Dhikr Name</p>
-        <input
-          onClick={(event) => {
-            const input = event.target;
-            input.selectionStart = input.value.length;
-            input.selectionEnd = input.value.length;
-            input.focus();
-          }}
-          ref={counterNameField}
-          className="form-filled-name-input form-input"
-          onChange={(e) => {
-            if (/\d/.test(e.target.value)) return;
-            setCounterName(e.target.value);
-          }}
-          // type="text"
-          value={counterNameInput}
-          required
-        ></input>
-        <div
-          ref={showNameAlert}
-          className={`form-alert-styles`}
-          style={{ visibility: "hidden" }}
-        >
-          Please enter a name
+          <MdOutlineRestartAlt
+            onClick={(e) => {
+              e.preventDefault();
+              resetSingleCounter(currentCounterId);
+              setcurrentCountInput(0);
+            }}
+          />
         </div>
-      </div>
-      <div className="count-and-target-input-wrap">
-        <div className="current-count-input-wrap">
-          <p>Count</p>
+        <div className="form-filled-counter-name-input-wrap">
+          <p>Dhikr Name</p>
           <input
             onClick={(event) => {
               const input = event.target;
@@ -118,67 +91,96 @@ const FormFilled = ({
               input.selectionEnd = input.value.length;
               input.focus();
             }}
-            ref={counterCountField}
-            className="form-input"
-            maxLength={5}
+            ref={counterNameField}
+            className="form-filled-name-input form-input"
             onChange={(e) => {
-              if (/[a-zA-Z]/.test(e.target.value)) return;
-              setcurrentCountInput(e.target.value);
+              if (/\d/.test(e.target.value)) return;
+              setCounterName(e.target.value);
             }}
             // type="text"
-            value={currentCountInput}
-            // pattern="[0-9]*"
+            value={counterNameInput}
             required
           ></input>
           <div
-            ref={showCountAlert}
+            ref={showNameAlert}
             className={`form-alert-styles`}
             style={{ visibility: "hidden" }}
           >
-            Please enter a number
+            Please enter a name
           </div>
         </div>
-        <div className="target-input-wrap">
-          <p>Target</p>
-          <input
-            onClick={(event) => {
-              const input = event.target;
-              input.selectionStart = input.value.length;
-              input.selectionEnd = input.value.length;
-              input.focus();
-            }}
-            ref={counterTargetField}
-            className="form-input"
-            maxLength={5}
-            onChange={(e) => {
-              if (/[a-zA-Z]/.test(e.target.value)) return;
-              setCurrentTarget(e.target.value);
-            }}
-            // type="text"
-            value={currentTargetInput}
-            // pattern="[0-9]*"
-            required
-          ></input>
-          <div
-            ref={showTargetAlert}
-            className={`form-alert-styles`}
-            style={{ visibility: "hidden" }}
-          >
-            Target must be above 0
+        <div className="count-and-target-input-wrap">
+          <div className="current-count-input-wrap">
+            <p>Count</p>
+            <input
+              onClick={(event) => {
+                const input = event.target;
+                input.selectionStart = input.value.length;
+                input.selectionEnd = input.value.length;
+                input.focus();
+              }}
+              ref={counterCountField}
+              className="form-input"
+              maxLength={5}
+              onChange={(e) => {
+                if (/[a-zA-Z]/.test(e.target.value)) return;
+                setcurrentCountInput(e.target.value);
+              }}
+              // type="text"
+              value={currentCountInput}
+              // pattern="[0-9]*"
+              required
+            ></input>
+            <div
+              ref={showCountAlert}
+              className={`form-alert-styles`}
+              style={{ visibility: "hidden" }}
+            >
+              Please enter a number
+            </div>
+          </div>
+          <div className="target-input-wrap">
+            <p>Target</p>
+            <input
+              onClick={(event) => {
+                const input = event.target;
+                input.selectionStart = input.value.length;
+                input.selectionEnd = input.value.length;
+                input.focus();
+              }}
+              ref={counterTargetField}
+              className="form-input"
+              maxLength={5}
+              onChange={(e) => {
+                if (/[a-zA-Z]/.test(e.target.value)) return;
+                setCurrentTarget(e.target.value);
+              }}
+              // type="text"
+              value={currentTargetInput}
+              // pattern="[0-9]*"
+              required
+            ></input>
+            <div
+              ref={showTargetAlert}
+              className={`form-alert-styles`}
+              style={{ visibility: "hidden" }}
+            >
+              Target must be above 0
+            </div>
           </div>
         </div>
-      </div>
-      <div className="pop-up-box-buttons-wrap">
-        <div className="reset-and-save-btn-wrap"></div>
-        <div
-          className="form-filled-save-btn"
-          style={{ backgroundColor: activeBackgroundColor }}
-          onClick={submitCounter}
-        >
-          Done
+        <div className="pop-up-box-buttons-wrap">
+          <div className="reset-and-save-btn-wrap"></div>
         </div>
+      </form>
+      <div
+        className="form-filled-save-btn"
+        style={{ backgroundColor: activeBackgroundColor }}
+        onClick={submitCounter}
+      >
+        Done
       </div>
-    </form>
+    </>
   );
 };
 

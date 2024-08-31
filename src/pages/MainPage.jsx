@@ -3,6 +3,7 @@ import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import PlusBtn from "../components/PlusBtn";
 // import { RateApp } from "capacitor-rate-app";
 import { InAppReview } from "@capacitor-community/in-app-review";
+import { Capacitor } from "@capacitor/core";
 
 const MainPage = ({
   showReviewPrompt,
@@ -23,7 +24,7 @@ const MainPage = ({
   activeBackgroundColor,
   resetSingleCounter,
 }) => {
-  if (reviewPrompt) {
+  if (reviewPrompt && Capacitor.isNativePlatform) {
     // RateApp.requestReview();
     InAppReview.requestReview();
     showReviewPrompt(false);
