@@ -7,13 +7,13 @@ import {
 } from "react-icons/md";
 
 const FormFilled = ({
+  setIsFormFilledSheetOpen,
   activeBackgroundColor,
   modifyTheCountersArray,
   currentCounterName,
   currentCount,
   currentCounterTarget,
   currentCounterId,
-  handleCloseModal,
   resetSingleCounter,
   deleteSingleCounter,
   setcurrentCount,
@@ -55,7 +55,7 @@ const FormFilled = ({
       currentTargetInput
     );
 
-    handleCloseModal();
+    setIsFormFilledSheetOpen(false);
   };
 
   const [counterNameInput, setCounterName] = useState(currentCounterName);
@@ -69,7 +69,7 @@ const FormFilled = ({
           onClick={(e) => {
             deleteSingleCounter(currentCounterId);
             e.preventDefault();
-            handleCloseModal();
+            setIsFormFilledSheetOpen(false);
           }}
         />
 

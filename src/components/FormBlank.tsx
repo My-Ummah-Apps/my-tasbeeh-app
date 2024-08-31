@@ -3,13 +3,13 @@ import { useState, useRef } from "react";
 interface FormBlankProps {
   activeBackgroundColor: string;
   addCounter: (counterNameInput: string, counterTargetInput: string) => void;
-  handleCloseModal2: () => void;
+  setIsFormBlankSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function FormBlank({
   activeBackgroundColor,
   addCounter,
-  handleCloseModal2,
+  setIsFormBlankSheetOpen,
 }: FormBlankProps) {
   const counterField = useRef(null);
   const counterTargetField = useRef(null);
@@ -48,7 +48,7 @@ function FormBlank({
     }
     addCounter(counterNameInput, counterTargetInput);
     setCounterName("");
-    handleCloseModal2();
+    setIsFormBlankSheetOpen(false);
   };
 
   return (

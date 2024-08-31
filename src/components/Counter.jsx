@@ -2,6 +2,7 @@ import { FaPen } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Counter = ({
+  setIsFormFilledSheetOpen,
   nextColor,
   invokeSetActiveCounter,
   counterItem,
@@ -52,7 +53,7 @@ const Counter = ({
             setcurrentCount(counterItem.count);
             setCounterTarget(counterItem.target);
             setcurrentCounterId(counterItem.id);
-            handleOpenModal();
+            setIsFormFilledSheetOpen(true);
           }}
         >
           {/* <MdModeEditOutline /> */}
