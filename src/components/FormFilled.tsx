@@ -41,28 +41,32 @@ const FormFilled = ({
   const showTargetAlert = useRef<HTMLDivElement | null>(null);
   const showCountAlert = useRef<HTMLDivElement | null>(null);
   const showNameAlert = useRef<HTMLDivElement | null>(null);
-  const formBlankFilled = useRef<HTMLDivElement | null>(null);
+  const formFilledRef = useRef<HTMLDivElement | null>(null);
+
+  const [counterNameInput, setCounterName] = useState(currentCounterName);
+  const [currentCountInput, setcurrentCountInput] = useState(currentCount);
+  const [currentTargetInput, setCurrentTarget] = useState(currentCounterTarget);
 
   if (Capacitor.getPlatform() === "ios") {
     window.addEventListener("keyboardWillShow", (e) => {
-      if (formBlankFilled.current) {
-        formBlankFilled.current.style.marginBottom =
+      if (formFilledRef.current) {
+        formFilledRef.current.style.marginBottom =
           (e as any).keyboardHeight + "px";
       }
     });
     window.addEventListener("keyboardWillHide", (e) => {
-      if (formBlankFilled.current) {
-        formBlankFilled.current.style.marginBottom = "0px";
+      if (formFilledRef.current) {
+        formFilledRef.current.style.marginBottom = "0px";
       }
     });
   }
 
-  const submitCounter = (e) => {
-    e.preventDefault();
+  const submitCounter = () => {
+    // e.preventDefault();
 
     if (
       !counterNameInput ||
-      currentCountInput.length == 0 ||
+      currentCountInput.toString().length == 0 ||
       currentTargetInput == 0
     ) {
       if (showNameAlert.current) {
@@ -74,7 +78,7 @@ const FormFilled = ({
       }
 
       if (showCountAlert.current) {
-        currentCountInput.length == 0
+        currentCountInput.toString().length == 0
           ? (showCountAlert.current.style.visibility = "visible")
           : (showCountAlert.current.style.visibility = "hidden");
       } else {
@@ -102,13 +106,9 @@ const FormFilled = ({
     setIsFormFilledSheetOpen(false);
   };
 
-  const [counterNameInput, setCounterName] = useState(currentCounterName);
-  const [currentCountInput, setcurrentCountInput] = useState(currentCount);
-  const [currentTargetInput, setCurrentTarget] = useState(currentCounterTarget);
-
   return (
     <>
-      <div ref={formBlankFilled} className="form-wrap form-filled">
+      <div ref={formFilledRef} className="form-wrap form-filled">
         <form>
           <div className="form-filled-icons-wrap">
             <MdDeleteOutline
@@ -130,12 +130,14 @@ const FormFilled = ({
           <div className="form-filled-counter-name-input-wrap">
             <p>Dhikr Name</p>
             <input
-              onClick={(event) => {
-                const input = event.target;
-                input.selectionStart = input.value.length;
-                input.selectionEnd = input.value.length;
-                input.focus();
-              }}
+              // onClick={(event) => {
+              //   // const input = event.target;
+              //   // console.log("input: ", input.selectionStart);
+
+              //   // input.selectionStart = input.value.length;
+              //   // input.selectionEnd = input.value.length;
+              //   // input.focus();
+              // }}
               ref={counterNameField}
               className="form-filled-name-input form-input"
               onChange={(e) => {
@@ -158,18 +160,18 @@ const FormFilled = ({
             <div className="current-count-input-wrap">
               <p>Count</p>
               <input
-                onClick={(event) => {
-                  const input = event.target;
-                  input.selectionStart = input.value.length;
-                  input.selectionEnd = input.value.length;
-                  input.focus();
-                }}
+                // onClick={(event) => {
+                //   const input = event.target;
+                //   // input.selectionStart = input.value.length;
+                //   // input.selectionEnd = input.value.length;
+                //   // input.focus();
+                // }}
                 ref={counterCountField}
                 className="form-input"
                 maxLength={5}
                 onChange={(e) => {
                   if (/[a-zA-Z]/.test(e.target.value)) return;
-                  setcurrentCountInput(e.target.value);
+                  setcurrentCountInput(Number(e.target.value));
                 }}
                 // type="text"
                 value={currentCountInput}
@@ -187,18 +189,18 @@ const FormFilled = ({
             <div className="target-input-wrap">
               <p>Target</p>
               <input
-                onClick={(event) => {
-                  const input = event.target;
-                  input.selectionStart = input.value.length;
-                  input.selectionEnd = input.value.length;
-                  input.focus();
-                }}
+                // onClick={(event) => {
+                //   const input = event.target;
+                //   // input.selectionStart = input.value.length;
+                //   // input.selectionEnd = input.value.length;
+                //   // input.focus();
+                // }}
                 ref={counterTargetField}
                 className="form-input"
                 maxLength={5}
                 onChange={(e) => {
                   if (/[a-zA-Z]/.test(e.target.value)) return;
-                  setCurrentTarget(e.target.value);
+                  setCurrentTarget(Number(e.target.value));
                 }}
                 // type="text"
                 value={currentTargetInput}
@@ -220,10 +222,10 @@ const FormFilled = ({
         </form>
         <div
           className="form-filled-save-btn"
-          style={{ backgroundColor: activeBackgroundColor }}
           onClick={submitCounter}
+          style={{ backgroundColor: activeBackgroundColor }}
         >
-          Done
+          Save
         </div>
       </div>
     </>

@@ -730,7 +730,8 @@ input[type="number"] {
   color: var(--text-color); */
 }
 
-.form-blank {
+.form-blank,
+.form-filled {
   margin-bottom: 0;
   transition: margin-bottom 420ms;
 }
