@@ -82,7 +82,7 @@ function CountersPage({
             />
           </Sheet.Content>
         </Sheet.Container>
-        <Sheet.Backdrop />
+        <Sheet.Backdrop onTap={() => setIsFormFilledSheetOpen(false)} />
       </Sheet>
 
       <Sheet
@@ -104,7 +104,10 @@ function CountersPage({
             />
           </Sheet.Content>
         </Sheet.Container>
-        <Sheet.Backdrop />
+        <Sheet.Backdrop
+          // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+          onTap={() => setIsFormBlankSheetOpen(false)}
+        />
       </Sheet>
 
       <div className="counters-wrap">

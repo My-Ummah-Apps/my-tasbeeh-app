@@ -1,3 +1,4 @@
+import { Capacitor } from "@capacitor/core";
 import { useState, useRef } from "react";
 
 interface FormBlankProps {
@@ -19,6 +20,22 @@ function FormBlank({
 
   const [counterNameInput, setCounterName] = useState<string>("");
   const [counterTargetInput, setCounterTargetInput] = useState<string>("");
+
+  const formBlankRef = useRef<HTMLDivElement | null>(null);
+
+  if (Capacitor.getPlatform() === "ios") {
+    window.addEventListener("keyboardWillShow", (e) => {
+      if (formBlankRef.current) {
+        formBlankRef.current.style.marginBottom =
+          (e as any).keyboardHeight + "px";
+      }
+    });
+    window.addEventListener("keyboardWillHide", (e) => {
+      if (formBlankRef.current) {
+        formBlankRef.current.style.marginBottom = "0px";
+      }
+    });
+  }
 
   const submitCounter = (e: React.MouseEvent<HTMLDivElement>): void => {
     e.preventDefault();
@@ -53,7 +70,7 @@ function FormBlank({
 
   return (
     <>
-      <div className="form-wrap form-blank">
+      <div ref={formBlankRef} className="form-wrap form-blank">
         <form>
           <div className="form-blank-counter-name-input-wrap">
             <div className="form-blank-name-and-target-wrap">
@@ -101,13 +118,13 @@ function FormBlank({
           </div>
           <div className="pop-up-box-buttons-wrap"></div>
         </form>
-      </div>
-      <div
-        className="form-blank-save-btn"
-        onClick={submitCounter}
-        style={{ backgroundColor: activeBackgroundColor }}
-      >
-        Save
+        <div
+          className="form-blank-save-btn"
+          onClick={submitCounter}
+          style={{ backgroundColor: activeBackgroundColor }}
+        >
+          Save
+        </div>
       </div>
     </>
   );

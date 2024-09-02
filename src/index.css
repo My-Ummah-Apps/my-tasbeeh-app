@@ -730,6 +730,11 @@ input[type="number"] {
   color: var(--text-color); */
 }
 
+.form-blank {
+  margin-bottom: 0;
+  transition: margin-bottom 420ms;
+}
+
 .form-wrap {
   height: 100%;
   background: var(--form-wrap-bg-color);
@@ -753,6 +758,7 @@ input[type="number"] {
   text-align: right;
   display: flex;
   justify-content: space-between;
+  margin-top: 0.5rem;
   padding: 0.5rem 1rem;
   /* border-bottom: 1px solid var(--border-form); */
 }
@@ -768,9 +774,9 @@ input[type="number"] {
 }
 
 .form-blank-counter-name-input-wrap {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: center; */
   margin-bottom: 0.5rem;
   text-align: center;
 }
@@ -861,10 +867,11 @@ input[type="number"] {
   color: #fff;
   text-align: center;
   padding: 1.5rem;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   width: 90%;
   margin-inline: auto;
-  margin-bottom: 1rem;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
 }
 
 .form-alert-styles {

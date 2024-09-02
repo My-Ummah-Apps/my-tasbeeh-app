@@ -34,6 +34,7 @@ function CounterNameAndNumber({
 
       currentName = counterItem.counter;
       currentCounterTarget = counterItem.target;
+
       currentNumber = counterItem.count;
       currentCounterId = counterItem.id;
 
