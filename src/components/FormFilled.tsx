@@ -35,13 +35,12 @@ const FormFilled = ({
   resetSingleCounter,
   deleteSingleCounter, // setcurrentCount,
 }: FormFilledProps) => {
-  const counterNameField = useRef(null);
-  const counterCountField = useRef(null);
-  const counterTargetField = useRef(null);
-  const showTargetAlert = useRef(null);
-  const showCountAlert = useRef(null);
-  const showNameAlert = useRef(null);
-
+  const counterNameField = useRef<HTMLInputElement | null>(null);
+  const counterCountField = useRef<HTMLInputElement | null>(null);
+  const counterTargetField = useRef<HTMLInputElement | null>(null);
+  const showTargetAlert = useRef<HTMLDivElement | null>(null);
+  const showCountAlert = useRef<HTMLDivElement | null>(null);
+  const showNameAlert = useRef<HTMLDivElement | null>(null);
   const formBlankFilled = useRef<HTMLDivElement | null>(null);
 
   if (Capacitor.getPlatform() === "ios") {
@@ -66,19 +65,31 @@ const FormFilled = ({
       currentCountInput.length == 0 ||
       currentTargetInput == 0
     ) {
-      counterNameInput.length == 0
-        ? (showNameAlert.current.style.visibility = "visible")
-        : (showNameAlert.current.style.visibility = "hidden");
+      if (showNameAlert.current) {
+        counterNameInput.length == 0
+          ? (showNameAlert.current.style.visibility = "visible")
+          : (showNameAlert.current.style.visibility = "hidden");
+      } else {
+        console.error("showNameAlert.current is null");
+      }
 
-      currentCountInput.length == 0
-        ? (showCountAlert.current.style.visibility = "visible")
-        : (showCountAlert.current.style.visibility = "hidden");
+      if (showCountAlert.current) {
+        currentCountInput.length == 0
+          ? (showCountAlert.current.style.visibility = "visible")
+          : (showCountAlert.current.style.visibility = "hidden");
+      } else {
+        console.error("showCountAlert.current is null");
+      }
 
-      currentTargetInput == 0
-        ? (showTargetAlert.current.style.visibility = "visible")
-        : (showTargetAlert.current.style.visibility = "hidden");
+      if (showTargetAlert.current) {
+        currentTargetInput == 0
+          ? (showTargetAlert.current.style.visibility = "visible")
+          : (showTargetAlert.current.style.visibility = "hidden");
+      } else {
+        console.error("showTargetAlert.current is null");
+      }
 
-      return;
+      // return;
     }
 
     modifyTheCountersArray(
@@ -92,7 +103,6 @@ const FormFilled = ({
   };
 
   const [counterNameInput, setCounterName] = useState(currentCounterName);
-
   const [currentCountInput, setcurrentCountInput] = useState(currentCount);
   const [currentTargetInput, setCurrentTarget] = useState(currentCounterTarget);
 
