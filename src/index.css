@@ -739,7 +739,7 @@ input[type="number"] {
 .form-wrap {
   height: 100%;
   background: var(--form-wrap-bg-color);
-  padding: 0.5rem 0 0 0;
+  /* padding: 0.5rem 0 0 0; */
   /* border-radius: 1.5rem; */
   display: block;
   overflow: auto;
@@ -760,7 +760,8 @@ input[type="number"] {
   display: flex;
   justify-content: space-between;
   margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
+  padding-inline: 1rem;
   /* border-bottom: 1px solid var(--border-form); */
 }
 
@@ -826,6 +827,7 @@ input[type="number"] {
 .form-filled-name-input,
 .count-and-target-input-wrap {
   display: flex;
+  justify-content: center;
 }
 
 .current-count-input-wrap input,
@@ -863,16 +865,31 @@ input[type="number"] {
   font-size: 0.7rem;
 }
 
+.form-filled-save-and-cancel-btn-wrap,
+.form-blank-save-and-cancel-btn-wrap {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 2.5rem 0.5rem 2rem 0.5rem;
+}
+
+.form-filled-save-and-cancel-btn-wrap > div,
+.form-blank-save-and-cancel-btn-wrap > div {
+  padding: 1rem 0;
+  border-radius: 0.7rem;
+  flex: 1;
+  text-align: center;
+}
+
 .form-blank-save-btn,
 .form-filled-save-btn {
   color: #fff;
-  text-align: center;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  width: 90%;
-  margin-inline: auto;
-  margin-top: 4rem;
-  margin-bottom: 2rem;
+}
+
+.form-blank-cancel-btn,
+.form-filled-cancel-btn {
+  border: 1px solid rgba(218, 210, 210, 0.49);
+  color: rgb(107, 103, 103);
 }
 
 .form-alert-styles {

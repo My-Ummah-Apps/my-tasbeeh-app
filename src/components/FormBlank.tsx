@@ -118,12 +118,23 @@ function FormBlank({
           </div>
           <div className="pop-up-box-buttons-wrap"></div>
         </form>
-        <div
-          className="form-blank-save-btn"
-          onClick={submitCounter}
-          style={{ backgroundColor: activeBackgroundColor }}
-        >
-          Save
+        <div className="form-blank-save-and-cancel-btn-wrap">
+          <div
+            onClick={() => {
+              setIsFormBlankSheetOpen(false);
+            }}
+            className="form-blank-cancel-btn"
+            style={{ backgroundColor: "transparent" }}
+          >
+            Cancel
+          </div>
+          <div
+            className="form-blank-save-btn"
+            onClick={submitCounter}
+            style={{ backgroundColor: activeBackgroundColor }}
+          >
+            Save
+          </div>
         </div>
       </div>
     </>

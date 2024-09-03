@@ -220,12 +220,23 @@ const FormFilled = ({
             <div className="reset-and-save-btn-wrap"></div>
           </div>
         </form>
-        <div
-          className="form-filled-save-btn"
-          onClick={submitCounter}
-          style={{ backgroundColor: activeBackgroundColor }}
-        >
-          Save
+        <div className="form-filled-save-and-cancel-btn-wrap">
+          <div
+            onClick={() => {
+              setIsFormFilledSheetOpen(false);
+            }}
+            className="form-filled-cancel-btn"
+            style={{ backgroundColor: "transparent" }}
+          >
+            Cancel
+          </div>
+          <div
+            className="form-filled-save-btn"
+            onClick={submitCounter}
+            style={{ backgroundColor: activeBackgroundColor }}
+          >
+            Save
+          </div>
         </div>
       </div>
     </>
