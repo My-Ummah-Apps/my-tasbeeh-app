@@ -1,5 +1,7 @@
-import { Capacitor } from "@capacitor/core";
 import { useState, useRef } from "react";
+
+import { Capacitor } from "@capacitor/core";
+import { Keyboard } from "@capacitor/keyboard";
 
 interface FormBlankProps {
   activeBackgroundColor: string;
@@ -23,19 +25,21 @@ function FormBlank({
 
   const formBlankRef = useRef<HTMLDivElement | null>(null);
 
-  if (Capacitor.getPlatform() === "ios") {
-    window.addEventListener("keyboardWillShow", (e) => {
-      if (formBlankRef.current) {
-        formBlankRef.current.style.marginBottom =
-          (e as any).keyboardHeight + "px";
-      }
-    });
-    window.addEventListener("keyboardWillHide", (e) => {
-      if (formBlankRef.current) {
-        formBlankRef.current.style.marginBottom = "0px";
-      }
-    });
-  }
+  // if (Capacitor.getPlatform() === "ios") {
+  //   Keyboard.setAccessoryBarVisible({ isVisible: true });
+
+  //   // window.addEventListener("keyboardWillShow", (e) => {
+  //   //   if (formBlankRef.current) {
+  //   //     formBlankRef.current.style.marginBottom =
+  //   //       (e as any).keyboardHeight + "px";
+  //   //   }
+  //   // });
+  //   // window.addEventListener("keyboardWillHide", (e) => {
+  //   //   if (formBlankRef.current) {
+  //   //     formBlankRef.current.style.marginBottom = "0px";
+  //   //   }
+  //   // });
+  // }
 
   const submitCounter = (e: React.MouseEvent<HTMLDivElement>): void => {
     e.preventDefault();
@@ -118,23 +122,23 @@ function FormBlank({
           </div>
           <div className="pop-up-box-buttons-wrap"></div>
         </form>
-        <div className="form-blank-save-and-cancel-btn-wrap">
-          <div
-            onClick={() => {
-              setIsFormBlankSheetOpen(false);
-            }}
-            className="form-blank-cancel-btn"
-            style={{ backgroundColor: "transparent" }}
-          >
-            Cancel
-          </div>
-          <div
-            className="form-blank-save-btn"
-            onClick={submitCounter}
-            style={{ backgroundColor: activeBackgroundColor }}
-          >
-            Save
-          </div>
+      </div>
+      <div className="form-blank-save-and-cancel-btn-wrap">
+        <div
+          onClick={() => {
+            setIsFormBlankSheetOpen(false);
+          }}
+          className="form-blank-cancel-btn"
+          style={{ backgroundColor: "transparent" }}
+        >
+          Cancel
+        </div>
+        <div
+          className="form-blank-save-btn"
+          onClick={submitCounter}
+          style={{ backgroundColor: activeBackgroundColor }}
+        >
+          Save
         </div>
       </div>
     </>

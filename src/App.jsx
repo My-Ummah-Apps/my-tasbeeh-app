@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
+import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
@@ -151,6 +152,10 @@ function App() {
   //     });
   //   }
   // }
+
+  if (Capacitor.getPlatform() === "ios") {
+    Keyboard.setAccessoryBarVisible({ isVisible: true });
+  }
 
   const [modalStyles, setModalStyles] = useState({
     overlay: {

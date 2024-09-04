@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { VscDebugRestart } from "react-icons/vsc";
+import { Keyboard } from "@capacitor/keyboard";
 import {
   MdOutlinePlaylistRemove,
   MdOutlineRestartAlt,
@@ -47,19 +48,20 @@ const FormFilled = ({
   const [currentCountInput, setcurrentCountInput] = useState(currentCount);
   const [currentTargetInput, setCurrentTarget] = useState(currentCounterTarget);
 
-  if (Capacitor.getPlatform() === "ios") {
-    window.addEventListener("keyboardWillShow", (e) => {
-      if (formFilledRef.current) {
-        formFilledRef.current.style.marginBottom =
-          (e as any).keyboardHeight + "px";
-      }
-    });
-    window.addEventListener("keyboardWillHide", (e) => {
-      if (formFilledRef.current) {
-        formFilledRef.current.style.marginBottom = "0px";
-      }
-    });
-  }
+  // if (Capacitor.getPlatform() === "ios") {
+  //   Keyboard.setAccessoryBarVisible({ isVisible: true });
+  //   // window.addEventListener("keyboardWillShow", (e) => {
+  //   //   if (formFilledRef.current) {
+  //   //     formFilledRef.current.style.marginBottom =
+  //   //       (e as any).keyboardHeight + "px";
+  //   //   }
+  //   // });
+  //   // window.addEventListener("keyboardWillHide", (e) => {
+  //   //   if (formFilledRef.current) {
+  //   //     formFilledRef.current.style.marginBottom = "0px";
+  //   //   }
+  //   // });
+  // }
 
   const submitCounter = () => {
     // e.preventDefault();
@@ -220,23 +222,23 @@ const FormFilled = ({
             <div className="reset-and-save-btn-wrap"></div>
           </div>
         </form>
-        <div className="form-filled-save-and-cancel-btn-wrap">
-          <div
-            onClick={() => {
-              setIsFormFilledSheetOpen(false);
-            }}
-            className="form-filled-cancel-btn"
-            style={{ backgroundColor: "transparent" }}
-          >
-            Cancel
-          </div>
-          <div
-            className="form-filled-save-btn"
-            onClick={submitCounter}
-            style={{ backgroundColor: activeBackgroundColor }}
-          >
-            Save
-          </div>
+      </div>
+      <div className="form-filled-save-and-cancel-btn-wrap">
+        <div
+          onClick={() => {
+            setIsFormFilledSheetOpen(false);
+          }}
+          className="form-filled-cancel-btn"
+          style={{ backgroundColor: "transparent" }}
+        >
+          Cancel
+        </div>
+        <div
+          className="form-filled-save-btn"
+          onClick={submitCounter}
+          style={{ backgroundColor: activeBackgroundColor }}
+        >
+          Save
         </div>
       </div>
     </>

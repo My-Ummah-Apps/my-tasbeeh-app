@@ -59,7 +59,7 @@ function CountersPage({
       <Sheet
         isOpen={isFormFilledSheetOpen}
         onClose={() => setIsFormFilledSheetOpen(false)}
-        detent="content-height"
+        detent="full-height"
       >
         <Sheet.Container>
           <Sheet.Header />
@@ -88,7 +88,7 @@ function CountersPage({
       <Sheet
         isOpen={isFormBlankSheetOpen}
         onClose={() => setIsFormBlankSheetOpen(false)}
-        detent="content-height"
+        detent="full-height"
       >
         <Sheet.Container>
           <Sheet.Header />

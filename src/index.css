@@ -796,7 +796,7 @@ input[type="number"] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0.5rem auto 0rem auto;
+  margin: 0rem auto 0rem auto;
   width: 100%;
   text-align: center;
 }

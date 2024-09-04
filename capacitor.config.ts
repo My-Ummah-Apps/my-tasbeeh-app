@@ -14,8 +14,7 @@ const config: CapacitorConfig = {
   plugins: {
     Keyboard: {
       resize: KeyboardResize.None,
-      // resize: KeyboardResize.Native,
-      resizeOnFullScreen: true,
+      // resizeOnFullScreen: true,
     },
     LocalNotifications: {
       smallIcon: "res:///ic_stat_five",
