@@ -1,4 +1,14 @@
 import { useState, useRef, useEffect } from "react";
+import React from "react";
+import {
+  IonButton,
+  IonHeader,
+  IonContent,
+  IonToolbar,
+  IonTitle,
+  IonPage,
+  IonToast,
+} from "@ionic/react";
 import { VscDebugRestart } from "react-icons/vsc";
 import { Keyboard } from "@capacitor/keyboard";
 import {
@@ -44,7 +54,7 @@ const FormFilled = ({
   const showNameAlert = useRef<HTMLDivElement | null>(null);
   const formFilledRef = useRef<HTMLDivElement | null>(null);
 
-  const [counterNameInput, setCounterName] = useState(currentCounterName);
+  const [counterNameInput, setCounterNameInput] = useState(currentCounterName);
   const [currentCountInput, setcurrentCountInput] = useState(currentCount);
   const [currentTargetInput, setCurrentTarget] = useState(currentCounterTarget);
 
@@ -63,9 +73,11 @@ const FormFilled = ({
   //   // });
   // }
 
+  const [toast, setToast] = useState(false);
+
   useEffect(() => {
     if (counterNameField.current) {
-      counterNameField.current.style.height = "auto";
+      // counterNameField.current.style.height = "auto";
       counterNameField.current.style.height = `${counterNameField.current.scrollHeight}px`;
     } else {
       console.error("counterNameField.current does not exist");
@@ -74,6 +86,9 @@ const FormFilled = ({
 
   const submitCounter = () => {
     // e.preventDefault();
+    console.log("counterNameInput; ", counterNameInput);
+    console.log("currentCountInput", currentCountInput);
+    console.log("currentTargetInput, ", currentTargetInput);
 
     if (
       !counterNameInput ||
@@ -104,7 +119,7 @@ const FormFilled = ({
         console.error("showTargetAlert.current is null");
       }
 
-      // return;
+      return;
     }
 
     modifyTheCountersArray(
@@ -117,15 +132,17 @@ const FormFilled = ({
     setIsFormFilledSheetOpen(false);
   };
 
-  const increaseTextAreaHeight = (e) => {
+  const increaseTextAreaHeight = (e: any) => {
     if (counterNameField.current) {
-      console.log(counterNameField.current);
-      counterNameField.current.style.height = "auto";
+      // counterNameField.current.style.height = "auto";
       counterNameField.current.style.height = `${e.target.scrollHeight}px`;
     } else {
       console.error("counterNameField.current does not exist");
     }
   };
+
+  const [isOpen, setIsOpen] = useState(false);
+  console.log("isOpen: ", isOpen);
 
   return (
     <>
@@ -135,6 +152,7 @@ const FormFilled = ({
           <div className="form-filled-icons-wrap">
             <MdDeleteOutline
               onClick={(e) => {
+                setIsOpen(true);
                 deleteSingleCounter(currentCounterId);
                 e.preventDefault();
                 setIsFormFilledSheetOpen(false);
@@ -161,10 +179,11 @@ const FormFilled = ({
               //   // input.focus();
               // }}
               ref={counterNameField}
-              className="form-filled-name-input form-input"
+              // className="form-filled-name-input form-input"
+              className="form-textarea"
               onChange={(e) => {
                 if (/\d/.test(e.target.value)) return;
-                setCounterName(e.target.value);
+                setCounterNameInput(e.target.value);
                 increaseTextAreaHeight(e);
               }}
               // type="text"
@@ -254,6 +273,12 @@ const FormFilled = ({
         >
           Cancel
         </div>
+        <IonToast
+          isOpen={isOpen}
+          message="This toast will close in 5 seconds"
+          onDidDismiss={() => setIsOpen(false)}
+          duration={5000}
+        ></IonToast>
         <div
           className="form-filled-save-btn"
           onClick={submitCounter}

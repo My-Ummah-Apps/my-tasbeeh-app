@@ -60,6 +60,7 @@ function CountersPage({
         isOpen={isFormFilledSheetOpen}
         onClose={() => setIsFormFilledSheetOpen(false)}
         detent="full-height"
+        tweenConfig={{ ease: "easeOut", duration: 0.3 }}
       >
         <Sheet.Container>
           {/* <Sheet.Header /> */}
@@ -89,6 +90,7 @@ function CountersPage({
         isOpen={isFormBlankSheetOpen}
         onClose={() => setIsFormBlankSheetOpen(false)}
         detent="full-height"
+        tweenConfig={{ ease: "easeOut", duration: 0.3 }}
       >
         <Sheet.Container>
           {/* <Sheet.Header /> */}

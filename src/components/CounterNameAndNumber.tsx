@@ -1,15 +1,23 @@
+// @ts-nocheck
 import { useRef, useEffect, useState } from "react";
 import { FaPen } from "react-icons/fa";
 
 import { VscDebugRestart } from "react-icons/vsc";
 import { MdOutlineRestartAlt } from "react-icons/md";
 
+interface CounterNameAndNumberProps {
+  localSavedCountersArray: any;
+  setActiveBackgroundColor: any;
+  activeBackgroundColor: any;
+  resetSingleCounter: any;
+}
+
 function CounterNameAndNumber({
   localSavedCountersArray,
   setActiveBackgroundColor,
   activeBackgroundColor,
   resetSingleCounter,
-}) {
+}: CounterNameAndNumberProps) {
   // const [showAnimation, setShowAnimation] = useState(
   //   sessionStorage.getItem("showAnimationMainPageCounter")
   // );
@@ -26,9 +34,9 @@ function CounterNameAndNumber({
   let currentName;
   let currentNumber = 0;
   let currentCounterTarget;
-  let currentCounterId;
+  let currentCounterId: any;
   let textOverflowProperty;
-  localSavedCountersArray.map((counterItem) => {
+  localSavedCountersArray.map((counterItem: any) => {
     if (counterItem.isActive == true) {
       // setActiveBackgroundColor(counterItem.color);
 

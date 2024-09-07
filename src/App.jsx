@@ -543,6 +543,7 @@ function App() {
     setLocalSavedCountersArray(filteredArray);
     saveArrayLocally(filteredArray);
   };
+  console.log("typeof: ", localSavedCountersArray);
 
   return (
     <BrowserRouter>

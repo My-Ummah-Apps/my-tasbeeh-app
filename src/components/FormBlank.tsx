@@ -14,13 +14,14 @@ function FormBlank({
   addCounter,
   setIsFormBlankSheetOpen,
 }: FormBlankProps) {
+  const counterNameField = useRef<HTMLTextAreaElement | null>(null);
   const counterField = useRef(null);
   const counterTargetField = useRef(null);
 
   const showNameAlert = useRef<HTMLDivElement>(null);
   const showTargetAlert = useRef<HTMLDivElement>(null);
 
-  const [counterNameInput, setCounterName] = useState<string>("");
+  const [counterNameInput, setCounterNameInput] = useState<string>("");
   const [counterTargetInput, setCounterTargetInput] = useState<string>("");
 
   const formBlankRef = useRef<HTMLDivElement | null>(null);
@@ -40,6 +41,15 @@ function FormBlank({
   //   //   }
   //   // });
   // }
+
+  const increaseTextAreaHeight = (e: any) => {
+    if (counterNameField.current) {
+      counterNameField.current.style.height = "auto";
+      counterNameField.current.style.height = `${e.target.scrollHeight}px`;
+    } else {
+      console.error("counterNameField.current does not exist");
+    }
+  };
 
   const submitCounter = (e: React.MouseEvent<HTMLDivElement>): void => {
     e.preventDefault();
@@ -68,7 +78,7 @@ function FormBlank({
       return;
     }
     addCounter(counterNameInput, counterTargetInput);
-    setCounterName("");
+    setCounterNameInput("");
     setIsFormBlankSheetOpen(false);
   };
 
@@ -81,13 +91,15 @@ function FormBlank({
             <div className="form-blank-name-and-target-wrap">
               <p>Dhikr Name</p>
               <textarea
-                ref={counterField}
+                // ref={counterField}
+                ref={counterNameField}
                 className="form-textarea"
                 onChange={(e) => {
                   if (/\d/.test(e.target.value)) return;
-                  setCounterName(e.target.value);
+                  setCounterNameInput(e.target.value);
+                  increaseTextAreaHeight(e);
                 }}
-                type="text"
+                // type="text"
                 required
               ></textarea>
               <div

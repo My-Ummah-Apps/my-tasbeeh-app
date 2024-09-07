@@ -759,7 +759,7 @@ input[type="number"] {
   text-align: right;
   display: flex;
   justify-content: space-between;
-  margin-top: 0.5rem;
+  margin: 1rem 0;
   /* padding: 0.5rem 1rem; */
   padding-inline: 1rem;
   /* border-bottom: 1px solid var(--border-form); */
@@ -872,16 +872,26 @@ input[type="number"] {
   font-size: 0.7rem;
 }
 
+.form-blank-target-input-wrap > input {
+  width: 40%;
+}
+
 .form-blank textarea,
 .form-filled textarea {
+  font-size: 1.2rem;
+  background-color: var(--form-input-bg-color);
+  color: var(--text-color);
+  width: 95%;
+  align-items: center;
   font-family: inherit;
+  line-height: 1.2;
   max-height: 200px;
   resize: none;
   overflow: hidden;
   border: none;
-  border-radius: 0.3rem;
+  border-radius: 0.8rem;
   /* padding: 0.5rem; */
-  padding: 1rem 0.5rem;
+  padding: 0.5rem 0.5rem;
 }
 
 .form-filled-save-and-cancel-btn-wrap,
@@ -912,7 +922,7 @@ input[type="number"] {
 }
 
 .form-alert-styles {
-  /* margin: 0.5rem 0; */
+  margin: 0.5rem 0;
   color: red;
   font-size: 0.7rem;
 }
