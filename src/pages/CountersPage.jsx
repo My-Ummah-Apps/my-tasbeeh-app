@@ -62,7 +62,7 @@ function CountersPage({
         detent="full-height"
       >
         <Sheet.Container>
-          <Sheet.Header />
+          {/* <Sheet.Header /> */}
           <Sheet.Content>
             {" "}
             <FormFilled
@@ -91,7 +91,7 @@ function CountersPage({
         detent="full-height"
       >
         <Sheet.Container>
-          <Sheet.Header />
+          {/* <Sheet.Header /> */}
           <Sheet.Content>
             {" "}
             <FormBlank

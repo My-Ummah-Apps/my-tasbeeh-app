@@ -855,6 +855,13 @@ input[type="number"] {
   background-color: var(--form-wrap-bg-color) !important;
 }
 
+.form-blank-and-form-filled-header-text {
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  margin: 2rem;
+}
+
 .form-wrap input {
   border: none;
   text-align: center;
@@ -863,6 +870,18 @@ input[type="number"] {
 
 .form-blank p {
   font-size: 0.7rem;
+}
+
+.form-blank textarea,
+.form-filled textarea {
+  font-family: inherit;
+  max-height: 200px;
+  resize: none;
+  overflow: hidden;
+  border: none;
+  border-radius: 0.3rem;
+  /* padding: 0.5rem; */
+  padding: 1rem 0.5rem;
 }
 
 .form-filled-save-and-cancel-btn-wrap,
@@ -961,8 +980,8 @@ input[type="number"] {
   /* overflow: hidden; */
   height: 100%;
   white-space: nowrap;
-  -webkit-animation: scrollText 6s infinite linear;
-  animation: scrollText 6s infinite linear;
+  -webkit-animation: scrollText infinite linear;
+  animation: scrollText infinite linear;
   margin: 0;
   font-size: 0;
   display: inline-block;

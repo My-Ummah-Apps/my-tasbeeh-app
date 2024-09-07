@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { VscDebugRestart } from "react-icons/vsc";
 import { Keyboard } from "@capacitor/keyboard";
 import {
@@ -36,7 +36,7 @@ const FormFilled = ({
   resetSingleCounter,
   deleteSingleCounter, // setcurrentCount,
 }: FormFilledProps) => {
-  const counterNameField = useRef<HTMLInputElement | null>(null);
+  const counterNameField = useRef<HTMLTextAreaElement | null>(null);
   const counterCountField = useRef<HTMLInputElement | null>(null);
   const counterTargetField = useRef<HTMLInputElement | null>(null);
   const showTargetAlert = useRef<HTMLDivElement | null>(null);
@@ -62,6 +62,15 @@ const FormFilled = ({
   //   //   }
   //   // });
   // }
+
+  useEffect(() => {
+    if (counterNameField.current) {
+      counterNameField.current.style.height = "auto";
+      counterNameField.current.style.height = `${counterNameField.current.scrollHeight}px`;
+    } else {
+      console.error("counterNameField.current does not exist");
+    }
+  }, []);
 
   const submitCounter = () => {
     // e.preventDefault();
@@ -108,9 +117,20 @@ const FormFilled = ({
     setIsFormFilledSheetOpen(false);
   };
 
+  const increaseTextAreaHeight = (e) => {
+    if (counterNameField.current) {
+      console.log(counterNameField.current);
+      counterNameField.current.style.height = "auto";
+      counterNameField.current.style.height = `${e.target.scrollHeight}px`;
+    } else {
+      console.error("counterNameField.current does not exist");
+    }
+  };
+
   return (
     <>
       <div ref={formFilledRef} className="form-wrap form-filled">
+        <h1 className="form-blank-and-form-filled-header-text">Edit Tasbeeh</h1>
         <form>
           <div className="form-filled-icons-wrap">
             <MdDeleteOutline
@@ -131,7 +151,7 @@ const FormFilled = ({
           </div>
           <div className="form-filled-counter-name-input-wrap">
             <p>Dhikr Name</p>
-            <input
+            <textarea
               // onClick={(event) => {
               //   // const input = event.target;
               //   // console.log("input: ", input.selectionStart);
@@ -145,11 +165,12 @@ const FormFilled = ({
               onChange={(e) => {
                 if (/\d/.test(e.target.value)) return;
                 setCounterName(e.target.value);
+                increaseTextAreaHeight(e);
               }}
               // type="text"
               value={counterNameInput}
               required
-            ></input>
+            ></textarea>
             <div
               ref={showNameAlert}
               className={`form-alert-styles`}

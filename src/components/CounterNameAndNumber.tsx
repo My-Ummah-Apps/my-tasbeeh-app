@@ -46,6 +46,7 @@ function CounterNameAndNumber({
 
   const counterTextContainerRef = useRef(null);
   const textRef = useRef(null);
+  const mScrollRef = useRef(null);
 
   const [scroll, setScroll] = useState();
 
@@ -62,6 +63,17 @@ function CounterNameAndNumber({
       // setOverflow({ overflow: "unset" });
     } else if (textRef.current.clientWidth > counterTextContainerWidth) {
       setScroll(true);
+      // ! Below is making the scroll speed work across counters with varying lenghts keeping the speed the same
+      const scrollSpeed = textRef.current.innerText.length * 0.3;
+
+      console.log(
+        "textRef.current.innerText.length: ",
+        textRef.current.innerText.length,
+        "speed is: ",
+        scrollSpeed
+      );
+
+      mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
 
       // setOverflow({ overflow: "unset" });
     }
@@ -89,7 +101,7 @@ function CounterNameAndNumber({
 
           <div className="single-counter-counter-name" ref={textRef}>
             <div className={scroll ? "scroll" : ""}>
-              <div className={scroll ? "m-scroll" : ""}>
+              <div ref={mScrollRef} className={scroll ? "m-scroll" : ""}>
                 <span
                   className="active-counter-name"
                   style={{

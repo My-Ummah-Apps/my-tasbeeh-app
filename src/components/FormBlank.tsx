@@ -75,20 +75,21 @@ function FormBlank({
   return (
     <>
       <div ref={formBlankRef} className="form-wrap form-blank">
+        <h1 className="form-blank-and-form-filled-header-text">Add Tasbeeh</h1>
         <form>
           <div className="form-blank-counter-name-input-wrap">
             <div className="form-blank-name-and-target-wrap">
               <p>Dhikr Name</p>
-              <input
+              <textarea
                 ref={counterField}
-                className="form-input"
+                className="form-textarea"
                 onChange={(e) => {
                   if (/\d/.test(e.target.value)) return;
                   setCounterName(e.target.value);
                 }}
                 type="text"
                 required
-              ></input>
+              ></textarea>
               <div
                 ref={showNameAlert}
                 className={`form-alert-styles`}
