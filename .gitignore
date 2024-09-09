@@ -25,8 +25,8 @@ yarn-error.log*
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
-#*.jks
-#*.keystore
+*.jks
+*.keystore
 
 /App-Store-Assets
 android/file.pem
