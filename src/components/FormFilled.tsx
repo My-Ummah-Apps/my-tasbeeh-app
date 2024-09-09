@@ -147,6 +147,7 @@ const FormFilled = ({
 
   const [isOpen, setIsOpen] = useState(false);
   // console.log("isOpen: ", isOpen);
+  // console.log("activeBackgroundColor:", activeBackgroundColor);
 
   return (
     <>
@@ -167,7 +168,7 @@ const FormFilled = ({
           <div
             className="form-filled-save-btn"
             onClick={submitCounter}
-            style={{ backgroundColor: activeBackgroundColor }}
+            style={{ backgroundColor: "#3b82f6" }}
           >
             Save
           </div>
@@ -274,22 +275,28 @@ const FormFilled = ({
           </div>
         </form>
         <div className="form-filled-icons-wrap">
-          <MdDeleteOutline
+          {/* <button className="form-filled-reset-delete-btns-wrap">
+            <p>Reset Counter</p>
+            <MdOutlineRestartAlt
+              onClick={(e) => {
+                e.preventDefault();
+                resetSingleCounter(currentCounterId);
+                setcurrentCountInput(0);
+              }}
+            />
+          </button> */}
+          <button
+            className="form-filled-reset-delete-btns-wrap"
             onClick={(e) => {
               setIsOpen(true);
               deleteSingleCounter(currentCounterId);
               e.preventDefault();
               setIsFormFilledSheetOpen(false);
             }}
-          />
-
-          <MdOutlineRestartAlt
-            onClick={(e) => {
-              e.preventDefault();
-              resetSingleCounter(currentCounterId);
-              setcurrentCountInput(0);
-            }}
-          />
+          >
+            <p>Delete Counter</p>
+            <MdDeleteOutline />
+          </button>
         </div>
       </div>
 

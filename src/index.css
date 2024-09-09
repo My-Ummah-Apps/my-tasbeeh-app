@@ -802,9 +802,10 @@ input[type="number"] {
 }
 
 .form-filled-icons-wrap {
-  text-align: right;
-  display: flex;
-  justify-content: space-between;
+  /* text-align: right; */
+  /* display: flex;
+  justify-content: space-between; */
+
   margin: 1rem 0;
   /* padding: 0.5rem 1rem; */
   padding-inline: 1rem;
@@ -814,6 +815,24 @@ input[type="number"] {
 .form-filled-icons-wrap svg {
   padding: 4px;
   font-size: 2rem;
+}
+
+.form-filled-icons-wrap > button {
+  width: 50%;
+  padding: 0.3rem 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+}
+.form-filled-icons-wrap > button:nth-child(1) {
+  background-color: #dc2626;
+  color: #fff;
+}
+
+.form-filled-reset-delete-btns-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid white;
+  margin: 1rem 0rem;
 }
 
 .form-blank input {
