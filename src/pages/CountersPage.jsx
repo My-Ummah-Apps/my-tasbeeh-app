@@ -57,6 +57,7 @@ function CountersPage({
       </div>
 
       <Sheet
+        disableDrag={true}
         isOpen={isFormFilledSheetOpen}
         onClose={() => setIsFormFilledSheetOpen(false)}
         detent="full-height"
@@ -65,7 +66,7 @@ function CountersPage({
         <Sheet.Container>
           {/* <Sheet.Header /> */}
           <Sheet.Content>
-            {" "}
+            {/* <Sheet.Scroller> */}{" "}
             <FormFilled
               setIsFormFilledSheetOpen={setIsFormFilledSheetOpen}
               activeBackgroundColor={activeBackgroundColor}
@@ -81,12 +82,14 @@ function CountersPage({
               deleteSingleCounter={deleteSingleCounter}
               setcurrentCount={setcurrentCount}
             />
+            {/* </Sheet.Scroller> */}
           </Sheet.Content>
         </Sheet.Container>
         <Sheet.Backdrop onTap={() => setIsFormFilledSheetOpen(false)} />
       </Sheet>
 
       <Sheet
+        disableDrag={true}
         isOpen={isFormBlankSheetOpen}
         onClose={() => setIsFormBlankSheetOpen(false)}
         detent="full-height"

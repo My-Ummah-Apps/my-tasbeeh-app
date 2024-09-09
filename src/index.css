@@ -87,6 +87,52 @@ body {
   overflow: hidden;
 }
 
+.sheet-changelog {
+  background-color: var(--body-bg-color);
+  overflow: scroll;
+}
+
+.changelog-content-wrap {
+  margin: 1rem 1.5rem 0 1.5rem;
+}
+
+.sheet-changelog > h1 {
+  /* font-weight: 500; */
+  font-size: 2rem;
+  margin: 2rem 2rem 1rem 2rem;
+}
+
+.sheet-changelog:last-child {
+  margin-bottom: 6rem;
+}
+
+.changelog-individual-change-wrap {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--border-form);
+  border-radius: 1rem;
+}
+
+.changelog-individual-change-wrap > h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.sheet-changelog > button {
+  font-size: 1rem;
+  position: fixed;
+  bottom: 7%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  border: none;
+  border-radius: 1rem;
+  background-color: #5c6bc0;
+  color: #fff;
+  width: 90%;
+  padding: 1.5rem;
+}
+
 /* MAIN PAGE */
 
 /* @-webkit-keyframes fadeInDown {
@@ -737,7 +783,7 @@ input[type="number"] {
 }
 
 .form-wrap {
-  height: 100%;
+  /* height: 100%; */
   background: var(--form-wrap-bg-color);
   /* padding: 0.5rem 0 0 0; */
   /* border-radius: 1.5rem; */
@@ -878,28 +924,31 @@ input[type="number"] {
 
 .form-blank textarea,
 .form-filled textarea {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   background-color: var(--form-input-bg-color);
   color: var(--text-color);
   width: 95%;
   align-items: center;
   font-family: inherit;
   line-height: 1.2;
-  max-height: 200px;
+  max-height: 100px;
   resize: none;
-  overflow: hidden;
+  /* overflow: hidden; */
   border: none;
   border-radius: 0.8rem;
-  /* padding: 0.5rem; */
   padding: 0.5rem 0.5rem;
 }
 
 .form-filled-save-and-cancel-btn-wrap,
 .form-blank-save-and-cancel-btn-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--form-input-bg-color);
   display: flex;
   gap: 1rem;
   align-items: center;
-  margin: 2.5rem 0.5rem 2rem 0.5rem;
+  margin: 0rem 0.5rem 2rem 0.5rem;
 }
 
 .form-filled-save-and-cancel-btn-wrap > div,
@@ -917,8 +966,8 @@ input[type="number"] {
 
 .form-blank-cancel-btn,
 .form-filled-cancel-btn {
-  border: 1px solid rgba(218, 210, 210, 0.49);
-  color: rgb(107, 103, 103);
+  border: 1px solid rgba(154, 154, 154, 0.49);
+  color: var(--text-color);
 }
 
 .form-alert-styles {

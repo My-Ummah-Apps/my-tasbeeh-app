@@ -74,12 +74,12 @@ function CounterNameAndNumber({
       // ! Below is making the scroll speed work across counters with varying lenghts keeping the speed the same
       const scrollSpeed = textRef.current.innerText.length * 0.3;
 
-      console.log(
-        "textRef.current.innerText.length: ",
-        textRef.current.innerText.length,
-        "speed is: ",
-        scrollSpeed
-      );
+      // console.log(
+      //   "textRef.current.innerText.length: ",
+      //   textRef.current.innerText.length,
+      //   "speed is: ",
+      //   scrollSpeed
+      // );
 
       mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
 

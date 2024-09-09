@@ -5,15 +5,14 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
-
+import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
 
 import NavBar from "./components/NavBar";
-
 import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
-
+import { changeLogs } from "./utils/changelog";
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
 
@@ -136,6 +135,7 @@ let counterId;
 let defaultArray;
 
 function App() {
+  const [showChangelogModal, setShowChangelogModal] = useState(false);
   // const [iapProducts, setIapProducts] = useState(null);
   // document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -152,6 +152,27 @@ function App() {
   //     });
   //   }
   // }
+
+  useEffect(() => {
+    if (
+      (!localStorage.getItem("localSavedCountersArray") &&
+        !localStorage.getItem("appVersion")) ||
+      localStorage.getItem("appVersion") !== "2.0"
+    ) {
+      console.log("TRUE");
+    }
+    if (
+      !localStorage.getItem("localSavedCountersArray") ||
+      JSON.parse(
+        localStorage.getItem("localSavedCountersArray").length == 0 &&
+          !localStorage.getItem("appVersion")
+      ) ||
+      localStorage.getItem("appVersion") !== "2.0"
+    ) {
+      console.log("SHOW CHANGELOG");
+      setShowChangelogModal(true);
+    }
+  }, []);
 
   if (Capacitor.getPlatform() === "ios") {
     Keyboard.setAccessoryBarVisible({ isVisible: true });
@@ -543,86 +564,125 @@ function App() {
     setLocalSavedCountersArray(filteredArray);
     saveArrayLocally(filteredArray);
   };
-  console.log("typeof: ", localSavedCountersArray);
 
   return (
-    <BrowserRouter>
-      <section className="App">
-        <Routes>
-          <Route
-            path="SettingsPage"
-            element={
-              <SettingsPage
-                // iapProducts={iapProducts}
-                resetAllCounters={resetAllCounters}
-                setMorningNotification={setMorningNotification}
-                morningNotification={morningNotification}
-                afternoonNotification={afternoonNotification}
-                setAfternoonNotification={setAfternoonNotification}
-                eveningNotification={eveningNotification}
-                setEveningNotification={setEveningNotification}
-                modalStyles={modalStyles}
-                setHaptics={setHaptics}
-                haptics={haptics}
-                setDailyCounterReset={setDailyCounterReset}
-                dailyCounterReset={dailyCounterReset}
-                activeBackgroundColor={activeBackgroundColor}
-              />
-            }
+    <>
+      <BrowserRouter>
+        <section className="App">
+          <Routes>
+            <Route
+              path="SettingsPage"
+              element={
+                <SettingsPage
+                  // iapProducts={iapProducts}
+                  resetAllCounters={resetAllCounters}
+                  setMorningNotification={setMorningNotification}
+                  morningNotification={morningNotification}
+                  afternoonNotification={afternoonNotification}
+                  setAfternoonNotification={setAfternoonNotification}
+                  eveningNotification={eveningNotification}
+                  setEveningNotification={setEveningNotification}
+                  modalStyles={modalStyles}
+                  setHaptics={setHaptics}
+                  haptics={haptics}
+                  setDailyCounterReset={setDailyCounterReset}
+                  dailyCounterReset={dailyCounterReset}
+                  activeBackgroundColor={activeBackgroundColor}
+                />
+              }
+            />
+            <Route
+              index
+              element={
+                <Main
+                  showReviewPrompt={showReviewPrompt}
+                  reviewPrompt={reviewPrompt}
+                  setHaptics={setHaptics}
+                  haptics={haptics}
+                  setActiveCounterName={setActiveCounterName}
+                  setActiveCounterNumber={setActiveCounterNumber}
+                  saveArrayLocally={saveArrayLocally}
+                  currentCount={currentCount}
+                  counterName={counterName}
+                  localSavedCountersArray={localSavedCountersArray}
+                  counterId={counterId}
+                  activeCounterName={activeCounterName}
+                  activeCounterNumber={activeCounterNumber}
+                  setActiveBackgroundColor={setActiveBackgroundColor}
+                  activeBackgroundColor={activeBackgroundColor}
+                  resetSingleCounter={resetSingleCounter}
+                />
+              }
+            />
+            <Route
+              path="CountersPage"
+              element={
+                <CountersPage
+                  setActivePage={setActivePage}
+                  modalStyles={modalStyles}
+                  activeBackgroundColor={activeBackgroundColor}
+                  materialColors={materialColors}
+                  localSavedCountersArray={localSavedCountersArray}
+                  invokeSetActiveCounter={invokeSetActiveCounter}
+                  resetSingleCounter={resetSingleCounter}
+                  activeCounterName={activeCounterName}
+                  activeCounterNumber={activeCounterNumber}
+                  addItemToSavedCountersArray={addItemToSavedCountersArray}
+                  modifyTheCountersArray={modifyTheCountersArray}
+                  setLocalSavedCountersArray={setLocalSavedCountersArray}
+                  addCounter={addCounter}
+                  resetAllCounters={resetAllCounters}
+                  deleteSingleCounter={deleteSingleCounter}
+                />
+              }
+            />
+          </Routes>
+          <NavBar
+            activeBackgroundColor={activeBackgroundColor}
+            setActivePage={setActivePage}
+            activePage={activePage}
           />
-          <Route
-            index
-            element={
-              <Main
-                showReviewPrompt={showReviewPrompt}
-                reviewPrompt={reviewPrompt}
-                setHaptics={setHaptics}
-                haptics={haptics}
-                setActiveCounterName={setActiveCounterName}
-                setActiveCounterNumber={setActiveCounterNumber}
-                saveArrayLocally={saveArrayLocally}
-                currentCount={currentCount}
-                counterName={counterName}
-                localSavedCountersArray={localSavedCountersArray}
-                counterId={counterId}
-                activeCounterName={activeCounterName}
-                activeCounterNumber={activeCounterNumber}
-                setActiveBackgroundColor={setActiveBackgroundColor}
-                activeBackgroundColor={activeBackgroundColor}
-                resetSingleCounter={resetSingleCounter}
-              />
-            }
-          />
-          <Route
-            path="CountersPage"
-            element={
-              <CountersPage
-                setActivePage={setActivePage}
-                modalStyles={modalStyles}
-                activeBackgroundColor={activeBackgroundColor}
-                materialColors={materialColors}
-                localSavedCountersArray={localSavedCountersArray}
-                invokeSetActiveCounter={invokeSetActiveCounter}
-                resetSingleCounter={resetSingleCounter}
-                activeCounterName={activeCounterName}
-                activeCounterNumber={activeCounterNumber}
-                addItemToSavedCountersArray={addItemToSavedCountersArray}
-                modifyTheCountersArray={modifyTheCountersArray}
-                setLocalSavedCountersArray={setLocalSavedCountersArray}
-                addCounter={addCounter}
-                resetAllCounters={resetAllCounters}
-                deleteSingleCounter={deleteSingleCounter}
-              />
-            }
-          />
-        </Routes>
-        <NavBar
-          activeBackgroundColor={activeBackgroundColor}
-          setActivePage={setActivePage}
-          activePage={activePage}
+        </section>
+      </BrowserRouter>
+      <Sheet
+        disableDrag={true}
+        isOpen={showChangelogModal}
+        onClose={() => setShowChangelogModal(false)}
+        detent="full-height"
+        tweenConfig={{ ease: "easeOut", duration: 0.3 }}
+      >
+        <Sheet.Container>
+          {/* <Sheet.Header /> */}
+          <Sheet.Content className="sheet-changelog">
+            <h1>Whats new?</h1>
+            {changeLogs.map((item) => (
+              <section className="changelog-content-wrap">
+                <p>v{item.versionNum}</p>
+                {item.changes.map((item) => (
+                  <section
+                    // style={{ border: `1px solid ${activeBackgroundColor}` }}
+                    className="changelog-individual-change-wrap"
+                  >
+                    <h2>{item.heading}</h2>
+                    <p>{item.text}</p>
+                  </section>
+                ))}
+              </section>
+            ))}
+            <button
+              onClick={() => setShowChangelogModal(false)}
+              // className="sheet-changelog-dismiss-btn"
+            >
+              Dismiss
+            </button>
+          </Sheet.Content>
+        </Sheet.Container>
+        <Sheet.Backdrop
+          // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+          onTap={() => setShowChangelogModal(false)}
         />
-      </section>
-    </BrowserRouter>
+      </Sheet>
+    </>
   );
 }
 

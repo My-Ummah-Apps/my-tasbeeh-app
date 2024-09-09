@@ -30,7 +30,7 @@ const config: CapacitorConfig = {
 };
 
 Keyboard.setScroll({ isDisabled: false });
-Keyboard.setAccessoryBarVisible({ isVisible: true });
+// Keyboard.setAccessoryBarVisible({ isVisible: true });
 // Keyboard.setScroll({isDisabled: true})
 
 export default config;

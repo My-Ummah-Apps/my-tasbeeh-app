@@ -8,6 +8,9 @@ import {
   IonTitle,
   IonPage,
   IonToast,
+  IonTextarea,
+  IonList,
+  IonItem,
 } from "@ionic/react";
 import { VscDebugRestart } from "react-icons/vsc";
 import { Keyboard } from "@capacitor/keyboard";
@@ -77,7 +80,8 @@ const FormFilled = ({
 
   useEffect(() => {
     if (counterNameField.current) {
-      // counterNameField.current.style.height = "auto";
+      // ! Unsure if below line will work across all devices as its being set to 1px
+      counterNameField.current.style.height = "1px";
       counterNameField.current.style.height = `${counterNameField.current.scrollHeight}px`;
     } else {
       console.error("counterNameField.current does not exist");
@@ -86,9 +90,9 @@ const FormFilled = ({
 
   const submitCounter = () => {
     // e.preventDefault();
-    console.log("counterNameInput; ", counterNameInput);
-    console.log("currentCountInput", currentCountInput);
-    console.log("currentTargetInput, ", currentTargetInput);
+    // console.log("counterNameInput; ", counterNameInput);
+    // console.log("currentCountInput", currentCountInput);
+    // console.log("currentTargetInput, ", currentTargetInput);
 
     if (
       !counterNameInput ||
@@ -142,40 +146,47 @@ const FormFilled = ({
   };
 
   const [isOpen, setIsOpen] = useState(false);
-  console.log("isOpen: ", isOpen);
+  // console.log("isOpen: ", isOpen);
 
   return (
     <>
       <div ref={formFilledRef} className="form-wrap form-filled">
-        <h1 className="form-blank-and-form-filled-header-text">Edit Tasbeeh</h1>
-        <form>
-          <div className="form-filled-icons-wrap">
-            <MdDeleteOutline
-              onClick={(e) => {
-                setIsOpen(true);
-                deleteSingleCounter(currentCounterId);
-                e.preventDefault();
-                setIsFormFilledSheetOpen(false);
-              }}
-            />
-
-            <MdOutlineRestartAlt
-              onClick={(e) => {
-                e.preventDefault();
-                resetSingleCounter(currentCounterId);
-                setcurrentCountInput(0);
-              }}
-            />
+        <div className="form-filled-save-and-cancel-btn-wrap">
+          <div
+            onClick={() => {
+              setIsFormFilledSheetOpen(false);
+            }}
+            className="form-filled-cancel-btn"
+            style={{ backgroundColor: "transparent" }}
+          >
+            Cancel
           </div>
+          <h1 className="form-blank-and-form-filled-header-text">
+            Edit Tasbeeh
+          </h1>
+          <div
+            className="form-filled-save-btn"
+            onClick={submitCounter}
+            style={{ backgroundColor: activeBackgroundColor }}
+          >
+            Save
+          </div>
+        </div>
+
+        <form>
           <div className="form-filled-counter-name-input-wrap">
             <p>Dhikr Name</p>
+
             <textarea
               // onClick={(event) => {
-              //   // const input = event.target;
-              //   // console.log("input: ", input.selectionStart);
+              //   const input = event.target;
+              //   // console.log("input: ", input.value);
+
+              //   // // console.log("input: ", input.selectionStart);
 
               //   // input.selectionStart = input.value.length;
               //   // input.selectionEnd = input.value.length;
+              //   // @ts-ignore
               //   // input.focus();
               // }}
               ref={counterNameField}
@@ -262,31 +273,32 @@ const FormFilled = ({
             <div className="reset-and-save-btn-wrap"></div>
           </div>
         </form>
-      </div>
-      <div className="form-filled-save-and-cancel-btn-wrap">
-        <div
-          onClick={() => {
-            setIsFormFilledSheetOpen(false);
-          }}
-          className="form-filled-cancel-btn"
-          style={{ backgroundColor: "transparent" }}
-        >
-          Cancel
-        </div>
-        <IonToast
-          isOpen={isOpen}
-          message="This toast will close in 5 seconds"
-          onDidDismiss={() => setIsOpen(false)}
-          duration={5000}
-        ></IonToast>
-        <div
-          className="form-filled-save-btn"
-          onClick={submitCounter}
-          style={{ backgroundColor: activeBackgroundColor }}
-        >
-          Save
+        <div className="form-filled-icons-wrap">
+          <MdDeleteOutline
+            onClick={(e) => {
+              setIsOpen(true);
+              deleteSingleCounter(currentCounterId);
+              e.preventDefault();
+              setIsFormFilledSheetOpen(false);
+            }}
+          />
+
+          <MdOutlineRestartAlt
+            onClick={(e) => {
+              e.preventDefault();
+              resetSingleCounter(currentCounterId);
+              setcurrentCountInput(0);
+            }}
+          />
         </div>
       </div>
+
+      <IonToast
+        isOpen={isOpen}
+        message="This toast will close in 5 seconds"
+        onDidDismiss={() => setIsOpen(false)}
+        duration={5000}
+      ></IonToast>
     </>
   );
 };

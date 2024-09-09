@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { Capacitor } from "@capacitor/core";
 import { Keyboard } from "@capacitor/keyboard";
@@ -44,12 +44,21 @@ function FormBlank({
 
   const increaseTextAreaHeight = (e: any) => {
     if (counterNameField.current) {
-      counterNameField.current.style.height = "auto";
+      // counterNameField.current.style.height = "auto";
       counterNameField.current.style.height = `${e.target.scrollHeight}px`;
     } else {
       console.error("counterNameField.current does not exist");
     }
   };
+
+  useEffect(() => {
+    if (counterNameField.current) {
+      counterNameField.current.style.height = "1px";
+      counterNameField.current.style.height = `${counterNameField.current.scrollHeight}px`;
+    } else {
+      console.error("counterNameField.current does not exist");
+    }
+  }, []);
 
   const submitCounter = (e: React.MouseEvent<HTMLDivElement>): void => {
     e.preventDefault();
@@ -85,7 +94,28 @@ function FormBlank({
   return (
     <>
       <div ref={formBlankRef} className="form-wrap form-blank">
-        <h1 className="form-blank-and-form-filled-header-text">Add Tasbeeh</h1>
+        <div className="form-blank-save-and-cancel-btn-wrap">
+          <div
+            onClick={() => {
+              setIsFormBlankSheetOpen(false);
+            }}
+            className="form-blank-cancel-btn"
+            style={{ backgroundColor: "transparent" }}
+          >
+            Cancel
+          </div>
+          <h1 className="form-blank-and-form-filled-header-text">
+            Add Tasbeeh
+          </h1>
+          <div
+            className="form-blank-save-btn"
+            onClick={submitCounter}
+            style={{ backgroundColor: activeBackgroundColor }}
+          >
+            Save
+          </div>
+        </div>
+
         <form>
           <div className="form-blank-counter-name-input-wrap">
             <div className="form-blank-name-and-target-wrap">
@@ -135,24 +165,6 @@ function FormBlank({
           </div>
           <div className="pop-up-box-buttons-wrap"></div>
         </form>
-      </div>
-      <div className="form-blank-save-and-cancel-btn-wrap">
-        <div
-          onClick={() => {
-            setIsFormBlankSheetOpen(false);
-          }}
-          className="form-blank-cancel-btn"
-          style={{ backgroundColor: "transparent" }}
-        >
-          Cancel
-        </div>
-        <div
-          className="form-blank-save-btn"
-          onClick={submitCounter}
-          style={{ backgroundColor: activeBackgroundColor }}
-        >
-          Save
-        </div>
       </div>
     </>
   );
