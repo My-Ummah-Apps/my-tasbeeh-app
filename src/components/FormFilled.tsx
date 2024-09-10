@@ -3,6 +3,8 @@ import React from "react";
 import { ActionSheet, ActionSheetButtonStyle } from "@capacitor/action-sheet";
 import { VscDebugRestart } from "react-icons/vsc";
 import { Keyboard } from "@capacitor/keyboard";
+import { Toast } from "@capacitor/toast";
+
 import {
   MdOutlinePlaylistRemove,
   MdOutlineRestartAlt,
@@ -64,8 +66,7 @@ const FormFilled = ({
   //   });
   // }
 
-  const showDeleteCounterActions = async (currentCounterId) => {
-    console.log("showActions triggered");
+  const showDeleteCounterActions = async (currentCounterId: string) => {
     const result = await ActionSheet.showActions({
       title: "Delete Counter",
       message: "Are you sure you want to delete this counter?",
@@ -76,21 +77,27 @@ const FormFilled = ({
         },
         {
           title: "Cancel",
+          style: ActionSheetButtonStyle.Cancel,
         },
       ],
     });
 
+    const showCounterDeleteToast = async () => {
+      await Toast.show({
+        text: "Tasbeeh deleted",
+      });
+    };
+
     if (result.index === 0) {
       deleteSingleCounter(currentCounterId);
       setIsFormFilledSheetOpen(false);
+      showCounterDeleteToast();
     } else if (result.index === 1) {
       console.log("Delete action cancelled");
     }
 
     console.log("Action Sheet result:", result);
   };
-
-  const [toast, setToast] = useState(false);
 
   useEffect(() => {
     if (counterNameField.current) {
@@ -210,7 +217,7 @@ const FormFilled = ({
               // className="form-filled-name-input form-input"
               className="form-textarea"
               onChange={(e) => {
-                if (/\d/.test(e.target.value)) return;
+                // if (/\d/.test(e.target.value)) return;
                 setCounterNameInput(e.target.value);
                 increaseTextAreaHeight(e);
               }}
@@ -240,7 +247,8 @@ const FormFilled = ({
                 className="form-input"
                 maxLength={5}
                 onChange={(e) => {
-                  if (/[a-zA-Z]/.test(e.target.value)) return;
+                  // if (/[a-zA-Z]/.test(e.target.value)) return;
+                  if (/[^0-9]+/.test(e.target.value)) return;
                   setcurrentCountInput(Number(e.target.value));
                 }}
                 value={currentCountInput}
@@ -266,7 +274,8 @@ const FormFilled = ({
                 //   // input.focus();
                 // }}
                 onChange={(e) => {
-                  if (/[a-zA-Z]/.test(e.target.value)) return;
+                  // if (/[a-zA-Z]/.test(e.target.value)) return;
+                  if (/[^0-9]+/.test(e.target.value)) return;
                   setCurrentTarget(Number(e.target.value));
                 }}
                 ref={counterTargetField}
@@ -305,7 +314,7 @@ const FormFilled = ({
           </button> */}
         <button
           className="form-filled-delete-tasbeeh-btn"
-          onClick={(e) => {
+          onClick={async (e) => {
             setIsOpen(true);
             // deleteSingleCounter(currentCounterId);
             // setIsFormFilledSheetOpen(false);

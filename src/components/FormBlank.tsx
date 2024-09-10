@@ -125,11 +125,10 @@ function FormBlank({
                 ref={counterNameField}
                 className="form-textarea"
                 onChange={(e) => {
-                  if (/\d/.test(e.target.value)) return;
+                  // if (/\d/.test(e.target.value)) return;
                   setCounterNameInput(e.target.value);
                   increaseTextAreaHeight(e);
                 }}
-                // type="text"
                 required
               ></textarea>
               <div
@@ -145,7 +144,8 @@ function FormBlank({
               <input
                 ref={counterTargetField}
                 onChange={(e) => {
-                  if (/[a-zA-Z]/.test(e.target.value)) return;
+                  // if (/[a-zA-Z]/.test(e.target.value)) return;
+                  if (/[^0-9]+/.test(e.target.value)) return;
                   setCounterTargetInput(e.target.value);
                 }}
                 className="form-input"

@@ -892,7 +892,8 @@ input[type="number"] {
 }
 
 .form-input {
-  border-radius: 0.8rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
   background: var(--form-input-bg-color);
   color: var(--text-color);
 }
@@ -968,7 +969,7 @@ input[type="number"] {
   resize: none;
   /* overflow: hidden; */
   border: none;
-  border-radius: 0.8rem;
+  border-radius: 0.5rem;
   padding: 0.5rem 0.5rem;
 }
 
