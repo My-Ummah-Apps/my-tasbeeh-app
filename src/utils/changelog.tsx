@@ -1,6 +1,6 @@
 export const changeLogs = [
   {
-    versionNum: "2.0",
+    versionNum: "2.0.0",
     changes: [
       {
         heading: "Improved Modal Interaction",

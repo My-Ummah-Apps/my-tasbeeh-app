@@ -54,7 +54,9 @@ function FormBlank({
   useEffect(() => {
     if (counterNameField.current) {
       counterNameField.current.style.height = "1px";
-      counterNameField.current.style.height = `${counterNameField.current.scrollHeight}px`;
+      counterNameField.current.style.height = `${
+        counterNameField.current.scrollHeight + 2
+      }px`;
     } else {
       console.error("counterNameField.current does not exist");
     }

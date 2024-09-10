@@ -101,9 +101,10 @@ const FormFilled = ({
 
   useEffect(() => {
     if (counterNameField.current) {
-      // ! Unsure if below line will work across all devices as its being set to 1px
       counterNameField.current.style.height = "1px";
-      counterNameField.current.style.height = `${counterNameField.current.scrollHeight}px`;
+      counterNameField.current.style.height = `${
+        counterNameField.current.scrollHeight + 2
+      }px`;
     } else {
       console.error("counterNameField.current does not exist");
     }

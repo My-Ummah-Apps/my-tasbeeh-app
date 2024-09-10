@@ -970,7 +970,7 @@ input[type="number"] {
   /* overflow: hidden; */
   border: none;
   border-radius: 0.5rem;
-  padding: 0.5rem 0.5rem;
+  padding: 1rem 0.5rem;
 }
 
 .form-filled-save-and-cancel-btn-wrap,

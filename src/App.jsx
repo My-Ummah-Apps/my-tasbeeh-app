@@ -154,23 +154,15 @@ function App() {
   // }
 
   useEffect(() => {
-    if (
-      (!localStorage.getItem("localSavedCountersArray") &&
-        !localStorage.getItem("appVersion")) ||
-      localStorage.getItem("appVersion") !== "2.0"
-    ) {
-      console.log("TRUE");
-    }
-    if (
-      !localStorage.getItem("localSavedCountersArray") ||
-      JSON.parse(
-        localStorage.getItem("localSavedCountersArray").length == 0 &&
-          !localStorage.getItem("appVersion")
-      ) ||
-      localStorage.getItem("appVersion") !== "2.0"
+    if (!localStorage.getItem("localSavedCountersArray")) {
+      console.log("Brand new user, don't show changelog!");
+    } else if (
+      localStorage.getItem("localSavedCountersArray") &&
+      localStorage.getItem("appVersion") !== "2.0.0"
     ) {
       console.log("SHOW CHANGELOG");
       setShowChangelogModal(true);
+      localStorage.setItem("appVersion", "2.0.0");
     }
   }, []);
 
