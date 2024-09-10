@@ -68,7 +68,7 @@ const FormFilled = ({
 
   const showDeleteCounterActions = async (currentCounterId: string) => {
     const result = await ActionSheet.showActions({
-      title: "Delete Counter",
+      title: "Delete Tasbeeh",
       message: "Are you sure you want to delete this counter?",
       options: [
         {
