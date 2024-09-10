@@ -801,7 +801,7 @@ input[type="number"] {
   box-shadow: var(--form-box-shadow);
 }
 
-.form-filled-icons-wrap {
+.form-filled-reset-delete-btns-wrap {
   margin: 1rem 0;
   padding-inline: 1rem;
   position: absolute;
@@ -814,12 +814,12 @@ input[type="number"] {
   /* border-bottom: 1px solid var(--border-form); */
 }
 
-.form-filled-icons-wrap svg {
+.form-filled-reset-delete-btns-wrap svg {
   padding: 4px;
   font-size: 2rem;
 }
 
-.form-filled-icons-wrap > button {
+.form-filled-reset-delete-btns-wrap > button {
   background-color: rgb(255, 71, 71);
   color: #fff;
   padding: 0.5rem 0.5rem;
@@ -827,12 +827,21 @@ input[type="number"] {
   border-radius: 0.5rem;
 }
 
-.form-filled-icons-wrap > button:nth-child(1) {
+.form-filled-reset-delete-btns-wrap > button:nth-child(1) {
   background-color: #dc2626;
   color: #fff;
 }
 
 .form-filled-reset-delete-btns-wrap {
+  position: absolute;
+  bottom: 10px;
+  /* display: flex;
+  align-items: center;
+  border: 1px solid white;
+  margin: 1rem 0rem; */
+}
+
+.form-filled-delete-tasbeeh-btn {
   display: flex;
   align-items: center;
   border: 1px solid white;

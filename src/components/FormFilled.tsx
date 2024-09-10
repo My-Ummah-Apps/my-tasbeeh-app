@@ -1,17 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import React from "react";
-import {
-  IonButton,
-  IonHeader,
-  IonContent,
-  IonToolbar,
-  IonTitle,
-  IonPage,
-  IonToast,
-  IonTextarea,
-  IonList,
-  IonItem,
-} from "@ionic/react";
+import { ActionSheet, ActionSheetButtonStyle } from "@capacitor/action-sheet";
 import { VscDebugRestart } from "react-icons/vsc";
 import { Keyboard } from "@capacitor/keyboard";
 import {
@@ -74,6 +63,32 @@ const FormFilled = ({
   //     }
   //   });
   // }
+
+  const showDeleteCounterActions = async (currentCounterId) => {
+    console.log("showActions triggered");
+    const result = await ActionSheet.showActions({
+      title: "Delete Counter",
+      message: "Are you sure you want to delete this counter?",
+      options: [
+        {
+          title: "Delete",
+          style: ActionSheetButtonStyle.Destructive,
+        },
+        {
+          title: "Cancel",
+        },
+      ],
+    });
+
+    if (result.index === 0) {
+      deleteSingleCounter(currentCounterId);
+      setIsFormFilledSheetOpen(false);
+    } else if (result.index === 1) {
+      console.log("Delete action cancelled");
+    }
+
+    console.log("Action Sheet result:", result);
+  };
 
   const [toast, setToast] = useState(false);
 
@@ -277,13 +292,7 @@ const FormFilled = ({
         </form>
       </div>
 
-      <IonToast
-        isOpen={isOpen}
-        message="This toast will close in 5 seconds"
-        onDidDismiss={() => setIsOpen(false)}
-        duration={5000}
-      ></IonToast>
-      <div className="form-filled-icons-wrap">
+      <div className="form-filled-reset-delete-btns-wrap">
         {/* <button className="form-filled-reset-delete-btns-wrap">
             <p>Reset Counter</p>
             <MdOutlineRestartAlt
@@ -295,12 +304,13 @@ const FormFilled = ({
             />
           </button> */}
         <button
-          className="form-filled-reset-delete-btns-wrap"
+          className="form-filled-delete-tasbeeh-btn"
           onClick={(e) => {
             setIsOpen(true);
-            deleteSingleCounter(currentCounterId);
+            // deleteSingleCounter(currentCounterId);
+            // setIsFormFilledSheetOpen(false);
             e.preventDefault();
-            setIsFormFilledSheetOpen(false);
+            showDeleteCounterActions(currentCounterId);
           }}
         >
           <p>Delete Tasbeeh</p>
