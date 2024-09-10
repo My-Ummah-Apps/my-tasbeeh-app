@@ -802,13 +802,15 @@ input[type="number"] {
 }
 
 .form-filled-icons-wrap {
+  margin: 1rem 0;
+  padding-inline: 1rem;
+  position: absolute;
+  bottom: 10px;
   /* text-align: right; */
   /* display: flex;
   justify-content: space-between; */
 
-  margin: 1rem 0;
   /* padding: 0.5rem 1rem; */
-  padding-inline: 1rem;
   /* border-bottom: 1px solid var(--border-form); */
 }
 
@@ -818,11 +820,13 @@ input[type="number"] {
 }
 
 .form-filled-icons-wrap > button {
-  width: 50%;
-  padding: 0.3rem 0.5rem;
+  background-color: rgb(255, 71, 71);
+  color: #fff;
+  padding: 0.5rem 0.5rem;
   border: none;
   border-radius: 0.5rem;
 }
+
 .form-filled-icons-wrap > button:nth-child(1) {
   background-color: #dc2626;
   color: #fff;
@@ -893,6 +897,7 @@ input[type="number"] {
 .count-and-target-input-wrap {
   display: flex;
   justify-content: center;
+  margin-top: -0.7rem;
 }
 
 .current-count-input-wrap input,
@@ -963,11 +968,11 @@ input[type="number"] {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: var(--form-input-bg-color);
+  background-color: var(--form-wrap-bg-color);
   display: flex;
   gap: 1rem;
   align-items: center;
-  margin: 0rem 0.5rem 2rem 0.5rem;
+  margin: 0rem 0.5rem 0rem 0.5rem;
 }
 
 .form-filled-save-and-cancel-btn-wrap > div,
@@ -990,7 +995,7 @@ input[type="number"] {
 }
 
 .form-alert-styles {
-  margin: 0.5rem 0;
+  margin-top: 0.5rem;
   color: red;
   font-size: 0.7rem;
 }

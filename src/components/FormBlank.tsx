@@ -144,14 +144,14 @@ function FormBlank({
               <p>Target</p>
               <input
                 ref={counterTargetField}
-                className="form-input"
-                maxLength={5}
                 onChange={(e) => {
                   if (/[a-zA-Z]/.test(e.target.value)) return;
                   setCounterTargetInput(e.target.value);
                 }}
-                type="text"
-                // pattern="[0-9]*"
+                className="form-input"
+                maxLength={5}
+                inputMode="numeric"
+                pattern="[0-9]*"
                 required
               ></input>
               <div

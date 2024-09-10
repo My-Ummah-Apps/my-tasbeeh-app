@@ -62,18 +62,17 @@ const FormFilled = ({
   const [currentTargetInput, setCurrentTarget] = useState(currentCounterTarget);
 
   // if (Capacitor.getPlatform() === "ios") {
-  //   Keyboard.setAccessoryBarVisible({ isVisible: true });
-  //   // window.addEventListener("keyboardWillShow", (e) => {
-  //   //   if (formFilledRef.current) {
-  //   //     formFilledRef.current.style.marginBottom =
-  //   //       (e as any).keyboardHeight + "px";
-  //   //   }
-  //   // });
-  //   // window.addEventListener("keyboardWillHide", (e) => {
-  //   //   if (formFilledRef.current) {
-  //   //     formFilledRef.current.style.marginBottom = "0px";
-  //   //   }
-  //   // });
+  //   window.addEventListener("keyboardWillShow", (e) => {
+  //     if (formFilledRef.current) {
+  //       formFilledRef.current.style.marginBottom =
+  //         (e as any).keyboardHeight + "px";
+  //     }
+  //   });
+  //   window.addEventListener("keyboardWillHide", (e) => {
+  //     if (formFilledRef.current) {
+  //       formFilledRef.current.style.marginBottom = "0px";
+  //     }
+  //   });
   // }
 
   const [toast, setToast] = useState(false);
@@ -151,7 +150,7 @@ const FormFilled = ({
 
   return (
     <>
-      <div ref={formFilledRef} className="form-wrap form-filled">
+      <div className="form-wrap form-filled">
         <div className="form-filled-save-and-cancel-btn-wrap">
           <div
             onClick={() => {
@@ -168,13 +167,15 @@ const FormFilled = ({
           <div
             className="form-filled-save-btn"
             onClick={submitCounter}
-            style={{ backgroundColor: "#3b82f6" }}
+            style={{ backgroundColor: activeBackgroundColor }}
           >
             Save
           </div>
         </div>
 
-        <form>
+        <form
+        // ref={formFilledRef}
+        >
           <div className="form-filled-counter-name-input-wrap">
             <p>Dhikr Name</p>
 
@@ -227,9 +228,9 @@ const FormFilled = ({
                   if (/[a-zA-Z]/.test(e.target.value)) return;
                   setcurrentCountInput(Number(e.target.value));
                 }}
-                // type="text"
                 value={currentCountInput}
-                // pattern="[0-9]*"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 required
               ></input>
               <div
@@ -249,16 +250,16 @@ const FormFilled = ({
                 //   // input.selectionEnd = input.value.length;
                 //   // input.focus();
                 // }}
-                ref={counterTargetField}
-                className="form-input"
-                maxLength={5}
                 onChange={(e) => {
                   if (/[a-zA-Z]/.test(e.target.value)) return;
                   setCurrentTarget(Number(e.target.value));
                 }}
-                // type="text"
+                ref={counterTargetField}
+                className="form-input"
+                maxLength={5}
                 value={currentTargetInput}
-                // pattern="[0-9]*"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 required
               ></input>
               <div
@@ -274,8 +275,16 @@ const FormFilled = ({
             <div className="reset-and-save-btn-wrap"></div>
           </div>
         </form>
-        <div className="form-filled-icons-wrap">
-          {/* <button className="form-filled-reset-delete-btns-wrap">
+      </div>
+
+      <IonToast
+        isOpen={isOpen}
+        message="This toast will close in 5 seconds"
+        onDidDismiss={() => setIsOpen(false)}
+        duration={5000}
+      ></IonToast>
+      <div className="form-filled-icons-wrap">
+        {/* <button className="form-filled-reset-delete-btns-wrap">
             <p>Reset Counter</p>
             <MdOutlineRestartAlt
               onClick={(e) => {
@@ -285,27 +294,19 @@ const FormFilled = ({
               }}
             />
           </button> */}
-          <button
-            className="form-filled-reset-delete-btns-wrap"
-            onClick={(e) => {
-              setIsOpen(true);
-              deleteSingleCounter(currentCounterId);
-              e.preventDefault();
-              setIsFormFilledSheetOpen(false);
-            }}
-          >
-            <p>Delete Counter</p>
-            <MdDeleteOutline />
-          </button>
-        </div>
+        <button
+          className="form-filled-reset-delete-btns-wrap"
+          onClick={(e) => {
+            setIsOpen(true);
+            deleteSingleCounter(currentCounterId);
+            e.preventDefault();
+            setIsFormFilledSheetOpen(false);
+          }}
+        >
+          <p>Delete Tasbeeh</p>
+          <MdDeleteOutline />
+        </button>
       </div>
-
-      <IonToast
-        isOpen={isOpen}
-        message="This toast will close in 5 seconds"
-        onDidDismiss={() => setIsOpen(false)}
-        duration={5000}
-      ></IonToast>
     </>
   );
 };

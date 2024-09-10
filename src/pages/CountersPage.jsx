@@ -1,7 +1,23 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useRef } from "react";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Sheet } from "react-modal-sheet";
+import { KeyboardResize, Keyboard } from "@capacitor/keyboard";
+
+import {
+  IonModal,
+  IonButton,
+  IonHeader,
+  IonContent,
+  IonToolbar,
+  IonTitle,
+  IonPage,
+  IonToast,
+  IonTextarea,
+  IonList,
+  IonItem,
+  IonInput,
+} from "@ionic/react";
 
 import { MdModeEditOutline, MdAdd } from "react-icons/md";
 
@@ -25,6 +41,20 @@ function CountersPage({
 }) {
   function singleCounterStyles(count, target) {
     return count > 0 ? (count / target) * 100 + "%" : "100%";
+  }
+  const formFilledRef = useRef(null);
+  if (Capacitor.getPlatform() === "ios") {
+    // Keyboard.setAccessoryBarVisible({ isVisible: true });
+    window.addEventListener("keyboardWillShow", (e) => {
+      if (formFilledRef.current) {
+        formFilledRef.current.style.marginBottom = e.keyboardHeight + "px";
+      }
+    });
+    window.addEventListener("keyboardWillHide", (e) => {
+      if (formFilledRef.current) {
+        formFilledRef.current.style.marginBottom = "0px";
+      }
+    });
   }
 
   const [isFormBlankSheetOpen, setIsFormBlankSheetOpen] = useState(false);
@@ -57,6 +87,8 @@ function CountersPage({
       </div>
 
       <Sheet
+        // ref={formFilledRef}
+        style={{ willChange: "transform" }}
         disableDrag={true}
         isOpen={isFormFilledSheetOpen}
         onClose={() => setIsFormFilledSheetOpen(false)}
@@ -138,6 +170,44 @@ function CountersPage({
           );
         })}
       </div>
+      {/* <IonContent className="ion-padding">
+        <IonButton id="open-modal" expand="block">
+          Open
+        </IonButton>
+        <p>{"message"}</p>
+        <IonModal
+          // ref={modal}
+          trigger="open-modal"
+          onWillDismiss={(ev) => onWillDismiss(ev)}
+        >
+          <IonHeader>
+            <IonToolbar>
+              <IonButton slot="start">
+                <IonButton onClick={() => modal.current?.dismiss()}>
+                  Cancel
+                </IonButton>
+              </IonButton>
+              <IonTitle>Welcome</IonTitle>
+              <IonButton slot="end">
+                <IonButton strong={true} onClick={() => confirm()}>
+                  Confirm
+                </IonButton>
+              </IonButton>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent className="ion-padding">
+            <IonItem>
+              <IonInput
+                label="Enter your name"
+                labelPlacement="stacked"
+                // ref={input}
+                type="text"
+                placeholder="Your name"
+              />
+            </IonItem>
+          </IonContent>
+        </IonModal>
+      </IonContent> */}
     </div>
   );
 }
