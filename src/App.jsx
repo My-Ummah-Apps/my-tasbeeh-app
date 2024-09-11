@@ -13,6 +13,7 @@ import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 import { changeLogs } from "./utils/changelog";
+import SheetCloseBtn from "./components/SheetCloseBtn";
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
 
@@ -663,10 +664,11 @@ function App() {
             ))}
             <button
               onClick={() => setShowChangelogModal(false)}
-              // className="sheet-changelog-dismiss-btn"
+              className="sheet-changelog-dismiss-btn"
             >
-              Dismiss
+              Close
             </button>
+            {/* <SheetCloseBtn closeModalState={setShowChangelogModal} /> */}
           </Sheet.Content>
         </Sheet.Container>
         <Sheet.Backdrop

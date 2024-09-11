@@ -4,12 +4,12 @@ import Modal from "react-modal";
 import { Capacitor } from "@capacitor/core";
 import { MdOutlineChevronRight } from "react-icons/md";
 import { FaHandHoldingHeart } from "react-icons/fa";
+import { Sheet } from "react-modal-sheet";
 
 // import { FaJar } from "react-icons/fa6";
 // import { GiMasonJar } from "react-icons/gi";
 import Switch from "react-ios-switch";
 import NotificationOptions from "../components/NotificationOptions";
-import ResetAllCountersAlert from "../components/ResetAllCountersAlert";
 import AboutUs from "../components/AboutUs";
 
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
@@ -56,6 +56,7 @@ const SettingsPage = ({
   useEffect(() => {
     setTheme(JSON.parse(localStorage.getItem("theme")));
   }, [theme]);
+  const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -129,14 +130,16 @@ const SettingsPage = ({
       alert("Please turn notifications back on from within system settings");
       return;
     } else if (checkPermission.display == "granted") {
-      handleOpenModal2();
+      setShowNotificationsSheet(true);
     } else if (
       // checkPermission.display == "denied" ||
       checkPermission.display == "prompt" ||
       checkPermission.display == "prompt-with-rationale"
     ) {
-      handleOpenModal2();
-      requestPermissionFunction();
+      // handleOpenModal2();
+
+      await requestPermissionFunction();
+      setShowNotificationsSheet(true);
       setMorningNotification(false);
       setAfternoonNotification(false);
       setEveningNotification(false);
@@ -404,40 +407,61 @@ const SettingsPage = ({
             </div>
           </Modal>
         </div>
-
-        {Capacitor.isNativePlatform() ? (
-          <div className="individual-section-wrap">
-            <div
-              className="notifications-wrap"
-              onClick={() => {
-                checkNotificationPermissions();
-              }}
-            >
-              <div className="text-wrap" style={{ display: "block" }}>
-                <p>Notifications</p>
-                <p>Set Notifications</p>
-              </div>
-              <MdOutlineChevronRight className="chevron" />
+*/}
+        {/* {Capacitor.isNativePlatform() ? ( */}
+        <div className="individual-section-wrap">
+          <div
+            className="notifications-wrap"
+            onClick={() => {
+              checkNotificationPermissions();
+            }}
+          >
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Notifications</p>
+              <p>Set Notifications</p>
             </div>
-            <Modal
-              style={modalStyles}
-              isOpen={showModal2}
-              onRequestClose={handleCloseModal2}
-              closeTimeoutMS={250}
-              contentLabel="Modal #2 Global Style Override Example"
-            >
-              <NotificationOptions
-                setMorningNotification={setMorningNotification}
-                morningNotification={morningNotification}
-                afternoonNotification={afternoonNotification}
-                setAfternoonNotification={setAfternoonNotification}
-                eveningNotification={eveningNotification}
-                setEveningNotification={setEveningNotification}
-                activeBackgroundColor={activeBackgroundColor}
-              />
-            </Modal>
+            <MdOutlineChevronRight className="chevron" />
           </div>
-        ) : null} */}
+          <Sheet
+            disableDrag={true}
+            isOpen={showNotificationsSheet}
+            onClose={() => setShowNotificationsSheet(false)}
+            detent="full-height"
+            tweenConfig={{ ease: "easeOut", duration: 0.3 }}
+          >
+            <Sheet.Container>
+              {/* <Sheet.Header /> */}
+              <Sheet.Content>
+                {" "}
+                <NotificationOptions
+                  setMorningNotification={setMorningNotification}
+                  morningNotification={morningNotification}
+                  afternoonNotification={afternoonNotification}
+                  setAfternoonNotification={setAfternoonNotification}
+                  eveningNotification={eveningNotification}
+                  setEveningNotification={setEveningNotification}
+                  activeBackgroundColor={activeBackgroundColor}
+                />
+                <div>
+                  <button
+                    onClick={() => {
+                      setShowNotificationsSheet(false);
+                    }}
+                    style={{ backgroundColor: activeBackgroundColor }}
+                    className="sheet-notifications-btn"
+                  >
+                    Close
+                  </button>
+                </div>
+              </Sheet.Content>
+            </Sheet.Container>
+            <Sheet.Backdrop
+              // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+              onTap={() => setShowNotificationsSheet(false)}
+            />
+          </Sheet>
+        </div>
+        {/* ) : null} */}
         <div className="individual-section-wrap">
           <div
             className="theme-wrap"
