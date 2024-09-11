@@ -22,7 +22,7 @@ dependencies {
     implementation project(':capacitor-toast')
 
 }
-apply from: "../../node_modules/cordova-annotated-plugin-android/build.gradle"
+
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

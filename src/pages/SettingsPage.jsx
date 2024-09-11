@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { Capacitor } from "@capacitor/core";
 import { MdOutlineChevronRight } from "react-icons/md";
 import { FaHandHoldingHeart } from "react-icons/fa";
+
 // import { FaJar } from "react-icons/fa6";
 // import { GiMasonJar } from "react-icons/gi";
 import Switch from "react-ios-switch";
@@ -16,6 +17,9 @@ import AboutUs from "../components/AboutUs";
 import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { StatusBar, Style } from "@capacitor/status-bar";
+import { ActionSheet, ActionSheetButtonStyle } from "@capacitor/action-sheet";
+import { Toast } from "@capacitor/toast";
+
 // import ThemeOptions from "../components/ThemeOptions";
 
 // Override default Modal styles
@@ -156,6 +160,38 @@ const SettingsPage = ({
       setAfternoonNotification(false);
       setEveningNotification(false);
     }
+  };
+
+  const showResetAllCountersActionSheet = async () => {
+    const result = await ActionSheet.showActions({
+      title: "Reset All Adhkar",
+      message: "Are you sure you want to reset all Adkhar to 0?",
+      options: [
+        {
+          title: "Reset",
+          style: ActionSheetButtonStyle.Destructive,
+        },
+        {
+          title: "Cancel",
+          style: ActionSheetButtonStyle.Cancel,
+        },
+      ],
+    });
+
+    const showAllCounterResetToast = async () => {
+      await Toast.show({
+        text: "All Adhkar Reset",
+      });
+    };
+
+    if (result.index === 0) {
+      resetAllCounters();
+      showAllCounterResetToast();
+    } else if (result.index === 1) {
+      // console.log("Res action cancelled");
+    }
+
+    // console.log("Action Sheet result:", result);
   };
 
   const loadingIconRef = useRef(null);
@@ -575,23 +611,17 @@ const SettingsPage = ({
           <div className="reset-adkhar-text-wrap">
             <p
               onClick={() => {
-                handleOpenModal3();
+                // handleOpenModal3();
+                showResetAllCountersActionSheet();
               }}
             >
-              Clear all Adhkar
+              Reset all Adhkar
             </p>
-            <Modal
-              style={modalStyles}
-              isOpen={showModal3}
-              onRequestClose={handleCloseModal3}
-              closeTimeoutMS={250}
-              contentLabel="Modal #2 Global Style Override Example"
-            >
-              <ResetAllCountersAlert
-                resetAllCounters={resetAllCounters}
-                handleCloseModal3={handleCloseModal3}
-              />
-            </Modal>
+
+            {/* <ResetAllCountersAlert
+              resetAllCounters={resetAllCounters}
+              handleCloseModal3={handleCloseModal3}
+            /> */}
           </div>
         </div>
         <div className="individual-section-wrap">
