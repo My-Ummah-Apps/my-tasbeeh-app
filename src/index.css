@@ -119,13 +119,23 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.sheet-changelog-dismiss-btn,
-.sheet-notifications-btn {
+.sheet-changelog-close-btn {
   font-size: 1rem;
   position: fixed;
   bottom: 7%;
   left: 50%;
   transform: translate(-50%, 50%);
+  border: none;
+  border-radius: 1rem;
+  background-color: #5c6bc0;
+  color: #fff;
+  width: 90%;
+  padding: 1.5rem;
+}
+
+.sheet-notifications-close-btn,
+.sheet-aboutus-close-btn {
+  margin: 1rem auto 1rem auto;
   border: none;
   border-radius: 1rem;
   background-color: #5c6bc0;
@@ -1316,15 +1326,11 @@ input[type="number"] {
   width: 90%;
 }
 
-.about-us-modal {
+.about-us-wrap {
   background: var(--form-wrap-bg-color);
   padding: 2rem 0;
   border-radius: 1rem;
   font-size: 1rem;
-}
-
-.about-us-modal img {
-  /* margin: 0 0 1rem 0; */
 }
 
 .about-us-organisation-text {

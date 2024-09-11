@@ -57,66 +57,7 @@ const SettingsPage = ({
     setTheme(JSON.parse(localStorage.getItem("theme")));
   }, [theme]);
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
-
-  const [showModal, setShowModal] = useState(false);
-  const [showModal2, setShowModal2] = useState(false);
-  const [showModal3, setShowModal3] = useState(false);
-  const [showModal4, setShowModal4] = useState(false);
-  const [showModal5, setShowModal5] = useState(false);
-  const [showModal6, setShowModal6] = useState(false);
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-
-  const handleOpenModal2 = () => {
-    setShowModal2(true);
-  };
-
-  const handleOpenModal3 = () => {
-    setShowModal3(true);
-  };
-
-  const handleOpenModal4 = () => {
-    setShowModal4(true);
-  };
-
-  const handleOpenModal5 = () => {
-    setShowModal5(true);
-  };
-
-  const handleOpenModal6 = () => {
-    setShowModal6(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const handleCloseModal2 = () => {
-    setShowModal2(false);
-  };
-
-  const handleCloseModal3 = () => {
-    setShowModal3(false);
-  };
-
-  const handleCloseModal4 = () => {
-    setShowModal4(false);
-  };
-
-  const handleCloseModal5 = () => {
-    setShowModal5(false);
-  };
-
-  const handleCloseModal6 = () => {
-    setShowModal6(false);
-  };
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
+  const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
 
   let requestPermission;
   let checkPermission;
@@ -136,8 +77,6 @@ const SettingsPage = ({
       checkPermission.display == "prompt" ||
       checkPermission.display == "prompt-with-rationale"
     ) {
-      // handleOpenModal2();
-
       await requestPermissionFunction();
       setShowNotificationsSheet(true);
       setMorningNotification(false);
@@ -426,7 +365,7 @@ const SettingsPage = ({
             disableDrag={true}
             isOpen={showNotificationsSheet}
             onClose={() => setShowNotificationsSheet(false)}
-            detent="full-height"
+            detent="content-height"
             tweenConfig={{ ease: "easeOut", duration: 0.3 }}
           >
             <Sheet.Container>
@@ -442,17 +381,16 @@ const SettingsPage = ({
                   setEveningNotification={setEveningNotification}
                   activeBackgroundColor={activeBackgroundColor}
                 />
-                <div>
-                  <button
-                    onClick={() => {
-                      setShowNotificationsSheet(false);
-                    }}
-                    style={{ backgroundColor: activeBackgroundColor }}
-                    className="sheet-notifications-btn"
-                  >
-                    Close
-                  </button>
-                </div>
+                <button
+                  onClick={() => {
+                    setShowNotificationsSheet(false);
+                    console.log(setShowNotificationsSheet);
+                  }}
+                  style={{ backgroundColor: activeBackgroundColor }}
+                  className="sheet-notifications-close-btn"
+                >
+                  Close
+                </button>
               </Sheet.Content>
             </Sheet.Container>
             <Sheet.Backdrop
@@ -716,28 +654,48 @@ const SettingsPage = ({
             </div>
             <MdOutlineChevronRight className="chevron" />
           </div>
-          {Capacitor.isNativePlatform() ? (
-            <div
-              onClick={() => {
-                handleOpenModal4();
-              }}
-            >
-              <div className="text-wrap" style={{ display: "block" }}>
-                <p>About</p>
-                <p>About us</p>
-              </div>
-              <MdOutlineChevronRight className="chevron" />
-            </div>
-          ) : null}
-          <Modal
-            style={modalStyles}
-            isOpen={showModal4}
-            onRequestClose={handleCloseModal4}
-            closeTimeoutMS={250}
-            contentLabel="Modal #2 Global Style Override Example"
+          {/* {Capacitor.isNativePlatform() ? ( */}
+          <div
+            onClick={() => {
+              setShowAboutUsSheet(true);
+            }}
           >
-            <AboutUs />
-          </Modal>
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>About</p>
+              <p>About us</p>
+            </div>
+            <MdOutlineChevronRight className="chevron" />
+            <Sheet
+              disableDrag={true}
+              isOpen={showAboutUsSheet}
+              onClose={() => setShowAboutUsSheet(false)}
+              detent="content-height"
+              tweenConfig={{ ease: "easeOut", duration: 0.3 }}
+            >
+              <Sheet.Container>
+                {/* <Sheet.Header /> */}
+                <Sheet.Content>
+                  <AboutUs />
+                  <button
+                    onClick={() => {
+                      console.log("hi");
+                      setShowAboutUsSheet(false);
+                      console.log(showAboutUsSheet);
+                    }}
+                    style={{ backgroundColor: activeBackgroundColor }}
+                    className="sheet-aboutus-close-btn"
+                  >
+                    Close
+                  </button>
+                </Sheet.Content>
+              </Sheet.Container>
+              <Sheet.Backdrop
+                // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+                onTap={() => setShowAboutUsSheet(false)}
+              />
+            </Sheet>
+          </div>
+          {/* ) : null} */}
         </div>
       </div>
     </div>

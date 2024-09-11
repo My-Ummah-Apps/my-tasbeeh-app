@@ -664,7 +664,7 @@ function App() {
             ))}
             <button
               onClick={() => setShowChangelogModal(false)}
-              className="sheet-changelog-dismiss-btn"
+              className="sheet-changelog-close-btn"
             >
               Close
             </button>

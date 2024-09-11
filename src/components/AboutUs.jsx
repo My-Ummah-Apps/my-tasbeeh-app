@@ -4,7 +4,7 @@ const link = (url) => {
 
 const AboutUs = () => {
   return (
-    <div className="about-us-modal">
+    <div className="about-us-wrap">
       <div className="image-and-text-wrap">
         <img
           src="/images/My-Ummah-Apps-72ppi.png"
