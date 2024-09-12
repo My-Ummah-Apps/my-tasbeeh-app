@@ -588,7 +588,7 @@ input:focus,
 select:focus,
 textarea:focus,
 button:focus {
-  outline: 1px solid #cecece;
+  /* outline: 1px solid #cecece; */
 }
 
 .pop-up-box-wrap {
