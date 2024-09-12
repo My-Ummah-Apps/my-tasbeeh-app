@@ -48,9 +48,12 @@ const FormFilled = ({
   const showNameAlert = useRef<HTMLDivElement | null>(null);
   const formFilledRef = useRef<HTMLDivElement | null>(null);
 
-  const [counterNameInput, setCounterNameInput] = useState(currentCounterName);
-  const [currentCountInput, setcurrentCountInput] = useState(currentCount);
-  const [currentTargetInput, setCurrentTarget] = useState(currentCounterTarget);
+  const [counterNameInput, setCounterNameInput] =
+    useState<string>(currentCounterName);
+  const [currentCountInput, setcurrentCountInput] =
+    useState<number>(currentCount);
+  const [currentTargetInput, setCurrentTarget] =
+    useState<number>(currentCounterTarget);
 
   // if (Capacitor.getPlatform() === "ios") {
   //   window.addEventListener("keyboardWillShow", (e) => {
@@ -220,8 +223,6 @@ const FormFilled = ({
               onChange={(e) => {
                 // if (/\d/.test(e.target.value)) return;
                 setCounterNameInput(e.target.value);
-                console.log("value is:", e.target.value);
-
                 increaseTextAreaHeight(e);
               }}
               // type="text"
@@ -253,7 +254,12 @@ const FormFilled = ({
                   // if (/[a-zA-Z]/.test(e.target.value)) return;
                   if (/[^0-9]+/.test(e.target.value)) return;
                   setcurrentCountInput(Number(e.target.value));
+                  // setcurrentCountInput((prev) =>
+                  //   prev > 0 ? Number(e.target.value) : 0
+                  // );
+                  console.log("e.target.value", e.target.value);
                 }}
+                // value={currentCountInput > 0 ? currentCountInput : ""}
                 value={currentCountInput}
                 inputMode="numeric"
                 pattern="[0-9]*"
