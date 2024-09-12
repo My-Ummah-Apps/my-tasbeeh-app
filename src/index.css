@@ -1185,6 +1185,7 @@ input[type="number"] {
 .notifications-options-heading-text {
   text-align: center;
   margin-block: 1rem;
+  font-weight: 400;
 }
 
 .individual-notification-option-wrap {

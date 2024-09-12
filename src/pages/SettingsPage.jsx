@@ -347,49 +347,49 @@ const SettingsPage = ({
           </Modal>
         </div>
 */}
-        {/* {Capacitor.isNativePlatform() ? ( */}
-        <div className="individual-section-wrap">
-          <div
-            className="notifications-wrap"
-            onClick={() => {
-              checkNotificationPermissions();
-            }}
-          >
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>Notifications</p>
-              <p>Set Notifications</p>
+        {Capacitor.isNativePlatform() ? (
+          <div className="individual-section-wrap">
+            <div
+              className="notifications-wrap"
+              onClick={() => {
+                checkNotificationPermissions();
+              }}
+            >
+              <div className="text-wrap" style={{ display: "block" }}>
+                <p>Notifications</p>
+                <p>Set Notifications</p>
+              </div>
+              <MdOutlineChevronRight className="chevron" />
             </div>
-            <MdOutlineChevronRight className="chevron" />
+            <Sheet
+              disableDrag={false}
+              isOpen={showNotificationsSheet}
+              onClose={() => setShowNotificationsSheet(false)}
+              detent="content-height"
+              tweenConfig={{ ease: "easeOut", duration: 0.3 }}
+            >
+              <Sheet.Container>
+                {/* <Sheet.Header /> */}
+                <Sheet.Content>
+                  {" "}
+                  <NotificationOptions
+                    setMorningNotification={setMorningNotification}
+                    morningNotification={morningNotification}
+                    afternoonNotification={afternoonNotification}
+                    setAfternoonNotification={setAfternoonNotification}
+                    eveningNotification={eveningNotification}
+                    setEveningNotification={setEveningNotification}
+                    activeBackgroundColor={activeBackgroundColor}
+                  />
+                </Sheet.Content>
+              </Sheet.Container>
+              <Sheet.Backdrop
+                // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+                onTap={() => setShowNotificationsSheet(false)}
+              />
+            </Sheet>
           </div>
-          <Sheet
-            disableDrag={false}
-            isOpen={showNotificationsSheet}
-            onClose={() => setShowNotificationsSheet(false)}
-            detent="content-height"
-            tweenConfig={{ ease: "easeOut", duration: 0.3 }}
-          >
-            <Sheet.Container>
-              {/* <Sheet.Header /> */}
-              <Sheet.Content>
-                {" "}
-                <NotificationOptions
-                  setMorningNotification={setMorningNotification}
-                  morningNotification={morningNotification}
-                  afternoonNotification={afternoonNotification}
-                  setAfternoonNotification={setAfternoonNotification}
-                  eveningNotification={eveningNotification}
-                  setEveningNotification={setEveningNotification}
-                  activeBackgroundColor={activeBackgroundColor}
-                />
-              </Sheet.Content>
-            </Sheet.Container>
-            <Sheet.Backdrop
-              // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-              onTap={() => setShowNotificationsSheet(false)}
-            />
-          </Sheet>
-        </div>
-        {/* ) : null} */}
+        ) : null}
         <div className="individual-section-wrap">
           <div
             className="theme-wrap"

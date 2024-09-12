@@ -18,8 +18,8 @@ interface FormFilledProps {
   modifyTheCountersArray: (
     id: string,
     modifiedCounterName: string,
-    modifiedCount: number,
-    modifiedTarget: number
+    modifiedCount: number | string,
+    modifiedTarget: number | string
   ) => void;
   currentCounterName: string;
   currentCount: number;
@@ -50,10 +50,12 @@ const FormFilled = ({
 
   const [counterNameInput, setCounterNameInput] =
     useState<string>(currentCounterName);
-  const [currentCountInput, setcurrentCountInput] =
-    useState<number>(currentCount);
-  const [currentTargetInput, setCurrentTarget] =
-    useState<number>(currentCounterTarget);
+  const [currentCountInput, setcurrentCountInput] = useState<number | string>(
+    currentCount
+  );
+  const [currentTargetInput, setCurrentTarget] = useState<number | string>(
+    currentCounterTarget
+  );
 
   // if (Capacitor.getPlatform() === "ios") {
   //   window.addEventListener("keyboardWillShow", (e) => {
@@ -253,7 +255,8 @@ const FormFilled = ({
                 onChange={(e) => {
                   // if (/[a-zA-Z]/.test(e.target.value)) return;
                   if (/[^0-9]+/.test(e.target.value)) return;
-                  setcurrentCountInput(Number(e.target.value));
+                  // setcurrentCountInput(Number(e.target.value));
+                  setcurrentCountInput(e.target.value);
                   // setcurrentCountInput((prev) =>
                   //   prev > 0 ? Number(e.target.value) : 0
                   // );
@@ -261,8 +264,8 @@ const FormFilled = ({
                 }}
                 // value={currentCountInput > 0 ? currentCountInput : ""}
                 value={currentCountInput}
-                inputMode="numeric"
-                pattern="[0-9]*"
+                // inputMode="numeric"
+                // pattern="[0-9]*"
                 required
               ></input>
               <div
@@ -285,7 +288,8 @@ const FormFilled = ({
                 onChange={(e) => {
                   // if (/[a-zA-Z]/.test(e.target.value)) return;
                   if (/[^0-9]+/.test(e.target.value)) return;
-                  setCurrentTarget(Number(e.target.value));
+                  // setCurrentTarget(Number(e.target.value));
+                  setCurrentTarget(e.target.value);
                 }}
                 ref={counterTargetField}
                 className="form-input"
