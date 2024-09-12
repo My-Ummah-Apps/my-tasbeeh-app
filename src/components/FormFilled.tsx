@@ -103,7 +103,7 @@ const FormFilled = ({
     if (counterNameField.current) {
       counterNameField.current.style.height = "1px";
       counterNameField.current.style.height = `${
-        counterNameField.current.scrollHeight + 2
+        counterNameField.current.scrollHeight + 0.5
       }px`;
     } else {
       console.error("counterNameField.current does not exist");
@@ -220,6 +220,8 @@ const FormFilled = ({
               onChange={(e) => {
                 // if (/\d/.test(e.target.value)) return;
                 setCounterNameInput(e.target.value);
+                console.log("value is:", e.target.value);
+
                 increaseTextAreaHeight(e);
               }}
               // type="text"

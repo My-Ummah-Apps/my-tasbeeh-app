@@ -74,7 +74,7 @@ function CountersPage({
       <Sheet
         // ref={formFilledRef}
         style={{ willChange: "transform" }}
-        disableDrag={true}
+        disableDrag={false}
         isOpen={isFormFilledSheetOpen}
         onClose={() => setIsFormFilledSheetOpen(false)}
         detent="full-height"
@@ -106,7 +106,7 @@ function CountersPage({
       </Sheet>
 
       <Sheet
-        disableDrag={true}
+        disableDrag={false}
         isOpen={isFormBlankSheetOpen}
         onClose={() => setIsFormBlankSheetOpen(false)}
         detent="full-height"

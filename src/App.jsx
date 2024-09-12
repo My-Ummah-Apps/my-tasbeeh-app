@@ -12,7 +12,7 @@ import NavBar from "./components/NavBar";
 import Main from "./pages/MainPage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
-import { changeLogs } from "./utils/changelog";
+import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
 import SheetCloseBtn from "./components/SheetCloseBtn";
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
@@ -155,15 +155,12 @@ function App() {
   // }
 
   useEffect(() => {
-    if (!localStorage.getItem("localSavedCountersArray")) {
-      console.log("Brand new user, don't show changelog!");
-    } else if (
+    if (
       localStorage.getItem("localSavedCountersArray") &&
-      localStorage.getItem("appVersion") !== "2.0.0"
+      localStorage.getItem("appVersion") !== LATEST_APP_VERSION
     ) {
-      console.log("SHOW CHANGELOG");
       setShowChangelogModal(true);
-      localStorage.setItem("appVersion", "2.0.0");
+      localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
   }, []);
 
@@ -649,10 +646,11 @@ function App() {
           <Sheet.Content className="sheet-changelog">
             <h1>Whats new?</h1>
             {changeLogs.map((item) => (
-              <section className="changelog-content-wrap">
+              <section key={item} className="changelog-content-wrap">
                 <p>v{item.versionNum}</p>
                 {item.changes.map((item) => (
                   <section
+                    key={item.heading}
                     // style={{ border: `1px solid ${activeBackgroundColor}` }}
                     className="changelog-individual-change-wrap"
                   >

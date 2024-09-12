@@ -13,6 +13,7 @@ const NotificationOptions = ({
 }) => {
   return (
     <div className="notification-options-wrap">
+      <h2 className="notifications-options-heading-text">Notifications</h2>
       <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Morning</p>

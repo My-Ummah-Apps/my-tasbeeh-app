@@ -362,7 +362,7 @@ const SettingsPage = ({
             <MdOutlineChevronRight className="chevron" />
           </div>
           <Sheet
-            disableDrag={true}
+            disableDrag={false}
             isOpen={showNotificationsSheet}
             onClose={() => setShowNotificationsSheet(false)}
             detent="content-height"
@@ -381,16 +381,6 @@ const SettingsPage = ({
                   setEveningNotification={setEveningNotification}
                   activeBackgroundColor={activeBackgroundColor}
                 />
-                <button
-                  onClick={() => {
-                    setShowNotificationsSheet(false);
-                    console.log(setShowNotificationsSheet);
-                  }}
-                  style={{ backgroundColor: activeBackgroundColor }}
-                  className="sheet-notifications-close-btn"
-                >
-                  Close
-                </button>
               </Sheet.Content>
             </Sheet.Container>
             <Sheet.Backdrop
@@ -655,18 +645,14 @@ const SettingsPage = ({
             <MdOutlineChevronRight className="chevron" />
           </div>
           {/* {Capacitor.isNativePlatform() ? ( */}
-          <div
-            onClick={() => {
-              setShowAboutUsSheet(true);
-            }}
-          >
+          <div onClick={() => setShowAboutUsSheet(true)}>
             <div className="text-wrap" style={{ display: "block" }}>
               <p>About</p>
               <p>About us</p>
             </div>
             <MdOutlineChevronRight className="chevron" />
             <Sheet
-              disableDrag={true}
+              disableDrag={false}
               isOpen={showAboutUsSheet}
               onClose={() => setShowAboutUsSheet(false)}
               detent="content-height"
@@ -676,17 +662,6 @@ const SettingsPage = ({
                 {/* <Sheet.Header /> */}
                 <Sheet.Content>
                   <AboutUs />
-                  <button
-                    onClick={() => {
-                      console.log("hi");
-                      setShowAboutUsSheet(false);
-                      console.log(showAboutUsSheet);
-                    }}
-                    style={{ backgroundColor: activeBackgroundColor }}
-                    className="sheet-aboutus-close-btn"
-                  >
-                    Close
-                  </button>
                 </Sheet.Content>
               </Sheet.Container>
               <Sheet.Backdrop

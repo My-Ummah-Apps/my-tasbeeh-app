@@ -55,7 +55,7 @@ function FormBlank({
     if (counterNameField.current) {
       counterNameField.current.style.height = "1px";
       counterNameField.current.style.height = `${
-        counterNameField.current.scrollHeight + 2
+        counterNameField.current.scrollHeight + 0.5
       }px`;
     } else {
       console.error("counterNameField.current does not exist");

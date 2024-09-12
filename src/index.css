@@ -22,7 +22,7 @@
   --border-header-and-nav: none;
   --border-form: #d5d5d5;
   --form-wrap-bg-color: #f4f4f4;
-  --form-input-bg-color: #fbfbfb;
+  --form-input-bg-color: #e9e9e9d5;
   --form-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.6);
   --settings-page-box-shadow: 0 0px 5px 0 rgba(132, 132, 132, 0.2);
 }
@@ -588,7 +588,7 @@ input:focus,
 select:focus,
 textarea:focus,
 button:focus {
-  outline: none;
+  outline: 1px solid lightgray;
 }
 
 .pop-up-box-wrap {
@@ -865,10 +865,6 @@ input[type="number"] {
 }
 
 .form-blank-counter-name-input-wrap {
-  /* display: flex;
-  flex-direction: row;
-  justify-content: center; */
-  margin-bottom: 0.5rem;
   text-align: center;
 }
 
@@ -964,7 +960,7 @@ input[type="number"] {
 }
 
 .form-blank-target-input-wrap > input {
-  width: 40%;
+  width: 30%;
 }
 
 .form-blank textarea,
@@ -1183,11 +1179,12 @@ input[type="number"] {
 }
 
 .notification-options-wrap {
+  margin-bottom: 5rem;
 }
 
-.notifications-heading {
+.notifications-options-heading-text {
   text-align: center;
-  padding-top: 2rem;
+  margin-block: 1rem;
 }
 
 .individual-notification-option-wrap {
@@ -1322,13 +1319,12 @@ input[type="number"] {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
-
   width: 90%;
 }
 
 .about-us-wrap {
   background: var(--form-wrap-bg-color);
-  padding: 2rem 0;
+  padding-block: 3rem;
   border-radius: 1rem;
   font-size: 1rem;
 }
