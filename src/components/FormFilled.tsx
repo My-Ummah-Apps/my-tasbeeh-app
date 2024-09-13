@@ -264,8 +264,8 @@ const FormFilled = ({
                 }}
                 // value={currentCountInput > 0 ? currentCountInput : ""}
                 value={currentCountInput}
-                // inputMode="numeric"
-                // pattern="[0-9]*"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 required
               ></input>
               <div
