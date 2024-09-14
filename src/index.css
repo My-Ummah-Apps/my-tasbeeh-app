@@ -1074,12 +1074,22 @@ input[type="number"] {
   padding: 0;
 }
 
-.m-scroll {
+.scroll-ltr {
+  -webkit-animation: scrollText-ltr infinite linear;
+  animation: scrollText-ltr infinite linear;
+}
+
+.scroll-rtl {
+  -webkit-animation: scrollText-rtl infinite linear;
+  animation: scrollText-rtl infinite linear;
+}
+
+.single-counter-text-wrap {
   /* overflow: hidden; */
   height: 100%;
   white-space: nowrap;
-  -webkit-animation: scrollText infinite linear;
-  animation: scrollText infinite linear;
+  /* -webkit-animation: scrollText infinite linear;
+  animation: scrollText infinite linear; */
   margin: 0;
   font-size: 0;
   display: inline-block;
@@ -1095,7 +1105,7 @@ input[type="number"] {
   color: white;
 }
 
-@-webkit-keyframes scrollText {
+@-webkit-keyframes scrollText-ltr {
   from {
     transform: translateX(0%);
   }
@@ -1104,12 +1114,30 @@ input[type="number"] {
   }
 }
 
-@keyframes scrollText {
+@keyframes scrollText-ltr {
   from {
     transform: translateX(0%);
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@-webkit-keyframes scrollText-rtl {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes scrollText-rtl {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
   }
 }
 

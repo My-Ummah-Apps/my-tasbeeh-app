@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useRef, useEffect, useState } from "react";
+import { direction } from "direction";
 import { FaPen } from "react-icons/fa";
 
 import { VscDebugRestart } from "react-icons/vsc";
@@ -57,6 +58,7 @@ function CounterNameAndNumber({
   const mScrollRef = useRef(null);
 
   const [scroll, setScroll] = useState();
+  const [languageDirection, setLanguageDirection] = useState("");
 
   let scrollingStyle = { overflow: "hidden" };
   // const [overflow, setOverflow] = useState({ overflow: "hidden" });
@@ -71,15 +73,16 @@ function CounterNameAndNumber({
       // setOverflow({ overflow: "unset" });
     } else if (textRef.current.clientWidth > counterTextContainerWidth) {
       setScroll(true);
-      // ! Below is making the scroll speed work across counters with varying lenghts keeping the speed the same
+      // ! Below is making the scroll speed work across counters with varying lengths keeping the speed the consistent
       const scrollSpeed = textRef.current.innerText.length * 0.3;
 
-      // console.log(
-      //   "textRef.current.innerText.length: ",
-      //   textRef.current.innerText.length,
-      //   "speed is: ",
-      //   scrollSpeed
-      // );
+      if (direction(textRef.current.innerText) === "ltr") {
+        setLanguageDirection("ltr");
+        console.log("direction: ", direction(textRef.current.innerText));
+      } else if (direction(textRef.current.innerText === "rtl")) {
+        setLanguageDirection("rtl");
+        console.log("direction: ", direction(textRef.current.innerText));
+      }
 
       mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
 
@@ -109,7 +112,17 @@ function CounterNameAndNumber({
 
           <div className="single-counter-counter-name" ref={textRef}>
             <div className={scroll ? "scroll" : ""}>
-              <div ref={mScrollRef} className={scroll ? "m-scroll" : ""}>
+              {/* <div ref={mScrollRef} className={scroll ? "m-scroll" : ""}> */}
+              <div
+                ref={mScrollRef}
+                className={`single-counter-text-wrap ${
+                  scroll
+                    ? languageDirection === "ltr"
+                      ? "scroll-ltr"
+                      : "scroll-rtl"
+                    : ""
+                }`}
+              >
                 <span
                   className="active-counter-name"
                   style={{
