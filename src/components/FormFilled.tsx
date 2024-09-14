@@ -208,6 +208,7 @@ const FormFilled = ({
             <p>Dhikr Name</p>
 
             <textarea
+              dir="auto"
               // onClick={(event) => {
               //   const input = event.target;
               //   // console.log("input: ", input.value);

@@ -123,6 +123,7 @@ function FormBlank({
             <div className="form-blank-name-and-target-wrap">
               <p>Dhikr Name</p>
               <textarea
+                dir="auto"
                 // ref={counterField}
                 ref={counterNameField}
                 className="form-textarea"
