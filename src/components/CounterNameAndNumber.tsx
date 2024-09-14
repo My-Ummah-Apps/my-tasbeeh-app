@@ -73,15 +73,12 @@ function CounterNameAndNumber({
       // setOverflow({ overflow: "unset" });
     } else if (textRef.current.clientWidth > counterTextContainerWidth) {
       setScroll(true);
-      // ! Below is making the scroll speed work across counters with varying lengths keeping the speed the consistent
       const scrollSpeed = textRef.current.innerText.length * 0.3;
 
       if (direction(textRef.current.innerText) === "ltr") {
         setLanguageDirection("ltr");
-        console.log("direction: ", direction(textRef.current.innerText));
       } else if (direction(textRef.current.innerText === "rtl")) {
         setLanguageDirection("rtl");
-        console.log("direction: ", direction(textRef.current.innerText));
       }
 
       mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
