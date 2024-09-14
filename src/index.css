@@ -536,6 +536,7 @@ MdModeEditOutline {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
 .single-counter-count {
@@ -1085,14 +1086,12 @@ input[type="number"] {
 }
 
 .single-counter-text-wrap {
-  /* overflow: hidden; */
   height: 100%;
   white-space: nowrap;
-  /* -webkit-animation: scrollText infinite linear;
-  animation: scrollText infinite linear; */
-  margin: 0;
-  font-size: 0;
   display: inline-block;
+  /* overflow: hidden; */
+  /* margin: 0; */
+  /* font-size: 0; */
 }
 
 .scroll span {
