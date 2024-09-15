@@ -1,5 +1,6 @@
 import { FaPen } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { direction } from "direction";
 
 const Counter = ({
   setIsFormFilledSheetOpen,
@@ -39,7 +40,13 @@ const Counter = ({
               {counterItem.count} / {counterItem.target}
             </div>
 
-            <div className="single-counter-counter-name">
+            <div
+              style={{
+                textAlign:
+                  direction(counterItem.counter) === "ltr" ? "left" : "right",
+              }}
+              className="single-counter-counter-name"
+            >
               {counterItem.counter}
             </div>
           </Link>

@@ -531,7 +531,6 @@ MdModeEditOutline {
 }
 
 .single-counter-counter-name {
-  /* margin-top: 1rem; */
   font-size: 1.3rem;
   white-space: nowrap;
   overflow: hidden;
@@ -1078,11 +1077,13 @@ input[type="number"] {
 .scroll-ltr {
   -webkit-animation: scrollText-ltr infinite linear;
   animation: scrollText-ltr infinite linear;
+  animation-delay: 0.5s;
 }
 
 .scroll-rtl {
   -webkit-animation: scrollText-rtl infinite linear;
   animation: scrollText-rtl infinite linear;
+  animation-delay: 0.5s;
 }
 
 .single-counter-text-wrap {
