@@ -423,14 +423,6 @@ function App() {
           id: uuidv4(),
         },
         {
-          counter: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
-          count: 0,
-          color: "26A69A",
-          isActive: false,
-          target: 50,
-          id: uuidv4(),
-        },
-        {
           counter: "Subhan-Allahi wa bihamdih",
           count: 0,
           color: "66BB6A",
