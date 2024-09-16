@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import React from "react";
-import Modal from "react-modal";
 import { Capacitor } from "@capacitor/core";
 import { MdOutlineChevronRight } from "react-icons/md";
 import { FaHandHoldingHeart } from "react-icons/fa";
@@ -21,19 +20,6 @@ import { ActionSheet, ActionSheetButtonStyle } from "@capacitor/action-sheet";
 import { Toast } from "@capacitor/toast";
 
 // import ThemeOptions from "../components/ThemeOptions";
-
-// Override default Modal styles
-Modal.defaultStyles.content.border = "none";
-Modal.defaultStyles.content.position = "absolute";
-Modal.defaultStyles.content.inset = "50% 0% 0% 50%";
-Modal.defaultStyles.content.transform = "translate(-50%, -50%)";
-// Modal.defaultStyles.content.background = "#f4f4f4";
-Modal.defaultStyles.content.overflow = "none";
-Modal.defaultStyles.content.borderRadius = "2rem";
-Modal.defaultStyles.content.padding = "0";
-Modal.defaultStyles.content.height = "fit-content";
-Modal.defaultStyles.content.zIndex = "10000";
-Modal.defaultStyles.content.width = "90%";
 
 const SettingsPage = ({
   // iapProducts,
@@ -220,7 +206,6 @@ const SettingsPage = ({
   const link = (url) => {
     window.location.href = url;
   };
-  Modal.setAppElement("#root");
 
   return (
     <div className="settings-page-wrap">
@@ -228,20 +213,14 @@ const SettingsPage = ({
         <p>Settings</p>
       </div>
 
-      {/* <Modal
-        style={modalStyles}
-        isOpen={showModal}
-        onRequestClose={handleCloseModal}
-        closeTimeoutMS={250}
-        contentLabel="Modal #2 Global Style Override Example"
-      >
+      {/* 
         <ThemeOptions
           formTheme={formTheme}
           theme={theme}
           activeBackgroundColor={activeBackgroundColor}
           setTheme={setTheme}
         />
-      </Modal> */}
+      */}
 
       <div className="settings-page-options-and-info-wrap">
         {/* <div className="individual-section-wrap">
@@ -266,13 +245,7 @@ const SettingsPage = ({
             <MdOutlineChevronRight className="chevron" />
           </div>
 
-          <Modal
-            style={modalStyles}
-            isOpen={showModal5}
-            onRequestClose={handleCloseModal5}
-            closeTimeoutMS={250}
-            contentLabel="Modal #2 Global Style Override Example"
-          >
+        
             <div className="tip-box-wrap">
               <p
                 className="tip-jar-box-first-line-of-text tip-jar-box-text"
@@ -330,13 +303,7 @@ const SettingsPage = ({
                   );
                 })
               )}
-              <Modal
-                style={modalStyles}
-                isOpen={showModal6}
-                // onRequestClose={handleCloseModal5}
-                closeTimeoutMS={250}
-                contentLabel="Modal #2 Global Style Override Example"
-              >
+            
                 {" "}
                 <div class="lds-ellipsis">
                   <div></div>
@@ -344,9 +311,9 @@ const SettingsPage = ({
                   <div></div>
                   <div></div>
                 </div>
-              </Modal>
+
             </div>
-          </Modal>
+
         </div>
 */}
         {Capacitor.isNativePlatform() ? (
