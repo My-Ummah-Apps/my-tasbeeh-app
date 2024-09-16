@@ -1,6 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import React from "react";
 import { Capacitor } from "@capacitor/core";
+import { Dialog } from "@capacitor/dialog";
+import {
+  NativeSettings,
+  AndroidSettings,
+  IOSSettings,
+} from "capacitor-native-settings";
+
 import { MdOutlineChevronRight } from "react-icons/md";
 import { FaHandHoldingHeart } from "react-icons/fa";
 import { Sheet } from "react-modal-sheet";
@@ -49,12 +56,39 @@ const SettingsPage = ({
   let checkPermission;
   let userNotificationPermission;
 
+  const showNotificationsAlert = async () => {
+    const { value } = await Dialog.confirm({
+      title: "Open Settings",
+      message: `You currently have notifications turned off for this application, you can open Settings to re-enable them`,
+      okButtonTitle: "Settings",
+      cancelButtonTitle: "Cancel",
+    });
+
+    if (value) {
+      if (Capacitor.getPlatform() === "ios") {
+        NativeSettings.openIOS({
+          option: IOSSettings.App,
+        });
+      } else if (Capacitor.getPlatform() === "android") {
+        NativeSettings.openAndroid({
+          option: AndroidSettings.AppNotification,
+        });
+      }
+    }
+  };
+
   async function checkNotificationPermissions() {
     checkPermission = await LocalNotifications.checkPermissions();
     userNotificationPermission = checkPermission.display;
 
     if (userNotificationPermission == "denied") {
-      alert("Please turn notifications back on from within system settings");
+      // showNotificationsAlert();
+      // alert("Please turn notifications back on from within system settings");
+      showNotificationsAlert();
+
+      // NativeSettings.openIOS({
+      //   option: IOSSettings.App,
+      // });
       return;
     } else if (checkPermission.display == "granted") {
       setShowNotificationsSheet(true);
