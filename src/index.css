@@ -242,9 +242,6 @@ body {
   color: white;
 }
 
-.active-counter-name {
-}
-
 .active-counter-number {
   position: absolute;
   left: 50%;
@@ -1074,37 +1071,6 @@ input[type="number"] {
   padding: 0;
 }
 
-.scroll-ltr {
-  -webkit-animation: scrollText-ltr infinite linear;
-  animation: scrollText-ltr infinite linear;
-  animation-delay: 0.5s;
-}
-
-.scroll-rtl {
-  -webkit-animation: scrollText-rtl infinite linear;
-  animation: scrollText-rtl infinite linear;
-  animation-delay: 0.5s;
-}
-
-.single-counter-text-wrap {
-  height: 100%;
-  white-space: nowrap;
-  display: inline-block;
-  /* overflow: hidden; */
-  /* margin: 0; */
-  /* font-size: 0; */
-}
-
-.scroll span {
-  font-size: 1.5rem;
-  display: inline-block;
-  min-width: 100vw;
-  margin: 0;
-  padding: 0;
-  padding-left: 2rem;
-  color: white;
-}
-
 @-webkit-keyframes scrollText-ltr {
   from {
     transform: translateX(0%);
@@ -1125,20 +1091,51 @@ input[type="number"] {
 
 @-webkit-keyframes scrollText-rtl {
   from {
-    transform: translateX(-50%);
+    transform: translateX(0%);
   }
   to {
-    transform: translateX(0%);
+    transform: translateX(50%);
   }
 }
 
 @keyframes scrollText-rtl {
   from {
-    transform: translateX(-50%);
-  }
-  to {
     transform: translateX(0%);
   }
+  to {
+    transform: translateX(50%);
+  }
+}
+
+.scroll-ltr {
+  -webkit-animation: scrollText-ltr infinite linear;
+  animation: scrollText-ltr infinite linear;
+  animation-delay: 1s;
+}
+
+.scroll-rtl {
+  -webkit-animation: scrollText-rtl infinite linear;
+  animation: scrollText-rtl infinite linear;
+  animation-delay: 1s;
+}
+
+.single-counter-text-wrap {
+  height: 100%;
+  white-space: nowrap;
+  display: inline-block;
+  /* overflow: hidden; */
+  /* margin: 0; */
+  /* font-size: 0; */
+}
+
+.scroll span {
+  font-size: 1.5rem;
+  display: inline-block;
+  min-width: 100vw;
+  margin: 0;
+  padding: 0;
+  padding-left: 2rem;
+  color: white;
 }
 
 /* Chrome, Safari, Edge, Opera */

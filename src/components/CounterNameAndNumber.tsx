@@ -67,6 +67,12 @@ function CounterNameAndNumber({
     const counterTextContainerWidth =
       counterTextContainerRef.current.clientWidth;
 
+    if (direction(textRef.current.innerText) === "ltr") {
+      setLanguageDirection("ltr");
+    } else if (direction(textRef.current.innerText === "rtl")) {
+      setLanguageDirection("rtl");
+    }
+
     if (textRef.current.clientWidth < counterTextContainerWidth) {
       setScroll(false);
 
@@ -74,13 +80,6 @@ function CounterNameAndNumber({
     } else if (textRef.current.clientWidth > counterTextContainerWidth) {
       setScroll(true);
       const scrollSpeed = textRef.current.innerText.length * 0.3;
-
-      if (direction(textRef.current.innerText) === "ltr") {
-        setLanguageDirection("ltr");
-      } else if (direction(textRef.current.innerText === "rtl")) {
-        setLanguageDirection("rtl");
-      }
-
       mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
 
       // setOverflow({ overflow: "unset" });
@@ -110,7 +109,7 @@ function CounterNameAndNumber({
           <div
             style={{
               textAlign: languageDirection === "ltr" ? "left" : "right",
-              direction: languageDirection,
+              direction: languageDirection === "ltr" ? "ltr" : "rtl",
             }}
             className="single-counter-counter-name"
             ref={textRef}
