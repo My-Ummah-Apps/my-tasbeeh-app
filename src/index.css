@@ -772,9 +772,6 @@ textarea:focus {
 
 /* FORMS */
 
-Modal {
-}
-
 input[type="text"],
 input[type="number"] {
   padding: 1rem;
@@ -1417,32 +1414,6 @@ input[type="number"] {
   transition: 0.15s ease-in-out !important;
 }
 
-/* MODAL */
-
-.ReactModal__Overlay {
-  opacity: 0;
-  /* height: 0 !important; */
-  /* transform: translateY(600px); */
-  transition: all 250ms ease-in-out;
-}
-
-.ReactModal__Overlay--after-open {
-  opacity: 1;
-  z-index: 1;
-
-  /* transform: translateY(0px); */
-}
-
-.ReactModal__Overlay--before-close {
-  opacity: 0;
-  /* transform: translateY(-600px); */
-}
-
-.ReactModal__Content--after-open {
-  /* height: 0 !important; */
-  /* inset: 25% 0% 0% 50% !important; */
-}
-
 /* DEVICE SPECIFIC STYLES */
 
 /* IOS */
@@ -1524,10 +1495,6 @@ input[type="number"] {
 .form-switch input:checked + i::after {
   transform: translate3d(22px, 2px, 0);
 }
-
-/* .ReactModal__Body--open {
-  background: 50px 50px 50px rgba(62, 62, 62, 0.84) !important;
-} */
 
 /* LOADING ICON */
 
