@@ -90,6 +90,8 @@ const FormFilled = ({
     const showCounterDeleteToast = async () => {
       await Toast.show({
         text: "Tasbeeh deleted",
+        position: "center",
+        duration: "short",
       });
     };
 

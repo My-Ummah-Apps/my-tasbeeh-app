@@ -107,7 +107,14 @@ function CounterNameAndNumber({
               : "100%"}
           </div>
 
-          <div className="single-counter-counter-name" ref={textRef}>
+          <div
+            style={{
+              textAlign: languageDirection === "ltr" ? "left" : "right",
+              direction: languageDirection,
+            }}
+            className="single-counter-counter-name"
+            ref={textRef}
+          >
             <div className={scroll ? "scroll" : ""}>
               {/* <div ref={mScrollRef} className={scroll ? "m-scroll" : ""}> */}
               <div

@@ -123,6 +123,8 @@ const SettingsPage = ({
     const showAllCounterResetToast = async () => {
       await Toast.show({
         text: "All Adhkar Reset",
+        position: "center",
+        duration: "short",
       });
     };
 
