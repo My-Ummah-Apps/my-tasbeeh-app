@@ -1498,7 +1498,7 @@ input[type="number"] {
 
 /* LOADING ICON */
 
-.lds-ellipsis {
+/* .lds-ellipsis {
   display: inline-block;
   position: absolute;
   width: 80px;
@@ -1555,7 +1555,7 @@ input[type="number"] {
   100% {
     transform: translate(24px, 0);
   }
-}
+} */
 
 /* 
 .lds-ripple {
