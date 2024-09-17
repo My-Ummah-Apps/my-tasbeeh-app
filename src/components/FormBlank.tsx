@@ -151,6 +151,7 @@ function FormBlank({
                   if (/[^0-9]+/.test(e.target.value)) return;
                   setCounterTargetInput(e.target.value);
                 }}
+                value={counterTargetInput}
                 className="form-input"
                 maxLength={5}
                 inputMode="numeric"
