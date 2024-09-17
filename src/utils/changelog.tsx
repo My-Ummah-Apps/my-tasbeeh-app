@@ -1,5 +1,7 @@
 export const LATEST_APP_VERSION = "2.0";
 
+// LATES FEATURES: RTL ISSUES FIXED, NATIVE ALERTS ADDED
+
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,

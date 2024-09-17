@@ -5,6 +5,8 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
+import { Toast } from "@capacitor/toast";
+import { Dialog } from "@capacitor/dialog";
 import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
 
@@ -528,19 +530,35 @@ function App() {
     saveArrayLocally(localSavedCountersArray);
   };
 
+  const showOneCounterNeededAlert = async () => {
+    await Dialog.alert({
+      title: "Unable to delete Tasbeeh",
+      message: "Atleast one tasbeeh must exist",
+    });
+  };
+
   const deleteSingleCounter = (id) => {
     // e.preventDefault();
+    const showCounterDeleteToast = async () => {
+      await Toast.show({
+        text: "Tasbeeh deleted",
+        position: "top",
+        duration: "short",
+      });
+    };
 
     const filteredArray = localSavedCountersArray.filter(
       (counterItem) => counterItem.id !== id
     );
     if (filteredArray.length == 0) {
-      alert("Atleast one counter must be saved");
+      // alert("Atleast one counter must be saved");
+      showOneCounterNeededAlert();
       return;
     }
     if (filteredArray.length > 0) {
       filteredArray[0].isActive = true;
       setActiveCounterNumber(filteredArray[0].count);
+      showCounterDeleteToast();
     }
 
     setLocalSavedCountersArray(filteredArray);

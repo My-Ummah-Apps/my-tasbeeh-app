@@ -3,7 +3,6 @@ import React from "react";
 import { ActionSheet, ActionSheetButtonStyle } from "@capacitor/action-sheet";
 import { VscDebugRestart } from "react-icons/vsc";
 import { Keyboard } from "@capacitor/keyboard";
-import { Toast } from "@capacitor/toast";
 
 import {
   MdOutlinePlaylistRemove,
@@ -38,7 +37,7 @@ const FormFilled = ({
   currentCounterTarget,
   currentCounterId,
   resetSingleCounter,
-  deleteSingleCounter, // setcurrentCount,
+  deleteSingleCounter,
 }: FormFilledProps) => {
   const counterNameField = useRef<HTMLTextAreaElement | null>(null);
   const counterCountField = useRef<HTMLInputElement | null>(null);
@@ -87,18 +86,9 @@ const FormFilled = ({
       ],
     });
 
-    const showCounterDeleteToast = async () => {
-      await Toast.show({
-        text: "Tasbeeh deleted",
-        position: "top",
-        duration: "short",
-      });
-    };
-
     if (result.index === 0) {
       deleteSingleCounter(currentCounterId);
       setIsFormFilledSheetOpen(false);
-      showCounterDeleteToast();
     } else if (result.index === 1) {
       console.log("Delete action cancelled");
     }
