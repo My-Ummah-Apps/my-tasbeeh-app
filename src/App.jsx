@@ -657,7 +657,12 @@ function App() {
             <h1>Whats new?</h1>
             {changeLogs.map((item) => (
               <section key={item} className="changelog-content-wrap">
-                <p>v{item.versionNum}</p>
+                {/* <p>v{item.versionNum}</p> */}
+                <p>
+                  {item.versionNum === LATEST_APP_VERSION
+                    ? `v${item.versionNum} - Latest Version`
+                    : `v${item.versionNum}`}
+                </p>
                 {item.changes.map((item) => (
                   <section
                     key={item.heading}
