@@ -10,6 +10,7 @@ import { Dialog } from "@capacitor/dialog";
 import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
 import { direction } from "direction";
+import { TWEEN_CONFIG } from "./utils/constants";
 
 import NavBar from "./components/NavBar";
 import Main from "./pages/MainPage";
@@ -659,7 +660,7 @@ function App() {
         isOpen={showChangelogModal}
         onClose={() => setShowChangelogModal(false)}
         detent="full-height"
-        tweenConfig={{ ease: "easeOut", duration: 0.3 }}
+        tweenConfig={TWEEN_CONFIG}
       >
         <Sheet.Container>
           {/* <Sheet.Header /> */}

@@ -25,6 +25,7 @@ import { LocalNotifications } from "@capacitor/local-notifications";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { ActionSheet, ActionSheetButtonStyle } from "@capacitor/action-sheet";
 import { Toast } from "@capacitor/toast";
+import { TWEEN_CONFIG } from "../utils/constants";
 
 // import ThemeOptions from "../components/ThemeOptions";
 
@@ -369,7 +370,7 @@ const SettingsPage = ({
               isOpen={showNotificationsSheet}
               onClose={() => setShowNotificationsSheet(false)}
               detent="content-height"
-              tweenConfig={{ ease: "easeOut", duration: 0.3 }}
+              tweenConfig={TWEEN_CONFIG}
             >
               <Sheet.Container>
                 {/* <Sheet.Header /> */}
@@ -659,7 +660,7 @@ const SettingsPage = ({
               isOpen={showAboutUsSheet}
               onClose={() => setShowAboutUsSheet(false)}
               detent="content-height"
-              tweenConfig={{ ease: "easeOut", duration: 0.3 }}
+              tweenConfig={TWEEN_CONFIG}
             >
               <Sheet.Container>
                 {/* <Sheet.Header /> */}

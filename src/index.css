@@ -1107,13 +1107,13 @@ input[type="number"] {
 .scroll-ltr {
   -webkit-animation: scrollText-ltr infinite linear;
   animation: scrollText-ltr infinite linear;
-  animation-delay: 1s;
+  animation-delay: 2s;
 }
 
 .scroll-rtl {
   -webkit-animation: scrollText-rtl infinite linear;
   animation: scrollText-rtl infinite linear;
-  animation-delay: 1s;
+  animation-delay: 2s;
 }
 
 .single-counter-text-wrap {
@@ -1131,7 +1131,7 @@ input[type="number"] {
   min-width: 100vw;
   margin: 0;
   padding: 0;
-  padding-left: 2rem;
+  /* padding-left: 2rem; */
   color: white;
 }
 

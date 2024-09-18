@@ -9,6 +9,7 @@ import { MdModeEditOutline, MdAdd } from "react-icons/md";
 import FormBlank from "../components/FormBlank";
 import FormFilled from "../components/FormFilled";
 import Counter from "../components/Counter";
+import { TWEEN_CONFIG } from "../utils/constants";
 
 function CountersPage({
   modalStyles,
@@ -78,7 +79,7 @@ function CountersPage({
         isOpen={isFormFilledSheetOpen}
         onClose={() => setIsFormFilledSheetOpen(false)}
         detent="full-height"
-        tweenConfig={{ ease: "easeOut", duration: 0.3 }}
+        tweenConfig={TWEEN_CONFIG}
       >
         <Sheet.Container>
           {/* <Sheet.Header /> */}
@@ -110,7 +111,7 @@ function CountersPage({
         isOpen={isFormBlankSheetOpen}
         onClose={() => setIsFormBlankSheetOpen(false)}
         detent="full-height"
-        tweenConfig={{ ease: "easeOut", duration: 0.3 }}
+        tweenConfig={TWEEN_CONFIG}
       >
         <Sheet.Container>
           {/* <Sheet.Header /> */}
