@@ -64,7 +64,6 @@ function CounterNameAndNumber({
 
   let scrollingStyle = { overflow: "hidden" };
   // const [overflow, setOverflow] = useState({ overflow: "hidden" });
-  console.log("DIRECTION: ", languageDirection);
 
   useEffect(() => {
     const counterTextContainerWidth =
