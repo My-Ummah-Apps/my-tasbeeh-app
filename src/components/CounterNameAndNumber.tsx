@@ -16,6 +16,8 @@ interface CounterNameAndNumberProps {
 function CounterNameAndNumber({
   localSavedCountersArray,
   setActiveBackgroundColor,
+  setLanguageDirection,
+  languageDirection,
   activeBackgroundColor,
   resetSingleCounter,
 }: CounterNameAndNumberProps) {
@@ -58,19 +60,22 @@ function CounterNameAndNumber({
   const mScrollRef = useRef(null);
 
   const [scroll, setScroll] = useState();
-  const [languageDirection, setLanguageDirection] = useState("");
+  // const [languageDirection, setLanguageDirection] = useState("");
 
   let scrollingStyle = { overflow: "hidden" };
   // const [overflow, setOverflow] = useState({ overflow: "hidden" });
+  console.log("DIRECTION: ", languageDirection);
 
   useEffect(() => {
     const counterTextContainerWidth =
       counterTextContainerRef.current.clientWidth;
 
-    if (direction(textRef.current.innerText) === "ltr") {
-      setLanguageDirection("ltr");
-    } else if (direction(textRef.current.innerText === "rtl")) {
-      setLanguageDirection("rtl");
+    if (languageDirection !== "ltr" && languageDirection !== "rtl") {
+      if (direction(textRef.current.innerText) === "ltr") {
+        setLanguageDirection("ltr");
+      } else if (direction(textRef.current.innerText) === "rtl") {
+        setLanguageDirection("rtl");
+      }
     }
 
     if (textRef.current.clientWidth < counterTextContainerWidth) {
@@ -86,7 +91,7 @@ function CounterNameAndNumber({
     }
   }, [textRef.current]);
   // ${showAnimation ? "fade-down-animation" : ""}
-
+  // debugger;
   return (
     <div className="single-counter-wrap-parent">
       <div
@@ -107,11 +112,11 @@ function CounterNameAndNumber({
           </div>
 
           <div
+            className="single-counter-counter-name"
             style={{
               textAlign: languageDirection === "ltr" ? "left" : "right",
               direction: languageDirection === "ltr" ? "ltr" : "rtl",
             }}
-            className="single-counter-counter-name"
             ref={textRef}
           >
             <div className={scroll ? "scroll" : ""}>

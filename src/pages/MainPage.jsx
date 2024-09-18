@@ -10,6 +10,8 @@ const MainPage = ({
   reviewPrompt,
   setHaptics,
   haptics,
+  setLanguageDirection,
+  languageDirection,
   savedCountersArray,
   saveArrayLocally,
   counterId,
@@ -37,6 +39,8 @@ const MainPage = ({
       <CounterNameAndNumber
         resetSingleCounter={resetSingleCounter}
         setActiveCounterName={setActiveCounterName}
+        setLanguageDirection={setLanguageDirection}
+        languageDirection={languageDirection}
         setActiveCounterNumber={setActiveCounterNumber}
         activeCounterName={activeCounterName}
         activeCounterNumber={activeCounterNumber}

@@ -9,6 +9,7 @@ import { Toast } from "@capacitor/toast";
 import { Dialog } from "@capacitor/dialog";
 import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
+import { direction } from "direction";
 
 import NavBar from "./components/NavBar";
 import Main from "./pages/MainPage";
@@ -307,6 +308,7 @@ function App() {
 
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
   const [activeCounterName, setActiveCounterName] = useState("");
+  const [languageDirection, setLanguageDirection] = useState("");
   const [activeCounterNumber, setActiveCounterNumber] = useState(0);
   const [activeBackgroundColor, setActiveBackgroundColor] = useState("");
 
@@ -514,6 +516,12 @@ function App() {
       }
       saveArrayLocally(localSavedCountersArray);
       setActiveCounterName(counterName);
+      // ! TODO: The below if else statement has been duplicated in the CounterNameAndNumber component for a quick workaround due to text scrolling in the wrong direction if this function wasn't triggered (ie, the user launched the app which would land them on the homescreen), this duplication needs to be resolved in the future
+      if (direction(counterName) === "ltr") {
+        setLanguageDirection("ltr");
+      } else if (direction(counterName) === "rtl") {
+        setLanguageDirection("rtl");
+      }
       setActiveCounterNumber(currentCount);
     });
   };
@@ -604,6 +612,8 @@ function App() {
                   saveArrayLocally={saveArrayLocally}
                   currentCount={currentCount}
                   counterName={counterName}
+                  setLanguageDirection={setLanguageDirection}
+                  languageDirection={languageDirection}
                   localSavedCountersArray={localSavedCountersArray}
                   counterId={counterId}
                   activeCounterName={activeCounterName}
