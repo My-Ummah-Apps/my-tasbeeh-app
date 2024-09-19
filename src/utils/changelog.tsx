@@ -1,8 +1,21 @@
-export const LATEST_APP_VERSION = "2.1";
+export const LATEST_APP_VERSION = "2.2";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "Text scrolling fix",
+        text: (
+          <>
+            <strong>Fixed</strong>: Issue with scrolling text overlapping.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "2.1",
     changes: [
       {
         heading: "RTL Language Fixes",
