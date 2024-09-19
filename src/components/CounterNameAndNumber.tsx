@@ -91,6 +91,7 @@ function CounterNameAndNumber({
   }, [textRef.current]);
   // ${showAnimation ? "fade-down-animation" : ""}
   // debugger;
+  // TODO: Un-duplicate styles in below spans which hold currentName
   return (
     <div className="single-counter-wrap-parent">
       <div
@@ -134,6 +135,10 @@ function CounterNameAndNumber({
                   className="active-counter-name"
                   style={{
                     textOverflow: textOverflowProperty,
+                    paddingRight:
+                      scroll && languageDirection === "ltr" ? "2rem" : "",
+                    paddingLeft:
+                      scroll && languageDirection === "rtl" ? "2rem" : "",
                   }}
                 >
                   {currentName}
@@ -142,6 +147,10 @@ function CounterNameAndNumber({
                   className={scroll ? "active-counter-name" : "display-none"}
                   style={{
                     textOverflow: textOverflowProperty,
+                    paddingRight:
+                      scroll && languageDirection === "ltr" ? "2rem" : "",
+                    paddingLeft:
+                      scroll && languageDirection === "rtl" ? "2rem" : "",
                   }}
                 >
                   {currentName}

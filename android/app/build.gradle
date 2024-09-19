@@ -7,7 +7,7 @@ android {
         applicationId "com.tasbeeh.my"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2002
+        versionCode 2003
         versionName '2.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
