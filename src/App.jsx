@@ -477,13 +477,21 @@ function App() {
 
   const resetAllCounters = () => {
     console.log("Reset all counters triggered", localSavedCountersArray);
+    // ! BUG: Below resets the counters, but upon app re-launch the counters return to their previous counts instead of being at 0, localSavedCountersArray is empty if page is manually refresh, if cmd+s is done localSavedCountersArray shows up correctly
+    console.log(JSON.parse(localStorage.getItem("localSavedCountersArray")));
 
-    setLocalSavedCountersArray((prev) =>
-      prev.map((counterItem) => ({
-        ...counterItem,
-        count: 0,
-      }))
-    );
+    const resettedCounters = JSON.parse(
+      localStorage.getItem("localSavedCountersArray")
+    ).map((counter) => ({ ...counter, count: 0 }));
+    console.log("resettedCounters, ", resettedCounters);
+
+    setLocalSavedCountersArray(resettedCounters);
+    // setLocalSavedCountersArray((prev) =>
+    //   prev.map((counterItem) => ({
+    //     ...counterItem,
+    //     count: 0,
+    //   }))
+    // );
     saveArrayLocally(localSavedCountersArray);
     setActiveCounterNumber(0);
     console.log(
@@ -492,11 +500,13 @@ function App() {
     );
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     resetAllCounters();
-  //   }, 5000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      console.log("LOCALCOUNTERS IN SETITMEOUT:", localSavedCountersArray);
+
+      resetAllCounters();
+    }, 5000);
+  }, []);
 
   const modifyTheCountersArray = (
     id,
