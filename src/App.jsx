@@ -331,19 +331,6 @@ function App() {
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
 
   useEffect(() => {
-    const storedDate = localStorage.getItem("lastLaunchDate");
-    const currentDate = new Date().toLocaleDateString();
-
-    if (storedDate !== currentDate && dailyCounterReset == true) {
-      // Reset variable or perform any other actions
-      resetAllCounters();
-    }
-
-    setLastLaunchDate(currentDate);
-    localStorage.setItem("lastLaunchDate", currentDate);
-  }, []);
-
-  useEffect(() => {
     if (localStorage.getItem("haptics") == null) {
       localStorage.setItem("haptics", JSON.stringify(true));
       setHaptics(true);
@@ -360,9 +347,23 @@ function App() {
       JSON.parse(localStorage.getItem("localSavedCountersArray")) &&
       JSON.parse(localStorage.getItem("localSavedCountersArray")).length > 0
     ) {
-      defaultArray = JSON.parse(
-        localStorage.getItem("localSavedCountersArray")
-      );
+      // localStorage.setItem("lastLaunchDate", "19.09.2024");
+      const previousLaunchDate = localStorage.getItem("lastLaunchDate");
+      const todaysDate = new Date().toLocaleDateString();
+      setLastLaunchDate(todaysDate);
+      localStorage.setItem("lastLaunchDate", todaysDate);
+
+      if (previousLaunchDate !== todaysDate && dailyCounterReset == true) {
+        defaultArray = JSON.parse(
+          localStorage.getItem("localSavedCountersArray")
+        ).map((counterItem) => ({ ...counterItem, count: 0 }));
+        console.log("defaultArray after daily reset: ", defaultArray);
+      } else {
+        defaultArray = JSON.parse(
+          localStorage.getItem("localSavedCountersArray")
+        );
+        console.log("defaultArray without daily reset:", defaultArray);
+      }
     } else if (
       !localStorage.getItem("localSavedCountersArray") ||
       JSON.parse(localStorage.getItem("localSavedCountersArray")).length == 0
@@ -475,13 +476,27 @@ function App() {
   };
 
   const resetAllCounters = () => {
-    localSavedCountersArray.map((counterItem) => {
-      counterItem.count = 0;
-    });
-    setLocalSavedCountersArray(localSavedCountersArray);
+    console.log("Reset all counters triggered", localSavedCountersArray);
+
+    setLocalSavedCountersArray((prev) =>
+      prev.map((counterItem) => ({
+        ...counterItem,
+        count: 0,
+      }))
+    );
     saveArrayLocally(localSavedCountersArray);
     setActiveCounterNumber(0);
+    console.log(
+      "localSavedCountersArray in resetAllCounters: ",
+      localSavedCountersArray
+    );
   };
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     resetAllCounters();
+  //   }, 5000);
+  // }, []);
 
   const modifyTheCountersArray = (
     id,
