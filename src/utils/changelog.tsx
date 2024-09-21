@@ -8,7 +8,7 @@ export const changeLogs = [
         heading: "Custom Tasbeeh fix",
         text: (
           <>
-            <strong>Fixed</strong>: Issue with custom added Tasbeeh disapearing
+            <strong>Fixed</strong>: Issue with custom added Tasbeeh disappearing
             when the 'Auto Reset Adhkar' feature was being used.
           </>
         ),
