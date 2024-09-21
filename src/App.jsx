@@ -357,12 +357,10 @@ function App() {
         defaultArray = JSON.parse(
           localStorage.getItem("localSavedCountersArray")
         ).map((counterItem) => ({ ...counterItem, count: 0 }));
-        console.log("defaultArray after daily reset: ", defaultArray);
       } else {
         defaultArray = JSON.parse(
           localStorage.getItem("localSavedCountersArray")
         );
-        console.log("defaultArray without daily reset:", defaultArray);
       }
     } else if (
       !localStorage.getItem("localSavedCountersArray") ||
@@ -484,12 +482,6 @@ function App() {
     saveArrayLocally(resettedCounters);
     setActiveCounterNumber(0);
   };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     resetAllCounters();
-  //   }, 5000);
-  // }, []);
 
   const modifyTheCountersArray = (
     id,
