@@ -1,8 +1,22 @@
-export const LATEST_APP_VERSION = "2.2";
+export const LATEST_APP_VERSION = "2.3";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "Custom Tasbeeh fix",
+        text: (
+          <>
+            <strong>Fixed</strong>: Issue with custom added Tasbeeh dissapearing
+            when the 'Auto Reset Adhkar' feature was being used.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "2.2",
     changes: [
       {
         heading: "Text scrolling fix",
