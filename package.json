@@ -18,6 +18,7 @@
     "@capacitor/splash-screen": "^6.0.0",
     "@capacitor/status-bar": "^6.0.0",
     "@capacitor/toast": "^6.0.2",
+    "@hugotomazi/capacitor-navigation-bar": "^4.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

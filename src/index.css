@@ -1184,6 +1184,7 @@ input[type="number"] {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 1rem;
+  border-bottom: 1px solid rgb(232, 232, 232);
 }
 
 .notificatiions-options-sub-text {

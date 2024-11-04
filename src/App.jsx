@@ -11,6 +11,7 @@ import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
 import { direction } from "direction";
 import { TWEEN_CONFIG } from "./utils/constants";
+// import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
 
 import NavBar from "./components/NavBar";
 import Main from "./pages/MainPage";
@@ -60,14 +61,20 @@ window.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         if (statusBarThemeColor == "#EDEDED") {
           StatusBar.setStyle({ style: Style.Light });
+          // changeNavBarColor("#EDEDED");
         } else if (statusBarThemeColor == "#242424") {
           StatusBar.setStyle({ style: Style.Dark });
+          // changeNavBarColor("#242424");
         }
         StatusBar.setBackgroundColor({ color: statusBarThemeColor });
       }, 1000);
     }
   }
 });
+
+// const changeNavBarColor = async (color) => {
+//   await NavigationBar.setColor({ color: color });
+// };
 
 let scheduleMorningNotifications;
 let scheduleAfternoonNotification;
@@ -667,8 +674,8 @@ function App() {
           {/* <Sheet.Header /> */}
           <Sheet.Content className="sheet-changelog">
             <h1>Whats new?</h1>
-            {changeLogs.map((item) => (
-              <section key={item} className="changelog-content-wrap">
+            {changeLogs.map((item, i) => (
+              <section key={i} className="changelog-content-wrap">
                 {/* <p>v{item.versionNum}</p> */}
                 <p>
                   {item.versionNum === LATEST_APP_VERSION

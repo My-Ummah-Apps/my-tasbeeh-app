@@ -1,8 +1,22 @@
-export const LATEST_APP_VERSION = "2.3";
+export const LATEST_APP_VERSION = "2.4";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "Notification Fix",
+        text: (
+          <>
+            <strong>Fixed</strong>: Resolved an issue where notifications
+            continued to trigger even when turned off.{" "}
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "2.3",
     changes: [
       {
         heading: "Custom Tasbeeh fix",
