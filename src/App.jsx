@@ -88,7 +88,7 @@ if (Capacitor.isNativePlatform()) {
           body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
           id: 1,
           schedule: {
-            on: { hour: 7, minute: 0 }, // THIS WORKS ON IOS
+            on: { hour: 8, minute: 0 },
             allowWhileIdle: true,
             foreground: true, // iOS only
             repeats: true,
@@ -107,7 +107,7 @@ if (Capacitor.isNativePlatform()) {
           schedule: {
             allowWhileIdle: true,
             foreground: true, // iOS only
-            on: { hour: 14, minute: 0 }, // THIS WORKS ON IOS
+            on: { hour: 14, minute: 0 },
             repeats: true,
           },
         },
@@ -124,7 +124,7 @@ if (Capacitor.isNativePlatform()) {
           schedule: {
             allowWhileIdle: true,
             foreground: true, // iOS only
-            on: { hour: 19, minute: 0 }, // THIS WORKS ON IOS
+            on: { hour: 19, minute: 0 },
             repeats: true,
           },
         },
@@ -264,7 +264,7 @@ function App() {
       ) {
         localStorage.setItem("morning-notification", JSON.stringify(false));
         setMorningNotification(false);
-        LocalNotifications.cancel({ notifications: [{ id: 2 }] });
+        // LocalNotifications.cancel({ notifications: [{ id: 2 }] });
       } else if (localStorage.getItem("morning-notification") == "true") {
         localStorage.setItem("morning-notification", JSON.stringify(true));
         setMorningNotification(true);
@@ -281,7 +281,7 @@ function App() {
       ) {
         localStorage.setItem("afternoon-notification", JSON.stringify(false));
         setAfternoonNotification(false);
-        LocalNotifications.cancel({ notifications: [{ id: 3 }] });
+        // LocalNotifications.cancel({ notifications: [{ id: 3 }] });
       } else if (localStorage.getItem("afternoon-notification") == "true") {
         localStorage.setItem("afternoon-notification", JSON.stringify(true));
         setAfternoonNotification(true);
@@ -298,7 +298,7 @@ function App() {
       ) {
         localStorage.setItem("evening-notification", JSON.stringify(false));
         setEveningNotification(false);
-        LocalNotifications.cancel({ notifications: [{ id: 4 }] });
+        // LocalNotifications.cancel({ notifications: [{ id: 4 }] });
       } else if (localStorage.getItem("evening-notification") == "true") {
         localStorage.setItem("evening-notification", JSON.stringify(true));
         setEveningNotification(true);
@@ -437,6 +437,7 @@ function App() {
       ];
 
       saveArrayLocally(defaultArray);
+      localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
 
     defaultArray.findIndex((object) => {

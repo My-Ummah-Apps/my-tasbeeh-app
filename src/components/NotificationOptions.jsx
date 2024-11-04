@@ -1,6 +1,6 @@
 import Switch from "react-ios-switch";
 import { LocalNotifications } from "@capacitor/local-notifications";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 
 const NotificationOptions = ({
   setMorningNotification,
@@ -11,6 +11,10 @@ const NotificationOptions = ({
   setEveningNotification,
   activeBackgroundColor,
 }) => {
+  const cancelNotification = async (id) => {
+    await LocalNotifications.cancel({ notifications: [{ id: id }] });
+  };
+
   return (
     <div className="notification-options-wrap">
       <h2 className="notifications-options-heading-text">Notifications</h2>
@@ -29,13 +33,11 @@ const NotificationOptions = ({
           name={undefined}
           offColor="white"
           onChange={() => {
-            console.log("MORNING TOGGLE CLICKED");
-
             if (
               JSON.parse(localStorage.getItem("morning-notification")) == true
             ) {
-              console.log("MORNING TOGGLE TURNED OFF");
               setMorningNotification(false);
+              cancelNotification(1);
               localStorage.setItem(
                 "morning-notification",
                 JSON.stringify(false)
@@ -43,7 +45,6 @@ const NotificationOptions = ({
             } else if (
               JSON.parse(localStorage.getItem("morning-notification")) == false
             ) {
-              console.log("MORNING TOGGLE TURNED ON");
               setMorningNotification(true);
               localStorage.setItem(
                 "morning-notification",
@@ -77,6 +78,7 @@ const NotificationOptions = ({
               JSON.parse(localStorage.getItem("afternoon-notification")) == true
             ) {
               setAfternoonNotification(false);
+              cancelNotification(3);
               localStorage.setItem(
                 "afternoon-notification",
                 JSON.stringify(false)
@@ -118,6 +120,7 @@ const NotificationOptions = ({
               JSON.parse(localStorage.getItem("evening-notification")) == true
             ) {
               setEveningNotification(false);
+              cancelNotification(4);
               localStorage.setItem(
                 "evening-notification",
                 JSON.stringify(false)
