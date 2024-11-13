@@ -55,6 +55,15 @@ body.dark {
   src: url(/src/font/Roboto-Regular.ttf);
 }
 
+*:focus {
+  outline: none;
+}
+input:focus,
+button:focus {
+  outline: none;
+  border: none;
+}
+
 body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
