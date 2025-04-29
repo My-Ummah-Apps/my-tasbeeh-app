@@ -445,59 +445,38 @@ const SettingsPage = ({
           </div>
         </div>
         <div className="individual-section-wrap">
-          <div className="individual-row-wrap haptic-wrap">
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>Haptic Vibration</p>
-              <p>Set vibration on every increment</p>
+          {Capacitor.isNativePlatform() && (
+            <div className="individual-row-wrap haptic-wrap">
+              <div className="text-wrap" style={{ display: "block" }}>
+                <p>Haptic Vibration</p>
+                <p>Set vibration on every increment</p>
+              </div>
+              <Switch
+                checked={haptics}
+                className={undefined}
+                disabled={undefined}
+                handleColor="white"
+                name={undefined}
+                offColor="white"
+                onChange={(e) => {
+                  if (JSON.parse(localStorage.getItem("haptics")) == true) {
+                    setHaptics(false);
+                    localStorage.setItem("haptics", JSON.stringify(false));
+                  } else if (
+                    JSON.parse(localStorage.getItem("haptics")) == false
+                  ) {
+                    setHaptics(true);
+                    localStorage.setItem("haptics", JSON.stringify(true));
+                  }
+                }}
+                onColor={activeBackgroundColor}
+                pendingOffColor={undefined}
+                pendingOnColor={undefined}
+                readOnly={undefined}
+                style={undefined}
+              />
             </div>
-            <Switch
-              checked={haptics}
-              className={undefined}
-              disabled={undefined}
-              handleColor="white"
-              name={undefined}
-              offColor="white"
-              onChange={(e) => {
-                if (JSON.parse(localStorage.getItem("haptics")) == true) {
-                  setHaptics(false);
-                  localStorage.setItem("haptics", JSON.stringify(false));
-                } else if (
-                  JSON.parse(localStorage.getItem("haptics")) == false
-                ) {
-                  setHaptics(true);
-                  localStorage.setItem("haptics", JSON.stringify(true));
-                }
-              }}
-              onColor={activeBackgroundColor}
-              pendingOffColor={undefined}
-              pendingOnColor={undefined}
-              readOnly={undefined}
-              style={undefined}
-            />
-            {/* <span className="mt-ios">
-            <input id="1" type="checkbox" checked={haptics} />
-            <label
-              style={
-                {
-                  // boxShadow: `inset 0 0 0 1.5em ${activeBackgroundColor},0 0 0 .1875em ${activeBackgroundColor}`,
-                  // boxShadow: 0 0 0 .1875em transparent,0 .375em .375em rgba(0,0,0,.3),
-                }
-              }
-              for="1"
-              onClick={(e) => {
-                if (JSON.parse(localStorage.getItem("haptics")) == true) {
-                  setHaptics(false);
-                  localStorage.setItem("haptics", JSON.stringify(false));
-                } else if (
-                  JSON.parse(localStorage.getItem("haptics")) == false
-                ) {
-                  setHaptics(true);
-                  localStorage.setItem("haptics", JSON.stringify(true));
-                }
-              }}
-            ></label>
-          </span> */}
-          </div>
+          )}
           <div className="individual-row-wrap">
             <div className="text-wrap" style={{ display: "block" }}>
               <p>Auto Reset Adhkar</p>
