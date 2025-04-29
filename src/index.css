@@ -688,7 +688,8 @@ textarea:focus {
   right: 28px;
   transform: translate(50%, -50%);
   height: 100%;
-  width: 18%;
+  /* width: 18%; */
+  width: clamp(4.375rem, 4.0625rem + 1.4286vw, 4.6875rem);
   padding: 0 1.2rem 0 1.2rem;
 }
 
