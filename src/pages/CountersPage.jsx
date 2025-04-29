@@ -3,7 +3,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Sheet } from "react-modal-sheet";
 import { KeyboardResize, Keyboard } from "@capacitor/keyboard";
-import { ActionSheet, ActionSheetButtonStyle } from "@capacitor/action-sheet";
 import { MdModeEditOutline, MdAdd } from "react-icons/md";
 
 import FormBlank from "../components/FormBlank";

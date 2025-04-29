@@ -334,7 +334,10 @@ function App() {
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
 
   useEffect(() => {
-    if (localStorage.getItem("haptics") == null) {
+    if (
+      localStorage.getItem("haptics") == null &&
+      Capacitor.isNativePlatform()
+    ) {
       localStorage.setItem("haptics", JSON.stringify(true));
       setHaptics(true);
     }

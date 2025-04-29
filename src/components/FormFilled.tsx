@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import React from "react";
-import { ActionSheet, ActionSheetButtonStyle } from "@capacitor/action-sheet";
 import { VscDebugRestart } from "react-icons/vsc";
 import { Keyboard } from "@capacitor/keyboard";
 
@@ -10,6 +9,7 @@ import {
   MdDeleteOutline,
 } from "react-icons/md";
 import { Capacitor } from "@capacitor/core";
+import { showConfirmDialog, showToast } from "../utils/constants";
 
 interface FormFilledProps {
   setIsFormFilledSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -69,32 +69,6 @@ const FormFilled = ({
   //     }
   //   });
   // }
-
-  const showDeleteCounterActions = async (currentCounterId: string) => {
-    const result = await ActionSheet.showActions({
-      title: "Delete Tasbeeh",
-      message: "Are you sure you want to delete this Tasbeeh?",
-      options: [
-        {
-          title: "Delete",
-          style: ActionSheetButtonStyle.Destructive,
-        },
-        {
-          title: "Cancel",
-          style: ActionSheetButtonStyle.Cancel,
-        },
-      ],
-    });
-
-    if (result.index === 0) {
-      deleteSingleCounter(currentCounterId);
-      setIsFormFilledSheetOpen(false);
-    } else if (result.index === 1) {
-      console.log("Delete action cancelled");
-    }
-
-    console.log("Action Sheet result:", result);
-  };
 
   useEffect(() => {
     if (counterNameField.current) {
@@ -325,7 +299,16 @@ const FormFilled = ({
             // deleteSingleCounter(currentCounterId);
             // setIsFormFilledSheetOpen(false);
             e.preventDefault();
-            showDeleteCounterActions(currentCounterId);
+
+            const result = await showConfirmDialog(
+              "Delete Tasbeeh",
+              "Are you sure you want to delete this Tasbeeh?"
+            );
+            if (result) {
+              deleteSingleCounter(currentCounterId);
+              setIsFormFilledSheetOpen(false);
+              showToast("Tasbeeh deleted", "bottom", "short");
+            }
           }}
         >
           <p>Delete Tasbeeh</p>

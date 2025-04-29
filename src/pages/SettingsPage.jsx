@@ -23,9 +23,8 @@ import AboutUs from "../components/AboutUs";
 import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { ActionSheet, ActionSheetButtonStyle } from "@capacitor/action-sheet";
 import { Toast } from "@capacitor/toast";
-import { TWEEN_CONFIG } from "../utils/constants";
+import { showConfirmDialog, showToast, TWEEN_CONFIG } from "../utils/constants";
 
 // import ThemeOptions from "../components/ThemeOptions";
 
@@ -124,40 +123,6 @@ const SettingsPage = ({
       setAfternoonNotification(false);
       setEveningNotification(false);
     }
-  };
-
-  const showResetAllCountersActionSheet = async () => {
-    const result = await ActionSheet.showActions({
-      title: "Reset All Adhkar",
-      message: "Are you sure you want to reset all Adkhar to 0?",
-      options: [
-        {
-          title: "Reset",
-          style: ActionSheetButtonStyle.Destructive,
-        },
-        {
-          title: "Cancel",
-          style: ActionSheetButtonStyle.Cancel,
-        },
-      ],
-    });
-
-    const showAllCounterResetToast = async () => {
-      await Toast.show({
-        text: "All Adhkar Reset",
-        position: "top",
-        duration: "short",
-      });
-    };
-
-    if (result.index === 0) {
-      resetAllCounters();
-      showAllCounterResetToast();
-    } else if (result.index === 1) {
-      // console.log("Res action cancelled");
-    }
-
-    // console.log("Action Sheet result:", result);
   };
 
   const loadingIconRef = useRef(null);
@@ -542,9 +507,17 @@ const SettingsPage = ({
           </div>
           <div className="reset-adkhar-text-wrap">
             <p
-              onClick={() => {
-                // handleOpenModal3();
-                showResetAllCountersActionSheet();
+              onClick={async () => {
+                const result = await showConfirmDialog(
+                  "Reset All Adhkar",
+                  "Are you sure you want to reset all Adkhar to 0?"
+                );
+                console.log("RESULT IS: ", result);
+
+                if (result) {
+                  resetAllCounters();
+                  showToast("All Adhkar reset to 0", "bottom", "short");
+                }
               }}
             >
               Reset all Adhkar
