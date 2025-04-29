@@ -398,8 +398,8 @@ const SettingsPage = ({
           <div
             className="theme-wrap"
             onClick={() => {
-              handleOpenModal();
-              setFormTheme(true);
+              // handleOpenModal();
+              // setFormTheme(true);
             }}
           >
             <div className="text-wrap" style={{ display: "block" }}>
