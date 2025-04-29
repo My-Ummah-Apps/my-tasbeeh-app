@@ -23,32 +23,28 @@ import SheetCloseBtn from "./components/SheetCloseBtn";
 // import { Purchases } from "cordova-plugin-purchase";
 
 window.addEventListener("DOMContentLoaded", () => {
+  const setStatusBarStyleDark = async () => {
+    await StatusBar.setStyle({ style: Style.Dark });
+  };
+
+  const setStatusBarStyleLight = async () => {
+    await StatusBar.setStyle({ style: Style.Light });
+  };
+  let statusBarThemeColor;
+  if (localStorage.getItem("theme") === null) {
+    localStorage.setItem("theme", JSON.stringify("light"));
+    setStatusBarStyleLight();
+    statusBarThemeColor = "#EDEDED";
+  } else if (JSON.parse(localStorage.getItem("theme")) === "dark") {
+    setStatusBarStyleDark();
+    statusBarThemeColor = "#242424";
+    document.body.classList.add("dark");
+  } else if (JSON.parse(localStorage.getItem("theme")) === "light") {
+    setStatusBarStyleLight();
+    statusBarThemeColor = "#EDEDED";
+    document.body.classList.remove("dark");
+  }
   if (Capacitor.isNativePlatform()) {
-    // STATUS BAR FUNCTIONALITY
-
-    const setStatusBarStyleDark = async () => {
-      await StatusBar.setStyle({ style: Style.Dark });
-    };
-
-    const setStatusBarStyleLight = async () => {
-      await StatusBar.setStyle({ style: Style.Light });
-    };
-
-    let statusBarThemeColor;
-    if (localStorage.getItem("theme") == null) {
-      localStorage.setItem("theme", JSON.stringify("light"));
-      setStatusBarStyleLight();
-      statusBarThemeColor = "#EDEDED";
-    } else if (JSON.parse(localStorage.getItem("theme")) == "dark") {
-      setStatusBarStyleDark();
-      statusBarThemeColor = "#242424";
-      document.body.classList.add("dark");
-    } else if (JSON.parse(localStorage.getItem("theme")) == "light") {
-      setStatusBarStyleLight();
-      statusBarThemeColor = "#EDEDED";
-      document.body.classList.remove("dark");
-    }
-
     setTimeout(() => {
       SplashScreen.hide({
         fadeOutDuration: 250,

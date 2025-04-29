@@ -49,6 +49,7 @@ const SettingsPage = ({
 
   useEffect(() => {
     setTheme(JSON.parse(localStorage.getItem("theme")));
+    console.log("THEME SET, THEME IS: ", theme);
   }, [theme]);
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
@@ -395,13 +396,7 @@ const SettingsPage = ({
           </div>
         ) : null}
         <div className="individual-section-wrap">
-          <div
-            className="theme-wrap"
-            onClick={() => {
-              // handleOpenModal();
-              // setFormTheme(true);
-            }}
-          >
+          <div className="theme-wrap">
             <div className="text-wrap" style={{ display: "block" }}>
               <p>Dark Theme</p>
               <p>
@@ -419,6 +414,8 @@ const SettingsPage = ({
               name={undefined}
               offColor="white"
               onChange={(e) => {
+                console.log("THEME IS: ", theme);
+
                 if (theme == "light") {
                   setTheme("dark");
                   if (Capacitor.isNativePlatform()) {
