@@ -69,6 +69,7 @@ function PlusBtn({
 
   return (
     <button
+      aria-label={`Increase counter, current value is ${currentNumber}`}
       style={{
         backgroundColor: `${activeBackgroundColor}`,
         boxShadow: `0px 0px 10px ${activeBackgroundColor}`,

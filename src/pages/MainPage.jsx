@@ -12,7 +12,6 @@ const MainPage = ({
   haptics,
   setLanguageDirection,
   languageDirection,
-  savedCountersArray,
   saveArrayLocally,
   counterId,
   activeCounterName,
@@ -31,6 +30,7 @@ const MainPage = ({
     InAppReview.requestReview();
     showReviewPrompt(false);
   }
+
   return (
     <div className="main-page-wrap">
       <div className="home-page-header">
@@ -58,8 +58,6 @@ const MainPage = ({
         setActiveCounterNumber={setActiveCounterNumber}
         activeCounterNumber={activeCounterNumber}
         activeCounterTarget={activeCounterTarget}
-        savedCountersArray={savedCountersArray}
-        counterId={counterId}
       />
     </div>
   );
