@@ -24,34 +24,36 @@ import { singleCounterType, themeType } from "./utils/types";
 // import { Purchases } from "cordova-plugin-purchase";
 
 window.addEventListener("DOMContentLoaded", () => {
-  const setStatusBarStyleDark = async () => {
-    await StatusBar.setStyle({ style: Style.Dark });
-  };
-
-  const setStatusBarStyleLight = async () => {
-    await StatusBar.setStyle({ style: Style.Light });
-  };
   let statusBarThemeColor: string;
   const storedTheme: themeType | null = JSON.parse(
     localStorage.getItem("theme")
   );
-  console.log("STORED THEME IS: ", storedTheme);
 
   if (storedTheme === null) {
-    console.log("STORED THEME IS NULL");
-
     localStorage.setItem("theme", JSON.stringify("light"));
-    setStatusBarStyleLight();
+    if (Capacitor.isNativePlatform()) {
+      const setStatusBarStyleLight = async () => {
+        await StatusBar.setStyle({ style: Style.Light });
+      };
+      setStatusBarStyleLight();
+    }
     statusBarThemeColor = "#EDEDED";
   } else if (storedTheme === "dark") {
-    console.log("STORED THEME IS DARK");
-
-    setStatusBarStyleDark();
+    if (Capacitor.isNativePlatform()) {
+      const setStatusBarStyleDark = async () => {
+        await StatusBar.setStyle({ style: Style.Dark });
+      };
+      setStatusBarStyleDark();
+    }
     statusBarThemeColor = "#242424";
     document.body.classList.add("dark");
   } else if (storedTheme === "light") {
-    console.log("STORED THEME IS light");
-    setStatusBarStyleLight();
+    if (Capacitor.isNativePlatform()) {
+      const setStatusBarStyleLight = async () => {
+        await StatusBar.setStyle({ style: Style.Light });
+      };
+      setStatusBarStyleLight();
+    }
     statusBarThemeColor = "#EDEDED";
     document.body.classList.remove("dark");
   }
@@ -62,9 +64,9 @@ window.addEventListener("DOMContentLoaded", () => {
       });
     }, 500);
 
-    if (Capacitor.getPlatform() == "ios") return;
+    if (Capacitor.getPlatform() === "ios") return;
 
-    if (Capacitor.getPlatform() == "android") {
+    if (Capacitor.getPlatform() === "android") {
       setTimeout(() => {
         if (statusBarThemeColor == "#EDEDED") {
           StatusBar.setStyle({ style: Style.Light });

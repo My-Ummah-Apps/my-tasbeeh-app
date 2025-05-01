@@ -69,6 +69,7 @@ function PlusBtn({
 
   return (
     <button
+      data-testid="counter-increment-button"
       aria-label={`Increase counter, current value is ${currentNumber}`}
       style={{
         backgroundColor: `${activeBackgroundColor}`,

@@ -13,6 +13,6 @@
     "isolatedModules": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src/**/*.tsx", "src/**/*.ts"]
 }
  

@@ -25,7 +25,7 @@ const MainPage = ({
   activeBackgroundColor,
   resetSingleCounter,
 }) => {
-  if (reviewPrompt && Capacitor.isNativePlatform) {
+  if (reviewPrompt && Capacitor.isNativePlatform()) {
     // RateApp.requestReview();
     InAppReview.requestReview();
     showReviewPrompt(false);
