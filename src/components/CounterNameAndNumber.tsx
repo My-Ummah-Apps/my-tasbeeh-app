@@ -112,6 +112,7 @@ function CounterNameAndNumber({
           </div>
 
           <div
+            data-testid="active-counter-name"
             className="single-counter-counter-name"
             style={{
               textAlign: languageDirection === "ltr" ? "left" : "right",
