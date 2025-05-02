@@ -1,40 +1,14 @@
 import { LATEST_APP_VERSION } from "../../src/utils/changelog";
+import { DEFAULT_COUNTERS } from "../../src/utils/constants";
+import { counterObjType } from "../../src/utils/types";
 
 describe("Home Page - Counter", () => {
   beforeEach(() => {
     cy.visit("/", {
       onBeforeLoad(win) {
-        const mockCounters = [
-          {
-            counter: "Counter 1",
-            count: 200,
-            color: "#EF5350",
-            isActive: true,
-            target: 10,
-            id: 1,
-          },
-
-          {
-            counter: "Counter 2",
-            count: 20,
-            color: "#EC407A",
-            isActive: false,
-            target: 20,
-            id: 2,
-          },
-
-          {
-            counter: "Counter 3",
-            count: 3,
-            color: "AB47BC",
-            isActive: false,
-            target: 50,
-            id: 3,
-          },
-        ];
         win.localStorage.setItem(
           "localSavedCountersArray",
-          JSON.stringify(mockCounters)
+          JSON.stringify(DEFAULT_COUNTERS)
         );
         win.localStorage.setItem("appVersion", LATEST_APP_VERSION);
       },
@@ -48,21 +22,23 @@ describe("Home Page - Counter", () => {
   it("should display the counter name and initial count value", () => {
     cy.get('[data-testid="active-counter-name"]').should(
       "contain",
-      "Counter 1"
+      "Alhumdulillah"
     );
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "200");
+    cy.get('[data-testid="counter-increment-button"]').should("contain", "0");
   });
 
   it("should increment the counter, update value on-screen and store value in localStorage", () => {
     cy.get('[data-testid="counter-increment-button"]').click().click();
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "202");
+    cy.get('[data-testid="counter-increment-button"]').should("contain", "2");
 
     cy.window().then((win) => {
       const counters = JSON.parse(
         win.localStorage.getItem("localSavedCountersArray") || "[]"
       );
-      const activeCounter = counters.find((counter) => counter.isActive);
-      expect(activeCounter.count).to.equal(202);
+      const activeCounter = counters.find(
+        (counter: counterObjType) => counter.isActive
+      );
+      expect(activeCounter.count).to.equal(2);
     });
   });
 });
