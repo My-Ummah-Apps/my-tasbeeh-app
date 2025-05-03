@@ -5,7 +5,7 @@ import { counterObjType } from "../../src/utils/types";
 const mockCountersArr: counterObjType[] = [
   {
     counter: "Counter 1",
-    count: 0,
+    count: 10,
     color: "#EF5350",
     isActive: true,
     target: 50,
@@ -21,7 +21,7 @@ const mockCountersArr: counterObjType[] = [
   },
 ];
 
-const assertLocalStorageValue = () => {
+const assertLocalStorageValue = (num: number) => {
   cy.window().then((win) => {
     const counters = JSON.parse(
       win.localStorage.getItem("localSavedCountersArray") || "[]"
@@ -29,7 +29,7 @@ const assertLocalStorageValue = () => {
     const activeCounter = counters.find(
       (counter: counterObjType) => counter.isActive
     );
-    expect(activeCounter.count).to.equal(2);
+    expect(activeCounter.count).to.equal(num);
   });
 };
 
@@ -68,9 +68,9 @@ describe("New user flow with no data present in localStorage", () => {
     cy.get('[data-testid="counter-increment-button"]').click().click();
     cy.get('[data-testid="counter-increment-button"]').should("contain", "2");
 
-    assertLocalStorageValue();
+    assertLocalStorageValue(2);
     cy.reload();
-    assertLocalStorageValue();
+    assertLocalStorageValue(2);
   });
 });
 
@@ -96,9 +96,9 @@ describe("New user flow with DEFAULT_COUNTERS inserted", () => {
     cy.get('[data-testid="counter-increment-button"]').click().click();
     cy.get('[data-testid="counter-increment-button"]').should("contain", "2");
 
-    assertLocalStorageValue();
+    assertLocalStorageValue(2);
     cy.reload();
-    assertLocalStorageValue();
+    assertLocalStorageValue(2);
   });
 });
 
@@ -124,8 +124,61 @@ describe("Existing user flow", () => {
     cy.get('[data-testid="counter-increment-button"]').click().click();
     cy.get('[data-testid="counter-increment-button"]').should("contain", "2");
 
-    assertLocalStorageValue();
+    assertLocalStorageValue(12);
     cy.reload();
-    assertLocalStorageValue();
+    assertLocalStorageValue(12);
+  });
+});
+
+describe("it should reset the counter and persist after reload", () => {
+  beforeEach(() => {
+    // cy.clearLocalStorage();
+    cy.visit("/", {
+      onBeforeLoad(win) {
+        win.localStorage.setItem(
+          "localSavedCountersArray",
+          JSON.stringify(mockCountersArr)
+        );
+        win.localStorage.setItem("appVersion", LATEST_APP_VERSION);
+      },
+    });
+  });
+
+  it("should reset the counter to 0 and persist across page reloads", () => {
+    cy.get('[data-testid="counter-increment-button"]').should("contain", "10");
+    cy.get('[data-testid="counter-reset-btn"]').click();
+    assertLocalStorageValue(0);
+    cy.reload();
+    assertLocalStorageValue(0);
+  });
+
+  it("should reset the counter to 0 multiple times, increment and persist across page reloads", () => {
+    cy.get('[data-testid="counter-increment-button"]').should("contain", "10");
+    assertLocalStorageValue(10);
+
+    cy.get('[data-testid="counter-reset-btn"]').click();
+    assertLocalStorageValue(0);
+    cy.get('[data-testid="counter-increment-button"]').should("contain", "0");
+
+    cy.get('[data-testid="counter-increment-button"]').click();
+    cy.get('[data-testid="counter-increment-button"]').should("contain", "1");
+    assertLocalStorageValue(1);
+    cy.reload();
+    assertLocalStorageValue(1);
+
+    cy.get('[data-testid="counter-reset-btn"]').click();
+    assertLocalStorageValue(0);
+    cy.get('[data-testid="counter-increment-button"]').should("contain", "0");
+    cy.reload();
+    assertLocalStorageValue(0);
+    cy.get('[data-testid="counter-increment-button"]').should("contain", "0");
+
+    cy.get('[data-testid="counter-increment-button"]').click().click();
+    assertLocalStorageValue(2);
+    cy.get('[data-testid="counter-increment-button"]').should("contain", "2");
+
+    cy.get('[data-testid="counter-reset-btn"]').click();
+    assertLocalStorageValue(0);
+    cy.get('[data-testid="counter-increment-button"]').should("contain", "0");
   });
 });

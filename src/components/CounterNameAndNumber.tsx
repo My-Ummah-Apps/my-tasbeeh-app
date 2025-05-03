@@ -161,6 +161,7 @@ function CounterNameAndNumber({
           </div>
         </div>
         <div
+          data-testid="counter-reset-btn"
           className="reset-btn-wrap"
           onClick={(e) => {
             e.stopPropagation();
@@ -168,7 +169,6 @@ function CounterNameAndNumber({
           }}
         >
           <MdOutlineRestartAlt />
-          {/* <VscDebugRestart /> */}
         </div>
 
         <div
