@@ -21,6 +21,10 @@ const mockCountersArr: counterObjType[] = [
   },
 ];
 
+const counterIncrementBtn = () =>
+  cy.get('[data-testid="counter-increment-button"]');
+const counterResetBtn = () => cy.get('[data-testid="counter-reset-btn"]');
+
 const assertLocalStorageValue = (num: number) => {
   cy.window().then((win) => {
     const counters = JSON.parse(
@@ -65,8 +69,8 @@ describe("New user flow with no data present in localStorage", () => {
   });
 
   it("should increment the counter, update value on-screen and store value in localStorage", () => {
-    cy.get('[data-testid="counter-increment-button"]').click().click();
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "2");
+    counterIncrementBtn().click().click();
+    counterIncrementBtn().should("contain", "2");
 
     assertLocalStorageValue(2);
     cy.reload();
@@ -93,8 +97,8 @@ describe("New user flow with DEFAULT_COUNTERS inserted", () => {
   });
 
   it("should increment the counter, update value on-screen and store value in localStorage", () => {
-    cy.get('[data-testid="counter-increment-button"]').click().click();
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "2");
+    counterIncrementBtn().click().click();
+    counterIncrementBtn().should("contain", "2");
 
     assertLocalStorageValue(2);
     cy.reload();
@@ -121,8 +125,8 @@ describe("Existing user flow", () => {
   });
 
   it("should increment the counter, update value on-screen and store value in localStorage", () => {
-    cy.get('[data-testid="counter-increment-button"]').click().click();
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "2");
+    counterIncrementBtn().click().click();
+    counterIncrementBtn().should("contain", "2");
 
     assertLocalStorageValue(12);
     cy.reload();
@@ -145,40 +149,40 @@ describe("it should reset the counter and persist after reload", () => {
   });
 
   it("should reset the counter to 0 and persist across page reloads", () => {
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "10");
-    cy.get('[data-testid="counter-reset-btn"]').click();
+    counterIncrementBtn().should("contain", "10");
+    counterResetBtn().click();
     assertLocalStorageValue(0);
     cy.reload();
     assertLocalStorageValue(0);
   });
 
   it("should reset the counter to 0 multiple times, increment and persist across page reloads", () => {
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "10");
+    counterIncrementBtn().should("contain", "10");
     assertLocalStorageValue(10);
 
-    cy.get('[data-testid="counter-reset-btn"]').click();
+    counterResetBtn().click();
     assertLocalStorageValue(0);
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "0");
+    counterIncrementBtn().should("contain", "0");
 
-    cy.get('[data-testid="counter-increment-button"]').click();
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "1");
+    counterIncrementBtn().click();
+    counterIncrementBtn().should("contain", "1");
     assertLocalStorageValue(1);
     cy.reload();
     assertLocalStorageValue(1);
 
-    cy.get('[data-testid="counter-reset-btn"]').click();
+    counterResetBtn().click();
     assertLocalStorageValue(0);
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "0");
+    counterIncrementBtn().should("contain", "0");
     cy.reload();
     assertLocalStorageValue(0);
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "0");
+    counterIncrementBtn().should("contain", "0");
 
-    cy.get('[data-testid="counter-increment-button"]').click().click();
+    counterIncrementBtn().click().click();
     assertLocalStorageValue(2);
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "2");
+    counterIncrementBtn().should("contain", "2");
 
-    cy.get('[data-testid="counter-reset-btn"]').click();
+    counterResetBtn().click();
     assertLocalStorageValue(0);
-    cy.get('[data-testid="counter-increment-button"]').should("contain", "0");
+    counterIncrementBtn().should("contain", "0");
   });
 });
