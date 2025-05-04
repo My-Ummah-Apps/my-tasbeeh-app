@@ -25,7 +25,7 @@ const counterIncrementBtn = () =>
   cy.get('[data-testid="counter-increment-button"]');
 const counterResetBtn = () => cy.get('[data-testid="counter-reset-btn"]');
 
-const assertLocalStorageValue = (num: number) => {
+const assertLocalStorageActiveCounterValue = (num: number) => {
   cy.window().then((win) => {
     const counters = JSON.parse(
       win.localStorage.getItem("localSavedCountersArray") || "[]"
@@ -72,9 +72,9 @@ describe("New user flow with no data present in localStorage", () => {
     counterIncrementBtn().click().click();
     counterIncrementBtn().should("contain", "2");
 
-    assertLocalStorageValue(2);
+    assertLocalStorageActiveCounterValue(2);
     cy.reload();
-    assertLocalStorageValue(2);
+    assertLocalStorageActiveCounterValue(2);
   });
 });
 
@@ -100,9 +100,9 @@ describe("New user flow with DEFAULT_COUNTERS inserted", () => {
     counterIncrementBtn().click().click();
     counterIncrementBtn().should("contain", "2");
 
-    assertLocalStorageValue(2);
+    assertLocalStorageActiveCounterValue(2);
     cy.reload();
-    assertLocalStorageValue(2);
+    assertLocalStorageActiveCounterValue(2);
   });
 });
 
@@ -128,13 +128,13 @@ describe("Existing user flow", () => {
     counterIncrementBtn().click().click();
     counterIncrementBtn().should("contain", "2");
 
-    assertLocalStorageValue(12);
+    assertLocalStorageActiveCounterValue(12);
     cy.reload();
-    assertLocalStorageValue(12);
+    assertLocalStorageActiveCounterValue(12);
   });
 });
 
-describe("it should reset the counter and persist after reload", () => {
+describe("Counter reset and persistence after reload", () => {
   beforeEach(() => {
     // cy.clearLocalStorage();
     cy.visit("/", {
@@ -151,38 +151,38 @@ describe("it should reset the counter and persist after reload", () => {
   it("should reset the counter to 0 and persist across page reloads", () => {
     counterIncrementBtn().should("contain", "10");
     counterResetBtn().click();
-    assertLocalStorageValue(0);
+    assertLocalStorageActiveCounterValue(0);
     cy.reload();
-    assertLocalStorageValue(0);
+    assertLocalStorageActiveCounterValue(0);
   });
 
   it("should reset the counter to 0 multiple times, increment and persist across page reloads", () => {
     counterIncrementBtn().should("contain", "10");
-    assertLocalStorageValue(10);
+    assertLocalStorageActiveCounterValue(10);
 
     counterResetBtn().click();
-    assertLocalStorageValue(0);
+    assertLocalStorageActiveCounterValue(0);
     counterIncrementBtn().should("contain", "0");
 
     counterIncrementBtn().click();
     counterIncrementBtn().should("contain", "1");
-    assertLocalStorageValue(1);
+    assertLocalStorageActiveCounterValue(1);
     cy.reload();
-    assertLocalStorageValue(1);
+    assertLocalStorageActiveCounterValue(1);
 
     counterResetBtn().click();
-    assertLocalStorageValue(0);
+    assertLocalStorageActiveCounterValue(0);
     counterIncrementBtn().should("contain", "0");
     cy.reload();
-    assertLocalStorageValue(0);
+    assertLocalStorageActiveCounterValue(0);
     counterIncrementBtn().should("contain", "0");
 
     counterIncrementBtn().click().click();
-    assertLocalStorageValue(2);
+    assertLocalStorageActiveCounterValue(2);
     counterIncrementBtn().should("contain", "2");
 
     counterResetBtn().click();
-    assertLocalStorageValue(0);
+    assertLocalStorageActiveCounterValue(0);
     counterIncrementBtn().should("contain", "0");
   });
 });

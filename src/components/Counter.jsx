@@ -1,4 +1,4 @@
-import { FaPen } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { direction } from "direction";
 
@@ -11,7 +11,6 @@ const Counter = ({
   setcurrentCount,
   setCounterTarget,
   setcurrentCounterId,
-  handleOpenModal,
   setActivePage,
 }) => {
   return (
@@ -53,7 +52,8 @@ const Counter = ({
           </Link>
         </div>
 
-        <div
+        <button
+          arial-label="Edit Counter"
           className="edit-btn-wrap"
           onClick={(e) => {
             e.stopPropagation();
@@ -64,10 +64,8 @@ const Counter = ({
             setIsFormFilledSheetOpen(true);
           }}
         >
-          {/* <MdModeEditOutline /> */}
-          <FaPen />
-        </div>
-
+          <MdEdit />
+        </button>
         <div
           className="single-counter-overlay"
           style={{

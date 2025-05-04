@@ -1,8 +1,6 @@
 // @ts-nocheck
 import { useRef, useEffect, useState } from "react";
 import { direction } from "direction";
-import { FaPen } from "react-icons/fa";
-
 import { VscDebugRestart } from "react-icons/vsc";
 import { MdOutlineRestartAlt } from "react-icons/md";
 
@@ -160,7 +158,8 @@ function CounterNameAndNumber({
             </div>
           </div>
         </div>
-        <div
+        <button
+          aria-label="Reset Counter"
           data-testid="counter-reset-btn"
           className="reset-btn-wrap"
           onClick={(e) => {
@@ -169,7 +168,7 @@ function CounterNameAndNumber({
           }}
         >
           <MdOutlineRestartAlt />
-        </div>
+        </button>
 
         <div
           style={{

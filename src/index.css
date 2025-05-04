@@ -527,22 +527,21 @@ MdModeEditOutline {
 .single-counter-count {
   margin-left: 0.7rem;
   padding: 0.5rem 0;
-  /* font-weight: lighter; */
   font-weight: 400;
 }
 
 .edit-btn-wrap,
 .reset-btn-wrap {
-  margin: -1rem -0.7rem -1rem -1rem;
-  padding: 1rem 1.5rem;
-  font-size: 0.8rem;
-}
-
-.reset-btn-wrap {
-  font-size: 1.5rem;
-  margin: -1rem -0.7rem -1rem -1rem;
-  padding: 1rem 1.5rem;
-  z-index: 1;
+  margin-right: 0.7rem;
+  font-size: 1.2rem;
+  z-index: 10;
+  background: none;
+  border: none;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .add-btn {
