@@ -103,7 +103,10 @@ function CounterNameAndNumber({
         }}
       >
         <div className="single-counter-name-and-count-wrap">
-          <div className="single-counter-count">
+          <div
+            data-testid="counter-progress-percent-text"
+            className="single-counter-count"
+          >
             {currentNumber <= currentCounterTarget
               ? Math.floor((currentNumber / currentCounterTarget) * 100) + "%"
               : "100%"}

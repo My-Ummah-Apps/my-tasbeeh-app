@@ -69,7 +69,6 @@ function PlusBtn({
 
   return (
     <button
-      data-testid="counter-increment-button"
       aria-label={`Increase counter, current value is ${currentNumber}`}
       style={{
         backgroundColor: `${activeBackgroundColor}`,
@@ -86,8 +85,15 @@ function PlusBtn({
       className={`increment-btn`}
     >
       <div className="increment-btn-number-and-target-wrap">
-        <div className="increment-btn-number">{currentNumber}</div>
-        <div className="increment-btn-target">of {currentCounterTarget}</div>
+        <div
+          data-testid="counter-current-count-text"
+          className="increment-btn-number"
+        >
+          {currentNumber}
+        </div>
+        <div data-testid="counter-target-text" className="increment-btn-target">
+          of {currentCounterTarget}
+        </div>
       </div>
       {/* <div className="plus-svg-wrap">
         <MdAdd />
