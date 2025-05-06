@@ -19,6 +19,7 @@ function CounterButton({
   setHaptics,
   haptics,
   setActiveCounterNumber,
+  activeCounterName,
   activeCounterNumber,
   activeCounterTarget,
   localSavedCountersArray,
@@ -69,7 +70,8 @@ function CounterButton({
 
   return (
     <button
-      aria-label={`Increase counter, current value is ${currentNumber}`}
+      data-testid="counter-increment-button"
+      aria-label={`Increase counter for ${activeCounterName}, current value is ${currentNumber}`}
       style={{
         backgroundColor: `${activeBackgroundColor}`,
         boxShadow: `0px 0px 10px ${activeBackgroundColor}`,

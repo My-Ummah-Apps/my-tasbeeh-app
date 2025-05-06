@@ -3,6 +3,8 @@ import { DEFAULT_COUNTERS } from "../../src/utils/constants";
 import { counterObjType } from "../../src/utils/types";
 
 const counterIncrementBtn = () =>
+  cy.get('[data-testid="counter-increment-button"]');
+const counterCurrentCountText = () =>
   cy.get('[data-testid="counter-current-count-text"]');
 const counterResetBtn = () => cy.get('[data-testid="counter-reset-btn"]');
 const counterProgressText = () =>
@@ -90,7 +92,7 @@ describe("New user flow with no data present in localStorage", () => {
   });
 
   it("should increment the counter, update value on-screen and store value in localStorage", () => {
-    counterIncrementBtn().click().click();
+    counterCurrentCountText().click().click();
     expectTestIdToContain("counter-current-count-text", "2", "have.text");
 
     assertLocalStorageActiveCounterValue(2);
@@ -121,7 +123,7 @@ describe("New user flow with DEFAULT_COUNTERS inserted", () => {
   });
 
   it("should increment the counter, update value on-screen and store value in localStorage", () => {
-    counterIncrementBtn().click().click();
+    counterCurrentCountText().click().click();
     expectTestIdToContain("counter-current-count-text", "2", "have.text");
 
     assertLocalStorageActiveCounterValue(2);
@@ -166,7 +168,7 @@ describe("Existing user flow", () => {
   });
 
   it("should increment the counter, update value on-screen and store value in localStorage", () => {
-    counterIncrementBtn().click().click();
+    counterCurrentCountText().click().click();
     expectTestIdToContain("counter-current-count-text", "12", "have.text");
 
     assertLocalStorageActiveCounterValue(12);
@@ -241,7 +243,7 @@ describe("Counter reset and persistence after reload", () => {
     assertLocalStorageActiveCounterValue(0);
     expectTestIdToContain("counter-current-count-text", "0", "have.text");
 
-    counterIncrementBtn().click();
+    counterCurrentCountText().click();
     expectTestIdToContain("counter-current-count-text", "1", "have.text");
     assertLocalStorageActiveCounterValue(1);
     cy.reload();
@@ -254,7 +256,7 @@ describe("Counter reset and persistence after reload", () => {
     assertLocalStorageActiveCounterValue(0);
     expectTestIdToContain("counter-current-count-text", "0", "have.text");
 
-    counterIncrementBtn().click().click();
+    counterCurrentCountText().click().click();
     assertLocalStorageActiveCounterValue(2);
     expectTestIdToContain("counter-current-count-text", "2", "have.text");
 
@@ -290,20 +292,55 @@ describe("Counter target text behaviour", () => {
     expectTestIdToContain("active-counter-name", "Dummy Counter", "contain");
     expectTestIdToContain("counter-current-count-text", "0", "have.text");
 
-    counterIncrementBtn().click();
+    counterCurrentCountText().click();
     expectTestIdToContain("counter-progress-percent-text", "20%", "have.text");
+    counterCurrentCountText().click();
+    expectTestIdToContain("counter-progress-percent-text", "40%", "have.text");
+    cy.reload();
+    expectTestIdToContain("counter-progress-percent-text", "40%", "have.text");
+    counterCurrentCountText().click().click().click();
+    // clickIncrement(counterCurrentCountText(), 3);
+    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
+    cy.reload();
+    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
+    counterCurrentCountText().click().click();
+    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
+    cy.reload();
+    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
+  });
+});
+
+describe("Counter button accessibility", () => {
+  beforeEach(() => {
+    cy.visit("/", {
+      onBeforeLoad(win) {
+        win.localStorage.setItem(
+          "localSavedCountersArray",
+          JSON.stringify([
+            {
+              counter: "Dummy Counter",
+              count: 0,
+              color: "#EF5350",
+              isActive: true,
+              target: 5,
+              id: "random identifier 1",
+            },
+          ])
+        );
+        win.localStorage.setItem("appVersion", LATEST_APP_VERSION);
+      },
+    });
+  });
+  it("should have the correct aria-label", () => {
+    counterIncrementBtn()
+      .should("have.attr", "aria-label")
+      .and("include", "Increase counter for Dummy Counter, current value is 0");
+  });
+
+  it("should update aria-label correct after incrementing the counter", () => {
     counterIncrementBtn().click();
-    expectTestIdToContain("counter-progress-percent-text", "40%", "have.text");
-    cy.reload();
-    expectTestIdToContain("counter-progress-percent-text", "40%", "have.text");
-    counterIncrementBtn().click().click().click();
-    // clickIncrement(counterIncrementBtn(), 3);
-    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
-    cy.reload();
-    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
-    counterIncrementBtn().click().click();
-    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
-    cy.reload();
-    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
+    counterIncrementBtn()
+      .should("have.attr", "aria-label")
+      .and("include", "Increase counter for Dummy Counter, current value is 1");
   });
 });

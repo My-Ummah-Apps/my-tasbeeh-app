@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CounterNameAndNumber from "../components/CounterNameAndNumber";
-import PlusBtn from "../components/PlusBtn";
+import CounterButton from "../components/CounterButton";
 // import { RateApp } from "capacitor-rate-app";
 import { InAppReview } from "@capacitor-community/in-app-review";
 import { Capacitor } from "@capacitor/core";
@@ -49,12 +49,13 @@ const HomePage = ({
         setActiveBackgroundColor={setActiveBackgroundColor}
         activeBackgroundColor={activeBackgroundColor}
       />
-      <PlusBtn
+      <CounterButton
         activeBackgroundColor={activeBackgroundColor}
         setHaptics={setHaptics}
         haptics={haptics}
         saveArrayLocally={saveArrayLocally}
         localSavedCountersArray={localSavedCountersArray}
+        activeCounterName={activeCounterName}
         setActiveCounterNumber={setActiveCounterNumber}
         activeCounterNumber={activeCounterNumber}
         activeCounterTarget={activeCounterTarget}
