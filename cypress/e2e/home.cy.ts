@@ -84,7 +84,7 @@ describe("New user flow with no data present in localStorage", () => {
     });
   });
 
-  it("should initialise with default counters and display the active counter", () => {
+  it("should initialise with DEFAULT_COUNTERS and display the active counter", () => {
     expectTestIdToContain("active-counter-name", "Alhumdulillah", "contain");
     expectTestIdToContain("counter-current-count-text", "0", "have.text");
   });
@@ -113,6 +113,9 @@ describe("New user flow with DEFAULT_COUNTERS inserted", () => {
   });
 
   it("should display counter with isActive property set to true along with the counters count value", () => {
+    expectTestIdToContain("active-counter-name", "Alhumdulillah", "contain");
+    expectTestIdToContain("counter-current-count-text", "0", "have.text");
+    cy.reload();
     expectTestIdToContain("active-counter-name", "Alhumdulillah", "contain");
     expectTestIdToContain("counter-current-count-text", "0", "have.text");
   });
@@ -169,6 +172,33 @@ describe("Existing user flow", () => {
     assertLocalStorageActiveCounterValue(12);
     cy.reload();
     assertLocalStorageActiveCounterValue(12);
+  });
+});
+
+describe("Counter goal text", () => {
+  beforeEach(() => {
+    cy.visit("/", {
+      onBeforeLoad(win) {
+        win.localStorage.setItem(
+          "localSavedCountersArray",
+          JSON.stringify([
+            {
+              counter: "Dummy Counter",
+              count: 0,
+              color: "#EF5350",
+              isActive: true,
+              target: 5,
+              id: "random identifier 1",
+            },
+          ])
+        );
+        win.localStorage.setItem("appVersion", LATEST_APP_VERSION);
+      },
+    });
+  });
+
+  it("displays the correct target value next to the counter", () => {
+    expectTestIdToContain("counter-target-text", "of 5", "have.text");
   });
 });
 
@@ -255,10 +285,10 @@ describe("Counter target text behaviour", () => {
       },
     });
   });
+
   it("updates and persists correct percentage as counter increases and reaches/exceeds target", () => {
     expectTestIdToContain("active-counter-name", "Dummy Counter", "contain");
     expectTestIdToContain("counter-current-count-text", "0", "have.text");
-    expectTestIdToContain("counter-target-text", "of 5", "have.text");
 
     counterIncrementBtn().click();
     expectTestIdToContain("counter-progress-percent-text", "20%", "have.text");
