@@ -5,7 +5,7 @@ import PlusBtn from "../components/PlusBtn";
 import { InAppReview } from "@capacitor-community/in-app-review";
 import { Capacitor } from "@capacitor/core";
 
-const MainPage = ({
+const HomePage = ({
   showReviewPrompt,
   reviewPrompt,
   setHaptics,
@@ -63,4 +63,4 @@ const MainPage = ({
   );
 };
 
-export default MainPage;
+export default HomePage;
