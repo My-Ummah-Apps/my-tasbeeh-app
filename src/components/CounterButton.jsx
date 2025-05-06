@@ -15,7 +15,7 @@ const hapticsVibrate = async () => {
   await Haptics.vibrate({ duration: 1000 });
 };
 
-function PlusBtn({
+function CounterButton({
   setHaptics,
   haptics,
   setActiveCounterNumber,
@@ -102,4 +102,4 @@ function PlusBtn({
   );
 }
 
-export default PlusBtn;
+export default CounterButton;
