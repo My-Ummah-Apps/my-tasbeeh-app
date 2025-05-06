@@ -20,7 +20,7 @@
     "@capacitor/toast": "^7.0.0",
     "@hugotomazi/capacitor-navigation-bar": "^4.0.1",
     "@vitejs/plugin-react-swc": "^3.7.0",
-    "capacitor-native-settings": "^6.0.1",
+    "capacitor-native-settings": "^7.0.1",
     "direction": "^2.0.1",
     "framer-motion": "^11.5.4",
     "react": "^18.3.1",
