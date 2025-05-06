@@ -41,12 +41,15 @@
     "serve": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "wesbos/typescript"
     ]
   },
   "browserslist": {
@@ -71,8 +74,11 @@
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "cypress": "^14.3.2",
+    "eslint": "^8.57.1",
+    "eslint-config-wesbos": "^4.3.2",
     "jsdom": "^26.1.0",
-    "typescript": "^5.6.2",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
     "vitest": "^3.1.2"
   }
 }

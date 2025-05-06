@@ -1,15 +1,14 @@
-import { useState, useRef, useEffect } from "react";
-import React from "react";
-import { VscDebugRestart } from "react-icons/vsc";
-import { Keyboard } from "@capacitor/keyboard";
+import React, { useState, useRef, useEffect } from 'react';
+import { VscDebugRestart } from 'react-icons/vsc';
+import { Keyboard } from '@capacitor/keyboard';
 
 import {
   MdOutlinePlaylistRemove,
   MdOutlineRestartAlt,
   MdDeleteOutline,
-} from "react-icons/md";
-import { Capacitor } from "@capacitor/core";
-import { showConfirmDialog, showToast } from "../utils/constants";
+} from 'react-icons/md';
+import { Capacitor } from '@capacitor/core';
+import { showConfirmDialog, showToast } from '../utils/constants';
 
 interface FormFilledProps {
   setIsFormFilledSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,7 +17,7 @@ interface FormFilledProps {
     id: string,
     modifiedCounterName: string,
     modifiedCount: number | string,
-    modifiedTarget: number | string
+    modifiedTarget: number | string,
   ) => void;
   currentCounterName: string;
   currentCount: number;
@@ -50,10 +49,10 @@ const FormFilled = ({
   const [counterNameInput, setCounterNameInput] =
     useState<string>(currentCounterName);
   const [currentCountInput, setcurrentCountInput] = useState<number | string>(
-    currentCount
+    currentCount,
   );
   const [currentTargetInput, setCurrentTarget] = useState<number | string>(
-    currentCounterTarget
+    currentCounterTarget,
   );
 
   // if (Capacitor.getPlatform() === "ios") {
@@ -72,12 +71,12 @@ const FormFilled = ({
 
   useEffect(() => {
     if (counterNameField.current) {
-      counterNameField.current.style.height = "1px";
+      counterNameField.current.style.height = '1px';
       counterNameField.current.style.height = `${
         counterNameField.current.scrollHeight + 0.5
       }px`;
     } else {
-      console.error("counterNameField.current does not exist");
+      console.error('counterNameField.current does not exist');
     }
   }, []);
 
@@ -94,26 +93,26 @@ const FormFilled = ({
     ) {
       if (showNameAlert.current) {
         counterNameInput.length == 0
-          ? (showNameAlert.current.style.visibility = "visible")
-          : (showNameAlert.current.style.visibility = "hidden");
+          ? (showNameAlert.current.style.visibility = 'visible')
+          : (showNameAlert.current.style.visibility = 'hidden');
       } else {
-        console.error("showNameAlert.current is null");
+        console.error('showNameAlert.current is null');
       }
 
       if (showCountAlert.current) {
         currentCountInput.toString().length == 0
-          ? (showCountAlert.current.style.visibility = "visible")
-          : (showCountAlert.current.style.visibility = "hidden");
+          ? (showCountAlert.current.style.visibility = 'visible')
+          : (showCountAlert.current.style.visibility = 'hidden');
       } else {
-        console.error("showCountAlert.current is null");
+        console.error('showCountAlert.current is null');
       }
 
       if (showTargetAlert.current) {
         currentTargetInput == 0
-          ? (showTargetAlert.current.style.visibility = "visible")
-          : (showTargetAlert.current.style.visibility = "hidden");
+          ? (showTargetAlert.current.style.visibility = 'visible')
+          : (showTargetAlert.current.style.visibility = 'hidden');
       } else {
-        console.error("showTargetAlert.current is null");
+        console.error('showTargetAlert.current is null');
       }
 
       return;
@@ -123,7 +122,7 @@ const FormFilled = ({
       currentCounterId,
       counterNameInput,
       currentCountInput,
-      currentTargetInput
+      currentTargetInput,
     );
 
     setIsFormFilledSheetOpen(false);
@@ -134,7 +133,7 @@ const FormFilled = ({
       // counterNameField.current.style.height = "auto";
       counterNameField.current.style.height = `${e.target.scrollHeight}px`;
     } else {
-      console.error("counterNameField.current does not exist");
+      console.error('counterNameField.current does not exist');
     }
   };
 
@@ -151,7 +150,7 @@ const FormFilled = ({
               setIsFormFilledSheetOpen(false);
             }}
             className="form-filled-cancel-btn"
-            style={{ backgroundColor: "transparent" }}
+            style={{ backgroundColor: 'transparent' }}
           >
             Cancel
           </div>
@@ -197,11 +196,11 @@ const FormFilled = ({
               // type="text"
               value={counterNameInput}
               required
-            ></textarea>
+            />
             <div
               ref={showNameAlert}
-              className={`form-alert-styles`}
-              style={{ visibility: "hidden" }}
+              className="form-alert-styles"
+              style={{ visibility: 'hidden' }}
             >
               Please enter a name
             </div>
@@ -227,18 +226,18 @@ const FormFilled = ({
                   // setcurrentCountInput((prev) =>
                   //   prev > 0 ? Number(e.target.value) : 0
                   // );
-                  console.log("e.target.value", e.target.value);
+                  console.log('e.target.value', e.target.value);
                 }}
                 // value={currentCountInput > 0 ? currentCountInput : ""}
                 value={currentCountInput}
                 inputMode="numeric"
                 pattern="[0-9]*"
                 required
-              ></input>
+              />
               <div
                 ref={showCountAlert}
-                className={`form-alert-styles`}
-                style={{ visibility: "hidden" }}
+                className="form-alert-styles"
+                style={{ visibility: 'hidden' }}
               >
                 Please enter a number
               </div>
@@ -265,18 +264,18 @@ const FormFilled = ({
                 inputMode="numeric"
                 pattern="[0-9]*"
                 required
-              ></input>
+              />
               <div
                 ref={showTargetAlert}
-                className={`form-alert-styles`}
-                style={{ visibility: "hidden" }}
+                className="form-alert-styles"
+                style={{ visibility: 'hidden' }}
               >
                 Target must be above 0
               </div>
             </div>
           </div>
           <div className="pop-up-box-buttons-wrap">
-            <div className="reset-and-save-btn-wrap"></div>
+            <div className="reset-and-save-btn-wrap" />
           </div>
         </form>
       </div>
@@ -301,13 +300,13 @@ const FormFilled = ({
             e.preventDefault();
 
             const result = await showConfirmDialog(
-              "Delete Tasbeeh",
-              "Are you sure you want to delete this Tasbeeh?"
+              'Delete Tasbeeh',
+              'Are you sure you want to delete this Tasbeeh?',
             );
             if (result) {
               deleteSingleCounter(currentCounterId);
               setIsFormFilledSheetOpen(false);
-              showToast("Tasbeeh deleted", "bottom", "short");
+              showToast('Tasbeeh deleted', 'bottom', 'short');
             }
           }}
         >

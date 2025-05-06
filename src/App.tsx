@@ -1,61 +1,61 @@
-import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
-import { Keyboard } from "@capacitor/keyboard";
-import { StatusBar, Style } from "@capacitor/status-bar";
-import { LocalNotifications } from "@capacitor/local-notifications";
-import { SplashScreen } from "@capacitor/splash-screen";
-import { Capacitor } from "@capacitor/core";
-import { Toast } from "@capacitor/toast";
-import { Dialog } from "@capacitor/dialog";
-import { Sheet } from "react-modal-sheet";
-import { v4 as uuidv4 } from "uuid";
-import { direction } from "direction";
-import { DEFAULT_COUNTERS, TWEEN_CONFIG } from "./utils/constants";
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
+import { Keyboard } from '@capacitor/keyboard';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { Capacitor } from '@capacitor/core';
+import { Toast } from '@capacitor/toast';
+import { Dialog } from '@capacitor/dialog';
+import { Sheet } from 'react-modal-sheet';
+import { v4 as uuidv4 } from 'uuid';
+import { direction } from 'direction';
+import { DEFAULT_COUNTERS, TWEEN_CONFIG } from './utils/constants';
 // import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
 
-import NavBar from "./components/NavBar";
-import Main from "./pages/MainPage";
-import CountersPage from "./pages/CountersPage";
-import SettingsPage from "./pages/SettingsPage";
-import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
-import SheetCloseBtn from "./components/SheetCloseBtn";
-import { singleCounterType, themeType } from "./utils/types";
+import NavBar from './components/NavBar';
+import Main from './pages/MainPage';
+import CountersPage from './pages/CountersPage';
+import SettingsPage from './pages/SettingsPage';
+import { changeLogs, LATEST_APP_VERSION } from './utils/changelog';
+import SheetCloseBtn from './components/SheetCloseBtn';
+import { singleCounterType, themeType } from './utils/types';
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener('DOMContentLoaded', () => {
   let statusBarThemeColor: string;
   const storedTheme: themeType | null = JSON.parse(
-    localStorage.getItem("theme")
+    localStorage.getItem('theme'),
   );
 
   if (storedTheme === null) {
-    localStorage.setItem("theme", JSON.stringify("light"));
+    localStorage.setItem('theme', JSON.stringify('light'));
     if (Capacitor.isNativePlatform()) {
       const setStatusBarStyleLight = async () => {
         await StatusBar.setStyle({ style: Style.Light });
       };
       setStatusBarStyleLight();
     }
-    statusBarThemeColor = "#EDEDED";
-  } else if (storedTheme === "dark") {
+    statusBarThemeColor = '#EDEDED';
+  } else if (storedTheme === 'dark') {
     if (Capacitor.isNativePlatform()) {
       const setStatusBarStyleDark = async () => {
         await StatusBar.setStyle({ style: Style.Dark });
       };
       setStatusBarStyleDark();
     }
-    statusBarThemeColor = "#242424";
-    document.body.classList.add("dark");
-  } else if (storedTheme === "light") {
+    statusBarThemeColor = '#242424';
+    document.body.classList.add('dark');
+  } else if (storedTheme === 'light') {
     if (Capacitor.isNativePlatform()) {
       const setStatusBarStyleLight = async () => {
         await StatusBar.setStyle({ style: Style.Light });
       };
       setStatusBarStyleLight();
     }
-    statusBarThemeColor = "#EDEDED";
-    document.body.classList.remove("dark");
+    statusBarThemeColor = '#EDEDED';
+    document.body.classList.remove('dark');
   }
   if (Capacitor.isNativePlatform()) {
     setTimeout(() => {
@@ -64,14 +64,14 @@ window.addEventListener("DOMContentLoaded", () => {
       });
     }, 500);
 
-    if (Capacitor.getPlatform() === "ios") return;
+    if (Capacitor.getPlatform() === 'ios') return;
 
-    if (Capacitor.getPlatform() === "android") {
+    if (Capacitor.getPlatform() === 'android') {
       setTimeout(() => {
-        if (statusBarThemeColor == "#EDEDED") {
+        if (statusBarThemeColor == '#EDEDED') {
           StatusBar.setStyle({ style: Style.Light });
           // changeNavBarColor("#EDEDED");
-        } else if (statusBarThemeColor == "#242424") {
+        } else if (statusBarThemeColor == '#242424') {
           StatusBar.setStyle({ style: Style.Dark });
           // changeNavBarColor("#242424");
         }
@@ -100,7 +100,7 @@ if (Capacitor.isNativePlatform()) {
     await LocalNotifications.schedule({
       notifications: [
         {
-          title: "Morning Reminder",
+          title: 'Morning Reminder',
           body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
           id: 1,
           schedule: {
@@ -117,7 +117,7 @@ if (Capacitor.isNativePlatform()) {
     await LocalNotifications.schedule({
       notifications: [
         {
-          title: "Afternoon Reminder",
+          title: 'Afternoon Reminder',
           body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
           id: 3,
           schedule: {
@@ -134,7 +134,7 @@ if (Capacitor.isNativePlatform()) {
     await LocalNotifications.schedule({
       notifications: [
         {
-          title: "Evening Reminder",
+          title: 'Evening Reminder',
           body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
           id: 4,
           schedule: {
@@ -176,26 +176,26 @@ function App() {
 
   useEffect(() => {
     if (
-      localStorage.getItem("localSavedCountersArray") &&
-      localStorage.getItem("appVersion") !== LATEST_APP_VERSION
+      localStorage.getItem('localSavedCountersArray') &&
+      localStorage.getItem('appVersion') !== LATEST_APP_VERSION
     ) {
       setShowChangelogModal(true);
-      localStorage.setItem("appVersion", LATEST_APP_VERSION);
+      localStorage.setItem('appVersion', LATEST_APP_VERSION);
     }
   }, []);
 
-  if (Capacitor.getPlatform() === "ios") {
+  if (Capacitor.getPlatform() === 'ios') {
     Keyboard.setAccessoryBarVisible({ isVisible: true });
   }
 
   const [modalStyles, setModalStyles] = useState({
     overlay: {
-      backgroundColor: "rgba(53, 53, 53, 0.75)",
-      boxShadow: "none",
+      backgroundColor: 'rgba(53, 53, 53, 0.75)',
+      boxShadow: 'none',
     },
     content: {
-      backgroundColor: "rgba(53, 53, 53, 0.75)",
-      boxShadow: "none",
+      backgroundColor: 'rgba(53, 53, 53, 0.75)',
+      boxShadow: 'none',
     },
   });
 
@@ -225,47 +225,33 @@ function App() {
   //   }
   // }, []);
 
-  const materialColors = [
-    "#EF5350",
-    "#EC407A",
-    "#AB47BC",
-    "#7E57C2",
-    "#5C6BC0",
-    "#42A5F5",
-    "#29B6F6",
-    "#26C6DA",
-    "#26A69A",
-    "#66BB6A",
-    "#9CCC65",
-    "#FF7043",
-  ];
-  const [activePage, setActivePage] = useState("home");
+  const [activePage, setActivePage] = useState('home');
 
   const [morningNotification, setMorningNotification] = useState(
-    JSON.parse(localStorage.getItem("morning-notification"))
+    JSON.parse(localStorage.getItem('morning-notification')),
   );
 
   const [afternoonNotification, setAfternoonNotification] = useState(
-    JSON.parse(localStorage.getItem("afternoon-notification"))
+    JSON.parse(localStorage.getItem('afternoon-notification')),
   );
 
   const [eveningNotification, setEveningNotification] = useState(
-    JSON.parse(localStorage.getItem("evening-notification"))
+    JSON.parse(localStorage.getItem('evening-notification')),
   );
 
   const [reviewPrompt, showReviewPrompt] = useState(false);
 
   useEffect(() => {
-    let launchCount = localStorage.getItem("launch-count");
+    let launchCount = localStorage.getItem('launch-count');
     if (launchCount > 14) {
       launchCount = 0;
     } else if (launchCount == null) {
       launchCount = 1;
     } else if (launchCount != null) {
-      let launchCountNumber = Number(launchCount);
+      const launchCountNumber = Number(launchCount);
       launchCount = launchCountNumber + 1;
     }
-    localStorage.setItem("launch-count", JSON.stringify(launchCount));
+    localStorage.setItem('launch-count', JSON.stringify(launchCount));
 
     if (launchCount == 3 || launchCount == 8 || launchCount == 14) {
       showReviewPrompt(true);
@@ -275,14 +261,14 @@ function App() {
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
       if (
-        localStorage.getItem("morning-notification") == null ||
-        localStorage.getItem("morning-notification") == "false"
+        localStorage.getItem('morning-notification') == null ||
+        localStorage.getItem('morning-notification') == 'false'
       ) {
-        localStorage.setItem("morning-notification", JSON.stringify(false));
+        localStorage.setItem('morning-notification', JSON.stringify(false));
         setMorningNotification(false);
         // LocalNotifications.cancel({ notifications: [{ id: 2 }] });
-      } else if (localStorage.getItem("morning-notification") == "true") {
-        localStorage.setItem("morning-notification", JSON.stringify(true));
+      } else if (localStorage.getItem('morning-notification') == 'true') {
+        localStorage.setItem('morning-notification', JSON.stringify(true));
         setMorningNotification(true);
         scheduleMorningNotifications();
       }
@@ -292,14 +278,14 @@ function App() {
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
       if (
-        localStorage.getItem("afternoon-notification") == null ||
-        localStorage.getItem("afternoon-notification") == "false"
+        localStorage.getItem('afternoon-notification') == null ||
+        localStorage.getItem('afternoon-notification') == 'false'
       ) {
-        localStorage.setItem("afternoon-notification", JSON.stringify(false));
+        localStorage.setItem('afternoon-notification', JSON.stringify(false));
         setAfternoonNotification(false);
         // LocalNotifications.cancel({ notifications: [{ id: 3 }] });
-      } else if (localStorage.getItem("afternoon-notification") == "true") {
-        localStorage.setItem("afternoon-notification", JSON.stringify(true));
+      } else if (localStorage.getItem('afternoon-notification') == 'true') {
+        localStorage.setItem('afternoon-notification', JSON.stringify(true));
         setAfternoonNotification(true);
         scheduleAfternoonNotification();
       }
@@ -309,14 +295,14 @@ function App() {
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
       if (
-        localStorage.getItem("evening-notification") == null ||
-        localStorage.getItem("evening-notification") == "false"
+        localStorage.getItem('evening-notification') == null ||
+        localStorage.getItem('evening-notification') == 'false'
       ) {
-        localStorage.setItem("evening-notification", JSON.stringify(false));
+        localStorage.setItem('evening-notification', JSON.stringify(false));
         setEveningNotification(false);
         // LocalNotifications.cancel({ notifications: [{ id: 4 }] });
-      } else if (localStorage.getItem("evening-notification") == "true") {
-        localStorage.setItem("evening-notification", JSON.stringify(true));
+      } else if (localStorage.getItem('evening-notification') == 'true') {
+        localStorage.setItem('evening-notification', JSON.stringify(true));
         setEveningNotification(true);
         scheduleEveningNotification();
       }
@@ -324,71 +310,65 @@ function App() {
   }, [eveningNotification]);
 
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
-  const [activeCounterName, setActiveCounterName] = useState("");
-  const [languageDirection, setLanguageDirection] = useState("");
+  const [activeCounterName, setActiveCounterName] = useState('');
+  const [languageDirection, setLanguageDirection] = useState('');
   const [activeCounterNumber, setActiveCounterNumber] = useState(0);
-  const [activeBackgroundColor, setActiveBackgroundColor] = useState("");
+  const [activeBackgroundColor, setActiveBackgroundColor] = useState('');
 
   const saveArrayLocally = (arrayToSave) => {
     localStorage.setItem(
-      "localSavedCountersArray",
-      JSON.stringify(arrayToSave)
+      'localSavedCountersArray',
+      JSON.stringify(arrayToSave),
     );
   };
 
   const [haptics, setHaptics] = useState<boolean | null>(
-    JSON.parse(localStorage.getItem("haptics") || "null")
+    JSON.parse(localStorage.getItem('haptics') || 'null'),
   );
 
   const [dailyCounterReset, setDailyCounterReset] = useState(
-    JSON.parse(localStorage.getItem("dailyCounterReset"))
+    JSON.parse(localStorage.getItem('dailyCounterReset')),
   );
 
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
 
   useEffect(() => {
     if (
-      localStorage.getItem("haptics") == null &&
+      localStorage.getItem('haptics') == null &&
       Capacitor.isNativePlatform()
     ) {
-      localStorage.setItem("haptics", JSON.stringify(true));
+      localStorage.setItem('haptics', JSON.stringify(true));
       setHaptics(true);
     }
 
-    if (localStorage.getItem("dailyCounterReset") == null) {
-      localStorage.setItem("dailyCounterReset", JSON.stringify(false));
+    if (localStorage.getItem('dailyCounterReset') == null) {
+      localStorage.setItem('dailyCounterReset', JSON.stringify(false));
       setDailyCounterReset(false);
     }
   });
 
   useEffect(() => {
-    if (
-      JSON.parse(localStorage.getItem("localSavedCountersArray")) &&
-      JSON.parse(localStorage.getItem("localSavedCountersArray")).length > 0
-    ) {
+    const storedCounters = localStorage.getItem('localSavedCountersArray');
+    if (JSON.parse(storedCounters) && JSON.parse(storedCounters).length > 0) {
       // localStorage.setItem("lastLaunchDate", "19.09.2024");
-      const previousLaunchDate = localStorage.getItem("lastLaunchDate");
+      const previousLaunchDate = localStorage.getItem('lastLaunchDate');
       const todaysDate = new Date().toLocaleDateString();
       setLastLaunchDate(todaysDate);
-      localStorage.setItem("lastLaunchDate", todaysDate);
+      localStorage.setItem('lastLaunchDate', todaysDate);
 
       if (previousLaunchDate !== todaysDate && dailyCounterReset == true) {
-        defaultArray = JSON.parse(
-          localStorage.getItem("localSavedCountersArray")
-        ).map((counterItem) => ({ ...counterItem, count: 0 }));
+        defaultArray = JSON.parse(storedCounters).map((counterItem) => ({
+          ...counterItem,
+          count: 0,
+        }));
       } else {
-        defaultArray = JSON.parse(
-          localStorage.getItem("localSavedCountersArray")
-        );
+        defaultArray = JSON.parse(storedCounters);
       }
-    } else if (
-      !localStorage.getItem("localSavedCountersArray") ||
-      JSON.parse(localStorage.getItem("localSavedCountersArray")).length == 0
-    ) {
+    } else if (!storedCounters || JSON.parse(storedCounters).length == 0) {
       defaultArray = DEFAULT_COUNTERS;
 
       saveArrayLocally(defaultArray);
-      localStorage.setItem("appVersion", LATEST_APP_VERSION);
+      localStorage.setItem('appVersion', LATEST_APP_VERSION);
     }
 
     defaultArray.findIndex((object) => {
@@ -413,7 +393,7 @@ function App() {
       counter: counterToAdd,
       count: 0,
       isActive: false,
-      target: target,
+      target,
       id: uuidv4(),
     };
     const newArray = [...localSavedCountersArray, newCounter];
@@ -427,7 +407,7 @@ function App() {
 
   const resetAllCounters = () => {
     const resettedCounters = JSON.parse(
-      localStorage.getItem("localSavedCountersArray")
+      localStorage.getItem('localSavedCountersArray'),
     ).map((counter) => ({ ...counter, count: 0 }));
 
     setLocalSavedCountersArray(resettedCounters);
@@ -439,7 +419,7 @@ function App() {
     id,
     modifiedCounterName,
     modifiedCount,
-    modifiedTarget
+    modifiedTarget,
   ) => {
     localSavedCountersArray.map((counterItem) => {
       if (counterItem.id == id && counterItem.isActive) {
@@ -470,10 +450,10 @@ function App() {
       saveArrayLocally(localSavedCountersArray);
       setActiveCounterName(counterName);
       // ! TODO: The below if else statement has been duplicated in the CounterNameAndNumber component for a quick workaround due to text scrolling in the wrong direction if this function wasn't triggered (ie, the user launched the app which would land them on the homescreen), this duplication needs to be resolved in the future
-      if (direction(counterName) === "ltr") {
-        setLanguageDirection("ltr");
-      } else if (direction(counterName) === "rtl") {
-        setLanguageDirection("rtl");
+      if (direction(counterName) === 'ltr') {
+        setLanguageDirection('ltr');
+      } else if (direction(counterName) === 'rtl') {
+        setLanguageDirection('rtl');
       }
       setActiveCounterNumber(currentCount);
     });
@@ -493,8 +473,8 @@ function App() {
 
   const showOneCounterNeededAlert = async () => {
     await Dialog.alert({
-      title: "Unable to delete Tasbeeh",
-      message: "Atleast one tasbeeh must exist",
+      title: 'Unable to delete Tasbeeh',
+      message: 'Atleast one tasbeeh must exist',
     });
   };
 
@@ -502,14 +482,14 @@ function App() {
     // e.preventDefault();
     const showCounterDeleteToast = async () => {
       await Toast.show({
-        text: "Tasbeeh deleted",
-        position: "top",
-        duration: "short",
+        text: 'Tasbeeh deleted',
+        position: 'top',
+        duration: 'short',
       });
     };
 
     const filteredArray = localSavedCountersArray.filter(
-      (counterItem) => counterItem.id !== id
+      (counterItem) => counterItem.id !== id,
     );
     if (filteredArray.length == 0) {
       // alert("Atleast one counter must be saved");
@@ -584,7 +564,6 @@ function App() {
                   setActivePage={setActivePage}
                   modalStyles={modalStyles}
                   activeBackgroundColor={activeBackgroundColor}
-                  materialColors={materialColors}
                   localSavedCountersArray={localSavedCountersArray}
                   invokeSetActiveCounter={invokeSetActiveCounter}
                   resetSingleCounter={resetSingleCounter}
@@ -608,7 +587,7 @@ function App() {
         </section>
       </BrowserRouter>
       <Sheet
-        disableDrag={true}
+        disableDrag
         isOpen={showChangelogModal}
         onClose={() => setShowChangelogModal(false)}
         detent="full-height"

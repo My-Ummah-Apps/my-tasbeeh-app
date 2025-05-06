@@ -1,25 +1,25 @@
-export const LATEST_APP_VERSION = "2.4";
+export const LATEST_APP_VERSION = '2.4';
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
     changes: [
       {
-        heading: "Notification Fix",
+        heading: 'Notification Fix',
         text: (
           <>
             <strong>Fixed</strong>: Resolved an issue where notifications
-            continued to trigger even when turned off.{" "}
+            continued to trigger even when turned off.{' '}
           </>
         ),
       },
     ],
   },
   {
-    versionNum: "2.3",
+    versionNum: '2.3',
     changes: [
       {
-        heading: "Custom Tasbeeh fix",
+        heading: 'Custom Tasbeeh fix',
         text: (
           <>
             <strong>Fixed</strong>: Issue with custom added Tasbeeh disappearing
@@ -30,10 +30,10 @@ export const changeLogs = [
     ],
   },
   {
-    versionNum: "2.2",
+    versionNum: '2.2',
     changes: [
       {
-        heading: "Text scrolling fix",
+        heading: 'Text scrolling fix',
         text: (
           <>
             <strong>Fixed</strong>: Issue with scrolling text overlapping.
@@ -43,10 +43,10 @@ export const changeLogs = [
     ],
   },
   {
-    versionNum: "2.1",
+    versionNum: '2.1',
     changes: [
       {
-        heading: "RTL Language Fixes",
+        heading: 'RTL Language Fixes',
         text: (
           <>
             <strong>Fixed</strong>: Issues with right-to-left languages not
@@ -57,10 +57,10 @@ export const changeLogs = [
     ],
   },
   {
-    versionNum: "2.0",
+    versionNum: '2.0',
     changes: [
       {
-        heading: "Improved Modal Interaction",
+        heading: 'Improved Modal Interaction',
         text: (
           <>
             <strong>Improvements</strong>: Switched from pop-up to slide-up
@@ -70,7 +70,7 @@ export const changeLogs = [
         ),
       },
       {
-        heading: "Scroll Speed Adjustment",
+        heading: 'Scroll Speed Adjustment',
         text: (
           <>
             <strong>Fixed</strong>: A user reported an issue where scrolling was

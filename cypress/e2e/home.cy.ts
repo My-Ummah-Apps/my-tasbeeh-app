@@ -35,6 +35,33 @@ const expectTestIdToContain = (
 //   }
 // };
 
+// describe("Deal with malformed localStorage counters data", () => {
+//   beforeEach(() => {
+//     // cy.clearLocalStorage();
+//     cy.visit("/", {
+//       onBeforeLoad(win) {
+//         win.localStorage.setItem("localSavedCountersArray", "{invalid json}");
+//         win.localStorage.setItem("appVersion", LATEST_APP_VERSION);
+//       },
+//     });
+//   });
+
+//   it("should not crash and fall back to DEFAULT_COUNTERS", () => {
+//     cy.window().then((win) => {
+//       const storedCounters = JSON.parse(
+//         win.localStorage.getItem("localSavedCountersArray") || "[]"
+//       );
+//       expect(storedCounters.length).to.equal(DEFAULT_COUNTERS.length);
+//     });
+
+//     expectTestIdToContain(
+//       "active-counter-name",
+//       DEFAULT_COUNTERS[0].counter,
+//       "contain"
+//     );
+//   });
+// });
+
 describe("New user flow with no data present in localStorage", () => {
   beforeEach(() => {
     cy.clearLocalStorage();

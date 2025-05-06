@@ -8,7 +8,7 @@ import { MdModeEditOutline, MdAdd } from "react-icons/md";
 import FormBlank from "../components/FormBlank";
 import FormFilled from "../components/FormFilled";
 import Counter from "../components/Counter";
-import { TWEEN_CONFIG } from "../utils/constants";
+import { materialColors, TWEEN_CONFIG } from "../utils/constants";
 
 function CountersPage({
   modalStyles,
@@ -21,7 +21,6 @@ function CountersPage({
   addCounter,
   resetAllCounters,
   deleteSingleCounter,
-  materialColors,
   setActivePage,
 }) {
   function singleCounterStyles(count, target) {

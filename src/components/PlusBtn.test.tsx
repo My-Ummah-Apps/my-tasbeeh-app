@@ -1,22 +1,22 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import PlusBtn from "./PlusBtn";
-import { vi } from "vitest";
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
+import PlusBtn from './PlusBtn';
 
 // screen.logTestingPlaygroundURL();
 
-test("increases number upon button being tapped", async () => {
+test('increases number upon button being tapped', async () => {
   render(
     <PlusBtn
-      activeBackgroundColor={"blue"}
+      activeBackgroundColor="blue"
       setHaptics={vi.fn()}
       haptics={false}
       saveArrayLocally={vi.fn()}
       localSavedCountersArray={[
         {
-          counter: "Alhumdulillah",
+          counter: 'Alhumdulillah',
           count: 0,
-          color: "#EF5350",
+          color: '#EF5350',
           isActive: true,
           target: 50,
           id: 1,
@@ -25,21 +25,21 @@ test("increases number upon button being tapped", async () => {
       setActiveCounterNumber={vi.fn()}
       activeCounterNumber={0}
       activeCounterTarget={3}
-    />
+    />,
   );
-  const btn = screen.getByRole("button", {
+  const btn = screen.getByRole('button', {
     name: /Increase counter, current value is 0/i,
   });
   expect(btn).toBeInTheDocument();
   expect(btn).toHaveAttribute(
-    "aria-label",
-    "Increase counter, current value is 0"
+    'aria-label',
+    'Increase counter, current value is 0',
   );
   userEvent.click(btn);
   await waitFor(() => {
     expect(btn).toHaveAttribute(
-      "aria-label",
-      "Increase counter, current value is 1"
+      'aria-label',
+      'Increase counter, current value is 1',
     );
   });
 });
