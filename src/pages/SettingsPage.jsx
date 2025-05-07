@@ -37,7 +37,6 @@ const SettingsPage = ({
   setAfternoonNotification,
   eveningNotification,
   setEveningNotification,
-  modalStyles,
   setHaptics,
   haptics,
   setDailyCounterReset,

@@ -11,7 +11,6 @@ import Counter from "../components/Counter";
 import { materialColors, TWEEN_CONFIG } from "../utils/constants";
 
 function CountersPage({
-  modalStyles,
   activeBackgroundColor,
   resetSingleCounter,
   invokeSetActiveCounter,

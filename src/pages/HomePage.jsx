@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import CounterButton from "../components/CounterButton";
-// import { RateApp } from "capacitor-rate-app";
-import { InAppReview } from "@capacitor-community/in-app-review";
 import { Capacitor } from "@capacitor/core";
 
 const HomePage = ({
-  showReviewPrompt,
-  reviewPrompt,
   setHaptics,
   haptics,
   setLanguageDirection,
@@ -23,12 +19,6 @@ const HomePage = ({
   activeBackgroundColor,
   resetSingleCounter,
 }) => {
-  if (reviewPrompt && Capacitor.isNativePlatform()) {
-    // RateApp.requestReview();
-    InAppReview.requestReview();
-    showReviewPrompt(false);
-  }
-
   return (
     <div className="main-page-wrap">
       <div className="home-page-header">

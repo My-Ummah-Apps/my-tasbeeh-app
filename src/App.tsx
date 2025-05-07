@@ -12,9 +12,9 @@ import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
 import { direction } from "direction";
 import { DEFAULT_COUNTERS, TWEEN_CONFIG } from "./utils/constants";
-
+import { InAppReview } from "@capacitor-community/in-app-review";
 import NavBar from "./components/NavBar";
-import Main from "./pages/HomePage";
+import HomePage from "./pages/HomePage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
@@ -22,10 +22,6 @@ import SheetCloseBtn from "./components/SheetCloseBtn";
 import { counterObjType, themeType } from "./utils/types";
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
-
-// window.addEventListener("DOMContentLoaded", async () => {
-
-// });
 
 let scheduleMorningNotifications;
 let scheduleAfternoonNotification;
@@ -99,6 +95,32 @@ let defaultArray: singleCounterType[];
 
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
+  const [activePage, setActivePage] = useState("home");
+  const [morningNotification, setMorningNotification] = useState(
+    JSON.parse(localStorage.getItem("morning-notification"))
+  );
+
+  const [afternoonNotification, setAfternoonNotification] = useState(
+    JSON.parse(localStorage.getItem("afternoon-notification"))
+  );
+
+  const [eveningNotification, setEveningNotification] = useState(
+    JSON.parse(localStorage.getItem("evening-notification"))
+  );
+
+  const [reviewPrompt, showReviewPrompt] = useState(false);
+  const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
+  const [activeCounterName, setActiveCounterName] = useState("");
+  const [languageDirection, setLanguageDirection] = useState("");
+  const [activeCounterNumber, setActiveCounterNumber] = useState(0);
+  const [activeBackgroundColor, setActiveBackgroundColor] = useState("");
+  const [haptics, setHaptics] = useState<boolean | null>(
+    JSON.parse(localStorage.getItem("haptics") || "null")
+  );
+  const [dailyCounterReset, setDailyCounterReset] = useState(
+    JSON.parse(localStorage.getItem("dailyCounterReset"))
+  );
+  const [lastLaunchDate, setLastLaunchDate] = useState(null);
   // const [iapProducts, setIapProducts] = useState(null);
   // document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -189,17 +211,6 @@ function App() {
     Keyboard.setAccessoryBarVisible({ isVisible: true });
   }
 
-  const [modalStyles, setModalStyles] = useState({
-    overlay: {
-      backgroundColor: "rgba(53, 53, 53, 0.75)",
-      boxShadow: "none",
-    },
-    content: {
-      backgroundColor: "rgba(53, 53, 53, 0.75)",
-      boxShadow: "none",
-    },
-  });
-
   // const productsArray = [
   //   process.env.REACT_APP_ST,
   //   process.env.REACT_APP_MT,
@@ -226,36 +237,20 @@ function App() {
   //   }
   // }, []);
 
-  const [activePage, setActivePage] = useState("home");
-
-  const [morningNotification, setMorningNotification] = useState(
-    JSON.parse(localStorage.getItem("morning-notification"))
-  );
-
-  const [afternoonNotification, setAfternoonNotification] = useState(
-    JSON.parse(localStorage.getItem("afternoon-notification"))
-  );
-
-  const [eveningNotification, setEveningNotification] = useState(
-    JSON.parse(localStorage.getItem("evening-notification"))
-  );
-
-  const [reviewPrompt, showReviewPrompt] = useState(false);
-
   useEffect(() => {
-    let launchCount = localStorage.getItem("launch-count");
-    if (launchCount > 14) {
-      launchCount = 0;
-    } else if (launchCount == null) {
-      launchCount = 1;
-    } else if (launchCount != null) {
-      const launchCountNumber = Number(launchCount);
-      launchCount = launchCountNumber + 1;
-    }
+    let storedLaunchCount = localStorage.getItem("launch-count");
+    let launchCount = storedLaunchCount ? Number(storedLaunchCount) : 0;
+    launchCount++;
     localStorage.setItem("launch-count", JSON.stringify(launchCount));
 
-    if (launchCount == 3 || launchCount == 8 || launchCount == 14) {
-      showReviewPrompt(true);
+    const shouldTriggerReview =
+      launchCount === 3 ||
+      launchCount === 10 ||
+      launchCount === 20 ||
+      launchCount % 50 === 0;
+
+    if (Capacitor.isNativePlatform() && shouldTriggerReview) {
+      InAppReview.requestReview();
     }
   }, []);
 
@@ -310,28 +305,12 @@ function App() {
     }
   }, [eveningNotification]);
 
-  const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
-  const [activeCounterName, setActiveCounterName] = useState("");
-  const [languageDirection, setLanguageDirection] = useState("");
-  const [activeCounterNumber, setActiveCounterNumber] = useState(0);
-  const [activeBackgroundColor, setActiveBackgroundColor] = useState("");
-
   const saveArrayLocally = (arrayToSave) => {
     localStorage.setItem(
       "localSavedCountersArray",
       JSON.stringify(arrayToSave)
     );
   };
-
-  const [haptics, setHaptics] = useState<boolean | null>(
-    JSON.parse(localStorage.getItem("haptics") || "null")
-  );
-
-  const [dailyCounterReset, setDailyCounterReset] = useState(
-    JSON.parse(localStorage.getItem("dailyCounterReset"))
-  );
-
-  const [lastLaunchDate, setLastLaunchDate] = useState(null);
 
   useEffect(() => {
     if (
@@ -524,7 +503,6 @@ function App() {
                   setAfternoonNotification={setAfternoonNotification}
                   eveningNotification={eveningNotification}
                   setEveningNotification={setEveningNotification}
-                  modalStyles={modalStyles}
                   setHaptics={setHaptics}
                   haptics={haptics}
                   setDailyCounterReset={setDailyCounterReset}
@@ -536,7 +514,7 @@ function App() {
             <Route
               index
               element={
-                <Main
+                <HomePage
                   showReviewPrompt={showReviewPrompt}
                   reviewPrompt={reviewPrompt}
                   setHaptics={setHaptics}
@@ -563,7 +541,6 @@ function App() {
               element={
                 <CountersPage
                   setActivePage={setActivePage}
-                  modalStyles={modalStyles}
                   activeBackgroundColor={activeBackgroundColor}
                   localSavedCountersArray={localSavedCountersArray}
                   invokeSetActiveCounter={invokeSetActiveCounter}
