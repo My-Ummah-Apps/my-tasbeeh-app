@@ -44,7 +44,6 @@ if (Capacitor.isNativePlatform()) {
           schedule: {
             on: { hour: 8, minute: 0 },
             allowWhileIdle: true,
-            foreground: true, // iOS only
             repeats: true,
           },
         },
@@ -57,10 +56,9 @@ if (Capacitor.isNativePlatform()) {
         {
           title: "Afternoon Reminder",
           body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
-          id: 3,
+          id: 2,
           schedule: {
             allowWhileIdle: true,
-            foreground: true, // iOS only
             on: { hour: 14, minute: 0 },
             repeats: true,
           },
@@ -74,10 +72,9 @@ if (Capacitor.isNativePlatform()) {
         {
           title: "Evening Reminder",
           body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
-          id: 4,
+          id: 3,
           schedule: {
             allowWhileIdle: true,
-            foreground: true, // iOS only
             on: { hour: 19, minute: 0 },
             repeats: true,
           },
@@ -256,14 +253,17 @@ function App() {
 
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
+      const morningNotificationStatus = localStorage.getItem(
+        "morning-notification"
+      );
       if (
-        localStorage.getItem("morning-notification") == null ||
-        localStorage.getItem("morning-notification") == "false"
+        morningNotificationStatus === null ||
+        morningNotificationStatus === "false"
       ) {
         localStorage.setItem("morning-notification", JSON.stringify(false));
         setMorningNotification(false);
         // LocalNotifications.cancel({ notifications: [{ id: 2 }] });
-      } else if (localStorage.getItem("morning-notification") == "true") {
+      } else if (morningNotificationStatus === "true") {
         localStorage.setItem("morning-notification", JSON.stringify(true));
         setMorningNotification(true);
         scheduleMorningNotifications();
@@ -273,14 +273,17 @@ function App() {
 
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
+      const afternoonNotificationStatus = localStorage.getItem(
+        "afternoon-notification"
+      );
       if (
-        localStorage.getItem("afternoon-notification") == null ||
-        localStorage.getItem("afternoon-notification") == "false"
+        afternoonNotificationStatus === null ||
+        afternoonNotificationStatus === "false"
       ) {
         localStorage.setItem("afternoon-notification", JSON.stringify(false));
         setAfternoonNotification(false);
         // LocalNotifications.cancel({ notifications: [{ id: 3 }] });
-      } else if (localStorage.getItem("afternoon-notification") == "true") {
+      } else if (afternoonNotificationStatus === "true") {
         localStorage.setItem("afternoon-notification", JSON.stringify(true));
         setAfternoonNotification(true);
         scheduleAfternoonNotification();
@@ -290,27 +293,23 @@ function App() {
 
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
+      const eveningNotificationStatus = localStorage.getItem(
+        "afternoon-notification"
+      );
       if (
-        localStorage.getItem("evening-notification") == null ||
-        localStorage.getItem("evening-notification") == "false"
+        eveningNotificationStatus === null ||
+        eveningNotificationStatus === "false"
       ) {
         localStorage.setItem("evening-notification", JSON.stringify(false));
         setEveningNotification(false);
         // LocalNotifications.cancel({ notifications: [{ id: 4 }] });
-      } else if (localStorage.getItem("evening-notification") == "true") {
+      } else if (eveningNotificationStatus === "true") {
         localStorage.setItem("evening-notification", JSON.stringify(true));
         setEveningNotification(true);
         scheduleEveningNotification();
       }
     }
   }, [eveningNotification]);
-
-  const saveArrayLocally = (arrayToSave) => {
-    localStorage.setItem(
-      "localSavedCountersArray",
-      JSON.stringify(arrayToSave)
-    );
-  };
 
   useEffect(() => {
     if (
@@ -367,6 +366,13 @@ function App() {
     saveArrayLocally(defaultArray);
   }, []);
   const addItemToSavedCountersArray = () => {};
+
+  const saveArrayLocally = (arrayToSave) => {
+    localStorage.setItem(
+      "localSavedCountersArray",
+      JSON.stringify(arrayToSave)
+    );
+  };
 
   const addCounter = (counterToAdd, target) => {
     const newCounter = {
