@@ -18,7 +18,7 @@
     "@capacitor/splash-screen": "^7.0.0",
     "@capacitor/status-bar": "^7.0.0",
     "@capacitor/toast": "^7.0.0",
-    "@hugotomazi/capacitor-navigation-bar": "^4.0.1",
+    "@capawesome/capacitor-android-edge-to-edge-support": "^7.2.1",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "capacitor-native-settings": "^7.0.1",
     "direction": "^2.0.1",
@@ -38,6 +38,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc && vite build",
+    "build-no-tsc": "vite build",
     "serve": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",

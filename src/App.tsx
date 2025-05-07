@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
+import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
@@ -11,7 +12,6 @@ import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
 import { direction } from "direction";
 import { DEFAULT_COUNTERS, TWEEN_CONFIG } from "./utils/constants";
-// import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
 
 import NavBar from "./components/NavBar";
 import Main from "./pages/HomePage";
@@ -32,27 +32,34 @@ window.addEventListener("DOMContentLoaded", () => {
   if (storedTheme === null) {
     localStorage.setItem("theme", JSON.stringify("light"));
     if (Capacitor.isNativePlatform()) {
-      const setStatusBarStyleLight = async () => {
-        await StatusBar.setStyle({ style: Style.Light });
+      const setStatusAndNavBarBackgroundColor = async () => {
+        await EdgeToEdge.setBackgroundColor({ color: "#5a8e33" });
+        // await StatusBar.setStyle({ style: Style.Light });
       };
-      setStatusBarStyleLight();
+
+      setStatusAndNavBarBackgroundColor();
+
+      const setStatusBarStyleLight = async () => {
+        // await StatusBar.setStyle({ style: Style.Light });
+      };
+      // setStatusBarStyleLight();
     }
     statusBarThemeColor = "#EDEDED";
   } else if (storedTheme === "dark") {
     if (Capacitor.isNativePlatform()) {
       const setStatusBarStyleDark = async () => {
-        await StatusBar.setStyle({ style: Style.Dark });
+        // await StatusBar.setStyle({ style: Style.Dark });
       };
-      setStatusBarStyleDark();
+      // setStatusBarStyleDark();
     }
     statusBarThemeColor = "#242424";
     document.body.classList.add("dark");
   } else if (storedTheme === "light") {
     if (Capacitor.isNativePlatform()) {
       const setStatusBarStyleLight = async () => {
-        await StatusBar.setStyle({ style: Style.Light });
+        // await StatusBar.setStyle({ style: Style.Light });
       };
-      setStatusBarStyleLight();
+      // setStatusBarStyleLight();
     }
     statusBarThemeColor = "#EDEDED";
     document.body.classList.remove("dark");
@@ -69,21 +76,17 @@ window.addEventListener("DOMContentLoaded", () => {
     if (Capacitor.getPlatform() === "android") {
       setTimeout(() => {
         if (statusBarThemeColor == "#EDEDED") {
-          StatusBar.setStyle({ style: Style.Light });
+          // StatusBar.setStyle({ style: Style.Light });
           // changeNavBarColor("#EDEDED");
         } else if (statusBarThemeColor == "#242424") {
-          StatusBar.setStyle({ style: Style.Dark });
+          // StatusBar.setStyle({ style: Style.Dark });
           // changeNavBarColor("#242424");
         }
-        StatusBar.setBackgroundColor({ color: statusBarThemeColor });
+        // StatusBar.setBackgroundColor({ color: statusBarThemeColor });
       }, 1000);
     }
   }
 });
-
-// const changeNavBarColor = async (color) => {
-//   await NavigationBar.setColor({ color: color });
-// };
 
 let scheduleMorningNotifications;
 let scheduleAfternoonNotification;
