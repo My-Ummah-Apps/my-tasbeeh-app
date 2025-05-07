@@ -19,6 +19,7 @@
     "@capacitor/status-bar": "^7.0.0",
     "@capacitor/toast": "^7.0.0",
     "@capawesome/capacitor-android-edge-to-edge-support": "^7.2.1",
+    "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "capacitor-native-settings": "^7.0.1",
     "direction": "^2.0.1",

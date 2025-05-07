@@ -6,3 +6,5 @@ export type counterObjType = {
   target: number;
   id: string;
 };
+
+export type themeType = "light" | "dark";

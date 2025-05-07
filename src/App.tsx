@@ -19,74 +19,13 @@ import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
 import SheetCloseBtn from "./components/SheetCloseBtn";
-import { singleCounterType, themeType } from "./utils/types";
+import { counterObjType, themeType } from "./utils/types";
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
 
-window.addEventListener("DOMContentLoaded", () => {
-  let statusBarThemeColor: string;
-  const storedTheme: themeType | null = JSON.parse(
-    localStorage.getItem("theme")
-  );
+// window.addEventListener("DOMContentLoaded", async () => {
 
-  if (storedTheme === null) {
-    localStorage.setItem("theme", JSON.stringify("light"));
-    if (Capacitor.isNativePlatform()) {
-      const setStatusAndNavBarBackgroundColor = async () => {
-        await EdgeToEdge.setBackgroundColor({ color: "#5a8e33" });
-        // await StatusBar.setStyle({ style: Style.Light });
-      };
-
-      setStatusAndNavBarBackgroundColor();
-
-      const setStatusBarStyleLight = async () => {
-        // await StatusBar.setStyle({ style: Style.Light });
-      };
-      // setStatusBarStyleLight();
-    }
-    statusBarThemeColor = "#EDEDED";
-  } else if (storedTheme === "dark") {
-    if (Capacitor.isNativePlatform()) {
-      const setStatusBarStyleDark = async () => {
-        // await StatusBar.setStyle({ style: Style.Dark });
-      };
-      // setStatusBarStyleDark();
-    }
-    statusBarThemeColor = "#242424";
-    document.body.classList.add("dark");
-  } else if (storedTheme === "light") {
-    if (Capacitor.isNativePlatform()) {
-      const setStatusBarStyleLight = async () => {
-        // await StatusBar.setStyle({ style: Style.Light });
-      };
-      // setStatusBarStyleLight();
-    }
-    statusBarThemeColor = "#EDEDED";
-    document.body.classList.remove("dark");
-  }
-  if (Capacitor.isNativePlatform()) {
-    setTimeout(() => {
-      SplashScreen.hide({
-        fadeOutDuration: 250,
-      });
-    }, 500);
-
-    if (Capacitor.getPlatform() === "ios") return;
-
-    if (Capacitor.getPlatform() === "android") {
-      setTimeout(() => {
-        if (statusBarThemeColor == "#EDEDED") {
-          // StatusBar.setStyle({ style: Style.Light });
-          // changeNavBarColor("#EDEDED");
-        } else if (statusBarThemeColor == "#242424") {
-          // StatusBar.setStyle({ style: Style.Dark });
-          // changeNavBarColor("#242424");
-        }
-        // StatusBar.setBackgroundColor({ color: statusBarThemeColor });
-      }, 1000);
-    }
-  }
-});
+// });
 
 let scheduleMorningNotifications;
 let scheduleAfternoonNotification;
@@ -176,6 +115,65 @@ function App() {
   //     });
   //   }
   // }
+
+  useEffect(() => {
+    const initialiseApp = async () => {
+      const SPLASH_HIDE_DELAY = 500;
+      const ANDROID_STYLE_DELAY = 400;
+      let statusBarThemeColor: string;
+      const themeString = localStorage.getItem("theme");
+      let storedTheme: themeType | null = themeString
+        ? JSON.parse(themeString)
+        : null;
+
+      if (storedTheme === null) {
+        localStorage.setItem("theme", JSON.stringify("light"));
+        storedTheme = "light";
+      }
+
+      const setStatusAndNavBarBackgroundColor = async (
+        backgroundColor: string,
+        iconColor: Style
+      ) => {
+        await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
+        await StatusBar.setStyle({ style: iconColor });
+      };
+
+      if (storedTheme === "dark") {
+        statusBarThemeColor = "#242424";
+        if (Capacitor.isNativePlatform()) {
+          setStatusAndNavBarBackgroundColor("#242424", Style.Dark);
+        }
+        document.body.classList.add("dark");
+      } else if (storedTheme === "light") {
+        statusBarThemeColor = "#EDEDED";
+        if (Capacitor.isNativePlatform()) {
+          setStatusAndNavBarBackgroundColor("#EDEDED", Style.Light);
+        }
+        document.body.classList.remove("dark");
+      }
+
+      if (Capacitor.getPlatform() === "android") {
+        setTimeout(() => {
+          if (statusBarThemeColor == "#EDEDED") {
+            StatusBar.setStyle({ style: Style.Light });
+          } else if (statusBarThemeColor == "#242424") {
+            StatusBar.setStyle({ style: Style.Dark });
+          }
+        }, ANDROID_STYLE_DELAY);
+      }
+
+      if (Capacitor.isNativePlatform()) {
+        setTimeout(() => {
+          SplashScreen.hide({
+            fadeOutDuration: 250,
+          });
+        }, SPLASH_HIDE_DELAY);
+      }
+    };
+
+    initialiseApp();
+  }, []);
 
   useEffect(() => {
     if (
