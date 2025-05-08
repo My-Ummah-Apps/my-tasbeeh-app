@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
 // import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
@@ -55,9 +55,7 @@ function App() {
   const [haptics, setHaptics] = useState<boolean | null>(
     JSON.parse(localStorage.getItem("haptics") || "null")
   );
-  const [dailyCounterReset, setDailyCounterReset] = useState(
-    JSON.parse(localStorage.getItem("dailyCounterReset"))
-  );
+  const [dailyCounterReset, setDailyCounterReset] = useState(false);
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
   // const [iapProducts, setIapProducts] = useState(null);
   // document.addEventListener("deviceready", onDeviceReady, false);
@@ -301,18 +299,18 @@ function App() {
 
   useEffect(() => {
     if (
-      localStorage.getItem("haptics") == null &&
+      localStorage.getItem("haptics") === null &&
       Capacitor.isNativePlatform()
     ) {
       localStorage.setItem("haptics", JSON.stringify(true));
       setHaptics(true);
     }
 
-    if (localStorage.getItem("dailyCounterReset") == null) {
+    if (localStorage.getItem("dailyCounterReset") === null) {
       localStorage.setItem("dailyCounterReset", JSON.stringify(false));
       setDailyCounterReset(false);
     }
-  });
+  }, []);
 
   useEffect(() => {
     const storedCounters = localStorage.getItem("localSavedCountersArray");
