@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
+// import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
@@ -19,70 +19,15 @@ import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
 import SheetCloseBtn from "./components/SheetCloseBtn";
-import { counterObjType, themeType } from "./utils/types";
+import { counterObjType, NotificationParams, themeType } from "./utils/types";
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
 
-let scheduleMorningNotifications;
-let scheduleAfternoonNotification;
-let scheduleEveningNotification;
-
-if (Capacitor.isNativePlatform()) {
-  // LocalNotifications.createChannel({
-  //   id: "1",
-  //   name: "Notification",
-  //   description: "General Notification",
-  // });
-
-  scheduleMorningNotifications = async () => {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: "Morning Reminder",
-          body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
-          id: 1,
-          schedule: {
-            on: { hour: 8, minute: 0 },
-            allowWhileIdle: true,
-            repeats: true,
-          },
-        },
-      ],
-    });
-  };
-  scheduleAfternoonNotification = async () => {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: "Afternoon Reminder",
-          body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
-          id: 2,
-          schedule: {
-            allowWhileIdle: true,
-            on: { hour: 14, minute: 0 },
-            repeats: true,
-          },
-        },
-      ],
-    });
-  };
-  scheduleEveningNotification = async () => {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: "Evening Reminder",
-          body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
-          id: 3,
-          schedule: {
-            allowWhileIdle: true,
-            on: { hour: 19, minute: 0 },
-            repeats: true,
-          },
-        },
-      ],
-    });
-  };
-}
+// LocalNotifications.createChannel({
+//   id: "1",
+//   name: "Notification",
+//   description: "General Notification",
+// });
 
 let lastUsedCounterIndex;
 let counterName;
@@ -93,18 +38,9 @@ let defaultArray: singleCounterType[];
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
   const [activePage, setActivePage] = useState("home");
-  const [morningNotification, setMorningNotification] = useState(
-    JSON.parse(localStorage.getItem("morning-notification"))
-  );
-
-  const [afternoonNotification, setAfternoonNotification] = useState(
-    JSON.parse(localStorage.getItem("afternoon-notification"))
-  );
-
-  const [eveningNotification, setEveningNotification] = useState(
-    JSON.parse(localStorage.getItem("evening-notification"))
-  );
-
+  const [morningNotification, setMorningNotification] = useState(false);
+  const [afternoonNotification, setAfternoonNotification] = useState(false);
+  const [eveningNotification, setEveningNotification] = useState(false);
   const [reviewPrompt, showReviewPrompt] = useState(false);
   const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
   const [activeCounterName, setActiveCounterName] = useState("");
@@ -135,6 +71,29 @@ function App() {
   //   }
   // }
 
+  const scheduleNotification = async ({
+    id,
+    title,
+    body,
+    hour,
+    minute,
+  }: NotificationParams) => {
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: title,
+          body: body,
+          id: id,
+          schedule: {
+            on: { hour: hour, minute: minute },
+            allowWhileIdle: true,
+            repeats: true,
+          },
+        },
+      ],
+    });
+  };
+
   useEffect(() => {
     const initialiseApp = async () => {
       const SPLASH_HIDE_DELAY = 500;
@@ -150,24 +109,37 @@ function App() {
         storedTheme = "light";
       }
 
+      // const enable = async () => {
+      //   await EdgeToEdge.enable();
+      // };
+
+      // if (Capacitor.isNativePlatform()) {
+      //   await enable();
+      // }
+
+      // const insets = await EdgeToEdge.getInsets();
+      // console.log("INSETS: ", insets);
+
       const setStatusAndNavBarBackgroundColor = async (
         backgroundColor: string,
         iconColor: Style
       ) => {
-        await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
+        // await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
         await StatusBar.setStyle({ style: iconColor });
       };
 
       if (storedTheme === "dark") {
         statusBarThemeColor = "#242424";
         if (Capacitor.isNativePlatform()) {
-          setStatusAndNavBarBackgroundColor("#242424", Style.Dark);
+          setStatusAndNavBarBackgroundColor("#D75B2A", Style.Dark);
+          // setStatusAndNavBarBackgroundColor("#242424", Style.Dark);
         }
         document.body.classList.add("dark");
       } else if (storedTheme === "light") {
         statusBarThemeColor = "#EDEDED";
         if (Capacitor.isNativePlatform()) {
-          setStatusAndNavBarBackgroundColor("#EDEDED", Style.Light);
+          // setStatusAndNavBarBackgroundColor("#EDEDED", Style.Light);
+          setStatusAndNavBarBackgroundColor("#D75B2A", Style.Light);
         }
         document.body.classList.remove("dark");
       }
@@ -251,64 +223,83 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
+  const intialiseNotification = async ({
+    storageKey,
+    id,
+    title,
+    body,
+    hour,
+    minute,
+    setState,
+  }: {
+    storageKey: string;
+    id: number;
+    title: string;
+    body: string;
+    hour: number;
+    minute: number;
+    setState: React.Dispatch<React.SetStateAction<boolean>>;
+  }) => {
     if (Capacitor.isNativePlatform()) {
-      const morningNotificationStatus = localStorage.getItem(
-        "morning-notification"
-      );
-      if (
-        morningNotificationStatus === null ||
-        morningNotificationStatus === "false"
-      ) {
-        localStorage.setItem("morning-notification", JSON.stringify(false));
-        setMorningNotification(false);
-        // LocalNotifications.cancel({ notifications: [{ id: 2 }] });
-      } else if (morningNotificationStatus === "true") {
-        localStorage.setItem("morning-notification", JSON.stringify(true));
-        setMorningNotification(true);
-        scheduleMorningNotifications();
+      const notificationStatus = localStorage.getItem(storageKey);
+      if (notificationStatus === null || notificationStatus === "false") {
+        localStorage.setItem(storageKey, JSON.stringify(false));
+        setState(false);
+      } else if (notificationStatus === "true") {
+        localStorage.setItem(storageKey, JSON.stringify(true));
+        setState(true);
+
+        await scheduleNotification({
+          id: id,
+          title: title,
+          body: body,
+          hour: hour,
+          minute: minute,
+        });
       }
     }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await intialiseNotification({
+        storageKey: "morning-notification",
+        id: 1,
+        title: "Morning Reminder",
+        body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
+        hour: 8,
+        minute: 0,
+        setState: setMorningNotification,
+      });
+    })();
   }, [morningNotification]);
 
   useEffect(() => {
-    if (Capacitor.isNativePlatform()) {
-      const afternoonNotificationStatus = localStorage.getItem(
-        "afternoon-notification"
-      );
-      if (
-        afternoonNotificationStatus === null ||
-        afternoonNotificationStatus === "false"
-      ) {
-        localStorage.setItem("afternoon-notification", JSON.stringify(false));
-        setAfternoonNotification(false);
-        // LocalNotifications.cancel({ notifications: [{ id: 3 }] });
-      } else if (afternoonNotificationStatus === "true") {
-        localStorage.setItem("afternoon-notification", JSON.stringify(true));
-        setAfternoonNotification(true);
-        scheduleAfternoonNotification();
-      }
-    }
+    (async () => {
+      await intialiseNotification({
+        storageKey: "afternoon-notification",
+        id: 2,
+        title: "Afternoon Reminder",
+        body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
+        hour: 14,
+        minute: 0,
+        setState: setAfternoonNotification,
+      });
+    })();
   }, [afternoonNotification]);
 
   useEffect(() => {
-    if (Capacitor.isNativePlatform()) {
-      const eveningNotificationStatus = localStorage.getItem(
-        "afternoon-notification"
-      );
-      if (
-        eveningNotificationStatus === null ||
-        eveningNotificationStatus === "false"
-      ) {
-        localStorage.setItem("evening-notification", JSON.stringify(false));
-        setEveningNotification(false);
-        // LocalNotifications.cancel({ notifications: [{ id: 4 }] });
-      } else if (eveningNotificationStatus === "true") {
-        localStorage.setItem("evening-notification", JSON.stringify(true));
-        setEveningNotification(true);
-        scheduleEveningNotification();
-      }
-    }
+    (async () => {
+      await intialiseNotification({
+        storageKey: "evening-notification",
+        id: 3,
+        title: "Evening Reminder",
+        body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
+        hour: 19,
+        minute: 0,
+        setState: setEveningNotification,
+      });
+    })();
   }, [eveningNotification]);
 
   useEffect(() => {

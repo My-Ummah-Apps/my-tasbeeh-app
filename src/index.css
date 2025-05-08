@@ -65,8 +65,8 @@ button:focus {
 }
 
 body {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   overflow: hidden;
   color: var(--text-color-primary);
   height: 100vh;
@@ -81,10 +81,6 @@ body {
   -ms-user-select: none;
   user-select: none;
   background-color: var(--body-bg-color);
-
-  /* padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left); */
-  /* padding-top: constant(safe-area-inset-top); */
 }
 
 .body::-webkit-scrollbar {
@@ -682,6 +678,7 @@ textarea:focus {
 .settings-page-header,
 .counters-page-header,
 .home-page-header {
+  /* padding-top: env(safe-area-inset-top); */
   background: var(--header-bg-color);
   position: relative;
   height: 7vh;

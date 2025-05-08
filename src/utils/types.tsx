@@ -8,3 +8,11 @@ export type counterObjType = {
 };
 
 export type themeType = "light" | "dark";
+
+export type NotificationParams = {
+  id: number;
+  title: string;
+  body: string;
+  hour: number;
+  minute: number;
+};

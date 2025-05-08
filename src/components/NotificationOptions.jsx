@@ -78,7 +78,7 @@ const NotificationOptions = ({
               JSON.parse(localStorage.getItem("afternoon-notification")) == true
             ) {
               setAfternoonNotification(false);
-              cancelNotification(3);
+              cancelNotification(2);
               localStorage.setItem(
                 "afternoon-notification",
                 JSON.stringify(false)
@@ -120,7 +120,7 @@ const NotificationOptions = ({
               JSON.parse(localStorage.getItem("evening-notification")) == true
             ) {
               setEveningNotification(false);
-              cancelNotification(4);
+              cancelNotification(3);
               localStorage.setItem(
                 "evening-notification",
                 JSON.stringify(false)
