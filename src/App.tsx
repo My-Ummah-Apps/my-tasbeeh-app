@@ -25,8 +25,6 @@ import {
   NotificationParams,
   themeType,
 } from "./utils/types";
-// import { Purchases } from "@awesome-cordova-plugins/purchases";
-// import { Purchases } from "cordova-plugin-purchase";
 
 // LocalNotifications.createChannel({
 //   id: "1",
@@ -57,22 +55,6 @@ function App() {
   );
   const [dailyCounterReset, setDailyCounterReset] = useState(false);
   const [lastLaunchDate, setLastLaunchDate] = useState(null);
-  // const [iapProducts, setIapProducts] = useState(null);
-  // document.addEventListener("deviceready", onDeviceReady, false);
-
-  // function onDeviceReady() {
-  //   Purchases.setDebugLogsEnabled(true);
-
-  //   if (Capacitor.getPlatform() === "ios") {
-  //     Purchases.configureWith({
-  //       apiKey: process.env.REACT_APP_APPLE_APIKEY,
-  //     });
-  //   } else if (Capacitor.getPlatform() === "android") {
-  //     Purchases.configureWith({
-  //       apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
-  //     });
-  //   }
-  // }
 
   useEffect(() => {
     const initialiseApp = async () => {
@@ -159,32 +141,6 @@ function App() {
   if (Capacitor.getPlatform() === "ios") {
     Keyboard.setAccessoryBarVisible({ isVisible: true });
   }
-
-  // const productsArray = [
-  //   process.env.REACT_APP_ST,
-  //   process.env.REACT_APP_MT,
-  //   process.env.REACT_APP_LT,
-  //   process.env.REACT_APP_XLT,
-  // ];
-
-  // useEffect(() => {
-  //   if (Capacitor.isNativePlatform()) {
-  //     (async () => {
-  //       const fetchedProducts = await Purchases.getProducts(
-  //         productsArray,
-  //         "inapp"
-  //       );
-  //       fetchedProducts.sort(function (a, b) {
-  //         return a.price - b.price;
-  //       });
-  //       setIapProducts(fetchedProducts);
-  //     })();
-
-  //     return () => {
-  //       // Not required right now, but if needed this will get called when the component unmounts
-  //     };
-  //   }
-  // }, []);
 
   useEffect(() => {
     let storedLaunchCount = localStorage.getItem("launch-count");
