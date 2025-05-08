@@ -19,7 +19,12 @@ import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
 import SheetCloseBtn from "./components/SheetCloseBtn";
-import { counterObjType, NotificationParams, themeType } from "./utils/types";
+import {
+  counterObjType,
+  InitialiseNotificationParams,
+  NotificationParams,
+  themeType,
+} from "./utils/types";
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { Purchases } from "cordova-plugin-purchase";
 
@@ -70,29 +75,6 @@ function App() {
   //     });
   //   }
   // }
-
-  const scheduleNotification = async ({
-    id,
-    title,
-    body,
-    hour,
-    minute,
-  }: NotificationParams) => {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: title,
-          body: body,
-          id: id,
-          schedule: {
-            on: { hour: hour, minute: minute },
-            allowWhileIdle: true,
-            repeats: true,
-          },
-        },
-      ],
-    });
-  };
 
   useEffect(() => {
     const initialiseApp = async () => {
@@ -223,6 +205,29 @@ function App() {
     }
   }, []);
 
+  const scheduleNotification = async ({
+    id,
+    title,
+    body,
+    hour,
+    minute,
+  }: NotificationParams) => {
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: title,
+          body: body,
+          id: id,
+          schedule: {
+            on: { hour: hour, minute: minute },
+            allowWhileIdle: true,
+            repeats: true,
+          },
+        },
+      ],
+    });
+  };
+
   const intialiseNotification = async ({
     storageKey,
     id,
@@ -231,15 +236,7 @@ function App() {
     hour,
     minute,
     setState,
-  }: {
-    storageKey: string;
-    id: number;
-    title: string;
-    body: string;
-    hour: number;
-    minute: number;
-    setState: React.Dispatch<React.SetStateAction<boolean>>;
-  }) => {
+  }: InitialiseNotificationParams) => {
     if (Capacitor.isNativePlatform()) {
       const notificationStatus = localStorage.getItem(storageKey);
       if (notificationStatus === null || notificationStatus === "false") {

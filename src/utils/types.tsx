@@ -16,3 +16,8 @@ export type NotificationParams = {
   hour: number;
   minute: number;
 };
+
+export type InitialiseNotificationParams = NotificationParams & {
+  storageKey: string;
+  setState: React.Dispatch<React.SetStateAction<boolean>>;
+};
