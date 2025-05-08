@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
-// import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
+import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
@@ -11,7 +11,11 @@ import { Dialog } from "@capacitor/dialog";
 import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
 import { direction } from "direction";
-import { DEFAULT_COUNTERS, TWEEN_CONFIG } from "./utils/constants";
+import {
+  DEFAULT_COUNTERS,
+  setStatusAndNavBarBackgroundColor,
+  TWEEN_CONFIG,
+} from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
 import NavBar from "./components/NavBar";
 import HomePage from "./pages/HomePage";
@@ -36,7 +40,7 @@ let lastUsedCounterIndex;
 let counterName;
 let currentCount;
 let counterId;
-let defaultArray: singleCounterType[];
+let defaultArray: counterObjType[];
 
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
@@ -54,12 +58,12 @@ function App() {
     JSON.parse(localStorage.getItem("haptics") || "null")
   );
   const [dailyCounterReset, setDailyCounterReset] = useState(false);
-  const [lastLaunchDate, setLastLaunchDate] = useState(null);
+  const [lastLaunchDate, setLastLaunchDate] = useState("");
 
   useEffect(() => {
     const initialiseApp = async () => {
       const SPLASH_HIDE_DELAY = 500;
-      const ANDROID_STYLE_DELAY = 400;
+      const ANDROID_STYLE_DELAY = 1000;
       let statusBarThemeColor: string;
       const themeString = localStorage.getItem("theme");
       let storedTheme: themeType | null = themeString
@@ -71,46 +75,33 @@ function App() {
         storedTheme = "light";
       }
 
-      // const enable = async () => {
-      //   await EdgeToEdge.enable();
+      // const setStatusAndNavBarBackgroundColor = async (
+      //   backgroundColor: string,
+      //   textColor: Style
+      // ) => {
+      //   await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
+      //   await StatusBar.setStyle({ style: textColor });
       // };
-
-      // if (Capacitor.isNativePlatform()) {
-      //   await enable();
-      // }
-
-      // const insets = await EdgeToEdge.getInsets();
-      // console.log("INSETS: ", insets);
-
-      const setStatusAndNavBarBackgroundColor = async (
-        backgroundColor: string,
-        iconColor: Style
-      ) => {
-        // await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
-        await StatusBar.setStyle({ style: iconColor });
-      };
 
       if (storedTheme === "dark") {
         statusBarThemeColor = "#242424";
         if (Capacitor.isNativePlatform()) {
-          setStatusAndNavBarBackgroundColor("#D75B2A", Style.Dark);
-          // setStatusAndNavBarBackgroundColor("#242424", Style.Dark);
+          setStatusAndNavBarBackgroundColor(statusBarThemeColor, Style.Dark);
         }
         document.body.classList.add("dark");
       } else if (storedTheme === "light") {
         statusBarThemeColor = "#EDEDED";
         if (Capacitor.isNativePlatform()) {
-          // setStatusAndNavBarBackgroundColor("#EDEDED", Style.Light);
-          setStatusAndNavBarBackgroundColor("#D75B2A", Style.Light);
+          setStatusAndNavBarBackgroundColor(statusBarThemeColor, Style.Light);
         }
         document.body.classList.remove("dark");
       }
 
       if (Capacitor.getPlatform() === "android") {
         setTimeout(() => {
-          if (statusBarThemeColor == "#EDEDED") {
+          if (statusBarThemeColor === "#EDEDED") {
             StatusBar.setStyle({ style: Style.Light });
-          } else if (statusBarThemeColor == "#242424") {
+          } else if (statusBarThemeColor === "#242424") {
             StatusBar.setStyle({ style: Style.Dark });
           }
         }, ANDROID_STYLE_DELAY);
@@ -269,9 +260,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const storedCounters = localStorage.getItem("localSavedCountersArray");
+    const storedCounters =
+      localStorage.getItem("localSavedCountersArray") || "[]";
     if (JSON.parse(storedCounters) && JSON.parse(storedCounters).length > 0) {
-      // localStorage.setItem("lastLaunchDate", "19.09.2024");
       const previousLaunchDate = localStorage.getItem("lastLaunchDate");
       const todaysDate = new Date().toLocaleDateString();
       setLastLaunchDate(todaysDate);
@@ -289,7 +280,7 @@ function App() {
       defaultArray = DEFAULT_COUNTERS;
 
       saveArrayLocally(defaultArray);
-      localStorage.setItem("appVersion", LATEST_APP_VERSION);
+      localStorage.setItem("appVersion", LATEST_AP_VERSION);
     }
 
     defaultArray.findIndex((object) => {

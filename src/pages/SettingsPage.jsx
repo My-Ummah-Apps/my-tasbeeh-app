@@ -24,7 +24,12 @@ import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { Toast } from "@capacitor/toast";
-import { showConfirmDialog, showToast, TWEEN_CONFIG } from "../utils/constants";
+import {
+  setStatusAndNavBarBackgroundColor,
+  showConfirmDialog,
+  showToast,
+  TWEEN_CONFIG,
+} from "../utils/constants";
 
 // import ThemeOptions from "../components/ThemeOptions";
 
@@ -47,7 +52,6 @@ const SettingsPage = ({
 
   useEffect(() => {
     setTheme(JSON.parse(localStorage.getItem("theme")));
-    console.log("THEME SET, THEME IS: ", theme);
   }, [theme]);
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
@@ -378,13 +382,10 @@ const SettingsPage = ({
               name={undefined}
               offColor="white"
               onChange={(e) => {
-                console.log("THEME IS: ", theme);
-
                 if (theme == "light") {
                   setTheme("dark");
                   if (Capacitor.isNativePlatform()) {
-                    StatusBar.setBackgroundColor({ color: "#242424" });
-                    StatusBar.setStyle({ style: Style.Dark });
+                    setStatusAndNavBarBackgroundColor("#242424", Style.Dark);
                   }
 
                   localStorage.setItem("theme", JSON.stringify("dark"));
@@ -392,8 +393,7 @@ const SettingsPage = ({
                 } else if (theme == "dark") {
                   setTheme("light");
                   if (Capacitor.isNativePlatform()) {
-                    StatusBar.setBackgroundColor({ color: "#EDEDED" });
-                    StatusBar.setStyle({ style: Style.Light });
+                    setStatusAndNavBarBackgroundColor("#EDEDED", Style.Light);
                   }
 
                   localStorage.setItem("theme", JSON.stringify("light"));
