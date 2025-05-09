@@ -2,16 +2,13 @@ import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import CounterButton from "../components/CounterButton";
 
 const HomePage = ({
+  setActiveCounter,
+  activeCounter,
   setHaptics,
   haptics,
   setLanguageDirection,
   languageDirection,
-  activeCounterName,
-  activeCounterTarget,
-  activeCounterNumber,
-  setActiveCounterNumber,
-  localSavedCountersArray,
-  setActiveBackgroundColor,
+  countersArr,
   activeBackgroundColor,
   resetSingleCounter,
 }) => {
@@ -21,22 +18,19 @@ const HomePage = ({
         <p>Home</p>
       </div>
       <CounterNameAndNumber
+        activeCounter={activeCounter}
         resetSingleCounter={resetSingleCounter}
         setLanguageDirection={setLanguageDirection}
         languageDirection={languageDirection}
-        localSavedCountersArray={localSavedCountersArray}
-        setActiveBackgroundColor={setActiveBackgroundColor}
-        activeBackgroundColor={activeBackgroundColor}
+        countersArr={countersArr}
       />
       <CounterButton
         activeBackgroundColor={activeBackgroundColor}
+        setActiveCounter={setActiveCounter}
+        activeCounter={activeCounter}
         setHaptics={setHaptics}
         haptics={haptics}
-        localSavedCountersArray={localSavedCountersArray}
-        activeCounterName={activeCounterName}
-        setActiveCounterNumber={setActiveCounterNumber}
-        activeCounterNumber={activeCounterNumber}
-        activeCounterTarget={activeCounterTarget}
+        countersArr={countersArr}
       />
     </div>
   );

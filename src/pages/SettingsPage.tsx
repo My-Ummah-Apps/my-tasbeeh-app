@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import React from "react";
 import { Capacitor } from "@capacitor/core";
 import { Dialog } from "@capacitor/dialog";
 import {
@@ -35,6 +34,7 @@ import {
 
 const SettingsPage = ({
   // iapProducts,
+
   resetAllCounters,
   morningNotification,
   setMorningNotification,

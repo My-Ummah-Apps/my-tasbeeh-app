@@ -13,7 +13,6 @@ import {
   DEFAULT_COUNTERS,
   setStatusAndNavBarBackgroundColor,
   showToast,
-  storeCounters,
   TWEEN_CONFIG,
 } from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
@@ -24,6 +23,7 @@ import SettingsPage from "./pages/SettingsPage";
 import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
 import SheetCloseBtn from "./components/SheetCloseBtn";
 import {
+  ActiveCounter,
   counterObjType,
   InitialiseNotificationParams,
   NotificationParams,
@@ -36,30 +36,31 @@ import {
 //   description: "General Notification",
 // });
 
-let lastUsedCounterIndex;
-let counterName;
-let currentCount;
-let counterId;
-
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
   const [activePage, setActivePage] = useState("home");
+  const [activeCounter, setActiveCounter] = useState<ActiveCounter>({
+    counterName: "",
+    count: 0,
+    target: 0,
+    color: "",
+  });
   const [morningNotification, setMorningNotification] = useState(false);
   const [afternoonNotification, setAfternoonNotification] = useState(false);
   const [eveningNotification, setEveningNotification] = useState(false);
   const [reviewPrompt, showReviewPrompt] = useState(false);
-  const [localSavedCountersArray, setLocalSavedCountersArray] = useState<
-    counterObjType[]
-  >([]);
-  const [activeCounterName, setActiveCounterName] = useState("");
+  const [countersArr, setCountersArr] = useState<counterObjType[]>([]);
   const [languageDirection, setLanguageDirection] = useState("");
-  const [activeCounterNumber, setActiveCounterNumber] = useState(0);
-  const [activeBackgroundColor, setActiveBackgroundColor] = useState("");
   const [haptics, setHaptics] = useState<boolean | null>(
     JSON.parse(localStorage.getItem("haptics") || "null")
   );
   const [dailyCounterReset, setDailyCounterReset] = useState(false);
   const [lastLaunchDate, setLastLaunchDate] = useState("");
+
+  const setAndStoreCounters = (arr: counterObjType[]) => {
+    setCountersArr(arr);
+    localStorage.setItem("localSavedCountersArray", JSON.stringify(arr));
+  };
 
   useEffect(() => {
     const initialiseApp = async () => {
@@ -274,25 +275,37 @@ function App() {
       }
     } else if (!storedCounters || storedCounters.length === 0) {
       counters = DEFAULT_COUNTERS;
-      storeCounters(counters);
+      setAndStoreCounters(counters);
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
 
-    counters.findIndex((object) => {
-      if (object.isActive == true) {
-        lastUsedCounterIndex = counters.indexOf(object);
+    const storedActiveCounter = counters.find(
+      (counter) => counter.isActive === true
+    );
 
-        setActiveCounterName(counters[lastUsedCounterIndex].counter);
-        setActiveCounterNumber(counters[lastUsedCounterIndex].count);
-        setActiveBackgroundColor(counters[lastUsedCounterIndex].color);
-      } else {
-        lastUsedCounterIndex = 0;
+    if (storedActiveCounter) {
+      invokeSetActiveCounter(storedActiveCounter.id);
+    } else {
+      invokeSetActiveCounter(0);
+    }
+
+    setAndStoreCounters(counters);
+    console.log("storedActiveCounter: ", storedActiveCounter);
+  }, []);
+
+  useEffect(() => {
+    console.log("activeCounter: ", activeCounter);
+
+    countersArr.map((counterItem: counterObjType) => {
+      if (counterItem.isActive) {
+        counterItem.count = activeCounter.count;
       }
     });
+    console.log("CountersArr: ", countersArr);
 
-    setLocalSavedCountersArray(counters);
-    storeCounters(counters);
-  }, []);
+    setAndStoreCounters(countersArr);
+  }, [activeCounter]);
+
   const addItemToSavedCountersArray = () => {};
 
   const addCounter = (counterToAdd, target) => {
@@ -303,13 +316,13 @@ function App() {
       target,
       id: uuidv4(),
     };
-    const newArray = [...localSavedCountersArray, newCounter];
+    const newArray = [...countersArr, newCounter];
     if (newArray.length == 1) {
       newCounter.isActive = true;
-      setActiveCounterNumber(0);
+      // setActiveCounterNumber(0);
+      setActiveCounter((prev) => ({ ...prev, count: 0 }));
     }
-    setLocalSavedCountersArray(newArray);
-    storeCounters(newArray);
+    setAndStoreCounters(newArray);
   };
 
   const resetAllCounters = () => {
@@ -317,9 +330,9 @@ function App() {
       localStorage.getItem("localSavedCountersArray")
     ).map((counter) => ({ ...counter, count: 0 }));
 
-    setLocalSavedCountersArray(resettedCounters);
-    storeCounters(resettedCounters);
-    setActiveCounterNumber(0);
+    setAndStoreCounters(resettedCounters);
+    // setActiveCounterNumber(0);
+    setActiveCounter((prev) => ({ ...prev, count: 0 }));
   };
 
   const modifyTheCountersArray = (
@@ -328,9 +341,10 @@ function App() {
     modifiedCount: number,
     modifiedTarget: number
   ) => {
-    localSavedCountersArray.map((counterItem) => {
+    countersArr.map((counterItem) => {
       if (counterItem.id == id && counterItem.isActive) {
-        setActiveCounterNumber(Number(modifiedCount));
+        // setActiveCounterNumber(Number(modifiedCount));
+        setActiveCounter((prev) => ({ ...prev, count: Number(modifiedCount) }));
       }
       if (counterItem.id == id) {
         counterItem.counter = modifiedCounterName;
@@ -339,43 +353,51 @@ function App() {
       }
     });
 
-    setLocalSavedCountersArray(localSavedCountersArray);
-    storeCounters(localSavedCountersArray);
+    setAndStoreCounters(countersArr);
   };
 
   const invokeSetActiveCounter = (id) => {
-    localSavedCountersArray.map((counterItem) => {
+    countersArr.map((counterItem) => {
       counterItem.isActive = false;
 
-      if (counterItem.id == id) {
+      if (counterItem.id === id) {
         counterItem.isActive = true;
-        counterName = counterItem.counter;
-        currentCount = counterItem.count;
-        counterId = counterItem.id;
-        setActiveBackgroundColor(counterItem.color);
+        setActiveCounter({
+          counterName: counterItem.counter,
+          count: counterItem.count,
+          target: counterItem.target,
+          color: counterItem.color,
+        });
       }
-      storeCounters(localSavedCountersArray);
-      setActiveCounterName(counterName);
+      setAndStoreCounters(countersArr);
+
+      // setActiveCounterName(counterName);
+      setActiveCounter((prev) => ({
+        ...prev,
+        counterName: counterItem.counter,
+      }));
       // ! TODO: The below if else statement has been duplicated in the CounterNameAndNumber component for a quick workaround due to text scrolling in the wrong direction if this function wasn't triggered (ie, the user launched the app which would land them on the homescreen), this duplication needs to be resolved in the future
-      if (direction(counterName) === "ltr") {
+      if (direction(activeCounter.counterName) === "ltr") {
         setLanguageDirection("ltr");
-      } else if (direction(counterName) === "rtl") {
+      } else if (direction(activeCounter.counterName) === "rtl") {
         setLanguageDirection("rtl");
       }
-      setActiveCounterNumber(currentCount);
+      // setActiveCounterNumber(currentCount);
+      // setActiveCounter((prev) => ({ ...prev, count: currentCount }));
     });
   };
 
   const resetSingleCounter = (id) => {
-    localSavedCountersArray.map((counterItem1) => {
+    countersArr.map((counterItem1) => {
       if (counterItem1.id == id) {
         counterItem1.count = 0;
-        setActiveCounterNumber(0);
-        setLocalSavedCountersArray(localSavedCountersArray);
+        // setActiveCounterNumber(0);
+        setActiveCounter((prev) => ({ ...prev, count: 0 }));
+        // setLocalSavedCountersArray(localSavedCountersArray);
+        setAndStoreCounters(countersArr);
       }
     });
-
-    storeCounters(localSavedCountersArray);
+    setAndStoreCounters(countersArr);
   };
 
   const showOneCounterNeededAlert = async () => {
@@ -390,7 +412,7 @@ function App() {
       await showToast("Tasbeeh deleted", "top", "short");
     };
 
-    const filteredArray = localSavedCountersArray.filter(
+    const filteredArray = countersArr.filter(
       (counterItem) => counterItem.id !== id
     );
     if (filteredArray.length == 0) {
@@ -399,12 +421,11 @@ function App() {
     }
     if (filteredArray.length > 0) {
       filteredArray[0].isActive = true;
-      setActiveCounterNumber(filteredArray[0].count);
+      setActiveCounter((prev) => ({ ...prev, count: filteredArray[0].count }));
       showCounterDeleteToast();
     }
 
-    setLocalSavedCountersArray(filteredArray);
-    storeCounters(filteredArray);
+    setAndStoreCounters(filteredArray);
   };
 
   return (
@@ -417,6 +438,7 @@ function App() {
               element={
                 <SettingsPage
                   // iapProducts={iapProducts}
+                  setActiveCounter={setActiveCounter}
                   resetAllCounters={resetAllCounters}
                   setMorningNotification={setMorningNotification}
                   morningNotification={morningNotification}
@@ -428,7 +450,6 @@ function App() {
                   haptics={haptics}
                   setDailyCounterReset={setDailyCounterReset}
                   dailyCounterReset={dailyCounterReset}
-                  activeBackgroundColor={activeBackgroundColor}
                 />
               }
             />
@@ -436,21 +457,15 @@ function App() {
               index
               element={
                 <HomePage
+                  setActiveCounter={setActiveCounter}
+                  activeCounter={activeCounter}
                   showReviewPrompt={showReviewPrompt}
                   reviewPrompt={reviewPrompt}
                   setHaptics={setHaptics}
                   haptics={haptics}
-                  setActiveCounterNumber={setActiveCounterNumber}
-                  currentCount={currentCount}
-                  counterName={counterName}
                   setLanguageDirection={setLanguageDirection}
                   languageDirection={languageDirection}
-                  localSavedCountersArray={localSavedCountersArray}
-                  counterId={counterId}
-                  activeCounterName={activeCounterName}
-                  activeCounterNumber={activeCounterNumber}
-                  setActiveBackgroundColor={setActiveBackgroundColor}
-                  activeBackgroundColor={activeBackgroundColor}
+                  countersArr={countersArr}
                   resetSingleCounter={resetSingleCounter}
                 />
               }
@@ -460,13 +475,12 @@ function App() {
               element={
                 <CountersPage
                   setActivePage={setActivePage}
-                  activeBackgroundColor={activeBackgroundColor}
-                  localSavedCountersArray={localSavedCountersArray}
+                  countersArr={countersArr}
                   invokeSetActiveCounter={invokeSetActiveCounter}
                   resetSingleCounter={resetSingleCounter}
                   addItemToSavedCountersArray={addItemToSavedCountersArray}
                   modifyTheCountersArray={modifyTheCountersArray}
-                  setLocalSavedCountersArray={setLocalSavedCountersArray}
+                  setAndStoreCounters={setAndStoreCounters}
                   addCounter={addCounter}
                   resetAllCounters={resetAllCounters}
                   deleteSingleCounter={deleteSingleCounter}
@@ -474,11 +488,7 @@ function App() {
               }
             />
           </Routes>
-          <NavBar
-            activeBackgroundColor={activeBackgroundColor}
-            setActivePage={setActivePage}
-            activePage={activePage}
-          />
+          <NavBar setActivePage={setActivePage} activePage={activePage} />
         </section>
       </BrowserRouter>
       <Sheet

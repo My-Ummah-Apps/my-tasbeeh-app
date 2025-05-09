@@ -11,14 +11,12 @@ import Counter from "../components/Counter";
 import { materialColors, TWEEN_CONFIG } from "../utils/constants";
 
 function CountersPage({
-  activeBackgroundColor,
+  setActiveCounter,
   resetSingleCounter,
   invokeSetActiveCounter,
   modifyTheCountersArray,
-  setLocalSavedCountersArray,
   localSavedCountersArray,
   addCounter,
-  resetAllCounters,
   deleteSingleCounter,
   setActivePage,
 }) {
@@ -84,7 +82,6 @@ function CountersPage({
             {/* <Sheet.Scroller> */}{" "}
             <FormFilled
               setIsFormFilledSheetOpen={setIsFormFilledSheetOpen}
-              activeBackgroundColor={activeBackgroundColor}
               modifyTheCountersArray={modifyTheCountersArray}
               currentCounterName={currentCounterName}
               currentCount={currentCount}
@@ -115,7 +112,6 @@ function CountersPage({
           <Sheet.Content>
             {" "}
             <FormBlank
-              activeBackgroundColor={activeBackgroundColor}
               nextColor={nextColor}
               setIsFormBlankSheetOpen={setIsFormBlankSheetOpen}
               setLocalSavedCountersArray={setLocalSavedCountersArray}
@@ -140,6 +136,7 @@ function CountersPage({
           return (
             <Counter
               setActivePage={setActivePage}
+              setActiveCounter={setActiveCounter}
               key={counterItem.id}
               setIsFormFilledSheetOpen={setIsFormFilledSheetOpen}
               nextColor={nextColor}

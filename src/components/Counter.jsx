@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { direction } from "direction";
 
 const Counter = ({
+  setActiveCounter,
   setIsFormFilledSheetOpen,
   nextColor,
   invokeSetActiveCounter,
@@ -57,10 +58,17 @@ const Counter = ({
           className="edit-btn-wrap"
           onClick={(e) => {
             e.stopPropagation();
-            setCurrentCounterName(counterItem.counter);
-            setcurrentCount(counterItem.count);
-            setCounterTarget(counterItem.target);
-            setcurrentCounterId(counterItem.id);
+            // setCurrentCounterName(counterItem.counter);
+            // setcurrentCount(counterItem.count);
+            // setCounterTarget(counterItem.target);
+            // setcurrentCounterId(counterItem.id);
+            // setActiveCounter({
+            //   counterName: counterItem.counter,
+            //   count: counterItem.count,
+            //   target: counterItem.target,
+            //   color: counterItem.id,
+            // });
+            invokeSetActiveCounter(counterItem.id);
             setIsFormFilledSheetOpen(true);
           }}
         >

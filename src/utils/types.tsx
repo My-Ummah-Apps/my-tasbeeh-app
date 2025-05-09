@@ -21,3 +21,10 @@ export type InitialiseNotificationParams = NotificationParams & {
   storageKey: string;
   setState: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+export type ActiveCounter = {
+  counterName: string;
+  count: number;
+  target: number;
+  color: string;
+};

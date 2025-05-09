@@ -3,6 +3,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { Toast, ToastShowOptions } from "@capacitor/toast";
 import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { v4 as uuidv4 } from "uuid";
+import { counterObjType } from "./types";
 
 export const materialColors = [
   "#EF5350",
@@ -123,8 +124,4 @@ export const setStatusAndNavBarBackgroundColor = async (
 ) => {
   await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
   await StatusBar.setStyle({ style: textColor });
-};
-
-export const storeCounters = (arrayToSave) => {
-  localStorage.setItem("localSavedCountersArray", JSON.stringify(arrayToSave));
 };

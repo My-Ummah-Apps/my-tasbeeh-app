@@ -5,20 +5,18 @@ import { VscDebugRestart } from "react-icons/vsc";
 import { MdOutlineRestartAlt } from "react-icons/md";
 
 interface CounterNameAndNumberProps {
-  localSavedCountersArray: any;
-  setActiveBackgroundColor: any;
-  activeBackgroundColor: any;
+  activeCounter: ActiveCounter;
+  countersArr: any;
   resetSingleCounter: any;
   setLanguageDirection: any;
   languageDirection: any;
 }
 
 function CounterNameAndNumber({
-  localSavedCountersArray,
-  setActiveBackgroundColor,
+  activeCounter,
+  countersArr,
   setLanguageDirection,
   languageDirection,
-  activeBackgroundColor,
   resetSingleCounter,
 }: CounterNameAndNumberProps) {
   // const [showAnimation, setShowAnimation] = useState(
@@ -39,10 +37,8 @@ function CounterNameAndNumber({
   let currentCounterTarget;
   let currentCounterId: any;
   let textOverflowProperty;
-  localSavedCountersArray.map((counterItem: any) => {
+  countersArr.map((counterItem: any) => {
     if (counterItem.isActive == true) {
-      // setActiveBackgroundColor(counterItem.color);
-
       currentName = counterItem.counter;
       currentCounterTarget = counterItem.target;
 
@@ -99,7 +95,7 @@ function CounterNameAndNumber({
           `}
         ref={counterTextContainerRef}
         style={{
-          backgroundColor: `${activeBackgroundColor}BF`,
+          backgroundColor: `${activeCounter.color}BF`,
           // boxShadow: `0px 5px 20px ${activeBackgroundColor}`,
           // boxShadow: `0px 7px 10px 0px ${activeBackgroundColor}`,
         }}
@@ -177,7 +173,7 @@ function CounterNameAndNumber({
 
         <div
           style={{
-            backgroundColor: activeBackgroundColor,
+            backgroundColor: activeCounter.color,
 
             width:
               currentCounterTarget > 0
