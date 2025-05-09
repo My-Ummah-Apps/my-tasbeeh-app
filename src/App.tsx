@@ -255,26 +255,25 @@ function App() {
   useEffect(() => {
     let counters: counterObjType[] = [];
 
-    const storedCounters =
-      localStorage.getItem("localSavedCountersArray") || "[]";
+    const storedCounters = JSON.parse(
+      localStorage.getItem("localSavedCountersArray") || "[]"
+    );
 
-    if (JSON.parse(storedCounters) && JSON.parse(storedCounters).length > 0) {
+    if (storedCounters && storedCounters.length > 0) {
       const previousLaunchDate = localStorage.getItem("lastLaunchDate");
       const todaysDate = new Date().toLocaleDateString();
       setLastLaunchDate(todaysDate);
       localStorage.setItem("lastLaunchDate", todaysDate);
 
       if (previousLaunchDate !== todaysDate && dailyCounterReset == true) {
-        counters = JSON.parse(storedCounters).map(
-          (counterItem: counterObjType) => ({
-            ...counterItem,
-            count: 0,
-          })
-        );
+        counters = storedCounters.map((counterItem: counterObjType) => ({
+          ...counterItem,
+          count: 0,
+        }));
       } else {
-        counters = JSON.parse(storedCounters);
+        counters = storedCounters;
       }
-    } else if (!storedCounters || JSON.parse(storedCounters).length == 0) {
+    } else if (!storedCounters || storedCounters.length == 0) {
       counters = DEFAULT_COUNTERS;
       storeCounters(counters);
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
