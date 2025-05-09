@@ -254,7 +254,6 @@ function App() {
 
   useEffect(() => {
     let counters: counterObjType[] = [];
-
     const storedCounters = JSON.parse(
       localStorage.getItem("localSavedCountersArray") || "[]"
     );
@@ -265,7 +264,7 @@ function App() {
       setLastLaunchDate(todaysDate);
       localStorage.setItem("lastLaunchDate", todaysDate);
 
-      if (previousLaunchDate !== todaysDate && dailyCounterReset == true) {
+      if (previousLaunchDate !== todaysDate && dailyCounterReset === true) {
         counters = storedCounters.map((counterItem: counterObjType) => ({
           ...counterItem,
           count: 0,
@@ -273,7 +272,7 @@ function App() {
       } else {
         counters = storedCounters;
       }
-    } else if (!storedCounters || storedCounters.length == 0) {
+    } else if (!storedCounters || storedCounters.length === 0) {
       counters = DEFAULT_COUNTERS;
       storeCounters(counters);
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
@@ -324,10 +323,10 @@ function App() {
   };
 
   const modifyTheCountersArray = (
-    id,
-    modifiedCounterName,
-    modifiedCount,
-    modifiedTarget
+    id: string,
+    modifiedCounterName: string,
+    modifiedCount: number,
+    modifiedTarget: number
   ) => {
     localSavedCountersArray.map((counterItem) => {
       if (counterItem.id == id && counterItem.isActive) {
@@ -441,7 +440,6 @@ function App() {
                   reviewPrompt={reviewPrompt}
                   setHaptics={setHaptics}
                   haptics={haptics}
-                  setActiveCounterName={setActiveCounterName}
                   setActiveCounterNumber={setActiveCounterNumber}
                   currentCount={currentCount}
                   counterName={counterName}
@@ -466,8 +464,6 @@ function App() {
                   localSavedCountersArray={localSavedCountersArray}
                   invokeSetActiveCounter={invokeSetActiveCounter}
                   resetSingleCounter={resetSingleCounter}
-                  activeCounterName={activeCounterName}
-                  activeCounterNumber={activeCounterNumber}
                   addItemToSavedCountersArray={addItemToSavedCountersArray}
                   modifyTheCountersArray={modifyTheCountersArray}
                   setLocalSavedCountersArray={setLocalSavedCountersArray}

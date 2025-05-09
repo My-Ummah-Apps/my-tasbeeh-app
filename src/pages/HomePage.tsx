@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
 import CounterNameAndNumber from "../components/CounterNameAndNumber";
 import CounterButton from "../components/CounterButton";
-import { Capacitor } from "@capacitor/core";
 
 const HomePage = ({
   setHaptics,
@@ -11,7 +9,6 @@ const HomePage = ({
   activeCounterName,
   activeCounterTarget,
   activeCounterNumber,
-  setActiveCounterName,
   setActiveCounterNumber,
   localSavedCountersArray,
   setActiveBackgroundColor,
@@ -25,13 +22,8 @@ const HomePage = ({
       </div>
       <CounterNameAndNumber
         resetSingleCounter={resetSingleCounter}
-        setActiveCounterName={setActiveCounterName}
         setLanguageDirection={setLanguageDirection}
         languageDirection={languageDirection}
-        setActiveCounterNumber={setActiveCounterNumber}
-        activeCounterName={activeCounterName}
-        activeCounterNumber={activeCounterNumber}
-        activeCounterTarget={activeCounterTarget}
         localSavedCountersArray={localSavedCountersArray}
         setActiveBackgroundColor={setActiveBackgroundColor}
         activeBackgroundColor={activeBackgroundColor}

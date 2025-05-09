@@ -1,14 +1,16 @@
 // @ts-nocheck
-import { useRef, useEffect, useState } from 'react';
-import { direction } from 'direction';
-import { VscDebugRestart } from 'react-icons/vsc';
-import { MdOutlineRestartAlt } from 'react-icons/md';
+import { useRef, useEffect, useState } from "react";
+import { direction } from "direction";
+import { VscDebugRestart } from "react-icons/vsc";
+import { MdOutlineRestartAlt } from "react-icons/md";
 
 interface CounterNameAndNumberProps {
   localSavedCountersArray: any;
   setActiveBackgroundColor: any;
   activeBackgroundColor: any;
   resetSingleCounter: any;
+  setLanguageDirection: any;
+  languageDirection: any;
 }
 
 function CounterNameAndNumber({
@@ -48,8 +50,8 @@ function CounterNameAndNumber({
       currentCounterId = counterItem.id;
 
       currentName.length > 50
-        ? (textOverflowProperty = 'ellipsis')
-        : (textOverflowProperty = 'clip');
+        ? (textOverflowProperty = "ellipsis")
+        : (textOverflowProperty = "clip");
     }
   });
 
@@ -60,18 +62,18 @@ function CounterNameAndNumber({
   const [scroll, setScroll] = useState();
   // const [languageDirection, setLanguageDirection] = useState("");
 
-  const scrollingStyle = { overflow: 'hidden' };
+  const scrollingStyle = { overflow: "hidden" };
   // const [overflow, setOverflow] = useState({ overflow: "hidden" });
 
   useEffect(() => {
     const counterTextContainerWidth =
       counterTextContainerRef.current.clientWidth;
 
-    if (languageDirection !== 'ltr' && languageDirection !== 'rtl') {
-      if (direction(textRef.current.innerText) === 'ltr') {
-        setLanguageDirection('ltr');
-      } else if (direction(textRef.current.innerText) === 'rtl') {
-        setLanguageDirection('rtl');
+    if (languageDirection !== "ltr" && languageDirection !== "rtl") {
+      if (direction(textRef.current.innerText) === "ltr") {
+        setLanguageDirection("ltr");
+      } else if (direction(textRef.current.innerText) === "rtl") {
+        setLanguageDirection("rtl");
       }
     }
 
@@ -109,28 +111,28 @@ function CounterNameAndNumber({
           >
             {currentNumber <= currentCounterTarget
               ? `${Math.floor((currentNumber / currentCounterTarget) * 100)}%`
-              : '100%'}
+              : "100%"}
           </div>
 
           <div
             data-testid="active-counter-name"
             className="single-counter-counter-name"
             style={{
-              textAlign: languageDirection === 'ltr' ? 'left' : 'right',
-              direction: languageDirection === 'ltr' ? 'ltr' : 'rtl',
+              textAlign: languageDirection === "ltr" ? "left" : "right",
+              direction: languageDirection === "ltr" ? "ltr" : "rtl",
             }}
             ref={textRef}
           >
-            <div className={scroll ? 'scroll' : ''}>
+            <div className={scroll ? "scroll" : ""}>
               {/* <div ref={mScrollRef} className={scroll ? "m-scroll" : ""}> */}
               <div
                 ref={mScrollRef}
                 className={`single-counter-text-wrap ${
                   scroll
-                    ? languageDirection === 'ltr'
-                      ? 'scroll-ltr'
-                      : 'scroll-rtl'
-                    : ''
+                    ? languageDirection === "ltr"
+                      ? "scroll-ltr"
+                      : "scroll-rtl"
+                    : ""
                 }`}
               >
                 <span
@@ -138,21 +140,21 @@ function CounterNameAndNumber({
                   style={{
                     textOverflow: textOverflowProperty,
                     paddingRight:
-                      scroll && languageDirection === 'ltr' ? '2rem' : '',
+                      scroll && languageDirection === "ltr" ? "2rem" : "",
                     paddingLeft:
-                      scroll && languageDirection === 'rtl' ? '2rem' : '',
+                      scroll && languageDirection === "rtl" ? "2rem" : "",
                   }}
                 >
                   {currentName}
                 </span>
                 <span
-                  className={scroll ? 'active-counter-name' : 'display-none'}
+                  className={scroll ? "active-counter-name" : "display-none"}
                   style={{
                     textOverflow: textOverflowProperty,
                     paddingRight:
-                      scroll && languageDirection === 'ltr' ? '2rem' : '',
+                      scroll && languageDirection === "ltr" ? "2rem" : "",
                     paddingLeft:
-                      scroll && languageDirection === 'rtl' ? '2rem' : '',
+                      scroll && languageDirection === "rtl" ? "2rem" : "",
                   }}
                 >
                   {currentName}
@@ -180,7 +182,7 @@ function CounterNameAndNumber({
             width:
               currentCounterTarget > 0
                 ? `${(currentNumber / currentCounterTarget) * 100}%`
-                : '100%',
+                : "100%",
 
             // width: singleCounterStyles(count, target),
           }}
@@ -191,7 +193,7 @@ function CounterNameAndNumber({
       {/* Remove below code */}
       <div
         className="counter-type-wrap"
-        style={{ position: 'absolute', opacity: 0 }}
+        style={{ position: "absolute", opacity: 0 }}
       >
         <div ref={textRef}>
           <span>{currentName}</span>
