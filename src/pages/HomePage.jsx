@@ -8,7 +8,6 @@ const HomePage = ({
   haptics,
   setLanguageDirection,
   languageDirection,
-  saveArrayLocally,
   activeCounterName,
   activeCounterTarget,
   activeCounterNumber,
@@ -41,7 +40,6 @@ const HomePage = ({
         activeBackgroundColor={activeBackgroundColor}
         setHaptics={setHaptics}
         haptics={haptics}
-        saveArrayLocally={saveArrayLocally}
         localSavedCountersArray={localSavedCountersArray}
         activeCounterName={activeCounterName}
         setActiveCounterNumber={setActiveCounterNumber}

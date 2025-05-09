@@ -1,14 +1,10 @@
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
-import { MdAdd } from "react-icons/md";
+import { storeCounters } from "../utils/constants";
 
 import { useState } from "react";
 
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
-};
-
-const hapticsImpactLight = async () => {
-  await Haptics.impact({ style: ImpactStyle.Light });
 };
 
 const hapticsVibrate = async () => {
@@ -21,9 +17,7 @@ function CounterButton({
   setActiveCounterNumber,
   activeCounterName,
   activeCounterNumber,
-  activeCounterTarget,
   localSavedCountersArray,
-  saveArrayLocally,
   activeBackgroundColor,
 }) {
   let currentNumber;
@@ -49,7 +43,7 @@ function CounterButton({
         counterItem.count = activeCounterNumber;
       }
     });
-    saveArrayLocally(localSavedCountersArray);
+    storeCounters(localSavedCountersArray);
 
     if (currentNumber == currentCounterTarget - 1) {
       if (haptics == true) {
@@ -75,15 +69,11 @@ function CounterButton({
       style={{
         backgroundColor: `${activeBackgroundColor}`,
         boxShadow: `0px 0px 10px ${activeBackgroundColor}`,
-        // boxShadow: isClicked
-        //   ? `0px 0px 10px ${activeBackgroundColor}`
-        //   : `0px 0px 20px ${activeBackgroundColor}`,
       }}
       onClick={() => {
         setCounterAndHaptics();
         handleClick();
       }}
-      //       ${showAnimation ? "fade-up-animation" : null}
       className={`increment-btn`}
     >
       <div className="increment-btn-number-and-target-wrap">
@@ -97,9 +87,6 @@ function CounterButton({
           of {currentCounterTarget}
         </div>
       </div>
-      {/* <div className="plus-svg-wrap">
-        <MdAdd />
-      </div> */}
     </button>
   );
 }

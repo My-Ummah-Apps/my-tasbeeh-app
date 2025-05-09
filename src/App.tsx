@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
-import { Toast } from "@capacitor/toast";
 import { Dialog } from "@capacitor/dialog";
 import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
@@ -15,6 +13,7 @@ import {
   DEFAULT_COUNTERS,
   setStatusAndNavBarBackgroundColor,
   showToast,
+  storeCounters,
   TWEEN_CONFIG,
 } from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
@@ -41,7 +40,6 @@ let lastUsedCounterIndex;
 let counterName;
 let currentCount;
 let counterId;
-let defaultArray: counterObjType[];
 
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
@@ -50,7 +48,9 @@ function App() {
   const [afternoonNotification, setAfternoonNotification] = useState(false);
   const [eveningNotification, setEveningNotification] = useState(false);
   const [reviewPrompt, showReviewPrompt] = useState(false);
-  const [localSavedCountersArray, setLocalSavedCountersArray] = useState([]);
+  const [localSavedCountersArray, setLocalSavedCountersArray] = useState<
+    counterObjType[]
+  >([]);
   const [activeCounterName, setActiveCounterName] = useState("");
   const [languageDirection, setLanguageDirection] = useState("");
   const [activeCounterNumber, setActiveCounterNumber] = useState(0);
@@ -253,8 +253,11 @@ function App() {
   }, []);
 
   useEffect(() => {
+    let counters: counterObjType[] = [];
+
     const storedCounters =
       localStorage.getItem("localSavedCountersArray") || "[]";
+
     if (JSON.parse(storedCounters) && JSON.parse(storedCounters).length > 0) {
       const previousLaunchDate = localStorage.getItem("lastLaunchDate");
       const todaysDate = new Date().toLocaleDateString();
@@ -262,43 +265,37 @@ function App() {
       localStorage.setItem("lastLaunchDate", todaysDate);
 
       if (previousLaunchDate !== todaysDate && dailyCounterReset == true) {
-        defaultArray = JSON.parse(storedCounters).map((counterItem) => ({
-          ...counterItem,
-          count: 0,
-        }));
+        counters = JSON.parse(storedCounters).map(
+          (counterItem: counterObjType) => ({
+            ...counterItem,
+            count: 0,
+          })
+        );
       } else {
-        defaultArray = JSON.parse(storedCounters);
+        counters = JSON.parse(storedCounters);
       }
     } else if (!storedCounters || JSON.parse(storedCounters).length == 0) {
-      defaultArray = DEFAULT_COUNTERS;
-
-      saveArrayLocally(defaultArray);
+      counters = DEFAULT_COUNTERS;
+      storeCounters(counters);
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
 
-    defaultArray.findIndex((object) => {
+    counters.findIndex((object) => {
       if (object.isActive == true) {
-        lastUsedCounterIndex = defaultArray.indexOf(object);
+        lastUsedCounterIndex = counters.indexOf(object);
 
-        setActiveCounterName(defaultArray[lastUsedCounterIndex].counter);
-        setActiveCounterNumber(defaultArray[lastUsedCounterIndex].count);
-        setActiveBackgroundColor(defaultArray[lastUsedCounterIndex].color);
+        setActiveCounterName(counters[lastUsedCounterIndex].counter);
+        setActiveCounterNumber(counters[lastUsedCounterIndex].count);
+        setActiveBackgroundColor(counters[lastUsedCounterIndex].color);
       } else {
         lastUsedCounterIndex = 0;
       }
     });
 
-    setLocalSavedCountersArray(defaultArray);
-    saveArrayLocally(defaultArray);
+    setLocalSavedCountersArray(counters);
+    storeCounters(counters);
   }, []);
   const addItemToSavedCountersArray = () => {};
-
-  const saveArrayLocally = (arrayToSave) => {
-    localStorage.setItem(
-      "localSavedCountersArray",
-      JSON.stringify(arrayToSave)
-    );
-  };
 
   const addCounter = (counterToAdd, target) => {
     const newCounter = {
@@ -314,7 +311,7 @@ function App() {
       setActiveCounterNumber(0);
     }
     setLocalSavedCountersArray(newArray);
-    saveArrayLocally(newArray);
+    storeCounters(newArray);
   };
 
   const resetAllCounters = () => {
@@ -323,7 +320,7 @@ function App() {
     ).map((counter) => ({ ...counter, count: 0 }));
 
     setLocalSavedCountersArray(resettedCounters);
-    saveArrayLocally(resettedCounters);
+    storeCounters(resettedCounters);
     setActiveCounterNumber(0);
   };
 
@@ -345,7 +342,7 @@ function App() {
     });
 
     setLocalSavedCountersArray(localSavedCountersArray);
-    saveArrayLocally(localSavedCountersArray);
+    storeCounters(localSavedCountersArray);
   };
 
   const invokeSetActiveCounter = (id) => {
@@ -359,7 +356,7 @@ function App() {
         counterId = counterItem.id;
         setActiveBackgroundColor(counterItem.color);
       }
-      saveArrayLocally(localSavedCountersArray);
+      storeCounters(localSavedCountersArray);
       setActiveCounterName(counterName);
       // ! TODO: The below if else statement has been duplicated in the CounterNameAndNumber component for a quick workaround due to text scrolling in the wrong direction if this function wasn't triggered (ie, the user launched the app which would land them on the homescreen), this duplication needs to be resolved in the future
       if (direction(counterName) === "ltr") {
@@ -380,7 +377,7 @@ function App() {
       }
     });
 
-    saveArrayLocally(localSavedCountersArray);
+    storeCounters(localSavedCountersArray);
   };
 
   const showOneCounterNeededAlert = async () => {
@@ -409,7 +406,7 @@ function App() {
     }
 
     setLocalSavedCountersArray(filteredArray);
-    saveArrayLocally(filteredArray);
+    storeCounters(filteredArray);
   };
 
   return (
@@ -447,7 +444,6 @@ function App() {
                   haptics={haptics}
                   setActiveCounterName={setActiveCounterName}
                   setActiveCounterNumber={setActiveCounterNumber}
-                  saveArrayLocally={saveArrayLocally}
                   currentCount={currentCount}
                   counterName={counterName}
                   setLanguageDirection={setLanguageDirection}

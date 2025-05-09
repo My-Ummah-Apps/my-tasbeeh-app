@@ -124,3 +124,7 @@ export const setStatusAndNavBarBackgroundColor = async (
   await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
   await StatusBar.setStyle({ style: textColor });
 };
+
+export const storeCounters = (arrayToSave) => {
+  localStorage.setItem("localSavedCountersArray", JSON.stringify(arrayToSave));
+};
