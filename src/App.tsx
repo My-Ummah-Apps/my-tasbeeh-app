@@ -14,6 +14,7 @@ import { direction } from "direction";
 import {
   DEFAULT_COUNTERS,
   setStatusAndNavBarBackgroundColor,
+  showToast,
   TWEEN_CONFIG,
 } from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
@@ -74,14 +75,6 @@ function App() {
         localStorage.setItem("theme", JSON.stringify("light"));
         storedTheme = "light";
       }
-
-      // const setStatusAndNavBarBackgroundColor = async (
-      //   backgroundColor: string,
-      //   textColor: Style
-      // ) => {
-      //   await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
-      //   await StatusBar.setStyle({ style: textColor });
-      // };
 
       if (storedTheme === "dark") {
         statusBarThemeColor = "#242424";
@@ -280,7 +273,7 @@ function App() {
       defaultArray = DEFAULT_COUNTERS;
 
       saveArrayLocally(defaultArray);
-      localStorage.setItem("appVersion", LATEST_AP_VERSION);
+      localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
 
     defaultArray.findIndex((object) => {
@@ -397,21 +390,15 @@ function App() {
     });
   };
 
-  const deleteSingleCounter = (id) => {
-    // e.preventDefault();
+  const deleteSingleCounter = (id: number) => {
     const showCounterDeleteToast = async () => {
-      await Toast.show({
-        text: "Tasbeeh deleted",
-        position: "top",
-        duration: "short",
-      });
+      await showToast("Tasbeeh deleted", "top", "short");
     };
 
     const filteredArray = localSavedCountersArray.filter(
       (counterItem) => counterItem.id !== id
     );
     if (filteredArray.length == 0) {
-      // alert("Atleast one counter must be saved");
       showOneCounterNeededAlert();
       return;
     }
