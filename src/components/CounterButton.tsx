@@ -16,18 +16,34 @@ const hapticsVibrate = async () => {
 function CounterButton({
   setActiveCounter,
   activeCounter,
+  setAndStoreCounters,
+  countersArr,
   setHaptics,
   haptics,
 }: {
-  activeCounter: ActiveCounter;
+  countersArr: counterObjType[];
+  activeCounter: counterObjType;
 }) {
+  console.log("COUNTER BUTTON RENDERED, ACTIVECOUNTER IS: ", activeCounter);
+
   const setCounterAndHaptics = () => {
-    setActiveCounter((prev: ActiveCounter) => ({
+    const updatedCountersArr = countersArr.map((counter) => {
+      const isActive = counter.isActive === activeCounter.isActive;
+
+      if (isActive) {
+        return { ...counter, count: (counter.count += 1) };
+      }
+      return { ...counter };
+    });
+
+    setAndStoreCounters(updatedCountersArr);
+
+    setActiveCounter((prev: counterObjType) => ({
       ...prev,
       count: prev.count + 1,
     }));
 
-    if (activeCounter.count == activeCounter.target - 1) {
+    if (activeCounter.count === activeCounter.target - 1) {
       if (haptics === true && Capacitor.isNativePlatform()) {
         setHaptics(false);
 
@@ -47,7 +63,7 @@ function CounterButton({
   return (
     <button
       data-testid="counter-increment-button"
-      aria-label={`Increase counter for ${activeCounter.counterName}, current value is ${activeCounter.count}`}
+      aria-label={`Increase counter for ${activeCounter.counter}, current value is ${activeCounter.count}`}
       style={{
         backgroundColor: `${activeCounter.color}`,
         boxShadow: `0px 0px 10px ${activeCounter.color}`,

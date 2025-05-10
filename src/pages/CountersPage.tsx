@@ -1,6 +1,4 @@
 import { useState, useReducer, useRef } from "react";
-import React from "react";
-import ReactDOM from "react-dom";
 import { Sheet } from "react-modal-sheet";
 import { KeyboardResize, Keyboard } from "@capacitor/keyboard";
 import { MdModeEditOutline, MdAdd } from "react-icons/md";
@@ -13,9 +11,9 @@ import { materialColors, TWEEN_CONFIG } from "../utils/constants";
 function CountersPage({
   setActiveCounter,
   resetSingleCounter,
+  countersArr,
   invokeSetActiveCounter,
   modifyTheCountersArray,
-  localSavedCountersArray,
   addCounter,
   deleteSingleCounter,
   setActivePage,
@@ -87,8 +85,8 @@ function CountersPage({
               currentCount={currentCount}
               currentCounterTarget={currentCounterTarget}
               currentCounterId={currentCounterId}
-              setLocalSavedCountersArray={setLocalSavedCountersArray}
-              localSavedCountersArray={localSavedCountersArray}
+              // setLocalSavedCountersArray={setLocalSavedCountersArray}
+              countersArr={countersArr}
               addCounter={addCounter}
               resetSingleCounter={resetSingleCounter}
               deleteSingleCounter={deleteSingleCounter}
@@ -114,8 +112,8 @@ function CountersPage({
             <FormBlank
               nextColor={nextColor}
               setIsFormBlankSheetOpen={setIsFormBlankSheetOpen}
-              setLocalSavedCountersArray={setLocalSavedCountersArray}
-              localSavedCountersArray={localSavedCountersArray}
+              // setLocalSavedCountersArray={setLocalSavedCountersArray}
+              countersArr={countersArr}
               addCounter={addCounter}
             />
           </Sheet.Content>
@@ -127,7 +125,7 @@ function CountersPage({
       </Sheet>
 
       <div className="counters-wrap">
-        {localSavedCountersArray.map((counterItem) => {
+        {countersArr.map((counterItem) => {
           nextColor = materialColors[nextColorIndex];
           counterItem.color = nextColor;
           nextColorIndex == materialColors.length - 1

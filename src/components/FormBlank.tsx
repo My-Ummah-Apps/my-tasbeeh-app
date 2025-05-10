@@ -1,7 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
-
-import { Capacitor } from '@capacitor/core';
-import { Keyboard } from '@capacitor/keyboard';
+import { useState, useRef, useEffect } from "react";
 
 interface FormBlankProps {
   activeBackgroundColor: string;
@@ -21,8 +18,8 @@ function FormBlank({
   const showNameAlert = useRef<HTMLDivElement>(null);
   const showTargetAlert = useRef<HTMLDivElement>(null);
 
-  const [counterNameInput, setCounterNameInput] = useState<string>('');
-  const [counterTargetInput, setCounterTargetInput] = useState<string>('');
+  const [counterNameInput, setCounterNameInput] = useState<string>("");
+  const [counterTargetInput, setCounterTargetInput] = useState<string>("");
 
   const formBlankRef = useRef<HTMLDivElement | null>(null);
 
@@ -47,18 +44,18 @@ function FormBlank({
       // counterNameField.current.style.height = "auto";
       counterNameField.current.style.height = `${e.target.scrollHeight}px`;
     } else {
-      console.error('counterNameField.current does not exist');
+      console.error("counterNameField.current does not exist");
     }
   };
 
   useEffect(() => {
     if (counterNameField.current) {
-      counterNameField.current.style.height = '1px';
+      counterNameField.current.style.height = "1px";
       counterNameField.current.style.height = `${
         counterNameField.current.scrollHeight + 0.5
       }px`;
     } else {
-      console.error('counterNameField.current does not exist');
+      console.error("counterNameField.current does not exist");
     }
   }, []);
 
@@ -67,29 +64,29 @@ function FormBlank({
 
     if (
       counterNameInput.length === 0 ||
-      counterTargetInput === '0' ||
+      counterTargetInput === "0" ||
       counterTargetInput.length === 0 ||
       !counterTargetInput
     ) {
       if (counterNameInput.length === 0) {
-        showNameAlert.current!.style.visibility = 'visible';
+        showNameAlert.current!.style.visibility = "visible";
       } else {
-        showNameAlert.current!.style.visibility = 'hidden';
+        showNameAlert.current!.style.visibility = "hidden";
       }
       if (
-        counterTargetInput === '0' ||
+        counterTargetInput === "0" ||
         counterTargetInput.length === 0 ||
         !counterTargetInput
       ) {
-        showTargetAlert.current!.style.visibility = 'visible';
+        showTargetAlert.current!.style.visibility = "visible";
       } else {
-        showTargetAlert.current!.style.visibility = 'hidden';
+        showTargetAlert.current!.style.visibility = "hidden";
       }
 
       return;
     }
     addCounter(counterNameInput, counterTargetInput);
-    setCounterNameInput('');
+    setCounterNameInput("");
     setIsFormBlankSheetOpen(false);
   };
 
@@ -101,7 +98,7 @@ function FormBlank({
             setIsFormBlankSheetOpen(false);
           }}
           className="form-blank-cancel-btn"
-          style={{ backgroundColor: 'transparent' }}
+          style={{ backgroundColor: "transparent" }}
         >
           Cancel
         </div>
@@ -134,7 +131,7 @@ function FormBlank({
             <div
               ref={showNameAlert}
               className="form-alert-styles"
-              style={{ visibility: 'hidden' }}
+              style={{ visibility: "hidden" }}
             >
               Please enter a name
             </div>
@@ -158,7 +155,7 @@ function FormBlank({
             <div
               ref={showTargetAlert}
               className="form-alert-styles"
-              style={{ visibility: 'hidden' }}
+              style={{ visibility: "hidden" }}
             >
               Target must be above 0
             </div>

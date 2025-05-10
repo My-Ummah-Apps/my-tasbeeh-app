@@ -4,11 +4,12 @@ import CounterButton from "../components/CounterButton";
 const HomePage = ({
   setActiveCounter,
   activeCounter,
+  setAndStoreCounters,
+  countersArr,
   setHaptics,
   haptics,
   setLanguageDirection,
   languageDirection,
-  countersArr,
   activeBackgroundColor,
   resetSingleCounter,
 }) => {
@@ -25,6 +26,8 @@ const HomePage = ({
         countersArr={countersArr}
       />
       <CounterButton
+        countersArr={countersArr}
+        setAndStoreCounters={setAndStoreCounters}
         activeBackgroundColor={activeBackgroundColor}
         setActiveCounter={setActiveCounter}
         activeCounter={activeCounter}

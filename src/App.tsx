@@ -39,11 +39,14 @@ import {
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
   const [activePage, setActivePage] = useState("home");
-  const [activeCounter, setActiveCounter] = useState<ActiveCounter>({
-    counterName: "",
+  const [activeCounter, setActiveCounter] = useState<counterObjType>({
+    counter: "",
     count: 0,
     target: 0,
     color: "",
+    isActive: false,
+    target: 0,
+    id: "",
   });
   const [morningNotification, setMorningNotification] = useState(false);
   const [afternoonNotification, setAfternoonNotification] = useState(false);
@@ -58,6 +61,8 @@ function App() {
   const [lastLaunchDate, setLastLaunchDate] = useState("");
 
   const setAndStoreCounters = (arr: counterObjType[]) => {
+    console.log("ARR RECEIVED: ", arr);
+
     setCountersArr(arr);
     localStorage.setItem("localSavedCountersArray", JSON.stringify(arr));
   };
@@ -282,31 +287,15 @@ function App() {
     const storedActiveCounter = counters.find(
       (counter) => counter.isActive === true
     );
-
     if (storedActiveCounter) {
-      invokeSetActiveCounter(storedActiveCounter.id);
-    } else {
-      invokeSetActiveCounter(0);
+      // invokeSetActiveCounter(storedActiveCounter.id);
+      setActiveCounter(storedActiveCounter);
     }
 
     setAndStoreCounters(counters);
+
     console.log("storedActiveCounter: ", storedActiveCounter);
   }, []);
-
-  useEffect(() => {
-    console.log("activeCounter: ", activeCounter);
-
-    countersArr.map((counterItem: counterObjType) => {
-      if (counterItem.isActive) {
-        counterItem.count = activeCounter.count;
-      }
-    });
-    console.log("CountersArr: ", countersArr);
-
-    setAndStoreCounters(countersArr);
-  }, [activeCounter]);
-
-  const addItemToSavedCountersArray = () => {};
 
   const addCounter = (counterToAdd, target) => {
     const newCounter = {
@@ -319,7 +308,6 @@ function App() {
     const newArray = [...countersArr, newCounter];
     if (newArray.length == 1) {
       newCounter.isActive = true;
-      // setActiveCounterNumber(0);
       setActiveCounter((prev) => ({ ...prev, count: 0 }));
     }
     setAndStoreCounters(newArray);
@@ -356,35 +344,32 @@ function App() {
     setAndStoreCounters(countersArr);
   };
 
-  const invokeSetActiveCounter = (id) => {
-    countersArr.map((counterItem) => {
-      counterItem.isActive = false;
+  const invokeSetActiveCounter = (id: string) => {
+    const updatedCountersArr: counterObjType[] = countersArr.map((counter) => {
+      if (counter.id === id) {
+        console.log("TRIGGERED");
 
-      if (counterItem.id === id) {
-        counterItem.isActive = true;
         setActiveCounter({
-          counterName: counterItem.counter,
-          count: counterItem.count,
-          target: counterItem.target,
-          color: counterItem.color,
+          counter: counter.counter,
+          count: counter.count,
+          color: counter.color,
+          isActive: true,
+          target: counter.target,
+          id: counter.id,
         });
-      }
-      setAndStoreCounters(countersArr);
 
-      // setActiveCounterName(counterName);
-      setActiveCounter((prev) => ({
-        ...prev,
-        counterName: counterItem.counter,
-      }));
-      // ! TODO: The below if else statement has been duplicated in the CounterNameAndNumber component for a quick workaround due to text scrolling in the wrong direction if this function wasn't triggered (ie, the user launched the app which would land them on the homescreen), this duplication needs to be resolved in the future
-      if (direction(activeCounter.counterName) === "ltr") {
-        setLanguageDirection("ltr");
-      } else if (direction(activeCounter.counterName) === "rtl") {
-        setLanguageDirection("rtl");
+        return { ...counter, isActive: true };
+      } else {
+        return { ...counter, isActive: false };
       }
-      // setActiveCounterNumber(currentCount);
-      // setActiveCounter((prev) => ({ ...prev, count: currentCount }));
     });
+    // ! TODO: The below if else statement has been duplicated in the CounterNameAndNumber component for a quick workaround due to text scrolling in the wrong direction if this function wasn't triggered (ie, the user launched the app which would land them on the homescreen), this duplication needs to be resolved in the future
+    if (direction(activeCounter.counter) === "ltr") {
+      setLanguageDirection("ltr");
+    } else if (direction(activeCounter.counter) === "rtl") {
+      setLanguageDirection("rtl");
+    }
+    setAndStoreCounters(updatedCountersArr);
   };
 
   const resetSingleCounter = (id) => {
@@ -428,6 +413,10 @@ function App() {
     setAndStoreCounters(filteredArray);
   };
 
+  useEffect(() => {
+    console.log("COUNRERS ARR ON HIOMEPAGEL: ", countersArr);
+  }, [countersArr]);
+
   return (
     <>
       <BrowserRouter>
@@ -459,7 +448,9 @@ function App() {
                 <HomePage
                   setActiveCounter={setActiveCounter}
                   activeCounter={activeCounter}
+                  setAndStoreCounters={setAndStoreCounters}
                   showReviewPrompt={showReviewPrompt}
+                  countersArr={countersArr}
                   reviewPrompt={reviewPrompt}
                   setHaptics={setHaptics}
                   haptics={haptics}
@@ -478,7 +469,6 @@ function App() {
                   countersArr={countersArr}
                   invokeSetActiveCounter={invokeSetActiveCounter}
                   resetSingleCounter={resetSingleCounter}
-                  addItemToSavedCountersArray={addItemToSavedCountersArray}
                   modifyTheCountersArray={modifyTheCountersArray}
                   setAndStoreCounters={setAndStoreCounters}
                   addCounter={addCounter}
