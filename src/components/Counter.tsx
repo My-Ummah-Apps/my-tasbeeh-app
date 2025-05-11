@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { direction } from "direction";
 
 const Counter = ({
-  setIsFormFilledSheetOpen,
+  setShowForm,
+  setAddNewCounter,
   nextColor,
   invokeSetActiveCounter,
   counterItem,
@@ -63,8 +64,9 @@ const Counter = ({
             //   target: counterItem.target,
             //   color: counterItem.id,
             // });
+            setAddNewCounter(false);
             invokeSetActiveCounter(counterItem.id);
-            setIsFormFilledSheetOpen(true);
+            setShowForm(true);
           }}
         >
           <MdEdit />

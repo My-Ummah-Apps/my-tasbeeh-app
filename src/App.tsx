@@ -49,7 +49,6 @@ function App() {
   const [morningNotification, setMorningNotification] = useState(false);
   const [afternoonNotification, setAfternoonNotification] = useState(false);
   const [eveningNotification, setEveningNotification] = useState(false);
-  const [reviewPrompt, showReviewPrompt] = useState(false);
   const [countersArr, setCountersArr] = useState<counterObjType[]>([]);
   const [languageDirection, setLanguageDirection] = useState("");
   const [haptics, setHaptics] = useState<boolean | null>(
@@ -198,6 +197,42 @@ function App() {
       }
     }
   };
+
+  const notifications = [
+    {
+      morningNotification: {
+        storageKey: "morning-notification",
+        id: 1,
+        title: "Morning Reminder",
+        body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
+        hour: 8,
+        minute: 0,
+        setState: setMorningNotification,
+      },
+    },
+    {
+      afternoonNotification: {
+        storageKey: "afternoon-notification",
+        id: 2,
+        title: "Afternoon Reminder",
+        body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
+        hour: 14,
+        minute: 0,
+        setState: setAfternoonNotification,
+      },
+    },
+    {
+      eveningNotification: {
+        storageKey: "evening-notification",
+        id: 3,
+        title: "Evening Reminder",
+        body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
+        hour: 19,
+        minute: 0,
+        setState: setEveningNotification,
+      },
+    },
+  ];
 
   useEffect(() => {
     (async () => {
@@ -419,6 +454,7 @@ function App() {
               element={
                 <SettingsPage
                   // iapProducts={iapProducts}
+                  activeCounter={activeCounter}
                   resetAllCounters={resetAllCounters}
                   setMorningNotification={setMorningNotification}
                   morningNotification={morningNotification}
@@ -440,14 +476,11 @@ function App() {
                   setActiveCounter={setActiveCounter}
                   activeCounter={activeCounter}
                   setAndStoreCounters={setAndStoreCounters}
-                  showReviewPrompt={showReviewPrompt}
                   countersArr={countersArr}
-                  reviewPrompt={reviewPrompt}
                   setHaptics={setHaptics}
                   haptics={haptics}
                   setLanguageDirection={setLanguageDirection}
                   languageDirection={languageDirection}
-                  countersArr={countersArr}
                   resetSingleCounter={resetSingleCounter}
                 />
               }

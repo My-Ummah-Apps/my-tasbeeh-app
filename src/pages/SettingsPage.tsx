@@ -34,7 +34,6 @@ import {
 
 const SettingsPage = ({
   // iapProducts,
-
   resetAllCounters,
   morningNotification,
   setMorningNotification,
@@ -320,49 +319,50 @@ const SettingsPage = ({
 
         </div>
 */}
-        {Capacitor.isNativePlatform() ? (
-          <div className="individual-section-wrap">
-            <div
-              className="notifications-wrap"
-              onClick={() => {
-                checkNotificationPermissions();
-              }}
-            >
-              <div className="text-wrap" style={{ display: "block" }}>
-                <p>Notifications</p>
-                <p>Set Notifications</p>
-              </div>
-              <MdOutlineChevronRight className="chevron" />
+        {/* {Capacitor.isNativePlatform() ? ( */}
+        <div className="individual-section-wrap">
+          <div
+            className="notifications-wrap"
+            onClick={() => {
+              checkNotificationPermissions();
+            }}
+          >
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Notifications</p>
+              <p>Set Notifications</p>
             </div>
-            <Sheet
-              disableDrag={false}
-              isOpen={showNotificationsSheet}
-              onClose={() => setShowNotificationsSheet(false)}
-              detent="content-height"
-              tweenConfig={TWEEN_CONFIG}
-            >
-              <Sheet.Container>
-                {/* <Sheet.Header /> */}
-                <Sheet.Content>
-                  {" "}
-                  <NotificationOptions
-                    setMorningNotification={setMorningNotification}
-                    morningNotification={morningNotification}
-                    afternoonNotification={afternoonNotification}
-                    setAfternoonNotification={setAfternoonNotification}
-                    eveningNotification={eveningNotification}
-                    setEveningNotification={setEveningNotification}
-                    activeCounter={activeCounter}
-                  />
-                </Sheet.Content>
-              </Sheet.Container>
-              <Sheet.Backdrop
-                // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-                onTap={() => setShowNotificationsSheet(false)}
-              />
-            </Sheet>
+            <MdOutlineChevronRight className="chevron" />
           </div>
-        ) : null}
+          <Sheet
+            disableDrag={false}
+            isOpen={showNotificationsSheet}
+            onClose={() => setShowNotificationsSheet(false)}
+            detent="content-height"
+            tweenConfig={TWEEN_CONFIG}
+          >
+            <Sheet.Container>
+              {/* <Sheet.Header /> */}
+              <Sheet.Content>
+                {" "}
+                <NotificationOptions
+                  activeCounter={activeCounter}
+                  setMorningNotification={setMorningNotification}
+                  morningNotification={morningNotification}
+                  afternoonNotification={afternoonNotification}
+                  setAfternoonNotification={setAfternoonNotification}
+                  eveningNotification={eveningNotification}
+                  setEveningNotification={setEveningNotification}
+                  activeCounter={activeCounter}
+                />
+              </Sheet.Content>
+            </Sheet.Container>
+            <Sheet.Backdrop
+              // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+              onTap={() => setShowNotificationsSheet(false)}
+            />
+          </Sheet>
+        </div>
+        {/* // ) : null} */}
         <div className="individual-section-wrap">
           <div className="theme-wrap">
             <div className="text-wrap" style={{ display: "block" }}>

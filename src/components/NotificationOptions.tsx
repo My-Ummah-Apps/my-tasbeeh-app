@@ -1,8 +1,8 @@
 import Switch from "react-ios-switch";
 import { LocalNotifications } from "@capacitor/local-notifications";
-// import { useState, useEffect } from "react";
 
 const NotificationOptions = ({
+  activeCounter,
   setMorningNotification,
   morningNotification,
   afternoonNotification,
@@ -26,10 +26,7 @@ const NotificationOptions = ({
         </div>
         <Switch
           checked={morningNotification}
-          className={undefined}
-          disabled={undefined}
           handleColor="white"
-          name={undefined}
           offColor="white"
           onChange={() => {
             if (
@@ -52,10 +49,6 @@ const NotificationOptions = ({
             }
           }}
           onColor={activeCounter.color}
-          pendingOffColor={undefined}
-          pendingOnColor={undefined}
-          readOnly={undefined}
-          style={undefined}
         />
       </div>
       <div className="individual-notification-option-wrap">
@@ -67,8 +60,6 @@ const NotificationOptions = ({
         </div>
         <Switch
           checked={afternoonNotification}
-          className={undefined}
-          disabled={undefined}
           handleColor="white"
           name={undefined}
           offColor="white"
@@ -94,10 +85,6 @@ const NotificationOptions = ({
             }
           }}
           onColor={activeCounter.color}
-          pendingOffColor={undefined}
-          pendingOnColor={undefined}
-          readOnly={undefined}
-          style={undefined}
         />
       </div>
       <div className="individual-notification-option-wrap">
@@ -109,8 +96,6 @@ const NotificationOptions = ({
         </div>
         <Switch
           checked={eveningNotification}
-          className={undefined}
-          disabled={undefined}
           handleColor="white"
           name={undefined}
           offColor="white"
@@ -135,10 +120,6 @@ const NotificationOptions = ({
             }
           }}
           onColor={activeCounter.color}
-          pendingOffColor={undefined}
-          pendingOnColor={undefined}
-          readOnly={undefined}
-          style={undefined}
         />
       </div>
     </div>

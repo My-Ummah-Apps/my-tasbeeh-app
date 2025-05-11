@@ -22,25 +22,8 @@ function FormBlank({
 
   const formBlankRef = useRef<HTMLDivElement | null>(null);
 
-  // if (Capacitor.getPlatform() === "ios") {
-  //   Keyboard.setAccessoryBarVisible({ isVisible: true });
-
-  //   // window.addEventListener("keyboardWillShow", (e) => {
-  //   //   if (formBlankRef.current) {
-  //   //     formBlankRef.current.style.marginBottom =
-  //   //       (e as any).keyboardHeight + "px";
-  //   //   }
-  //   // });
-  //   // window.addEventListener("keyboardWillHide", (e) => {
-  //   //   if (formBlankRef.current) {
-  //   //     formBlankRef.current.style.marginBottom = "0px";
-  //   //   }
-  //   // });
-  // }
-
   const increaseTextAreaHeight = (e: any) => {
     if (counterNameField.current) {
-      // counterNameField.current.style.height = "auto";
       counterNameField.current.style.height = `${e.target.scrollHeight}px`;
     } else {
       console.error("counterNameField.current does not exist");
@@ -117,11 +100,9 @@ function FormBlank({
             <p>Dhikr Name</p>
             <textarea
               dir="auto"
-              // ref={counterField}
               ref={counterNameField}
               className="form-textarea"
               onChange={(e) => {
-                // if (/\d/.test(e.target.value)) return;
                 setCounterNameInput(e.target.value);
                 increaseTextAreaHeight(e);
               }}
@@ -140,7 +121,6 @@ function FormBlank({
             <input
               ref={counterTargetField}
               onChange={(e) => {
-                // if (/[a-zA-Z]/.test(e.target.value)) return;
                 if (/[^0-9]+/.test(e.target.value)) return;
                 setCounterTargetInput(e.target.value);
               }}

@@ -1,13 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { VscDebugRestart } from "react-icons/vsc";
-import { Keyboard } from "@capacitor/keyboard";
 
-import {
-  MdOutlinePlaylistRemove,
-  MdOutlineRestartAlt,
-  MdDeleteOutline,
-} from "react-icons/md";
-import { Capacitor } from "@capacitor/core";
+import { MdDeleteOutline } from "react-icons/md";
 import { showConfirmDialog, showToast } from "../utils/constants";
 
 interface FormFilledProps {
@@ -18,7 +11,6 @@ interface FormFilledProps {
     modifiedCount: number | string,
     modifiedTarget: number | string
   ) => void;
-
   currentCounterName: string;
   currentCount: number;
   currentCounterTarget: number;
@@ -35,7 +27,6 @@ const FormFilled = ({
   currentCounterTarget,
   currentCounterId,
   activeCounter,
-  resetSingleCounter,
   deleteSingleCounter,
 }: FormFilledProps) => {
   const counterNameField = useRef<HTMLTextAreaElement | null>(null);
@@ -55,20 +46,6 @@ const FormFilled = ({
     currentCounterTarget
   );
 
-  // if (Capacitor.getPlatform() === "ios") {
-  //   window.addEventListener("keyboardWillShow", (e) => {
-  //     if (formFilledRef.current) {
-  //       formFilledRef.current.style.marginBottom =
-  //         (e as any).keyboardHeight + "px";
-  //     }
-  //   });
-  //   window.addEventListener("keyboardWillHide", (e) => {
-  //     if (formFilledRef.current) {
-  //       formFilledRef.current.style.marginBottom = "0px";
-  //     }
-  //   });
-  // }
-
   useEffect(() => {
     if (counterNameField.current) {
       counterNameField.current.style.height = "1px";
@@ -81,11 +58,6 @@ const FormFilled = ({
   }, []);
 
   const submitCounter = () => {
-    // e.preventDefault();
-    // console.log("counterNameInput; ", counterNameInput);
-    // console.log("currentCountInput", currentCountInput);
-    // console.log("currentTargetInput, ", currentTargetInput);
-
     if (
       !counterNameInput ||
       currentCountInput.toString().length == 0 ||
@@ -130,7 +102,6 @@ const FormFilled = ({
 
   const increaseTextAreaHeight = (e: any) => {
     if (counterNameField.current) {
-      // counterNameField.current.style.height = "auto";
       counterNameField.current.style.height = `${e.target.scrollHeight}px`;
     } else {
       console.error("counterNameField.current does not exist");
@@ -205,26 +176,16 @@ const FormFilled = ({
             <div className="current-count-input-wrap">
               <p>Count</p>
               <input
-                // onClick={(event) => {
-                //   const input = event.target;
-                //   // input.selectionStart = input.value.length;
-                //   // input.selectionEnd = input.value.length;
-                //   // input.focus();
-                // }}
                 ref={counterCountField}
                 className="form-input"
                 maxLength={5}
                 onChange={(e) => {
-                  // if (/[a-zA-Z]/.test(e.target.value)) return;
                   if (/[^0-9]+/.test(e.target.value)) return;
-                  // setcurrentCountInput(Number(e.target.value));
+
                   setcurrentCountInput(e.target.value);
-                  // setcurrentCountInput((prev) =>
-                  //   prev > 0 ? Number(e.target.value) : 0
-                  // );
+
                   console.log("e.target.value", e.target.value);
                 }}
-                // value={currentCountInput > 0 ? currentCountInput : ""}
                 value={currentCountInput}
                 inputMode="numeric"
                 pattern="[0-9]*"
@@ -241,16 +202,9 @@ const FormFilled = ({
             <div className="target-input-wrap">
               <p>Target</p>
               <input
-                // onClick={(event) => {
-                //   const input = event.target;
-                //   // input.selectionStart = input.value.length;
-                //   // input.selectionEnd = input.value.length;
-                //   // input.focus();
-                // }}
                 onChange={(e) => {
-                  // if (/[a-zA-Z]/.test(e.target.value)) return;
                   if (/[^0-9]+/.test(e.target.value)) return;
-                  // setCurrentTarget(Number(e.target.value));
+
                   setCurrentTarget(e.target.value);
                 }}
                 ref={counterTargetField}
@@ -277,21 +231,9 @@ const FormFilled = ({
       </div>
 
       <div className="form-filled-reset-delete-btns-wrap">
-        {/* <button className="form-filled-reset-delete-btns-wrap">
-            <p>Reset Counter</p>
-            <MdOutlineRestartAlt
-              onClick={(e) => {
-                e.preventDefault();
-                resetSingleCounter(currentCounterId);
-                setcurrentCountInput(0);
-              }}
-            />
-          </button> */}
         <button
           className="form-filled-delete-tasbeeh-btn"
           onClick={async (e) => {
-            // deleteSingleCounter(currentCounterId);
-            // setIsFormFilledSheetOpen(false);
             e.preventDefault();
 
             const result = await showConfirmDialog(

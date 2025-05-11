@@ -1,12 +1,9 @@
-import { useState, useReducer, useRef } from "react";
+import { useState, useRef } from "react";
 import { Sheet } from "react-modal-sheet";
-import { KeyboardResize, Keyboard } from "@capacitor/keyboard";
-import { MdModeEditOutline, MdAdd } from "react-icons/md";
-
-import FormBlank from "../components/FormBlank";
-import FormFilled from "../components/FormFilled";
+import { MdAdd } from "react-icons/md";
 import Counter from "../components/Counter";
 import { materialColors, TWEEN_CONFIG } from "../utils/constants";
+import Form from "../components/Form";
 
 function CountersPage({
   setActiveCounter,
@@ -37,8 +34,8 @@ function CountersPage({
     });
   }
 
-  const [isFormBlankSheetOpen, setIsFormBlankSheetOpen] = useState(false);
-  const [isFormFilledSheetOpen, setIsFormFilledSheetOpen] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [addNewCounter, setAddNewCounter] = useState(false);
 
   let nextColorIndex = 0;
   let nextColor;
@@ -48,39 +45,34 @@ function CountersPage({
   const [currentCounterTarget, setCounterTarget] = useState(0);
   const [currentCounterId, setcurrentCounterId] = useState(0);
 
-  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
-
-  // function handleClick() {
-  //   forceUpdate();
-  // }
-  //  ${showAnimation ? "fade-down-animation" : null}
-
   return (
     <div className={`counters-page-wrap`}>
       <div className="counters-page-header">
         <p>Adhkar</p>
         <MdAdd
           onClick={() => {
-            setIsFormBlankSheetOpen(true);
+            setAddNewCounter(true);
+            setShowForm(true);
           }}
         />
       </div>
 
       <Sheet
-        // ref={formFilledRef}
         style={{ willChange: "transform" }}
         disableDrag={false}
-        isOpen={isFormFilledSheetOpen}
-        onClose={() => setIsFormFilledSheetOpen(false)}
+        isOpen={showForm}
+        onClose={() => setShowForm(false)}
         detent="full-height"
         tweenConfig={TWEEN_CONFIG}
       >
         <Sheet.Container>
-          {/* <Sheet.Header /> */}
+          <Sheet.Header />
           <Sheet.Content>
             {/* <Sheet.Scroller> */}{" "}
-            <FormFilled
-              setIsFormFilledSheetOpen={setIsFormFilledSheetOpen}
+            <Form
+              activeCounter={activeCounter}
+              addNewCounter={addNewCounter}
+              setShowForm={setShowForm}
               modifyTheCountersArray={modifyTheCountersArray}
               activeCounter={activeCounter}
               currentCounterName={currentCounterName}
@@ -97,34 +89,7 @@ function CountersPage({
             {/* </Sheet.Scroller> */}
           </Sheet.Content>
         </Sheet.Container>
-        <Sheet.Backdrop onTap={() => setIsFormFilledSheetOpen(false)} />
-      </Sheet>
-
-      <Sheet
-        disableDrag={false}
-        isOpen={isFormBlankSheetOpen}
-        onClose={() => setIsFormBlankSheetOpen(false)}
-        detent="full-height"
-        tweenConfig={TWEEN_CONFIG}
-      >
-        <Sheet.Container>
-          {/* <Sheet.Header /> */}
-          <Sheet.Content>
-            {" "}
-            <FormBlank
-              nextColor={nextColor}
-              setIsFormBlankSheetOpen={setIsFormBlankSheetOpen}
-              activeCounter={activeCounter}
-              // setLocalSavedCountersArray={setLocalSavedCountersArray}
-              countersArr={countersArr}
-              addCounter={addCounter}
-            />
-          </Sheet.Content>
-        </Sheet.Container>
-        <Sheet.Backdrop
-          // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-          onTap={() => setIsFormBlankSheetOpen(false)}
-        />
+        <Sheet.Backdrop onTap={() => setShowForm(false)} />
       </Sheet>
 
       <div className="counters-wrap">
@@ -137,9 +102,10 @@ function CountersPage({
           return (
             <Counter
               setActivePage={setActivePage}
+              setAddNewCounter={setAddNewCounter}
               setActiveCounter={setActiveCounter}
               key={counterItem.id}
-              setIsFormFilledSheetOpen={setIsFormFilledSheetOpen}
+              setShowForm={setShowForm}
               nextColor={nextColor}
               invokeSetActiveCounter={invokeSetActiveCounter}
               counterItem={counterItem}
