@@ -41,6 +41,7 @@
   "scripts": {
     "start": "vite --host 0.0.0.0",
     "build": "tsc && vite build",
+    "build-no-tsc": "vite build",
     "serve": "vite preview"
   },
   "eslintConfig": {
