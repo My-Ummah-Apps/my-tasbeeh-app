@@ -1,13 +1,7 @@
-import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
-import { useState } from "react";
-import { IconContext } from "react-icons";
-import { FaHome } from "react-icons/fa";
-import { GrHomeRounded } from "react-icons/gr";
+import { NavLink } from "react-router-dom";
 import { BsFillHouseDoorFill, BsList, BsFillNutFill } from "react-icons/bs";
 
-import { MdSettings, MdHome, MdMenu } from "react-icons/md";
-
-const NavBar = ({ activeBackgroundColor, setActivePage, activePage }) => {
+const NavBar = ({ activeCounterColor, setActivePage, activePage }) => {
   return (
     <div className="navbar-wrap">
       <NavLink
@@ -19,7 +13,7 @@ const NavBar = ({ activeBackgroundColor, setActivePage, activePage }) => {
       >
         <BsFillNutFill
           className="nav-icon"
-          color={activePage == "settings" ? activeBackgroundColor : "grey"}
+          color={activePage == "settings" ? activeCounterColor : "grey"}
         />
       </NavLink>
 
@@ -33,7 +27,7 @@ const NavBar = ({ activeBackgroundColor, setActivePage, activePage }) => {
         <div>
           <BsFillHouseDoorFill
             className="nav-icon"
-            color={activePage == "home" ? activeBackgroundColor : "grey"}
+            color={activePage == "home" ? activeCounterColor : "grey"}
           />
         </div>
       </NavLink>
@@ -47,7 +41,7 @@ const NavBar = ({ activeBackgroundColor, setActivePage, activePage }) => {
       >
         <BsList
           className="nav-icon"
-          color={activePage == "counters" ? activeBackgroundColor : "grey"}
+          color={activePage == "counters" ? activeCounterColor : "grey"}
         />
       </NavLink>
     </div>

@@ -25,6 +25,7 @@ function CounterButton({
   activeCounter: counterObjType;
 }) {
   console.log("COUNTER BUTTON RENDERED, ACTIVECOUNTER IS: ", activeCounter);
+  // const incrementedCount = activeCounter.count +=1
 
   const setCounterAndHaptics = () => {
     const updatedCountersArr = countersArr.map((counter) => {
@@ -38,10 +39,10 @@ function CounterButton({
 
     setAndStoreCounters(updatedCountersArr);
 
-    setActiveCounter((prev: counterObjType) => ({
-      ...prev,
-      count: prev.count + 1,
-    }));
+    // setActiveCounter((prev: counterObjType) => ({
+    //   ...prev,
+    //   count: (prev.count += 1),
+    // }));
 
     if (activeCounter.count === activeCounter.target - 1) {
       if (haptics === true && Capacitor.isNativePlatform()) {

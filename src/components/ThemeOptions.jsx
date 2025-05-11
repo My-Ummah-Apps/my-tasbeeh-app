@@ -2,13 +2,13 @@ import { useState } from "react";
 import React from "react";
 import Switch from "react-ios-switch";
 
-const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
+const PopUpBox = ({ formTheme, setTheme, theme, activeCounter.color }) => {
   if (formTheme) {
     return (
       <div className="theme-options-wrap">
         <div
           style={{
-            backgroundColor: theme == "dark" ? activeBackgroundColor : null,
+            backgroundColor: theme == "dark" ? activeCounter.color : null,
           }}
           onClick={() => {
             setTheme("dark");
@@ -20,7 +20,7 @@ const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
         </div>
         <div
           style={{
-            backgroundColor: theme == "light" ? activeBackgroundColor : null,
+            backgroundColor: theme == "light" ? activeCounter.color : null,
           }}
           onClick={() => {
             setTheme("light");
@@ -32,7 +32,7 @@ const PopUpBox = ({ formTheme, setTheme, theme, activeBackgroundColor }) => {
         </div>
         {/* <div
           style={{
-            backgroundColor: theme == "system" ? activeBackgroundColor : null,
+            backgroundColor: theme == "system" ? activeCounter.color : null,
           }}
           onClick={() => {
             setTheme("system");

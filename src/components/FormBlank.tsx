@@ -1,15 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 
 interface FormBlankProps {
-  activeBackgroundColor: string;
   addCounter: (counterNameInput: string, counterTargetInput: string) => void;
   setIsFormBlankSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function FormBlank({
-  activeBackgroundColor,
   addCounter,
   setIsFormBlankSheetOpen,
+  activeCounter,
 }: FormBlankProps) {
   const counterNameField = useRef<HTMLTextAreaElement | null>(null);
   const counterField = useRef(null);
@@ -106,7 +105,7 @@ function FormBlank({
         <div
           className="form-blank-save-btn"
           onClick={submitCounter}
-          style={{ backgroundColor: activeBackgroundColor }}
+          style={{ backgroundColor: activeCounter.color }}
         >
           Save
         </div>

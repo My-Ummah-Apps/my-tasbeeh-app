@@ -8,7 +8,6 @@ import CounterButton from "./CounterButton";
 test("increases number upon button being tapped", async () => {
   render(
     <CounterButton
-      activeBackgroundColor="blue"
       setHaptics={vi.fn()}
       haptics={false}
       saveArrayLocally={vi.fn()}

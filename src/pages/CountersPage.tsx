@@ -10,6 +10,7 @@ import { materialColors, TWEEN_CONFIG } from "../utils/constants";
 
 function CountersPage({
   setActiveCounter,
+  activeCounter,
   resetSingleCounter,
   countersArr,
   invokeSetActiveCounter,
@@ -81,6 +82,7 @@ function CountersPage({
             <FormFilled
               setIsFormFilledSheetOpen={setIsFormFilledSheetOpen}
               modifyTheCountersArray={modifyTheCountersArray}
+              activeCounter={activeCounter}
               currentCounterName={currentCounterName}
               currentCount={currentCount}
               currentCounterTarget={currentCounterTarget}
@@ -112,6 +114,7 @@ function CountersPage({
             <FormBlank
               nextColor={nextColor}
               setIsFormBlankSheetOpen={setIsFormBlankSheetOpen}
+              activeCounter={activeCounter}
               // setLocalSavedCountersArray={setLocalSavedCountersArray}
               countersArr={countersArr}
               addCounter={addCounter}

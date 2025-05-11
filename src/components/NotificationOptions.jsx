@@ -9,7 +9,6 @@ const NotificationOptions = ({
   setAfternoonNotification,
   eveningNotification,
   setEveningNotification,
-  activeBackgroundColor,
 }) => {
   const cancelNotification = async (id) => {
     await LocalNotifications.cancel({ notifications: [{ id: id }] });
@@ -52,7 +51,7 @@ const NotificationOptions = ({
               );
             }
           }}
-          onColor={activeBackgroundColor}
+          onColor={activeCounter.color}
           pendingOffColor={undefined}
           pendingOnColor={undefined}
           readOnly={undefined}
@@ -94,7 +93,7 @@ const NotificationOptions = ({
               );
             }
           }}
-          onColor={activeBackgroundColor}
+          onColor={activeCounter.color}
           pendingOffColor={undefined}
           pendingOnColor={undefined}
           readOnly={undefined}
@@ -135,7 +134,7 @@ const NotificationOptions = ({
               );
             }
           }}
-          onColor={activeBackgroundColor}
+          onColor={activeCounter.color}
           pendingOffColor={undefined}
           pendingOnColor={undefined}
           readOnly={undefined}

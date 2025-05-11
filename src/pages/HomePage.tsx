@@ -10,7 +10,6 @@ const HomePage = ({
   haptics,
   setLanguageDirection,
   languageDirection,
-  activeBackgroundColor,
   resetSingleCounter,
 }) => {
   return (
@@ -28,7 +27,6 @@ const HomePage = ({
       <CounterButton
         countersArr={countersArr}
         setAndStoreCounters={setAndStoreCounters}
-        activeBackgroundColor={activeBackgroundColor}
         setActiveCounter={setActiveCounter}
         activeCounter={activeCounter}
         setHaptics={setHaptics}

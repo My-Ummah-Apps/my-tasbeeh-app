@@ -96,8 +96,6 @@ function CounterNameAndNumber({
         ref={counterTextContainerRef}
         style={{
           backgroundColor: `${activeCounter.color}BF`,
-          // boxShadow: `0px 5px 20px ${activeBackgroundColor}`,
-          // boxShadow: `0px 7px 10px 0px ${activeBackgroundColor}`,
         }}
       >
         <div className="single-counter-name-and-count-wrap">

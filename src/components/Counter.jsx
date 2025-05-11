@@ -3,15 +3,10 @@ import { Link } from "react-router-dom";
 import { direction } from "direction";
 
 const Counter = ({
-  setActiveCounter,
   setIsFormFilledSheetOpen,
   nextColor,
   invokeSetActiveCounter,
   counterItem,
-  setCurrentCounterName,
-  setcurrentCount,
-  setCounterTarget,
-  setcurrentCounterId,
   setActivePage,
 }) => {
   return (

@@ -8,7 +8,7 @@ import {
 } from "capacitor-native-settings";
 
 import { MdOutlineChevronRight } from "react-icons/md";
-import { FaHandHoldingHeart } from "react-icons/fa";
+
 import { Sheet } from "react-modal-sheet";
 
 // import { FaJar } from "react-icons/fa6";
@@ -21,8 +21,8 @@ import AboutUs from "../components/AboutUs";
 // import { PURCHASE_TYPE } from "cordova-plugin-purchases";
 import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
-import { StatusBar, Style } from "@capacitor/status-bar";
-import { Toast } from "@capacitor/toast";
+import { Style } from "@capacitor/status-bar";
+
 import {
   setStatusAndNavBarBackgroundColor,
   showConfirmDialog,
@@ -46,7 +46,7 @@ const SettingsPage = ({
   haptics,
   setDailyCounterReset,
   dailyCounterReset,
-  activeBackgroundColor,
+  activeCounter,
 }) => {
   const [theme, setTheme] = useState(JSON.parse(localStorage.getItem("theme")));
 
@@ -221,7 +221,7 @@ const SettingsPage = ({
         <ThemeOptions
           formTheme={formTheme}
           theme={theme}
-          activeBackgroundColor={activeBackgroundColor}
+          activeCounter={activeCounter}
           setTheme={setTheme}
         />
       */}
@@ -238,7 +238,7 @@ const SettingsPage = ({
               <FaHandHoldingHeart
                 style={{
                   fontSize: "32px",
-                  color: activeBackgroundColor,
+                  color: activeCounter.color,
                 }}
               />
               <div className="support-box-text-wrap">
@@ -254,14 +254,14 @@ const SettingsPage = ({
               <p
                 className="tip-jar-box-first-line-of-text tip-jar-box-text"
                 style={{
-                  backgroundColor: activeBackgroundColor,
+                  backgroundColor: activeCounter.color,
                 }}
               ></p>
 
               <p
                 className="tip-jar-box-text"
                 style={{
-                  backgroundColor: activeBackgroundColor,
+                  backgroundColor: activeCounter.color,
                 }}
               >
                 MyUmmahApps Ltd provides free, open source applications for the
@@ -271,7 +271,7 @@ const SettingsPage = ({
               <p
                 className="tip-jar-box-text"
                 style={{
-                  backgroundColor: activeBackgroundColor,
+                  backgroundColor: activeCounter.color,
                 }}
               >
                 {" "}
@@ -282,7 +282,7 @@ const SettingsPage = ({
               <p
                 className="tip-jar-box-text"
                 style={{
-                  backgroundColor: activeBackgroundColor,
+                  backgroundColor: activeCounter.color,
                 }}
               >
                 {" "}
@@ -352,7 +352,7 @@ const SettingsPage = ({
                     setAfternoonNotification={setAfternoonNotification}
                     eveningNotification={eveningNotification}
                     setEveningNotification={setEveningNotification}
-                    activeBackgroundColor={activeBackgroundColor}
+                    activeCounter={activeCounter}
                   />
                 </Sheet.Content>
               </Sheet.Container>
@@ -400,7 +400,7 @@ const SettingsPage = ({
                   document.body.classList.remove("dark");
                 }
               }}
-              onColor={activeBackgroundColor}
+              onColor={activeCounter.color}
               pendingOffColor={undefined}
               pendingOnColor={undefined}
               readOnly={undefined}
@@ -433,7 +433,7 @@ const SettingsPage = ({
                     localStorage.setItem("haptics", JSON.stringify(true));
                   }
                 }}
-                onColor={activeBackgroundColor}
+                onColor={activeCounter.color}
                 pendingOffColor={undefined}
                 pendingOnColor={undefined}
                 readOnly={undefined}
@@ -472,7 +472,7 @@ const SettingsPage = ({
                   );
                 }
               }}
-              onColor={activeBackgroundColor}
+              onColor={activeCounter.color}
               pendingOffColor={undefined}
               pendingOnColor={undefined}
               readOnly={undefined}

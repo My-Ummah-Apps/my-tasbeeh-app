@@ -23,7 +23,6 @@ import SettingsPage from "./pages/SettingsPage";
 import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
 import SheetCloseBtn from "./components/SheetCloseBtn";
 import {
-  ActiveCounter,
   counterObjType,
   InitialiseNotificationParams,
   NotificationParams,
@@ -45,7 +44,6 @@ function App() {
     target: 0,
     color: "",
     isActive: false,
-    target: 0,
     id: "",
   });
   const [morningNotification, setMorningNotification] = useState(false);
@@ -61,10 +59,10 @@ function App() {
   const [lastLaunchDate, setLastLaunchDate] = useState("");
 
   const setAndStoreCounters = (arr: counterObjType[]) => {
-    console.log("ARR RECEIVED: ", arr);
-
-    setCountersArr(arr);
     localStorage.setItem("localSavedCountersArray", JSON.stringify(arr));
+    setCountersArr(arr);
+    const activeCounter = arr.find((counter) => counter.isActive === true);
+    setActiveCounter(activeCounter);
   };
 
   useEffect(() => {
@@ -287,10 +285,10 @@ function App() {
     const storedActiveCounter = counters.find(
       (counter) => counter.isActive === true
     );
-    if (storedActiveCounter) {
-      // invokeSetActiveCounter(storedActiveCounter.id);
-      setActiveCounter(storedActiveCounter);
-    }
+    // if (storedActiveCounter) {
+    //   // invokeSetActiveCounter(storedActiveCounter.id);
+    //   setActiveCounter(storedActiveCounter);
+    // }
 
     setAndStoreCounters(counters);
 
@@ -306,7 +304,7 @@ function App() {
       id: uuidv4(),
     };
     const newArray = [...countersArr, newCounter];
-    if (newArray.length == 1) {
+    if (newArray.length === 1) {
       newCounter.isActive = true;
       setActiveCounter((prev) => ({ ...prev, count: 0 }));
     }
@@ -319,8 +317,8 @@ function App() {
     ).map((counter) => ({ ...counter, count: 0 }));
 
     setAndStoreCounters(resettedCounters);
-    // setActiveCounterNumber(0);
-    setActiveCounter((prev) => ({ ...prev, count: 0 }));
+
+    // setActiveCounter((prev) => ({ ...prev, count: 0 }));
   };
 
   const modifyTheCountersArray = (
@@ -347,8 +345,6 @@ function App() {
   const invokeSetActiveCounter = (id: string) => {
     const updatedCountersArr: counterObjType[] = countersArr.map((counter) => {
       if (counter.id === id) {
-        console.log("TRIGGERED");
-
         setActiveCounter({
           counter: counter.counter,
           count: counter.count,
@@ -359,9 +355,8 @@ function App() {
         });
 
         return { ...counter, isActive: true };
-      } else {
-        return { ...counter, isActive: false };
       }
+      return { ...counter, isActive: false };
     });
     // ! TODO: The below if else statement has been duplicated in the CounterNameAndNumber component for a quick workaround due to text scrolling in the wrong direction if this function wasn't triggered (ie, the user launched the app which would land them on the homescreen), this duplication needs to be resolved in the future
     if (direction(activeCounter.counter) === "ltr") {
@@ -372,17 +367,14 @@ function App() {
     setAndStoreCounters(updatedCountersArr);
   };
 
-  const resetSingleCounter = (id) => {
-    countersArr.map((counterItem1) => {
-      if (counterItem1.id == id) {
-        counterItem1.count = 0;
-        // setActiveCounterNumber(0);
-        setActiveCounter((prev) => ({ ...prev, count: 0 }));
-        // setLocalSavedCountersArray(localSavedCountersArray);
-        setAndStoreCounters(countersArr);
+  const resetSingleCounter = (id: string) => {
+    const updatedCountersArr = countersArr.map((counter) => {
+      if (counter.id === id) {
+        return { ...counter, count: 0 };
       }
+      return { ...counter };
     });
-    setAndStoreCounters(countersArr);
+    setAndStoreCounters(updatedCountersArr);
   };
 
   const showOneCounterNeededAlert = async () => {
@@ -427,7 +419,6 @@ function App() {
               element={
                 <SettingsPage
                   // iapProducts={iapProducts}
-                  setActiveCounter={setActiveCounter}
                   resetAllCounters={resetAllCounters}
                   setMorningNotification={setMorningNotification}
                   morningNotification={morningNotification}
@@ -466,6 +457,7 @@ function App() {
               element={
                 <CountersPage
                   setActivePage={setActivePage}
+                  activeCounter={activeCounter}
                   countersArr={countersArr}
                   invokeSetActiveCounter={invokeSetActiveCounter}
                   resetSingleCounter={resetSingleCounter}
@@ -478,7 +470,11 @@ function App() {
               }
             />
           </Routes>
-          <NavBar setActivePage={setActivePage} activePage={activePage} />
+          <NavBar
+            activeCounterColor={activeCounter.color}
+            setActivePage={setActivePage}
+            activePage={activePage}
+          />
         </section>
       </BrowserRouter>
       <Sheet
@@ -503,7 +499,6 @@ function App() {
                 {item.changes.map((item) => (
                   <section
                     key={item.heading}
-                    // style={{ border: `1px solid ${activeBackgroundColor}` }}
                     className="changelog-individual-change-wrap"
                   >
                     <h2>{item.heading}</h2>
