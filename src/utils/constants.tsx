@@ -125,3 +125,10 @@ export const setStatusAndNavBarBackgroundColor = async (
   await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
   await StatusBar.setStyle({ style: textColor });
 };
+
+export const showerAlert = async (title: string, message: string) => {
+  await Dialog.alert({
+    title: title,
+    message: message,
+  });
+};

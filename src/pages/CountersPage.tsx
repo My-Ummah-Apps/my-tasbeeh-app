@@ -7,10 +7,8 @@ import Form from "../components/Form";
 import { counterObjType } from "../utils/types";
 
 function CountersPage({
-  setActiveCounter,
   activeCounter,
   setAndStoreCounters,
-  resetSingleCounter,
   countersArr,
   modifyCounter,
   addCounter,
@@ -41,9 +39,6 @@ function CountersPage({
   let nextColorIndex = 0;
   let nextColor;
 
-  const [currentCounterName, setCurrentCounterName] = useState(0);
-  const [currentCount, setcurrentCount] = useState(0);
-  const [currentCounterTarget, setCounterTarget] = useState(0);
   const [editingCounterId, setEditingCounterId] = useState(0);
 
   return (
@@ -77,15 +72,8 @@ function CountersPage({
               editingCounterId={editingCounterId}
               setShowForm={setShowForm}
               modifyCounter={modifyCounter}
-              activeCounter={activeCounter}
-              currentCounterName={currentCounterName}
-              currentCount={currentCount}
-              currentCounterTarget={currentCounterTarget}
-              countersArr={countersArr}
               addCounter={addCounter}
-              resetSingleCounter={resetSingleCounter}
               deleteSingleCounter={deleteSingleCounter}
-              setcurrentCount={setcurrentCount}
             />
             {/* </Sheet.Scroller> */}
           </Sheet.Content>
@@ -104,7 +92,6 @@ function CountersPage({
             <CountersListItem
               key={counterItem.id}
               setAndStoreCounters={setAndStoreCounters}
-              setActiveCounter={setActiveCounter}
               countersArr={countersArr}
               setEditingCounterId={setEditingCounterId}
               setActivePage={setActivePage}

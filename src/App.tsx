@@ -12,6 +12,7 @@ import { direction } from "direction";
 import {
   DEFAULT_COUNTERS,
   setStatusAndNavBarBackgroundColor,
+  showerAlert,
   showToast,
   TWEEN_CONFIG,
 } from "./utils/constants";
@@ -366,7 +367,7 @@ function App() {
     setAndStoreCounters(updatedCountersArr);
   };
 
-  const resetSingleCounter = (id: string) => {
+  const resetSingleCounter = async (id: string) => {
     const updatedCountersArr = countersArr.map((counter) => {
       if (counter.id === id) {
         return { ...counter, count: 0 };
@@ -376,29 +377,18 @@ function App() {
     setAndStoreCounters(updatedCountersArr);
   };
 
-  const showOneCounterNeededAlert = async () => {
-    await Dialog.alert({
-      title: "Unable to delete Tasbeeh",
-      message: "Atleast one tasbeeh must exist",
-    });
-  };
-
   const deleteSingleCounter = (id: number) => {
-    const showCounterDeleteToast = async () => {
-      await showToast("Tasbeeh deleted", "top", "short");
-    };
-
     const filteredArray = countersArr.filter(
       (counterItem) => counterItem.id !== id
     );
     if (filteredArray.length === 0) {
-      showOneCounterNeededAlert();
+      showerAlert("Unable to delete Tasbeeh", "Atleast one tasbeeh must exist");
       return;
     }
     if (filteredArray.length > 0) {
       filteredArray[0].isActive = true;
       setActiveCounter((prev) => ({ ...prev, count: filteredArray[0].count }));
-      showCounterDeleteToast();
+      showToast("Tasbeeh deleted", "top", "short");
     }
 
     setAndStoreCounters(filteredArray);
@@ -456,11 +446,9 @@ function App() {
                   setActivePage={setActivePage}
                   activeCounter={activeCounter}
                   countersArr={countersArr}
-                  resetSingleCounter={resetSingleCounter}
                   modifyCounter={modifyCounter}
                   setAndStoreCounters={setAndStoreCounters}
                   addCounter={addCounter}
-                  resetAllCounters={resetAllCounters}
                   deleteSingleCounter={deleteSingleCounter}
                 />
               }

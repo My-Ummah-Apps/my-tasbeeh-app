@@ -11,7 +11,6 @@ const hapticsVibrate = async () => {
 };
 
 function CounterButton({
-  setActiveCounter,
   activeCounter,
   setAndStoreCounters,
   countersArr,
@@ -33,7 +32,7 @@ function CounterButton({
 
     setAndStoreCounters(updatedCountersArr);
 
-    if (activeCounter.count === activeCounter.target - 1) {
+    if (activeCounter.count === activeCounter.target) {
       if (haptics === true && Capacitor.isNativePlatform()) {
         setHaptics(false);
 
