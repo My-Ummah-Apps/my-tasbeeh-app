@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
-import { Dialog } from "@capacitor/dialog";
 import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
-import { direction } from "direction";
 import {
   DEFAULT_COUNTERS,
   setStatusAndNavBarBackgroundColor,
@@ -340,9 +338,10 @@ function App() {
   };
 
   const resetAllCounters = () => {
-    const resettedCounters = JSON.parse(
-      localStorage.getItem("localSavedCountersArray")
-    ).map((counter) => ({ ...counter, count: 0 }));
+    const resettedCounters = countersArr.map((counter: counterObjType) => ({
+      ...counter,
+      count: 0,
+    }));
 
     setAndStoreCounters(resettedCounters);
   };
@@ -369,15 +368,12 @@ function App() {
 
   const resetSingleCounter = async (id: string) => {
     const updatedCountersArr = countersArr.map((counter) => {
-      if (counter.id === id) {
-        return { ...counter, count: 0 };
-      }
-      return { ...counter };
+      return counter.id === id ? { ...counter, count: 0 } : { ...counter };
     });
     setAndStoreCounters(updatedCountersArr);
   };
 
-  const deleteSingleCounter = (id: number) => {
+  const deleteSingleCounter = (id: string) => {
     const filteredArray = countersArr.filter(
       (counterItem) => counterItem.id !== id
     );
@@ -385,11 +381,12 @@ function App() {
       showerAlert("Unable to delete Tasbeeh", "Atleast one tasbeeh must exist");
       return;
     }
-    if (filteredArray.length > 0) {
-      filteredArray[0].isActive = true;
-      setActiveCounter((prev) => ({ ...prev, count: filteredArray[0].count }));
-      showToast("Tasbeeh deleted", "top", "short");
-    }
+    // ! Why is the first item in the filtered array being set to the active item?
+    // if (filteredArray.length > 0) {
+    filteredArray[0].isActive = true;
+    setActiveCounter((prev) => ({ ...prev, count: filteredArray[0].count }));
+    showToast("Tasbeeh deleted", "top", "short");
+    // }
 
     setAndStoreCounters(filteredArray);
   };

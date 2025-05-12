@@ -118,17 +118,17 @@ export const showToast = async (
   });
 };
 
+export const showerAlert = async (title: string, message: string) => {
+  await Dialog.alert({
+    title: title,
+    message: message,
+  });
+};
+
 export const setStatusAndNavBarBackgroundColor = async (
   backgroundColor: string,
   textColor: Style
 ) => {
   await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
   await StatusBar.setStyle({ style: textColor });
-};
-
-export const showerAlert = async (title: string, message: string) => {
-  await Dialog.alert({
-    title: title,
-    message: message,
-  });
 };
