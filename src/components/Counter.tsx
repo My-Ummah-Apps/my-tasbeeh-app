@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { direction } from "direction";
 
 const Counter = ({
+  setEditingCounterId,
   setShowForm,
   setAddNewCounter,
   nextColor,
@@ -16,9 +17,6 @@ const Counter = ({
         className="single-counter-wrap"
         style={{
           backgroundColor: nextColor + "BF",
-          // backgroundColor: nextColor + "FF",
-          // color: "black",
-          // backgroundColor: nextColor,
         }}
         onClick={() => {
           invokeSetActiveCounter(counterItem.id);
@@ -54,18 +52,8 @@ const Counter = ({
           className="edit-btn-wrap"
           onClick={(e) => {
             e.stopPropagation();
-            // setCurrentCounterName(counterItem.counter);
-            // setcurrentCount(counterItem.count);
-            // setCounterTarget(counterItem.target);
-            // setcurrentCounterId(counterItem.id);
-            // setActiveCounter({
-            //   counterName: counterItem.counter,
-            //   count: counterItem.count,
-            //   target: counterItem.target,
-            //   color: counterItem.id,
-            // });
             setAddNewCounter(false);
-            invokeSetActiveCounter(counterItem.id);
+            setEditingCounterId(counterItem.id);
             setShowForm(true);
           }}
         >
@@ -76,7 +64,6 @@ const Counter = ({
           style={{
             backgroundColor: nextColor,
             width: (counterItem.count / counterItem.target) * 100 + "%",
-            // width: singleCounterStyles(count, target),
           }}
         ></div>
       </div>

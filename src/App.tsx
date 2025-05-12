@@ -61,7 +61,7 @@ function App() {
     localStorage.setItem("localSavedCountersArray", JSON.stringify(arr));
     setCountersArr(arr);
     const activeCounter = arr.find((counter) => counter.isActive === true);
-    setActiveCounter(activeCounter);
+    setActiveCounter(activeCounter ?? { ...DEFAULT_COUNTERS[0] });
   };
 
   useEffect(() => {
@@ -198,41 +198,41 @@ function App() {
     }
   };
 
-  const notifications = [
-    {
-      morningNotification: {
-        storageKey: "morning-notification",
-        id: 1,
-        title: "Morning Reminder",
-        body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
-        hour: 8,
-        minute: 0,
-        setState: setMorningNotification,
-      },
-    },
-    {
-      afternoonNotification: {
-        storageKey: "afternoon-notification",
-        id: 2,
-        title: "Afternoon Reminder",
-        body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
-        hour: 14,
-        minute: 0,
-        setState: setAfternoonNotification,
-      },
-    },
-    {
-      eveningNotification: {
-        storageKey: "evening-notification",
-        id: 3,
-        title: "Evening Reminder",
-        body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
-        hour: 19,
-        minute: 0,
-        setState: setEveningNotification,
-      },
-    },
-  ];
+  // const notifications = [
+  //   {
+  //     morningNotification: {
+  //       storageKey: "morning-notification",
+  //       id: 1,
+  //       title: "Morning Reminder",
+  //       body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
+  //       hour: 8,
+  //       minute: 0,
+  //       setState: setMorningNotification,
+  //     },
+  //   },
+  //   {
+  //     afternoonNotification: {
+  //       storageKey: "afternoon-notification",
+  //       id: 2,
+  //       title: "Afternoon Reminder",
+  //       body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
+  //       hour: 14,
+  //       minute: 0,
+  //       setState: setAfternoonNotification,
+  //     },
+  //   },
+  //   {
+  //     eveningNotification: {
+  //       storageKey: "evening-notification",
+  //       id: 3,
+  //       title: "Evening Reminder",
+  //       body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
+  //       hour: 19,
+  //       minute: 0,
+  //       setState: setEveningNotification,
+  //     },
+  //   },
+  // ];
 
   useEffect(() => {
     (async () => {
@@ -312,38 +312,30 @@ function App() {
         counters = storedCounters;
       }
     } else if (!storedCounters || storedCounters.length === 0) {
-      counters = DEFAULT_COUNTERS;
+      counters = [...DEFAULT_COUNTERS];
       setAndStoreCounters(counters);
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
 
-    const storedActiveCounter = counters.find(
-      (counter) => counter.isActive === true
-    );
-    // if (storedActiveCounter) {
-    //   // invokeSetActiveCounter(storedActiveCounter.id);
-    //   setActiveCounter(storedActiveCounter);
-    // }
-
     setAndStoreCounters(counters);
-
-    console.log("storedActiveCounter: ", storedActiveCounter);
   }, []);
 
-  const addCounter = (counterToAdd, target) => {
-    const newCounter = {
+  const addCounter = (counterToAdd: string, target: number) => {
+    const newCounter: counterObjType = {
       counter: counterToAdd,
       count: 0,
+      color: "",
       isActive: false,
       target,
       id: uuidv4(),
     };
-    const newArray = [...countersArr, newCounter];
-    if (newArray.length === 1) {
+    const updatedCountersArr = [...countersArr, newCounter];
+    // ! Below may not be required, test and remove if needed
+    if (updatedCountersArr.length === 1) {
       newCounter.isActive = true;
-      setActiveCounter((prev) => ({ ...prev, count: 0 }));
+      // setActiveCounter((prev) => ({ ...prev, count: 0 }));
     }
-    setAndStoreCounters(newArray);
+    setAndStoreCounters(updatedCountersArr);
   };
 
   const resetAllCounters = () => {
@@ -352,29 +344,26 @@ function App() {
     ).map((counter) => ({ ...counter, count: 0 }));
 
     setAndStoreCounters(resettedCounters);
-
-    // setActiveCounter((prev) => ({ ...prev, count: 0 }));
   };
 
-  const modifyTheCountersArray = (
+  const modifyCounter = (
     id: string,
     modifiedCounterName: string,
     modifiedCount: number,
     modifiedTarget: number
   ) => {
-    countersArr.map((counterItem) => {
-      if (counterItem.id == id && counterItem.isActive) {
-        // setActiveCounterNumber(Number(modifiedCount));
-        setActiveCounter((prev) => ({ ...prev, count: Number(modifiedCount) }));
-      }
-      if (counterItem.id == id) {
-        counterItem.counter = modifiedCounterName;
-        counterItem.count = Number(modifiedCount);
-        counterItem.target = Number(modifiedTarget);
-      }
+    const updatedCountersArr = countersArr.map((counterItem) => {
+      return counterItem.id === id
+        ? {
+            ...counterItem,
+            counter: modifiedCounterName,
+            count: modifiedCount,
+            target: modifiedTarget,
+          }
+        : { ...counterItem };
     });
 
-    setAndStoreCounters(countersArr);
+    setAndStoreCounters(updatedCountersArr);
   };
 
   const invokeSetActiveCounter = (id: string) => {
@@ -427,7 +416,7 @@ function App() {
     const filteredArray = countersArr.filter(
       (counterItem) => counterItem.id !== id
     );
-    if (filteredArray.length == 0) {
+    if (filteredArray.length === 0) {
       showOneCounterNeededAlert();
       return;
     }
@@ -441,7 +430,7 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("COUNRERS ARR ON HIOMEPAGEL: ", countersArr);
+    console.log("COUNRERS ARR IN APP.TSX: ", countersArr);
   }, [countersArr]);
 
   return (
@@ -494,7 +483,7 @@ function App() {
                   countersArr={countersArr}
                   invokeSetActiveCounter={invokeSetActiveCounter}
                   resetSingleCounter={resetSingleCounter}
-                  modifyTheCountersArray={modifyTheCountersArray}
+                  modifyCounter={modifyCounter}
                   setAndStoreCounters={setAndStoreCounters}
                   addCounter={addCounter}
                   resetAllCounters={resetAllCounters}

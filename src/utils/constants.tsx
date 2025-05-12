@@ -42,7 +42,7 @@ export const DEFAULT_COUNTERS = [
   {
     counter: "Allahu-Akbar",
     count: 0,
-    color: "AB47BC",
+    color: "#AB47BC",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -51,7 +51,7 @@ export const DEFAULT_COUNTERS = [
   {
     counter: "Astagfirullah",
     count: 0,
-    color: "7E57C2",
+    color: "#7E57C2",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -59,7 +59,7 @@ export const DEFAULT_COUNTERS = [
   {
     counter: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
     count: 0,
-    color: "5C6BC0",
+    color: "#5C6BC0",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -67,7 +67,7 @@ export const DEFAULT_COUNTERS = [
   {
     counter: "La hawla wa la quwwata illa billah",
     count: 0,
-    color: "29B6F6",
+    color: "#29B6F6",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -75,7 +75,7 @@ export const DEFAULT_COUNTERS = [
   {
     counter: "La ilaha illallah",
     count: 0,
-    color: "26C6DA",
+    color: "#26C6DA",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -83,7 +83,7 @@ export const DEFAULT_COUNTERS = [
   {
     counter: "Subhan-Allahi wa bihamdih",
     count: 0,
-    color: "66BB6A",
+    color: "#66BB6A",
     isActive: false,
     target: 50,
     id: uuidv4(),

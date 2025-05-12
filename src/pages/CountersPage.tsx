@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Sheet } from "react-modal-sheet";
 import { MdAdd } from "react-icons/md";
 import Counter from "../components/Counter";
@@ -11,7 +11,7 @@ function CountersPage({
   resetSingleCounter,
   countersArr,
   invokeSetActiveCounter,
-  modifyTheCountersArray,
+  modifyCounter,
   addCounter,
   deleteSingleCounter,
   setActivePage,
@@ -43,7 +43,11 @@ function CountersPage({
   const [currentCounterName, setCurrentCounterName] = useState(0);
   const [currentCount, setcurrentCount] = useState(0);
   const [currentCounterTarget, setCounterTarget] = useState(0);
-  const [currentCounterId, setcurrentCounterId] = useState(0);
+  const [editingCounterId, setEditingCounterId] = useState(0);
+
+  useEffect(() => {
+    console.log("currentCounterId: ", editingCounterId);
+  }, [editingCounterId]);
 
   return (
     <div className={`counters-page-wrap`}>
@@ -72,13 +76,14 @@ function CountersPage({
             <Form
               activeCounter={activeCounter}
               addNewCounter={addNewCounter}
+              editingCounterId={editingCounterId}
               setShowForm={setShowForm}
-              modifyTheCountersArray={modifyTheCountersArray}
+              modifyCounter={modifyCounter}
               activeCounter={activeCounter}
               currentCounterName={currentCounterName}
               currentCount={currentCount}
               currentCounterTarget={currentCounterTarget}
-              currentCounterId={currentCounterId}
+              currentCounterId={editingCounterId}
               // setLocalSavedCountersArray={setLocalSavedCountersArray}
               countersArr={countersArr}
               addCounter={addCounter}
@@ -101,10 +106,11 @@ function CountersPage({
             : (nextColorIndex += 1);
           return (
             <Counter
+              key={counterItem.id}
+              setEditingCounterId={setEditingCounterId}
               setActivePage={setActivePage}
               setAddNewCounter={setAddNewCounter}
               setActiveCounter={setActiveCounter}
-              key={counterItem.id}
               setShowForm={setShowForm}
               nextColor={nextColor}
               invokeSetActiveCounter={invokeSetActiveCounter}
@@ -112,7 +118,7 @@ function CountersPage({
               setCurrentCounterName={setCurrentCounterName}
               setcurrentCount={setcurrentCount}
               setCounterTarget={setCounterTarget}
-              setcurrentCounterId={setcurrentCounterId}
+              setcurrentCounterId={setEditingCounterId}
             />
           );
         })}

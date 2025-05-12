@@ -980,6 +980,7 @@ input[type="number"] {
 
 .form-filled-save-and-cancel-btn-wrap,
 .form-blank-save-and-cancel-btn-wrap {
+  justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -990,8 +991,8 @@ input[type="number"] {
   margin: 0rem 0.5rem 0rem 0.5rem;
 }
 
-.form-filled-save-and-cancel-btn-wrap > div,
-.form-blank-save-and-cancel-btn-wrap > div {
+.form-filled-save-and-cancel-btn-wrap > button,
+.form-blank-save-and-cancel-btn-wrap > button {
   padding: 1rem 0;
   border-radius: 0.7rem;
   flex: 1;
@@ -1000,6 +1001,7 @@ input[type="number"] {
 
 .form-blank-save-btn,
 .form-filled-save-btn {
+  border: none;
   color: #fff;
 }
 
