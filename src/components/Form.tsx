@@ -12,6 +12,7 @@ interface Form {
 }
 
 function Form({
+  countersArr,
   editingCounterId,
   addNewCounter,
   addCounter,
@@ -27,14 +28,20 @@ function Form({
   const showTargetAlert = useRef<HTMLDivElement>(null);
   const showCountAlert = useRef<HTMLDivElement | null>(null);
 
+  const clickedCounter = countersArr.find(
+    (counter: counterObjType) => counter.id === editingCounterId
+  );
+
+  console.log("clickedCounter: ", clickedCounter);
+
   const [counterNameInputValue, setCounterNameInputValue] = useState<string>(
-    addNewCounter ? "" : activeCounter.counter
+    addNewCounter ? "" : clickedCounter.counter
   );
   const [currentCountInputValue, setcurrentCountInputValue] = useState<
     number | string
-  >(addNewCounter ? 0 : activeCounter.count);
+  >(addNewCounter ? 0 : clickedCounter.count);
   const [targetInputValue, setTargetInputValue] = useState<number | string>(
-    addNewCounter ? 0 : activeCounter.target
+    addNewCounter ? 0 : clickedCounter.target
   );
 
   const increaseTextAreaHeight = (e: any) => {
@@ -70,7 +77,6 @@ function Form({
           currentCountInputValue,
           targetInputValue
         );
-
     setShowForm(false);
   };
 

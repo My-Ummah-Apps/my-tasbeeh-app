@@ -12,7 +12,7 @@ interface CounterNameAndNumberProps {
   languageDirection: any;
 }
 
-function CounterNameAndNumber({
+function ActiveCounter({
   activeCounter,
   countersArr,
   setLanguageDirection,
@@ -56,37 +56,31 @@ function CounterNameAndNumber({
   const mScrollRef = useRef(null);
 
   const [scroll, setScroll] = useState();
-  // const [languageDirection, setLanguageDirection] = useState("");
 
   const scrollingStyle = { overflow: "hidden" };
-  // const [overflow, setOverflow] = useState({ overflow: "hidden" });
 
   useEffect(() => {
+    console.log("USEEFFECT TRIGGERED FOR LTR RTL");
+
     const counterTextContainerWidth =
       counterTextContainerRef.current.clientWidth;
 
-    if (languageDirection !== "ltr" && languageDirection !== "rtl") {
-      if (direction(textRef.current.innerText) === "ltr") {
-        setLanguageDirection("ltr");
-      } else if (direction(textRef.current.innerText) === "rtl") {
-        setLanguageDirection("rtl");
-      }
+    if (direction(activeCounter.counter) === "ltr") {
+      setLanguageDirection("ltr");
+    } else if (direction(activeCounter.counter) === "rtl") {
+      setLanguageDirection("rtl");
     }
 
     if (textRef.current.clientWidth < counterTextContainerWidth) {
       setScroll(false);
-
-      // setOverflow({ overflow: "unset" });
     } else if (textRef.current.clientWidth > counterTextContainerWidth) {
       setScroll(true);
       const scrollSpeed = textRef.current.innerText.length * 0.3;
       mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
-
-      // setOverflow({ overflow: "unset" });
     }
   }, [textRef.current]);
   // ${showAnimation ? "fade-down-animation" : ""}
-  // debugger;
+
   // TODO: Un-duplicate styles in below spans which hold currentName
   return (
     <div className="single-counter-wrap-parent">
@@ -162,7 +156,7 @@ function CounterNameAndNumber({
           data-testid="counter-reset-btn"
           className="reset-btn-wrap"
           onClick={(e) => {
-            e.stopPropagation();
+            // e.stopPropagation();
             resetSingleCounter(currentCounterId);
           }}
         >
@@ -172,7 +166,6 @@ function CounterNameAndNumber({
         <div
           style={{
             backgroundColor: activeCounter.color,
-
             width:
               currentCounterTarget > 0
                 ? `${(currentNumber / currentCounterTarget) * 100}%`
@@ -197,4 +190,4 @@ function CounterNameAndNumber({
   );
 }
 
-export default CounterNameAndNumber;
+export default ActiveCounter;

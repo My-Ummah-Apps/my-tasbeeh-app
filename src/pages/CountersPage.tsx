@@ -1,16 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { Sheet } from "react-modal-sheet";
 import { MdAdd } from "react-icons/md";
-import Counter from "../components/Counter";
+import CountersListItem from "../components/CountersListItem";
 import { materialColors, TWEEN_CONFIG } from "../utils/constants";
 import Form from "../components/Form";
+import { counterObjType } from "../utils/types";
 
 function CountersPage({
   setActiveCounter,
   activeCounter,
+  setAndStoreCounters,
   resetSingleCounter,
   countersArr,
-  invokeSetActiveCounter,
   modifyCounter,
   addCounter,
   deleteSingleCounter,
@@ -45,10 +46,6 @@ function CountersPage({
   const [currentCounterTarget, setCounterTarget] = useState(0);
   const [editingCounterId, setEditingCounterId] = useState(0);
 
-  useEffect(() => {
-    console.log("currentCounterId: ", editingCounterId);
-  }, [editingCounterId]);
-
   return (
     <div className={`counters-page-wrap`}>
       <div className="counters-page-header">
@@ -74,6 +71,7 @@ function CountersPage({
           <Sheet.Content>
             {/* <Sheet.Scroller> */}{" "}
             <Form
+              countersArr={countersArr}
               activeCounter={activeCounter}
               addNewCounter={addNewCounter}
               editingCounterId={editingCounterId}
@@ -83,8 +81,6 @@ function CountersPage({
               currentCounterName={currentCounterName}
               currentCount={currentCount}
               currentCounterTarget={currentCounterTarget}
-              currentCounterId={editingCounterId}
-              // setLocalSavedCountersArray={setLocalSavedCountersArray}
               countersArr={countersArr}
               addCounter={addCounter}
               resetSingleCounter={resetSingleCounter}
@@ -98,27 +94,24 @@ function CountersPage({
       </Sheet>
 
       <div className="counters-wrap">
-        {countersArr.map((counterItem) => {
+        {countersArr.map((counterItem: counterObjType) => {
           nextColor = materialColors[nextColorIndex];
           counterItem.color = nextColor;
           nextColorIndex == materialColors.length - 1
             ? (nextColorIndex = 0)
             : (nextColorIndex += 1);
           return (
-            <Counter
+            <CountersListItem
               key={counterItem.id}
+              setAndStoreCounters={setAndStoreCounters}
+              setActiveCounter={setActiveCounter}
+              countersArr={countersArr}
               setEditingCounterId={setEditingCounterId}
               setActivePage={setActivePage}
               setAddNewCounter={setAddNewCounter}
-              setActiveCounter={setActiveCounter}
               setShowForm={setShowForm}
               nextColor={nextColor}
-              invokeSetActiveCounter={invokeSetActiveCounter}
               counterItem={counterItem}
-              setCurrentCounterName={setCurrentCounterName}
-              setcurrentCount={setcurrentCount}
-              setCounterTarget={setCounterTarget}
-              setcurrentCounterId={setEditingCounterId}
             />
           );
         })}

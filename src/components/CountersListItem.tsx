@@ -1,13 +1,16 @@
 import { MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { direction } from "direction";
+import { counterObjType } from "../utils/types";
+import { useState } from "react";
 
-const Counter = ({
+const CountersListItem = ({
+  setAndStoreCounters,
   setEditingCounterId,
+  countersArr,
   setShowForm,
   setAddNewCounter,
   nextColor,
-  invokeSetActiveCounter,
   counterItem,
   setActivePage,
 }) => {
@@ -19,7 +22,15 @@ const Counter = ({
           backgroundColor: nextColor + "BF",
         }}
         onClick={() => {
-          invokeSetActiveCounter(counterItem.id);
+          setEditingCounterId(counterItem.id);
+          const updatedCountersArr: counterObjType[] = countersArr.map(
+            (counter: counterObjType) => {
+              return counter.id === counterItem.id
+                ? { ...counter, isActive: true }
+                : { ...counter, isActive: false };
+            }
+          );
+          setAndStoreCounters(updatedCountersArr);
         }}
       >
         <div className="single-counter-name-and-count-wrap">
@@ -71,4 +82,4 @@ const Counter = ({
   );
 };
 
-export default Counter;
+export default CountersListItem;

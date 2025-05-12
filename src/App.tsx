@@ -366,31 +366,6 @@ function App() {
     setAndStoreCounters(updatedCountersArr);
   };
 
-  const invokeSetActiveCounter = (id: string) => {
-    const updatedCountersArr: counterObjType[] = countersArr.map((counter) => {
-      if (counter.id === id) {
-        setActiveCounter({
-          counter: counter.counter,
-          count: counter.count,
-          color: counter.color,
-          isActive: true,
-          target: counter.target,
-          id: counter.id,
-        });
-
-        return { ...counter, isActive: true };
-      }
-      return { ...counter, isActive: false };
-    });
-    // ! TODO: The below if else statement has been duplicated in the CounterNameAndNumber component for a quick workaround due to text scrolling in the wrong direction if this function wasn't triggered (ie, the user launched the app which would land them on the homescreen), this duplication needs to be resolved in the future
-    if (direction(activeCounter.counter) === "ltr") {
-      setLanguageDirection("ltr");
-    } else if (direction(activeCounter.counter) === "rtl") {
-      setLanguageDirection("rtl");
-    }
-    setAndStoreCounters(updatedCountersArr);
-  };
-
   const resetSingleCounter = (id: string) => {
     const updatedCountersArr = countersArr.map((counter) => {
       if (counter.id === id) {
@@ -481,7 +456,6 @@ function App() {
                   setActivePage={setActivePage}
                   activeCounter={activeCounter}
                   countersArr={countersArr}
-                  invokeSetActiveCounter={invokeSetActiveCounter}
                   resetSingleCounter={resetSingleCounter}
                   modifyCounter={modifyCounter}
                   setAndStoreCounters={setAndStoreCounters}

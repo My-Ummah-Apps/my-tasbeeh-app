@@ -1,8 +1,5 @@
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
-import { storeCounters } from "../utils/constants";
-
-import { useEffect } from "react";
-import { ActiveCounter, counterObjType } from "../utils/types";
+import { counterObjType } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 
 const hapticsImpactMedium = async () => {
@@ -24,9 +21,6 @@ function CounterButton({
   countersArr: counterObjType[];
   activeCounter: counterObjType;
 }) {
-  console.log("COUNTER BUTTON RENDERED, ACTIVECOUNTER IS: ", activeCounter);
-  // const incrementedCount = activeCounter.count +=1
-
   const setCounterAndHaptics = () => {
     const updatedCountersArr = countersArr.map((counter) => {
       const isActive = counter.isActive === activeCounter.isActive;
@@ -38,11 +32,6 @@ function CounterButton({
     });
 
     setAndStoreCounters(updatedCountersArr);
-
-    // setActiveCounter((prev: counterObjType) => ({
-    //   ...prev,
-    //   count: (prev.count += 1),
-    // }));
 
     if (activeCounter.count === activeCounter.target - 1) {
       if (haptics === true && Capacitor.isNativePlatform()) {

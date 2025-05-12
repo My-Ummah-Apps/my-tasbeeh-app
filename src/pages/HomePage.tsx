@@ -1,4 +1,4 @@
-import CounterNameAndNumber from "../components/CounterNameAndNumber";
+import ActiveCounter from "../components/ActiveCounter";
 import CounterButton from "../components/CounterButton";
 
 const HomePage = ({
@@ -17,7 +17,7 @@ const HomePage = ({
       <div className="home-page-header">
         <p>Home</p>
       </div>
-      <CounterNameAndNumber
+      <ActiveCounter
         activeCounter={activeCounter}
         resetSingleCounter={resetSingleCounter}
         setLanguageDirection={setLanguageDirection}
