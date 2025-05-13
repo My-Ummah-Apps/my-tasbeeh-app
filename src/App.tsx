@@ -366,13 +366,6 @@ function App() {
     setAndStoreCounters(updatedCountersArr);
   };
 
-  const resetSingleCounter = async (id: string) => {
-    const updatedCountersArr = countersArr.map((counter) => {
-      return counter.id === id ? { ...counter, count: 0 } : { ...counter };
-    });
-    setAndStoreCounters(updatedCountersArr);
-  };
-
   const deleteSingleCounter = (id: string) => {
     const filteredArray = countersArr.filter(
       (counterItem) => counterItem.id !== id
@@ -432,7 +425,6 @@ function App() {
                   haptics={haptics}
                   setLanguageDirection={setLanguageDirection}
                   languageDirection={languageDirection}
-                  resetSingleCounter={resetSingleCounter}
                 />
               }
             />

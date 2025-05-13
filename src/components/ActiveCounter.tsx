@@ -1,11 +1,11 @@
-// @ts-nocheck
 import { useRef, useEffect, useState } from "react";
 import { direction } from "direction";
 import { VscDebugRestart } from "react-icons/vsc";
 import { MdOutlineRestartAlt } from "react-icons/md";
+import { counterObjType } from "../utils/types";
 
 interface CounterNameAndNumberProps {
-  activeCounter: ActiveCounter;
+  activeCounter: counterObjType;
   countersArr: any;
   resetSingleCounter: any;
   setLanguageDirection: any;
@@ -14,42 +14,17 @@ interface CounterNameAndNumberProps {
 
 function ActiveCounter({
   activeCounter,
+  setAndStoreCounters,
   countersArr,
   setLanguageDirection,
   languageDirection,
-  resetSingleCounter,
 }: CounterNameAndNumberProps) {
-  // const [showAnimation, setShowAnimation] = useState(
-  //   sessionStorage.getItem("showAnimationMainPageCounter")
-  // );
-  // useEffect(() => {
-  //   if (sessionStorage.getItem("showAnimationMainPageCounter") == "false") {
-  //     setShowAnimation(false);
-  //   } else if (sessionStorage.getItem("showAnimationMainPageCounter") == null) {
-  //     setShowAnimation(true);
-
-  //     sessionStorage.setItem("showAnimationMainPageCounter", "false");
-  //   }
-  // }, []);
-
-  let currentName;
-  let currentNumber = 0;
-  let currentCounterTarget;
-  let currentCounterId: any;
-  let textOverflowProperty;
-  countersArr.map((counterItem: any) => {
-    if (counterItem.isActive == true) {
-      currentName = counterItem.counter;
-      currentCounterTarget = counterItem.target;
-
-      currentNumber = counterItem.count;
-      currentCounterId = counterItem.id;
-
-      currentName.length > 50
-        ? (textOverflowProperty = "ellipsis")
-        : (textOverflowProperty = "clip");
-    }
-  });
+  const resetSingleCounter = async (id: string) => {
+    const updatedCountersArr = countersArr.map((counter) => {
+      return counter.id === id ? { ...counter, count: 0 } : { ...counter };
+    });
+    setAndStoreCounters(updatedCountersArr);
+  };
 
   const counterTextContainerRef = useRef(null);
   const textRef = useRef(null);
@@ -57,11 +32,7 @@ function ActiveCounter({
 
   const [scroll, setScroll] = useState();
 
-  const scrollingStyle = { overflow: "hidden" };
-
   useEffect(() => {
-    console.log("USEEFFECT TRIGGERED FOR LTR RTL");
-
     const counterTextContainerWidth =
       counterTextContainerRef.current.clientWidth;
 
@@ -79,9 +50,13 @@ function ActiveCounter({
       mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
     }
   }, [textRef.current]);
-  // ${showAnimation ? "fade-down-animation" : ""}
 
-  // TODO: Un-duplicate styles in below spans which hold currentName
+  const counterNameStyles = {
+    textOverflow: activeCounter.counter.length > 50 ? "ellipsis" : "clip",
+    paddingRight: scroll && languageDirection === "ltr" ? "2rem" : "",
+    paddingLeft: scroll && languageDirection === "rtl" ? "2rem" : "",
+  };
+
   return (
     <div className="single-counter-wrap-parent">
       <div
@@ -97,8 +72,8 @@ function ActiveCounter({
             data-testid="counter-progress-percent-text"
             className="single-counter-count"
           >
-            {currentNumber <= currentCounterTarget
-              ? `${Math.floor((currentNumber / currentCounterTarget) * 100)}%`
+            {activeCounter.count <= activeCounter.target
+              ? `${Math.floor((activeCounter.count / activeCounter.target) * 100)}%`
               : "100%"}
           </div>
 
@@ -112,7 +87,6 @@ function ActiveCounter({
             ref={textRef}
           >
             <div className={scroll ? "scroll" : ""}>
-              {/* <div ref={mScrollRef} className={scroll ? "m-scroll" : ""}> */}
               <div
                 ref={mScrollRef}
                 className={`single-counter-text-wrap ${
@@ -123,30 +97,17 @@ function ActiveCounter({
                     : ""
                 }`}
               >
-                <span
-                  className="active-counter-name"
-                  style={{
-                    textOverflow: textOverflowProperty,
-                    paddingRight:
-                      scroll && languageDirection === "ltr" ? "2rem" : "",
-                    paddingLeft:
-                      scroll && languageDirection === "rtl" ? "2rem" : "",
-                  }}
-                >
-                  {currentName}
+                <span className="active-counter-name" style={counterNameStyles}>
+                  {activeCounter.counter}
                 </span>
-                <span
-                  className={scroll ? "active-counter-name" : "display-none"}
-                  style={{
-                    textOverflow: textOverflowProperty,
-                    paddingRight:
-                      scroll && languageDirection === "ltr" ? "2rem" : "",
-                    paddingLeft:
-                      scroll && languageDirection === "rtl" ? "2rem" : "",
-                  }}
-                >
-                  {currentName}
-                </span>
+                {scroll && (
+                  <span
+                    className={"active-counter-name"}
+                    style={counterNameStyles}
+                  >
+                    {activeCounter.counter}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -156,8 +117,7 @@ function ActiveCounter({
           data-testid="counter-reset-btn"
           className="reset-btn-wrap"
           onClick={(e) => {
-            // e.stopPropagation();
-            resetSingleCounter(currentCounterId);
+            resetSingleCounter(activeCounter.id);
           }}
         >
           <MdOutlineRestartAlt />
@@ -167,13 +127,10 @@ function ActiveCounter({
           style={{
             backgroundColor: activeCounter.color,
             width:
-              currentCounterTarget > 0
-                ? `${(currentNumber / currentCounterTarget) * 100}%`
+              activeCounter.target > 0
+                ? `${(activeCounter.count / activeCounter.target) * 100}%`
                 : "100%",
-
-            // width: singleCounterStyles(count, target),
           }}
-          // ${showAnimation ? "width-animation" : ""}
           className="single-counter-overlay"
         />
       </div>
@@ -183,7 +140,7 @@ function ActiveCounter({
         style={{ position: "absolute", opacity: 0 }}
       >
         <div ref={textRef}>
-          <span>{currentName}</span>
+          <span>{activeCounter.counter}</span>
         </div>
       </div>
     </div>

@@ -10,7 +10,6 @@ const HomePage = ({
   haptics,
   setLanguageDirection,
   languageDirection,
-  resetSingleCounter,
 }) => {
   return (
     <div className="main-page-wrap">
@@ -19,7 +18,7 @@ const HomePage = ({
       </div>
       <ActiveCounter
         activeCounter={activeCounter}
-        resetSingleCounter={resetSingleCounter}
+        setAndStoreCounters={setAndStoreCounters}
         setLanguageDirection={setLanguageDirection}
         languageDirection={languageDirection}
         countersArr={countersArr}
@@ -31,7 +30,6 @@ const HomePage = ({
         activeCounter={activeCounter}
         setHaptics={setHaptics}
         haptics={haptics}
-        countersArr={countersArr}
       />
     </div>
   );
