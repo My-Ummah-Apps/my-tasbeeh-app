@@ -27,15 +27,24 @@ import {
 
 // import ThemeOptions from "../components/ThemeOptions";
 
+interface SettingsageProps {
+  activeCounter: counterObjType;
+  setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
+  haptics: boolean | null;
+  resetAllCounters: () => void;
+  setDailyCounterReset: React.Dispatch<React.SetStateAction<boolean>>;
+  dailyCounterReset: boolean;
+}
+
 const SettingsPage = ({
   // iapProducts,
-  resetAllCounters,
+  activeCounter,
   setHaptics,
   haptics,
+  resetAllCounters,
   setDailyCounterReset,
   dailyCounterReset,
-  activeCounter,
-}) => {
+}: SettingsageProps) => {
   const [morningNotification, setMorningNotification] = useState(false);
   const [afternoonNotification, setAfternoonNotification] = useState(false);
   const [eveningNotification, setEveningNotification] = useState(false);

@@ -22,6 +22,8 @@ export type NotificationParams = {
   minute: number;
 };
 
+export type languageDirection = null | "rtl" | "ltr";
+
 // export type InitialiseNotificationParams = NotificationParams & {
 //   setState: React.Dispatch<React.SetStateAction<boolean>>;
 // };

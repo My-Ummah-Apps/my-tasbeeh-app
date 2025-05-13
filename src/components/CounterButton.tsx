@@ -10,16 +10,21 @@ const hapticsVibrate = async () => {
   await Haptics.vibrate({ duration: 1000 });
 };
 
-function CounterButton({
-  activeCounter,
-  setAndStoreCounters,
-  countersArr,
-  setHaptics,
-  haptics,
-}: {
+interface CounterButtonProps {
   countersArr: counterObjType[];
   activeCounter: counterObjType;
-}) {
+  setAndStoreCounters: (arr: counterObjType[]) => void;
+  setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
+  haptics: boolean | null;
+}
+
+function CounterButton({
+  countersArr,
+  activeCounter,
+  setAndStoreCounters,
+  setHaptics,
+  haptics,
+}: CounterButtonProps) {
   const setCounterAndHaptics = () => {
     const updatedCountersArr = countersArr.map((counter) => {
       const isActive = counter.isActive === activeCounter.isActive;

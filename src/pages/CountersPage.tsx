@@ -7,6 +7,21 @@ import Form from "../components/Form";
 import { counterObjType } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 
+interface CountersPageProps {
+  activeCounter: counterObjType;
+  setAndStoreCounters: (arr: counterObjType[]) => void;
+  deleteSingleCounter: (id: string) => void;
+  countersArr: counterObjType[];
+  modifyCounter: (
+    id: string,
+    modifiedCounterName: string,
+    modifiedCount: number,
+    modifiedTarget: number
+  ) => void;
+  addCounter: (counterToAdd: string, target: number) => void;
+  setActivePage: React.Dispatch<React.SetStateAction<string>>;
+}
+
 function CountersPage({
   activeCounter,
   setAndStoreCounters,
@@ -15,7 +30,7 @@ function CountersPage({
   modifyCounter,
   addCounter,
   setActivePage,
-}) {
+}: CountersPageProps) {
   const formFilledRef = useRef(null);
   // ! Is the below even needed? wasn't even being utilised
   if (Capacitor.getPlatform() === "ios") {

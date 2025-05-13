@@ -2,7 +2,6 @@ import { MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { direction } from "direction";
 import { counterObjType } from "../utils/types";
-import { useState } from "react";
 
 const CountersListItem = ({
   setAndStoreCounters,

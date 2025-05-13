@@ -4,6 +4,16 @@ import { NotificationParams } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 import { useEffect } from "react";
 
+interface NotificationOptionsProps {
+  activeCounter: counterObjType;
+  setMorningNotification: React.Dispatch<React.SetStateAction<boolean>>;
+  morningNotification: boolean;
+  setAfternoonNotification: React.Dispatch<React.SetStateAction<boolean>>;
+  afternoonNotification: boolean;
+  setEveningNotification: React.Dispatch<React.SetStateAction<boolean>>;
+  eveningNotification: boolean;
+}
+
 const NotificationOptions = ({
   activeCounter,
   setMorningNotification,
@@ -12,7 +22,7 @@ const NotificationOptions = ({
   setAfternoonNotification,
   eveningNotification,
   setEveningNotification,
-}) => {
+}: NotificationOptionsProps) => {
   const manageNotification = (storageKey, setState) => {
     // ! UNCOMMENT BELOW NATIVE PLATFORM CHECK WHEN DONE TESTING ON WEB
     // if (Capacitor.isNativePlatform()) {
@@ -43,7 +53,7 @@ const NotificationOptions = ({
     minute,
   }: NotificationParams) => {
     const notificationValue = JSON.parse(localStorage.getItem(storageKey));
-    console.log("NOTIFICATION IS TRUE: ", notificationValue);
+    console.log("notificationValue: ", notificationValue);
     if (notificationValue === true) {
       setState(false);
       cancelNotification(id);

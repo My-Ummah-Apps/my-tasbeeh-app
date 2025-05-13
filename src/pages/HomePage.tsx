@@ -1,5 +1,18 @@
 import ActiveCounter from "../components/ActiveCounter";
 import CounterButton from "../components/CounterButton";
+import { counterObjType } from "../utils/types";
+
+interface HomePageProps {
+  setActiveCounter: React.Dispatch<React.SetStateAction<counterObjType>>;
+  activeCounter: counterObjType;
+  resetSingleCounter: (id: string) => Promise<void>;
+  setAndStoreCounters: (arr: counterObjType[]) => void;
+  countersArr: counterObjType[];
+  setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
+  haptics: boolean | null;
+  setLanguageDirection: React.Dispatch<React.SetStateAction<string>>;
+  languageDirection: string;
+}
 
 const HomePage = ({
   setActiveCounter,
@@ -11,7 +24,7 @@ const HomePage = ({
   haptics,
   setLanguageDirection,
   languageDirection,
-}) => {
+}: HomePageProps) => {
   return (
     <div className="main-page-wrap">
       <div className="home-page-header">

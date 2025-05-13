@@ -213,13 +213,21 @@ describe("Counter reset and persistence after reload", () => {
           "localSavedCountersArray",
           JSON.stringify([
             {
-              counter: "Dummy Counter",
+              counter: "Dummy Counter 1",
               count: 10,
               color: "#EF5350",
               isActive: true,
               target: 50,
               id: "random identifier 1",
             },
+            // {
+            //   counter: "Dummy Counter 2",
+            //   count: 99,
+            //   color: "#EF5350",
+            //   isActive: true,
+            //   target: 100,
+            //   id: "random identifier 2",
+            // },
           ])
         );
         win.localStorage.setItem("appVersion", LATEST_APP_VERSION);

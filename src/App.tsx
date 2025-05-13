@@ -19,7 +19,7 @@ import HomePage from "./pages/HomePage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
-import { counterObjType, themeType } from "./utils/types";
+import { counterObjType, languageDirection, themeType } from "./utils/types";
 
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
@@ -34,7 +34,8 @@ function App() {
   });
 
   const [countersArr, setCountersArr] = useState<counterObjType[]>([]);
-  const [languageDirection, setLanguageDirection] = useState("");
+  const [languageDirection, setLanguageDirection] =
+    useState<languageDirection>(null);
   const [haptics, setHaptics] = useState<boolean | null>(
     JSON.parse(localStorage.getItem("haptics") || "null")
   );
