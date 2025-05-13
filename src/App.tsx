@@ -329,10 +329,6 @@ function App() {
       id: uuidv4(),
     };
     const updatedCountersArr = [...countersArr, newCounter];
-    // ! Below may not be required, test and remove if needed
-    if (updatedCountersArr.length === 1) {
-      newCounter.isActive = true;
-    }
     setAndStoreCounters(updatedCountersArr);
   };
 

@@ -4,6 +4,7 @@ import { Toast, ToastShowOptions } from "@capacitor/toast";
 import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { v4 as uuidv4 } from "uuid";
 import { counterObjType } from "./types";
+import { EasingDefinition } from "framer-motion";
 
 export const materialColors = [
   "#EF5350",
@@ -91,8 +92,8 @@ export const DEFAULT_COUNTERS = [
 ];
 
 export const TWEEN_CONFIG = {
-  easingDefinition: "ease",
-  duration: 0.3,
+  ease: "easeInOut" as EasingDefinition,
+  duration: 0.5,
 };
 
 type ToastOptions = Parameters<typeof Toast.show>[0];
