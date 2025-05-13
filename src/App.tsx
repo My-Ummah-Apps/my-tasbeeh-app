@@ -332,8 +332,14 @@ function App() {
     // ! Below may not be required, test and remove if needed
     if (updatedCountersArr.length === 1) {
       newCounter.isActive = true;
-      // setActiveCounter((prev) => ({ ...prev, count: 0 }));
     }
+    setAndStoreCounters(updatedCountersArr);
+  };
+
+  const resetSingleCounter = async (id: string) => {
+    const updatedCountersArr = countersArr.map((counter) => {
+      return counter.id === id ? { ...counter, count: 0 } : { ...counter };
+    });
     setAndStoreCounters(updatedCountersArr);
   };
 
@@ -367,21 +373,26 @@ function App() {
   };
 
   const deleteSingleCounter = (id: string) => {
-    const filteredArray = countersArr.filter(
-      (counterItem) => counterItem.id !== id
+    const remainingCounters = countersArr.filter(
+      (counter) => counter.id !== id
     );
-    if (filteredArray.length === 0) {
-      showerAlert("Unable to delete Tasbeeh", "Atleast one tasbeeh must exist");
+    if (remainingCounters.length === 0) {
+      showerAlert(
+        "Unable to delete Tasbeeh",
+        "At least one tasbeeh must exist"
+      );
       return;
     }
-    // ! Why is the first item in the filtered array being set to the active item?
-    // if (filteredArray.length > 0) {
-    filteredArray[0].isActive = true;
-    setActiveCounter((prev) => ({ ...prev, count: filteredArray[0].count }));
-    showToast("Tasbeeh deleted", "top", "short");
-    // }
 
-    setAndStoreCounters(filteredArray);
+    const updatedCountersArr: counterObjType[] = remainingCounters.map(
+      (counter, i) => ({
+        ...counter,
+        isActive: activeCounter.id === id && i === 0 ? true : counter.isActive,
+      })
+    );
+
+    showToast("Tasbeeh deleted", "top", "short");
+    setAndStoreCounters(updatedCountersArr);
   };
 
   useEffect(() => {
@@ -419,6 +430,7 @@ function App() {
                 <HomePage
                   setActiveCounter={setActiveCounter}
                   activeCounter={activeCounter}
+                  resetSingleCounter={resetSingleCounter}
                   setAndStoreCounters={setAndStoreCounters}
                   countersArr={countersArr}
                   setHaptics={setHaptics}

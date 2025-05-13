@@ -5,20 +5,19 @@ import CountersListItem from "../components/CountersListItem";
 import { materialColors, TWEEN_CONFIG } from "../utils/constants";
 import Form from "../components/Form";
 import { counterObjType } from "../utils/types";
+import { Capacitor } from "@capacitor/core";
 
 function CountersPage({
   activeCounter,
   setAndStoreCounters,
+  deleteSingleCounter,
   countersArr,
   modifyCounter,
   addCounter,
-  deleteSingleCounter,
   setActivePage,
 }) {
-  function singleCounterStyles(count, target) {
-    return count > 0 ? (count / target) * 100 + "%" : "100%";
-  }
   const formFilledRef = useRef(null);
+  // ! Is the below even needed? wasn't even being utilised
   if (Capacitor.getPlatform() === "ios") {
     // Keyboard.setAccessoryBarVisible({ isVisible: true });
     window.addEventListener("keyboardWillShow", (e) => {
@@ -68,12 +67,12 @@ function CountersPage({
             <Form
               countersArr={countersArr}
               activeCounter={activeCounter}
+              deleteSingleCounter={deleteSingleCounter}
               addNewCounter={addNewCounter}
               editingCounterId={editingCounterId}
               setShowForm={setShowForm}
               modifyCounter={modifyCounter}
               addCounter={addCounter}
-              deleteSingleCounter={deleteSingleCounter}
             />
             {/* </Sheet.Scroller> */}
           </Sheet.Content>

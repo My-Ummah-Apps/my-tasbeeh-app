@@ -1,12 +1,10 @@
 import { useRef, useEffect, useState } from "react";
 import { direction } from "direction";
-import { VscDebugRestart } from "react-icons/vsc";
 import { MdOutlineRestartAlt } from "react-icons/md";
 import { counterObjType } from "../utils/types";
 
 interface CounterNameAndNumberProps {
   activeCounter: counterObjType;
-  countersArr: any;
   resetSingleCounter: any;
   setLanguageDirection: any;
   languageDirection: any;
@@ -14,18 +12,10 @@ interface CounterNameAndNumberProps {
 
 function ActiveCounter({
   activeCounter,
-  setAndStoreCounters,
-  countersArr,
+  resetSingleCounter,
   setLanguageDirection,
   languageDirection,
 }: CounterNameAndNumberProps) {
-  const resetSingleCounter = async (id: string) => {
-    const updatedCountersArr = countersArr.map((counter) => {
-      return counter.id === id ? { ...counter, count: 0 } : { ...counter };
-    });
-    setAndStoreCounters(updatedCountersArr);
-  };
-
   const counterTextContainerRef = useRef(null);
   const textRef = useRef(null);
   const mScrollRef = useRef(null);

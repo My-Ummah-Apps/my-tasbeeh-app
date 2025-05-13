@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MdDeleteOutline } from "react-icons/md";
-import { showConfirmDialog, showToast } from "../utils/constants";
+import { showConfirmDialog, showerAlert, showToast } from "../utils/constants";
 import { counterObjType } from "../utils/types";
 
 interface Form {
@@ -14,12 +14,12 @@ interface Form {
 function Form({
   countersArr,
   editingCounterId,
+  deleteSingleCounter,
   addNewCounter,
   addCounter,
   modifyCounter,
   setShowForm,
   activeCounter,
-  deleteSingleCounter,
 }: Form) {
   const counterNameField = useRef<HTMLTextAreaElement | null>(null);
   const counterCountField = useRef<HTMLInputElement | null>(null);
@@ -31,8 +31,6 @@ function Form({
   const clickedCounter = countersArr.find(
     (counter: counterObjType) => counter.id === editingCounterId
   );
-
-  console.log("clickedCounter: ", clickedCounter);
 
   const [counterNameInputValue, setCounterNameInputValue] = useState<string>(
     addNewCounter ? "" : clickedCounter.counter
