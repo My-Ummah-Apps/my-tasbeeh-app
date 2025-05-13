@@ -8,15 +8,10 @@ import {
 } from "capacitor-native-settings";
 
 import { MdOutlineChevronRight } from "react-icons/md";
-
 import { Sheet } from "react-modal-sheet";
-
-// import { FaJar } from "react-icons/fa6";
-// import { GiMasonJar } from "react-icons/gi";
 import Switch from "react-ios-switch";
 import NotificationOptions from "../components/NotificationOptions";
 import AboutUs from "../components/AboutUs";
-
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { PURCHASE_TYPE } from "cordova-plugin-purchases";
 import { Share } from "@capacitor/share";
@@ -35,18 +30,15 @@ import {
 const SettingsPage = ({
   // iapProducts,
   resetAllCounters,
-  morningNotification,
-  setMorningNotification,
-  afternoonNotification,
-  setAfternoonNotification,
-  eveningNotification,
-  setEveningNotification,
   setHaptics,
   haptics,
   setDailyCounterReset,
   dailyCounterReset,
   activeCounter,
 }) => {
+  const [morningNotification, setMorningNotification] = useState(false);
+  const [afternoonNotification, setAfternoonNotification] = useState(false);
+  const [eveningNotification, setEveningNotification] = useState(false);
   const [theme, setTheme] = useState(JSON.parse(localStorage.getItem("theme")));
 
   useEffect(() => {
@@ -84,54 +76,39 @@ const SettingsPage = ({
     checkPermission = await LocalNotifications.checkPermissions();
     userNotificationPermission = checkPermission.display;
 
-    if (userNotificationPermission == "denied") {
-      // showNotificationsAlert();
-      // alert("Please turn notifications back on from within system settings");
+    if (userNotificationPermission === "denied") {
       showNotificationsAlert();
-
-      // NativeSettings.openIOS({
-      //   option: IOSSettings.App,
-      // });
       return;
-    } else if (checkPermission.display == "granted") {
+    } else if (checkPermission.display === "granted") {
       setShowNotificationsSheet(true);
     } else if (
       // checkPermission.display == "denied" ||
-      checkPermission.display == "prompt" ||
-      checkPermission.display == "prompt-with-rationale"
+      checkPermission.display === "prompt" ||
+      checkPermission.display === "prompt-with-rationale"
     ) {
       await requestPermissionFunction();
-      setShowNotificationsSheet(true);
       setMorningNotification(false);
       setAfternoonNotification(false);
       setEveningNotification(false);
-      localStorage.setItem("morning-notification", JSON.stringify(false));
+      setShowNotificationsSheet(true);
+      // localStorage.setItem("morning-notification", JSON.stringify(false));
     }
   }
 
   const requestPermissionFunction = async () => {
     requestPermission = await LocalNotifications.requestPermissions();
 
-    if (requestPermission.display == "granted") {
-      handleOpenModal2();
+    if (requestPermission.display === "granted") {
       // setMorningNotification(true);
-    } else if (requestPermission.display == "denied") {
-      handleCloseModal2();
-      setMorningNotification(false);
-      setAfternoonNotification(false);
-      setEveningNotification(false);
-    } else if (requestPermission.display == "prompt") {
+    } else if (
+      requestPermission.display === "denied" ||
+      requestPermission.display === "prompt"
+    ) {
       setMorningNotification(false);
       setAfternoonNotification(false);
       setEveningNotification(false);
     }
   };
-
-  const loadingIconRef = useRef(null);
-
-  const [formTheme, setFormTheme] = useState(false);
-
-  let subtitle;
 
   // async function triggerPurchase(tipAmount) {
   //   try {
@@ -157,8 +134,7 @@ const SettingsPage = ({
   //       );
   //     }
   //   } catch (e) {
-  //     console.log("ERROR");
-  //     console.log(e);
+  //     console.log("ERROR", e);
   //     console.log(Purchases.PURCHASE_TYPE.INAPP);
   //   }
   //   // try {
@@ -193,9 +169,9 @@ const SettingsPage = ({
 
   const shareThisAppLink = async () => {
     let link;
-    if (Capacitor.getPlatform() == "ios") {
+    if (Capacitor.getPlatform() === "ios") {
       link = "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967";
-    } else if (Capacitor.getPlatform() == "android") {
+    } else if (Capacitor.getPlatform() === "android") {
       link = "https://play.google.com/store/apps/details?id=com.tasbeeh.my";
     }
 
@@ -206,7 +182,7 @@ const SettingsPage = ({
       dialogTitle: "",
     });
   };
-  const link = (url) => {
+  const link = (url: string) => {
     window.location.href = url;
   };
 
@@ -352,7 +328,6 @@ const SettingsPage = ({
                   setAfternoonNotification={setAfternoonNotification}
                   eveningNotification={eveningNotification}
                   setEveningNotification={setEveningNotification}
-                  activeCounter={activeCounter}
                 />
               </Sheet.Content>
             </Sheet.Container>

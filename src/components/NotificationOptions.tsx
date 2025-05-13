@@ -1,5 +1,8 @@
 import Switch from "react-ios-switch";
 import { LocalNotifications } from "@capacitor/local-notifications";
+import { NotificationParams } from "../utils/types";
+import { Capacitor } from "@capacitor/core";
+import { useEffect } from "react";
 
 const NotificationOptions = ({
   activeCounter,
@@ -10,9 +13,70 @@ const NotificationOptions = ({
   eveningNotification,
   setEveningNotification,
 }) => {
-  const cancelNotification = async (id) => {
+  const manageNotification = (storageKey, setState) => {
+    // ! UNCOMMENT BELOW NATIVE PLATFORM CHECK WHEN DONE TESTING ON WEB
+    // if (Capacitor.isNativePlatform()) {
+    const notificationValue = JSON.parse(localStorage.getItem(storageKey));
+
+    if (notificationValue === null || notificationValue === false) {
+      console.log(typeof notificationValue);
+      localStorage.setItem(storageKey, JSON.stringify(false));
+      setState(false);
+    } else if (notificationValue === true) {
+      setState(true);
+    }
+  };
+
+  useEffect(() => {
+    manageNotification("morning-notification", setMorningNotification);
+    manageNotification("afternoon-notification", setAfternoonNotification);
+    manageNotification("evening-notification", setEveningNotification);
+  }, []);
+
+  const toggleNotification = async ({
+    storageKey,
+    setState,
+    id,
+    title,
+    body,
+    hour,
+    minute,
+  }: NotificationParams) => {
+    const notificationValue = JSON.parse(localStorage.getItem(storageKey));
+    console.log("NOTIFICATION IS TRUE: ", notificationValue);
+    if (notificationValue === true) {
+      setState(false);
+      cancelNotification(id);
+      localStorage.setItem(storageKey, JSON.stringify(false));
+    } else if (notificationValue === false) {
+      setState(true);
+      localStorage.setItem(storageKey, JSON.stringify(true));
+      await LocalNotifications.schedule({
+        notifications: [
+          {
+            title: title,
+            body: body,
+            id: id,
+            schedule: {
+              on: { hour: hour, minute: minute },
+              allowWhileIdle: true,
+              repeats: true,
+            },
+          },
+        ],
+      });
+    }
+  };
+
+  const cancelNotification = async (id: number) => {
     await LocalNotifications.cancel({ notifications: [{ id: id }] });
   };
+
+  // LocalNotifications.createChannel({
+  //   id: "1",
+  //   name: "Notification",
+  //   description: "General Notification",
+  // });
 
   return (
     <div className="notification-options-wrap">
@@ -28,25 +92,16 @@ const NotificationOptions = ({
           checked={morningNotification}
           handleColor="white"
           offColor="white"
-          onChange={() => {
-            if (
-              JSON.parse(localStorage.getItem("morning-notification")) == true
-            ) {
-              setMorningNotification(false);
-              cancelNotification(1);
-              localStorage.setItem(
-                "morning-notification",
-                JSON.stringify(false)
-              );
-            } else if (
-              JSON.parse(localStorage.getItem("morning-notification")) == false
-            ) {
-              setMorningNotification(true);
-              localStorage.setItem(
-                "morning-notification",
-                JSON.stringify(true)
-              );
-            }
+          onChange={async () => {
+            await toggleNotification({
+              storageKey: "morning-notification",
+              setState: setMorningNotification,
+              id: 1,
+              title: "Morning Reminder",
+              body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
+              hour: 8,
+              minute: 0,
+            });
           }}
           onColor={activeCounter.color}
         />
@@ -63,26 +118,16 @@ const NotificationOptions = ({
           handleColor="white"
           name={undefined}
           offColor="white"
-          onChange={(e) => {
-            if (
-              JSON.parse(localStorage.getItem("afternoon-notification")) == true
-            ) {
-              setAfternoonNotification(false);
-              cancelNotification(2);
-              localStorage.setItem(
-                "afternoon-notification",
-                JSON.stringify(false)
-              );
-            } else if (
-              JSON.parse(localStorage.getItem("afternoon-notification")) ==
-              false
-            ) {
-              setAfternoonNotification(true);
-              localStorage.setItem(
-                "afternoon-notification",
-                JSON.stringify(true)
-              );
-            }
+          onChange={async () => {
+            await toggleNotification({
+              storageKey: "afternoon-notification",
+              setState: setAfternoonNotification,
+              id: 2,
+              title: "Afternoon Reminder",
+              body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
+              hour: 14,
+              minute: 0,
+            });
           }}
           onColor={activeCounter.color}
         />
@@ -99,25 +144,16 @@ const NotificationOptions = ({
           handleColor="white"
           name={undefined}
           offColor="white"
-          onChange={(e) => {
-            if (
-              JSON.parse(localStorage.getItem("evening-notification")) == true
-            ) {
-              setEveningNotification(false);
-              cancelNotification(3);
-              localStorage.setItem(
-                "evening-notification",
-                JSON.stringify(false)
-              );
-            } else if (
-              JSON.parse(localStorage.getItem("evening-notification")) == false
-            ) {
-              setEveningNotification(true);
-              localStorage.setItem(
-                "evening-notification",
-                JSON.stringify(true)
-              );
-            }
+          onChange={async () => {
+            await toggleNotification({
+              storageKey: "evening-notification",
+              setState: setEveningNotification,
+              id: 3,
+              title: "Evening Reminder",
+              body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
+              hour: 19,
+              minute: 0,
+            });
           }}
           onColor={activeCounter.color}
         />

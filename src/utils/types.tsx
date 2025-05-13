@@ -10,6 +10,11 @@ export type counterObjType = {
 export type themeType = "light" | "dark";
 
 export type NotificationParams = {
+  storageKey:
+    | "morning-notification"
+    | "afternoon-notification"
+    | "evening-notification";
+  setState: React.Dispatch<React.SetStateAction<boolean>>;
   id: number;
   title: string;
   body: string;
@@ -17,10 +22,9 @@ export type NotificationParams = {
   minute: number;
 };
 
-export type InitialiseNotificationParams = NotificationParams & {
-  storageKey: string;
-  setState: React.Dispatch<React.SetStateAction<boolean>>;
-};
+// export type InitialiseNotificationParams = NotificationParams & {
+//   setState: React.Dispatch<React.SetStateAction<boolean>>;
+// };
 
 // export type ActiveCounter = {
 //   counterName: string;

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { LocalNotifications } from "@capacitor/local-notifications";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
 import { Sheet } from "react-modal-sheet";
@@ -20,19 +19,7 @@ import HomePage from "./pages/HomePage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
-import SheetCloseBtn from "./components/SheetCloseBtn";
-import {
-  counterObjType,
-  InitialiseNotificationParams,
-  NotificationParams,
-  themeType,
-} from "./utils/types";
-
-// LocalNotifications.createChannel({
-//   id: "1",
-//   name: "Notification",
-//   description: "General Notification",
-// });
+import { counterObjType, themeType } from "./utils/types";
 
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
@@ -45,9 +32,7 @@ function App() {
     isActive: false,
     id: "",
   });
-  const [morningNotification, setMorningNotification] = useState(false);
-  const [afternoonNotification, setAfternoonNotification] = useState(false);
-  const [eveningNotification, setEveningNotification] = useState(false);
+
   const [countersArr, setCountersArr] = useState<counterObjType[]>([]);
   const [languageDirection, setLanguageDirection] = useState("");
   const [haptics, setHaptics] = useState<boolean | null>(
@@ -144,136 +129,6 @@ function App() {
       InAppReview.requestReview();
     }
   }, []);
-
-  const scheduleNotification = async ({
-    id,
-    title,
-    body,
-    hour,
-    minute,
-  }: NotificationParams) => {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: title,
-          body: body,
-          id: id,
-          schedule: {
-            on: { hour: hour, minute: minute },
-            allowWhileIdle: true,
-            repeats: true,
-          },
-        },
-      ],
-    });
-  };
-
-  const intialiseNotification = async ({
-    storageKey,
-    id,
-    title,
-    body,
-    hour,
-    minute,
-    setState,
-  }: InitialiseNotificationParams) => {
-    if (Capacitor.isNativePlatform()) {
-      const notificationStatus = localStorage.getItem(storageKey);
-      if (notificationStatus === null || notificationStatus === "false") {
-        localStorage.setItem(storageKey, JSON.stringify(false));
-        setState(false);
-      } else if (notificationStatus === "true") {
-        localStorage.setItem(storageKey, JSON.stringify(true));
-        setState(true);
-
-        await scheduleNotification({
-          id: id,
-          title: title,
-          body: body,
-          hour: hour,
-          minute: minute,
-        });
-      }
-    }
-  };
-
-  // const notifications = [
-  //   {
-  //     morningNotification: {
-  //       storageKey: "morning-notification",
-  //       id: 1,
-  //       title: "Morning Reminder",
-  //       body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
-  //       hour: 8,
-  //       minute: 0,
-  //       setState: setMorningNotification,
-  //     },
-  //   },
-  //   {
-  //     afternoonNotification: {
-  //       storageKey: "afternoon-notification",
-  //       id: 2,
-  //       title: "Afternoon Reminder",
-  //       body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
-  //       hour: 14,
-  //       minute: 0,
-  //       setState: setAfternoonNotification,
-  //     },
-  //   },
-  //   {
-  //     eveningNotification: {
-  //       storageKey: "evening-notification",
-  //       id: 3,
-  //       title: "Evening Reminder",
-  //       body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
-  //       hour: 19,
-  //       minute: 0,
-  //       setState: setEveningNotification,
-  //     },
-  //   },
-  // ];
-
-  useEffect(() => {
-    (async () => {
-      await intialiseNotification({
-        storageKey: "morning-notification",
-        id: 1,
-        title: "Morning Reminder",
-        body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
-        hour: 8,
-        minute: 0,
-        setState: setMorningNotification,
-      });
-    })();
-  }, [morningNotification]);
-
-  useEffect(() => {
-    (async () => {
-      await intialiseNotification({
-        storageKey: "afternoon-notification",
-        id: 2,
-        title: "Afternoon Reminder",
-        body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
-        hour: 14,
-        minute: 0,
-        setState: setAfternoonNotification,
-      });
-    })();
-  }, [afternoonNotification]);
-
-  useEffect(() => {
-    (async () => {
-      await intialiseNotification({
-        storageKey: "evening-notification",
-        id: 3,
-        title: "Evening Reminder",
-        body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
-        hour: 19,
-        minute: 0,
-        setState: setEveningNotification,
-      });
-    })();
-  }, [eveningNotification]);
 
   useEffect(() => {
     if (
@@ -407,12 +262,6 @@ function App() {
                   // iapProducts={iapProducts}
                   activeCounter={activeCounter}
                   resetAllCounters={resetAllCounters}
-                  setMorningNotification={setMorningNotification}
-                  morningNotification={morningNotification}
-                  afternoonNotification={afternoonNotification}
-                  setAfternoonNotification={setAfternoonNotification}
-                  eveningNotification={eveningNotification}
-                  setEveningNotification={setEveningNotification}
                   setHaptics={setHaptics}
                   haptics={haptics}
                   setDailyCounterReset={setDailyCounterReset}
