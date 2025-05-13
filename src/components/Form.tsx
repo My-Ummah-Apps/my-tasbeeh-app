@@ -32,13 +32,13 @@ function Form({
     (counter: counterObjType) => counter.id === editingCounterId
   );
 
-  const [counterNameInputValue, setCounterNameInputValue] = useState<string>(
+  const [counterNameInputValue, setCounterNameInputValue] = useState<number>(
     addNewCounter ? "" : clickedCounter.counter
   );
-  const [currentCountInputValue, setcurrentCountInputValue] = useState<
-    number | string
-  >(addNewCounter ? 0 : clickedCounter.count);
-  const [targetInputValue, setTargetInputValue] = useState<number | string>(
+  const [currentCountInputValue, setcurrentCountInputValue] = useState<number>(
+    addNewCounter ? 0 : clickedCounter.count
+  );
+  const [targetInputValue, setTargetInputValue] = useState<number>(
     addNewCounter ? 0 : clickedCounter.target
   );
 
@@ -117,7 +117,7 @@ function Form({
                 ref={counterNameField}
                 className="form-textarea"
                 onChange={(e) => {
-                  setCounterNameInputValue(e.target.value);
+                  setCounterNameInputValue(Number(e.target.value));
                   increaseTextAreaHeight(e);
                 }}
                 value={counterNameInputValue}
@@ -142,7 +142,7 @@ function Form({
                     onChange={(e) => {
                       if (/[^0-9]+/.test(e.target.value)) return;
 
-                      setcurrentCountInputValue(e.target.value);
+                      setcurrentCountInputValue(Number(e.target.value));
 
                       console.log("e.target.value", e.target.value);
                     }}
@@ -167,7 +167,7 @@ function Form({
                   onChange={(e) => {
                     if (/[^0-9]+/.test(e.target.value)) return;
 
-                    setTargetInputValue(e.target.value);
+                    setTargetInputValue(Number(e.target.value));
                   }}
                   ref={counterTargetField}
                   className="form-input"

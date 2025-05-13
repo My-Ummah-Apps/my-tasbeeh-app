@@ -24,6 +24,7 @@ import {
   showToast,
   TWEEN_CONFIG,
 } from "../utils/constants";
+import { counterObjType } from "../utils/types";
 
 // import ThemeOptions from "../components/ThemeOptions";
 
@@ -131,7 +132,6 @@ const SettingsPage = ({
   //     console.log(e);
   //     // console.log(e.userCancelled);
 
-  //     handleCloseModal6();
   //     // }
   //   }
   //   try {
@@ -173,7 +173,6 @@ const SettingsPage = ({
   //   // console.log(customerInfo);
   //   // console.log(productIdentifier);
 
-  //   handleCloseModal6();
   // }
 
   const shareThisAppLink = async () => {
@@ -215,7 +214,7 @@ const SettingsPage = ({
           <div
             className="support-box-wrap"
             onClick={() => {
-              handleOpenModal5();
+
             }}
           >
             <div className="support-box-icon-and-text-wrap">
@@ -282,7 +281,7 @@ const SettingsPage = ({
                       className="tip-wrap"
                       onClick={() => {
                         triggerPurchase(item.identifier);
-                        handleOpenModal6();
+
                       }}
                     >
                       <p>{item.title}</p>
@@ -508,7 +507,7 @@ const SettingsPage = ({
 
             {/* <ResetAllCountersAlert
               resetAllCounters={resetAllCounters}
-              handleCloseModal3={handleCloseModal3}
+
             /> */}
           </div>
         </div>
