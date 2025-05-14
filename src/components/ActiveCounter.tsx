@@ -1,13 +1,13 @@
 import { useRef, useEffect, useState } from "react";
 import { direction } from "direction";
 import { MdOutlineRestartAlt } from "react-icons/md";
-import { counterObjType } from "../utils/types";
+import { counterObjType, languageDirection } from "../utils/types";
 
 interface CounterNameAndNumberProps {
   activeCounter: counterObjType;
-  resetSingleCounter: any;
-  setLanguageDirection: any;
-  languageDirection: any;
+  resetSingleCounter: (id: string) => Promise<void>;
+  setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
+  languageDirection: languageDirection;
 }
 
 function ActiveCounter({
@@ -16,15 +16,16 @@ function ActiveCounter({
   setLanguageDirection,
   languageDirection,
 }: CounterNameAndNumberProps) {
-  const counterTextContainerRef = useRef(null);
-  const textRef = useRef(null);
-  const mScrollRef = useRef(null);
+  const counterTextContainerRef = useRef<HTMLElement | null>(null);
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const mScrollRef = useRef<HTMLDivElement | null>(null);
 
-  const [scroll, setScroll] = useState();
+  const [scroll, setScroll] = useState<boolean>(false);
 
   useEffect(() => {
-    const counterTextContainerWidth =
-      counterTextContainerRef.current.clientWidth;
+    const counterTextContainerWidth = counterTextContainerRef.current
+      ? counterTextContainerRef.current.clientWidth
+      : 0;
 
     if (direction(activeCounter.counter) === "ltr") {
       setLanguageDirection("ltr");
@@ -32,12 +33,21 @@ function ActiveCounter({
       setLanguageDirection("rtl");
     }
 
-    if (textRef.current.clientWidth < counterTextContainerWidth) {
+    if (
+      textRef.current &&
+      textRef.current.clientWidth < counterTextContainerWidth
+    ) {
       setScroll(false);
-    } else if (textRef.current.clientWidth > counterTextContainerWidth) {
+    } else if (
+      textRef.current &&
+      mScrollRef.current &&
+      textRef.current.clientWidth > counterTextContainerWidth
+    ) {
       setScroll(true);
       const scrollSpeed = textRef.current.innerText.length * 0.3;
       mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
+    } else {
+      console.error("Error in setting scroll");
     }
   }, [textRef.current]);
 
@@ -48,8 +58,8 @@ function ActiveCounter({
   };
 
   return (
-    <div className="single-counter-wrap-parent">
-      <div
+    <section className="single-counter-wrap-parent">
+      <section
         className={`single-counter-wrap remove-counter-blinking 
           `}
         ref={counterTextContainerRef}
@@ -67,7 +77,7 @@ function ActiveCounter({
               : "100%"}
           </div>
 
-          <div
+          <section
             data-testid="active-counter-name"
             className="single-counter-counter-name"
             style={{
@@ -100,7 +110,7 @@ function ActiveCounter({
                 )}
               </div>
             </div>
-          </div>
+          </section>
         </div>
         <button
           aria-label="Reset Counter"
@@ -123,17 +133,17 @@ function ActiveCounter({
           }}
           className="single-counter-overlay"
         />
-      </div>
+      </section>
       {/* Remove below code */}
-      <div
+      <section
         className="counter-type-wrap"
         style={{ position: "absolute", opacity: 0 }}
       >
         <div ref={textRef}>
           <span>{activeCounter.counter}</span>
         </div>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }
 

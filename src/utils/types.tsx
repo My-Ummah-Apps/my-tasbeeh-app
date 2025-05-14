@@ -1,3 +1,5 @@
+import { materialColors } from "./constants";
+
 export type counterObjType = {
   counter: string;
   count: number;
@@ -23,6 +25,8 @@ export type NotificationParams = {
 };
 
 export type languageDirection = null | "rtl" | "ltr";
+
+export type MaterialColor = (typeof materialColors)[number];
 
 // export type InitialiseNotificationParams = NotificationParams & {
 //   setState: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,18 +1,27 @@
 import { MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { direction } from "direction";
-import { counterObjType } from "../utils/types";
+import { counterObjType, MaterialColor } from "../utils/types";
+
+interface CountersListItemProps {
+  setAndStoreCounters: (arr: counterObjType[]) => void;
+  setEditingCounterId: React.Dispatch<React.SetStateAction<string>>;
+  countersArr: counterObjType[];
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditingCounter: React.Dispatch<React.SetStateAction<boolean>>;
+  nextColor: MaterialColor;
+  counterItem: counterObjType;
+}
 
 const CountersListItem = ({
   setAndStoreCounters,
   setEditingCounterId,
   countersArr,
   setShowForm,
-  setAddNewCounter,
+  setIsEditingCounter,
   nextColor,
   counterItem,
-  setActivePage,
-}) => {
+}: CountersListItemProps) => {
   return (
     <div className="single-counter-wrap-parent">
       <div
@@ -33,13 +42,7 @@ const CountersListItem = ({
         }}
       >
         <div className="single-counter-name-and-count-wrap">
-          <Link
-            onClick={() => {
-              setActivePage("home");
-            }}
-            to="/"
-            style={{ color: "#fff", textDecoration: "none" }}
-          >
+          <Link to="/" style={{ color: "#fff", textDecoration: "none" }}>
             <div className="single-counter-count">
               {counterItem.count} / {counterItem.target}
             </div>
@@ -62,7 +65,7 @@ const CountersListItem = ({
           className="edit-btn-wrap"
           onClick={(e) => {
             e.stopPropagation();
-            setAddNewCounter(false);
+            setIsEditingCounter(true);
             setEditingCounterId(counterItem.id);
             setShowForm(true);
           }}

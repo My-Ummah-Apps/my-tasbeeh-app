@@ -4,22 +4,30 @@ import { showConfirmDialog, showerAlert, showToast } from "../utils/constants";
 import { counterObjType } from "../utils/types";
 
 interface Form {
+  countersArr: counterObjType[];
   editingCounterId: string;
+  deleteSingleCounter: (id: string) => void;
   activeCounter: counterObjType;
-  addCounter: (counterNameInput: string, counterTargetInput: string) => void;
+  isEditingCounter: boolean;
+  addCounter: (counterToAdd: string, target: number) => void;
+  modifyCounter: (
+    id: string,
+    modifiedCounterName: string,
+    modifiedCount: number,
+    modifiedTarget: number
+  ) => void;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
-  addNewCounter: boolean;
 }
 
 function Form({
   countersArr,
   editingCounterId,
   deleteSingleCounter,
-  addNewCounter,
+  activeCounter,
+  isEditingCounter,
   addCounter,
   modifyCounter,
   setShowForm,
-  activeCounter,
 }: Form) {
   const counterNameField = useRef<HTMLTextAreaElement | null>(null);
   const counterCountField = useRef<HTMLInputElement | null>(null);
@@ -32,17 +40,24 @@ function Form({
     (counter: counterObjType) => counter.id === editingCounterId
   );
 
-  const [counterNameInputValue, setCounterNameInputValue] = useState<number>(
-    addNewCounter ? "" : clickedCounter.counter
+  // if (!clickedCounter) {
+  //   console.error("clickedCounter does not exist");
+  //   return;
+  // }
+
+  const [nameInputValue, setNameInputValue] = useState<string>(
+    isEditingCounter ? clickedCounter.counter : ""
   );
-  const [currentCountInputValue, setcurrentCountInputValue] = useState<number>(
-    addNewCounter ? 0 : clickedCounter.count
+  const [countInputValue, setCountInputValue] = useState<number>(
+    isEditingCounter ? clickedCounter.count : 0
   );
   const [targetInputValue, setTargetInputValue] = useState<number>(
-    addNewCounter ? 0 : clickedCounter.target
+    isEditingCounter ? clickedCounter.target : 0
   );
 
-  const increaseTextAreaHeight = (e: any) => {
+  const increaseTextAreaHeight = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     if (counterNameField.current) {
       counterNameField.current.style.height = `${e.target.scrollHeight}px`;
     } else {
@@ -62,17 +77,17 @@ function Form({
   }, []);
 
   const submitCounter = (
-    e: React.MouseEvent<HTMLDivElement>,
+    e: React.FormEvent<HTMLFormElement>,
     action: "add" | "modify"
   ): void => {
     e.preventDefault();
 
     action === "add"
-      ? addCounter(counterNameInputValue, Number(targetInputValue))
+      ? addCounter(nameInputValue, Number(targetInputValue))
       : modifyCounter(
           editingCounterId,
-          counterNameInputValue,
-          currentCountInputValue,
+          nameInputValue,
+          countInputValue,
           targetInputValue
         );
     setShowForm(false);
@@ -92,7 +107,7 @@ function Form({
             Cancel
           </button>
           <h1 className="form-blank-and-form-filled-header-text">
-            {addNewCounter ? "Add Tasbeeh" : "Edit Tasbeeh"}
+            {isEditingCounter ? "Edit Tasbeeh" : "Add Tasbeeh"}
           </h1>
           <button
             form="form"
@@ -107,7 +122,7 @@ function Form({
           <form
             id="form"
             onSubmit={(e) => {
-              submitCounter(e, addNewCounter ? "add" : "modify");
+              submitCounter(e, isEditingCounter ? "modify" : "add");
             }}
           >
             <div className="form-filled-counter-name-input-wrap">
@@ -117,10 +132,10 @@ function Form({
                 ref={counterNameField}
                 className="form-textarea"
                 onChange={(e) => {
-                  setCounterNameInputValue(Number(e.target.value));
+                  setNameInputValue(e.target.value);
                   increaseTextAreaHeight(e);
                 }}
-                value={counterNameInputValue}
+                value={nameInputValue}
                 required
               />
               <div
@@ -132,7 +147,7 @@ function Form({
               </div>
             </div>
             <div className="count-and-target-input-wrap">
-              {!addNewCounter && (
+              {isEditingCounter && (
                 <div className="current-count-input-wrap">
                   <p>Count</p>
                   <input
@@ -141,12 +156,9 @@ function Form({
                     maxLength={5}
                     onChange={(e) => {
                       if (/[^0-9]+/.test(e.target.value)) return;
-
-                      setcurrentCountInputValue(Number(e.target.value));
-
-                      console.log("e.target.value", e.target.value);
+                      setCountInputValue(Number(e.target.value));
                     }}
-                    value={currentCountInputValue}
+                    value={countInputValue}
                     inputMode="numeric"
                     pattern="[0-9]*"
                     required
@@ -191,7 +203,7 @@ function Form({
             </div>
           </form>
         </div>
-        {!addNewCounter && (
+        {isEditingCounter && (
           <div className="form-filled-reset-delete-btns-wrap">
             <button
               className="form-filled-delete-tasbeeh-btn"

@@ -23,7 +23,6 @@ import { counterObjType, languageDirection, themeType } from "./utils/types";
 
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
-  const [activePage, setActivePage] = useState("home");
   const [activeCounter, setActiveCounter] = useState<counterObjType>({
     counter: "",
     count: 0,
@@ -38,6 +37,7 @@ function App() {
     useState<languageDirection>(null);
   const [haptics, setHaptics] = useState<boolean | null>(null);
   const [dailyCounterReset, setDailyCounterReset] = useState(false);
+  const [theme, setTheme] = useState<themeType | null>(null);
 
   const setAndStoreCounters = (arr: counterObjType[]) => {
     localStorage.setItem("localSavedCountersArray", JSON.stringify(arr));
@@ -59,16 +59,19 @@ function App() {
       if (storedTheme === null) {
         localStorage.setItem("theme", JSON.stringify("light"));
         storedTheme = "light";
+        setTheme("light");
       }
 
       if (storedTheme === "dark") {
         statusBarThemeColor = "#242424";
+        setTheme("dark");
         if (Capacitor.isNativePlatform()) {
           setStatusAndNavBarBackgroundColor(statusBarThemeColor, Style.Dark);
         }
         document.body.classList.add("dark");
       } else if (storedTheme === "light") {
         statusBarThemeColor = "#EDEDED";
+        setTheme("light");
         if (Capacitor.isNativePlatform()) {
           setStatusAndNavBarBackgroundColor(statusBarThemeColor, Style.Light);
         }
@@ -263,6 +266,8 @@ function App() {
                   haptics={haptics}
                   setDailyCounterReset={setDailyCounterReset}
                   dailyCounterReset={dailyCounterReset}
+                  setTheme={setTheme}
+                  theme={theme}
                 />
               }
             />
@@ -285,7 +290,6 @@ function App() {
               path="CountersPage"
               element={
                 <CountersPage
-                  setActivePage={setActivePage}
                   activeCounter={activeCounter}
                   countersArr={countersArr}
                   modifyCounter={modifyCounter}

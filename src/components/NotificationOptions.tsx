@@ -1,6 +1,7 @@
+// @ts-ignore
 import Switch from "react-ios-switch";
 import { LocalNotifications } from "@capacitor/local-notifications";
-import { NotificationParams } from "../utils/types";
+import { counterObjType, NotificationParams } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 import { useEffect } from "react";
 
@@ -23,7 +24,13 @@ const NotificationOptions = ({
   eveningNotification,
   setEveningNotification,
 }: NotificationOptionsProps) => {
-  const manageNotification = (storageKey, setState) => {
+  const manageNotification = (
+    storageKey:
+      | "morning-notification"
+      | "afternoon-notification"
+      | "evening-notification",
+    setState: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
     // ! UNCOMMENT BELOW NATIVE PLATFORM CHECK WHEN DONE TESTING ON WEB
     // if (Capacitor.isNativePlatform()) {
     const notificationValue = JSON.parse(localStorage.getItem(storageKey));

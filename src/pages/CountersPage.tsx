@@ -5,7 +5,6 @@ import CountersListItem from "../components/CountersListItem";
 import { materialColors, TWEEN_CONFIG } from "../utils/constants";
 import Form from "../components/Form";
 import { counterObjType } from "../utils/types";
-import { Capacitor } from "@capacitor/core";
 
 interface CountersPageProps {
   activeCounter: counterObjType;
@@ -19,7 +18,6 @@ interface CountersPageProps {
     modifiedTarget: number
   ) => void;
   addCounter: (counterToAdd: string, target: number) => void;
-  setActivePage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function CountersPage({
@@ -29,31 +27,15 @@ function CountersPage({
   countersArr,
   modifyCounter,
   addCounter,
-  setActivePage,
 }: CountersPageProps) {
-  const formFilledRef = useRef(null);
-  // ! Is the below even needed? wasn't even being utilised
-  if (Capacitor.getPlatform() === "ios") {
-    // Keyboard.setAccessoryBarVisible({ isVisible: true });
-    window.addEventListener("keyboardWillShow", (e) => {
-      if (formFilledRef.current) {
-        formFilledRef.current.style.marginBottom = e.keyboardHeight + "px";
-      }
-    });
-    window.addEventListener("keyboardWillHide", (e) => {
-      if (formFilledRef.current) {
-        formFilledRef.current.style.marginBottom = "0px";
-      }
-    });
-  }
-
   const [showForm, setShowForm] = useState(false);
-  const [addNewCounter, setAddNewCounter] = useState(false);
+  const [isEditingCounter, setIsEditingCounter] = useState(false);
 
+  // ! REFACTOR BELOW
   let nextColorIndex = 0;
   let nextColor;
 
-  const [editingCounterId, setEditingCounterId] = useState(0);
+  const [editingCounterId, setEditingCounterId] = useState("");
 
   return (
     <div className={`counters-page-wrap`}>
@@ -61,7 +43,7 @@ function CountersPage({
         <p>Adhkar</p>
         <MdAdd
           onClick={() => {
-            setAddNewCounter(true);
+            setIsEditingCounter(false);
             setShowForm(true);
           }}
         />
@@ -83,7 +65,7 @@ function CountersPage({
               countersArr={countersArr}
               activeCounter={activeCounter}
               deleteSingleCounter={deleteSingleCounter}
-              addNewCounter={addNewCounter}
+              isEditingCounter={isEditingCounter}
               editingCounterId={editingCounterId}
               setShowForm={setShowForm}
               modifyCounter={modifyCounter}
@@ -108,8 +90,7 @@ function CountersPage({
               setAndStoreCounters={setAndStoreCounters}
               countersArr={countersArr}
               setEditingCounterId={setEditingCounterId}
-              setActivePage={setActivePage}
-              setAddNewCounter={setAddNewCounter}
+              setIsEditingCounter={setIsEditingCounter}
               setShowForm={setShowForm}
               nextColor={nextColor}
               counterItem={counterItem}

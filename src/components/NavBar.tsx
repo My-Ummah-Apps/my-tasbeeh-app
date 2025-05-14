@@ -1,7 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { BsFillHouseDoorFill, BsList, BsFillNutFill } from "react-icons/bs";
+import { MaterialColor } from "../utils/types";
 
-const NavBar = ({ activeCounterColor }) => {
+interface NavBarProps {
+  activeCounterColor: MaterialColor;
+}
+
+const NavBar = ({ activeCounterColor }: NavBarProps) => {
   return (
     <div className="navbar-wrap">
       <NavLink className="nav-link" to="/SettingsPage">

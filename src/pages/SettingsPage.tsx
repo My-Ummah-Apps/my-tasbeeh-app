@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Capacitor } from "@capacitor/core";
 import { Dialog } from "@capacitor/dialog";
 import {
@@ -9,6 +9,7 @@ import {
 
 import { MdOutlineChevronRight } from "react-icons/md";
 import { Sheet } from "react-modal-sheet";
+// @ts-ignore
 import Switch from "react-ios-switch";
 import NotificationOptions from "../components/NotificationOptions";
 import AboutUs from "../components/AboutUs";
@@ -35,6 +36,8 @@ interface SettingsageProps {
   resetAllCounters: () => void;
   setDailyCounterReset: React.Dispatch<React.SetStateAction<boolean>>;
   dailyCounterReset: boolean;
+  setTheme: React.Dispatch<React.SetStateAction<themeType | null>>;
+  theme: themeType | null;
 }
 
 const SettingsPage = ({
@@ -45,17 +48,14 @@ const SettingsPage = ({
   resetAllCounters,
   setDailyCounterReset,
   dailyCounterReset,
+  setTheme,
+  theme,
 }: SettingsageProps) => {
   const [morningNotification, setMorningNotification] = useState(false);
   const [afternoonNotification, setAfternoonNotification] = useState(false);
   const [eveningNotification, setEveningNotification] = useState(false);
-  const [theme, setTheme] = useState<themeType | null>(null);
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
-
-  useEffect(() => {
-    setTheme(JSON.parse(localStorage.getItem("theme")) || "light");
-  }, []);
 
   let requestPermission;
   let checkPermission;
@@ -359,12 +359,10 @@ const SettingsPage = ({
             {/* <MdOutlineChevronRight className="chevron" /> */}
             <Switch
               checked={theme === "light" ? false : true}
-              className={undefined}
-              disabled={undefined}
               handleColor="white"
               name={undefined}
               offColor="white"
-              onChange={(e) => {
+              onChange={() => {
                 if (theme === "light") {
                   setTheme("dark");
                   if (Capacitor.isNativePlatform()) {
@@ -399,7 +397,7 @@ const SettingsPage = ({
                 handleColor="white"
                 name={undefined}
                 offColor="white"
-                onChange={(e) => {
+                onChange={() => {
                   const newHapticsValue = !haptics;
                   setHaptics(newHapticsValue);
                   localStorage.setItem(

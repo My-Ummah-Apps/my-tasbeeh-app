@@ -19,7 +19,7 @@ export const materialColors = [
   "#66BB6A",
   "#9CCC65",
   "#FF7043",
-];
+] as const;
 
 export const DEFAULT_COUNTERS = [
   {
