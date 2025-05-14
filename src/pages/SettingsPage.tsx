@@ -358,14 +358,14 @@ const SettingsPage = ({
             </div>
             {/* <MdOutlineChevronRight className="chevron" /> */}
             <Switch
-              checked={theme == "light" ? false : true}
+              checked={theme === "light" ? false : true}
               className={undefined}
               disabled={undefined}
               handleColor="white"
               name={undefined}
               offColor="white"
               onChange={(e) => {
-                if (theme == "light") {
+                if (theme === "light") {
                   setTheme("dark");
                   if (Capacitor.isNativePlatform()) {
                     setStatusAndNavBarBackgroundColor("#242424", Style.Dark);
@@ -373,7 +373,7 @@ const SettingsPage = ({
 
                   localStorage.setItem("theme", JSON.stringify("dark"));
                   document.body.classList.add("dark");
-                } else if (theme == "dark") {
+                } else if (theme === "dark") {
                   setTheme("light");
                   if (Capacitor.isNativePlatform()) {
                     setStatusAndNavBarBackgroundColor("#EDEDED", Style.Light);

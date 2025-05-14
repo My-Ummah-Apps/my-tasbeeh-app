@@ -36,11 +36,8 @@ function App() {
   const [countersArr, setCountersArr] = useState<counterObjType[]>([]);
   const [languageDirection, setLanguageDirection] =
     useState<languageDirection>(null);
-  const [haptics, setHaptics] = useState<boolean | null>(
-    JSON.parse(localStorage.getItem("haptics") || "null")
-  );
+  const [haptics, setHaptics] = useState<boolean | null>(null);
   const [dailyCounterReset, setDailyCounterReset] = useState(false);
-  const [lastLaunchDate, setLastLaunchDate] = useState("");
 
   const setAndStoreCounters = (arr: counterObjType[]) => {
     localStorage.setItem("localSavedCountersArray", JSON.stringify(arr));
@@ -115,7 +112,7 @@ function App() {
   }
 
   useEffect(() => {
-    let storedLaunchCount = localStorage.getItem("launch-count");
+    const storedLaunchCount = localStorage.getItem("launch-count");
     let launchCount = storedLaunchCount ? Number(storedLaunchCount) : 0;
     launchCount++;
     localStorage.setItem("launch-count", JSON.stringify(launchCount));
@@ -133,8 +130,8 @@ function App() {
 
   useEffect(() => {
     if (
-      localStorage.getItem("haptics") === null &&
-      Capacitor.isNativePlatform()
+      Capacitor.isNativePlatform() &&
+      localStorage.getItem("haptics") === null
     ) {
       localStorage.setItem("haptics", JSON.stringify(true));
       setHaptics(true);
@@ -142,11 +139,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setDailyCounterReset(JSON.parse(localStorage.getItem("dailyCounterReset")));
-    // if (localStorage.getItem("dailyCounterReset") === null) {
-    //   localStorage.setItem("dailyCounterReset", JSON.stringify(false));
-    //   setDailyCounterReset(false);
-    // }
+    setDailyCounterReset(
+      JSON.parse(localStorage.getItem("dailyCounterReset") || "false")
+    );
 
     let counters: counterObjType[] = [];
     const storedCounters = JSON.parse(
@@ -156,8 +151,7 @@ function App() {
     if (storedCounters && storedCounters.length > 0) {
       const previousLaunchDate = localStorage.getItem("lastLaunchDate");
       const todaysDate = new Date().toLocaleDateString();
-      // const todaysDate = "18/05/2025";
-      setLastLaunchDate(todaysDate);
+      // const todaysDate = "20/05/2025";
       localStorage.setItem("lastLaunchDate", todaysDate);
 
       if (previousLaunchDate !== todaysDate && dailyCounterReset === true) {
@@ -276,7 +270,6 @@ function App() {
               index
               element={
                 <HomePage
-                  setActiveCounter={setActiveCounter}
                   activeCounter={activeCounter}
                   resetSingleCounter={resetSingleCounter}
                   setAndStoreCounters={setAndStoreCounters}
@@ -303,11 +296,7 @@ function App() {
               }
             />
           </Routes>
-          <NavBar
-            activeCounterColor={activeCounter.color}
-            setActivePage={setActivePage}
-            activePage={activePage}
-          />
+          <NavBar activeCounterColor={activeCounter.color} />
         </section>
       </BrowserRouter>
       <Sheet
