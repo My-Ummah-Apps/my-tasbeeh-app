@@ -24,7 +24,7 @@ import {
   showToast,
   TWEEN_CONFIG,
 } from "../utils/constants";
-import { counterObjType } from "../utils/types";
+import { counterObjType, themeType } from "../utils/types";
 
 // import ThemeOptions from "../components/ThemeOptions";
 
@@ -49,13 +49,13 @@ const SettingsPage = ({
   const [morningNotification, setMorningNotification] = useState(false);
   const [afternoonNotification, setAfternoonNotification] = useState(false);
   const [eveningNotification, setEveningNotification] = useState(false);
-  const [theme, setTheme] = useState(JSON.parse(localStorage.getItem("theme")));
-
-  useEffect(() => {
-    setTheme(JSON.parse(localStorage.getItem("theme")));
-  }, [theme]);
+  const [theme, setTheme] = useState<themeType | null>(null);
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
+
+  useEffect(() => {
+    setTheme(JSON.parse(localStorage.getItem("theme")) || "light");
+  }, []);
 
   let requestPermission;
   let checkPermission;
@@ -384,10 +384,6 @@ const SettingsPage = ({
                 }
               }}
               onColor={activeCounter.color}
-              pendingOffColor={undefined}
-              pendingOnColor={undefined}
-              readOnly={undefined}
-              style={undefined}
             />
           </div>
         </div>
@@ -400,27 +396,18 @@ const SettingsPage = ({
               </div>
               <Switch
                 checked={haptics}
-                className={undefined}
-                disabled={undefined}
                 handleColor="white"
                 name={undefined}
                 offColor="white"
                 onChange={(e) => {
-                  if (JSON.parse(localStorage.getItem("haptics")) == true) {
-                    setHaptics(false);
-                    localStorage.setItem("haptics", JSON.stringify(false));
-                  } else if (
-                    JSON.parse(localStorage.getItem("haptics")) == false
-                  ) {
-                    setHaptics(true);
-                    localStorage.setItem("haptics", JSON.stringify(true));
-                  }
+                  const newHapticsValue = !haptics;
+                  setHaptics(newHapticsValue);
+                  localStorage.setItem(
+                    "haptics",
+                    JSON.stringify(newHapticsValue)
+                  );
                 }}
                 onColor={activeCounter.color}
-                pendingOffColor={undefined}
-                pendingOnColor={undefined}
-                readOnly={undefined}
-                style={undefined}
               />
             </div>
           )}
@@ -431,61 +418,19 @@ const SettingsPage = ({
             </div>
             <Switch
               checked={dailyCounterReset}
-              className={undefined}
-              disabled={undefined}
               handleColor="white"
               name={undefined}
               offColor="white"
-              onChange={(e) => {
-                if (
-                  JSON.parse(localStorage.getItem("dailyCounterReset")) == true
-                ) {
-                  setDailyCounterReset(false);
-                  localStorage.setItem(
-                    "dailyCounterReset",
-                    JSON.stringify(false)
-                  );
-                } else if (
-                  JSON.parse(localStorage.getItem("dailyCounterReset")) == false
-                ) {
-                  setDailyCounterReset(true);
-                  localStorage.setItem(
-                    "dailyCounterReset",
-                    JSON.stringify(true)
-                  );
-                }
+              onChange={() => {
+                const newResetValue = !dailyCounterReset;
+                setDailyCounterReset(newResetValue);
+                localStorage.setItem(
+                  "dailyCounterReset",
+                  JSON.stringify(newResetValue)
+                );
               }}
               onColor={activeCounter.color}
-              pendingOffColor={undefined}
-              pendingOnColor={undefined}
-              readOnly={undefined}
-              style={undefined}
             />
-            {/* <span className="mt-ios">
-            <input id="2" type="checkbox" checked={dailyCounterReset} />
-            <label
-              for="2"
-              onClick={(e) => {
-                if (
-                  JSON.parse(localStorage.getItem("dailyCounterReset")) == true
-                ) {
-                  setDailyCounterReset(false);
-                  localStorage.setItem(
-                    "dailyCounterReset",
-                    JSON.stringify(false)
-                  );
-                } else if (
-                  JSON.parse(localStorage.getItem("dailyCounterReset")) == false
-                ) {
-                  setDailyCounterReset(true);
-                  localStorage.setItem(
-                    "dailyCounterReset",
-                    JSON.stringify(true)
-                  );
-                }
-              }}
-            ></label>
-          </span> */}
           </div>
           <div className="reset-adkhar-text-wrap">
             <p
@@ -504,11 +449,6 @@ const SettingsPage = ({
             >
               Reset all Adhkar
             </p>
-
-            {/* <ResetAllCountersAlert
-              resetAllCounters={resetAllCounters}
-
-            /> */}
           </div>
         </div>
         <div className="individual-section-wrap">

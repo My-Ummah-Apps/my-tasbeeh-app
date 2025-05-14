@@ -139,14 +139,15 @@ function App() {
       localStorage.setItem("haptics", JSON.stringify(true));
       setHaptics(true);
     }
-
-    if (localStorage.getItem("dailyCounterReset") === null) {
-      localStorage.setItem("dailyCounterReset", JSON.stringify(false));
-      setDailyCounterReset(false);
-    }
   }, []);
 
   useEffect(() => {
+    setDailyCounterReset(JSON.parse(localStorage.getItem("dailyCounterReset")));
+    // if (localStorage.getItem("dailyCounterReset") === null) {
+    //   localStorage.setItem("dailyCounterReset", JSON.stringify(false));
+    //   setDailyCounterReset(false);
+    // }
+
     let counters: counterObjType[] = [];
     const storedCounters = JSON.parse(
       localStorage.getItem("localSavedCountersArray") || "[]"
@@ -155,6 +156,7 @@ function App() {
     if (storedCounters && storedCounters.length > 0) {
       const previousLaunchDate = localStorage.getItem("lastLaunchDate");
       const todaysDate = new Date().toLocaleDateString();
+      // const todaysDate = "18/05/2025";
       setLastLaunchDate(todaysDate);
       localStorage.setItem("lastLaunchDate", todaysDate);
 
