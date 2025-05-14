@@ -8,6 +8,7 @@ import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
 import {
   DEFAULT_COUNTERS,
+  materialColors,
   setStatusAndNavBarBackgroundColor,
   showerAlert,
   showToast,
@@ -27,14 +28,14 @@ function App() {
     counter: "",
     count: 0,
     target: 0,
-    color: "",
+    color: materialColors[0],
     isActive: false,
     id: "",
   });
 
   const [countersArr, setCountersArr] = useState<counterObjType[]>([]);
   const [languageDirection, setLanguageDirection] =
-    useState<languageDirection>(null);
+    useState<languageDirection>("neutral");
   const [haptics, setHaptics] = useState<boolean | null>(null);
   const [dailyCounterReset, setDailyCounterReset] = useState(false);
   const [theme, setTheme] = useState<themeType | null>(null);
@@ -178,7 +179,7 @@ function App() {
     const newCounter: counterObjType = {
       counter: counterToAdd,
       count: 0,
-      color: "",
+      color: materialColors[0],
       isActive: false,
       target,
       id: uuidv4(),

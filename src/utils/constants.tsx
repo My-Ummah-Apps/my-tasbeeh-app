@@ -21,7 +21,7 @@ export const materialColors = [
   "#FF7043",
 ] as const;
 
-export const DEFAULT_COUNTERS = [
+export const DEFAULT_COUNTERS: counterObjType[] = [
   {
     counter: "Alhumdulillah",
     count: 0,

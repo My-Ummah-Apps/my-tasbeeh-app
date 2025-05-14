@@ -1,4 +1,4 @@
-const link = (url) => {
+const link = (url: string) => {
   window.location.href = url;
 };
 

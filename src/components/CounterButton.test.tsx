@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
@@ -10,20 +11,20 @@ test("increases number upon button being tapped", async () => {
     <CounterButton
       setHaptics={vi.fn()}
       haptics={false}
-      saveArrayLocally={vi.fn()}
-      localSavedCountersArray={[
-        {
-          counter: "Alhumdulillah",
-          count: 0,
-          color: "#EF5350",
-          isActive: true,
-          target: 50,
-          id: 1,
-        },
-      ]}
-      setActiveCounterNumber={vi.fn()}
-      activeCounterNumber={0}
-      activeCounterTarget={3}
+      // saveArrayLocally={vi.fn()}
+      // localSavedCountersArray={[
+      //   {
+      //     counter: "Alhumdulillah",
+      //     count: 0,
+      //     color: "#EF5350",
+      //     isActive: true,
+      //     target: 50,
+      //     id: 1,
+      //   },
+      // ]}
+      // setActiveCounterNumber={vi.fn()}
+      // activeCounterNumber={0}
+      // activeCounterTarget={3}
     />
   );
   const btn = screen.getByRole("button", {

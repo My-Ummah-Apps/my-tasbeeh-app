@@ -3,7 +3,7 @@ import { materialColors } from "./constants";
 export type counterObjType = {
   counter: string;
   count: number;
-  color: string;
+  color: MaterialColor;
   isActive: boolean;
   target: number;
   id: string;
@@ -24,9 +24,14 @@ export type NotificationParams = {
   minute: number;
 };
 
-export type languageDirection = null | "rtl" | "ltr";
+export type languageDirection = "rtl" | "ltr" | "neutral";
 
 export type MaterialColor = (typeof materialColors)[number];
+
+export type Notifications =
+  | "morning-notification"
+  | "afternoon-notification"
+  | "evening-notification";
 
 // export type InitialiseNotificationParams = NotificationParams & {
 //   setState: React.Dispatch<React.SetStateAction<boolean>>;
