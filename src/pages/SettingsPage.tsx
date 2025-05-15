@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Capacitor } from "@capacitor/core";
 import { Dialog } from "@capacitor/dialog";
 import {
@@ -8,11 +8,9 @@ import {
 } from "capacitor-native-settings";
 
 import { MdOutlineChevronRight } from "react-icons/md";
-import { Sheet } from "react-modal-sheet";
 // @ts-ignore
 import Switch from "react-ios-switch";
-import NotificationOptions from "../components/NotificationOptions";
-import AboutUs from "../components/AboutUs";
+
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { PURCHASE_TYPE } from "cordova-plugin-purchases";
 import { Share } from "@capacitor/share";
@@ -23,9 +21,11 @@ import {
   setStatusAndNavBarBackgroundColor,
   showConfirmDialog,
   showToast,
-  TWEEN_CONFIG,
 } from "../utils/constants";
 import { counterObjType, themeType } from "../utils/types";
+import SettingIndividual from "../components/SettingIndividual";
+import BottomSheetAboutUs from "../components/BottomSheets/AboutUsBottomSheet";
+import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 
 // import ThemeOptions from "../components/ThemeOptions";
 
@@ -38,6 +38,7 @@ interface SettingsageProps {
   dailyCounterReset: boolean;
   setTheme: React.Dispatch<React.SetStateAction<themeType | null>>;
   theme: themeType | null;
+  setShowChangelogModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SettingsPage = ({
@@ -50,12 +51,16 @@ const SettingsPage = ({
   dailyCounterReset,
   setTheme,
   theme,
+  setShowChangelogModal,
 }: SettingsageProps) => {
   const [morningNotification, setMorningNotification] = useState(false);
   const [afternoonNotification, setAfternoonNotification] = useState(false);
   const [eveningNotification, setEveningNotification] = useState(false);
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
+
+  // const individualSettingStyles =
+  //   "flex items-center justify-between p-2 m-2 py-2 mx-2";
 
   let requestPermission;
   let checkPermission;
@@ -175,14 +180,7 @@ const SettingsPage = ({
 
   // }
 
-  const shareThisAppLink = async () => {
-    let link;
-    if (Capacitor.getPlatform() === "ios") {
-      link = "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967";
-    } else if (Capacitor.getPlatform() === "android") {
-      link = "https://play.google.com/store/apps/details?id=com.tasbeeh.my";
-    }
-
+  const shareThisAppLink = async (link: string) => {
     await Share.share({
       title: "",
       text: "",
@@ -190,6 +188,7 @@ const SettingsPage = ({
       dialogTitle: "",
     });
   };
+
   const link = (url: string) => {
     window.location.href = url;
   };
@@ -317,33 +316,17 @@ const SettingsPage = ({
             </div>
             <MdOutlineChevronRight className="chevron" />
           </div>
-          <Sheet
-            disableDrag={false}
-            isOpen={showNotificationsSheet}
-            onClose={() => setShowNotificationsSheet(false)}
-            detent="content-height"
-            tweenConfig={TWEEN_CONFIG}
-          >
-            <Sheet.Container>
-              {/* <Sheet.Header /> */}
-              <Sheet.Content>
-                {" "}
-                <NotificationOptions
-                  activeCounter={activeCounter}
-                  setMorningNotification={setMorningNotification}
-                  morningNotification={morningNotification}
-                  afternoonNotification={afternoonNotification}
-                  setAfternoonNotification={setAfternoonNotification}
-                  eveningNotification={eveningNotification}
-                  setEveningNotification={setEveningNotification}
-                />
-              </Sheet.Content>
-            </Sheet.Container>
-            <Sheet.Backdrop
-              // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-              onTap={() => setShowNotificationsSheet(false)}
-            />
-          </Sheet>
+          <BottomSheetNotificationsOptions
+            activeCounter={activeCounter}
+            setShowNotificationsSheet={setShowNotificationsSheet}
+            showNotificationsSheet={showNotificationsSheet}
+            setMorningNotification={setMorningNotification}
+            morningNotification={morningNotification}
+            setAfternoonNotification={setAfternoonNotification}
+            afternoonNotification={afternoonNotification}
+            setEveningNotification={setEveningNotification}
+            eveningNotification={eveningNotification}
+          />
         </div>
         {/* // ) : null} */}
         <div className="individual-section-wrap">
@@ -437,8 +420,6 @@ const SettingsPage = ({
                   "Reset All Adhkar",
                   "Are you sure you want to reset all Adkhar to 0?"
                 );
-                console.log("RESULT IS: ", result);
-
                 if (result) {
                   resetAllCounters();
                   showToast("All Adhkar reset to 0", "bottom", "short");
@@ -450,75 +431,98 @@ const SettingsPage = ({
           </div>
         </div>
         <div className="individual-section-wrap">
-          {Capacitor.getPlatform() == "android" ? (
-            <div
-              className="review-wrap"
+          {Capacitor.getPlatform() === "android" && (
+            <SettingIndividual
+              // indvidualStyles={"rounded-t-md"}
+              headingText={"Review"}
+              subText={"Rate us on the Google Play Store"}
               onClick={() => {
                 link(
                   "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
                 );
               }}
-            >
-              <div className="text-wrap" style={{ display: "block" }}>
-                <p>Write a review</p>
-                <p>Rate us on the Play Store</p>
-              </div>
-              <MdOutlineChevronRight className="chevron" />
-            </div>
-          ) : null}
-          {Capacitor.getPlatform() == "ios" ? (
-            <div
-              className="review-wrap"
+            />
+          )}
+          {Capacitor.getPlatform() === "ios" && (
+            <SettingIndividual
+              // indvidualStyles={"rounded-t-md"}
+              headingText={"Review"}
+              subText={"Rate us on the App Store"}
               onClick={() => {
                 link(
                   "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967"
                 );
               }}
-            >
-              <div className="text-wrap" style={{ display: "block" }}>
-                <p>Write a review</p>
-                <p>Rate us on the App Store</p>
-              </div>
-              <MdOutlineChevronRight className="chevron" />
-            </div>
-          ) : null}
-          {Capacitor.isNativePlatform() ? (
-            <div className="share-wrap" onClick={shareThisAppLink}>
-              <div className="text-wrap" style={{ display: "block" }}>
-                <p>Share</p>
-                <p>Share application</p>
-              </div>
-              <MdOutlineChevronRight className="chevron" />
-            </div>
-          ) : null}
-          <div
-            className="feedback-wrap"
+            />
+          )}
+          {Capacitor.isNativePlatform() && (
+            <SettingIndividual
+              // indvidualStyles={"rounded-t-md"}
+              headingText={"Share"}
+              subText={"Share application"}
+              onClick={() => {
+                if (Capacitor.getPlatform() === "android") {
+                  shareThisAppLink(
+                    "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
+                  );
+                } else if (Capacitor.getPlatform() === "ios") {
+                  shareThisAppLink(
+                    "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967"
+                  );
+                }
+              }}
+            />
+          )}
+          <SettingIndividual
+            headingText={"Changelog"}
+            subText={"View Changelog"}
+            onClick={() => {
+              setShowChangelogModal(true);
+            }}
+          />
+          <SettingIndividual
+            headingText={"Feedback"}
+            subText={"Send us your feedback"}
+            // indvidualStyles={"rounded-b-md"}
             onClick={() => {
               link(
                 "mailto: contact@myummahapps.com?subject=My Tasbeeh App Feedback"
               );
             }}
-          >
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>Feedback</p>
-              <p>Send us your feedback</p>
-            </div>
-            <MdOutlineChevronRight className="chevron" />
-          </div>
-          <div
-            className="website-wrap"
+          />
+          <SettingIndividual
+            headingText={"Website"}
+            subText={"Visit our website"}
+            // indvidualStyles={"rounded-b-md"}
             onClick={() => {
               link("https://myummahapps.com/");
             }}
-          >
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>Website</p>
-              <p>Visit our website</p>
-            </div>
-            <MdOutlineChevronRight className="chevron" />
-          </div>
-          {/* {Capacitor.isNativePlatform() ? ( */}
-          <div onClick={() => setShowAboutUsSheet(true)}>
+          />
+          <SettingIndividual
+            headingText={"Privacy Policy"}
+            subText={"View Privacy Policy"}
+            onClick={() => {
+              link("https://sites.google.com/view/mytasbeehprivacypolicy/home");
+            }}
+          />
+          <SettingIndividual
+            headingText={"Source Code"}
+            subText={"View Source Code"}
+            onClick={() => {
+              link("https://github.com/My-Ummah-Apps/my-tasbeeh-app");
+            }}
+          />
+          <SettingIndividual
+            headingText={"About"}
+            subText={"About us"}
+            // indvidualStyles={"rounded-b-md"}
+            onClick={() => setShowAboutUsSheet(true)}
+          />
+          <BottomSheetAboutUs
+            setShowAboutUsSheet={setShowAboutUsSheet}
+            showAboutUsSheet={showAboutUsSheet}
+          />
+          {/* <div onClick={() => setShowAboutUsSheet(true)}>
             <div className="text-wrap" style={{ display: "block" }}>
               <p>About</p>
               <p>About us</p>
@@ -532,7 +536,7 @@ const SettingsPage = ({
               tweenConfig={TWEEN_CONFIG}
             >
               <Sheet.Container>
-                {/* <Sheet.Header /> */}
+                <Sheet.Header />
                 <Sheet.Content>
                   <AboutUs />
                 </Sheet.Content>
@@ -542,8 +546,7 @@ const SettingsPage = ({
                 onTap={() => setShowAboutUsSheet(false)}
               />
             </Sheet>
-          </div>
-          {/* ) : null} */}
+          </div> */}
         </div>
       </div>
     </div>

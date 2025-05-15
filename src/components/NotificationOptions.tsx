@@ -32,18 +32,18 @@ const NotificationOptions = ({
     storageKey: Notifications,
     setState: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    // ! UNCOMMENT BELOW NATIVE PLATFORM CHECK WHEN DONE TESTING ON WEB
-    // if (Capacitor.isNativePlatform()) {
-    const notificationValue: boolean = JSON.parse(
-      localStorage.getItem(storageKey) || "false"
-    );
+    if (Capacitor.isNativePlatform()) {
+      const notificationValue: boolean = JSON.parse(
+        localStorage.getItem(storageKey) || "false"
+      );
 
-    if (notificationValue === null || notificationValue === false) {
-      console.log(typeof notificationValue);
-      localStorage.setItem(storageKey, JSON.stringify(false));
-      setState(false);
-    } else if (notificationValue === true) {
-      setState(true);
+      if (notificationValue === null || notificationValue === false) {
+        console.log(typeof notificationValue);
+        localStorage.setItem(storageKey, JSON.stringify(false));
+        setState(false);
+      } else if (notificationValue === true) {
+        setState(true);
+      }
     }
   };
 

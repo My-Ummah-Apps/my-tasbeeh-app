@@ -269,6 +269,7 @@ function App() {
                   dailyCounterReset={dailyCounterReset}
                   setTheme={setTheme}
                   theme={theme}
+                  setShowChangelogModal={setShowChangelogModal}
                 />
               }
             />

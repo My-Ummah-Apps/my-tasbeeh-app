@@ -1,6 +1,6 @@
 import { Dialog } from "@capacitor/dialog";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { Toast, ToastShowOptions } from "@capacitor/toast";
+import { Toast } from "@capacitor/toast";
 import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { v4 as uuidv4 } from "uuid";
 import { counterObjType } from "./types";
@@ -90,6 +90,21 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
     id: uuidv4(),
   },
 ];
+
+export const bottomSheetHeaderHeight = {
+  height: "60px",
+  // backgroundColor: "black",
+};
+
+export const bottomSheetContainerStyles = {
+  borderRadius: "1.5rem 1.5rem 0 0",
+  overflow: "hidden",
+  backgroundColor: "rgb(33, 36, 38)",
+};
+
+export const sheetBackdropColor = {
+  backgroundColor: "rgba(0, 0, 0, 0.7)",
+};
 
 export const TWEEN_CONFIG = {
   ease: "easeInOut" as EasingDefinition,

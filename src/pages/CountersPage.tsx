@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Sheet } from "react-modal-sheet";
 import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";

@@ -116,7 +116,7 @@ function ActiveCounter({
           aria-label="Reset Counter"
           data-testid="counter-reset-btn"
           className="reset-btn-wrap"
-          onClick={(e) => {
+          onClick={() => {
             resetSingleCounter(activeCounter.id);
           }}
         >
@@ -134,7 +134,6 @@ function ActiveCounter({
           className="single-counter-overlay"
         />
       </section>
-      {/* Remove below code */}
       <section
         className="counter-type-wrap"
         style={{ position: "absolute", opacity: 0 }}

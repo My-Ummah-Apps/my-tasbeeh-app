@@ -1,8 +1,22 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
+@import "tailwindcss";
+@layer base {
+  *,
+  *::before,
+  *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  /* For Firefox. */
+  * {
+    scrollbar-width: none;
+  }
+
+  /* For WebKit (Chrome & Safari). */
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 :root {
@@ -1191,13 +1205,13 @@ input[type="number"] {
 }
 
 .individual-section-wrap div {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; */
   /* padding: 0.5rem 0.5rem; */
   /* margin: 0.5rem 0.5rem; */
-  padding: 0.5rem 0;
-  margin: 0 0.5rem;
+  /* padding: 0.5rem 0;
+  margin: 0 0.5rem; */
 }
 
 .theme-wrap {

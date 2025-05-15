@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MdDeleteOutline } from "react-icons/md";
-import { showConfirmDialog, showerAlert, showToast } from "../utils/constants";
+import { showConfirmDialog, showToast } from "../utils/constants";
 import { counterObjType } from "../utils/types";
 
 interface Form {
@@ -211,7 +211,7 @@ function Form({
           <div className="form-filled-reset-delete-btns-wrap">
             <button
               className="form-filled-delete-tasbeeh-btn"
-              onClick={async (e) => {
+              onClick={async () => {
                 const result = await showConfirmDialog(
                   "Delete Tasbeeh",
                   "Are you sure you want to delete this Tasbeeh?"
