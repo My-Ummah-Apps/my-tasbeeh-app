@@ -68,6 +68,7 @@ function CountersPage({
               isEditingCounter={isEditingCounter}
               editingCounterId={editingCounterId}
               setShowForm={setShowForm}
+              showForm={showForm}
               modifyCounter={modifyCounter}
               addCounter={addCounter}
             />

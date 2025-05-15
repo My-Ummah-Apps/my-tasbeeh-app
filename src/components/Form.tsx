@@ -17,6 +17,7 @@ interface Form {
     modifiedTarget: number
   ) => void;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+  showForm: boolean;
 }
 
 function Form({
@@ -28,6 +29,7 @@ function Form({
   addCounter,
   modifyCounter,
   setShowForm,
+  showForm,
 }: Form) {
   const counterNameField = useRef<HTMLTextAreaElement | null>(null);
   const counterCountField = useRef<HTMLInputElement | null>(null);
@@ -36,24 +38,26 @@ function Form({
   const showTargetAlert = useRef<HTMLDivElement>(null);
   const showCountAlert = useRef<HTMLDivElement | null>(null);
 
-  const clickedCounter = countersArr.find(
-    (counter: counterObjType) => counter.id === editingCounterId
-  );
+  const [nameInputValue, setNameInputValue] = useState<string>("");
+  const [countInputValue, setCountInputValue] = useState<number>(0);
+  const [targetInputValue, setTargetInputValue] = useState<number>(0);
 
-  // if (!clickedCounter) {
-  //   console.error("clickedCounter does not exist");
-  //   return;
-  // }
+  useEffect(() => {
+    console.log("useEffect has triggered");
 
-  const [nameInputValue, setNameInputValue] = useState<string>(
-    isEditingCounter ? clickedCounter.counter : ""
-  );
-  const [countInputValue, setCountInputValue] = useState<number>(
-    isEditingCounter ? clickedCounter.count : 0
-  );
-  const [targetInputValue, setTargetInputValue] = useState<number>(
-    isEditingCounter ? clickedCounter.target : 0
-  );
+    const clickedCounter = countersArr.find(
+      (counter: counterObjType) => counter.id === editingCounterId
+    );
+
+    if (!clickedCounter) {
+      console.error("clickedCounter does not exist");
+      return;
+    }
+
+    setNameInputValue(isEditingCounter ? clickedCounter.counter : "");
+    setCountInputValue(isEditingCounter ? clickedCounter.count : 0);
+    setTargetInputValue(isEditingCounter ? clickedCounter.target : 0);
+  }, [showForm]);
 
   const increaseTextAreaHeight = (
     e: React.ChangeEvent<HTMLTextAreaElement>
