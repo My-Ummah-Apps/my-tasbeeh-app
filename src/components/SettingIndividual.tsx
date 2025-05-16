@@ -14,7 +14,7 @@ const SettingIndividual = ({
   return (
     <section
       // style={{ borderTopRightRadius: indvidualStyles }}
-      className={`flex items-center justify-between shadow-md mx-auto p-3 ${indvidualStyles}`}
+      className={`flex items-center justify-between mx-auto p-3 ${indvidualStyles}`}
       onClick={onClick}
     >
       <div className="">

@@ -106,7 +106,7 @@ export const sheetBackdropColor = {
   backgroundColor: "rgba(0, 0, 0, 0.7)",
 };
 
-export const TWEEN_CONFIG = {
+export const tween_config = {
   ease: "easeInOut" as EasingDefinition,
   duration: 0.5,
 };

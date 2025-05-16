@@ -12,7 +12,7 @@ import {
   setStatusAndNavBarBackgroundColor,
   showerAlert,
   showToast,
-  TWEEN_CONFIG,
+  tween_config,
 } from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
 import NavBar from "./components/NavBar";
@@ -309,7 +309,7 @@ function App() {
         isOpen={showChangelogModal}
         onClose={() => setShowChangelogModal(false)}
         detent="full-height"
-        tweenConfig={TWEEN_CONFIG}
+        tweenConfig={tween_config}
       >
         <Sheet.Container>
           {/* <Sheet.Header /> */}

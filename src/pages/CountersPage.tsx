@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Sheet } from "react-modal-sheet";
 import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
-import { materialColors, TWEEN_CONFIG } from "../utils/constants";
+import { materialColors, tween_config } from "../utils/constants";
 import Form from "../components/Form";
 import { counterObjType } from "../utils/types";
 
@@ -49,7 +49,7 @@ function CountersPage({
         isOpen={showForm}
         onClose={() => setShowForm(false)}
         detent="full-height"
-        tweenConfig={TWEEN_CONFIG}
+        tweenConfig={tween_config}
       >
         <Sheet.Container>
           <Sheet.Header />

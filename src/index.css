@@ -1080,8 +1080,8 @@ input[type="number"] {
   padding: 0.1rem 0;
 }
 
-.notification-options-wrap {
-  margin-bottom: 5rem;
+.notification-ul-wrap {
+  background-color: var(--form-wrap-bg-color) !important;
 }
 
 .notifications-options-heading-text {
@@ -1111,9 +1111,6 @@ input[type="number"] {
 .source-code-wrap {
   /* border-bottom: 1px solid #eaeaea;  */
   border-bottom: 1px solid var(--settings-page-borders);
-}
-
-.individual-section-wrap ul {
 }
 
 .individual-section-wrap ul li {

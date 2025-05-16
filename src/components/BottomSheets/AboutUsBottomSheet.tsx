@@ -3,7 +3,7 @@ import {
   bottomSheetContainerStyles,
   sheetBackdropColor,
   bottomSheetHeaderHeight,
-  TWEEN_CONFIG,
+  tween_config,
 } from "../../utils/constants";
 import MyUmmahAppsLogo from "/src//images/My-Ummah-Apps-72ppi.png";
 
@@ -19,7 +19,7 @@ const BottomSheetAboutUs = ({
   return (
     <Sheet
       detent="content-height"
-      tweenConfig={TWEEN_CONFIG}
+      tweenConfig={tween_config}
       isOpen={showAboutUsSheet}
       onClose={() => setShowAboutUsSheet(false)}
     >

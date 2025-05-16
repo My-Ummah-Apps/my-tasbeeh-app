@@ -1,4 +1,4 @@
-import { TWEEN_CONFIG } from "../../utils/constants";
+import { tween_config } from "../../utils/constants";
 import { counterObjType } from "../../utils/types";
 import { Sheet } from "react-modal-sheet";
 import NotificationOptions from "../NotificationOptions";
@@ -32,7 +32,7 @@ const BottomSheetNotificationsOptions = ({
       isOpen={showNotificationsSheet}
       onClose={() => setShowNotificationsSheet(false)}
       detent="content-height"
-      tweenConfig={TWEEN_CONFIG}
+      tweenConfig={tween_config}
     >
       <Sheet.Container>
         {/* <Sheet.Header /> */}

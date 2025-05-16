@@ -7,7 +7,6 @@ import {
   IOSSettings,
 } from "capacitor-native-settings";
 
-import { MdOutlineChevronRight } from "react-icons/md";
 // @ts-ignore
 import Switch from "react-ios-switch";
 
@@ -15,19 +14,13 @@ import Switch from "react-ios-switch";
 // import { PURCHASE_TYPE } from "cordova-plugin-purchases";
 import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
-import { Style } from "@capacitor/status-bar";
 
-import {
-  setStatusAndNavBarBackgroundColor,
-  showConfirmDialog,
-  showToast,
-} from "../utils/constants";
+import { showConfirmDialog, showToast } from "../utils/constants";
 import { counterObjType, themeType } from "../utils/types";
 import SettingIndividual from "../components/SettingIndividual";
 import BottomSheetAboutUs from "../components/BottomSheets/AboutUsBottomSheet";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
-
-// import ThemeOptions from "../components/ThemeOptions";
+import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
 
 interface SettingsageProps {
   activeCounter: counterObjType;
@@ -58,9 +51,7 @@ const SettingsPage = ({
   const [eveningNotification, setEveningNotification] = useState(false);
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
-
-  // const individualSettingStyles =
-  //   "flex items-center justify-between p-2 m-2 py-2 mx-2";
+  const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
 
   let requestPermission;
   let checkPermission;
@@ -198,16 +189,6 @@ const SettingsPage = ({
       <div className="settings-page-header">
         <p>Settings</p>
       </div>
-
-      {/* 
-        <ThemeOptions
-          formTheme={formTheme}
-          theme={theme}
-          activeCounter={activeCounter}
-          setTheme={setTheme}
-        />
-      */}
-
       <div className="settings-page-options-and-info-wrap">
         {/* <div className="individual-section-wrap">
           <div
@@ -303,19 +284,15 @@ const SettingsPage = ({
         </div>
 */}
         {/* {Capacitor.isNativePlatform() ? ( */}
-        <div className="individual-section-wrap">
-          <div
-            className="notifications-wrap"
+        <section className="individual-section-wrap">
+          <SettingIndividual
+            // indvidualStyles={"rounded-t-md"}
+            headingText={"Notifications"}
+            subText={"Set Notifications"}
             onClick={() => {
               checkNotificationPermissions();
             }}
-          >
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>Notifications</p>
-              <p>Set Notifications</p>
-            </div>
-            <MdOutlineChevronRight className="chevron" />
-          </div>
+          />
           <BottomSheetNotificationsOptions
             activeCounter={activeCounter}
             setShowNotificationsSheet={setShowNotificationsSheet}
@@ -327,48 +304,25 @@ const SettingsPage = ({
             setEveningNotification={setEveningNotification}
             eveningNotification={eveningNotification}
           />
-        </div>
+        </section>
         {/* // ) : null} */}
-        <div className="individual-section-wrap">
-          <div className="theme-wrap">
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>Dark Theme</p>
-              <p>
-                Toggle between Light / Dark Theme
-                {/* Current Theme: {theme == "light" ? "Light" : "Dark"} */}
-                {/* Current Theme: {theme.charAt(0).toUpperCase() + theme.slice(1)} */}
-              </p>
-            </div>
-            {/* <MdOutlineChevronRight className="chevron" /> */}
-            <Switch
-              checked={theme === "light" ? false : true}
-              handleColor="white"
-              name={undefined}
-              offColor="white"
-              onChange={() => {
-                if (theme === "light") {
-                  setTheme("dark");
-                  if (Capacitor.isNativePlatform()) {
-                    setStatusAndNavBarBackgroundColor("#242424", Style.Dark);
-                  }
-
-                  localStorage.setItem("theme", JSON.stringify("dark"));
-                  document.body.classList.add("dark");
-                } else if (theme === "dark") {
-                  setTheme("light");
-                  if (Capacitor.isNativePlatform()) {
-                    setStatusAndNavBarBackgroundColor("#EDEDED", Style.Light);
-                  }
-
-                  localStorage.setItem("theme", JSON.stringify("light"));
-                  document.body.classList.remove("dark");
-                }
-              }}
-              onColor={activeCounter.color}
-            />
-          </div>
-        </div>
-        <div className="individual-section-wrap">
+        <section className="individual-section-wrap">
+          <SettingIndividual
+            // indvidualStyles={"rounded-t-md"}
+            headingText={"Theme"}
+            subText={"Select Theme"}
+            onClick={() => {
+              setShowThemeOptionsSheet(true);
+            }}
+          />
+          <BottomSheetThemeOptions
+            setShowThemeOptionsSheet={setShowThemeOptionsSheet}
+            showThemeOptionsSheet={showThemeOptionsSheet}
+            setTheme={setTheme}
+            theme={theme}
+          />
+        </section>
+        <section className="individual-section-wrap">
           {Capacitor.isNativePlatform() && (
             <div className="individual-row-wrap haptic-wrap">
               <div className="text-wrap" style={{ display: "block" }}>
@@ -392,8 +346,8 @@ const SettingsPage = ({
               />
             </div>
           )}
-          <div className="individual-row-wrap">
-            <div className="text-wrap" style={{ display: "block" }}>
+          <section className="individual-row-wrap p-3">
+            <div className="text-wrap " style={{ display: "block" }}>
               <p>Auto Reset Adhkar</p>
               <p>Adhkar will be reset daily</p>
             </div>
@@ -412,8 +366,8 @@ const SettingsPage = ({
               }}
               onColor={activeCounter.color}
             />
-          </div>
-          <div className="reset-adkhar-text-wrap">
+          </section>
+          <div className="reset-adkhar-text-wrap pl-1">
             <p
               onClick={async () => {
                 const result = await showConfirmDialog(
@@ -429,7 +383,7 @@ const SettingsPage = ({
               Reset all Adhkar
             </p>
           </div>
-        </div>
+        </section>
         <div className="individual-section-wrap">
           {Capacitor.getPlatform() === "android" && (
             <SettingIndividual
@@ -533,7 +487,7 @@ const SettingsPage = ({
               isOpen={showAboutUsSheet}
               onClose={() => setShowAboutUsSheet(false)}
               detent="content-height"
-              tweenConfig={TWEEN_CONFIG}
+              tweenConfig={tween_config}
             >
               <Sheet.Container>
                 <Sheet.Header />
