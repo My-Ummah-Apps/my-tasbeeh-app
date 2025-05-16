@@ -165,18 +165,6 @@ body {
 
 /* MAIN PAGE */
 
-/* @-webkit-keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translateY(-10%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0%);
-  }
-} */
-
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -187,50 +175,6 @@ body {
     opacity: 1;
     transform: translateY(0%);
   }
-}
-
-@-webkit-keyframes fadeInUp {
-  /* 0% {
-    opacity: 0;
-    transform: translateY(10%);
-  }
-
-  25% {
-    opacity: 0;
-    transform: translateY(7%);
-  }
-
-  75% {
-    opacity: 0;
-    transform: translateY(3%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0%);
-  } */
-}
-
-@keyframes fadeInUp {
-  /* 0% {
-    opacity: 0;
-    transform: translateY(10%);
-  }
-
-  25% {
-    opacity: 0;
-    transform: translateY(7%);
-  }
-
-  75% {
-    opacity: 0;
-    transform: translateY(3%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0%);
-  } */
 }
 
 .counter-type-wrap {
@@ -293,12 +237,6 @@ body {
   border: none;
   box-shadow: var(--counters-page-single-counter-box-shadow);
 }
-
-/* .increment-btn:active {
-  background: red;
-  box-shadow: 0px 0px 20px;
-  font-size: 2rem;
-} */
 
 .increment-btn-number-and-target-wrap {
   color: #fff;
@@ -406,57 +344,6 @@ MdModeEditOutline {
   }
 }
 
-@keyframes slideRight {
-  0% {
-    box-shadow: 0;
-    -webkit-box-shadow: 0;
-    transform: translateX(0%);
-  }
-
-  100% {
-    box-shadow:
-      0 4px 8px 0 rgba(0, 0, 0, 0.2),
-      0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow:
-      0 4px 8px 0 rgba(0, 0, 0, 0.2),
-      0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    transform: translateX(1.5%);
-  }
-}
-
-@-webkit-keyframes slideLeft {
-  0% {
-    box-shadow:
-      0 4px 8px 0 rgba(0, 0, 0, 0.2),
-      0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow:
-      0 4px 8px 0 rgba(0, 0, 0, 0.2),
-      0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    transform: translateX(1.5%);
-  }
-
-  100% {
-    box-shadow: 0;
-    transform: translateX(0%);
-  }
-}
-
-@keyframes slideLeft {
-  0% {
-    box-shadow:
-      0 4px 8px 0 rgba(0, 0, 0, 0.2),
-      0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow:
-      0 4px 8px 0 rgba(0, 0, 0, 0.2),
-      0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    transform: translateX(1.5%);
-  }
-
-  100% {
-    box-shadow: 0;
-    transform: translateX(0%);
-  }
-}
 .counter-page-single-counter.not-active {
   position: relative;
   left: 0px;
@@ -510,17 +397,6 @@ MdModeEditOutline {
   /* clip-path: inset(0% 0% 0% 0% round 10px); */
   clip-path: inset(0% 0% 0% 0% round 16px);
 }
-
-/* .single-counter-wrap::before {
-  content: "";
-  position: absolute;
-  min-width: 5%;
-  border-radius: 1rem;
-  height: 100%;
-  overflow: hidden;
-  z-index: 100;
-  background: blue;
-} */
 
 /* This style is to do with turning each counter into a progress bar */
 .single-counter-overlay {
@@ -1202,20 +1078,6 @@ input[type="number"] {
   border-radius: 0.5rem;
   box-shadow: var(--settings-page-box-shadow);
   padding: 0.1rem 0;
-}
-
-.individual-section-wrap div {
-  /* display: flex;
-  align-items: center;
-  justify-content: space-between; */
-  /* padding: 0.5rem 0.5rem; */
-  /* margin: 0.5rem 0.5rem; */
-  /* padding: 0.5rem 0;
-  margin: 0 0.5rem; */
-}
-
-.theme-wrap {
-  /* margin-top: 3rem; */
 }
 
 .notification-options-wrap {
