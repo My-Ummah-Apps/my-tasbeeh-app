@@ -53,10 +53,6 @@ const SettingsPage = ({
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
   const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
 
-  let requestPermission;
-  let checkPermission;
-  let userNotificationPermission;
-
   const showNotificationsAlert = async () => {
     const { value } = await Dialog.confirm({
       title: "Open Settings",
@@ -79,8 +75,8 @@ const SettingsPage = ({
   };
 
   async function checkNotificationPermissions() {
-    checkPermission = await LocalNotifications.checkPermissions();
-    userNotificationPermission = checkPermission.display;
+    const checkPermission = await LocalNotifications.checkPermissions();
+    const userNotificationPermission = checkPermission.display;
 
     if (userNotificationPermission === "denied") {
       showNotificationsAlert();
@@ -102,7 +98,7 @@ const SettingsPage = ({
   }
 
   const requestPermissionFunction = async () => {
-    requestPermission = await LocalNotifications.requestPermissions();
+    const requestPermission = await LocalNotifications.requestPermissions();
 
     if (requestPermission.display === "granted") {
       // setMorningNotification(true);
