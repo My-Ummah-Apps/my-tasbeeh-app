@@ -220,7 +220,7 @@ body {
 
 .increment-btn {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -1095,7 +1095,7 @@ input[type="number"] {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 1rem;
-  border-bottom: 1px solid rgb(232, 232, 232);
+  border-bottom: 1px solid var(--settings-page-borders);
 }
 
 .notificatiions-options-sub-text {

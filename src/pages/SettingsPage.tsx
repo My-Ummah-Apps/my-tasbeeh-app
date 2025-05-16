@@ -6,10 +6,8 @@ import {
   AndroidSettings,
   IOSSettings,
 } from "capacitor-native-settings";
-
 // @ts-ignore
 import Switch from "react-ios-switch";
-
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { PURCHASE_TYPE } from "cordova-plugin-purchases";
 import { Share } from "@capacitor/share";
@@ -21,7 +19,6 @@ import SettingIndividual from "../components/SettingIndividual";
 import BottomSheetAboutUs from "../components/BottomSheets/AboutUsBottomSheet";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
-
 interface SettingsageProps {
   activeCounter: counterObjType;
   setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
