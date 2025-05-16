@@ -143,9 +143,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setDailyCounterReset(
-      JSON.parse(localStorage.getItem("dailyCounterReset") || "false")
+    const resetAllCounters = JSON.parse(
+      localStorage.getItem("dailyCounterReset") || "false"
     );
+    setDailyCounterReset(resetAllCounters);
 
     let counters: counterObjType[] = [];
     const storedCounters = JSON.parse(
@@ -155,10 +156,12 @@ function App() {
     if (storedCounters && storedCounters.length > 0) {
       const previousLaunchDate = localStorage.getItem("lastLaunchDate");
       const todaysDate = new Date().toLocaleDateString();
-      // const todaysDate = "20/05/2025";
+
       localStorage.setItem("lastLaunchDate", todaysDate);
 
-      if (previousLaunchDate !== todaysDate && dailyCounterReset === true) {
+      if (previousLaunchDate !== todaysDate && resetAllCounters === true) {
+        console.log("COUNTERS RESET");
+
         counters = storedCounters.map((counterItem: counterObjType) => ({
           ...counterItem,
           count: 0,
@@ -246,10 +249,6 @@ function App() {
     showToast("Tasbeeh deleted", "top", "short");
     setAndStoreCounters(updatedCountersArr);
   };
-
-  useEffect(() => {
-    console.log("COUNRERS ARR IN APP.TSX: ", countersArr);
-  }, [countersArr]);
 
   return (
     <>

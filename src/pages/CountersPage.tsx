@@ -30,15 +30,10 @@ function CountersPage({
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
   const [isEditingCounter, setIsEditingCounter] = useState(false);
-
-  // ! REFACTOR BELOW
-  let nextColorIndex = 0;
-  let nextColor;
-
   const [editingCounterId, setEditingCounterId] = useState("");
 
   return (
-    <div className={`counters-page-wrap`}>
+    <section className={`counters-page-wrap`}>
       <div className="counters-page-header">
         <p>Adhkar</p>
         <MdAdd
@@ -48,7 +43,6 @@ function CountersPage({
           }}
         />
       </div>
-
       <Sheet
         style={{ willChange: "transform" }}
         disableDrag={false}
@@ -79,12 +73,8 @@ function CountersPage({
       </Sheet>
 
       <div className="counters-wrap">
-        {countersArr.map((counterItem: counterObjType) => {
-          nextColor = materialColors[nextColorIndex];
-          counterItem.color = nextColor;
-          nextColorIndex == materialColors.length - 1
-            ? (nextColorIndex = 0)
-            : (nextColorIndex += 1);
+        {countersArr.map((counterItem: counterObjType, i) => {
+          let nextColor = materialColors[i % materialColors.length];
           return (
             <CountersListItem
               key={counterItem.id}
@@ -99,7 +89,7 @@ function CountersPage({
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }
 

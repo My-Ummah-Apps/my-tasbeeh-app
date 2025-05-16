@@ -15,6 +15,6 @@
      "noUnusedParameters": true,
     "jsx": "react-jsx"
   },
-  "include": ["src/**/*.tsx", "src/**/*.ts"]
+  "include": ["src/**/*.tsx", "src/**/*.ts", "src/index.jsx"]
 }
  
