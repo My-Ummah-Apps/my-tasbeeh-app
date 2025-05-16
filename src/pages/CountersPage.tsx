@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Sheet } from "react-modal-sheet";
 import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
-import { materialColors, tween_config } from "../utils/constants";
-import Form from "../components/Form";
+import { materialColors } from "../utils/constants";
 import { counterObjType } from "../utils/types";
+import BottomSheetForm from "../components/BottomSheets/BottomSheetsForm";
 
 interface CountersPageProps {
   activeCounter: counterObjType;
@@ -43,34 +42,17 @@ function CountersPage({
           }}
         />
       </div>
-      <Sheet
-        style={{ willChange: "transform" }}
-        disableDrag={false}
-        isOpen={showForm}
-        onClose={() => setShowForm(false)}
-        detent="full-height"
-        tweenConfig={tween_config}
-      >
-        <Sheet.Container>
-          <Sheet.Header />
-          <Sheet.Content>
-            {/* <Sheet.Scroller> */}{" "}
-            <Form
-              countersArr={countersArr}
-              activeCounter={activeCounter}
-              deleteSingleCounter={deleteSingleCounter}
-              isEditingCounter={isEditingCounter}
-              editingCounterId={editingCounterId}
-              setShowForm={setShowForm}
-              showForm={showForm}
-              modifyCounter={modifyCounter}
-              addCounter={addCounter}
-            />
-            {/* </Sheet.Scroller> */}
-          </Sheet.Content>
-        </Sheet.Container>
-        <Sheet.Backdrop onTap={() => setShowForm(false)} />
-      </Sheet>
+      <BottomSheetForm
+        countersArr={countersArr}
+        activeCounter={activeCounter}
+        deleteSingleCounter={deleteSingleCounter}
+        isEditingCounter={isEditingCounter}
+        editingCounterId={editingCounterId}
+        setShowForm={setShowForm}
+        showForm={showForm}
+        modifyCounter={modifyCounter}
+        addCounter={addCounter}
+      />
 
       <div className="counters-wrap">
         {countersArr.map((counterItem: counterObjType, i) => {
