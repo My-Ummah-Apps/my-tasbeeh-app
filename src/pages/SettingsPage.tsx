@@ -317,7 +317,7 @@ const SettingsPage = ({
         </section>
         <section className="individual-section-wrap">
           {Capacitor.isNativePlatform() && (
-            <div className="individual-row-wrap haptic-wrap">
+            <div className="individual-row-wrap haptic-wrap  p-3">
               <div className="text-wrap" style={{ display: "block" }}>
                 <p>Haptic Vibration</p>
                 <p>Set vibration on every increment</p>
