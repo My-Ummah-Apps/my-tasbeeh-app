@@ -1,9 +1,10 @@
 import { tween_config } from "../../utils/constants";
-import { counterObjType } from "../../utils/types";
+import { counterObjType, MaterialColor } from "../../utils/types";
 import { Sheet } from "react-modal-sheet";
 import NotificationOptions from "../NotificationOptions";
 
 interface BottomSheetNotificationsOptionsProps {
+  activeColor: MaterialColor;
   activeCounter: counterObjType;
   setShowNotificationsSheet: React.Dispatch<React.SetStateAction<boolean>>;
   showNotificationsSheet: boolean;
@@ -16,6 +17,7 @@ interface BottomSheetNotificationsOptionsProps {
 }
 
 const BottomSheetNotificationsOptions = ({
+  activeColor,
   activeCounter,
   setShowNotificationsSheet,
   showNotificationsSheet,
@@ -35,10 +37,11 @@ const BottomSheetNotificationsOptions = ({
       tweenConfig={tween_config}
     >
       <Sheet.Container>
-        {/* <Sheet.Header /> */}
+        <Sheet.Header />
         <Sheet.Content>
           {" "}
           <NotificationOptions
+            activeColor={activeColor}
             activeCounter={activeCounter}
             setMorningNotification={setMorningNotification}
             morningNotification={morningNotification}

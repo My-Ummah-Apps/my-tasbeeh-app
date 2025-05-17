@@ -2,10 +2,12 @@ import { useState } from "react";
 import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
 import { materialColors } from "../utils/constants";
-import { counterObjType } from "../utils/types";
-import BottomSheetForm from "../components/BottomSheets/BottomSheetsForm";
+import { counterObjType, MaterialColor } from "../utils/types";
+import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
 
 interface CountersPageProps {
+  activeColor: MaterialColor;
+  setActiveColor: React.Dispatch<MaterialColor>;
   activeCounter: counterObjType;
   setAndStoreCounters: (arr: counterObjType[]) => void;
   deleteSingleCounter: (id: string) => void;
@@ -20,6 +22,8 @@ interface CountersPageProps {
 }
 
 function CountersPage({
+  activeColor,
+  setActiveColor,
   activeCounter,
   setAndStoreCounters,
   deleteSingleCounter,
@@ -43,6 +47,7 @@ function CountersPage({
         />
       </div>
       <BottomSheetForm
+        activeColor={activeColor}
         countersArr={countersArr}
         activeCounter={activeCounter}
         deleteSingleCounter={deleteSingleCounter}
@@ -53,24 +58,25 @@ function CountersPage({
         modifyCounter={modifyCounter}
         addCounter={addCounter}
       />
-
-      <div className="counters-wrap">
+      <section className="counters-wrap">
         {countersArr.map((counterItem: counterObjType, i) => {
-          let nextColor = materialColors[i % materialColors.length];
+          let color = materialColors[i % materialColors.length];
+
           return (
             <CountersListItem
+              setActiveColor={setActiveColor}
               key={counterItem.id}
               setAndStoreCounters={setAndStoreCounters}
               countersArr={countersArr}
               setEditingCounterId={setEditingCounterId}
               setIsEditingCounter={setIsEditingCounter}
               setShowForm={setShowForm}
-              nextColor={nextColor}
+              color={color}
               counterItem={counterItem}
             />
           );
         })}
-      </div>
+      </section>
     </section>
   );
 }

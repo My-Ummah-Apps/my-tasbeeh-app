@@ -14,12 +14,13 @@ import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
 
 import { showConfirmDialog, showToast } from "../utils/constants";
-import { counterObjType, themeType } from "../utils/types";
+import { counterObjType, MaterialColor, themeType } from "../utils/types";
 import SettingIndividual from "../components/SettingIndividual";
-import BottomSheetAboutUs from "../components/BottomSheets/AboutUsBottomSheet";
+import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
 interface SettingsageProps {
+  activeColor: MaterialColor;
   activeCounter: counterObjType;
   setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
   haptics: boolean | null;
@@ -33,6 +34,7 @@ interface SettingsageProps {
 
 const SettingsPage = ({
   // iapProducts,
+  activeColor,
   activeCounter,
   setHaptics,
   haptics,
@@ -194,7 +196,7 @@ const SettingsPage = ({
               <FaHandHoldingHeart
                 style={{
                   fontSize: "32px",
-                  color: activeCounter.color,
+                  color: activeColor,
                 }}
               />
               <div className="support-box-text-wrap">
@@ -210,14 +212,14 @@ const SettingsPage = ({
               <p
                 className="tip-jar-box-first-line-of-text tip-jar-box-text"
                 style={{
-                  backgroundColor: activeCounter.color,
+                  backgroundColor: activeColor,
                 }}
               ></p>
 
               <p
                 className="tip-jar-box-text"
                 style={{
-                  backgroundColor: activeCounter.color,
+                  backgroundColor: activeColor,
                 }}
               >
                 MyUmmahApps Ltd provides free, open source applications for the
@@ -227,7 +229,7 @@ const SettingsPage = ({
               <p
                 className="tip-jar-box-text"
                 style={{
-                  backgroundColor: activeCounter.color,
+                  backgroundColor: activeColor,
                 }}
               >
                 {" "}
@@ -238,7 +240,7 @@ const SettingsPage = ({
               <p
                 className="tip-jar-box-text"
                 style={{
-                  backgroundColor: activeCounter.color,
+                  backgroundColor: activeColor,
                 }}
               >
                 {" "}
@@ -287,6 +289,7 @@ const SettingsPage = ({
             }}
           />
           <BottomSheetNotificationsOptions
+            activeColor={activeColor}
             activeCounter={activeCounter}
             setShowNotificationsSheet={setShowNotificationsSheet}
             showNotificationsSheet={showNotificationsSheet}
@@ -335,7 +338,7 @@ const SettingsPage = ({
                     JSON.stringify(newHapticsValue)
                   );
                 }}
-                onColor={activeCounter.color}
+                onColor={activeColor}
               />
             </div>
           )}
@@ -357,7 +360,7 @@ const SettingsPage = ({
                   JSON.stringify(newResetValue)
                 );
               }}
-              onColor={activeCounter.color}
+              onColor={activeColor}
             />
           </section>
           <div className="reset-adkhar-text-wrap pl-1">

@@ -1,5 +1,5 @@
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
-import { counterObjType } from "../utils/types";
+import { counterObjType, MaterialColor } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 
 const hapticsImpactMedium = async () => {
@@ -11,6 +11,7 @@ const hapticsVibrate = async () => {
 };
 
 interface CounterButtonProps {
+  activeColor: MaterialColor;
   countersArr: counterObjType[];
   activeCounter: counterObjType;
   setAndStoreCounters: (arr: counterObjType[]) => void;
@@ -19,6 +20,7 @@ interface CounterButtonProps {
 }
 
 function CounterButton({
+  activeColor,
   countersArr,
   activeCounter,
   setAndStoreCounters,
@@ -59,8 +61,8 @@ function CounterButton({
       data-testid="counter-increment-button"
       aria-label={`Increase counter for ${activeCounter.counter}, current value is ${activeCounter.count}`}
       style={{
-        backgroundColor: `${activeCounter.color}`,
-        boxShadow: `0px 0px 10px ${activeCounter.color}`,
+        backgroundColor: `${activeColor}`,
+        boxShadow: `0px 0px 10px ${activeColor}`,
       }}
       onClick={() => {
         setCounterAndHaptics();

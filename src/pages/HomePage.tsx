@@ -1,8 +1,13 @@
 import ActiveCounter from "../components/ActiveCounter";
 import CounterButton from "../components/CounterButton";
-import { counterObjType, languageDirection } from "../utils/types";
+import {
+  counterObjType,
+  languageDirection,
+  MaterialColor,
+} from "../utils/types";
 
 interface HomePageProps {
+  activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetSingleCounter: (id: string) => Promise<void>;
   setAndStoreCounters: (arr: counterObjType[]) => void;
@@ -14,6 +19,7 @@ interface HomePageProps {
 }
 
 const HomePage = ({
+  activeColor,
   activeCounter,
   resetSingleCounter,
   setAndStoreCounters,
@@ -29,12 +35,14 @@ const HomePage = ({
         <p>Home</p>
       </div>
       <ActiveCounter
+        activeColor={activeColor}
         activeCounter={activeCounter}
         resetSingleCounter={resetSingleCounter}
         setLanguageDirection={setLanguageDirection}
         languageDirection={languageDirection}
       />
       <CounterButton
+        activeColor={activeColor}
         countersArr={countersArr}
         setAndStoreCounters={setAndStoreCounters}
         activeCounter={activeCounter}

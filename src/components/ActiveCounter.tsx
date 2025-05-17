@@ -1,9 +1,14 @@
 import { useRef, useEffect, useState } from "react";
 import { direction } from "direction";
 import { MdOutlineRestartAlt } from "react-icons/md";
-import { counterObjType, languageDirection } from "../utils/types";
+import {
+  counterObjType,
+  languageDirection,
+  MaterialColor,
+} from "../utils/types";
 
 interface CounterNameAndNumberProps {
+  activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetSingleCounter: (id: string) => Promise<void>;
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
@@ -11,6 +16,7 @@ interface CounterNameAndNumberProps {
 }
 
 function ActiveCounter({
+  activeColor,
   activeCounter,
   resetSingleCounter,
   setLanguageDirection,
@@ -64,7 +70,7 @@ function ActiveCounter({
           `}
         ref={counterTextContainerRef}
         style={{
-          backgroundColor: `${activeCounter.color}BF`,
+          backgroundColor: `${activeColor}BF`,
         }}
       >
         <div className="single-counter-name-and-count-wrap">
@@ -125,7 +131,7 @@ function ActiveCounter({
 
         <div
           style={{
-            backgroundColor: activeCounter.color,
+            backgroundColor: activeColor,
             width:
               activeCounter.target > 0
                 ? `${(activeCounter.count / activeCounter.target) * 100}%`

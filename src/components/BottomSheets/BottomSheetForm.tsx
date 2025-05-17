@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import { Sheet } from "react-modal-sheet";
 import { MdDeleteOutline } from "react-icons/md";
 import { showConfirmDialog, showToast } from "../../utils/constants";
-import { counterObjType } from "../../utils/types";
+import { counterObjType, MaterialColor } from "../../utils/types";
 import { tween_config } from "../../utils/constants";
 
 interface BottomSheetFormProps {
+  activeColor: MaterialColor;
   countersArr: counterObjType[];
   editingCounterId: string;
   deleteSingleCounter: (id: string) => void;
@@ -23,10 +24,10 @@ interface BottomSheetFormProps {
 }
 
 const BottomSheetForm = ({
+  activeColor,
   countersArr,
   editingCounterId,
   deleteSingleCounter,
-  activeCounter,
   isEditingCounter,
   addCounter,
   modifyCounter,
@@ -34,15 +35,11 @@ const BottomSheetForm = ({
   showForm,
 }: BottomSheetFormProps) => {
   const counterNameField = useRef<HTMLTextAreaElement | null>(null);
-  const counterCountField = useRef<HTMLInputElement | null>(null);
-  const counterTargetField = useRef(null);
-  const showNameAlert = useRef<HTMLDivElement>(null);
-  const showTargetAlert = useRef<HTMLDivElement>(null);
-  const showCountAlert = useRef<HTMLDivElement | null>(null);
 
   const [nameInputValue, setNameInputValue] = useState<string>("");
   const [countInputValue, setCountInputValue] = useState<number>(0);
   const [targetInputValue, setTargetInputValue] = useState<number>(0);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const clickedCounter = countersArr.find(
@@ -111,8 +108,7 @@ const BottomSheetForm = ({
       <Sheet.Container>
         <Sheet.Header />
         <Sheet.Content>
-          {/* <Sheet.Scroller> */}{" "}
-          <div className="form-wrap form-blank">
+          <section className="form-wrap form-blank">
             <div className="form-filled-save-and-cancel-btn-wrap">
               <button
                 onClick={() => {
@@ -127,12 +123,9 @@ const BottomSheetForm = ({
                 {isEditingCounter ? "Edit Tasbeeh" : "Add Tasbeeh"}
               </h1>
               <button
-                onClick={() => {
-                  setShowForm(false);
-                }}
                 form="form"
                 className="form-filled-save-btn"
-                style={{ backgroundColor: activeCounter.color }}
+                style={{ backgroundColor: activeColor }}
               >
                 Save
               </button>
@@ -142,14 +135,24 @@ const BottomSheetForm = ({
               <form
                 id="form"
                 onSubmit={(e) => {
+                  e.preventDefault();
+                  setSubmitted(true);
+
+                  if (
+                    nameInputValue.trim() === "" ||
+                    countInputValue < 0 ||
+                    targetInputValue < 1
+                  ) {
+                    return;
+                  }
                   submitCounter(e, isEditingCounter ? "modify" : "add");
+                  setSubmitted(false);
                 }}
               >
                 <div className="form-filled-counter-name-input-wrap">
                   <p>Dhikr Name</p>
                   <textarea
                     dir="auto"
-                    ref={counterNameField}
                     className="form-textarea"
                     onChange={(e) => {
                       setNameInputValue(e.target.value);
@@ -158,20 +161,23 @@ const BottomSheetForm = ({
                     value={nameInputValue}
                     required
                   />
-                  <div
-                    ref={showNameAlert}
-                    className="form-alert-styles"
-                    style={{ visibility: "hidden" }}
+                  <p
+                    style={{
+                      color: "red",
+                      visibility:
+                        nameInputValue.trim() === "" && submitted
+                          ? "visible"
+                          : "hidden",
+                    }}
                   >
                     Please enter a name
-                  </div>
+                  </p>
                 </div>
                 <div className="count-and-target-input-wrap">
                   {isEditingCounter && (
                     <div className="current-count-input-wrap">
                       <p>Count</p>
                       <input
-                        ref={counterCountField}
                         className="form-input"
                         maxLength={5}
                         onChange={(e) => {
@@ -183,13 +189,17 @@ const BottomSheetForm = ({
                         pattern="[0-9]*"
                         required
                       />
-                      <div
-                        ref={showCountAlert}
-                        className="form-alert-styles"
-                        style={{ visibility: "hidden" }}
+                      <p
+                        style={{
+                          color: "red",
+                          visibility:
+                            !countInputValue && submitted
+                              ? "visible"
+                              : "hidden",
+                        }}
                       >
-                        Please enter a number
-                      </div>
+                        Target must be above 0
+                      </p>
                     </div>
                   )}
 
@@ -201,7 +211,6 @@ const BottomSheetForm = ({
 
                         setTargetInputValue(Number(e.target.value));
                       }}
-                      ref={counterTargetField}
                       className="form-input"
                       maxLength={5}
                       value={targetInputValue}
@@ -209,13 +218,17 @@ const BottomSheetForm = ({
                       pattern="[0-9]*"
                       required
                     />
-                    <div
-                      ref={showTargetAlert}
-                      className="form-alert-styles"
-                      style={{ visibility: "hidden" }}
+                    <p
+                      style={{
+                        color: "red",
+                        visibility:
+                          targetInputValue < 1 && submitted
+                            ? "visible"
+                            : "hidden",
+                      }}
                     >
                       Target must be above 0
-                    </div>
+                    </p>
                   </div>
                 </div>
               </form>
@@ -241,8 +254,7 @@ const BottomSheetForm = ({
                 </button>
               </div>
             )}
-          </div>
-          {/* </Sheet.Scroller> */}
+          </section>
         </Sheet.Content>
       </Sheet.Container>
       <Sheet.Backdrop

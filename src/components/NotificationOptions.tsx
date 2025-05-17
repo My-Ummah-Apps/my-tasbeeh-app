@@ -3,6 +3,7 @@ import Switch from "react-ios-switch";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import {
   counterObjType,
+  MaterialColor,
   NotificationParams,
   Notifications,
 } from "../utils/types";
@@ -10,6 +11,7 @@ import { Capacitor } from "@capacitor/core";
 import { useEffect } from "react";
 
 interface NotificationOptionsProps {
+  activeColor: MaterialColor;
   activeCounter: counterObjType;
   setMorningNotification: React.Dispatch<React.SetStateAction<boolean>>;
   morningNotification: boolean;
@@ -20,7 +22,7 @@ interface NotificationOptionsProps {
 }
 
 const NotificationOptions = ({
-  activeCounter,
+  activeColor,
   setMorningNotification,
   morningNotification,
   afternoonNotification,
@@ -125,7 +127,7 @@ const NotificationOptions = ({
               minute: 0,
             });
           }}
-          onColor={activeCounter.color}
+          onColor={activeColor}
         />
       </div>
       <div className="individual-notification-option-wrap">
@@ -151,7 +153,7 @@ const NotificationOptions = ({
               minute: 0,
             });
           }}
-          onColor={activeCounter.color}
+          onColor={activeColor}
         />
       </div>
       <div className="individual-notification-option-wrap">
@@ -177,7 +179,7 @@ const NotificationOptions = ({
               minute: 0,
             });
           }}
-          onColor={activeCounter.color}
+          onColor={activeColor}
         />
       </div>
     </div>

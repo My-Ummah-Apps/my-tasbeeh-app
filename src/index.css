@@ -821,8 +821,7 @@ input[type="number"] {
 .form-filled-dhikr-name-and-reset-icon-wrap p,
 .form-filled-counter-name-input-wrap p {
   text-align: center;
-  margin: 1rem 0 0.5rem 0;
-  /* font-size: 0.8rem; */
+  margin: 0.3rem 0 1rem 0;
 }
 
 .react-modal-sheet-container {

@@ -20,7 +20,12 @@ import HomePage from "./pages/HomePage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
 import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
-import { counterObjType, languageDirection, themeType } from "./utils/types";
+import {
+  counterObjType,
+  languageDirection,
+  MaterialColor,
+  themeType,
+} from "./utils/types";
 
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
@@ -28,7 +33,7 @@ function App() {
     counter: "",
     count: 0,
     target: 0,
-    color: materialColors[0],
+    // color: materialColors[0],
     isActive: false,
     id: "",
   });
@@ -39,6 +44,9 @@ function App() {
   const [haptics, setHaptics] = useState<boolean | null>(null);
   const [dailyCounterReset, setDailyCounterReset] = useState(false);
   const [theme, setTheme] = useState<themeType | null>(null);
+  const [activeColor, setActiveColor] = useState<MaterialColor>(
+    materialColors[0]
+  );
 
   const setAndStoreCounters = (arr: counterObjType[]) => {
     localStorage.setItem("localSavedCountersArray", JSON.stringify(arr));
@@ -49,8 +57,8 @@ function App() {
 
   useEffect(() => {
     const initialiseApp = async () => {
-      const SPLASH_HIDE_DELAY = 500;
-      const ANDROID_STYLE_DELAY = 1000;
+      const splash_hide_delay = 500;
+      const android_style_delay = 1000;
       let statusBarThemeColor: string;
       const themeString = localStorage.getItem("theme");
       let storedTheme: themeType | null = themeString
@@ -86,7 +94,7 @@ function App() {
           } else if (statusBarThemeColor === "#242424") {
             StatusBar.setStyle({ style: Style.Dark });
           }
-        }, ANDROID_STYLE_DELAY);
+        }, android_style_delay);
       }
 
       if (Capacitor.isNativePlatform()) {
@@ -94,11 +102,20 @@ function App() {
           SplashScreen.hide({
             fadeOutDuration: 250,
           });
-        }, SPLASH_HIDE_DELAY);
+        }, splash_hide_delay);
       }
     };
 
     initialiseApp();
+  }, []);
+
+  useEffect(() => {
+    const storedActiveColor: any = localStorage.getItem("activeColor");
+    if (storedActiveColor) {
+      setActiveColor(storedActiveColor);
+    } else if (!storedActiveColor) {
+      setActiveColor(materialColors[0]);
+    }
   }, []);
 
   useEffect(() => {
@@ -182,7 +199,6 @@ function App() {
     const newCounter: counterObjType = {
       counter: counterToAdd,
       count: 0,
-      color: materialColors[0],
       isActive: false,
       target,
       id: uuidv4(),
@@ -260,6 +276,7 @@ function App() {
               element={
                 <SettingsPage
                   // iapProducts={iapProducts}
+                  activeColor={activeColor}
                   activeCounter={activeCounter}
                   resetAllCounters={resetAllCounters}
                   setHaptics={setHaptics}
@@ -276,6 +293,7 @@ function App() {
               index
               element={
                 <HomePage
+                  activeColor={activeColor}
                   activeCounter={activeCounter}
                   resetSingleCounter={resetSingleCounter}
                   setAndStoreCounters={setAndStoreCounters}
@@ -291,6 +309,8 @@ function App() {
               path="CountersPage"
               element={
                 <CountersPage
+                  activeColor={activeColor}
+                  setActiveColor={setActiveColor}
                   activeCounter={activeCounter}
                   countersArr={countersArr}
                   modifyCounter={modifyCounter}
@@ -301,7 +321,7 @@ function App() {
               }
             />
           </Routes>
-          <NavBar activeCounterColor={activeCounter.color} />
+          <NavBar activeColor={activeColor} />
         </section>
       </BrowserRouter>
       <Sheet

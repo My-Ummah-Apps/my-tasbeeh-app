@@ -3,7 +3,7 @@ import { materialColors } from "./constants";
 export type counterObjType = {
   counter: string;
   count: number;
-  color: MaterialColor;
+  // color?: MaterialColor;
   isActive: boolean;
   target: number;
   id: string;

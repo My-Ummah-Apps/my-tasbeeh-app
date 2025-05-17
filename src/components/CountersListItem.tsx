@@ -4,22 +4,24 @@ import { direction } from "direction";
 import { counterObjType, MaterialColor } from "../utils/types";
 
 interface CountersListItemProps {
+  setActiveColor: React.Dispatch<MaterialColor>;
   setAndStoreCounters: (arr: counterObjType[]) => void;
   setEditingCounterId: React.Dispatch<React.SetStateAction<string>>;
   countersArr: counterObjType[];
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   setIsEditingCounter: React.Dispatch<React.SetStateAction<boolean>>;
-  nextColor: MaterialColor;
+  color: MaterialColor;
   counterItem: counterObjType;
 }
 
 const CountersListItem = ({
+  setActiveColor,
   setAndStoreCounters,
   setEditingCounterId,
   countersArr,
   setShowForm,
   setIsEditingCounter,
-  nextColor,
+  color,
   counterItem,
 }: CountersListItemProps) => {
   return (
@@ -27,10 +29,12 @@ const CountersListItem = ({
       <div
         className="single-counter-wrap"
         style={{
-          backgroundColor: nextColor + "BF",
+          backgroundColor: color + "BF",
         }}
         onClick={() => {
           setEditingCounterId(counterItem.id);
+          setActiveColor(color);
+          localStorage.setItem("activeColor", color);
           const updatedCountersArr: counterObjType[] = countersArr.map(
             (counter: counterObjType) => {
               return counter.id === counterItem.id
@@ -46,7 +50,6 @@ const CountersListItem = ({
             <div className="single-counter-count">
               {counterItem.count} / {counterItem.target}
             </div>
-
             <div
               style={{
                 textAlign:
@@ -75,7 +78,7 @@ const CountersListItem = ({
         <div
           className="single-counter-overlay"
           style={{
-            backgroundColor: nextColor,
+            backgroundColor: color,
             width: (counterItem.count / counterItem.target) * 100 + "%",
           }}
         ></div>

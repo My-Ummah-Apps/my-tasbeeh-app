@@ -25,7 +25,6 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   {
     counter: "Alhumdulillah",
     count: 0,
-    color: "#EF5350",
     isActive: true,
     target: 50,
     id: uuidv4(),
@@ -34,7 +33,6 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   {
     counter: "Subhanallah",
     count: 0,
-    color: "#EC407A",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -43,7 +41,6 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   {
     counter: "Allahu-Akbar",
     count: 0,
-    color: "#AB47BC",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -52,7 +49,6 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   {
     counter: "Astagfirullah",
     count: 0,
-    color: "#7E57C2",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -60,7 +56,6 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   {
     counter: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
     count: 0,
-    color: "#5C6BC0",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -68,7 +63,6 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   {
     counter: "La hawla wa la quwwata illa billah",
     count: 0,
-    color: "#29B6F6",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -76,7 +70,6 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   {
     counter: "La ilaha illallah",
     count: 0,
-    color: "#26C6DA",
     isActive: false,
     target: 50,
     id: uuidv4(),
@@ -84,7 +77,6 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   {
     counter: "Subhan-Allahi wa bihamdih",
     count: 0,
-    color: "#66BB6A",
     isActive: false,
     target: 50,
     id: uuidv4(),
