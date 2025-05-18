@@ -8,6 +8,8 @@ import { tween_config } from "../../utils/constants";
 interface BottomSheetFormProps {
   activeColor: MaterialColor;
   countersArr: counterObjType[];
+  setIsEditingCounter: (value: React.SetStateAction<boolean>) => void;
+  setEditingCounterId: React.Dispatch<React.SetStateAction<string>>;
   editingCounterId: string;
   deleteSingleCounter: (id: string) => void;
   activeCounter: counterObjType;
@@ -26,6 +28,8 @@ interface BottomSheetFormProps {
 const BottomSheetForm = ({
   activeColor,
   countersArr,
+  setIsEditingCounter,
+  setEditingCounterId,
   editingCounterId,
   deleteSingleCounter,
   isEditingCounter,
@@ -43,8 +47,9 @@ const BottomSheetForm = ({
 
   useEffect(() => {
     const clickedCounter = countersArr.find(
-      (counter: counterObjType) => counter.id === editingCounterId
+      (counter) => counter.id === editingCounterId
     );
+    console.log("clickedCounter is: ", clickedCounter);
 
     if (!clickedCounter) {
       console.log("clickedCounter does not exist");
@@ -54,6 +59,15 @@ const BottomSheetForm = ({
     setNameInputValue(isEditingCounter ? clickedCounter.counter : "");
     setCountInputValue(isEditingCounter ? clickedCounter.count : 0);
     setTargetInputValue(isEditingCounter ? clickedCounter.target : 0);
+
+    return () => {
+      setSubmitted(false);
+      setNameInputValue("");
+      setCountInputValue(0);
+      setTargetInputValue(0);
+      setIsEditingCounter(false);
+      setEditingCounterId("");
+    };
   }, [showForm]);
 
   const increaseTextAreaHeight = (
@@ -61,8 +75,6 @@ const BottomSheetForm = ({
   ) => {
     if (counterNameField.current) {
       counterNameField.current.style.height = `${e.target.scrollHeight}px`;
-    } else {
-      console.error("counterNameField.current does not exist");
     }
   };
 
@@ -72,25 +84,30 @@ const BottomSheetForm = ({
       counterNameField.current.style.height = `${
         counterNameField.current.scrollHeight + 0.5
       }px`;
-    } else {
-      console.log("counterNameField.current does not exist");
     }
   }, []);
 
-  const submitCounter = (
-    e: React.FormEvent<HTMLFormElement>,
-    action: "add" | "modify"
-  ): void => {
+  const submitCounter = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    setSubmitted(true);
 
-    action === "add"
-      ? addCounter(nameInputValue, Number(targetInputValue))
-      : modifyCounter(
+    if (
+      nameInputValue.trim() === "" ||
+      countInputValue < 0 ||
+      targetInputValue < 1
+    ) {
+      return;
+    }
+
+    isEditingCounter
+      ? modifyCounter(
           editingCounterId,
           nameInputValue,
           countInputValue,
           targetInputValue
-        );
+        )
+      : addCounter(nameInputValue, Number(targetInputValue));
+
     setShowForm(false);
   };
 
@@ -132,26 +149,11 @@ const BottomSheetForm = ({
             </div>
 
             <div className="form-wrap form-filled">
-              <form
-                id="form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSubmitted(true);
-
-                  if (
-                    nameInputValue.trim() === "" ||
-                    countInputValue < 0 ||
-                    targetInputValue < 1
-                  ) {
-                    return;
-                  }
-                  submitCounter(e, isEditingCounter ? "modify" : "add");
-                  setSubmitted(false);
-                }}
-              >
+              <form id="form" onSubmit={submitCounter}>
                 <div className="form-filled-counter-name-input-wrap">
                   <p>Dhikr Name</p>
                   <textarea
+                    ref={counterNameField}
                     dir="auto"
                     className="form-textarea"
                     onChange={(e) => {
