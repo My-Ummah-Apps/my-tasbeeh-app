@@ -8,12 +8,9 @@ import { tween_config } from "../../utils/constants";
 interface BottomSheetFormProps {
   activeColor: MaterialColor;
   countersArr: counterObjType[];
-  setIsEditingCounter: (value: React.SetStateAction<boolean>) => void;
-  setEditingCounterId: React.Dispatch<React.SetStateAction<string>>;
-  editingCounterId: string;
+  editingCounterId: string | null;
   deleteSingleCounter: (id: string) => void;
   activeCounter: counterObjType;
-  isEditingCounter: boolean;
   addCounter: (counterToAdd: string, target: number) => void;
   modifyCounter: (
     id: string,
@@ -28,46 +25,56 @@ interface BottomSheetFormProps {
 const BottomSheetForm = ({
   activeColor,
   countersArr,
-  setIsEditingCounter,
-  setEditingCounterId,
   editingCounterId,
   deleteSingleCounter,
-  isEditingCounter,
   addCounter,
   modifyCounter,
   setShowForm,
   showForm,
 }: BottomSheetFormProps) => {
   const counterNameField = useRef<HTMLTextAreaElement | null>(null);
+  const [input, setInput] = useState({
+    name: "",
+    count: 0,
+    target: 0,
+  });
 
-  const [nameInputValue, setNameInputValue] = useState<string>("");
-  const [countInputValue, setCountInputValue] = useState<number>(0);
-  const [targetInputValue, setTargetInputValue] = useState<number>(0);
+  // useEffect(() => {
+  //   console.log("input: ", input);
+  // }, [input]);
+
   const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    const clickedCounter = countersArr.find(
-      (counter) => counter.id === editingCounterId
-    );
-    console.log("clickedCounter is: ", clickedCounter);
+  const clickedCounter = countersArr.find(
+    (counter) => counter.id === editingCounterId
+  );
+  console.log("clickedCounter is: ", clickedCounter);
 
+  const isEditingCounter = clickedCounter !== undefined;
+  console.log("Is editing? ", isEditingCounter);
+
+  useEffect(() => {
     if (!clickedCounter) {
       console.log("clickedCounter does not exist");
       return;
     }
 
-    setNameInputValue(isEditingCounter ? clickedCounter.counter : "");
-    setCountInputValue(isEditingCounter ? clickedCounter.count : 0);
-    setTargetInputValue(isEditingCounter ? clickedCounter.target : 0);
+    setInput({
+      name: isEditingCounter ? clickedCounter.counter : "",
+      count: isEditingCounter ? clickedCounter.count : 0,
+      target: isEditingCounter ? clickedCounter.target : 0,
+    });
 
-    return () => {
-      setSubmitted(false);
-      setNameInputValue("");
-      setCountInputValue(0);
-      setTargetInputValue(0);
-      setIsEditingCounter(false);
-      setEditingCounterId("");
-    };
+    // return () => {
+    //   setSubmitted(false);
+    //   setInput({
+    //     name: "",
+    //     count: 0,
+    //     target: 0,
+    //   });
+    //   setIsEditingCounter(false);
+    //   setEditingCounterId("");
+    // };
   }, [showForm]);
 
   const increaseTextAreaHeight = (
@@ -91,22 +98,13 @@ const BottomSheetForm = ({
     e.preventDefault();
     setSubmitted(true);
 
-    if (
-      nameInputValue.trim() === "" ||
-      countInputValue < 0 ||
-      targetInputValue < 1
-    ) {
+    if (input.name.trim() === "" || input.count < 0 || input.target < 1) {
       return;
     }
 
     isEditingCounter
-      ? modifyCounter(
-          editingCounterId,
-          nameInputValue,
-          countInputValue,
-          targetInputValue
-        )
-      : addCounter(nameInputValue, Number(targetInputValue));
+      ? modifyCounter(editingCounterId, input.name, input.count, input.target)
+      : addCounter(input.name, Number(input.target));
 
     setShowForm(false);
   };
@@ -157,17 +155,17 @@ const BottomSheetForm = ({
                     dir="auto"
                     className="form-textarea"
                     onChange={(e) => {
-                      setNameInputValue(e.target.value);
+                      setInput((prev) => ({ ...prev, name: e.target.value }));
                       increaseTextAreaHeight(e);
                     }}
-                    value={nameInputValue}
+                    value={input.name}
                     required
                   />
                   <p
                     style={{
                       color: "red",
                       visibility:
-                        nameInputValue.trim() === "" && submitted
+                        input.name.trim() === "" && submitted
                           ? "visible"
                           : "hidden",
                     }}
@@ -184,9 +182,13 @@ const BottomSheetForm = ({
                         maxLength={5}
                         onChange={(e) => {
                           if (/[^0-9]+/.test(e.target.value)) return;
-                          setCountInputValue(Number(e.target.value));
+
+                          setInput((prev) => ({
+                            ...prev,
+                            count: Number(e.target.value),
+                          }));
                         }}
-                        value={countInputValue}
+                        value={input.count}
                         inputMode="numeric"
                         pattern="[0-9]*"
                         required
@@ -195,9 +197,7 @@ const BottomSheetForm = ({
                         style={{
                           color: "red",
                           visibility:
-                            !countInputValue && submitted
-                              ? "visible"
-                              : "hidden",
+                            !input.count && submitted ? "visible" : "hidden",
                         }}
                       >
                         Target must be above 0
@@ -210,12 +210,14 @@ const BottomSheetForm = ({
                     <input
                       onChange={(e) => {
                         if (/[^0-9]+/.test(e.target.value)) return;
-
-                        setTargetInputValue(Number(e.target.value));
+                        setInput((prev) => ({
+                          ...prev,
+                          target: Number(e.target.value),
+                        }));
                       }}
                       className="form-input"
                       maxLength={5}
-                      value={targetInputValue}
+                      value={input.target}
                       inputMode="numeric"
                       pattern="[0-9]*"
                       required
@@ -224,9 +226,7 @@ const BottomSheetForm = ({
                       style={{
                         color: "red",
                         visibility:
-                          targetInputValue < 1 && submitted
-                            ? "visible"
-                            : "hidden",
+                          input.target < 1 && submitted ? "visible" : "hidden",
                       }}
                     >
                       Target must be above 0

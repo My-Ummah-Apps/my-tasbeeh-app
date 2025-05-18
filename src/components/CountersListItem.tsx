@@ -6,10 +6,9 @@ import { counterObjType, MaterialColor } from "../utils/types";
 interface CountersListItemProps {
   setActiveColor: React.Dispatch<MaterialColor>;
   setAndStoreCounters: (arr: counterObjType[]) => void;
-  setEditingCounterId: React.Dispatch<React.SetStateAction<string>>;
+  setEditingCounterId: React.Dispatch<React.SetStateAction<string | null>>;
   countersArr: counterObjType[];
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsEditingCounter: React.Dispatch<React.SetStateAction<boolean>>;
   color: MaterialColor;
   counterItem: counterObjType;
 }
@@ -20,7 +19,6 @@ const CountersListItem = ({
   setEditingCounterId,
   countersArr,
   setShowForm,
-  setIsEditingCounter,
   color,
   counterItem,
 }: CountersListItemProps) => {
@@ -68,7 +66,6 @@ const CountersListItem = ({
           className="edit-btn-wrap"
           onClick={(e) => {
             e.stopPropagation();
-            setIsEditingCounter(true);
             setEditingCounterId(counterItem.id);
             setShowForm(true);
           }}

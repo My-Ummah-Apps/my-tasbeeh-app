@@ -32,8 +32,7 @@ function CountersPage({
   addCounter,
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
-  const [isEditingCounter, setIsEditingCounter] = useState(false);
-  const [editingCounterId, setEditingCounterId] = useState("");
+  const [editingCounterId, setEditingCounterId] = useState<string | null>(null);
 
   return (
     <section className={`counters-page-wrap`}>
@@ -41,7 +40,7 @@ function CountersPage({
         <p>Adhkar</p>
         <MdAdd
           onClick={() => {
-            setIsEditingCounter(false);
+            setEditingCounterId(null);
             setShowForm(true);
           }}
         />
@@ -51,9 +50,6 @@ function CountersPage({
         countersArr={countersArr}
         activeCounter={activeCounter}
         deleteSingleCounter={deleteSingleCounter}
-        setIsEditingCounter={setIsEditingCounter}
-        setEditingCounterId={setEditingCounterId}
-        isEditingCounter={isEditingCounter}
         editingCounterId={editingCounterId}
         setShowForm={setShowForm}
         showForm={showForm}
@@ -71,7 +67,6 @@ function CountersPage({
               setAndStoreCounters={setAndStoreCounters}
               countersArr={countersArr}
               setEditingCounterId={setEditingCounterId}
-              setIsEditingCounter={setIsEditingCounter}
               setShowForm={setShowForm}
               color={color}
               counterItem={counterItem}
