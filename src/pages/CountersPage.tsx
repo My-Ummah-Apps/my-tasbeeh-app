@@ -50,6 +50,7 @@ function CountersPage({
         countersArr={countersArr}
         activeCounter={activeCounter}
         deleteSingleCounter={deleteSingleCounter}
+        setEditingCounterId={setEditingCounterId}
         editingCounterId={editingCounterId}
         setShowForm={setShowForm}
         showForm={showForm}

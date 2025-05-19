@@ -8,6 +8,7 @@ import { tween_config } from "../../utils/constants";
 interface BottomSheetFormProps {
   activeColor: MaterialColor;
   countersArr: counterObjType[];
+  setEditingCounterId: React.Dispatch<React.SetStateAction<string | null>>;
   editingCounterId: string | null;
   deleteSingleCounter: (id: string) => void;
   activeCounter: counterObjType;
@@ -25,6 +26,7 @@ interface BottomSheetFormProps {
 const BottomSheetForm = ({
   activeColor,
   countersArr,
+  setEditingCounterId,
   editingCounterId,
   deleteSingleCounter,
   addCounter,
@@ -33,49 +35,23 @@ const BottomSheetForm = ({
   showForm,
 }: BottomSheetFormProps) => {
   const counterNameField = useRef<HTMLTextAreaElement | null>(null);
-  const [input, setInput] = useState({
-    name: "",
-    count: 0,
-    target: 0,
-  });
-
-  // useEffect(() => {
-  //   console.log("input: ", input);
-  // }, [input]);
-
   const [submitted, setSubmitted] = useState(false);
+  const [input, setInput] = useState({ name: "", count: 0, target: 0 });
 
-  const clickedCounter = countersArr.find(
-    (counter) => counter.id === editingCounterId
-  );
-  console.log("clickedCounter is: ", clickedCounter);
-
-  const isEditingCounter = clickedCounter !== undefined;
-  console.log("Is editing? ", isEditingCounter);
+  // console.log(!!editingCounterId);
 
   useEffect(() => {
-    if (!clickedCounter) {
-      console.log("clickedCounter does not exist");
-      return;
-    }
-
+    const clickedCounter = countersArr.find(
+      (counter) => counter.id === editingCounterId
+    );
+    const isEditingCounter = !!clickedCounter;
+    console.log("clickedCounter is: ", clickedCounter);
     setInput({
       name: isEditingCounter ? clickedCounter.counter : "",
       count: isEditingCounter ? clickedCounter.count : 0,
       target: isEditingCounter ? clickedCounter.target : 0,
     });
-
-    // return () => {
-    //   setSubmitted(false);
-    //   setInput({
-    //     name: "",
-    //     count: 0,
-    //     target: 0,
-    //   });
-    //   setIsEditingCounter(false);
-    //   setEditingCounterId("");
-    // };
-  }, [showForm]);
+  }, [editingCounterId]);
 
   const increaseTextAreaHeight = (
     e: React.ChangeEvent<HTMLTextAreaElement>
@@ -94,6 +70,13 @@ const BottomSheetForm = ({
     }
   }, []);
 
+  const closeFormCleanup = () => {
+    setShowForm(false);
+    setInput({ name: "", count: 0, target: 0 });
+    setEditingCounterId(null);
+    setSubmitted(false);
+  };
+
   const submitCounter = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     setSubmitted(true);
@@ -102,11 +85,11 @@ const BottomSheetForm = ({
       return;
     }
 
-    isEditingCounter
+    editingCounterId
       ? modifyCounter(editingCounterId, input.name, input.count, input.target)
       : addCounter(input.name, Number(input.target));
 
-    setShowForm(false);
+    closeFormCleanup();
   };
 
   return (
@@ -115,7 +98,7 @@ const BottomSheetForm = ({
       disableDrag={false}
       isOpen={showForm}
       onClose={() => {
-        setShowForm(false);
+        closeFormCleanup();
       }}
       detent="full-height"
       tweenConfig={tween_config}
@@ -127,7 +110,7 @@ const BottomSheetForm = ({
             <div className="form-filled-save-and-cancel-btn-wrap">
               <button
                 onClick={() => {
-                  setShowForm(false);
+                  closeFormCleanup();
                 }}
                 className="form-filled-cancel-btn"
                 style={{ backgroundColor: "transparent" }}
@@ -135,7 +118,7 @@ const BottomSheetForm = ({
                 Cancel
               </button>
               <h1 className="form-blank-and-form-filled-header-text">
-                {isEditingCounter ? "Edit Tasbeeh" : "Add Tasbeeh"}
+                {editingCounterId ? "Edit Tasbeeh" : "Add Tasbeeh"}
               </h1>
               <button
                 form="form"
@@ -174,7 +157,7 @@ const BottomSheetForm = ({
                   </p>
                 </div>
                 <div className="count-and-target-input-wrap">
-                  {isEditingCounter && (
+                  {editingCounterId && (
                     <div className="current-count-input-wrap">
                       <p>Count</p>
                       <input
@@ -193,7 +176,7 @@ const BottomSheetForm = ({
                         pattern="[0-9]*"
                         required
                       />
-                      <p
+                      {/* <p
                         style={{
                           color: "red",
                           visibility:
@@ -201,7 +184,7 @@ const BottomSheetForm = ({
                         }}
                       >
                         Target must be above 0
-                      </p>
+                      </p> */}
                     </div>
                   )}
 
@@ -235,7 +218,7 @@ const BottomSheetForm = ({
                 </div>
               </form>
             </div>
-            {isEditingCounter && (
+            {editingCounterId && (
               <div className="form-filled-reset-delete-btns-wrap">
                 <button
                   className="form-filled-delete-tasbeeh-btn"
@@ -246,7 +229,7 @@ const BottomSheetForm = ({
                     );
                     if (result) {
                       deleteSingleCounter(editingCounterId);
-                      setShowForm(false);
+                      closeFormCleanup();
                       showToast("Tasbeeh deleted", "bottom", "short");
                     }
                   }}
@@ -261,7 +244,7 @@ const BottomSheetForm = ({
       </Sheet.Container>
       <Sheet.Backdrop
         onTap={() => {
-          setShowForm(false);
+          closeFormCleanup();
         }}
       />
     </Sheet>
