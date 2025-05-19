@@ -53,22 +53,25 @@ const BottomSheetForm = ({
     });
   }, [editingCounterId]);
 
-  const increaseTextAreaHeight = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    if (counterNameField.current) {
-      counterNameField.current.style.height = `${e.target.scrollHeight}px`;
-    }
-  };
+  // const increaseTextAreaHeight = (
+  //   e: React.ChangeEvent<HTMLTextAreaElement>
+  // ) => {
+  //   // if (counterNameField.current) {
+  //   //   counterNameField.current.style.height = `${e.target.scrollHeight}px`;
+  //   //   console.log(e.target.scrollHeight);
+  //   // }
+  // };
 
   useEffect(() => {
     if (counterNameField.current) {
-      counterNameField.current.style.height = "1px";
+      if (!editingCounterId) {
+        counterNameField.current.style.height = "1px";
+      }
       counterNameField.current.style.height = `${
         counterNameField.current.scrollHeight + 0.5
       }px`;
     }
-  }, []);
+  }, [showForm, input.name]);
 
   const closeFormCleanup = () => {
     setShowForm(false);
@@ -139,7 +142,7 @@ const BottomSheetForm = ({
                     className="form-textarea"
                     onChange={(e) => {
                       setInput((prev) => ({ ...prev, name: e.target.value }));
-                      increaseTextAreaHeight(e);
+                      // increaseTextAreaHeight(e);
                     }}
                     value={input.name}
                     required
