@@ -45,7 +45,7 @@ const BottomSheetForm = ({
       (counter) => counter.id === editingCounterId
     );
     const isEditingCounter = !!clickedCounter;
-    console.log("clickedCounter is: ", clickedCounter);
+    // console.log("clickedCounter is: ", clickedCounter);
     setInput({
       name: isEditingCounter ? clickedCounter.counter : "",
       count: isEditingCounter ? clickedCounter.count : 0,
@@ -53,25 +53,25 @@ const BottomSheetForm = ({
     });
   }, [editingCounterId]);
 
-  // const increaseTextAreaHeight = (
-  //   e: React.ChangeEvent<HTMLTextAreaElement>
-  // ) => {
-  //   // if (counterNameField.current) {
-  //   //   counterNameField.current.style.height = `${e.target.scrollHeight}px`;
-  //   //   console.log(e.target.scrollHeight);
-  //   // }
-  // };
+  const increaseTextAreaHeight = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    if (counterNameField.current) {
+      counterNameField.current.style.height = `${e.target.scrollHeight}px`;
+    }
+  };
 
   useEffect(() => {
     if (counterNameField.current) {
-      if (!editingCounterId) {
-        counterNameField.current.style.height = "1px";
-      }
+      // if (!editingCounterId) {
+      // counterNameField.current.style.height = "1px";
+      // }
+      // console.log("scrollHeight: ", counterNameField.current.scrollHeight);
       counterNameField.current.style.height = `${
         counterNameField.current.scrollHeight + 0.5
       }px`;
     }
-  }, [showForm, input.name]);
+  }, [showForm]);
 
   const closeFormCleanup = () => {
     setShowForm(false);
@@ -142,7 +142,7 @@ const BottomSheetForm = ({
                     className="form-textarea"
                     onChange={(e) => {
                       setInput((prev) => ({ ...prev, name: e.target.value }));
-                      // increaseTextAreaHeight(e);
+                      increaseTextAreaHeight(e);
                     }}
                     value={input.name}
                     required

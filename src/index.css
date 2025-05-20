@@ -26,7 +26,7 @@
   --svg-color: #757575;
   /* --header-and-nav-bg-color: #f4f4f4; */
   --header-bg-color: rgb(237, 237, 237);
-  --nav-bg-color: #fff;
+  --nav-bg-color: rgb(242, 242, 242);
   --text-color-primary: #000;
   --text-color-secondary: #ffffff;
   --setings-page-boxes-bg-color: #f7f7f7;
@@ -46,7 +46,7 @@
 body.dark {
   /* Dark mode variables go here */
   --body-bg-color: #242424;
-  --nav-bg-color: #000;
+  --nav-bg-color: #212121;
   --header-bg-color: #242424;
   --text-color-primary: #fff;
   --setings-page-boxes-bg-color: #2f2f2f;

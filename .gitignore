@@ -38,3 +38,4 @@ android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png
 /src/components/TipJar.tsx
 ios/App/Podfile.lock
 capacitor.config.ts
+icon splash generation command.txt

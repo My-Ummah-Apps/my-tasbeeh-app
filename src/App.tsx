@@ -219,7 +219,6 @@ function App() {
       ...counter,
       count: 0,
     }));
-
     setAndStoreCounters(resettedCounters);
   };
 
