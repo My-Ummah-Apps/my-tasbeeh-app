@@ -26,6 +26,7 @@ import {
   MaterialColor,
   themeType,
 } from "./utils/types";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   const [showChangelogModal, setShowChangelogModal] = useState(false);
@@ -269,57 +270,59 @@ function App() {
     <>
       <BrowserRouter>
         <section className="App">
-          <Routes>
-            <Route
-              path="SettingsPage"
-              element={
-                <SettingsPage
-                  // iapProducts={iapProducts}
-                  activeColor={activeColor}
-                  activeCounter={activeCounter}
-                  resetAllCounters={resetAllCounters}
-                  setHaptics={setHaptics}
-                  haptics={haptics}
-                  setDailyCounterReset={setDailyCounterReset}
-                  dailyCounterReset={dailyCounterReset}
-                  setTheme={setTheme}
-                  theme={theme}
-                  setShowChangelogModal={setShowChangelogModal}
-                />
-              }
-            />
-            <Route
-              index
-              element={
-                <HomePage
-                  activeColor={activeColor}
-                  activeCounter={activeCounter}
-                  resetSingleCounter={resetSingleCounter}
-                  setAndStoreCounters={setAndStoreCounters}
-                  countersArr={countersArr}
-                  setHaptics={setHaptics}
-                  haptics={haptics}
-                  setLanguageDirection={setLanguageDirection}
-                  languageDirection={languageDirection}
-                />
-              }
-            />
-            <Route
-              path="CountersPage"
-              element={
-                <CountersPage
-                  activeColor={activeColor}
-                  setActiveColor={setActiveColor}
-                  activeCounter={activeCounter}
-                  countersArr={countersArr}
-                  modifyCounter={modifyCounter}
-                  setAndStoreCounters={setAndStoreCounters}
-                  addCounter={addCounter}
-                  deleteSingleCounter={deleteSingleCounter}
-                />
-              }
-            />
-          </Routes>
+          <AnimatePresence>
+            <Routes>
+              <Route
+                path="SettingsPage"
+                element={
+                  <SettingsPage
+                    // iapProducts={iapProducts}
+                    activeColor={activeColor}
+                    activeCounter={activeCounter}
+                    resetAllCounters={resetAllCounters}
+                    setHaptics={setHaptics}
+                    haptics={haptics}
+                    setDailyCounterReset={setDailyCounterReset}
+                    dailyCounterReset={dailyCounterReset}
+                    setTheme={setTheme}
+                    theme={theme}
+                    setShowChangelogModal={setShowChangelogModal}
+                  />
+                }
+              />
+              <Route
+                index
+                element={
+                  <HomePage
+                    activeColor={activeColor}
+                    activeCounter={activeCounter}
+                    resetSingleCounter={resetSingleCounter}
+                    setAndStoreCounters={setAndStoreCounters}
+                    countersArr={countersArr}
+                    setHaptics={setHaptics}
+                    haptics={haptics}
+                    setLanguageDirection={setLanguageDirection}
+                    languageDirection={languageDirection}
+                  />
+                }
+              />
+              <Route
+                path="CountersPage"
+                element={
+                  <CountersPage
+                    activeColor={activeColor}
+                    setActiveColor={setActiveColor}
+                    activeCounter={activeCounter}
+                    countersArr={countersArr}
+                    modifyCounter={modifyCounter}
+                    setAndStoreCounters={setAndStoreCounters}
+                    addCounter={addCounter}
+                    deleteSingleCounter={deleteSingleCounter}
+                  />
+                }
+              />
+            </Routes>
+          </AnimatePresence>
           <NavBar activeColor={activeColor} />
         </section>
       </BrowserRouter>

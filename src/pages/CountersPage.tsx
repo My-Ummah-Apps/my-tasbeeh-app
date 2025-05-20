@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
-import { materialColors, pageTransitionStyles } from "../utils/constants";
+import { materialColors } from "../utils/constants";
 import { counterObjType, MaterialColor } from "../utils/types";
 import { motion } from "framer-motion";
 import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
@@ -36,7 +36,10 @@ function CountersPage({
   const [editingCounterId, setEditingCounterId] = useState<string | null>(null);
 
   return (
-    <motion.section {...pageTransitionStyles} className={`counters-page-wrap`}>
+    <motion.section
+      // {...pageTransitionStyles}
+      className={`counters-page-wrap`}
+    >
       <div className="counters-page-header">
         <p>Adhkar</p>
         <MdAdd

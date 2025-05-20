@@ -568,6 +568,7 @@ textarea:focus {
 .counters-page-header,
 .home-page-header {
   /* padding-top: env(safe-area-inset-top); */
+  margin-top: 1rem;
   background: var(--header-bg-color);
   position: relative;
   height: 7vh;
@@ -1076,6 +1077,10 @@ input[type="number"] {
   border-radius: 0.5rem;
   box-shadow: var(--settings-page-box-shadow);
   padding: 0.1rem 0;
+}
+
+.individual-section-wrap section:not(:last-child) {
+  border-bottom: 1px solid var(--settings-page-borders);
 }
 
 .notification-ul-wrap {

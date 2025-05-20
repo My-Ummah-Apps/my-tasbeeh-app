@@ -16,7 +16,7 @@ import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
 
 import {
-  pageTransitionStyles,
+  // pageTransitionStyles,
   showConfirmDialog,
   showToast,
 } from "../utils/constants";
@@ -186,7 +186,10 @@ const SettingsPage = ({
   };
 
   return (
-    <motion.section {...pageTransitionStyles} className="settings-page-wrap">
+    <motion.section
+      // {...pageTransitionStyles}
+      className="settings-page-wrap"
+    >
       <div className="settings-page-header">
         <p>Settings</p>
       </div>
