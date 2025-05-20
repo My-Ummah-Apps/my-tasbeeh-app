@@ -151,12 +151,15 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (
-      Capacitor.isNativePlatform() &&
-      localStorage.getItem("haptics") === null
-    ) {
-      localStorage.setItem("haptics", JSON.stringify(true));
-      setHaptics(true);
+    const haptics = localStorage.getItem("haptics");
+
+    if (Capacitor.isNativePlatform()) {
+      if (haptics === null) {
+        localStorage.setItem("haptics", JSON.stringify(true));
+        setHaptics(true);
+      } else if (haptics) {
+        setHaptics(haptics === "false" ? false : true);
+      }
     }
   }, []);
 
@@ -178,8 +181,6 @@ function App() {
       localStorage.setItem("lastLaunchDate", todaysDate);
 
       if (previousLaunchDate !== todaysDate && resetAllCounters === true) {
-        console.log("COUNTERS RESET");
-
         counters = storedCounters.map((counterItem: counterObjType) => ({
           ...counterItem,
           count: 0,

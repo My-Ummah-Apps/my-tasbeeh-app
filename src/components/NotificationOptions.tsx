@@ -40,7 +40,6 @@ const NotificationOptions = ({
       );
 
       if (notificationValue === null || notificationValue === false) {
-        console.log(typeof notificationValue);
         localStorage.setItem(storageKey, JSON.stringify(false));
         setState(false);
       } else if (notificationValue === true) {
@@ -67,7 +66,7 @@ const NotificationOptions = ({
     const notificationValue = JSON.parse(
       localStorage.getItem(storageKey) || "false"
     );
-    console.log("notificationValue: ", notificationValue);
+
     if (notificationValue === true) {
       setState(false);
       cancelNotification(id);

@@ -38,14 +38,12 @@ const BottomSheetForm = ({
   const [submitted, setSubmitted] = useState(false);
   const [input, setInput] = useState({ name: "", count: 0, target: 0 });
 
-  // console.log(!!editingCounterId);
-
   useEffect(() => {
     const clickedCounter = countersArr.find(
       (counter) => counter.id === editingCounterId
     );
     const isEditingCounter = !!clickedCounter;
-    // console.log("clickedCounter is: ", clickedCounter);
+
     setInput({
       name: isEditingCounter ? clickedCounter.counter : "",
       count: isEditingCounter ? clickedCounter.count : 0,
