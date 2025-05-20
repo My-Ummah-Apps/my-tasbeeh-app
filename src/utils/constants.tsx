@@ -83,6 +83,12 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   },
 ];
 
+export const pageTransitionStyles = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 0.2 },
+};
+
 export const bottomSheetHeaderHeight = {
   height: "60px",
   // backgroundColor: "black",

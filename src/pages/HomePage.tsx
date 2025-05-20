@@ -1,5 +1,7 @@
 import ActiveCounter from "../components/ActiveCounter";
 import CounterButton from "../components/CounterButton";
+import { motion } from "framer-motion";
+import { pageTransitionStyles } from "../utils/constants";
 import {
   counterObjType,
   languageDirection,
@@ -30,7 +32,7 @@ const HomePage = ({
   languageDirection,
 }: HomePageProps) => {
   return (
-    <div className="main-page-wrap">
+    <motion.section {...pageTransitionStyles} className="main-page-wrap">
       <div className="home-page-header">
         <p>Home</p>
       </div>
@@ -49,7 +51,7 @@ const HomePage = ({
         setHaptics={setHaptics}
         haptics={haptics}
       />
-    </div>
+    </motion.section>
   );
 };
 

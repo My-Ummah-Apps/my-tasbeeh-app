@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Capacitor } from "@capacitor/core";
 import { Dialog } from "@capacitor/dialog";
+import { motion } from "framer-motion";
+
 import {
   NativeSettings,
   AndroidSettings,
@@ -13,7 +15,11 @@ import Switch from "react-ios-switch";
 import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
 
-import { showConfirmDialog, showToast } from "../utils/constants";
+import {
+  pageTransitionStyles,
+  showConfirmDialog,
+  showToast,
+} from "../utils/constants";
 import { counterObjType, MaterialColor, themeType } from "../utils/types";
 import SettingIndividual from "../components/SettingIndividual";
 import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
@@ -180,7 +186,7 @@ const SettingsPage = ({
   };
 
   return (
-    <div className="settings-page-wrap">
+    <motion.section {...pageTransitionStyles} className="settings-page-wrap">
       <div className="settings-page-header">
         <p>Settings</p>
       </div>
@@ -499,7 +505,7 @@ const SettingsPage = ({
           </div> */}
         </div>
       </div>
-    </div>
+    </motion.section>
   );
 };
 
