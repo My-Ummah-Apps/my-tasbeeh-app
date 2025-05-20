@@ -29,6 +29,7 @@ yarn-error.log*
 *.jks
 *.keystore
 
+
 /App-Store-Assets
 android/file.pem
 android/my-tasbeeh-app-keystore

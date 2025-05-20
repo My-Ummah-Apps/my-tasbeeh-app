@@ -1,8 +1,22 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
+@import "tailwindcss";
+@layer base {
+  *,
+  *::before,
+  *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  /* For Firefox. */
+  * {
+    scrollbar-width: none;
+  }
+
+  /* For WebKit (Chrome & Safari). */
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 :root {
@@ -12,7 +26,7 @@
   --svg-color: #757575;
   /* --header-and-nav-bg-color: #f4f4f4; */
   --header-bg-color: rgb(237, 237, 237);
-  --nav-bg-color: #fff;
+  --nav-bg-color: rgb(242, 242, 242);
   --text-color-primary: #000;
   --text-color-secondary: #ffffff;
   --setings-page-boxes-bg-color: #f7f7f7;
@@ -32,14 +46,13 @@
 body.dark {
   /* Dark mode variables go here */
   --body-bg-color: #242424;
-  --nav-bg-color: #000;
+  --nav-bg-color: #212121;
   --header-bg-color: #242424;
   --text-color-primary: #fff;
   --setings-page-boxes-bg-color: #2f2f2f;
   --settings-page-borders: #595959;
   --svg-color: #e1e1e1;
   --counters-page-single-counter-box-shadow: none;
-
   /* --border-header-and-nav: #747474; */
   --border-form: #747474;
   --border-header-and-nav: none;
@@ -65,8 +78,8 @@ button:focus {
 }
 
 body {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   overflow: hidden;
   color: var(--text-color-primary);
   height: 100vh;
@@ -81,10 +94,6 @@ body {
   -ms-user-select: none;
   user-select: none;
   background-color: var(--body-bg-color);
-
-  /* padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left); */
-  /* padding-top: constant(safe-area-inset-top); */
 }
 
 .body::-webkit-scrollbar {
@@ -155,18 +164,6 @@ body {
 
 /* MAIN PAGE */
 
-/* @-webkit-keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translateY(-10%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0%);
-  }
-} */
-
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -177,50 +174,6 @@ body {
     opacity: 1;
     transform: translateY(0%);
   }
-}
-
-@-webkit-keyframes fadeInUp {
-  /* 0% {
-    opacity: 0;
-    transform: translateY(10%);
-  }
-
-  25% {
-    opacity: 0;
-    transform: translateY(7%);
-  }
-
-  75% {
-    opacity: 0;
-    transform: translateY(3%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0%);
-  } */
-}
-
-@keyframes fadeInUp {
-  /* 0% {
-    opacity: 0;
-    transform: translateY(10%);
-  }
-
-  25% {
-    opacity: 0;
-    transform: translateY(7%);
-  }
-
-  75% {
-    opacity: 0;
-    transform: translateY(3%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0%);
-  } */
 }
 
 .counter-type-wrap {
@@ -266,7 +219,7 @@ body {
 
 .increment-btn {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -283,12 +236,6 @@ body {
   border: none;
   box-shadow: var(--counters-page-single-counter-box-shadow);
 }
-
-/* .increment-btn:active {
-  background: red;
-  box-shadow: 0px 0px 20px;
-  font-size: 2rem;
-} */
 
 .increment-btn-number-and-target-wrap {
   color: #fff;
@@ -342,8 +289,12 @@ body {
   text-align: left;
   cursor: pointer;
   height: 50px;
-  transition: left 0.3s ease-in, box-shadow 0.3s ease-in;
-  -webkit-transition: left 0.3s ease-in, box-shadow 0.3s ease-in,
+  transition:
+    left 0.3s ease-in,
+    box-shadow 0.3s ease-in;
+  -webkit-transition:
+    left 0.3s ease-in,
+    box-shadow 0.3s ease-in,
     -webkit-box-shadow 0.3s ease-in;
   /* animation: slideLeft 0.3s ease-in forwards;
   -webkit-animation: slideLeft 0.3s ease-in forwards; */
@@ -351,13 +302,20 @@ body {
 
 .counter-page-single-counter.active {
   position: relative;
-  box-shadow: 0 4px 8px 0 rgb(164 164 164 / 20%), 0 4px 8px 0 rgb(0 0 0 / 19%);
-  -webkit-box-shadow: 0 4px 8px 0 rgb(164 164 164 / 20%),
+  box-shadow:
+    0 4px 8px 0 rgb(164 164 164 / 20%),
+    0 4px 8px 0 rgb(0 0 0 / 19%);
+  -webkit-box-shadow:
+    0 4px 8px 0 rgb(164 164 164 / 20%),
     0 4px 8px 0 rgb(0 0 0 / 19%);
   padding: 3rem;
   left: 5px;
-  transition: left 0.3s ease-in, box-shadow 0.3s ease-in;
-  -webkit-transition: left 0.3s ease-in, box-shadow 0.3s ease-in,
+  transition:
+    left 0.3s ease-in,
+    box-shadow 0.3s ease-in;
+  -webkit-transition:
+    left 0.3s ease-in,
+    box-shadow 0.3s ease-in,
     -webkit-box-shadow 0.3s ease-in;
   /* animation: slideRight 0.3s ease-in forwards;
   -webkit-animation: slideRight 0.3s ease-in forwards; */
@@ -375,59 +333,22 @@ MdModeEditOutline {
   }
 
   100% {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
       0 4px 8px 0 rgba(0, 0, 0, 0.19);
     transform: translateX(1.5%);
   }
 }
 
-@keyframes slideRight {
-  0% {
-    box-shadow: 0;
-    -webkit-box-shadow: 0;
-    transform: translateX(0%);
-  }
-
-  100% {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-      0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    transform: translateX(1.5%);
-  }
-}
-
-@-webkit-keyframes slideLeft {
-  0% {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-      0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    transform: translateX(1.5%);
-  }
-
-  100% {
-    box-shadow: 0;
-    transform: translateX(0%);
-  }
-}
-
-@keyframes slideLeft {
-  0% {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-      0 4px 8px 0 rgba(0, 0, 0, 0.19);
-    transform: translateX(1.5%);
-  }
-
-  100% {
-    box-shadow: 0;
-    transform: translateX(0%);
-  }
-}
 .counter-page-single-counter.not-active {
   position: relative;
   left: 0px;
-  transition: left 0.3s ease-in, box-shadow 0.3s ease;
+  transition:
+    left 0.3s ease-in,
+    box-shadow 0.3s ease;
 }
 
 .counters-wrap {
@@ -476,17 +397,6 @@ MdModeEditOutline {
   clip-path: inset(0% 0% 0% 0% round 16px);
 }
 
-/* .single-counter-wrap::before {
-  content: "";
-  position: absolute;
-  min-width: 5%;
-  border-radius: 1rem;
-  height: 100%;
-  overflow: hidden;
-  z-index: 100;
-  background: blue;
-} */
-
 /* This style is to do with turning each counter into a progress bar */
 .single-counter-overlay {
   position: absolute;
@@ -527,22 +437,21 @@ MdModeEditOutline {
 .single-counter-count {
   margin-left: 0.7rem;
   padding: 0.5rem 0;
-  /* font-weight: lighter; */
   font-weight: 400;
 }
 
 .edit-btn-wrap,
 .reset-btn-wrap {
-  margin: -1rem -0.7rem -1rem -1rem;
-  padding: 1rem 1.5rem;
-  font-size: 0.8rem;
-}
-
-.reset-btn-wrap {
-  font-size: 1.5rem;
-  margin: -1rem -0.7rem -1rem -1rem;
-  padding: 1rem 1.5rem;
-  z-index: 1;
+  margin-right: 0.7rem;
+  font-size: 1.2rem;
+  z-index: 10;
+  background: none;
+  border: none;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .add-btn {
@@ -554,7 +463,9 @@ MdModeEditOutline {
   border-radius: 50%;
   cursor: pointer;
   background: var(--secondary-color);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 80px;
   height: 80px;
   text-align: center;
@@ -656,6 +567,7 @@ textarea:focus {
 .settings-page-header,
 .counters-page-header,
 .home-page-header {
+  /* padding-top: env(safe-area-inset-top); */
   background: var(--header-bg-color);
   position: relative;
   height: 7vh;
@@ -688,7 +600,8 @@ textarea:focus {
   right: 28px;
   transform: translate(50%, -50%);
   height: 100%;
-  width: 18%;
+  /* width: 18%; */
+  width: clamp(4.375rem, 4.0625rem + 1.4286vw, 4.6875rem);
   padding: 0 1.2rem 0 1.2rem;
 }
 
@@ -908,8 +821,7 @@ input[type="number"] {
 .form-filled-dhikr-name-and-reset-icon-wrap p,
 .form-filled-counter-name-input-wrap p {
   text-align: center;
-  margin: 1rem 0 0.5rem 0;
-  /* font-size: 0.8rem; */
+  margin: 0.3rem 0 1rem 0;
 }
 
 .react-modal-sheet-container {
@@ -956,6 +868,7 @@ input[type="number"] {
 
 .form-filled-save-and-cancel-btn-wrap,
 .form-blank-save-and-cancel-btn-wrap {
+  justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -966,8 +879,8 @@ input[type="number"] {
   margin: 0rem 0.5rem 0rem 0.5rem;
 }
 
-.form-filled-save-and-cancel-btn-wrap > div,
-.form-blank-save-and-cancel-btn-wrap > div {
+.form-filled-save-and-cancel-btn-wrap > button,
+.form-blank-save-and-cancel-btn-wrap > button {
   padding: 1rem 0;
   border-radius: 0.7rem;
   flex: 1;
@@ -976,6 +889,7 @@ input[type="number"] {
 
 .form-blank-save-btn,
 .form-filled-save-btn {
+  border: none;
   color: #fff;
 }
 
@@ -1164,22 +1078,8 @@ input[type="number"] {
   padding: 0.1rem 0;
 }
 
-.individual-section-wrap div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  /* padding: 0.5rem 0.5rem; */
-  /* margin: 0.5rem 0.5rem; */
-  padding: 0.5rem 0;
-  margin: 0 0.5rem;
-}
-
-.theme-wrap {
-  /* margin-top: 3rem; */
-}
-
-.notification-options-wrap {
-  margin-bottom: 5rem;
+.notification-ul-wrap {
+  background-color: var(--form-wrap-bg-color) !important;
 }
 
 .notifications-options-heading-text {
@@ -1193,7 +1093,7 @@ input[type="number"] {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 1rem;
-  border-bottom: 1px solid rgb(232, 232, 232);
+  border-bottom: 1px solid var(--settings-page-borders);
 }
 
 .notificatiions-options-sub-text {
@@ -1209,9 +1109,6 @@ input[type="number"] {
 .source-code-wrap {
   /* border-bottom: 1px solid #eaeaea;  */
   border-bottom: 1px solid var(--settings-page-borders);
-}
-
-.individual-section-wrap ul {
 }
 
 .individual-section-wrap ul li {
