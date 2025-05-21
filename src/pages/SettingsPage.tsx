@@ -481,31 +481,6 @@ const SettingsPage = ({
             setShowAboutUsSheet={setShowAboutUsSheet}
             showAboutUsSheet={showAboutUsSheet}
           />
-          {/* <div onClick={() => setShowAboutUsSheet(true)}>
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>About</p>
-              <p>About us</p>
-            </div>
-            <MdOutlineChevronRight className="chevron" />
-            <Sheet
-              disableDrag={false}
-              isOpen={showAboutUsSheet}
-              onClose={() => setShowAboutUsSheet(false)}
-              detent="content-height"
-              tweenConfig={tween_config}
-            >
-              <Sheet.Container>
-                <Sheet.Header />
-                <Sheet.Content>
-                  <AboutUs />
-                </Sheet.Content>
-              </Sheet.Container>
-              <Sheet.Backdrop
-                // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-                onTap={() => setShowAboutUsSheet(false)}
-              />
-            </Sheet>
-          </div> */}
         </div>
       </div>
     </motion.main>
