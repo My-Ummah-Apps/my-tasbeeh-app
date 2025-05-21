@@ -32,13 +32,13 @@ const HomePage = ({
   languageDirection,
 }: HomePageProps) => {
   return (
-    <motion.section
+    <motion.main
       // {...pageTransitionStyles}
       className="main-page-wrap"
     >
-      <div className="home-page-header">
+      <header className="home-page-header">
         <p>Home</p>
-      </div>
+      </header>
       <ActiveCounter
         activeColor={activeColor}
         activeCounter={activeCounter}
@@ -54,7 +54,7 @@ const HomePage = ({
         setHaptics={setHaptics}
         haptics={haptics}
       />
-    </motion.section>
+    </motion.main>
   );
 };
 

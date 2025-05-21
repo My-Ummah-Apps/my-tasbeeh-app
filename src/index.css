@@ -225,8 +225,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 300px;
-  width: 300px;
+  /* height: 300px;
+  width: 300px; */
+  width: clamp(200px, 80vw, 400px);
+  height: clamp(200px, 80vw, 400px);
   margin: 5rem auto;
   border-radius: 50%;
   line-height: 0vw;
@@ -833,7 +835,7 @@ input[type="number"] {
   font-size: 1rem;
   font-weight: 400;
   text-align: center;
-  margin: 2rem;
+  margin: 0 2rem;
 }
 
 .form-wrap input {
@@ -877,7 +879,7 @@ input[type="number"] {
   display: flex;
   gap: 1rem;
   align-items: center;
-  margin: 0rem 0.5rem 0rem 0.5rem;
+  margin-inline: 0.5rem;
 }
 
 .form-filled-save-and-cancel-btn-wrap > button,

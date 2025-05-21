@@ -36,11 +36,11 @@ function CountersPage({
   const [editingCounterId, setEditingCounterId] = useState<string | null>(null);
 
   return (
-    <motion.section
+    <motion.main
       // {...pageTransitionStyles}
       className={`counters-page-wrap`}
     >
-      <div className="counters-page-header">
+      <header className="counters-page-header">
         <p>Adhkar</p>
         <MdAdd
           onClick={() => {
@@ -48,7 +48,7 @@ function CountersPage({
             setShowForm(true);
           }}
         />
-      </div>
+      </header>
       <BottomSheetForm
         activeColor={activeColor}
         countersArr={countersArr}
@@ -79,7 +79,7 @@ function CountersPage({
           );
         })}
       </section>
-    </motion.section>
+    </motion.main>
   );
 }
 
