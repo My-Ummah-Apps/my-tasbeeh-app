@@ -880,6 +880,7 @@ input[type="number"] {
   gap: 1rem;
   align-items: center;
   margin-inline: 0.5rem;
+  margin-bottom: 3rem;
 }
 
 .form-filled-save-and-cancel-btn-wrap > button,
