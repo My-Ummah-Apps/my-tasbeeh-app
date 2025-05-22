@@ -27,8 +27,16 @@ import {
   themeType,
 } from "./utils/types";
 import { AnimatePresence } from "framer-motion";
+import useSQLiteDB from "./utils/useSqliteDB";
 
 function App() {
+  const {
+    isDatabaseInitialised,
+    sqliteConnection,
+    dbConnection,
+    checkAndOpenOrCloseDBConnection,
+  } = useSQLiteDB();
+
   const [showChangelogModal, setShowChangelogModal] = useState(false);
   const [activeCounter, setActiveCounter] = useState<counterObjType>({
     counter: "",
@@ -105,10 +113,27 @@ function App() {
           });
         }, splash_hide_delay);
       }
+
+      if (isDatabaseInitialised === true) {
+        const initialiseAndLoadData = async () => {
+          await fetchDataFromDB();
+        };
+        initialiseAndLoadData();
+        setTimeout(async () => {
+          await SplashScreen.hide({ fadeOutDuration: 250 });
+        }, 500);
+      }
     };
 
     initialiseApp();
-  }, []);
+  }, [isDatabaseInitialised]);
+
+  const fetchDataFromDB = async (isDBImported?: boolean) => {
+    try {
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const storedActiveColor: any = localStorage.getItem("activeColor");
