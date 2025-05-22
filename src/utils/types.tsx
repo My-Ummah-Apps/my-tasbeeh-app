@@ -1,5 +1,7 @@
 import { materialColors } from "./constants";
 
+export type DBConnectionStateType = "open" | "close";
+
 export type counterObjType = {
   counter: string;
   count: number;
