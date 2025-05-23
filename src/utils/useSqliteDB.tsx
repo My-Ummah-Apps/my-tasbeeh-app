@@ -114,7 +114,8 @@ const useSQLiteDB = () => {
         counterName TEXT NOT NULL, 
         count INTEGER NOT NULL, 
         target INTEGER NOT NULL, 
-        color TEXT DEFAULT NULL
+        color TEXT DEFAULT NULL,
+        isActive INTEGER NOT NULL DEFAULT 0
         ) STRICT;
         `;
 
