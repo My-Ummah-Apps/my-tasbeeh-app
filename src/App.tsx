@@ -8,6 +8,7 @@ import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
 import {
   DEFAULT_COUNTERS,
+  dictPreferencesDefaultValues,
   materialColors,
   setStatusAndNavBarBackgroundColor,
   showerAlert,
@@ -22,7 +23,6 @@ import SettingsPage from "./pages/SettingsPage";
 import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
 import {
   counterObjType,
-  dictPreferencesDefaultValues,
   languageDirection,
   MaterialColor,
   PreferenceObjType,
@@ -146,6 +146,11 @@ function App() {
         `SELECT * FROM userPreferencesTable`
       );
 
+      console.log(
+        "DBResultPreferences upon app start are: ",
+        DBResultPreferences
+      );
+
       const DBResultAllCounterData = await dbConnection.current?.query(
         `SELECT * FROM tasbeehDataTable`
       );
@@ -165,18 +170,41 @@ function App() {
         DBResultPreferences.values as PreferenceObjType[]
       );
 
-      const isExistingUser =
+      DBResultPreferences = await dbConnection.current?.query(
+        `SELECT * FROM userPreferencesTable`
+      );
+
+      console.log(
+        "DBResultPreferences after preferences have been set: ",
+        DBResultPreferences
+      );
+
+      if (!DBResultPreferences || !DBResultPreferences.values) {
+        throw new Error(
+          "DBResultPreferences or DBResultPreferences.values do not exist"
+        );
+      }
+
+      const isExistingUser = Number(
         DBResultPreferences.values.find(
           (row) => row.preferenceName === "isExistingUser"
-        ) || 0;
+        )?.preferenceValue ?? 0
+      );
 
-      const insertQuery = `INSERT into tasbeehDataTable(counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?)`;
+      console.log("isExistingUser: ", isExistingUser);
+
+      const insertQuery = `INSERT into tasbeehDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
 
       if (isExistingUser === 0) {
+        console.log("NEW USER, INITIATING DEFAULT COUNTERS");
+
         setAndStoreCounters([...DEFAULT_COUNTERS]);
-        for (const counterObj of DEFAULT_COUNTERS) {
+        for (let i = 0; i < DEFAULT_COUNTERS.length; i++) {
+          const counterObj = DEFAULT_COUNTERS[i];
           const isActive = counterObj.isActive === true ? 1 : 0;
+
           await dbConnection.current?.run(insertQuery, [
+            i,
             counterObj.counter,
             counterObj.count,
             counterObj.target,
@@ -187,15 +215,15 @@ function App() {
         localStorage.setItem("appVersion", LATEST_APP_VERSION);
       } else {
         const query = `SELECT * FROM tasbeehDataTable`;
-        console.log("QUERY: ", query);
         //  setAndStoreCounters([query]);
       }
 
-      console.log("isExistingUser: ", isExistingUser);
       console.log("DBResultPreferences: ", DBResultPreferences);
       console.log("DBResultAllCounterData: ", DBResultAllCounterData);
     } catch (error) {
       console.error(error);
+    } finally {
+      await modifyDataInUserPreferencesTable("isExistingUser", 1);
     }
   };
 
@@ -206,6 +234,8 @@ function App() {
 
     try {
       if (DBResultPreferencesValues.length === 0) {
+        console.log("New user, initiating default preferences");
+
         const params = Object.keys(dictPreferencesDefaultValues)
           .map((key) => {
             const value =
@@ -236,18 +266,13 @@ function App() {
         DBResultPreferencesValues =
           DBResultPreferencesQuery.values as PreferenceObjType[];
       } else if (DBResultPreferencesValues.length > 0) {
-        const DBResultPreferencesQuery = await dbConnection.current?.query(
-          `SELECT * FROM userPreferencesTable`
-        );
+        console.log("Existing user, Preferences are: ", DBResultPreferences);
 
-        if (!DBResultPreferencesQuery || !DBResultPreferencesQuery.values) {
-          throw new Error(
-            "No values returned from the DBResultPreferencesQuery."
-          );
-        }
+        DBResultPreferences.forEach((item) => {
+          item.preferenceValue = Number(item.preferenceValue);
+        });
 
-        DBResultPreferencesValues =
-          DBResultPreferencesQuery.values as PreferenceObjType[];
+        DBResultPreferencesValues = DBResultPreferences as PreferenceObjType[];
       }
     } catch (error) {
       console.error(error);
@@ -283,6 +308,27 @@ function App() {
     };
 
     await batchAssignPreferences();
+  };
+
+  const modifyDataInUserPreferencesTable = async (
+    preferenceName: PreferenceType,
+    preferenceValue: number
+  ) => {
+    try {
+      const query = `INSERT OR REPLACE INTO userPreferencesTable (preferenceName, preferenceValue) VALUES (?, ?)`;
+      await dbConnection.current?.run(query, [preferenceName, preferenceValue]);
+
+      setUserPreferences((userPreferences: userPreferencesType) => ({
+        ...userPreferences,
+        [preferenceName]: preferenceValue,
+      }));
+    } catch (error) {
+      console.log(`ERROR ENTERING ${preferenceName} into DB`);
+      console.error(error);
+    }
+    // finally {
+    //   await checkAndOpenOrCloseDBConnection("close");
+    // }
   };
 
   useEffect(() => {
@@ -440,26 +486,6 @@ function App() {
 
     showToast("Tasbeeh deleted", "top", "short");
     setAndStoreCounters(updatedCountersArr);
-  };
-
-  const modifyDataInUserPreferencesTable = async (
-    preferenceName: PreferenceType,
-    preferenceValue: string
-  ) => {
-    try {
-      const query = `INSERT OR REPLACE INTO userPreferencesTable (preferenceName, preferenceValue) VALUES (?, ?)`;
-      await dbConnection.current?.run(query, [preferenceName, preferenceValue]);
-
-      setUserPreferences((userPreferences: userPreferencesType) => ({
-        ...userPreferences,
-        [preferenceName]: preferenceValue,
-      }));
-    } catch (error) {
-      console.log(`ERROR ENTERING ${preferenceName} into DB`);
-      console.error(error);
-    } finally {
-      await checkAndOpenOrCloseDBConnection("close");
-    }
   };
 
   return (

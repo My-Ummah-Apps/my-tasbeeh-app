@@ -111,6 +111,7 @@ const useSQLiteDB = () => {
       const tasbeehDataTable = `
         CREATE TABLE IF NOT EXISTS tasbeehDataTable(
         id INTEGER PRIMARY KEY NOT NULL,
+        orderIndex INTEGER NOT NULL DEFAULT 0,
         counterName TEXT NOT NULL, 
         count INTEGER NOT NULL, 
         target INTEGER NOT NULL, 

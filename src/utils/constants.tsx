@@ -3,7 +3,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { Toast } from "@capacitor/toast";
 import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { v4 as uuidv4 } from "uuid";
-import { counterObjType } from "./types";
+import { counterObjType, userPreferencesType } from "./types";
 import { EasingDefinition } from "framer-motion";
 
 export const materialColors = [
@@ -82,6 +82,15 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
     id: uuidv4(),
   },
 ];
+
+export const dictPreferencesDefaultValues: userPreferencesType = {
+  morningNotification: 0,
+  afternoonNotification: 0,
+  eveningNotification: 0,
+  isExistingUser: 0,
+  appLaunchCount: 0,
+  haptics: 0,
+};
 
 // export const pageTransitionStyles = {
 //   initial: { opacity: 0 },
