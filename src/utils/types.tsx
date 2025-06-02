@@ -9,13 +9,14 @@ export interface userPreferencesType {
   isExistingUser: 0 | 1;
   appLaunchCount: number;
   haptics: 0 | 1;
+  previousLaunchDate: string;
 }
 
 export type PreferenceType = keyof userPreferencesType;
 
 export type PreferenceObjType = {
   preferenceName: PreferenceType;
-  preferenceValue: number;
+  preferenceValue: 0 | 1 | string;
 };
 
 export type counterObjType = {

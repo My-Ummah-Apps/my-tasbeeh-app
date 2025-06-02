@@ -7,6 +7,7 @@ import { Capacitor } from "@capacitor/core";
 import { Sheet } from "react-modal-sheet";
 import { v4 as uuidv4 } from "uuid";
 import {
+  assertValidDBResult,
   DEFAULT_COUNTERS,
   dictPreferencesDefaultValues,
   materialColors,
@@ -63,6 +64,44 @@ function App() {
   const [userPreferences, setUserPreferences] = useState<userPreferencesType>(
     dictPreferencesDefaultValues
   );
+
+  const initiateDefaultPrefsAndCounters = async () => {
+    const params = Object.keys(dictPreferencesDefaultValues)
+      .map((key) => {
+        const value =
+          dictPreferencesDefaultValues[key as keyof userPreferencesType];
+        return [key, Array.isArray(value) ? value.join(",") : value];
+      })
+      .flat();
+
+    const placeholders = Array(params.length / 2)
+      .fill("(?, ?)")
+      .join(", ");
+
+    const insertQuery = `
+        INSERT INTO userPreferencesTable (preferenceName, preferenceValue) 
+        VALUES ${placeholders};
+        `;
+
+    await dbConnection.current?.run(insertQuery, params);
+
+    setAndStoreCounters([...DEFAULT_COUNTERS]);
+    for (let i = 0; i < DEFAULT_COUNTERS.length; i++) {
+      const counterObj = DEFAULT_COUNTERS[i];
+      const isActive = counterObj.isActive === true ? 1 : 0;
+
+      const insertQuery = `INSERT into tasbeehDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+
+      await dbConnection.current?.run(insertQuery, [
+        i,
+        counterObj.counter,
+        counterObj.count,
+        counterObj.target,
+        null,
+        isActive,
+      ]);
+    }
+  };
 
   const setAndStoreCounters = (arr: counterObjType[]) => {
     // localStorage.setItem("localSavedCountersArray", JSON.stringify(arr));
@@ -146,13 +185,13 @@ function App() {
         `SELECT * FROM userPreferencesTable`
       );
 
+      const DBResultAllCounterData = await dbConnection.current?.query(
+        `SELECT * FROM tasbeehDataTable`
+      );
+
       console.log(
         "DBResultPreferences upon app start are: ",
         DBResultPreferences
-      );
-
-      const DBResultAllCounterData = await dbConnection.current?.query(
-        `SELECT * FROM tasbeehDataTable`
       );
 
       if (!DBResultPreferences || !DBResultPreferences.values) {
@@ -166,9 +205,10 @@ function App() {
         );
       }
 
-      await handleUserPreferencesDataFromDB(
-        DBResultPreferences.values as PreferenceObjType[]
-      );
+      if (DBResultPreferences.values.length === 0) {
+        console.log("New user, initiating default preferences and counters");
+        await initiateDefaultPrefsAndCounters();
+      }
 
       DBResultPreferences = await dbConnection.current?.query(
         `SELECT * FROM userPreferencesTable`
@@ -185,41 +225,9 @@ function App() {
         );
       }
 
-      const isExistingUser = Number(
-        DBResultPreferences.values.find(
-          (row) => row.preferenceName === "isExistingUser"
-        )?.preferenceValue ?? 0
+      await handleUserPreferencesDataFromDB(
+        DBResultPreferences.values as PreferenceObjType[]
       );
-
-      console.log("isExistingUser: ", isExistingUser);
-
-      const insertQuery = `INSERT into tasbeehDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
-
-      if (isExistingUser === 0) {
-        console.log("NEW USER, INITIATING DEFAULT COUNTERS");
-
-        setAndStoreCounters([...DEFAULT_COUNTERS]);
-        for (let i = 0; i < DEFAULT_COUNTERS.length; i++) {
-          const counterObj = DEFAULT_COUNTERS[i];
-          const isActive = counterObj.isActive === true ? 1 : 0;
-
-          await dbConnection.current?.run(insertQuery, [
-            i,
-            counterObj.counter,
-            counterObj.count,
-            counterObj.target,
-            null,
-            isActive,
-          ]);
-        }
-        localStorage.setItem("appVersion", LATEST_APP_VERSION);
-      } else {
-        const query = `SELECT * FROM tasbeehDataTable`;
-        //  setAndStoreCounters([query]);
-      }
-
-      console.log("DBResultPreferences: ", DBResultPreferences);
-      console.log("DBResultAllCounterData: ", DBResultAllCounterData);
     } catch (error) {
       console.error(error);
     } finally {
@@ -230,58 +238,18 @@ function App() {
   const handleUserPreferencesDataFromDB = async (
     DBResultPreferences: PreferenceObjType[]
   ) => {
-    let DBResultPreferencesValues = DBResultPreferences;
+    console.log("Existing user, Preferences are: ", DBResultPreferences);
 
-    try {
-      if (DBResultPreferencesValues.length === 0) {
-        console.log("New user, initiating default preferences");
-
-        const params = Object.keys(dictPreferencesDefaultValues)
-          .map((key) => {
-            const value =
-              dictPreferencesDefaultValues[key as keyof userPreferencesType];
-            return [key, Array.isArray(value) ? value.join(",") : value];
-          })
-          .flat();
-
-        const placeholders = Array(params.length / 2)
-          .fill("(?, ?)")
-          .join(", ");
-
-        const insertQuery = `
-        INSERT INTO userPreferencesTable (preferenceName, preferenceValue) 
-        VALUES ${placeholders};
-        `;
-
-        await dbConnection.current?.run(insertQuery, params);
-        const DBResultPreferencesQuery = await dbConnection.current?.query(
-          `SELECT * FROM userPreferencesTable`
-        );
-
-        if (!DBResultPreferencesQuery || !DBResultPreferencesQuery.values) {
-          throw new Error(
-            "No values returned from the DBResultPreferencesQuery."
-          );
-        }
-        DBResultPreferencesValues =
-          DBResultPreferencesQuery.values as PreferenceObjType[];
-      } else if (DBResultPreferencesValues.length > 0) {
-        console.log("Existing user, Preferences are: ", DBResultPreferences);
-
-        DBResultPreferences.forEach((item) => {
-          item.preferenceValue = Number(item.preferenceValue);
-        });
-
-        DBResultPreferencesValues = DBResultPreferences as PreferenceObjType[];
+    DBResultPreferences.forEach((item) => {
+      if (typeof item.preferenceValue !== "number") {
+        item.preferenceValue = Number(item.preferenceValue);
       }
-    } catch (error) {
-      console.error(error);
-    }
+    });
 
     const assignPreference = async (
       preference: PreferenceType
     ): Promise<void> => {
-      const preferenceQuery = DBResultPreferencesValues.find(
+      const preferenceQuery = DBResultPreferences.find(
         (row) => row.preferenceName === preference
       );
 
@@ -310,11 +278,16 @@ function App() {
     await batchAssignPreferences();
   };
 
+  useEffect(() => {
+    console.log("preference state: ", userPreferences);
+  }, [userPreferences]);
+
   const modifyDataInUserPreferencesTable = async (
     preferenceName: PreferenceType,
     preferenceValue: number
   ) => {
     try {
+      await checkAndOpenOrCloseDBConnection("open");
       const query = `INSERT OR REPLACE INTO userPreferencesTable (preferenceName, preferenceValue) VALUES (?, ?)`;
       await dbConnection.current?.run(query, [preferenceName, preferenceValue]);
 
@@ -325,10 +298,9 @@ function App() {
     } catch (error) {
       console.log(`ERROR ENTERING ${preferenceName} into DB`);
       console.error(error);
+    } finally {
+      await checkAndOpenOrCloseDBConnection("close");
     }
-    // finally {
-    //   await checkAndOpenOrCloseDBConnection("close");
-    // }
   };
 
   useEffect(() => {
@@ -394,26 +366,6 @@ function App() {
     const storedCounters = JSON.parse(
       localStorage.getItem("localSavedCountersArray") || "[]"
     );
-
-    if (storedCounters && storedCounters.length > 0) {
-      const previousLaunchDate = localStorage.getItem("lastLaunchDate");
-      const todaysDate = new Date().toLocaleDateString();
-
-      localStorage.setItem("lastLaunchDate", todaysDate);
-
-      if (previousLaunchDate !== todaysDate && resetAllCounters === true) {
-        counters = storedCounters.map((counterItem: counterObjType) => ({
-          ...counterItem,
-          count: 0,
-        }));
-      } else {
-        counters = storedCounters;
-      }
-    } else if (!storedCounters || storedCounters.length === 0) {
-      counters = [...DEFAULT_COUNTERS];
-      setAndStoreCounters(counters);
-      localStorage.setItem("appVersion", LATEST_APP_VERSION);
-    }
 
     setAndStoreCounters(counters);
   }, []);

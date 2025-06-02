@@ -133,7 +133,7 @@ const useSQLiteDB = () => {
       try {
         if (!dbConnection.current) {
           throw new Error(
-            `Unable to close cnnection within initialiseTables, dbConnection.current is ${dbConnection.current}`
+            `Unable to close connection within initialiseTables, dbConnection.current is ${dbConnection.current}`
           );
         }
 

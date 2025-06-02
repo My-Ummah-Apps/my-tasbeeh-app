@@ -83,6 +83,15 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   },
 ];
 
+// export function assertValidDBResult<T>(
+//   result: { values?: T },
+//   name: string
+// ): asserts result is { values: T } {
+//   if (!result || !result.values) {
+//     throw new Error(`${name} or ${name}.values do not exist`);
+//   }
+// }
+
 export const dictPreferencesDefaultValues: userPreferencesType = {
   morningNotification: 0,
   afternoonNotification: 0,
@@ -90,6 +99,7 @@ export const dictPreferencesDefaultValues: userPreferencesType = {
   isExistingUser: 0,
   appLaunchCount: 0,
   haptics: 0,
+  previousLaunchDate: "",
 };
 
 // export const pageTransitionStyles = {
