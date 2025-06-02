@@ -5,6 +5,7 @@ import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { v4 as uuidv4 } from "uuid";
 import { counterObjType, userPreferencesType } from "./types";
 import { EasingDefinition } from "framer-motion";
+import { DBSQLiteValues } from "@capacitor-community/sqlite";
 
 export const materialColors = [
   "#EF5350",
@@ -83,14 +84,14 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
   },
 ];
 
-// export function assertValidDBResult<T>(
-//   result: { values?: T },
-//   name: string
-// ): asserts result is { values: T } {
-//   if (!result || !result.values) {
-//     throw new Error(`${name} or ${name}.values do not exist`);
-//   }
-// }
+export function assertValidDBResult(
+  result: DBSQLiteValues | undefined,
+  query: string
+): asserts result is DBSQLiteValues & { values: any[] } {
+  if (!result || !result.values) {
+    throw new Error(`${query}.values does not exist`);
+  }
+}
 
 export const dictPreferencesDefaultValues: userPreferencesType = {
   morningNotification: 0,

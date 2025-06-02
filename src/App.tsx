@@ -185,7 +185,7 @@ function App() {
         `SELECT * FROM userPreferencesTable`
       );
 
-      const DBResultAllCounterData = await dbConnection.current?.query(
+      let DBResultAllCounterData = await dbConnection.current?.query(
         `SELECT * FROM tasbeehDataTable`
       );
 
@@ -194,16 +194,8 @@ function App() {
         DBResultPreferences
       );
 
-      if (!DBResultPreferences || !DBResultPreferences.values) {
-        throw new Error(
-          "DBResultPreferences or DBResultPreferences.values do not exist"
-        );
-      }
-      if (!DBResultAllCounterData || !DBResultAllCounterData.values) {
-        throw new Error(
-          "DBResultAllCounterData or !DBResultAllCounterData.values do not exist"
-        );
-      }
+      assertValidDBResult(DBResultPreferences, "DBResultPreferences");
+      assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
 
       if (DBResultPreferences.values.length === 0) {
         console.log("New user, initiating default preferences and counters");
@@ -214,20 +206,22 @@ function App() {
         `SELECT * FROM userPreferencesTable`
       );
 
+      DBResultAllCounterData = await dbConnection.current?.query(
+        `SELECT * FROM tasbeehDataTable`
+      );
+
       console.log(
         "DBResultPreferences after preferences have been set: ",
         DBResultPreferences
       );
 
-      if (!DBResultPreferences || !DBResultPreferences.values) {
-        throw new Error(
-          "DBResultPreferences or DBResultPreferences.values do not exist"
-        );
-      }
+      assertValidDBResult(DBResultPreferences, "DBResultPreferences");
+      assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
 
       await handleUserPreferencesDataFromDB(
         DBResultPreferences.values as PreferenceObjType[]
       );
+      await handleCounterDataFromDB();
     } catch (error) {
       console.error(error);
     } finally {
@@ -277,6 +271,8 @@ function App() {
 
     await batchAssignPreferences();
   };
+
+  const handleCounterDataFromDB = async () => {};
 
   useEffect(() => {
     console.log("preference state: ", userPreferences);
