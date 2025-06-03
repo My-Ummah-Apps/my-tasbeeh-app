@@ -45,7 +45,7 @@ const BottomSheetForm = ({
     const isEditingCounter = !!clickedCounter;
 
     setInput({
-      name: isEditingCounter ? clickedCounter.counter : "",
+      name: isEditingCounter ? clickedCounter.counterName : "",
       count: isEditingCounter ? clickedCounter.count : 0,
       target: isEditingCounter ? clickedCounter.target : 0,
     });
@@ -78,7 +78,9 @@ const BottomSheetForm = ({
     setSubmitted(false);
   };
 
-  const submitCounter = (e: React.FormEvent<HTMLFormElement>): void => {
+  const submitCounter = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     setSubmitted(true);
 
@@ -87,8 +89,13 @@ const BottomSheetForm = ({
     }
 
     editingCounterId
-      ? modifyCounter(editingCounterId, input.name, input.count, input.target)
-      : addCounter(input.name, Number(input.target));
+      ? await modifyCounter(
+          editingCounterId,
+          input.name,
+          input.count,
+          input.target
+        )
+      : await addCounter(input.name, Number(input.target));
 
     closeFormCleanup();
   };

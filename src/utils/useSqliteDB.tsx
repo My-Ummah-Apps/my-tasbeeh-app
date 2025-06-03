@@ -108,8 +108,8 @@ const useSQLiteDB = () => {
 
       await checkAndOpenOrCloseDBConnection("open");
 
-      const tasbeehDataTable = `
-        CREATE TABLE IF NOT EXISTS tasbeehDataTable(
+      const counterDataTable = `
+        CREATE TABLE IF NOT EXISTS counterDataTable(
         id INTEGER PRIMARY KEY NOT NULL,
         orderIndex INTEGER NOT NULL DEFAULT 0,
         counterName TEXT NOT NULL, 
@@ -125,7 +125,7 @@ const useSQLiteDB = () => {
         preferenceValue TEXT NOT NULL DEFAULT ''
         ) STRICT`;
 
-      await dbConnection.current.execute(tasbeehDataTable);
+      await dbConnection.current.execute(counterDataTable);
       await dbConnection.current.execute(userPreferencesTable);
     } catch (error) {
       console.error(error);

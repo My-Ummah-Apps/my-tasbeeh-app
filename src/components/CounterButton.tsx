@@ -29,7 +29,7 @@ function CounterButton({
 }: CounterButtonProps) {
   const setCounterAndHaptics = () => {
     const updatedCountersArr = countersArr.map((counter) => {
-      const isActive = counter.isActive === activeCounter.isActive;
+      const isActive = counter.isActive === 1;
 
       if (isActive) {
         return { ...counter, count: (counter.count += 1) };
@@ -59,7 +59,7 @@ function CounterButton({
   return (
     <button
       data-testid="counter-increment-button"
-      aria-label={`Increase counter for ${activeCounter.counter}, current value is ${activeCounter.count}`}
+      aria-label={`Increase counter for ${activeCounter.counterName}, current value is ${activeCounter.count}`}
       style={{
         backgroundColor: `${activeColor}`,
         boxShadow: `0px 0px 10px ${activeColor}`,

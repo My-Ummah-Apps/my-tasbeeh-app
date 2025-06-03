@@ -36,8 +36,8 @@ const CountersListItem = ({
           const updatedCountersArr: counterObjType[] = countersArr.map(
             (counter: counterObjType) => {
               return counter.id === counterItem.id
-                ? { ...counter, isActive: true }
-                : { ...counter, isActive: false };
+                ? { ...counter, isActive: 1 }
+                : { ...counter, isActive: 0 };
             }
           );
           setAndStoreCounters(updatedCountersArr);

@@ -24,61 +24,61 @@ export const materialColors = [
 
 export const DEFAULT_COUNTERS: counterObjType[] = [
   {
-    counter: "Alhumdulillah",
+    counterName: "Alhumdulillah",
     count: 0,
-    isActive: true,
+    isActive: 1,
     target: 50,
     id: uuidv4(),
   },
 
   {
-    counter: "Subhanallah",
+    counterName: "Subhanallah",
     count: 0,
-    isActive: false,
+    isActive: 0,
     target: 50,
     id: uuidv4(),
   },
 
   {
-    counter: "Allahu-Akbar",
+    counterName: "Allahu-Akbar",
     count: 0,
-    isActive: false,
+    isActive: 0,
     target: 50,
     id: uuidv4(),
   },
 
   {
-    counter: "Astagfirullah",
+    counterName: "Astagfirullah",
     count: 0,
-    isActive: false,
+    isActive: 0,
     target: 50,
     id: uuidv4(),
   },
   {
-    counter: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
+    counterName: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
     count: 0,
-    isActive: false,
+    isActive: 0,
     target: 50,
     id: uuidv4(),
   },
   {
-    counter: "La hawla wa la quwwata illa billah",
+    counterName: "La hawla wa la quwwata illa billah",
     count: 0,
-    isActive: false,
+    isActive: 0,
     target: 50,
     id: uuidv4(),
   },
   {
-    counter: "La ilaha illallah",
+    counterName: "La ilaha illallah",
     count: 0,
-    isActive: false,
+    isActive: 0,
     target: 50,
     id: uuidv4(),
   },
   {
-    counter: "Subhan-Allahi wa bihamdih",
+    counterName: "Subhan-Allahi wa bihamdih",
     count: 0,
-    isActive: false,
+    isActive: 0,
     target: 50,
     id: uuidv4(),
   },
@@ -101,6 +101,7 @@ export const dictPreferencesDefaultValues: userPreferencesType = {
   appLaunchCount: 0,
   haptics: 0,
   previousLaunchDate: "",
+  launchCount: 0,
 };
 
 // export const pageTransitionStyles = {

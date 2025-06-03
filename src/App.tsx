@@ -31,6 +31,18 @@ import {
   themeType,
   userPreferencesType,
 } from "./utils/types";
+
+// localStorage.setItem("theme", "\"dark\"");
+// localStorage.setItem("afternoon-notification", "true");
+// localStorage.setItem("lastLaunchDate", "02/06/2025");
+// localStorage.setItem("evening-notification", "true");
+// localStorage.setItem("haptics", "false");
+// localStorage.setItem("localSavedCountersArray", "[{\"counter\":\"Alhumdulillah\",\"count\":0,\"isActive\":true,\"target\":50,\"id\":\"372d741c-27a8-4f6f-a53a-847c3c7b29d7\"},{\"counter\":\"Subhanallah\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"cf1dd17c-9b8b-44ad-bf11-171b71610d40\"},{\"counter\":\"Allahu-Akbar\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"095717f8-524d-440e-b1b6-e53f65da5b9f\"},{\"counter\":\"Astagfirullah\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"f1cb3c53-b9aa-4d4a-aadf-f239a834a20c\"},{\"counter\":\"Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"2d9d35e7-0f65-48a0-a1de-106eccc02bba\"},{\"counter\":\"La hawla wa la quwwata illa billah\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"6b9830f7-86cc-45b2-a7e7-f8c3ea9b9511\"},{\"counter\":\"La ilaha illallah\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"2fce9b90-3e6e-402d-97c9-733cd3980460\"},{\"counter\":\"Subhan-Allahi wa bihamdih\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"7c85aee5-84f3-484f-a8cf-2700218baf0e\"}]");
+// localStorage.setItem("morning-notification", "true");
+// localStorage.setItem("launch-count", "764");
+// localStorage.setItem("appVersion", "2.5");
+// localStorage.setItem("activeColor", "#AB47BC");
+
 import { AnimatePresence } from "framer-motion";
 import useSQLiteDB from "./utils/useSqliteDB";
 
@@ -44,11 +56,11 @@ function App() {
 
   const [showChangelogModal, setShowChangelogModal] = useState(false);
   const [activeCounter, setActiveCounter] = useState<counterObjType>({
-    counter: "",
+    counterName: "",
     count: 0,
     target: 0,
     // color: materialColors[0],
-    isActive: false,
+    isActive: 0,
     id: "",
   });
 
@@ -85,16 +97,15 @@ function App() {
 
     await dbConnection.current?.run(insertQuery, params);
 
-    setAndStoreCounters([...DEFAULT_COUNTERS]);
     for (let i = 0; i < DEFAULT_COUNTERS.length; i++) {
       const counterObj = DEFAULT_COUNTERS[i];
-      const isActive = counterObj.isActive === true ? 1 : 0;
+      const isActive = counterObj.isActive === 1 ? 1 : 0;
 
-      const insertQuery = `INSERT into tasbeehDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+      const insertQuery = `INSERT into counterDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
 
       await dbConnection.current?.run(insertQuery, [
         i,
-        counterObj.counter,
+        counterObj.counterName,
         counterObj.count,
         counterObj.target,
         null,
@@ -103,11 +114,40 @@ function App() {
     }
   };
 
-  const setAndStoreCounters = (arr: counterObjType[]) => {
-    // localStorage.setItem("localSavedCountersArray", JSON.stringify(arr));
+  const setAndStoreCounters = async (arr: counterObjType[]) => {
+    console.log("arr: ", arr);
     setCountersArr(arr);
-    const activeCounter = arr.find((counter) => counter.isActive === true);
-    setActiveCounter(activeCounter ?? { ...DEFAULT_COUNTERS[0] });
+    const activeCounter =
+      arr.find((counter) => counter.isActive === 1) ?? arr[0];
+    setActiveCounter(activeCounter);
+
+    // try {
+    //   await checkAndOpenOrCloseDBConnection("open");
+
+    //   for (let i = 0; i < arr.length; i++) {
+    //     const counterObj = arr[i];
+    //     const isActive = counterObj.isActive === 1 ? 1 : 0;
+
+    //     const insertQuery = `INSERT into counterDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+
+    //     await dbConnection.current?.run(insertQuery, [
+    //       i,
+    //       counterObj.counterName,
+    //       counterObj.count,
+    //       counterObj.target,
+    //       null,
+    //       isActive,
+    //     ]);
+    //   }
+    // } catch (error) {
+    // } finally {
+    //   await checkAndOpenOrCloseDBConnection("close");
+    //   setCountersArr(arr);
+    //   const activeCounter =
+    //     arr.find((counter) => counter.isActive === 1) ?? arr[0];
+    //   console.log("ACTIVE COUNTER IS: ", activeCounter);
+    //   setActiveCounter(activeCounter);
+    // }
   };
 
   useEffect(() => {
@@ -186,7 +226,7 @@ function App() {
       );
 
       let DBResultAllCounterData = await dbConnection.current?.query(
-        `SELECT * FROM tasbeehDataTable`
+        `SELECT * FROM counterDataTable`
       );
 
       console.log(
@@ -207,7 +247,7 @@ function App() {
       );
 
       DBResultAllCounterData = await dbConnection.current?.query(
-        `SELECT * FROM tasbeehDataTable`
+        `SELECT * FROM counterDataTable`
       );
 
       console.log(
@@ -221,7 +261,7 @@ function App() {
       await handleUserPreferencesDataFromDB(
         DBResultPreferences.values as PreferenceObjType[]
       );
-      await handleCounterDataFromDB();
+      await handleCounterDataFromDB(DBResultAllCounterData);
     } catch (error) {
       console.error(error);
     } finally {
@@ -272,7 +312,19 @@ function App() {
     await batchAssignPreferences();
   };
 
-  const handleCounterDataFromDB = async () => {};
+  const handleCounterDataFromDB = async (DBResultAllCounterData) => {
+    console.log(
+      "DBResultAllCounterData.values: ",
+      DBResultAllCounterData.values
+    );
+
+    DBResultAllCounterData.values.forEach((item) => {
+      console.log("before assignment: ", typeof item.isActive);
+      item.isActive = Number(item.isActive);
+      console.log("after assignment: ", typeof item.isActive);
+    });
+    await setAndStoreCounters(DBResultAllCounterData.values);
+  };
 
   useEffect(() => {
     console.log("preference state: ", userPreferences);
@@ -309,10 +361,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (
-      localStorage.getItem("localSavedCountersArray") &&
-      localStorage.getItem("appVersion") !== LATEST_APP_VERSION
-    ) {
+    if (localStorage.getItem("appVersion") !== LATEST_APP_VERSION) {
       setShowChangelogModal(true);
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
@@ -326,7 +375,8 @@ function App() {
     const storedLaunchCount = localStorage.getItem("launch-count");
     let launchCount = storedLaunchCount ? Number(storedLaunchCount) : 0;
     launchCount++;
-    localStorage.setItem("launch-count", JSON.stringify(launchCount));
+    // localStorage.setItem("launch-count", JSON.stringify(launchCount));
+    modifyDataInUserPreferencesTable("launchcount", launchCount);
 
     const shouldTriggerReview =
       launchCount === 3 ||
@@ -352,31 +402,19 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    const resetAllCounters = JSON.parse(
-      localStorage.getItem("dailyCounterReset") || "false"
-    );
-    setDailyCounterReset(resetAllCounters);
+  // useEffect(() => {
+  //   const resetAllCounters = JSON.parse(
+  //     localStorage.getItem("dailyCounterReset") || "false"
+  //   );
+  //   setDailyCounterReset(resetAllCounters);
 
-    let counters: counterObjType[] = [];
-    const storedCounters = JSON.parse(
-      localStorage.getItem("localSavedCountersArray") || "[]"
-    );
+  //   let counters: counterObjType[] = [];
+  //   const storedCounters = JSON.parse(
+  //     localStorage.getItem("localSavedCountersArray") || "[]"
+  //   );
 
-    setAndStoreCounters(counters);
-  }, []);
-
-  const addCounter = (counterToAdd: string, target: number) => {
-    const newCounter: counterObjType = {
-      counter: counterToAdd,
-      count: 0,
-      isActive: false,
-      target,
-      id: uuidv4(),
-    };
-    const updatedCountersArr = [...countersArr, newCounter];
-    setAndStoreCounters(updatedCountersArr);
-  };
+  //   setAndStoreCounters(counters);
+  // }, []);
 
   const resetSingleCounter = async (id: string) => {
     const updatedCountersArr = countersArr.map((counter) => {
@@ -385,15 +423,44 @@ function App() {
     setAndStoreCounters(updatedCountersArr);
   };
 
-  const resetAllCounters = () => {
+  const resetAllCounters = async () => {
     const resettedCounters = countersArr.map((counter: counterObjType) => ({
       ...counter,
       count: 0,
     }));
-    setAndStoreCounters(resettedCounters);
+    await setAndStoreCounters(resettedCounters);
   };
 
-  const modifyCounter = (
+  const addCounter = async (counterToAdd: string, target: number) => {
+    const newCounter: counterObjType = {
+      counterName: counterToAdd,
+      count: 0,
+      isActive: 0,
+      target,
+      id: uuidv4(),
+    };
+    const updatedCountersArr = [...countersArr, newCounter];
+    await setAndStoreCounters(updatedCountersArr);
+    const index = updatedCountersArr.length;
+    try {
+      await checkAndOpenOrCloseDBConnection("open");
+      const insertQuery = `INSERT into counterDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+      await dbConnection.current?.run(insertQuery, [
+        index,
+        counterToAdd,
+        0,
+        target,
+        null,
+        0,
+      ]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await checkAndOpenOrCloseDBConnection("close");
+    }
+  };
+
+  const modifyCounter = async (
     id: string,
     modifiedCounterName: string,
     modifiedCount: number,
@@ -409,11 +476,23 @@ function App() {
           }
         : { ...counterItem };
     });
+    try {
+      await checkAndOpenOrCloseDBConnection("open");
+      const query = `UPDATE counterDataTable 
+      SET counterName = ${modifiedCounterName} 
+      SET count = ${modifiedCount} 
+      target = ${modifiedTarget}
+      WHERE id = ?`;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await checkAndOpenOrCloseDBConnection("close");
+    }
 
-    setAndStoreCounters(updatedCountersArr);
+    await setAndStoreCounters(updatedCountersArr);
   };
 
-  const deleteSingleCounter = (id: string) => {
+  const deleteSingleCounter = async (id: string) => {
     const remainingCounters = countersArr.filter(
       (counter) => counter.id !== id
     );
@@ -428,12 +507,12 @@ function App() {
     const updatedCountersArr: counterObjType[] = remainingCounters.map(
       (counter, i) => ({
         ...counter,
-        isActive: activeCounter.id === id && i === 0 ? true : counter.isActive,
+        isActive: activeCounter.id === id && i === 0 ? 1 : counter.isActive,
       })
     );
 
     showToast("Tasbeeh deleted", "top", "short");
-    setAndStoreCounters(updatedCountersArr);
+    await setAndStoreCounters(updatedCountersArr);
   };
 
   return (

@@ -33,9 +33,9 @@ function ActiveCounter({
       ? counterTextContainerRef.current.clientWidth
       : 0;
 
-    if (direction(activeCounter.counter) === "ltr") {
+    if (direction(activeCounter.counterName) === "ltr") {
       setLanguageDirection("ltr");
-    } else if (direction(activeCounter.counter) === "rtl") {
+    } else if (direction(activeCounter.counterName) === "rtl") {
       setLanguageDirection("rtl");
     }
 
@@ -58,7 +58,7 @@ function ActiveCounter({
   }, [textRef.current]);
 
   const counterNameStyles = {
-    textOverflow: activeCounter.counter.length > 50 ? "ellipsis" : "clip",
+    textOverflow: activeCounter.counterName.length > 50 ? "ellipsis" : "clip",
     paddingRight: scroll && languageDirection === "ltr" ? "2rem" : "",
     paddingLeft: scroll && languageDirection === "rtl" ? "2rem" : "",
   };
@@ -104,14 +104,14 @@ function ActiveCounter({
                 }`}
               >
                 <span className="active-counter-name" style={counterNameStyles}>
-                  {activeCounter.counter}
+                  {activeCounter.counterName}
                 </span>
                 {scroll && (
                   <span
                     className={"active-counter-name"}
                     style={counterNameStyles}
                   >
-                    {activeCounter.counter}
+                    {activeCounter.counterName}
                   </span>
                 )}
               </div>
@@ -145,7 +145,7 @@ function ActiveCounter({
         style={{ position: "absolute", opacity: 0 }}
       >
         <div ref={textRef}>
-          <span>{activeCounter.counter}</span>
+          <span>{activeCounter.counterName}</span>
         </div>
       </section>
     </section>
