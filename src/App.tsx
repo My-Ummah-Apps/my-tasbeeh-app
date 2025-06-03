@@ -478,11 +478,18 @@ function App() {
     });
     try {
       await checkAndOpenOrCloseDBConnection("open");
+      // ! COntiNUE FROM HERE
       const query = `UPDATE counterDataTable 
-      SET counterName = ${modifiedCounterName} 
-      SET count = ${modifiedCount} 
-      target = ${modifiedTarget}
+      SET counterName = ?
+      SET count = ?
+      target = ?
       WHERE id = ?`;
+
+      await dbConnection.current.run(query, [
+        modifiedCounterName,
+        modifiedCount,
+        modifiedTarget,
+      ]);
     } catch (error) {
       console.error(error);
     } finally {
