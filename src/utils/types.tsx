@@ -21,12 +21,13 @@ export type PreferenceObjType = {
 };
 
 export type counterObjType = {
+  id: number;
+  orderIndex: number;
   counterName: string;
   count: number;
-  // color?: MaterialColor;
-  isActive: 0 | 1;
   target: number;
-  id: string;
+  color: MaterialColor | null;
+  isActive: 0 | 1;
 };
 
 export type themeType = "light" | "dark";

@@ -2,7 +2,6 @@ import { Dialog } from "@capacitor/dialog";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { Toast } from "@capacitor/toast";
 import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
-import { v4 as uuidv4 } from "uuid";
 import { counterObjType, userPreferencesType } from "./types";
 import { EasingDefinition } from "framer-motion";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
@@ -22,13 +21,13 @@ export const materialColors = [
   "#FF7043",
 ] as const;
 
-export const DEFAULT_COUNTERS: counterObjType[] = [
+export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
   {
     counterName: "Alhumdulillah",
     count: 0,
     isActive: 1,
     target: 50,
-    id: uuidv4(),
+    index: 0,
   },
 
   {
@@ -36,7 +35,7 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
     count: 0,
     isActive: 0,
     target: 50,
-    id: uuidv4(),
+    index: 1,
   },
 
   {
@@ -44,7 +43,7 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
     count: 0,
     isActive: 0,
     target: 50,
-    id: uuidv4(),
+    index: 2,
   },
 
   {
@@ -52,35 +51,35 @@ export const DEFAULT_COUNTERS: counterObjType[] = [
     count: 0,
     isActive: 0,
     target: 50,
-    id: uuidv4(),
+    index: 3,
   },
   {
     counterName: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
     count: 0,
     isActive: 0,
     target: 50,
-    id: uuidv4(),
+    index: 4,
   },
   {
     counterName: "La hawla wa la quwwata illa billah",
     count: 0,
     isActive: 0,
     target: 50,
-    id: uuidv4(),
+    index: 5,
   },
   {
     counterName: "La ilaha illallah",
     count: 0,
     isActive: 0,
     target: 50,
-    id: uuidv4(),
+    index: 6,
   },
   {
     counterName: "Subhan-Allahi wa bihamdih",
     count: 0,
     isActive: 0,
     target: 50,
-    id: uuidv4(),
+    index: 7,
   },
 ];
 

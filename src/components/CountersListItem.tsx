@@ -5,8 +5,8 @@ import { counterObjType, MaterialColor } from "../utils/types";
 
 interface CountersListItemProps {
   setActiveColor: React.Dispatch<MaterialColor>;
-  setAndStoreCounters: (arr: counterObjType[]) => void;
-  setEditingCounterId: React.Dispatch<React.SetStateAction<string | null>>;
+  updateCountersState: (arr: counterObjType[]) => void;
+  setEditingCounterId: React.Dispatch<React.SetStateAction<number | null>>;
   countersArr: counterObjType[];
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   color: MaterialColor;
@@ -15,7 +15,7 @@ interface CountersListItemProps {
 
 const CountersListItem = ({
   setActiveColor,
-  setAndStoreCounters,
+  updateCountersState,
   setEditingCounterId,
   countersArr,
   setShowForm,
@@ -40,7 +40,7 @@ const CountersListItem = ({
                 : { ...counter, isActive: 0 };
             }
           );
-          setAndStoreCounters(updatedCountersArr);
+          updateCountersState(updatedCountersArr);
         }}
       >
         <div className="single-counter-name-and-count-wrap">
@@ -51,12 +51,14 @@ const CountersListItem = ({
             <div
               style={{
                 textAlign:
-                  direction(counterItem.counter) === "ltr" ? "left" : "right",
+                  direction(counterItem.counterName) === "ltr"
+                    ? "left"
+                    : "right",
                 // direction: direction(counterItem.counter),
               }}
               className="single-counter-counter-name"
             >
-              {counterItem.counter}
+              {counterItem.counterName}
             </div>
           </Link>
         </div>

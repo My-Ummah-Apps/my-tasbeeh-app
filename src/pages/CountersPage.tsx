@@ -10,7 +10,7 @@ interface CountersPageProps {
   activeColor: MaterialColor;
   setActiveColor: React.Dispatch<MaterialColor>;
   activeCounter: counterObjType;
-  setAndStoreCounters: (arr: counterObjType[]) => void;
+  updateCountersState: (arr: counterObjType[]) => void;
   deleteSingleCounter: (id: string) => void;
   countersArr: counterObjType[];
   modifyCounter: (
@@ -26,14 +26,14 @@ function CountersPage({
   activeColor,
   setActiveColor,
   activeCounter,
-  setAndStoreCounters,
+  updateCountersState,
   deleteSingleCounter,
   countersArr,
   modifyCounter,
   addCounter,
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
-  const [editingCounterId, setEditingCounterId] = useState<string | null>(null);
+  const [editingCounterId, setEditingCounterId] = useState<number | null>(null);
 
   return (
     <motion.main
@@ -69,7 +69,7 @@ function CountersPage({
             <CountersListItem
               setActiveColor={setActiveColor}
               key={counterItem.id}
-              setAndStoreCounters={setAndStoreCounters}
+              updateCountersState={updateCountersState}
               countersArr={countersArr}
               setEditingCounterId={setEditingCounterId}
               setShowForm={setShowForm}

@@ -14,7 +14,7 @@ interface CounterButtonProps {
   activeColor: MaterialColor;
   countersArr: counterObjType[];
   activeCounter: counterObjType;
-  setAndStoreCounters: (arr: counterObjType[]) => void;
+  updateCountersState: (arr: counterObjType[]) => void;
   setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
   haptics: boolean | null;
 }
@@ -23,7 +23,7 @@ function CounterButton({
   activeColor,
   countersArr,
   activeCounter,
-  setAndStoreCounters,
+  updateCountersState,
   setHaptics,
   haptics,
 }: CounterButtonProps) {
@@ -37,7 +37,7 @@ function CounterButton({
       return { ...counter };
     });
 
-    setAndStoreCounters(updatedCountersArr);
+    updateCountersState(updatedCountersArr);
 
     if (activeCounter.count === activeCounter.target) {
       if (haptics === true && Capacitor.isNativePlatform()) {

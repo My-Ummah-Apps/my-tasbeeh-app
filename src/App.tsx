@@ -5,7 +5,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
 import { Sheet } from "react-modal-sheet";
-import { v4 as uuidv4 } from "uuid";
+
 import {
   assertValidDBResult,
   DEFAULT_COUNTERS,
@@ -45,6 +45,7 @@ import {
 
 import { AnimatePresence } from "framer-motion";
 import useSQLiteDB from "./utils/useSqliteDB";
+import { DBSQLiteValues } from "@capacitor-community/sqlite";
 
 function App() {
   const {
@@ -64,7 +65,7 @@ function App() {
     id: "",
   });
 
-  const [countersArr, setCountersArr] = useState<counterObjType[]>([]);
+  const [countersState, setCountersState] = useState<counterObjType[]>([]);
   const [languageDirection, setLanguageDirection] =
     useState<languageDirection>("neutral");
   const [haptics, setHaptics] = useState<boolean | null>(null);
@@ -114,40 +115,11 @@ function App() {
     }
   };
 
-  const setAndStoreCounters = async (arr: counterObjType[]) => {
-    console.log("arr: ", arr);
-    setCountersArr(arr);
+  const updateCountersState = async (arr: counterObjType[]) => {
+    setCountersState(arr);
     const activeCounter =
       arr.find((counter) => counter.isActive === 1) ?? arr[0];
     setActiveCounter(activeCounter);
-
-    // try {
-    //   await checkAndOpenOrCloseDBConnection("open");
-
-    //   for (let i = 0; i < arr.length; i++) {
-    //     const counterObj = arr[i];
-    //     const isActive = counterObj.isActive === 1 ? 1 : 0;
-
-    //     const insertQuery = `INSERT into counterDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
-
-    //     await dbConnection.current?.run(insertQuery, [
-    //       i,
-    //       counterObj.counterName,
-    //       counterObj.count,
-    //       counterObj.target,
-    //       null,
-    //       isActive,
-    //     ]);
-    //   }
-    // } catch (error) {
-    // } finally {
-    //   await checkAndOpenOrCloseDBConnection("close");
-    //   setCountersArr(arr);
-    //   const activeCounter =
-    //     arr.find((counter) => counter.isActive === 1) ?? arr[0];
-    //   console.log("ACTIVE COUNTER IS: ", activeCounter);
-    //   setActiveCounter(activeCounter);
-    // }
   };
 
   useEffect(() => {
@@ -318,12 +290,25 @@ function App() {
       DBResultAllCounterData.values
     );
 
-    DBResultAllCounterData.values.forEach((item) => {
-      console.log("before assignment: ", typeof item.isActive);
-      item.isActive = Number(item.isActive);
-      console.log("after assignment: ", typeof item.isActive);
-    });
-    await setAndStoreCounters(DBResultAllCounterData.values);
+    const countersFromDB = DBResultAllCounterData.values as Array<
+      Record<string, any>
+    >;
+
+    const counters: counterObjType[] = countersFromDB.map(
+      (item): counterObjType => ({
+        id: Number(item.id),
+        orderIndex: Number(item.index),
+        counterName: item.counterName,
+        count: Number(item.count),
+        target: Number(item.target),
+        color: item.color,
+        isActive: Number(item.isActive) as 0 | 1,
+      })
+    );
+
+    console.log("COUNTERS: ", counters);
+
+    await updateCountersState(counters);
   };
 
   useEffect(() => {
@@ -416,43 +401,60 @@ function App() {
   //   setAndStoreCounters(counters);
   // }, []);
 
-  const resetSingleCounter = async (id: string) => {
-    const updatedCountersArr = countersArr.map((counter) => {
+  const resetSingleCounter = async (id: number) => {
+    const updatedCountersArr = countersState.map((counter) => {
       return counter.id === id ? { ...counter, count: 0 } : { ...counter };
     });
-    setAndStoreCounters(updatedCountersArr);
+    updateCountersState(updatedCountersArr);
   };
 
   const resetAllCounters = async () => {
-    const resettedCounters = countersArr.map((counter: counterObjType) => ({
+    const resettedCounters = countersState.map((counter: counterObjType) => ({
       ...counter,
       count: 0,
     }));
-    await setAndStoreCounters(resettedCounters);
+    await updateCountersState(resettedCounters);
   };
 
   const addCounter = async (counterToAdd: string, target: number) => {
-    const newCounter: counterObjType = {
-      counterName: counterToAdd,
-      count: 0,
-      isActive: 0,
-      target,
-      id: uuidv4(),
-    };
-    const updatedCountersArr = [...countersArr, newCounter];
-    await setAndStoreCounters(updatedCountersArr);
-    const index = updatedCountersArr.length;
     try {
       await checkAndOpenOrCloseDBConnection("open");
       const insertQuery = `INSERT into counterDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
-      await dbConnection.current?.run(insertQuery, [
-        index,
+      const result = await dbConnection.current?.run(insertQuery, [
+        countersState.length,
         counterToAdd,
         0,
         target,
         null,
         0,
       ]);
+
+      const maxOrderIndexResult = await dbConnection.current?.query(
+        `SELECT MAX(orderIndex) AS maxOrderIndex FROM counterDataTable`
+      );
+
+      const maxOrderIndex = maxOrderIndexResult?.values?.[0].maxOrderIndex ?? 0;
+      const lastId = result?.changes?.lastId;
+
+      console.log(result);
+      if (!lastId) {
+        throw new Error("result is null");
+      }
+
+      console.log("maxOrderIndexResult: ", maxOrderIndexResult);
+
+      const newCounter: counterObjType = {
+        id: lastId,
+        orderIndex: maxOrderIndex + 1,
+        counterName: counterToAdd,
+        count: 0,
+        target,
+        color: null,
+        isActive: 0,
+      };
+      const updatedCountersArr = [...countersState, newCounter];
+
+      await updateCountersState(updatedCountersArr);
     } catch (error) {
       console.error(error);
     } finally {
@@ -461,12 +463,12 @@ function App() {
   };
 
   const modifyCounter = async (
-    id: string,
+    id: number,
     modifiedCounterName: string,
     modifiedCount: number,
     modifiedTarget: number
   ) => {
-    const updatedCountersArr = countersArr.map((counterItem) => {
+    const updatedCountersArr = countersState.map((counterItem) => {
       return counterItem.id === id
         ? {
             ...counterItem,
@@ -496,11 +498,11 @@ function App() {
       await checkAndOpenOrCloseDBConnection("close");
     }
 
-    await setAndStoreCounters(updatedCountersArr);
+    await updateCountersState(updatedCountersArr);
   };
 
   const deleteSingleCounter = async (id: string) => {
-    const remainingCounters = countersArr.filter(
+    const remainingCounters = countersState.filter(
       (counter) => counter.id !== id
     );
     if (remainingCounters.length === 0) {
@@ -519,7 +521,7 @@ function App() {
     );
 
     showToast("Tasbeeh deleted", "top", "short");
-    await setAndStoreCounters(updatedCountersArr);
+    await updateCountersState(updatedCountersArr);
   };
 
   return (
@@ -553,8 +555,8 @@ function App() {
                     activeColor={activeColor}
                     activeCounter={activeCounter}
                     resetSingleCounter={resetSingleCounter}
-                    setAndStoreCounters={setAndStoreCounters}
-                    countersArr={countersArr}
+                    updateCountersState={updateCountersState}
+                    countersArr={countersState}
                     setHaptics={setHaptics}
                     haptics={haptics}
                     setLanguageDirection={setLanguageDirection}
@@ -569,9 +571,9 @@ function App() {
                     activeColor={activeColor}
                     setActiveColor={setActiveColor}
                     activeCounter={activeCounter}
-                    countersArr={countersArr}
+                    countersArr={countersState}
                     modifyCounter={modifyCounter}
-                    setAndStoreCounters={setAndStoreCounters}
+                    updateCountersState={updateCountersState}
                     addCounter={addCounter}
                     deleteSingleCounter={deleteSingleCounter}
                   />

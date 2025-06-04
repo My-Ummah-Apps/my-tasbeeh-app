@@ -12,7 +12,7 @@ interface HomePageProps {
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetSingleCounter: (id: string) => Promise<void>;
-  setAndStoreCounters: (arr: counterObjType[]) => void;
+  updateCountersState: (arr: counterObjType[]) => void;
   countersArr: counterObjType[];
   setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
   haptics: boolean | null;
@@ -24,7 +24,7 @@ const HomePage = ({
   activeColor,
   activeCounter,
   resetSingleCounter,
-  setAndStoreCounters,
+  updateCountersState,
   countersArr,
   setHaptics,
   haptics,
@@ -49,7 +49,7 @@ const HomePage = ({
       <CounterButton
         activeColor={activeColor}
         countersArr={countersArr}
-        setAndStoreCounters={setAndStoreCounters}
+        updateCountersState={updateCountersState}
         activeCounter={activeCounter}
         setHaptics={setHaptics}
         haptics={haptics}
