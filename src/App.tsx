@@ -416,27 +416,30 @@ function App() {
     await updateCountersState(resettedCounters);
   };
 
-  const addCounter = async (counterToAdd: string, target: number) => {
+  const addCounter = async (newCounterName: string, target: number) => {
     try {
       await checkAndOpenOrCloseDBConnection("open");
+
+      const maxOrderIndexResult = await dbConnection.current?.query(
+        `SELECT MAX(orderIndex) AS maxOrderIndex FROM counterDataTable`
+      );
+      const maxOrderIndex =
+        maxOrderIndexResult?.values?.[0].maxOrderIndex ?? -1;
+      const newOrderIndex = maxOrderIndex + 1;
+
       const insertQuery = `INSERT into counterDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
-      const result = await dbConnection.current?.run(insertQuery, [
-        countersState.length,
-        counterToAdd,
+      const insertResult = await dbConnection.current?.run(insertQuery, [
+        newOrderIndex,
+        newCounterName,
         0,
         target,
         null,
         0,
       ]);
 
-      const maxOrderIndexResult = await dbConnection.current?.query(
-        `SELECT MAX(orderIndex) AS maxOrderIndex FROM counterDataTable`
-      );
+      const lastId = insertResult?.changes?.lastId;
 
-      const maxOrderIndex = maxOrderIndexResult?.values?.[0].maxOrderIndex ?? 0;
-      const lastId = result?.changes?.lastId;
-
-      console.log(result);
+      console.log(insertResult);
       if (!lastId) {
         throw new Error("result is null");
       }
@@ -445,8 +448,8 @@ function App() {
 
       const newCounter: counterObjType = {
         id: lastId,
-        orderIndex: maxOrderIndex + 1,
-        counterName: counterToAdd,
+        orderIndex: newOrderIndex,
+        counterName: newCounterName,
         count: 0,
         target,
         color: null,
@@ -456,7 +459,7 @@ function App() {
 
       await updateCountersState(updatedCountersArr);
     } catch (error) {
-      console.error(error);
+      console.error("Failed to add counter: ", error);
     } finally {
       await checkAndOpenOrCloseDBConnection("close");
     }
@@ -468,40 +471,42 @@ function App() {
     modifiedCount: number,
     modifiedTarget: number
   ) => {
-    const updatedCountersArr = countersState.map((counterItem) => {
-      return counterItem.id === id
-        ? {
-            ...counterItem,
-            counter: modifiedCounterName,
-            count: modifiedCount,
-            target: modifiedTarget,
-          }
-        : { ...counterItem };
-    });
     try {
       await checkAndOpenOrCloseDBConnection("open");
-      // ! COntiNUE FROM HERE
-      const query = `UPDATE counterDataTable 
-      SET counterName = ?
-      SET count = ?
+
+      const updateCounterQuery = `UPDATE counterDataTable 
+      SET counterName = ?,
+      count = ?,
       target = ?
       WHERE id = ?`;
 
-      await dbConnection.current.run(query, [
+      await dbConnection.current?.run(updateCounterQuery, [
         modifiedCounterName,
         modifiedCount,
         modifiedTarget,
+        id,
       ]);
     } catch (error) {
-      console.error(error);
+      console.error("error modifying counter: ", error);
     } finally {
       await checkAndOpenOrCloseDBConnection("close");
     }
 
+    const updatedCountersArr = countersState.map((counterItem) => {
+      return counterItem.id === id
+        ? ({
+            ...counterItem,
+            counterName: modifiedCounterName,
+            count: modifiedCount,
+            target: modifiedTarget,
+          } satisfies counterObjType)
+        : counterItem;
+    });
+
     await updateCountersState(updatedCountersArr);
   };
 
-  const deleteSingleCounter = async (id: string) => {
+  const deleteSingleCounter = async (id: number) => {
     const remainingCounters = countersState.filter(
       (counter) => counter.id !== id
     );
@@ -520,8 +525,17 @@ function App() {
       })
     );
 
-    showToast("Tasbeeh deleted", "top", "short");
-    await updateCountersState(updatedCountersArr);
+    try {
+      await checkAndOpenOrCloseDBConnection("open");
+      const deleteQuery = `DELETE FROM counterDataTable WHERE id = ?`;
+      await dbConnection.current?.run(deleteQuery, [id]);
+      showToast("Tasbeeh deleted", "top", "short");
+      await updateCountersState(updatedCountersArr);
+    } catch (error) {
+      console.error("Error deleting counter: ", error);
+    } finally {
+      await checkAndOpenOrCloseDBConnection("close");
+    }
   };
 
   return (
