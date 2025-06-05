@@ -4,11 +4,15 @@ import { motion } from "framer-motion";
 // import { pageTransitionStyles } from "../utils/constants";
 import {
   counterObjType,
+  DBConnectionStateType,
   languageDirection,
   MaterialColor,
 } from "../utils/types";
+import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 
 interface HomePageProps {
+  dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
+  toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetSingleCounter: (id: string) => Promise<void>;
@@ -21,6 +25,8 @@ interface HomePageProps {
 }
 
 const HomePage = ({
+  dbConnection,
+  toggleDBConnection,
   activeColor,
   activeCounter,
   resetSingleCounter,
@@ -47,6 +53,8 @@ const HomePage = ({
         languageDirection={languageDirection}
       />
       <CounterButton
+        dbConnection={dbConnection}
+        toggleDBConnection={toggleDBConnection}
         activeColor={activeColor}
         countersArr={countersArr}
         updateCountersState={updateCountersState}

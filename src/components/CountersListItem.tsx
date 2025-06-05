@@ -1,23 +1,40 @@
 import { MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { direction } from "direction";
-import { counterObjType, MaterialColor } from "../utils/types";
+import {
+  counterObjType,
+  DBConnectionStateType,
+  MaterialColor,
+  PreferenceType,
+} from "../utils/types";
+import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 
 interface CountersListItemProps {
+  dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
+  toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
+  modifyDataInUserPrefsTable: (
+    preferenceName: PreferenceType,
+    preferenceValue: number | MaterialColor
+  ) => Promise<void>;
+  counterId: number;
   setActiveColor: React.Dispatch<MaterialColor>;
   updateCountersState: (arr: counterObjType[]) => void;
-  setEditingCounterId: React.Dispatch<React.SetStateAction<number | null>>;
-  countersArr: counterObjType[];
+  setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
+  countersState: counterObjType[];
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   color: MaterialColor;
   counterItem: counterObjType;
 }
 
 const CountersListItem = ({
+  dbConnection,
+  toggleDBConnection,
+  modifyDataInUserPrefsTable,
+  counterId,
   setActiveColor,
   updateCountersState,
-  setEditingCounterId,
-  countersArr,
+  setCounterId,
+  countersState,
   setShowForm,
   color,
   counterItem,
@@ -29,11 +46,37 @@ const CountersListItem = ({
         style={{
           backgroundColor: color + "BF",
         }}
-        onClick={() => {
-          setEditingCounterId(counterItem.id);
+        onClick={async () => {
+          setCounterId(counterItem.id);
+
+          try {
+            await toggleDBConnection("open");
+            // ! ACTIVE COLOR IS NOT PERSISTING UPON RELOAD
+            modifyDataInUserPrefsTable("activeColor", color);
+
+            const res1 = await dbConnection.current?.run(
+              `UPDATE counterDataTable SET isActive = 0`
+            );
+            console.log("COUNTERID", counterItem.id);
+
+            const res2 = await dbConnection.current?.run(
+              `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
+              [counterItem.id]
+            );
+            console.log("RES1: ", res1);
+            console.log("RES2: ", res2);
+          } catch (error) {
+            console.error(
+              "Error updating active counter/active color: ",
+              error
+            );
+          } finally {
+            await toggleDBConnection("close");
+          }
+
           setActiveColor(color);
-          localStorage.setItem("activeColor", color);
-          const updatedCountersArr: counterObjType[] = countersArr.map(
+          // localStorage.setItem("activeColor", color);
+          const updatedCountersArr: counterObjType[] = countersState.map(
             (counter: counterObjType) => {
               return counter.id === counterItem.id
                 ? { ...counter, isActive: 1 }
@@ -68,7 +111,7 @@ const CountersListItem = ({
           className="edit-btn-wrap"
           onClick={(e) => {
             e.stopPropagation();
-            setEditingCounterId(counterItem.id);
+            setCounterId(counterItem.id);
             setShowForm(true);
           }}
         >

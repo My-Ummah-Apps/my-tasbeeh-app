@@ -10,7 +10,9 @@ export interface userPreferencesType {
   appLaunchCount: number;
   haptics: 0 | 1;
   previousLaunchDate: string;
-  launchcount: number;
+  dailyCounterReset: 0 | 1;
+  launchCount: number;
+  activeColor: MaterialColor;
 }
 
 export type PreferenceType = keyof userPreferencesType;

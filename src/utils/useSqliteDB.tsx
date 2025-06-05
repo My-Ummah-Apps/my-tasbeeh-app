@@ -58,13 +58,11 @@ const useSQLiteDB = () => {
     initialiseDB();
   }, []);
 
-  async function checkAndOpenOrCloseDBConnection(
-    action: DBConnectionStateType
-  ) {
+  async function toggleDBConnection(action: DBConnectionStateType) {
     try {
       if (!dbConnection || !dbConnection.current) {
         throw new Error(
-          `Database connection not initialised within checkAndOpenOrCloseDBConnection, dbConnection is ${dbConnection} and dbConnection.current is ${dbConnection.current}`
+          `Database connection not initialised within toggleDBConnection, dbConnection is ${dbConnection} and dbConnection.current is ${dbConnection.current}`
         );
       }
 
@@ -79,7 +77,7 @@ const useSQLiteDB = () => {
 
       if (isDatabaseOpen.result === undefined) {
         throw new Error(
-          "isDatabaseOpen.result is undefined within checkAndOpenOrCloseDBConnection"
+          "isDatabaseOpen.result is undefined within toggleDBConnection"
         );
       } else if (action === "open" && isDatabaseOpen.result === false) {
         await dbConnection.current.open();
@@ -106,7 +104,7 @@ const useSQLiteDB = () => {
         );
       }
 
-      await checkAndOpenOrCloseDBConnection("open");
+      await toggleDBConnection("open");
 
       const counterDataTable = `
         CREATE TABLE IF NOT EXISTS counterDataTable(
@@ -139,7 +137,7 @@ const useSQLiteDB = () => {
 
         const isDatabaseOpen = await dbConnection.current.isDBOpen();
         if (isDatabaseOpen.result) {
-          await checkAndOpenOrCloseDBConnection("close");
+          await toggleDBConnection("close");
         }
       } catch (error) {
         console.error(error);
@@ -151,7 +149,7 @@ const useSQLiteDB = () => {
     isDatabaseInitialised,
     sqliteConnection,
     dbConnection,
-    checkAndOpenOrCloseDBConnection,
+    toggleDBConnection,
   };
 };
 

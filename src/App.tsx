@@ -52,7 +52,7 @@ function App() {
     isDatabaseInitialised,
     sqliteConnection,
     dbConnection,
-    checkAndOpenOrCloseDBConnection,
+    toggleDBConnection,
   } = useSQLiteDB();
 
   const [showChangelogModal, setShowChangelogModal] = useState(false);
@@ -189,9 +189,9 @@ function App() {
   const fetchDataFromDB = async (isDBImported?: boolean) => {
     try {
       //   if (isDBImported) {
-      //   await modifyDataInUserPreferencesTable("isExistingUser", "1");
+      //   await modifyDataInUserPrefsTable("isExistingUser", "1");
       // }
-      await checkAndOpenOrCloseDBConnection("open");
+      await toggleDBConnection("open");
 
       let DBResultPreferences = await dbConnection.current?.query(
         `SELECT * FROM userPreferencesTable`
@@ -237,7 +237,7 @@ function App() {
     } catch (error) {
       console.error(error);
     } finally {
-      await modifyDataInUserPreferencesTable("isExistingUser", 1);
+      await modifyDataInUserPrefsTable("isExistingUser", 1);
     }
   };
 
@@ -268,7 +268,7 @@ function App() {
           [prefName]: prefValue,
         }));
       } else {
-        await modifyDataInUserPreferencesTable(
+        await modifyDataInUserPrefsTable(
           preference,
           dictPreferencesDefaultValues[preference]
         );
@@ -282,6 +282,8 @@ function App() {
     };
 
     await batchAssignPreferences();
+
+    setActiveColor(userPreferences.activeColor);
   };
 
   const handleCounterDataFromDB = async (DBResultAllCounterData) => {
@@ -315,12 +317,12 @@ function App() {
     console.log("preference state: ", userPreferences);
   }, [userPreferences]);
 
-  const modifyDataInUserPreferencesTable = async (
+  const modifyDataInUserPrefsTable = async (
     preferenceName: PreferenceType,
-    preferenceValue: number
+    preferenceValue: number | MaterialColor
   ) => {
     try {
-      await checkAndOpenOrCloseDBConnection("open");
+      await toggleDBConnection("open");
       const query = `INSERT OR REPLACE INTO userPreferencesTable (preferenceName, preferenceValue) VALUES (?, ?)`;
       await dbConnection.current?.run(query, [preferenceName, preferenceValue]);
 
@@ -332,18 +334,18 @@ function App() {
       console.log(`ERROR ENTERING ${preferenceName} into DB`);
       console.error(error);
     } finally {
-      await checkAndOpenOrCloseDBConnection("close");
+      await toggleDBConnection("close");
     }
   };
 
-  useEffect(() => {
-    const storedActiveColor: any = localStorage.getItem("activeColor");
-    if (storedActiveColor) {
-      setActiveColor(storedActiveColor);
-    } else if (!storedActiveColor) {
-      setActiveColor(materialColors[0]);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedActiveColor: any = localStorage.getItem("activeColor");
+  //   if (storedActiveColor) {
+  //     setActiveColor(storedActiveColor);
+  //   } else if (!storedActiveColor) {
+  //     setActiveColor(materialColors[0]);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (localStorage.getItem("appVersion") !== LATEST_APP_VERSION) {
@@ -361,7 +363,7 @@ function App() {
     let launchCount = storedLaunchCount ? Number(storedLaunchCount) : 0;
     launchCount++;
     // localStorage.setItem("launch-count", JSON.stringify(launchCount));
-    modifyDataInUserPreferencesTable("launchcount", launchCount);
+    modifyDataInUserPrefsTable("launchcount", launchCount);
 
     const shouldTriggerReview =
       launchCount === 3 ||
@@ -418,7 +420,7 @@ function App() {
 
   const addCounter = async (newCounterName: string, target: number) => {
     try {
-      await checkAndOpenOrCloseDBConnection("open");
+      await toggleDBConnection("open");
 
       const maxOrderIndexResult = await dbConnection.current?.query(
         `SELECT MAX(orderIndex) AS maxOrderIndex FROM counterDataTable`
@@ -461,7 +463,7 @@ function App() {
     } catch (error) {
       console.error("Failed to add counter: ", error);
     } finally {
-      await checkAndOpenOrCloseDBConnection("close");
+      await toggleDBConnection("close");
     }
   };
 
@@ -472,7 +474,7 @@ function App() {
     modifiedTarget: number
   ) => {
     try {
-      await checkAndOpenOrCloseDBConnection("open");
+      await toggleDBConnection("open");
 
       const updateCounterQuery = `UPDATE counterDataTable 
       SET counterName = ?,
@@ -489,7 +491,7 @@ function App() {
     } catch (error) {
       console.error("error modifying counter: ", error);
     } finally {
-      await checkAndOpenOrCloseDBConnection("close");
+      await toggleDBConnection("close");
     }
 
     const updatedCountersArr = countersState.map((counterItem) => {
@@ -526,7 +528,7 @@ function App() {
     );
 
     try {
-      await checkAndOpenOrCloseDBConnection("open");
+      await toggleDBConnection("open");
       const deleteQuery = `DELETE FROM counterDataTable WHERE id = ?`;
       await dbConnection.current?.run(deleteQuery, [id]);
       showToast("Tasbeeh deleted", "top", "short");
@@ -534,7 +536,7 @@ function App() {
     } catch (error) {
       console.error("Error deleting counter: ", error);
     } finally {
-      await checkAndOpenOrCloseDBConnection("close");
+      await toggleDBConnection("close");
     }
   };
 
@@ -566,6 +568,8 @@ function App() {
                 index
                 element={
                   <HomePage
+                    dbConnection={dbConnection}
+                    toggleDBConnection={toggleDBConnection}
                     activeColor={activeColor}
                     activeCounter={activeCounter}
                     resetSingleCounter={resetSingleCounter}
@@ -582,10 +586,13 @@ function App() {
                 path="CountersPage"
                 element={
                   <CountersPage
+                    dbConnection={dbConnection}
+                    toggleDBConnection={toggleDBConnection}
+                    modifyDataInUserPrefsTable={modifyDataInUserPrefsTable}
                     activeColor={activeColor}
                     setActiveColor={setActiveColor}
                     activeCounter={activeCounter}
-                    countersArr={countersState}
+                    countersState={countersState}
                     modifyCounter={modifyCounter}
                     updateCountersState={updateCountersState}
                     addCounter={addCounter}

@@ -8,8 +8,8 @@ import { tween_config } from "../../utils/constants";
 interface BottomSheetFormProps {
   activeColor: MaterialColor;
   countersArr: counterObjType[];
-  setEditingCounterId: React.Dispatch<React.SetStateAction<string | null>>;
-  editingCounterId: string | null;
+  setCounterId: React.Dispatch<React.SetStateAction<string | null>>;
+  counterId: string | null;
   deleteSingleCounter: (id: string) => void;
   activeCounter: counterObjType;
   addCounter: (counterToAdd: string, target: number) => void;
@@ -26,8 +26,8 @@ interface BottomSheetFormProps {
 const BottomSheetForm = ({
   activeColor,
   countersArr,
-  setEditingCounterId,
-  editingCounterId,
+  setCounterId,
+  counterId,
   deleteSingleCounter,
   addCounter,
   modifyCounter,
@@ -40,7 +40,7 @@ const BottomSheetForm = ({
 
   useEffect(() => {
     const clickedCounter = countersArr.find(
-      (counter) => counter.id === editingCounterId
+      (counter) => counter.id === counterId
     );
     const isEditingCounter = !!clickedCounter;
 
@@ -49,7 +49,7 @@ const BottomSheetForm = ({
       count: isEditingCounter ? clickedCounter.count : 0,
       target: isEditingCounter ? clickedCounter.target : 0,
     });
-  }, [editingCounterId]);
+  }, [counterId]);
 
   const increaseTextAreaHeight = (
     e: React.ChangeEvent<HTMLTextAreaElement>
@@ -61,7 +61,7 @@ const BottomSheetForm = ({
 
   useEffect(() => {
     if (counterNameField.current) {
-      // if (!editingCounterId) {
+      // if (!counterId) {
       // counterNameField.current.style.height = "1px";
       // }
       // console.log("scrollHeight: ", counterNameField.current.scrollHeight);
@@ -74,7 +74,7 @@ const BottomSheetForm = ({
   const closeFormCleanup = () => {
     setShowForm(false);
     setInput({ name: "", count: 0, target: 0 });
-    setEditingCounterId(null);
+    setCounterId(null);
     setSubmitted(false);
   };
 
@@ -88,13 +88,8 @@ const BottomSheetForm = ({
       return;
     }
 
-    editingCounterId
-      ? await modifyCounter(
-          editingCounterId,
-          input.name,
-          input.count,
-          input.target
-        )
+    counterId
+      ? await modifyCounter(counterId, input.name, input.count, input.target)
       : await addCounter(input.name, Number(input.target));
 
     closeFormCleanup();
@@ -126,7 +121,7 @@ const BottomSheetForm = ({
                 Cancel
               </button>
               <h1 className="form-blank-and-form-filled-header-text">
-                {editingCounterId ? "Edit Tasbeeh" : "Add Tasbeeh"}
+                {counterId ? "Edit Tasbeeh" : "Add Tasbeeh"}
               </h1>
               <button
                 form="form"
@@ -165,7 +160,7 @@ const BottomSheetForm = ({
                   </p>
                 </div>
                 <div className="count-and-target-input-wrap">
-                  {editingCounterId && (
+                  {counterId && (
                     <div className="current-count-input-wrap">
                       <p>Count</p>
                       <input
@@ -226,7 +221,7 @@ const BottomSheetForm = ({
                 </div>
               </form>
             </div>
-            {editingCounterId && (
+            {counterId && (
               <div className="form-filled-reset-delete-btns-wrap">
                 <button
                   className="form-filled-delete-tasbeeh-btn"
@@ -236,7 +231,7 @@ const BottomSheetForm = ({
                       "Are you sure you want to delete this Tasbeeh?"
                     );
                     if (result) {
-                      deleteSingleCounter(editingCounterId);
+                      deleteSingleCounter(counterId);
                       closeFormCleanup();
                       showToast("Tasbeeh deleted", "bottom", "short");
                     }

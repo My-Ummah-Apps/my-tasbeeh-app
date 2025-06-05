@@ -1,6 +1,11 @@
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
-import { counterObjType, MaterialColor } from "../utils/types";
+import {
+  counterObjType,
+  DBConnectionStateType,
+  MaterialColor,
+} from "../utils/types";
 import { Capacitor } from "@capacitor/core";
+import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
@@ -11,6 +16,8 @@ const hapticsVibrate = async () => {
 };
 
 interface CounterButtonProps {
+  dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
+  toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   activeColor: MaterialColor;
   countersArr: counterObjType[];
   activeCounter: counterObjType;
@@ -20,6 +27,8 @@ interface CounterButtonProps {
 }
 
 function CounterButton({
+  dbConnection,
+  toggleDBConnection,
   activeColor,
   countersArr,
   activeCounter,
@@ -27,15 +36,28 @@ function CounterButton({
   setHaptics,
   haptics,
 }: CounterButtonProps) {
-  const setCounterAndHaptics = () => {
+  const setCounterAndHaptics = async () => {
+    console.log("Active Counter: ", activeCounter);
+
     const updatedCountersArr = countersArr.map((counter) => {
       const isActive = counter.isActive === 1;
+      console.log(isActive);
 
       if (isActive) {
         return { ...counter, count: (counter.count += 1) };
       }
       return { ...counter };
     });
+
+    try {
+      await toggleDBConnection("open");
+      const updateCounterCount = `UPDATE counterDataTable SET count = count + 1 WHERE id = ?`;
+      await dbConnection.current?.run(updateCounterCount, [activeCounter.id]);
+    } catch (error) {
+      console.error("Error incrementing counter: ", error);
+    } finally {
+      await toggleDBConnection("close");
+    }
 
     updateCountersState(updatedCountersArr);
 

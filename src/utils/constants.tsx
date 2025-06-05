@@ -23,63 +23,71 @@ export const materialColors = [
 
 export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
   {
+    orderIndex: 0,
     counterName: "Alhumdulillah",
     count: 0,
-    isActive: 1,
     target: 50,
-    index: 0,
+    color: null,
+    isActive: 1,
   },
 
   {
+    orderIndex: 1,
     counterName: "Subhanallah",
     count: 0,
-    isActive: 0,
     target: 50,
-    index: 1,
+    color: null,
+    isActive: 0,
   },
 
   {
+    orderIndex: 2,
     counterName: "Allahu-Akbar",
     count: 0,
-    isActive: 0,
     target: 50,
-    index: 2,
+    color: null,
+    isActive: 0,
   },
 
   {
+    orderIndex: 3,
     counterName: "Astagfirullah",
     count: 0,
-    isActive: 0,
     target: 50,
-    index: 3,
+    color: null,
+    isActive: 0,
   },
   {
+    orderIndex: 4,
     counterName: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
     count: 0,
-    isActive: 0,
     target: 50,
-    index: 4,
+    color: null,
+    isActive: 0,
   },
   {
+    orderIndex: 5,
     counterName: "La hawla wa la quwwata illa billah",
     count: 0,
-    isActive: 0,
     target: 50,
-    index: 5,
+    color: null,
+    isActive: 0,
   },
   {
+    orderIndex: 6,
     counterName: "La ilaha illallah",
     count: 0,
-    isActive: 0,
     target: 50,
-    index: 6,
+    color: null,
+    isActive: 0,
   },
   {
+    orderIndex: 7,
     counterName: "Subhan-Allahi wa bihamdih",
     count: 0,
-    isActive: 0,
     target: 50,
-    index: 7,
+    color: null,
+    isActive: 0,
   },
 ];
 
@@ -100,7 +108,9 @@ export const dictPreferencesDefaultValues: userPreferencesType = {
   appLaunchCount: 0,
   haptics: 0,
   previousLaunchDate: "",
+  dailyCounterReset: 0,
   launchCount: 0,
+  activeColor: materialColors[0],
 };
 
 // export const pageTransitionStyles = {

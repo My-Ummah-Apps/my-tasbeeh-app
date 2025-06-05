@@ -2,17 +2,29 @@ import { useState } from "react";
 import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
 import { materialColors } from "../utils/constants";
-import { counterObjType, MaterialColor } from "../utils/types";
+import {
+  counterObjType,
+  DBConnectionStateType,
+  MaterialColor,
+  PreferenceType,
+} from "../utils/types";
 import { motion } from "framer-motion";
 import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
+import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 
 interface CountersPageProps {
+  dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
+  toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
+  modifyDataInUserPrefsTable: (
+    preferenceName: PreferenceType,
+    preferenceValue: number | MaterialColor
+  ) => Promise<void>;
   activeColor: MaterialColor;
   setActiveColor: React.Dispatch<MaterialColor>;
   activeCounter: counterObjType;
   updateCountersState: (arr: counterObjType[]) => void;
   deleteSingleCounter: (id: string) => void;
-  countersArr: counterObjType[];
+  countersState: counterObjType[];
   modifyCounter: (
     id: string,
     modifiedCounterName: string,
@@ -23,17 +35,20 @@ interface CountersPageProps {
 }
 
 function CountersPage({
+  dbConnection,
+  toggleDBConnection,
+  modifyDataInUserPrefsTable,
   activeColor,
   setActiveColor,
   activeCounter,
   updateCountersState,
   deleteSingleCounter,
-  countersArr,
+  countersState,
   modifyCounter,
   addCounter,
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
-  const [editingCounterId, setEditingCounterId] = useState<number | null>(null);
+  const [counterId, setCounterId] = useState<number | null>(null);
 
   return (
     <motion.main
@@ -44,34 +59,38 @@ function CountersPage({
         <p>Adhkar</p>
         <MdAdd
           onClick={() => {
-            setEditingCounterId(null);
+            setCounterId(null);
             setShowForm(true);
           }}
         />
       </header>
       <BottomSheetForm
         activeColor={activeColor}
-        countersArr={countersArr}
+        countersState={countersState}
         activeCounter={activeCounter}
         deleteSingleCounter={deleteSingleCounter}
-        setEditingCounterId={setEditingCounterId}
-        editingCounterId={editingCounterId}
+        setCounterId={setCounterId}
+        counterId={counterId}
         setShowForm={setShowForm}
         showForm={showForm}
         modifyCounter={modifyCounter}
         addCounter={addCounter}
       />
       <section className="counters-wrap">
-        {countersArr.map((counterItem: counterObjType, i) => {
+        {countersState.map((counterItem: counterObjType, i) => {
           let color = materialColors[i % materialColors.length];
 
           return (
             <CountersListItem
+              dbConnection={dbConnection}
+              toggleDBConnection={toggleDBConnection}
+              modifyDataInUserPrefsTable={modifyDataInUserPrefsTable}
               setActiveColor={setActiveColor}
               key={counterItem.id}
               updateCountersState={updateCountersState}
-              countersArr={countersArr}
-              setEditingCounterId={setEditingCounterId}
+              countersState={countersState}
+              setCounterId={setCounterId}
+              counterId={counterId}
               setShowForm={setShowForm}
               color={color}
               counterItem={counterItem}
