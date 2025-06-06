@@ -22,10 +22,8 @@ function ActiveCounter({
   setLanguageDirection,
   languageDirection,
 }: CounterNameAndNumberProps) {
-  console.log("Active Color: ", activeColor);
-
   const counterTextContainerRef = useRef<HTMLElement | null>(null);
-  const textRef = useRef<HTMLDivElement | null>(null);
+  const activeCounterTextRef = useRef<HTMLDivElement | null>(null);
   const mScrollRef = useRef<HTMLDivElement | null>(null);
 
   const [scroll, setScroll] = useState<boolean>(false);
@@ -34,30 +32,33 @@ function ActiveCounter({
     const counterTextContainerWidth = counterTextContainerRef.current
       ? counterTextContainerRef.current.clientWidth
       : 0;
+    console.log("RUN");
 
     if (direction(activeCounter.counterName) === "ltr") {
       setLanguageDirection("ltr");
+      console.log("DIRECTION IS LTR");
     } else if (direction(activeCounter.counterName) === "rtl") {
       setLanguageDirection("rtl");
+      console.log("DIRECTION IS RTL");
     }
 
     if (
-      textRef.current &&
-      textRef.current.clientWidth < counterTextContainerWidth
+      activeCounterTextRef.current &&
+      activeCounterTextRef.current.clientWidth < counterTextContainerWidth
     ) {
       setScroll(false);
     } else if (
-      textRef.current &&
+      activeCounterTextRef.current &&
       mScrollRef.current &&
-      textRef.current.clientWidth > counterTextContainerWidth
+      activeCounterTextRef.current.clientWidth > counterTextContainerWidth
     ) {
       setScroll(true);
-      const scrollSpeed = textRef.current.innerText.length * 0.3;
+      const scrollSpeed = activeCounterTextRef.current.innerText.length * 0.3;
       mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
     } else {
       console.error("Error in setting scroll");
     }
-  }, [textRef.current]);
+  }, [activeCounter.counterName]);
 
   const counterNameStyles = {
     textOverflow: activeCounter.counterName.length > 50 ? "ellipsis" : "clip",
@@ -92,7 +93,7 @@ function ActiveCounter({
               textAlign: languageDirection === "ltr" ? "left" : "right",
               direction: languageDirection === "ltr" ? "ltr" : "rtl",
             }}
-            ref={textRef}
+            ref={activeCounterTextRef}
           >
             <div className={scroll ? "scroll" : ""}>
               <div
@@ -146,7 +147,7 @@ function ActiveCounter({
         className="counter-type-wrap"
         style={{ position: "absolute", opacity: 0 }}
       >
-        <div ref={textRef}>
+        <div ref={activeCounterTextRef}>
           <span>{activeCounter.counterName}</span>
         </div>
       </section>

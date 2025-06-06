@@ -45,12 +45,11 @@ import {
 
 import { AnimatePresence } from "framer-motion";
 import useSQLiteDB from "./utils/useSqliteDB";
-import { DBSQLiteValues } from "@capacitor-community/sqlite";
 
 function App() {
   const {
     isDatabaseInitialised,
-    sqliteConnection,
+    // sqliteConnection,
     dbConnection,
     toggleDBConnection,
   } = useSQLiteDB();
@@ -200,11 +199,6 @@ function App() {
         `SELECT * FROM counterDataTable`
       );
 
-      console.log(
-        "DBResultPreferences upon app start are: ",
-        DBResultPreferences
-      );
-
       assertValidDBResult(DBResultPreferences, "DBResultPreferences");
       assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
 
@@ -296,11 +290,6 @@ function App() {
   }, [userPreferencesState.activeColor]);
 
   const handleCounterDataFromDB = async (DBResultAllCounterData) => {
-    console.log(
-      "DBResultAllCounterData.values: ",
-      DBResultAllCounterData.values
-    );
-
     const countersFromDB = DBResultAllCounterData.values as Array<
       Record<string, any>
     >;
@@ -317,14 +306,8 @@ function App() {
       })
     );
 
-    console.log("COUNTERS: ", counters);
-
     await updateCountersState(counters);
   };
-
-  useEffect(() => {
-    console.log("preference state: ", userPreferencesState);
-  }, [userPreferencesState]);
 
   const modifyDataInUserPrefsTable = async (
     preferenceName: PreferenceKeyType,
@@ -340,8 +323,7 @@ function App() {
         [preferenceName]: preferenceValue,
       }));
     } catch (error) {
-      console.log(`ERROR ENTERING ${preferenceName} into DB`);
-      console.error(error);
+      console.error(`ERROR ENTERING ${preferenceName} into DB`);
     } finally {
       await toggleDBConnection("close");
     }
@@ -471,12 +453,9 @@ function App() {
 
       const lastId = insertResult?.changes?.lastId;
 
-      console.log(insertResult);
       if (!lastId) {
         throw new Error("result is null");
       }
-
-      console.log("maxOrderIndexResult: ", maxOrderIndexResult);
 
       const newCounter: counterObjType = {
         id: lastId,
