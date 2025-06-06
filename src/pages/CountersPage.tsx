@@ -6,7 +6,7 @@ import {
   counterObjType,
   DBConnectionStateType,
   MaterialColor,
-  PreferenceType,
+  PreferenceKeyType,
 } from "../utils/types";
 import { motion } from "framer-motion";
 import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
@@ -16,7 +16,7 @@ interface CountersPageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   modifyDataInUserPrefsTable: (
-    preferenceName: PreferenceType,
+    preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
   activeColor: MaterialColor;

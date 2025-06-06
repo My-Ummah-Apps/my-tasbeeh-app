@@ -7,7 +7,7 @@ import { tween_config } from "../../utils/constants";
 
 interface BottomSheetFormProps {
   activeColor: MaterialColor;
-  countersArr: counterObjType[];
+  countersState: counterObjType[];
   setCounterId: React.Dispatch<React.SetStateAction<string | null>>;
   counterId: string | null;
   deleteSingleCounter: (id: string) => void;
@@ -25,7 +25,7 @@ interface BottomSheetFormProps {
 
 const BottomSheetForm = ({
   activeColor,
-  countersArr,
+  countersState,
   setCounterId,
   counterId,
   deleteSingleCounter,
@@ -39,7 +39,7 @@ const BottomSheetForm = ({
   const [input, setInput] = useState({ name: "", count: 0, target: 0 });
 
   useEffect(() => {
-    const clickedCounter = countersArr.find(
+    const clickedCounter = countersState.find(
       (counter) => counter.id === counterId
     );
     const isEditingCounter = !!clickedCounter;

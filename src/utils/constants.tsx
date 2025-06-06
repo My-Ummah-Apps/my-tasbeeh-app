@@ -109,7 +109,6 @@ export const dictPreferencesDefaultValues: userPreferencesType = {
   haptics: 0,
   previousLaunchDate: "",
   dailyCounterReset: 0,
-  launchCount: 0,
   activeColor: materialColors[0],
 };
 

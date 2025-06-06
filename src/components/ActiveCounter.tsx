@@ -22,6 +22,8 @@ function ActiveCounter({
   setLanguageDirection,
   languageDirection,
 }: CounterNameAndNumberProps) {
+  console.log("Active Color: ", activeColor);
+
   const counterTextContainerRef = useRef<HTMLElement | null>(null);
   const textRef = useRef<HTMLDivElement | null>(null);
   const mScrollRef = useRef<HTMLDivElement | null>(null);

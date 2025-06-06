@@ -27,7 +27,7 @@ import {
   languageDirection,
   MaterialColor,
   PreferenceObjType,
-  PreferenceType,
+  PreferenceKeyType,
   themeType,
   userPreferencesType,
 } from "./utils/types";
@@ -74,9 +74,8 @@ function App() {
   const [activeColor, setActiveColor] = useState<MaterialColor>(
     materialColors[0]
   );
-  const [userPreferences, setUserPreferences] = useState<userPreferencesType>(
-    dictPreferencesDefaultValues
-  );
+  const [userPreferencesState, setUserPreferencesState] =
+    useState<userPreferencesType>(dictPreferencesDefaultValues);
 
   const initiateDefaultPrefsAndCounters = async () => {
     const params = Object.keys(dictPreferencesDefaultValues)
@@ -247,13 +246,19 @@ function App() {
     console.log("Existing user, Preferences are: ", DBResultPreferences);
 
     DBResultPreferences.forEach((item) => {
-      if (typeof item.preferenceValue !== "number") {
-        item.preferenceValue = Number(item.preferenceValue);
+      if (
+        item.preferenceValue === "0" ||
+        item.preferenceValue === "1" ||
+        item.preferenceName === "appLaunchCount"
+      ) {
+        (item as { preferenceValue: number }).preferenceValue = Number(
+          item.preferenceValue
+        );
       }
     });
 
     const assignPreference = async (
-      preference: PreferenceType
+      preference: PreferenceKeyType
     ): Promise<void> => {
       const preferenceQuery = DBResultPreferences.find(
         (row) => row.preferenceName === preference
@@ -263,7 +268,7 @@ function App() {
         const prefName = preferenceQuery.preferenceName;
         const prefValue = preferenceQuery.preferenceValue;
 
-        setUserPreferences((userPreferences: userPreferencesType) => ({
+        setUserPreferencesState((userPreferences: userPreferencesType) => ({
           ...userPreferences,
           [prefName]: prefValue,
         }));
@@ -273,6 +278,7 @@ function App() {
           dictPreferencesDefaultValues[preference]
         );
       }
+      setActiveColor(userPreferencesState.activeColor);
     };
 
     const batchAssignPreferences = async () => {
@@ -282,9 +288,12 @@ function App() {
     };
 
     await batchAssignPreferences();
-
-    setActiveColor(userPreferences.activeColor);
+    setActiveColor(userPreferencesState.activeColor);
   };
+
+  useEffect(() => {
+    setActiveColor(userPreferencesState.activeColor);
+  }, [userPreferencesState.activeColor]);
 
   const handleCounterDataFromDB = async (DBResultAllCounterData) => {
     console.log(
@@ -314,11 +323,11 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("preference state: ", userPreferences);
-  }, [userPreferences]);
+    console.log("preference state: ", userPreferencesState);
+  }, [userPreferencesState]);
 
   const modifyDataInUserPrefsTable = async (
-    preferenceName: PreferenceType,
+    preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => {
     try {
@@ -326,7 +335,7 @@ function App() {
       const query = `INSERT OR REPLACE INTO userPreferencesTable (preferenceName, preferenceValue) VALUES (?, ?)`;
       await dbConnection.current?.run(query, [preferenceName, preferenceValue]);
 
-      setUserPreferences((userPreferences: userPreferencesType) => ({
+      setUserPreferencesState((userPreferences: userPreferencesType) => ({
         ...userPreferences,
         [preferenceName]: preferenceValue,
       }));
@@ -404,18 +413,39 @@ function App() {
   // }, []);
 
   const resetSingleCounter = async (id: number) => {
-    const updatedCountersArr = countersState.map((counter) => {
-      return counter.id === id ? { ...counter, count: 0 } : { ...counter };
-    });
-    updateCountersState(updatedCountersArr);
+    try {
+      await toggleDBConnection("open");
+      const resetCounterQuery = `UPDATE counterDataTable SET count = ? WHERE id = ?`;
+      await dbConnection.current?.run(resetCounterQuery, [0, id]);
+
+      const updatedCountersArr = countersState.map((counter) => {
+        return counter.id === id ? { ...counter, count: 0 } : counter;
+      });
+      await updateCountersState(updatedCountersArr);
+    } catch (error) {
+      console.error("Error resetting single counter: ", error);
+    } finally {
+      await toggleDBConnection("close");
+    }
   };
 
   const resetAllCounters = async () => {
-    const resettedCounters = countersState.map((counter: counterObjType) => ({
-      ...counter,
-      count: 0,
-    }));
-    await updateCountersState(resettedCounters);
+    try {
+      await toggleDBConnection("open");
+
+      const resetCountersQuery = `UPDATE counterDataTable SET count = ?`;
+      await dbConnection.current?.run(resetCountersQuery, [0]);
+
+      const resettedCounters = countersState.map((counter) => ({
+        ...counter,
+        count: 0,
+      }));
+      await updateCountersState(resettedCounters);
+    } catch (error) {
+      console.error("Error resetting all counters: ", error);
+    } finally {
+      await toggleDBConnection("close");
+    }
   };
 
   const addCounter = async (newCounterName: string, target: number) => {

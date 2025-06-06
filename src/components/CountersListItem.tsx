@@ -5,7 +5,7 @@ import {
   counterObjType,
   DBConnectionStateType,
   MaterialColor,
-  PreferenceType,
+  PreferenceKeyType,
 } from "../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 
@@ -13,7 +13,7 @@ interface CountersListItemProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   modifyDataInUserPrefsTable: (
-    preferenceName: PreferenceType,
+    preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
   counterId: number;
@@ -54,17 +54,15 @@ const CountersListItem = ({
             // ! ACTIVE COLOR IS NOT PERSISTING UPON RELOAD
             modifyDataInUserPrefsTable("activeColor", color);
 
-            const res1 = await dbConnection.current?.run(
+            await dbConnection.current?.run(
               `UPDATE counterDataTable SET isActive = 0`
             );
             console.log("COUNTERID", counterItem.id);
 
-            const res2 = await dbConnection.current?.run(
+            await dbConnection.current?.run(
               `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
               [counterItem.id]
             );
-            console.log("RES1: ", res1);
-            console.log("RES2: ", res2);
           } catch (error) {
             console.error(
               "Error updating active counter/active color: ",

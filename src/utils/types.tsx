@@ -11,14 +11,13 @@ export interface userPreferencesType {
   haptics: 0 | 1;
   previousLaunchDate: string;
   dailyCounterReset: 0 | 1;
-  launchCount: number;
   activeColor: MaterialColor;
 }
 
-export type PreferenceType = keyof userPreferencesType;
+export type PreferenceKeyType = keyof userPreferencesType;
 
 export type PreferenceObjType = {
-  preferenceName: PreferenceType;
+  preferenceName: PreferenceKeyType;
   preferenceValue: 0 | 1 | string;
 };
 
