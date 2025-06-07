@@ -5,10 +5,14 @@ import {
 } from "../../utils/constants";
 import { Capacitor } from "@capacitor/core";
 import { Style } from "@capacitor/status-bar";
-import { themeType } from "../../utils/types";
+import { MaterialColor, PreferenceKeyType, themeType } from "../../utils/types";
 import { MdCheck } from "react-icons/md";
 
 interface BottomSheetThemeOptionsProps {
+  updateUserPreference: (
+    preferenceName: PreferenceKeyType,
+    preferenceValue: number | MaterialColor | themeType
+  ) => Promise<void>;
   setShowThemeOptionsSheet: React.Dispatch<React.SetStateAction<boolean>>;
   showThemeOptionsSheet: boolean;
   setTheme: React.Dispatch<React.SetStateAction<themeType | null>>;
@@ -16,6 +20,7 @@ interface BottomSheetThemeOptionsProps {
 }
 
 const BottomSheetThemeOptions = ({
+  updateUserPreference,
   setShowThemeOptionsSheet,
   showThemeOptionsSheet,
   setTheme,
@@ -48,7 +53,7 @@ const BottomSheetThemeOptions = ({
                           Style.Light
                         );
                       }
-                      localStorage.setItem("theme", JSON.stringify("light"));
+                      updateUserPreference("theme", "light");
                       document.body.classList.remove("dark");
                     }
                   }}
@@ -71,7 +76,7 @@ const BottomSheetThemeOptions = ({
                           Style.Dark
                         );
                       }
-                      localStorage.setItem("theme", JSON.stringify("dark"));
+                      updateUserPreference("theme", "dark");
                       document.body.classList.add("dark");
                     }
                   }}

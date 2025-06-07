@@ -42,14 +42,16 @@ import {
 // localStorage.setItem("launch-count", "764");
 // localStorage.setItem("appVersion", "2.5");
 // localStorage.setItem("activeColor", "#AB47BC");
+// localStorage.setItem("dailyCounterReset", "false");
 
 import { AnimatePresence } from "framer-motion";
 import useSQLiteDB from "./utils/useSqliteDB";
+import { DBSQLiteValues } from "@capacitor-community/sqlite";
 
 function App() {
   const {
-    isDatabaseInitialised,
-    // sqliteConnection,
+    isDBInitialised,
+    sqliteConnection,
     dbConnection,
     toggleDBConnection,
   } = useSQLiteDB();
@@ -68,7 +70,7 @@ function App() {
   const [languageDirection, setLanguageDirection] =
     useState<languageDirection>("neutral");
   const [haptics, setHaptics] = useState<boolean | null>(null);
-  const [dailyCounterReset, setDailyCounterReset] = useState(false);
+  const [dailyCounterReset, setDailyCounterReset] = useState<0 | 1>(0);
   const [theme, setTheme] = useState<themeType | null>(null);
   const [activeColor, setActiveColor] = useState<MaterialColor>(
     materialColors[0]
@@ -89,20 +91,20 @@ function App() {
       .fill("(?, ?)")
       .join(", ");
 
-    const insertQuery = `
+    const insertStmnt = `
         INSERT INTO userPreferencesTable (preferenceName, preferenceValue) 
         VALUES ${placeholders};
         `;
 
-    await dbConnection.current?.run(insertQuery, params);
+    await dbConnection.current?.run(insertStmnt, params);
 
     for (let i = 0; i < DEFAULT_COUNTERS.length; i++) {
       const counterObj = DEFAULT_COUNTERS[i];
       const isActive = counterObj.isActive === 1 ? 1 : 0;
 
-      const insertQuery = `INSERT into counterDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+      const insertStmnt = `INSERT into counterDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
 
-      await dbConnection.current?.run(insertQuery, [
+      await dbConnection.current?.run(insertStmnt, [
         i,
         counterObj.counterName,
         counterObj.count,
@@ -120,74 +122,70 @@ function App() {
     setActiveCounter(activeCounter);
   };
 
+  const initialiseAppUI = async () => {
+    const splash_hide_delay = 500;
+    const android_style_delay = 1000;
+    let statusBarThemeColor: string;
+
+    const storedTheme = userPreferencesState.theme;
+    console.log("storedTheme: ", storedTheme);
+
+    if (storedTheme === "dark") {
+      statusBarThemeColor = "#242424";
+      // setTheme("dark");
+      if (Capacitor.isNativePlatform()) {
+        setStatusAndNavBarBackgroundColor(statusBarThemeColor, Style.Dark);
+      }
+      document.body.classList.add("dark");
+    } else if (storedTheme === "light") {
+      statusBarThemeColor = "#EDEDED";
+      // setTheme("light");
+      if (Capacitor.isNativePlatform()) {
+        setStatusAndNavBarBackgroundColor(statusBarThemeColor, Style.Light);
+      }
+      document.body.classList.remove("dark");
+    }
+
+    if (Capacitor.getPlatform() === "android") {
+      setTimeout(() => {
+        if (statusBarThemeColor === "#EDEDED") {
+          StatusBar.setStyle({ style: Style.Light });
+        } else if (statusBarThemeColor === "#242424") {
+          StatusBar.setStyle({ style: Style.Dark });
+        }
+      }, android_style_delay);
+    }
+
+    if (Capacitor.isNativePlatform()) {
+      setTimeout(() => {
+        SplashScreen.hide({
+          fadeOutDuration: 250,
+        });
+      }, splash_hide_delay);
+    }
+
+    setTimeout(async () => {
+      await SplashScreen.hide({ fadeOutDuration: 250 });
+    }, 500);
+  };
+
   useEffect(() => {
     const initialiseApp = async () => {
-      const splash_hide_delay = 500;
-      const android_style_delay = 1000;
-      let statusBarThemeColor: string;
-      const themeString = localStorage.getItem("theme");
-      let storedTheme: themeType | null = themeString
-        ? JSON.parse(themeString)
-        : null;
-
-      if (storedTheme === null) {
-        localStorage.setItem("theme", JSON.stringify("light"));
-        storedTheme = "light";
-        setTheme("light");
-      }
-
-      if (storedTheme === "dark") {
-        statusBarThemeColor = "#242424";
-        setTheme("dark");
-        if (Capacitor.isNativePlatform()) {
-          setStatusAndNavBarBackgroundColor(statusBarThemeColor, Style.Dark);
-        }
-        document.body.classList.add("dark");
-      } else if (storedTheme === "light") {
-        statusBarThemeColor = "#EDEDED";
-        setTheme("light");
-        if (Capacitor.isNativePlatform()) {
-          setStatusAndNavBarBackgroundColor(statusBarThemeColor, Style.Light);
-        }
-        document.body.classList.remove("dark");
-      }
-
-      if (Capacitor.getPlatform() === "android") {
-        setTimeout(() => {
-          if (statusBarThemeColor === "#EDEDED") {
-            StatusBar.setStyle({ style: Style.Light });
-          } else if (statusBarThemeColor === "#242424") {
-            StatusBar.setStyle({ style: Style.Dark });
-          }
-        }, android_style_delay);
-      }
-
-      if (Capacitor.isNativePlatform()) {
-        setTimeout(() => {
-          SplashScreen.hide({
-            fadeOutDuration: 250,
-          });
-        }, splash_hide_delay);
-      }
-
-      if (isDatabaseInitialised === true) {
+      if (isDBInitialised === true) {
         const initialiseAndLoadData = async () => {
           await fetchDataFromDB();
         };
         initialiseAndLoadData();
-        setTimeout(async () => {
-          await SplashScreen.hide({ fadeOutDuration: 250 });
-        }, 500);
       }
     };
 
     initialiseApp();
-  }, [isDatabaseInitialised]);
+  }, [isDBInitialised]);
 
   const fetchDataFromDB = async (isDBImported?: boolean) => {
     try {
       //   if (isDBImported) {
-      //   await modifyDataInUserPrefsTable("isExistingUser", "1");
+      //   await updateUserPreference("isExistingUser", "1");
       // }
       await toggleDBConnection("open");
 
@@ -227,10 +225,11 @@ function App() {
         DBResultPreferences.values as PreferenceObjType[]
       );
       await handleCounterDataFromDB(DBResultAllCounterData);
+      await initialiseAppUI();
     } catch (error) {
       console.error(error);
     } finally {
-      await modifyDataInUserPrefsTable("isExistingUser", 1);
+      await updateUserPreference("isExistingUser", 1);
     }
   };
 
@@ -267,12 +266,11 @@ function App() {
           [prefName]: prefValue,
         }));
       } else {
-        await modifyDataInUserPrefsTable(
+        await updateUserPreference(
           preference,
           dictPreferencesDefaultValues[preference]
         );
       }
-      setActiveColor(userPreferencesState.activeColor);
     };
 
     const batchAssignPreferences = async () => {
@@ -282,14 +280,20 @@ function App() {
     };
 
     await batchAssignPreferences();
-    setActiveColor(userPreferencesState.activeColor);
   };
 
   useEffect(() => {
     setActiveColor(userPreferencesState.activeColor);
   }, [userPreferencesState.activeColor]);
 
-  const handleCounterDataFromDB = async (DBResultAllCounterData) => {
+  useEffect(() => {
+    setTheme(userPreferencesState.theme);
+    console.log("theme is: ", userPreferencesState.theme);
+  }, [userPreferencesState.theme]);
+
+  const handleCounterDataFromDB = async (
+    DBResultAllCounterData: DBSQLiteValues
+  ) => {
     const countersFromDB = DBResultAllCounterData.values as Array<
       Record<string, any>
     >;
@@ -309,9 +313,9 @@ function App() {
     await updateCountersState(counters);
   };
 
-  const modifyDataInUserPrefsTable = async (
+  const updateUserPreference = async (
     preferenceName: PreferenceKeyType,
-    preferenceValue: number | MaterialColor
+    preferenceValue: number | MaterialColor | themeType
   ) => {
     try {
       await toggleDBConnection("open");
@@ -329,15 +333,6 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //   const storedActiveColor: any = localStorage.getItem("activeColor");
-  //   if (storedActiveColor) {
-  //     setActiveColor(storedActiveColor);
-  //   } else if (!storedActiveColor) {
-  //     setActiveColor(materialColors[0]);
-  //   }
-  // }, []);
-
   useEffect(() => {
     if (localStorage.getItem("appVersion") !== LATEST_APP_VERSION) {
       setShowChangelogModal(true);
@@ -350,11 +345,11 @@ function App() {
   }
 
   useEffect(() => {
-    const storedLaunchCount = localStorage.getItem("launch-count");
+    const storedLaunchCount = userPreferencesState.appLaunchCount;
     let launchCount = storedLaunchCount ? Number(storedLaunchCount) : 0;
     launchCount++;
     // localStorage.setItem("launch-count", JSON.stringify(launchCount));
-    modifyDataInUserPrefsTable("launchcount", launchCount);
+    updateUserPreference("appLaunchCount", launchCount);
 
     const shouldTriggerReview =
       launchCount === 3 ||
@@ -368,31 +363,21 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const haptics = localStorage.getItem("haptics");
+    const haptics = userPreferencesState.haptics;
 
     if (Capacitor.isNativePlatform()) {
-      if (haptics === null) {
-        localStorage.setItem("haptics", JSON.stringify(true));
-        setHaptics(true);
-      } else if (haptics) {
-        setHaptics(haptics === "false" ? false : true);
-      }
+      setHaptics(haptics === 0 ? false : true);
     }
+  }, [userPreferencesState.haptics]);
+
+  useEffect(() => {
+    const dailyCounterReset = async () => {
+      await resetAllCounters();
+    };
+    // dailyCounterReset();
+
+    setDailyCounterReset(userPreferencesState.dailyCounterReset);
   }, []);
-
-  // useEffect(() => {
-  //   const resetAllCounters = JSON.parse(
-  //     localStorage.getItem("dailyCounterReset") || "false"
-  //   );
-  //   setDailyCounterReset(resetAllCounters);
-
-  //   let counters: counterObjType[] = [];
-  //   const storedCounters = JSON.parse(
-  //     localStorage.getItem("localSavedCountersArray") || "[]"
-  //   );
-
-  //   setAndStoreCounters(counters);
-  // }, []);
 
   const resetSingleCounter = async (id: number) => {
     try {
@@ -415,8 +400,8 @@ function App() {
     try {
       await toggleDBConnection("open");
 
-      const resetCountersQuery = `UPDATE counterDataTable SET count = ?`;
-      await dbConnection.current?.run(resetCountersQuery, [0]);
+      const resetCountersQuery = `UPDATE counterDataTable SET count = 0`;
+      await dbConnection.current?.run(resetCountersQuery);
 
       const resettedCounters = countersState.map((counter) => ({
         ...counter,
@@ -560,6 +545,7 @@ function App() {
                 element={
                   <SettingsPage
                     // iapProducts={iapProducts}
+                    updateUserPreference={updateUserPreference}
                     activeColor={activeColor}
                     activeCounter={activeCounter}
                     resetAllCounters={resetAllCounters}
@@ -597,7 +583,7 @@ function App() {
                   <CountersPage
                     dbConnection={dbConnection}
                     toggleDBConnection={toggleDBConnection}
-                    modifyDataInUserPrefsTable={modifyDataInUserPrefsTable}
+                    updateUserPreference={updateUserPreference}
                     activeColor={activeColor}
                     setActiveColor={setActiveColor}
                     activeCounter={activeCounter}

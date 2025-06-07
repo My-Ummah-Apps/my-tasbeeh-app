@@ -9,8 +9,7 @@ import {
 const useSQLiteDB = () => {
   const sqliteConnection = useRef<SQLiteConnection>(); // This is the connection to the dbConnection
   const dbConnection = useRef<SQLiteDBConnection>(); // This is the connection to the database itself, will deal with READ/INSERT etc
-  const [isDatabaseInitialised, setisDatabaseInitialised] =
-    useState<boolean>(false);
+  const [isDBInitialised, setIsDBInitialised] = useState<boolean>(false);
 
   useEffect(() => {
     const initialiseDB = async () => {
@@ -49,7 +48,7 @@ const useSQLiteDB = () => {
         }
 
         await initialiseTables();
-        setisDatabaseInitialised(true);
+        setIsDBInitialised(true);
       } catch (error) {
         console.error("Error initializing database: " + error);
       }
@@ -61,9 +60,7 @@ const useSQLiteDB = () => {
   async function toggleDBConnection(action: DBConnectionStateType) {
     try {
       if (!dbConnection || !dbConnection.current) {
-        throw new Error(
-          `Database connection not initialised within toggleDBConnection, dbConnection is ${dbConnection} and dbConnection.current is ${dbConnection.current}`
-        );
+        throw new Error();
       }
 
       const isDatabaseOpen = await dbConnection.current.isDBOpen();
@@ -146,7 +143,7 @@ const useSQLiteDB = () => {
   };
 
   return {
-    isDatabaseInitialised,
+    isDBInitialised,
     sqliteConnection,
     dbConnection,
     toggleDBConnection,

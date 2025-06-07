@@ -15,7 +15,7 @@ import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 interface CountersPageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
-  modifyDataInUserPrefsTable: (
+  updateUserPreference: (
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
@@ -37,7 +37,7 @@ interface CountersPageProps {
 function CountersPage({
   dbConnection,
   toggleDBConnection,
-  modifyDataInUserPrefsTable,
+  updateUserPreference,
   activeColor,
   setActiveColor,
   activeCounter,
@@ -84,7 +84,7 @@ function CountersPage({
             <CountersListItem
               dbConnection={dbConnection}
               toggleDBConnection={toggleDBConnection}
-              modifyDataInUserPrefsTable={modifyDataInUserPrefsTable}
+              updateUserPreference={updateUserPreference}
               setActiveColor={setActiveColor}
               key={counterItem.id}
               updateCountersState={updateCountersState}

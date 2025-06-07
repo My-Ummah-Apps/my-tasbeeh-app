@@ -12,7 +12,7 @@ import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 interface CountersListItemProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
-  modifyDataInUserPrefsTable: (
+  updateUserPreference: (
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
@@ -29,7 +29,7 @@ interface CountersListItemProps {
 const CountersListItem = ({
   dbConnection,
   toggleDBConnection,
-  modifyDataInUserPrefsTable,
+  updateUserPreference,
   counterId,
   setActiveColor,
   updateCountersState,
@@ -52,7 +52,7 @@ const CountersListItem = ({
           try {
             await toggleDBConnection("open");
             // ! ACTIVE COLOR IS NOT PERSISTING UPON RELOAD
-            modifyDataInUserPrefsTable("activeColor", color);
+            updateUserPreference("activeColor", color);
 
             await dbConnection.current?.run(
               `UPDATE counterDataTable SET isActive = 0`

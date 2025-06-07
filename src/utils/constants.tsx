@@ -110,6 +110,7 @@ export const dictPreferencesDefaultValues: userPreferencesType = {
   previousLaunchDate: "",
   dailyCounterReset: 0,
   activeColor: materialColors[0],
+  theme: "light",
 };
 
 // export const pageTransitionStyles = {

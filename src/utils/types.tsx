@@ -2,6 +2,8 @@ import { materialColors } from "./constants";
 
 export type DBConnectionStateType = "open" | "close";
 
+export type themeType = "light" | "dark";
+
 export interface userPreferencesType {
   morningNotification: 0 | 1;
   afternoonNotification: 0 | 1;
@@ -12,6 +14,7 @@ export interface userPreferencesType {
   previousLaunchDate: string;
   dailyCounterReset: 0 | 1;
   activeColor: MaterialColor;
+  theme: themeType;
 }
 
 export type PreferenceKeyType = keyof userPreferencesType;
@@ -30,8 +33,6 @@ export type counterObjType = {
   color: MaterialColor | null;
   isActive: 0 | 1;
 };
-
-export type themeType = "light" | "dark";
 
 export type NotificationParams = {
   storageKey:

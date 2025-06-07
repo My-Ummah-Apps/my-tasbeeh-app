@@ -20,12 +20,21 @@ import {
   showConfirmDialog,
   showToast,
 } from "../utils/constants";
-import { counterObjType, MaterialColor, themeType } from "../utils/types";
+import {
+  counterObjType,
+  MaterialColor,
+  PreferenceKeyType,
+  themeType,
+} from "../utils/types";
 import SettingIndividual from "../components/SettingIndividual";
 import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
 interface SettingsageProps {
+  updateUserPreference: (
+    preferenceName: PreferenceKeyType,
+    preferenceValue: number | MaterialColor | themeType
+  ) => Promise<void>;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
@@ -40,6 +49,7 @@ interface SettingsageProps {
 
 const SettingsPage = ({
   // iapProducts,
+  updateUserPreference,
   activeColor,
   activeCounter,
   setHaptics,
@@ -321,6 +331,7 @@ const SettingsPage = ({
             }}
           />
           <BottomSheetThemeOptions
+            updateUserPreference={updateUserPreference}
             setShowThemeOptionsSheet={setShowThemeOptionsSheet}
             showThemeOptionsSheet={showThemeOptionsSheet}
             setTheme={setTheme}
@@ -342,9 +353,9 @@ const SettingsPage = ({
                 onChange={() => {
                   const newHapticsValue = !haptics;
                   setHaptics(newHapticsValue);
-                  localStorage.setItem(
+                  updateUserPreference(
                     "haptics",
-                    JSON.stringify(newHapticsValue)
+                    newHapticsValue === false ? 0 : 1
                   );
                 }}
                 onColor={activeColor}
@@ -364,9 +375,9 @@ const SettingsPage = ({
               onChange={() => {
                 const newResetValue = !dailyCounterReset;
                 setDailyCounterReset(newResetValue);
-                localStorage.setItem(
+                updateUserPreference(
                   "dailyCounterReset",
-                  JSON.stringify(newResetValue)
+                  newResetValue === false ? 0 : 1
                 );
               }}
               onColor={activeColor}
