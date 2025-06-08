@@ -1,8 +1,5 @@
 import { Sheet } from "react-modal-sheet";
-import {
-  setStatusAndNavBarBackgroundColor,
-  tween_config,
-} from "../../utils/constants";
+import { setStatusAndNavBarBGColor, tween_config } from "../../utils/constants";
 import { Capacitor } from "@capacitor/core";
 import { Style } from "@capacitor/status-bar";
 import { MaterialColor, PreferenceKeyType, themeType } from "../../utils/types";
@@ -15,7 +12,6 @@ interface BottomSheetThemeOptionsProps {
   ) => Promise<void>;
   setShowThemeOptionsSheet: React.Dispatch<React.SetStateAction<boolean>>;
   showThemeOptionsSheet: boolean;
-  setTheme: React.Dispatch<React.SetStateAction<themeType | null>>;
   theme: themeType | null;
 }
 
@@ -23,7 +19,6 @@ const BottomSheetThemeOptions = ({
   updateUserPreference,
   setShowThemeOptionsSheet,
   showThemeOptionsSheet,
-  setTheme,
   theme,
 }: BottomSheetThemeOptionsProps) => {
   return (
@@ -46,15 +41,10 @@ const BottomSheetThemeOptions = ({
                   className="w-full text-left"
                   onClick={() => {
                     if (theme !== "light") {
-                      setTheme("light");
                       if (Capacitor.isNativePlatform()) {
-                        setStatusAndNavBarBackgroundColor(
-                          "#EDEDED",
-                          Style.Light
-                        );
+                        setStatusAndNavBarBGColor("#EDEDED", Style.Light);
                       }
                       updateUserPreference("theme", "light");
-                      document.body.classList.remove("dark");
                     }
                   }}
                 >
@@ -69,15 +59,10 @@ const BottomSheetThemeOptions = ({
                   className="w-full text-left"
                   onClick={() => {
                     if (theme !== "dark") {
-                      setTheme("dark");
                       if (Capacitor.isNativePlatform()) {
-                        setStatusAndNavBarBackgroundColor(
-                          "#242424",
-                          Style.Dark
-                        );
+                        setStatusAndNavBarBGColor("#242424", Style.Dark);
                       }
                       updateUserPreference("theme", "dark");
-                      document.body.classList.add("dark");
                     }
                   }}
                 >

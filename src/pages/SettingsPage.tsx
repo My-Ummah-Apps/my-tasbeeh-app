@@ -42,7 +42,6 @@ interface SettingsageProps {
   resetAllCounters: () => void;
   setDailyCounterReset: React.Dispatch<React.SetStateAction<boolean>>;
   dailyCounterReset: boolean;
-  setTheme: React.Dispatch<React.SetStateAction<themeType | null>>;
   theme: themeType | null;
   setShowChangelogModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -57,7 +56,6 @@ const SettingsPage = ({
   resetAllCounters,
   setDailyCounterReset,
   dailyCounterReset,
-  setTheme,
   theme,
   setShowChangelogModal,
 }: SettingsageProps) => {
@@ -334,7 +332,6 @@ const SettingsPage = ({
             updateUserPreference={updateUserPreference}
             setShowThemeOptionsSheet={setShowThemeOptionsSheet}
             showThemeOptionsSheet={showThemeOptionsSheet}
-            setTheme={setTheme}
             theme={theme}
           />
         </section>

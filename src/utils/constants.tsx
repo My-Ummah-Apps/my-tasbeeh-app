@@ -170,7 +170,7 @@ export const showerAlert = async (title: string, message: string) => {
   });
 };
 
-export const setStatusAndNavBarBackgroundColor = async (
+export const setStatusAndNavBarBGColor = async (
   backgroundColor: string,
   textColor: Style
 ) => {
