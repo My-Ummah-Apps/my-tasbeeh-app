@@ -23,10 +23,10 @@ interface CountersPageProps {
   setActiveColor: React.Dispatch<MaterialColor>;
   activeCounter: counterObjType;
   updateCountersState: (arr: counterObjType[]) => void;
-  deleteSingleCounter: (id: string) => void;
+  deleteSingleCounter: (id: number) => void;
   countersState: counterObjType[];
   modifyCounter: (
-    id: string,
+    id: number,
     modifiedCounterName: string,
     modifiedCount: number,
     modifiedTarget: number

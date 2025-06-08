@@ -107,7 +107,7 @@ export const dictPreferencesDefaultValues: userPreferencesType = {
   isExistingUser: 0,
   appLaunchCount: 0,
   haptics: 0,
-  previousLaunchDate: "",
+  previousLaunchDate: new Date().toLocaleDateString(),
   dailyCounterReset: 0,
   activeColor: materialColors[0],
   theme: "light",

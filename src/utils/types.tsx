@@ -4,15 +4,17 @@ export type DBConnectionStateType = "open" | "close";
 
 export type themeType = "light" | "dark";
 
+export type BinaryValue = 0 | 1;
+
 export interface userPreferencesType {
-  morningNotification: 0 | 1;
-  afternoonNotification: 0 | 1;
-  eveningNotification: 0 | 1;
-  isExistingUser: 0 | 1;
+  morningNotification: BinaryValue;
+  afternoonNotification: BinaryValue;
+  eveningNotification: BinaryValue;
+  isExistingUser: BinaryValue;
   appLaunchCount: number;
-  haptics: 0 | 1;
+  haptics: BinaryValue;
   previousLaunchDate: string;
-  dailyCounterReset: 0 | 1;
+  dailyCounterReset: BinaryValue;
   activeColor: MaterialColor;
   theme: themeType;
 }
@@ -21,7 +23,7 @@ export type PreferenceKeyType = keyof userPreferencesType;
 
 export type PreferenceObjType = {
   preferenceName: PreferenceKeyType;
-  preferenceValue: 0 | 1 | string;
+  preferenceValue: BinaryValue | string;
 };
 
 export type counterObjType = {
@@ -31,7 +33,7 @@ export type counterObjType = {
   count: number;
   target: number;
   color: MaterialColor | null;
-  isActive: 0 | 1;
+  isActive: BinaryValue;
 };
 
 export type NotificationParams = {

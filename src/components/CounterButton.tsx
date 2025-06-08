@@ -1,5 +1,6 @@
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
 import {
+  BinaryValue,
   counterObjType,
   DBConnectionStateType,
   MaterialColor,
@@ -22,8 +23,8 @@ interface CounterButtonProps {
   countersArr: counterObjType[];
   activeCounter: counterObjType;
   updateCountersState: (arr: counterObjType[]) => void;
-  setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
-  haptics: boolean | null;
+  setHaptics: React.Dispatch<React.SetStateAction<BinaryValue>>;
+  haptics: BinaryValue;
 }
 
 function CounterButton({
@@ -62,18 +63,18 @@ function CounterButton({
     updateCountersState(updatedCountersArr);
 
     if (activeCounter.count === activeCounter.target) {
-      if (haptics === true && Capacitor.isNativePlatform()) {
-        setHaptics(false);
+      if (haptics === 1 && Capacitor.isNativePlatform()) {
+        setHaptics(0);
 
         setTimeout(() => {
-          setHaptics(true);
+          setHaptics(1);
         }, 1100);
       }
       hapticsVibrate();
       return;
     }
 
-    if (haptics === true) {
+    if (haptics === 1) {
       hapticsImpactMedium();
     }
   };

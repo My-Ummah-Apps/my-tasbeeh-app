@@ -30,6 +30,7 @@ import {
   PreferenceKeyType,
   themeType,
   userPreferencesType,
+  BinaryValue,
 } from "./utils/types";
 
 // localStorage.setItem("theme", "\"dark\"");
@@ -69,8 +70,8 @@ function App() {
   const [countersState, setCountersState] = useState<counterObjType[]>([]);
   const [languageDirection, setLanguageDirection] =
     useState<languageDirection>("neutral");
-  const [haptics, setHaptics] = useState<boolean | null>(null);
-  const [dailyCounterReset, setDailyCounterReset] = useState<0 | 1>(0);
+  const [haptics, setHaptics] = useState<BinaryValue>(0);
+  const [dailyCounterReset, setDailyCounterReset] = useState<BinaryValue>(0);
   const [theme, setTheme] = useState<themeType | null>(null);
   const [activeColor, setActiveColor] = useState<MaterialColor>(
     materialColors[0]
@@ -207,6 +208,23 @@ function App() {
   ) => {
     console.log("Existing user, Preferences are: ", DBResultPreferences);
 
+    // ! Continue from here
+    const todaysDate = new Date().toLocaleDateString();
+    let counters;
+    localStorage.setItem("lastLaunchDate", todaysDate);
+    updateUserPreference("previousLaunchDate", todaysDate);
+
+    if (
+      userPreferencesState.previousLaunchDate !== todaysDate &&
+      userPreferencesState.dailyCounterReset === 1
+    ) {
+      counters = countersState.map((counterItem) => ({
+        ...counterItem,
+        count: 0,
+      }));
+    }
+    updateCountersState(counters);
+
     DBResultPreferences.forEach((item) => {
       if (
         item.preferenceValue === "0" ||
@@ -250,6 +268,24 @@ function App() {
 
     await batchAssignPreferences();
   };
+
+  useEffect(() => {
+    // const previousLaunchDate = localStorage.getItem("lastLaunchDate");
+    // const todaysDate = new Date().toLocaleDateString();
+    // let counters;
+    // localStorage.setItem("lastLaunchDate", todaysDate);
+    // updateUserPreference("previousLaunchDate", todaysDate);
+    // if (
+    //   userPreferencesState.previousLaunchDate !== todaysDate &&
+    //   userPreferencesState.dailyCounterReset === 1
+    // ) {
+    //   counters = countersState.map((counterItem: counterObjType) => ({
+    //     ...counterItem,
+    //     count: 0,
+    //   }));
+    // }
+    // updateCountersState(counters);
+  }, []);
 
   useEffect(() => {
     setActiveColor(userPreferencesState.activeColor);
@@ -304,7 +340,7 @@ function App() {
         count: Number(item.count),
         target: Number(item.target),
         color: item.color,
-        isActive: Number(item.isActive) as 0 | 1,
+        isActive: Number(item.isActive) as BinaryValue,
       })
     );
 
@@ -313,7 +349,7 @@ function App() {
 
   const updateUserPreference = async (
     preferenceName: PreferenceKeyType,
-    preferenceValue: number | MaterialColor | themeType
+    preferenceValue: number | MaterialColor | themeType | string
   ) => {
     try {
       await toggleDBConnection("open");
@@ -346,7 +382,7 @@ function App() {
     const storedLaunchCount = userPreferencesState.appLaunchCount;
     let launchCount = storedLaunchCount ? Number(storedLaunchCount) : 0;
     launchCount++;
-    // localStorage.setItem("launch-count", JSON.stringify(launchCount));
+
     updateUserPreference("appLaunchCount", launchCount);
 
     const shouldTriggerReview =
@@ -361,21 +397,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const haptics = userPreferencesState.haptics;
-
     if (Capacitor.isNativePlatform()) {
-      setHaptics(haptics === 0 ? false : true);
+      setHaptics(userPreferencesState.haptics);
     }
   }, [userPreferencesState.haptics]);
-
-  useEffect(() => {
-    const dailyCounterReset = async () => {
-      await resetAllCounters();
-    };
-    // dailyCounterReset();
-
-    setDailyCounterReset(userPreferencesState.dailyCounterReset);
-  }, []);
 
   const resetSingleCounter = async (id: number) => {
     try {
@@ -397,7 +422,6 @@ function App() {
   const resetAllCounters = async () => {
     try {
       await toggleDBConnection("open");
-
       const resetCountersQuery = `UPDATE counterDataTable SET count = 0`;
       await dbConnection.current?.run(resetCountersQuery);
 

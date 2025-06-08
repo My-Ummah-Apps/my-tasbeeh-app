@@ -3,6 +3,7 @@ import CounterButton from "../components/CounterButton";
 import { motion } from "framer-motion";
 // import { pageTransitionStyles } from "../utils/constants";
 import {
+  BinaryValue,
   counterObjType,
   DBConnectionStateType,
   languageDirection,
@@ -15,11 +16,11 @@ interface HomePageProps {
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
-  resetSingleCounter: (id: string) => Promise<void>;
+  resetSingleCounter: (id: number) => Promise<void>;
   updateCountersState: (arr: counterObjType[]) => void;
   countersArr: counterObjType[];
-  setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
-  haptics: boolean | null;
+  setHaptics: React.Dispatch<React.SetStateAction<BinaryValue>>;
+  haptics: BinaryValue;
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
 }

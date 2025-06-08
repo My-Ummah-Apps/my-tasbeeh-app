@@ -21,6 +21,7 @@ import {
   showToast,
 } from "../utils/constants";
 import {
+  BinaryValue,
   counterObjType,
   MaterialColor,
   PreferenceKeyType,
@@ -37,11 +38,11 @@ interface SettingsageProps {
   ) => Promise<void>;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
-  setHaptics: React.Dispatch<React.SetStateAction<boolean | null>>;
-  haptics: boolean | null;
-  resetAllCounters: () => void;
-  setDailyCounterReset: React.Dispatch<React.SetStateAction<boolean>>;
-  dailyCounterReset: boolean;
+  setHaptics: React.Dispatch<React.SetStateAction<BinaryValue>>;
+  haptics: BinaryValue;
+  resetAllCounters: () => Promise<void>;
+  setDailyCounterReset: React.Dispatch<React.SetStateAction<BinaryValue>>;
+  dailyCounterReset: BinaryValue;
   theme: themeType | null;
   setShowChangelogModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -343,17 +344,13 @@ const SettingsPage = ({
                 <p>Set vibration on every increment</p>
               </div>
               <Switch
-                checked={haptics}
+                checked={haptics === 1 ? true : false}
                 handleColor="white"
                 name={undefined}
                 offColor="white"
                 onChange={() => {
-                  const newHapticsValue = !haptics;
-                  setHaptics(newHapticsValue);
-                  updateUserPreference(
-                    "haptics",
-                    newHapticsValue === false ? 0 : 1
-                  );
+                  setHaptics(haptics);
+                  updateUserPreference("haptics", haptics);
                 }}
                 onColor={activeColor}
               />
@@ -388,7 +385,7 @@ const SettingsPage = ({
                   "Are you sure you want to reset all Adkhar to 0?"
                 );
                 if (result) {
-                  resetAllCounters();
+                  await resetAllCounters();
                   showToast("All Adhkar reset to 0", "bottom", "short");
                 }
               }}
