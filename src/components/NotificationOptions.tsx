@@ -6,52 +6,47 @@ import {
   MaterialColor,
   NotificationParams,
   Notifications,
+  userPreferencesType,
 } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 import { useEffect } from "react";
 
 interface NotificationOptionsProps {
+  setUserPreferencesState: React.Dispatch<
+    React.SetStateAction<userPreferencesType>
+  >;
+  userPreferencesState: userPreferencesType;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
-  setMorningNotification: React.Dispatch<React.SetStateAction<boolean>>;
-  morningNotification: boolean;
-  setAfternoonNotification: React.Dispatch<React.SetStateAction<boolean>>;
-  afternoonNotification: boolean;
-  setEveningNotification: React.Dispatch<React.SetStateAction<boolean>>;
-  eveningNotification: boolean;
 }
 
 const NotificationOptions = ({
+  setUserPreferencesState,
+  userPreferencesState,
   activeColor,
-  setMorningNotification,
-  morningNotification,
-  afternoonNotification,
-  setAfternoonNotification,
-  eveningNotification,
-  setEveningNotification,
 }: NotificationOptionsProps) => {
-  const manageNotification = (
-    storageKey: Notifications,
-    setState: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
-    if (Capacitor.isNativePlatform()) {
-      const notificationValue: boolean = JSON.parse(
-        localStorage.getItem(storageKey) || "false"
-      );
+  // const manageNotification = (
+  //   storageKey: Notifications,
+  //   setState: React.Dispatch<React.SetStateAction<boolean>>
+  // ) => {
+  //   if (Capacitor.isNativePlatform()) {
+  //     const notificationValue: boolean = JSON.parse(
+  //       localStorage.getItem(storageKey) || "false"
+  //     );
 
-      if (notificationValue === null || notificationValue === false) {
-        localStorage.setItem(storageKey, JSON.stringify(false));
-        setState(false);
-      } else if (notificationValue === true) {
-        setState(true);
-      }
-    }
-  };
+  //     if (notificationValue === null || notificationValue === false) {
+  //       // localStorage.setItem(storageKey, JSON.stringify(false));
+  //       setState(false);
+  //     } else if (notificationValue === true) {
+  //       setState(true);
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
-    manageNotification("morning-notification", setMorningNotification);
-    manageNotification("afternoon-notification", setAfternoonNotification);
-    manageNotification("evening-notification", setEveningNotification);
+    // manageNotification("morning-notification", setMorningNotification);
+    // manageNotification("afternoon-notification", setAfternoonNotification);
+    // manageNotification("evening-notification", setEveningNotification);
   }, []);
 
   const toggleNotification = async ({
@@ -70,10 +65,10 @@ const NotificationOptions = ({
     if (notificationValue === true) {
       setState(false);
       cancelNotification(id);
-      localStorage.setItem(storageKey, JSON.stringify(false));
+      // localStorage.setItem(storageKey, JSON.stringify(false));
     } else if (notificationValue === false) {
       setState(true);
-      localStorage.setItem(storageKey, JSON.stringify(true));
+      // localStorage.setItem(storageKey, JSON.stringify(true));
       await LocalNotifications.schedule({
         notifications: [
           {
@@ -112,7 +107,9 @@ const NotificationOptions = ({
           </p>
         </div>
         <Switch
-          checked={morningNotification}
+          checked={
+            userPreferencesState.morningNotification === 1 ? true : false
+          }
           handleColor="white"
           offColor="white"
           onChange={async () => {
@@ -137,7 +134,9 @@ const NotificationOptions = ({
           </p>
         </div>
         <Switch
-          checked={afternoonNotification}
+          checked={
+            userPreferencesState.afternoonNotification === 1 ? true : false
+          }
           handleColor="white"
           name={undefined}
           offColor="white"
@@ -163,7 +162,9 @@ const NotificationOptions = ({
           </p>
         </div>
         <Switch
-          checked={eveningNotification}
+          checked={
+            userPreferencesState.eveningNotification === 1 ? true : false
+          }
           handleColor="white"
           name={undefined}
           offColor="white"

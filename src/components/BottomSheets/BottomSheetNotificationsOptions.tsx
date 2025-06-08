@@ -1,9 +1,17 @@
 import { tween_config } from "../../utils/constants";
-import { counterObjType, MaterialColor } from "../../utils/types";
+import {
+  counterObjType,
+  MaterialColor,
+  userPreferencesType,
+} from "../../utils/types";
 import { Sheet } from "react-modal-sheet";
 import NotificationOptions from "../NotificationOptions";
 
 interface BottomSheetNotificationsOptionsProps {
+  setUserPreferencesState: React.Dispatch<
+    React.SetStateAction<userPreferencesType>
+  >;
+  userPreferencesState: userPreferencesType;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   setShowNotificationsSheet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,16 +25,12 @@ interface BottomSheetNotificationsOptionsProps {
 }
 
 const BottomSheetNotificationsOptions = ({
+  setUserPreferencesState,
+  userPreferencesState,
   activeColor,
   activeCounter,
   setShowNotificationsSheet,
   showNotificationsSheet,
-  setMorningNotification,
-  morningNotification,
-  afternoonNotification,
-  setAfternoonNotification,
-  eveningNotification,
-  setEveningNotification,
 }: BottomSheetNotificationsOptionsProps) => {
   return (
     <Sheet
@@ -43,12 +47,14 @@ const BottomSheetNotificationsOptions = ({
           <NotificationOptions
             activeColor={activeColor}
             activeCounter={activeCounter}
-            setMorningNotification={setMorningNotification}
-            morningNotification={morningNotification}
-            afternoonNotification={afternoonNotification}
-            setAfternoonNotification={setAfternoonNotification}
-            eveningNotification={eveningNotification}
-            setEveningNotification={setEveningNotification}
+            setUserPreferencesState={setUserPreferencesState}
+            userPreferencesState={userPreferencesState}
+            //   setMorningNotification={setMorningNotification}
+            //   morningNotification={morningNotification}
+            //   afternoonNotification={afternoonNotification}
+            //   setAfternoonNotification={setAfternoonNotification}
+            //   eveningNotification={eveningNotification}
+            //   setEveningNotification={setEveningNotification}
           />
         </Sheet.Content>
       </Sheet.Container>

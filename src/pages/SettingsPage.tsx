@@ -26,12 +26,17 @@ import {
   MaterialColor,
   PreferenceKeyType,
   themeType,
+  userPreferencesType,
 } from "../utils/types";
 import SettingIndividual from "../components/SettingIndividual";
 import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
 interface SettingsageProps {
+  setUserPreferencesState: React.Dispatch<
+    React.SetStateAction<userPreferencesType>
+  >;
+  userPreferencesState: userPreferencesType;
   updateUserPreference: (
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType
@@ -49,6 +54,8 @@ interface SettingsageProps {
 
 const SettingsPage = ({
   // iapProducts,
+  setUserPreferencesState,
+  userPreferencesState,
   updateUserPreference,
   activeColor,
   activeCounter,
@@ -60,9 +67,6 @@ const SettingsPage = ({
   theme,
   setShowChangelogModal,
 }: SettingsageProps) => {
-  const [morningNotification, setMorningNotification] = useState(false);
-  const [afternoonNotification, setAfternoonNotification] = useState(false);
-  const [eveningNotification, setEveningNotification] = useState(false);
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
   const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
@@ -103,9 +107,12 @@ const SettingsPage = ({
       checkPermission.display === "prompt-with-rationale"
     ) {
       await requestPermissionFunction();
-      setMorningNotification(false);
-      setAfternoonNotification(false);
-      setEveningNotification(false);
+      setUserPreferencesState((prev) => ({
+        ...prev,
+        morningNotification: 0,
+        afternoonNotification: 0,
+        eveningNotification: 0,
+      }));
       setShowNotificationsSheet(true);
       // localStorage.setItem("morning-notification", JSON.stringify(false));
     }
@@ -120,9 +127,12 @@ const SettingsPage = ({
       requestPermission.display === "denied" ||
       requestPermission.display === "prompt"
     ) {
-      setMorningNotification(false);
-      setAfternoonNotification(false);
-      setEveningNotification(false);
+      setUserPreferencesState((prev) => ({
+        ...prev,
+        morningNotification: 0,
+        afternoonNotification: 0,
+        eveningNotification: 0,
+      }));
     }
   };
 
@@ -311,12 +321,8 @@ const SettingsPage = ({
             activeCounter={activeCounter}
             setShowNotificationsSheet={setShowNotificationsSheet}
             showNotificationsSheet={showNotificationsSheet}
-            setMorningNotification={setMorningNotification}
-            morningNotification={morningNotification}
-            setAfternoonNotification={setAfternoonNotification}
-            afternoonNotification={afternoonNotification}
-            setEveningNotification={setEveningNotification}
-            eveningNotification={eveningNotification}
+            setUserPreferencesState={setUserPreferencesState}
+            userPreferencesState={userPreferencesState}
           />
         </section>
         {/* // ) : null} */}
@@ -362,17 +368,13 @@ const SettingsPage = ({
               <p>Adhkar will be reset daily</p>
             </div>
             <Switch
-              checked={dailyCounterReset}
+              checked={dailyCounterReset === 1 ? true : false}
               handleColor="white"
               name={undefined}
               offColor="white"
               onChange={() => {
-                const newResetValue = !dailyCounterReset;
-                setDailyCounterReset(newResetValue);
-                updateUserPreference(
-                  "dailyCounterReset",
-                  newResetValue === false ? 0 : 1
-                );
+                setDailyCounterReset(dailyCounterReset);
+                updateUserPreference("dailyCounterReset", dailyCounterReset);
               }}
               onColor={activeColor}
             />
