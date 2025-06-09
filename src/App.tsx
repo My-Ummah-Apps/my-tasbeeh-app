@@ -166,12 +166,12 @@ function App() {
         const todaysDate = new Date().toLocaleDateString("en-CA");
 
         const dailyCounterResetPref: PreferenceObjType =
-          DBResultPreferences.values!.find(
+          DBResultPreferences.values.find(
             (item) => item.preferenceName === "dailyCounterReset"
           );
 
         const previousLaunchDatePref: PreferenceObjType =
-          DBResultPreferences.values!.find(
+          DBResultPreferences.values.find(
             (item) => item.preferenceName === "previousLaunchDate"
           );
 
@@ -225,7 +225,10 @@ function App() {
   const handleUserPreferencesDataFromDB = async (
     DBResultPreferences: PreferenceObjType[]
   ) => {
-    console.log("Existing user, Preferences are: ", DBResultPreferences);
+    console.log(
+      "Existing user, Preferences from DB are: ",
+      DBResultPreferences
+    );
 
     DBResultPreferences.forEach((item) => {
       if (

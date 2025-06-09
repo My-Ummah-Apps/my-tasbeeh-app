@@ -50,9 +50,9 @@ interface SettingsageProps {
 
 const SettingsPage = ({
   // iapProducts,
+  updateUserPreference,
   setUserPreferencesState,
   userPreferencesState,
-  updateUserPreference,
   activeColor,
   activeCounter,
   resetAllCounters,
@@ -90,7 +90,6 @@ const SettingsPage = ({
 
     if (userNotificationPermission === "denied") {
       showNotificationsAlert();
-      return;
     } else if (checkPermission.display === "granted") {
       setShowNotificationsSheet(true);
     } else if (
@@ -98,14 +97,6 @@ const SettingsPage = ({
       checkPermission.display === "prompt-with-rationale"
     ) {
       await requestPermissionFunction();
-      // setUserPreferencesState((prev) => ({
-      //   ...prev,
-      //   morningNotification: 0,
-      //   afternoonNotification: 0,
-      //   eveningNotification: 0,
-      // }));
-      // setShowNotificationsSheet(true);
-      // localStorage.setItem("morning-notification", JSON.stringify(false));
     }
   }
 
@@ -113,21 +104,19 @@ const SettingsPage = ({
     const requestPermission = await LocalNotifications.requestPermissions();
 
     if (requestPermission.display === "granted") {
-      // setMorningNotification(true);
-      await updateUserPreference("morningNotification", 1);
-      await updateUserPreference("afternoonNotification", 1);
-      await updateUserPreference("eveningNotification", 1);
-    } else if (
-      requestPermission.display === "denied" ||
-      requestPermission.display === "prompt"
-    ) {
-      setUserPreferencesState((prev) => ({
-        ...prev,
-        morningNotification: 0,
-        afternoonNotification: 0,
-        eveningNotification: 0,
-      }));
+      setShowNotificationsSheet(true);
     }
+    // else if (
+    //   requestPermission.display === "denied" ||
+    //   requestPermission.display === "prompt"
+    // ) {
+    //   setUserPreferencesState((prev) => ({
+    //     ...prev,
+    //     morningNotification: 0,
+    //     afternoonNotification: 0,
+    //     eveningNotification: 0,
+    //   }));
+    // }
   };
 
   // async function triggerPurchase(tipAmount) {
@@ -311,6 +300,7 @@ const SettingsPage = ({
             }}
           />
           <BottomSheetNotificationsOptions
+            updateUserPreference={updateUserPreference}
             activeColor={activeColor}
             activeCounter={activeCounter}
             setShowNotificationsSheet={setShowNotificationsSheet}
