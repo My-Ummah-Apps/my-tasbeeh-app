@@ -94,18 +94,17 @@ const SettingsPage = ({
     } else if (checkPermission.display === "granted") {
       setShowNotificationsSheet(true);
     } else if (
-      // checkPermission.display == "denied" ||
       checkPermission.display === "prompt" ||
       checkPermission.display === "prompt-with-rationale"
     ) {
       await requestPermissionFunction();
-      setUserPreferencesState((prev) => ({
-        ...prev,
-        morningNotification: 0,
-        afternoonNotification: 0,
-        eveningNotification: 0,
-      }));
-      setShowNotificationsSheet(true);
+      // setUserPreferencesState((prev) => ({
+      //   ...prev,
+      //   morningNotification: 0,
+      //   afternoonNotification: 0,
+      //   eveningNotification: 0,
+      // }));
+      // setShowNotificationsSheet(true);
       // localStorage.setItem("morning-notification", JSON.stringify(false));
     }
   }
@@ -115,6 +114,9 @@ const SettingsPage = ({
 
     if (requestPermission.display === "granted") {
       // setMorningNotification(true);
+      await updateUserPreference("morningNotification", 1);
+      await updateUserPreference("afternoonNotification", 1);
+      await updateUserPreference("eveningNotification", 1);
     } else if (
       requestPermission.display === "denied" ||
       requestPermission.display === "prompt"
@@ -346,9 +348,9 @@ const SettingsPage = ({
               handleColor="white"
               name={undefined}
               offColor="white"
-              onChange={() => {
+              onChange={async () => {
                 const hapticsValue = userPreferencesState.haptics === 0 ? 1 : 0;
-                updateUserPreference("haptics", hapticsValue);
+                await updateUserPreference("haptics", hapticsValue);
               }}
               onColor={activeColor}
             />
@@ -366,10 +368,10 @@ const SettingsPage = ({
               handleColor="white"
               name={undefined}
               offColor="white"
-              onChange={() => {
+              onChange={async () => {
                 const dailyCounterResetValue =
                   userPreferencesState.dailyCounterReset === 0 ? 1 : 0;
-                updateUserPreference(
+                await updateUserPreference(
                   "dailyCounterReset",
                   dailyCounterResetValue
                 );

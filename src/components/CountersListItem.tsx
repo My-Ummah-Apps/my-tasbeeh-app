@@ -52,7 +52,7 @@ const CountersListItem = ({
           try {
             await toggleDBConnection("open");
             // ! ACTIVE COLOR IS NOT PERSISTING UPON RELOAD
-            updateUserPreference("activeColor", color);
+            await updateUserPreference("activeColor", color);
 
             await dbConnection.current?.run(
               `UPDATE counterDataTable SET isActive = 0`

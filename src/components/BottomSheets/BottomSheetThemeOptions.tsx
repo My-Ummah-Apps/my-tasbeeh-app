@@ -39,12 +39,12 @@ const BottomSheetThemeOptions = ({
                 <button
                   aria-pressed={theme === "light"}
                   className="w-full text-left"
-                  onClick={() => {
+                  onClick={async () => {
                     if (theme !== "light") {
                       if (Capacitor.isNativePlatform()) {
                         setStatusAndNavBarBGColor("#EDEDED", Style.Light);
                       }
-                      updateUserPreference("theme", "light");
+                      await updateUserPreference("theme", "light");
                     }
                   }}
                 >
@@ -57,12 +57,12 @@ const BottomSheetThemeOptions = ({
                 <button
                   aria-pressed={theme === "dark"}
                   className="w-full text-left"
-                  onClick={() => {
+                  onClick={async () => {
                     if (theme !== "dark") {
                       if (Capacitor.isNativePlatform()) {
                         setStatusAndNavBarBGColor("#242424", Style.Dark);
                       }
-                      updateUserPreference("theme", "dark");
+                      await updateUserPreference("theme", "dark");
                     }
                   }}
                 >

@@ -160,36 +160,41 @@ function App() {
       let DBResultPreferences = await dbConnection.current!.query(
         `SELECT * FROM userPreferencesTable`
       );
+      assertValidDBResult(DBResultPreferences, "DBResultPreferences");
 
-      const todaysDate = new Date().toLocaleDateString("en-CA");
-      console.log("todaysDate: ", todaysDate);
+      if (DBResultPreferences.values.length > 0) {
+        const todaysDate = new Date().toLocaleDateString("en-CA");
 
-      const dailyCounterResetPref: PreferenceObjType =
-        DBResultPreferences.values!.find(
-          (item) => item.preferenceName === "dailyCounterReset"
-        );
+        const dailyCounterResetPref: PreferenceObjType =
+          DBResultPreferences.values!.find(
+            (item) => item.preferenceName === "dailyCounterReset"
+          );
 
-      const previousLaunchDatePref: PreferenceObjType =
-        DBResultPreferences.values!.find(
-          (item) => item.preferenceName === "previousLaunchDate"
-        );
+        const previousLaunchDatePref: PreferenceObjType =
+          DBResultPreferences.values!.find(
+            (item) => item.preferenceName === "previousLaunchDate"
+          );
 
-      if (
-        previousLaunchDatePref.preferenceValue !== todaysDate &&
-        dailyCounterResetPref.preferenceValue === 1
-      ) {
-        const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
-        await dbConnection.current!.run(resetAllCountersStatement);
+        if (
+          previousLaunchDatePref.preferenceValue !== todaysDate &&
+          dailyCounterResetPref.preferenceValue === 1
+        ) {
+          const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
+          await dbConnection.current!.run(resetAllCountersStatement);
+        }
+
+        const updatePreviousLaunchDateStatement = `
+        UPDATE userPreferencesTable
+        SET preferenceValue = ? 
+        WHERE preferenceName = 'previousLaunchDate'`;
+        await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
+          todaysDate,
+        ]);
       }
 
-      updateUserPreference("previousLaunchDate", todaysDate);
-
-      let DBResultAllCounterData = await dbConnection.current!.query(
-        `SELECT * FROM counterDataTable`
-      );
-
-      assertValidDBResult(DBResultPreferences, "DBResultPreferences");
-      assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
+      // let DBResultAllCounterData = await dbConnection.current!.query(
+      //   `SELECT * FROM counterDataTable`
+      // );
 
       if (DBResultPreferences.values.length === 0) {
         await initiateDefaultPrefsAndCounters();
@@ -199,17 +204,11 @@ function App() {
         `SELECT * FROM userPreferencesTable`
       );
 
-      DBResultAllCounterData = await dbConnection.current?.query(
+      const DBResultAllCounterData = await dbConnection.current?.query(
         `SELECT * FROM counterDataTable`
       );
-
-      console.log(
-        "DBResultPreferences after preferences have been set: ",
-        DBResultPreferences
-      );
-
-      assertValidDBResult(DBResultPreferences, "DBResultPreferences");
       assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
+      assertValidDBResult(DBResultPreferences, "DBResultPreferences");
 
       await handleUserPreferencesDataFromDB(
         DBResultPreferences.values as PreferenceObjType[]
@@ -298,6 +297,8 @@ function App() {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType | string
   ) => {
+    console.log("updateUserPreference has run");
+
     try {
       await toggleDBConnection("open");
       const query = `INSERT OR REPLACE INTO userPreferencesTable (preferenceName, preferenceValue) VALUES (?, ?)`;
@@ -310,30 +311,9 @@ function App() {
     } catch (error) {
       console.error(`ERROR ENTERING ${preferenceName} into DB`);
     } finally {
-      const test = await dbConnection.current!.query(
-        `SELECT * from userPreferencesTable`
-      );
-      console.log("PREFS: ", test.values);
       await toggleDBConnection("close");
     }
   };
-
-  // useEffect(() => {
-  //   const todaysDate = new Date().toLocaleDateString();
-  //   let counters;
-  //   if (
-  //     userPreferencesState.previousLaunchDate !== todaysDate &&
-  //     userPreferencesState.dailyCounterReset === 1
-  //   ) {
-  //     counters = countersState.map((counterItem) => ({
-  //       ...counterItem,
-  //       count: 0,
-  //     }));
-  //   }
-  //   console.log("COUNTERS: ", counters);
-  //   updateCountersState(counters);
-  //   updateUserPreference("previousLaunchDate", todaysDate);
-  // }, [userPreferencesState.previousLaunchDate]);
 
   useEffect(() => {
     setActiveColor(userPreferencesState.activeColor);
@@ -385,21 +365,25 @@ function App() {
   }
 
   useEffect(() => {
-    const storedLaunchCount = userPreferencesState.appLaunchCount;
-    let launchCount = storedLaunchCount ? Number(storedLaunchCount) : 0;
-    launchCount++;
+    const reviewPrompt = async () => {
+      const storedLaunchCount = userPreferencesState.appLaunchCount;
+      let launchCount = storedLaunchCount ? Number(storedLaunchCount) : 0;
+      launchCount++;
 
-    updateUserPreference("appLaunchCount", launchCount);
+      await updateUserPreference("appLaunchCount", launchCount);
 
-    const shouldTriggerReview =
-      launchCount === 3 ||
-      launchCount === 10 ||
-      launchCount === 20 ||
-      launchCount % 50 === 0;
+      const shouldTriggerReview =
+        launchCount === 3 ||
+        launchCount === 10 ||
+        launchCount === 20 ||
+        launchCount % 50 === 0;
 
-    if (Capacitor.isNativePlatform() && shouldTriggerReview) {
-      InAppReview.requestReview();
-    }
+      if (Capacitor.isNativePlatform() && shouldTriggerReview) {
+        InAppReview.requestReview();
+      }
+    };
+
+    reviewPrompt();
   }, []);
 
   const resetSingleCounter = async (id: number) => {
