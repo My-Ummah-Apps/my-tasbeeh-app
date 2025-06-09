@@ -43,11 +43,7 @@ interface SettingsageProps {
   ) => Promise<void>;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
-  setHaptics: React.Dispatch<React.SetStateAction<BinaryValue>>;
-  haptics: BinaryValue;
   resetAllCounters: () => Promise<void>;
-  setDailyCounterReset: React.Dispatch<React.SetStateAction<BinaryValue>>;
-  dailyCounterReset: BinaryValue;
   theme: themeType | null;
   setShowChangelogModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -59,11 +55,7 @@ const SettingsPage = ({
   updateUserPreference,
   activeColor,
   activeCounter,
-  setHaptics,
-  haptics,
   resetAllCounters,
-  setDailyCounterReset,
-  dailyCounterReset,
   theme,
   setShowChangelogModal,
 }: SettingsageProps) => {
@@ -343,38 +335,44 @@ const SettingsPage = ({
           />
         </section>
         <section className="individual-section-wrap">
-          {Capacitor.isNativePlatform() && (
-            <div className="individual-row-wrap haptic-wrap  p-3">
-              <div className="text-wrap" style={{ display: "block" }}>
-                <p>Haptic Vibration</p>
-                <p>Set vibration on every increment</p>
-              </div>
-              <Switch
-                checked={haptics === 1 ? true : false}
-                handleColor="white"
-                name={undefined}
-                offColor="white"
-                onChange={() => {
-                  setHaptics(haptics);
-                  updateUserPreference("haptics", haptics);
-                }}
-                onColor={activeColor}
-              />
+          {/* {Capacitor.isNativePlatform() && ( */}
+          <div className="individual-row-wrap haptic-wrap  p-3">
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Haptic Vibration</p>
+              <p>Set vibration on every increment</p>
             </div>
-          )}
+            <Switch
+              checked={userPreferencesState.haptics === 1 ? true : false}
+              handleColor="white"
+              name={undefined}
+              offColor="white"
+              onChange={() => {
+                const hapticsValue = userPreferencesState.haptics === 0 ? 1 : 0;
+                updateUserPreference("haptics", hapticsValue);
+              }}
+              onColor={activeColor}
+            />
+          </div>
+          {/* // )} */}
           <section className="individual-row-wrap p-3">
             <div className="text-wrap " style={{ display: "block" }}>
               <p>Auto Reset Adhkar</p>
               <p>Adhkar will be reset daily</p>
             </div>
             <Switch
-              checked={dailyCounterReset === 1 ? true : false}
+              checked={
+                userPreferencesState.dailyCounterReset === 1 ? true : false
+              }
               handleColor="white"
               name={undefined}
               offColor="white"
               onChange={() => {
-                setDailyCounterReset(dailyCounterReset);
-                updateUserPreference("dailyCounterReset", dailyCounterReset);
+                const dailyCounterResetValue =
+                  userPreferencesState.dailyCounterReset === 0 ? 1 : 0;
+                updateUserPreference(
+                  "dailyCounterReset",
+                  dailyCounterResetValue
+                );
               }}
               onColor={activeColor}
             />

@@ -4,6 +4,7 @@ import {
   counterObjType,
   DBConnectionStateType,
   MaterialColor,
+  userPreferencesType,
 } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
@@ -19,27 +20,27 @@ const hapticsVibrate = async () => {
 interface CounterButtonProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
+  setUserPreferencesState: React.Dispatch<
+    React.SetStateAction<userPreferencesType>
+  >;
+  userPreferencesState: userPreferencesType;
   activeColor: MaterialColor;
   countersArr: counterObjType[];
   activeCounter: counterObjType;
   updateCountersState: (arr: counterObjType[]) => void;
-  setHaptics: React.Dispatch<React.SetStateAction<BinaryValue>>;
-  haptics: BinaryValue;
 }
 
 function CounterButton({
   dbConnection,
   toggleDBConnection,
+  setUserPreferencesState,
+  userPreferencesState,
   activeColor,
   countersArr,
   activeCounter,
   updateCountersState,
-  setHaptics,
-  haptics,
 }: CounterButtonProps) {
   const setCounterAndHaptics = async () => {
-    console.log("Active Counter: ", activeCounter);
-
     const updatedCountersArr = countersArr.map((counter) => {
       const isActive = counter.isActive === 1;
       console.log(isActive);
@@ -62,20 +63,23 @@ function CounterButton({
 
     updateCountersState(updatedCountersArr);
 
-    if (activeCounter.count === activeCounter.target) {
-      if (haptics === 1 && Capacitor.isNativePlatform()) {
-        setHaptics(0);
-
-        setTimeout(() => {
-          setHaptics(1);
-        }, 1100);
+    if (Capacitor.isNativePlatform()) {
+      if (
+        activeCounter.count === activeCounter.target &&
+        userPreferencesState.haptics === 1
+      ) {
+        // setHaptics(0);
+        // setUserPreferencesState(prev => ({...prev, haptics: 0}))
+        // setTimeout(() => {
+        //   setHaptics(1);
+        // }, 1100);
+        hapticsVibrate();
+        return;
       }
-      hapticsVibrate();
-      return;
-    }
 
-    if (haptics === 1) {
-      hapticsImpactMedium();
+      if (userPreferencesState.haptics === 1) {
+        hapticsImpactMedium();
+      }
     }
   };
 

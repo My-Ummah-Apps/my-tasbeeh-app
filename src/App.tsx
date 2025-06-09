@@ -70,8 +70,6 @@ function App() {
   const [countersState, setCountersState] = useState<counterObjType[]>([]);
   const [languageDirection, setLanguageDirection] =
     useState<languageDirection>("neutral");
-  const [haptics, setHaptics] = useState<BinaryValue>(0);
-  const [dailyCounterReset, setDailyCounterReset] = useState<BinaryValue>(0);
   const [theme, setTheme] = useState<themeType | null>(null);
   const [activeColor, setActiveColor] = useState<MaterialColor>(
     materialColors[0]
@@ -159,11 +157,34 @@ function App() {
       // }
       await toggleDBConnection("open");
 
-      let DBResultPreferences = await dbConnection.current?.query(
+      let DBResultPreferences = await dbConnection.current!.query(
         `SELECT * FROM userPreferencesTable`
       );
 
-      let DBResultAllCounterData = await dbConnection.current?.query(
+      const todaysDate = new Date().toLocaleDateString("en-CA");
+      console.log("todaysDate: ", todaysDate);
+
+      const dailyCounterResetPref: PreferenceObjType =
+        DBResultPreferences.values!.find(
+          (item) => item.preferenceName === "dailyCounterReset"
+        );
+
+      const previousLaunchDatePref: PreferenceObjType =
+        DBResultPreferences.values!.find(
+          (item) => item.preferenceName === "previousLaunchDate"
+        );
+
+      if (
+        previousLaunchDatePref.preferenceValue !== todaysDate &&
+        dailyCounterResetPref.preferenceValue === 1
+      ) {
+        const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
+        await dbConnection.current!.run(resetAllCountersStatement);
+      }
+
+      updateUserPreference("previousLaunchDate", todaysDate);
+
+      let DBResultAllCounterData = await dbConnection.current!.query(
         `SELECT * FROM counterDataTable`
       );
 
@@ -171,7 +192,6 @@ function App() {
       assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
 
       if (DBResultPreferences.values.length === 0) {
-        console.log("New user, initiating default preferences and counters");
         await initiateDefaultPrefsAndCounters();
       }
 
@@ -290,26 +310,30 @@ function App() {
     } catch (error) {
       console.error(`ERROR ENTERING ${preferenceName} into DB`);
     } finally {
+      const test = await dbConnection.current!.query(
+        `SELECT * from userPreferencesTable`
+      );
+      console.log("PREFS: ", test.values);
       await toggleDBConnection("close");
     }
   };
 
-  useEffect(() => {
-    // const todaysDate = new Date().toLocaleDateString();
-    // let counters;
-    // if (
-    //   userPreferencesState.previousLaunchDate !== todaysDate &&
-    //   userPreferencesState.dailyCounterReset === 1
-    // ) {
-    //   counters = countersState.map((counterItem) => ({
-    //     ...counterItem,
-    //     count: 0,
-    //   }));
-    // }
-    // console.log("COUNTERS: ", counters);
-    // updateCountersState(counters);
-    // updateUserPreference("previousLaunchDate", todaysDate);
-  }, [userPreferencesState.previousLaunchDate]);
+  // useEffect(() => {
+  //   const todaysDate = new Date().toLocaleDateString();
+  //   let counters;
+  //   if (
+  //     userPreferencesState.previousLaunchDate !== todaysDate &&
+  //     userPreferencesState.dailyCounterReset === 1
+  //   ) {
+  //     counters = countersState.map((counterItem) => ({
+  //       ...counterItem,
+  //       count: 0,
+  //     }));
+  //   }
+  //   console.log("COUNTERS: ", counters);
+  //   updateCountersState(counters);
+  //   updateUserPreference("previousLaunchDate", todaysDate);
+  // }, [userPreferencesState.previousLaunchDate]);
 
   useEffect(() => {
     setActiveColor(userPreferencesState.activeColor);
@@ -377,12 +401,6 @@ function App() {
       InAppReview.requestReview();
     }
   }, []);
-
-  useEffect(() => {
-    if (Capacitor.isNativePlatform()) {
-      setHaptics(userPreferencesState.haptics);
-    }
-  }, [userPreferencesState.haptics]);
 
   const resetSingleCounter = async (id: number) => {
     try {
@@ -555,10 +573,6 @@ function App() {
                     activeColor={activeColor}
                     activeCounter={activeCounter}
                     resetAllCounters={resetAllCounters}
-                    setHaptics={setHaptics}
-                    haptics={haptics}
-                    setDailyCounterReset={setDailyCounterReset}
-                    dailyCounterReset={dailyCounterReset}
                     theme={theme}
                     setShowChangelogModal={setShowChangelogModal}
                   />
@@ -570,13 +584,13 @@ function App() {
                   <HomePage
                     dbConnection={dbConnection}
                     toggleDBConnection={toggleDBConnection}
+                    setUserPreferencesState={setUserPreferencesState}
+                    userPreferencesState={userPreferencesState}
                     activeColor={activeColor}
                     activeCounter={activeCounter}
                     resetSingleCounter={resetSingleCounter}
                     updateCountersState={updateCountersState}
                     countersArr={countersState}
-                    setHaptics={setHaptics}
-                    haptics={haptics}
                     setLanguageDirection={setLanguageDirection}
                     languageDirection={languageDirection}
                   />

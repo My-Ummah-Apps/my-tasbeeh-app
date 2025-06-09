@@ -8,19 +8,22 @@ import {
   DBConnectionStateType,
   languageDirection,
   MaterialColor,
+  userPreferencesType,
 } from "../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
+  setUserPreferencesState: React.Dispatch<
+    React.SetStateAction<userPreferencesType>
+  >;
+  userPreferencesState: userPreferencesType;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetSingleCounter: (id: number) => Promise<void>;
   updateCountersState: (arr: counterObjType[]) => void;
   countersArr: counterObjType[];
-  setHaptics: React.Dispatch<React.SetStateAction<BinaryValue>>;
-  haptics: BinaryValue;
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
 }
@@ -28,13 +31,13 @@ interface HomePageProps {
 const HomePage = ({
   dbConnection,
   toggleDBConnection,
+  setUserPreferencesState,
+  userPreferencesState,
   activeColor,
   activeCounter,
   resetSingleCounter,
   updateCountersState,
   countersArr,
-  setHaptics,
-  haptics,
   setLanguageDirection,
   languageDirection,
 }: HomePageProps) => {
@@ -56,12 +59,11 @@ const HomePage = ({
       <CounterButton
         dbConnection={dbConnection}
         toggleDBConnection={toggleDBConnection}
+        userPreferencesState={userPreferencesState}
         activeColor={activeColor}
         countersArr={countersArr}
         updateCountersState={updateCountersState}
         activeCounter={activeCounter}
-        setHaptics={setHaptics}
-        haptics={haptics}
       />
     </motion.main>
   );
