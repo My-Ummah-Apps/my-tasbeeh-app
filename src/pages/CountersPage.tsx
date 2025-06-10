@@ -23,15 +23,15 @@ interface CountersPageProps {
   setActiveColor: React.Dispatch<MaterialColor>;
   activeCounter: counterObjType;
   updateCountersState: (arr: counterObjType[]) => void;
-  deleteSingleCounter: (id: number) => void;
   countersState: counterObjType[];
+  addCounter: (counterToAdd: string, target: number) => Promise<void>;
   modifyCounter: (
     id: number,
     modifiedCounterName: string,
     modifiedCount: number,
     modifiedTarget: number
-  ) => void;
-  addCounter: (counterToAdd: string, target: number) => void;
+  ) => Promise<void>;
+  deleteSingleCounter: (id: number) => Promise<void>;
 }
 
 function CountersPage({
@@ -82,15 +82,14 @@ function CountersPage({
 
           return (
             <CountersListItem
+              key={counterItem.id}
               dbConnection={dbConnection}
               toggleDBConnection={toggleDBConnection}
               updateUserPreference={updateUserPreference}
               setActiveColor={setActiveColor}
-              key={counterItem.id}
               updateCountersState={updateCountersState}
               countersState={countersState}
               setCounterId={setCounterId}
-              counterId={counterId}
               setShowForm={setShowForm}
               color={color}
               counterItem={counterItem}

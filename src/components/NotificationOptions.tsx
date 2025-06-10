@@ -4,14 +4,11 @@ import { LocalNotifications } from "@capacitor/local-notifications";
 import {
   counterObjType,
   MaterialColor,
-  NotificationParams,
-  Notifications,
   PreferenceKeyType,
   themeType,
   userPreferencesType,
 } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
-import { useEffect } from "react";
 
 interface NotificationOptionsProps {
   updateUserPreference: (
@@ -39,9 +36,9 @@ const NotificationOptions = ({
   // });
 
   return (
-    <div className="notification-options-wrap">
+    <section className="notification-options-wrap">
       <h2 className="notifications-options-heading-text">Notifications</h2>
-      <div className="individual-notification-option-wrap">
+      <section className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Morning</p>
           <p className="notificatiions-options-sub-text">
@@ -56,8 +53,8 @@ const NotificationOptions = ({
           offColor="white"
           onChange={async () => {
             if (userPreferencesState.morningNotification === 1) {
+              await updateUserPreference("morningNotification", 0);
               await cancelNotification(1);
-              updateUserPreference("morningNotification", 0);
             } else {
               await LocalNotifications.schedule({
                 notifications: [
@@ -73,12 +70,12 @@ const NotificationOptions = ({
                   },
                 ],
               });
-              updateUserPreference("morningNotification", 1);
+              await updateUserPreference("morningNotification", 1);
             }
           }}
           onColor={activeColor}
         />
-      </div>
+      </section>
       <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Afternoon</p>
@@ -95,8 +92,8 @@ const NotificationOptions = ({
           offColor="white"
           onChange={async () => {
             if (userPreferencesState.afternoonNotification === 1) {
+              await updateUserPreference("afternoonNotification", 0);
               await cancelNotification(2);
-              updateUserPreference("afternoonNotification", 0);
             } else {
               await LocalNotifications.schedule({
                 notifications: [
@@ -112,7 +109,7 @@ const NotificationOptions = ({
                   },
                 ],
               });
-              updateUserPreference("afternoonNotification", 1);
+              await updateUserPreference("afternoonNotification", 1);
             }
           }}
           onColor={activeColor}
@@ -134,8 +131,8 @@ const NotificationOptions = ({
           offColor="white"
           onChange={async () => {
             if (userPreferencesState.eveningNotification === 1) {
+              await updateUserPreference("eveningNotification", 0);
               await cancelNotification(3);
-              updateUserPreference("eveningNotification", 0);
             } else {
               await LocalNotifications.schedule({
                 notifications: [
@@ -151,13 +148,13 @@ const NotificationOptions = ({
                   },
                 ],
               });
-              updateUserPreference("eveningNotification", 1);
+              await updateUserPreference("eveningNotification", 1);
             }
           }}
           onColor={activeColor}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

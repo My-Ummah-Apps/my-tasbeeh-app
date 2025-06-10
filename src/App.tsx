@@ -33,18 +33,6 @@ import {
   BinaryValue,
 } from "./utils/types";
 
-// localStorage.setItem("theme", "\"dark\"");
-// localStorage.setItem("afternoon-notification", "true");
-// localStorage.setItem("lastLaunchDate", "02/06/2025");
-// localStorage.setItem("evening-notification", "true");
-// localStorage.setItem("haptics", "false");
-// localStorage.setItem("localSavedCountersArray", "[{\"counter\":\"Alhumdulillah\",\"count\":0,\"isActive\":true,\"target\":50,\"id\":\"372d741c-27a8-4f6f-a53a-847c3c7b29d7\"},{\"counter\":\"Subhanallah\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"cf1dd17c-9b8b-44ad-bf11-171b71610d40\"},{\"counter\":\"Allahu-Akbar\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"095717f8-524d-440e-b1b6-e53f65da5b9f\"},{\"counter\":\"Astagfirullah\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"f1cb3c53-b9aa-4d4a-aadf-f239a834a20c\"},{\"counter\":\"Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"2d9d35e7-0f65-48a0-a1de-106eccc02bba\"},{\"counter\":\"La hawla wa la quwwata illa billah\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"6b9830f7-86cc-45b2-a7e7-f8c3ea9b9511\"},{\"counter\":\"La ilaha illallah\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"2fce9b90-3e6e-402d-97c9-733cd3980460\"},{\"counter\":\"Subhan-Allahi wa bihamdih\",\"count\":0,\"isActive\":false,\"target\":50,\"id\":\"7c85aee5-84f3-484f-a8cf-2700218baf0e\"}]");
-// localStorage.setItem("morning-notification", "true");
-// localStorage.setItem("launch-count", "764");
-// localStorage.setItem("appVersion", "2.5");
-// localStorage.setItem("activeColor", "#AB47BC");
-// localStorage.setItem("dailyCounterReset", "false");
-
 import { AnimatePresence } from "framer-motion";
 import useSQLiteDB from "./utils/useSqliteDB";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
@@ -76,6 +64,66 @@ function App() {
   );
   const [userPreferencesState, setUserPreferencesState] =
     useState<userPreferencesType>(dictPreferencesDefaultValues);
+
+  const injectDummyData = () => {
+    localStorage.setItem("theme", '"dark"');
+    localStorage.setItem("afternoon-notification", "true");
+    localStorage.setItem("lastLaunchDate", "02/06/2025");
+    localStorage.setItem("evening-notification", "true");
+    localStorage.setItem("haptics", "false");
+    localStorage.setItem(
+      "localSavedCountersArray",
+      '[{"counter":"Counter 1","count":0,"isActive":true,"target":50,"id":"372d741c-27a8-4f6f-a53a-847c3c7b29d7"},{"counter":"Counter 2","count":0,"isActive":false,"target":50,"id":"cf1dd17c-9b8b-44ad-bf11-171b71610d40"},{"counter":"Counter 3","count":0,"isActive":false,"target":50,"id":"095717f8-524d-440e-b1b6-e53f65da5b9f"},{"counter":"Counter 4","count":0,"isActive":false,"target":50,"id":"f1cb3c53-b9aa-4d4a-aadf-f239a834a20c"},{"counter":"Counter 5","count":0,"isActive":false,"target":50,"id":"2d9d35e7-0f65-48a0-a1de-106eccc02bba"},{"counter":"Counter 6","count":0,"isActive":false,"target":50,"id":"6b9830f7-86cc-45b2-a7e7-f8c3ea9b9511"},{"counter":"Counter 7","count":0,"isActive":false,"target":50,"id":"2fce9b90-3e6e-402d-97c9-733cd3980460"},{"counter":"Counter 8","count":0,"isActive":false,"target":50,"id":"7c85aee5-84f3-484f-a8cf-2700218baf0e"}]'
+    );
+    localStorage.setItem("morning-notification", "true");
+    localStorage.setItem("launch-count", "764");
+    localStorage.setItem("appVersion", "2.5");
+    localStorage.setItem("activeColor", "#AB47BC");
+    localStorage.setItem("dailyCounterReset", "false");
+  };
+
+  injectDummyData();
+
+  const migrationToDB = async () => {
+    const countersArr: counterObjType[] = JSON.parse(
+      localStorage.getItem("localSavedCountersArray")
+    );
+
+    console.log("LOCALSTORAGE COUNTERS: ", countersArr);
+
+    try {
+      toggleDBConnection("open");
+      console.log("HELLOOOOOO");
+
+      for (let i = 0; i < countersArr.length; i++) {
+        const counterObj = countersArr[i];
+        console.log("counterObj: ", counterObj);
+
+        const isActive = counterObj.isActive === "true" ? 1 : 0;
+
+        const insertStmnt = `INSERT into counterDataTable(orderIndex, counterName, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+
+        if (!dbConnection.current) {
+          throw new Error("dbConnection.current does not exist");
+        }
+
+        await dbConnection.current.run(insertStmnt, [
+          i,
+          counterObj.counterName,
+          counterObj.count,
+          counterObj.target,
+          null,
+          isActive,
+        ]);
+      }
+    } catch (error) {
+      console.error("Error migrating data: ", error);
+    } finally {
+      toggleDBConnection("close");
+    }
+
+    // localStorage.clear();
+  };
 
   const initiateDefaultPrefsAndCounters = async () => {
     const params = Object.keys(dictPreferencesDefaultValues)
@@ -140,10 +188,13 @@ function App() {
   useEffect(() => {
     const initialiseApp = async () => {
       if (isDBInitialised === true) {
-        const initialiseAndLoadData = async () => {
-          await fetchDataFromDB();
-        };
-        initialiseAndLoadData();
+        if (localStorage.getItem("localSavedCountersArray")) {
+          await migrationToDB();
+        }
+        // const initialiseAndLoadData = async () => {
+        await fetchDataFromDB();
+        // };
+        // initialiseAndLoadData();
       }
     };
 
@@ -155,6 +206,8 @@ function App() {
       //   if (isDBImported) {
       //   await updateUserPreference("isExistingUser", "1");
       // }
+      console.log("fetchDataFromDB HAS RUN");
+
       await toggleDBConnection("open");
 
       let DBResultPreferences = await dbConnection.current!.query(
@@ -207,6 +260,8 @@ function App() {
       const DBResultAllCounterData = await dbConnection.current?.query(
         `SELECT * FROM counterDataTable`
       );
+      console.log("DBResultAllCounterData: ", DBResultAllCounterData?.values);
+
       assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
       assertValidDBResult(DBResultPreferences, "DBResultPreferences");
 
@@ -215,10 +270,29 @@ function App() {
       );
       await handleCounterDataFromDB(DBResultAllCounterData);
       await initialiseAppUI();
+      await reviewPrompt();
     } catch (error) {
       console.error(error);
     } finally {
       await updateUserPreference("isExistingUser", 1);
+    }
+  };
+
+  const reviewPrompt = async () => {
+    const storedLaunchCount = userPreferencesState.appLaunchCount;
+    let launchCount = storedLaunchCount ? Number(storedLaunchCount) : 0;
+    launchCount++;
+
+    await updateUserPreference("appLaunchCount", launchCount);
+
+    const shouldTriggerReview =
+      launchCount === 3 ||
+      launchCount === 10 ||
+      launchCount === 20 ||
+      launchCount % 50 === 0;
+
+    if (Capacitor.isNativePlatform() && shouldTriggerReview) {
+      InAppReview.requestReview();
     }
   };
 
@@ -366,28 +440,6 @@ function App() {
   if (Capacitor.getPlatform() === "ios") {
     Keyboard.setAccessoryBarVisible({ isVisible: true });
   }
-
-  useEffect(() => {
-    const reviewPrompt = async () => {
-      const storedLaunchCount = userPreferencesState.appLaunchCount;
-      let launchCount = storedLaunchCount ? Number(storedLaunchCount) : 0;
-      launchCount++;
-
-      await updateUserPreference("appLaunchCount", launchCount);
-
-      const shouldTriggerReview =
-        launchCount === 3 ||
-        launchCount === 10 ||
-        launchCount === 20 ||
-        launchCount % 50 === 0;
-
-      if (Capacitor.isNativePlatform() && shouldTriggerReview) {
-        InAppReview.requestReview();
-      }
-    };
-
-    reviewPrompt();
-  }, []);
 
   const resetSingleCounter = async (id: number) => {
     try {

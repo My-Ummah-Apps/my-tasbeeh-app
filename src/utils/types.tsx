@@ -36,18 +36,18 @@ export type counterObjType = {
   isActive: BinaryValue;
 };
 
-export type NotificationParams = {
-  storageKey:
-    | "morning-notification"
-    | "afternoon-notification"
-    | "evening-notification";
-  setState: React.Dispatch<React.SetStateAction<boolean>>;
-  id: number;
-  title: string;
-  body: string;
-  hour: number;
-  minute: number;
-};
+// export type NotificationParams = {
+//   storageKey:
+//     | "morning-notification"
+//     | "afternoon-notification"
+//     | "evening-notification";
+//   setState: React.Dispatch<React.SetStateAction<boolean>>;
+//   id: number;
+//   title: string;
+//   body: string;
+//   hour: number;
+//   minute: number;
+// };
 
 export type languageDirection = "rtl" | "ltr" | "neutral";
 
@@ -57,10 +57,6 @@ export type Notifications =
   | "morning-notification"
   | "afternoon-notification"
   | "evening-notification";
-
-// export type InitialiseNotificationParams = NotificationParams & {
-//   setState: React.Dispatch<React.SetStateAction<boolean>>;
-// };
 
 // export type ActiveCounter = {
 //   counterName: string;

@@ -16,7 +16,6 @@ interface CountersListItemProps {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
-  counterId: number;
   setActiveColor: React.Dispatch<MaterialColor>;
   updateCountersState: (arr: counterObjType[]) => void;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
@@ -30,7 +29,6 @@ const CountersListItem = ({
   dbConnection,
   toggleDBConnection,
   updateUserPreference,
-  counterId,
   setActiveColor,
   updateCountersState,
   setCounterId,
@@ -51,18 +49,15 @@ const CountersListItem = ({
 
           try {
             await toggleDBConnection("open");
-            // ! ACTIVE COLOR IS NOT PERSISTING UPON RELOAD
-            await updateUserPreference("activeColor", color);
-
-            await dbConnection.current?.run(
+            await dbConnection.current!.run(
               `UPDATE counterDataTable SET isActive = 0`
             );
-            console.log("COUNTERID", counterItem.id);
 
-            await dbConnection.current?.run(
+            await dbConnection.current!.run(
               `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
               [counterItem.id]
             );
+            await updateUserPreference("activeColor", color);
           } catch (error) {
             console.error(
               "Error updating active counter/active color: ",
@@ -73,7 +68,6 @@ const CountersListItem = ({
           }
 
           setActiveColor(color);
-          // localStorage.setItem("activeColor", color);
           const updatedCountersArr: counterObjType[] = countersState.map(
             (counter: counterObjType) => {
               return counter.id === counterItem.id

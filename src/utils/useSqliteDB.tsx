@@ -88,7 +88,7 @@ const useSQLiteDB = () => {
         );
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error toggling DB connection,", error);
     }
   }
 

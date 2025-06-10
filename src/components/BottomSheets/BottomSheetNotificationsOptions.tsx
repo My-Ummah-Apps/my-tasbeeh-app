@@ -14,9 +14,6 @@ interface BottomSheetNotificationsOptionsProps {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType
   ) => Promise<void>;
-  setUserPreferencesState: React.Dispatch<
-    React.SetStateAction<userPreferencesType>
-  >;
   userPreferencesState: userPreferencesType;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
@@ -26,7 +23,6 @@ interface BottomSheetNotificationsOptionsProps {
 
 const BottomSheetNotificationsOptions = ({
   updateUserPreference,
-  setUserPreferencesState,
   userPreferencesState,
   activeColor,
   activeCounter,
@@ -49,7 +45,6 @@ const BottomSheetNotificationsOptions = ({
             updateUserPreference={updateUserPreference}
             activeColor={activeColor}
             activeCounter={activeCounter}
-            setUserPreferencesState={setUserPreferencesState}
             userPreferencesState={userPreferencesState}
           />
         </Sheet.Content>

@@ -32,14 +32,11 @@ function ActiveCounter({
     const counterTextContainerWidth = counterTextContainerRef.current
       ? counterTextContainerRef.current.clientWidth
       : 0;
-    console.log("RUN");
 
     if (direction(activeCounter.counterName) === "ltr") {
       setLanguageDirection("ltr");
-      console.log("DIRECTION IS LTR");
     } else if (direction(activeCounter.counterName) === "rtl") {
       setLanguageDirection("rtl");
-      console.log("DIRECTION IS RTL");
     }
 
     if (

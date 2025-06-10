@@ -8,17 +8,17 @@ import { tween_config } from "../../utils/constants";
 interface BottomSheetFormProps {
   activeColor: MaterialColor;
   countersState: counterObjType[];
-  setCounterId: React.Dispatch<React.SetStateAction<string | null>>;
-  counterId: string | null;
-  deleteSingleCounter: (id: string) => void;
+  setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
+  counterId: number | null;
+  deleteSingleCounter: (id: number) => Promise<void>;
   activeCounter: counterObjType;
-  addCounter: (counterToAdd: string, target: number) => void;
+  addCounter: (counterToAdd: string, target: number) => Promise<void>;
   modifyCounter: (
-    id: string,
+    id: number,
     modifiedCounterName: string,
     modifiedCount: number,
     modifiedTarget: number
-  ) => void;
+  ) => Promise<void>;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   showForm: boolean;
 }
@@ -39,6 +39,8 @@ const BottomSheetForm = ({
   const [input, setInput] = useState({ name: "", count: 0, target: 0 });
 
   useEffect(() => {
+    console.log("EDITING ID IS: ", counterId);
+
     const clickedCounter = countersState.find(
       (counter) => counter.id === counterId
     );
@@ -231,7 +233,7 @@ const BottomSheetForm = ({
                       "Are you sure you want to delete this Tasbeeh?"
                     );
                     if (result) {
-                      deleteSingleCounter(counterId);
+                      await deleteSingleCounter(counterId);
                       closeFormCleanup();
                       showToast("Tasbeeh deleted", "bottom", "short");
                     }

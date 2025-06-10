@@ -96,28 +96,12 @@ const SettingsPage = ({
       checkPermission.display === "prompt" ||
       checkPermission.display === "prompt-with-rationale"
     ) {
-      await requestPermissionFunction();
+      const requestPermission = await LocalNotifications.requestPermissions();
+      if (requestPermission.display === "granted") {
+        setShowNotificationsSheet(true);
+      }
     }
   }
-
-  const requestPermissionFunction = async () => {
-    const requestPermission = await LocalNotifications.requestPermissions();
-
-    if (requestPermission.display === "granted") {
-      setShowNotificationsSheet(true);
-    }
-    // else if (
-    //   requestPermission.display === "denied" ||
-    //   requestPermission.display === "prompt"
-    // ) {
-    //   setUserPreferencesState((prev) => ({
-    //     ...prev,
-    //     morningNotification: 0,
-    //     afternoonNotification: 0,
-    //     eveningNotification: 0,
-    //   }));
-    // }
-  };
 
   // async function triggerPurchase(tipAmount) {
   //   try {
