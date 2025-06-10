@@ -29,7 +29,7 @@ export type PreferenceObjType = {
 export type counterObjType = {
   id: number;
   orderIndex: number;
-  counterName: string;
+  name: string;
   count: number;
   target: number;
   color: MaterialColor | null;
@@ -59,7 +59,7 @@ export type Notifications =
   | "evening-notification";
 
 // export type ActiveCounter = {
-//   counterName: string;
+//   name: string;
 //   count: number;
 //   target: number;
 //   color: string;

@@ -47,7 +47,7 @@ const BottomSheetForm = ({
     const isEditingCounter = !!clickedCounter;
 
     setInput({
-      name: isEditingCounter ? clickedCounter.counterName : "",
+      name: isEditingCounter ? clickedCounter.name : "",
       count: isEditingCounter ? clickedCounter.count : 0,
       target: isEditingCounter ? clickedCounter.target : 0,
     });

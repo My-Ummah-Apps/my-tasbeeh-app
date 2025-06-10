@@ -24,7 +24,7 @@ export const materialColors = [
 export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
   {
     orderIndex: 0,
-    counterName: "Alhumdulillah",
+    name: "Alhumdulillah",
     count: 0,
     target: 50,
     color: null,
@@ -33,7 +33,7 @@ export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
 
   {
     orderIndex: 1,
-    counterName: "Subhanallah",
+    name: "Subhanallah",
     count: 0,
     target: 50,
     color: null,
@@ -42,7 +42,7 @@ export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
 
   {
     orderIndex: 2,
-    counterName: "Allahu-Akbar",
+    name: "Allahu-Akbar",
     count: 0,
     target: 50,
     color: null,
@@ -51,7 +51,7 @@ export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
 
   {
     orderIndex: 3,
-    counterName: "Astagfirullah",
+    name: "Astagfirullah",
     count: 0,
     target: 50,
     color: null,
@@ -59,7 +59,7 @@ export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
   },
   {
     orderIndex: 4,
-    counterName: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
+    name: "Subhan-Allahi wa bihamdihi, Subhan-Allahil-Azim",
     count: 0,
     target: 50,
     color: null,
@@ -67,7 +67,7 @@ export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
   },
   {
     orderIndex: 5,
-    counterName: "La hawla wa la quwwata illa billah",
+    name: "La hawla wa la quwwata illa billah",
     count: 0,
     target: 50,
     color: null,
@@ -75,7 +75,7 @@ export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
   },
   {
     orderIndex: 6,
-    counterName: "La ilaha illallah",
+    name: "La ilaha illallah",
     count: 0,
     target: 50,
     color: null,
@@ -83,7 +83,7 @@ export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
   },
   {
     orderIndex: 7,
-    counterName: "Subhan-Allahi wa bihamdih",
+    name: "Subhan-Allahi wa bihamdih",
     count: 0,
     target: 50,
     color: null,

@@ -86,14 +86,12 @@ const CountersListItem = ({
             <div
               style={{
                 textAlign:
-                  direction(counterItem.counterName) === "ltr"
-                    ? "left"
-                    : "right",
+                  direction(counterItem.name) === "ltr" ? "left" : "right",
                 // direction: direction(counterItem.counter),
               }}
               className="single-counter-counter-name"
             >
-              {counterItem.counterName}
+              {counterItem.name}
             </div>
           </Link>
         </div>

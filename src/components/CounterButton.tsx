@@ -86,7 +86,7 @@ function CounterButton({
   return (
     <button
       data-testid="counter-increment-button"
-      aria-label={`Increase counter for ${activeCounter.counterName}, current value is ${activeCounter.count}`}
+      aria-label={`Increase counter for ${activeCounter.name}, current value is ${activeCounter.count}`}
       style={{
         backgroundColor: `${activeColor}`,
         boxShadow: `0px 0px 10px ${activeColor}`,

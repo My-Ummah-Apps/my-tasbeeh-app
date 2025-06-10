@@ -58,6 +58,8 @@ const useSQLiteDB = () => {
   }, []);
 
   async function toggleDBConnection(action: DBConnectionStateType) {
+    console.log("toggleDBConnection has run, action is: ", action);
+
     try {
       if (!dbConnection || !dbConnection.current) {
         throw new Error();
@@ -107,7 +109,7 @@ const useSQLiteDB = () => {
         CREATE TABLE IF NOT EXISTS counterDataTable(
         id INTEGER PRIMARY KEY NOT NULL,
         orderIndex INTEGER NOT NULL DEFAULT 0,
-        counterName TEXT NOT NULL, 
+        name TEXT NOT NULL UNIQUE, 
         count INTEGER NOT NULL, 
         target INTEGER NOT NULL, 
         color TEXT DEFAULT NULL,
