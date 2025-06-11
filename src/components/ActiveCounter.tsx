@@ -122,8 +122,8 @@ function ActiveCounter({
           aria-label="Reset Counter"
           data-testid="counter-reset-btn"
           className="reset-btn-wrap"
-          onClick={() => {
-            resetSingleCounter(activeCounter.id);
+          onClick={async () => {
+            await resetSingleCounter(activeCounter.id);
           }}
         >
           <MdOutlineRestartAlt />

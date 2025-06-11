@@ -26,7 +26,7 @@ interface CounterButtonProps {
   activeColor: MaterialColor;
   countersArr: counterObjType[];
   activeCounter: counterObjType;
-  updateCountersState: (arr: counterObjType[]) => void;
+  updateCountersState: (arr: counterObjType[]) => Promise<void>;
 }
 
 function CounterButton({
@@ -60,7 +60,7 @@ function CounterButton({
       await toggleDBConnection("close");
     }
 
-    updateCountersState(updatedCountersArr);
+    await updateCountersState(updatedCountersArr);
 
     if (Capacitor.isNativePlatform()) {
       if (

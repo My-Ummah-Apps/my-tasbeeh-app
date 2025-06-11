@@ -17,7 +17,7 @@ interface CountersListItemProps {
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
   setActiveColor: React.Dispatch<MaterialColor>;
-  updateCountersState: (arr: counterObjType[]) => void;
+  updateCountersState: (arr: counterObjType[]) => Promise<void>;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
   countersState: counterObjType[];
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -75,7 +75,7 @@ const CountersListItem = ({
                 : { ...counter, isActive: 0 };
             }
           );
-          updateCountersState(updatedCountersArr);
+          await updateCountersState(updatedCountersArr);
         }}
       >
         <div className="single-counter-name-and-count-wrap">

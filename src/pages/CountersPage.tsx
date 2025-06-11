@@ -22,7 +22,7 @@ interface CountersPageProps {
   activeColor: MaterialColor;
   setActiveColor: React.Dispatch<MaterialColor>;
   activeCounter: counterObjType;
-  updateCountersState: (arr: counterObjType[]) => void;
+  updateCountersState: (arr: counterObjType[]) => Promise<void>;
   countersState: counterObjType[];
   addCounter: (counterToAdd: string, target: number) => Promise<void>;
   modifyCounter: (

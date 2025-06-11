@@ -97,7 +97,7 @@ function App() {
     localStorage.removeItem("activeColor");
     localStorage.removeItem("dailyCounterReset");
   };
-  injectDummyData();
+  // injectDummyData();
 
   const migrationToDB = async () => {
     console.log("MIGRATION HAS BEGUN");
