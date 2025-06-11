@@ -108,7 +108,6 @@ function App() {
       // PREFERENCES MIGRATION
 
       const todaysDate = new Date().toLocaleDateString("en-CA");
-
       const theme = JSON.parse(localStorage.getItem("theme") || "dark");
       const morningNotification =
         localStorage.getItem("morning-notification") === "true" ? 1 : 0;
@@ -116,8 +115,8 @@ function App() {
         localStorage.getItem("afternoon-notification") === "true" ? 1 : 0;
       const eveningNotification =
         localStorage.getItem("evening-notification") === "true" ? 1 : 0;
-      const lastLaunchDate =
-        localStorage.getItem("lastLaunchDate") || todaysDate;
+      // const lastLaunchDate =
+      //   localStorage.getItem("lastLaunchDate") || todaysDate;
       const haptics = localStorage.getItem("haptics") === "true" ? 1 : 0;
       const launchCount = localStorage.getItem("launch-count") || 0;
       const activeColor =
@@ -134,7 +133,7 @@ function App() {
         isExistingUser: 1,
         appLaunchCount: Number(launchCount),
         haptics: haptics,
-        previousLaunchDate: lastLaunchDate,
+        previousLaunchDate: todaysDate,
         dailyCounterReset: dailyCounterReset,
         // @ts-ignore
         activeColor: activeColor,
@@ -194,7 +193,7 @@ function App() {
     } finally {
       toggleDBConnection("close");
     }
-    // clearLocalStorage();
+    clearLocalStorage();
     console.log("MIGRATION HAS FINISHED, LOCALSTORAGE CLEARED");
   };
 

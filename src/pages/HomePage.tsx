@@ -21,7 +21,7 @@ interface HomePageProps {
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetSingleCounter: (id: number) => Promise<void>;
-  updateCountersState: (arr: counterObjType[]) => void;
+  updateCountersState: (arr: counterObjType[]) => Promise<void>;
   countersArr: counterObjType[];
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
