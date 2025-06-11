@@ -46,6 +46,16 @@ const CountersListItem = ({
         }}
         onClick={async () => {
           setCounterId(counterItem.id);
+          setActiveColor(color);
+          const updatedCountersArr: counterObjType[] = countersState.map(
+            (counter: counterObjType) => {
+              return counter.id === counterItem.id
+                ? { ...counter, isActive: 1 }
+                : { ...counter, isActive: 0 };
+            }
+          );
+          await updateCountersState(updatedCountersArr);
+          await updateUserPreference("activeColor", color);
 
           try {
             await toggleDBConnection("open");
@@ -57,7 +67,6 @@ const CountersListItem = ({
               `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
               [counterItem.id]
             );
-            await updateUserPreference("activeColor", color);
           } catch (error) {
             console.error(
               "Error updating active counter/active color: ",
@@ -66,16 +75,6 @@ const CountersListItem = ({
           } finally {
             await toggleDBConnection("close");
           }
-
-          setActiveColor(color);
-          const updatedCountersArr: counterObjType[] = countersState.map(
-            (counter: counterObjType) => {
-              return counter.id === counterItem.id
-                ? { ...counter, isActive: 1 }
-                : { ...counter, isActive: 0 };
-            }
-          );
-          await updateCountersState(updatedCountersArr);
         }}
       >
         <div className="single-counter-name-and-count-wrap">

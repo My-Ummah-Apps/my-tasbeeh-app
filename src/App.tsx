@@ -99,6 +99,9 @@ function App() {
   };
   // injectDummyData();
 
+  // const test = new Date("01/01");
+  // console.log(test.toLocaleDateString("en-CA"));
+
   const migrationToDB = async () => {
     console.log("MIGRATION HAS BEGUN");
 
@@ -115,16 +118,12 @@ function App() {
         localStorage.getItem("afternoon-notification") === "true" ? 1 : 0;
       const eveningNotification =
         localStorage.getItem("evening-notification") === "true" ? 1 : 0;
-      // const lastLaunchDate =
-      //   localStorage.getItem("lastLaunchDate") || todaysDate;
       const haptics = localStorage.getItem("haptics") === "true" ? 1 : 0;
       const launchCount = localStorage.getItem("launch-count") || 0;
       const activeColor =
         localStorage.getItem("activeColor") || materialColors[0];
       const dailyCounterReset =
         localStorage.getItem("dailyCounterReset") === "true" ? 1 : 0;
-
-      console.log("theme: ", typeof theme);
 
       const prefs: userPreferencesType = {
         morningNotification: morningNotification,
@@ -191,7 +190,7 @@ function App() {
     } catch (error) {
       console.error("Error migrating data: ", error);
     } finally {
-      toggleDBConnection("close");
+      await toggleDBConnection("close");
     }
     clearLocalStorage();
     console.log("MIGRATION HAS FINISHED, LOCALSTORAGE CLEARED");
