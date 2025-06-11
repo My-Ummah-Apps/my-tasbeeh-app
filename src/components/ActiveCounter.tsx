@@ -10,7 +10,7 @@ import {
 interface CounterNameAndNumberProps {
   activeColor: MaterialColor;
   activeCounter: counterObjType;
-  resetSingleCounter: (id: string) => Promise<void>;
+  resetSingleCounter: (id: number) => Promise<void>;
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
 }

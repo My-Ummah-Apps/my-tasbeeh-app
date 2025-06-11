@@ -3,7 +3,6 @@ import CounterButton from "../components/CounterButton";
 import { motion } from "framer-motion";
 // import { pageTransitionStyles } from "../utils/constants";
 import {
-  BinaryValue,
   counterObjType,
   DBConnectionStateType,
   languageDirection,
@@ -15,9 +14,9 @@ import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
-  setUserPreferencesState: React.Dispatch<
-    React.SetStateAction<userPreferencesType>
-  >;
+  // setUserPreferencesState: React.Dispatch<
+  //   React.SetStateAction<userPreferencesType>
+  // >;
   userPreferencesState: userPreferencesType;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
@@ -31,7 +30,7 @@ interface HomePageProps {
 const HomePage = ({
   dbConnection,
   toggleDBConnection,
-  setUserPreferencesState,
+  // setUserPreferencesState,
   userPreferencesState,
   activeColor,
   activeCounter,

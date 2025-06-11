@@ -8,7 +8,7 @@ import {
   themeType,
   userPreferencesType,
 } from "../utils/types";
-import { Capacitor } from "@capacitor/core";
+// import { Capacitor } from "@capacitor/core";
 
 interface NotificationOptionsProps {
   updateUserPreference: (

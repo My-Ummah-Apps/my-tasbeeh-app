@@ -21,7 +21,6 @@ import {
   showToast,
 } from "../utils/constants";
 import {
-  BinaryValue,
   counterObjType,
   MaterialColor,
   PreferenceKeyType,
@@ -33,9 +32,9 @@ import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
 interface SettingsageProps {
-  setUserPreferencesState: React.Dispatch<
-    React.SetStateAction<userPreferencesType>
-  >;
+  // setUserPreferencesState: React.Dispatch<
+  //   React.SetStateAction<userPreferencesType>
+  // >;
   userPreferencesState: userPreferencesType;
   updateUserPreference: (
     preferenceName: PreferenceKeyType,
@@ -51,7 +50,7 @@ interface SettingsageProps {
 const SettingsPage = ({
   // iapProducts,
   updateUserPreference,
-  setUserPreferencesState,
+  // setUserPreferencesState,
   userPreferencesState,
   activeColor,
   activeCounter,
@@ -289,7 +288,6 @@ const SettingsPage = ({
             activeCounter={activeCounter}
             setShowNotificationsSheet={setShowNotificationsSheet}
             showNotificationsSheet={showNotificationsSheet}
-            setUserPreferencesState={setUserPreferencesState}
             userPreferencesState={userPreferencesState}
           />
         </section>

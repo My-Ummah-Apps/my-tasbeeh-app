@@ -1,6 +1,5 @@
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
 import {
-  BinaryValue,
   counterObjType,
   DBConnectionStateType,
   MaterialColor,
@@ -20,9 +19,9 @@ const hapticsVibrate = async () => {
 interface CounterButtonProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
-  setUserPreferencesState: React.Dispatch<
-    React.SetStateAction<userPreferencesType>
-  >;
+  // setUserPreferencesState: React.Dispatch<
+  //   React.SetStateAction<userPreferencesType>
+  // >;
   userPreferencesState: userPreferencesType;
   activeColor: MaterialColor;
   countersArr: counterObjType[];
@@ -33,7 +32,7 @@ interface CounterButtonProps {
 function CounterButton({
   dbConnection,
   toggleDBConnection,
-  setUserPreferencesState,
+  // setUserPreferencesState,
   userPreferencesState,
   activeColor,
   countersArr,
