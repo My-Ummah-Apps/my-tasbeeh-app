@@ -1100,7 +1100,11 @@ input[type="number"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2rem;
   padding: 1.5rem 1rem;
+}
+
+.individual-notification-option-wrap:not(:last-child) {
   border-bottom: 1px solid var(--settings-page-borders);
 }
 

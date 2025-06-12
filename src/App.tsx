@@ -12,7 +12,7 @@ import {
   dictPreferencesDefaultValues,
   materialColors,
   setStatusAndNavBarBGColor,
-  showerAlert,
+  showAlert,
   showToast,
   tween_config,
 } from "./utils/constants";
@@ -111,6 +111,7 @@ function App() {
       // PREFERENCES MIGRATION
 
       const todaysDate = new Date().toLocaleDateString("en-CA");
+
       const theme = JSON.parse(localStorage.getItem("theme") || "dark");
       const morningNotification =
         localStorage.getItem("morning-notification") === "true" ? 1 : 0;
@@ -340,12 +341,14 @@ function App() {
         DBResultPreferences.values as PreferenceObjType[]
       );
       await handleCounterDataFromDB(DBResultAllCounterData);
+      await updateUserPreference("isExistingUser", 1);
       await initialiseAppUI();
       await reviewPrompt();
     } catch (error) {
       console.error(error);
     } finally {
-      await updateUserPreference("isExistingUser", 1);
+      // await toggleDBConnection("close");
+      // await updateUserPreference("isExistingUser", 1);
     }
   };
 
@@ -558,7 +561,7 @@ function App() {
         maxOrderIndexResult?.values?.[0].maxOrderIndex ?? -1;
       const newOrderIndex = maxOrderIndex + 1;
 
-      const insertQuery = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+      const insertQuery = `INSERT OR IGNORE into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
       const insertResult = await dbConnection.current?.run(insertQuery, [
         newOrderIndex,
         newCounterName,
@@ -639,10 +642,7 @@ function App() {
       (counter) => counter.id !== id
     );
     if (remainingCounters.length === 0) {
-      showerAlert(
-        "Unable to delete Tasbeeh",
-        "At least one tasbeeh must exist"
-      );
+      showAlert("Unable to delete Tasbeeh", "At least one tasbeeh must exist");
       return;
     }
 

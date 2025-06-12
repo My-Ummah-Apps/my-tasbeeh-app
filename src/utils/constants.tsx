@@ -164,7 +164,7 @@ export const showToast = async (
   });
 };
 
-export const showerAlert = async (title: string, message: string) => {
+export const showAlert = async (title: string, message: string) => {
   await Dialog.alert({
     title: title,
     message: message,

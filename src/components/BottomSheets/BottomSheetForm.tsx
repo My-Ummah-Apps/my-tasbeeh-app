@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Sheet } from "react-modal-sheet";
 import { MdDeleteOutline } from "react-icons/md";
-import { showConfirmDialog, showToast } from "../../utils/constants";
+import { showConfirmDialog, showAlert, showToast } from "../../utils/constants";
 import { counterObjType, MaterialColor } from "../../utils/types";
 import { tween_config } from "../../utils/constants";
 
@@ -86,13 +86,30 @@ const BottomSheetForm = ({
     e.preventDefault();
     setSubmitted(true);
 
-    if (input.name.trim() === "" || input.count < 0 || input.target < 1) {
+    const inputName = input.name.trim();
+
+    if (inputName === "" || input.count < 0 || input.target < 1) {
       return;
     }
 
+    if (!counterId) {
+      const isDuplicate = countersState.some(
+        (counter) =>
+          counter.name.trim().toLowerCase() === inputName.toLowerCase()
+      );
+
+      if (isDuplicate) {
+        showAlert(
+          "Duplicate Tasbeeh",
+          "A tasbeeh with this name already exists. Please choose a different name."
+        );
+        return;
+      }
+    }
+
     counterId
-      ? await modifyCounter(counterId, input.name, input.count, input.target)
-      : await addCounter(input.name, Number(input.target));
+      ? await modifyCounter(counterId, inputName, input.count, input.target)
+      : await addCounter(inputName, Number(input.target));
 
     closeFormCleanup();
   };
