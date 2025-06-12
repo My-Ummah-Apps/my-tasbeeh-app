@@ -42,7 +42,6 @@ function CounterButton({
   const setCounterAndHaptics = async () => {
     const updatedCountersArr = countersArr.map((counter) => {
       const isActive = counter.isActive === 1;
-      console.log(isActive);
 
       if (isActive) {
         return { ...counter, count: (counter.count += 1) };

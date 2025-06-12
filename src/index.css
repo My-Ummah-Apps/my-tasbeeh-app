@@ -1100,7 +1100,7 @@ input[type="number"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
   padding: 1.5rem 1rem;
 }
 

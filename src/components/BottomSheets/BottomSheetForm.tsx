@@ -10,7 +10,7 @@ interface BottomSheetFormProps {
   countersState: counterObjType[];
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
   counterId: number | null;
-  deleteSingleCounter: (id: number) => Promise<void>;
+  deleteCounter: (id: number) => Promise<void>;
   activeCounter: counterObjType;
   addCounter: (counterToAdd: string, target: number) => Promise<void>;
   modifyCounter: (
@@ -28,7 +28,7 @@ const BottomSheetForm = ({
   countersState,
   setCounterId,
   counterId,
-  deleteSingleCounter,
+  deleteCounter,
   addCounter,
   modifyCounter,
   setShowForm,
@@ -39,8 +39,6 @@ const BottomSheetForm = ({
   const [input, setInput] = useState({ name: "", count: 0, target: 0 });
 
   useEffect(() => {
-    console.log("EDITING ID IS: ", counterId);
-
     const clickedCounter = countersState.find(
       (counter) => counter.id === counterId
     );
@@ -250,7 +248,7 @@ const BottomSheetForm = ({
                       "Are you sure you want to delete this Tasbeeh?"
                     );
                     if (result) {
-                      await deleteSingleCounter(counterId);
+                      await deleteCounter(counterId);
                       closeFormCleanup();
                       showToast("Tasbeeh deleted", "bottom", "short");
                     }

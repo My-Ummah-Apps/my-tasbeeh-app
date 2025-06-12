@@ -31,7 +31,7 @@ interface CountersPageProps {
     modifiedCount: number,
     modifiedTarget: number
   ) => Promise<void>;
-  deleteSingleCounter: (id: number) => Promise<void>;
+  deleteCounter: (id: number) => Promise<void>;
 }
 
 function CountersPage({
@@ -42,7 +42,7 @@ function CountersPage({
   setActiveColor,
   activeCounter,
   updateCountersState,
-  deleteSingleCounter,
+  deleteCounter: deleteCounter,
   countersState,
   modifyCounter,
   addCounter,
@@ -68,7 +68,7 @@ function CountersPage({
         activeColor={activeColor}
         countersState={countersState}
         activeCounter={activeCounter}
-        deleteSingleCounter={deleteSingleCounter}
+        deleteCounter={deleteCounter}
         setCounterId={setCounterId}
         counterId={counterId}
         setShowForm={setShowForm}

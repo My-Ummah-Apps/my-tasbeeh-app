@@ -28,6 +28,7 @@ const expectTestIdToContain = (
   value: string,
   assertion: "contain" | "have.text"
 ) => {
+  n;
   cy.get(`[data-testid="${testId}"]`).should(assertion, value);
 };
 
@@ -64,7 +65,7 @@ const expectTestIdToContain = (
 //   });
 // });
 
-describe("New user flow with no data present in localStorage", () => {
+describe("New user flow with no data present in localStorage or DB", () => {
   beforeEach(() => {
     cy.clearLocalStorage();
     cy.visit("/");

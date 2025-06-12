@@ -99,9 +99,6 @@ function App() {
   };
   // injectDummyData();
 
-  // const test = new Date("01/01");
-  // console.log(test.toLocaleDateString("en-CA"));
-
   const migrationToDB = async () => {
     console.log("MIGRATION HAS BEGUN");
 
@@ -164,7 +161,7 @@ function App() {
         // @ts-ignore
         localStorage.getItem("localSavedCountersArray")
       );
-      console.log("LOCALSTORAGE COUNTERS: ", countersArr);
+      // console.log("LOCALSTORAGE COUNTERS: ", countersArr);
 
       for (let i = 0; i < countersArr.length; i++) {
         const counterObj = countersArr[i];
@@ -278,7 +275,7 @@ function App() {
       if (isDBImported) {
         // await updateUserPreference("isExistingUser", "1");
       }
-      console.log("fetchDataFromDB HAS RUN");
+      // console.log("fetchDataFromDB HAS RUN");
 
       await toggleDBConnection("open");
 
@@ -333,7 +330,7 @@ function App() {
       const DBResultAllCounterData = await dbConnection.current?.query(
         `SELECT * FROM counterDataTable`
       );
-      console.log("DBResultAllCounterData: ", DBResultAllCounterData?.values);
+      // console.log("DBResultAllCounterData: ", DBResultAllCounterData?.values);
 
       assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
 
@@ -373,10 +370,10 @@ function App() {
   const handleUserPreferencesDataFromDB = async (
     DBResultPreferences: PreferenceObjType[]
   ) => {
-    console.log(
-      "Existing user, Preferences from DB are: ",
-      DBResultPreferences
-    );
+    // console.log(
+    //   "Existing user, Preferences from DB are: ",
+    //   DBResultPreferences
+    // );
 
     DBResultPreferences.forEach((item) => {
       if (
@@ -448,7 +445,7 @@ function App() {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType | string
   ) => {
-    console.log("updateUserPreference has run");
+    // console.log("updateUserPreference has run");
 
     try {
       await toggleDBConnection("open");
@@ -634,10 +631,10 @@ function App() {
         : counterItem;
     });
 
-    await updateCountersState(updatedCountersArr);
+    updateCountersState(updatedCountersArr);
   };
 
-  const deleteSingleCounter = async (id: number) => {
+  const deleteCounter = async (id: number) => {
     const remainingCounters = countersState.filter(
       (counter) => counter.id !== id
     );
@@ -658,7 +655,7 @@ function App() {
       const deleteQuery = `DELETE FROM counterDataTable WHERE id = ?`;
       await dbConnection.current?.run(deleteQuery, [id]);
       showToast("Tasbeeh deleted", "top", "short");
-      await updateCountersState(updatedCountersArr);
+      updateCountersState(updatedCountersArr);
     } catch (error) {
       console.error("Error deleting counter: ", error);
     } finally {
@@ -720,7 +717,7 @@ function App() {
                     modifyCounter={modifyCounter}
                     updateCountersState={updateCountersState}
                     addCounter={addCounter}
-                    deleteSingleCounter={deleteSingleCounter}
+                    deleteCounter={deleteCounter}
                   />
                 }
               />
