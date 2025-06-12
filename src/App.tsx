@@ -233,7 +233,7 @@ function App() {
     }
   };
 
-  const updateCountersState = async (arr: counterObjType[]) => {
+  const updateCountersState = (arr: counterObjType[]) => {
     setCountersState(arr);
     const activeCounter =
       arr.find((counter) => counter.isActive === 1) ?? arr[0];
@@ -438,7 +438,7 @@ function App() {
       })
     );
 
-    await updateCountersState(counters);
+    updateCountersState(counters);
   };
 
   const updateUserPreference = async (
@@ -521,7 +521,7 @@ function App() {
       const updatedCountersArr = countersState.map((counter) => {
         return counter.id === id ? { ...counter, count: 0 } : counter;
       });
-      await updateCountersState(updatedCountersArr);
+      updateCountersState(updatedCountersArr);
     } catch (error) {
       console.error("Error resetting single counter: ", error);
     } finally {
@@ -539,7 +539,7 @@ function App() {
         ...counter,
         count: 0,
       }));
-      await updateCountersState(resettedCounters);
+      updateCountersState(resettedCounters);
     } catch (error) {
       console.error("Error resetting all counters: ", error);
     } finally {
@@ -585,7 +585,7 @@ function App() {
       };
       const updatedCountersArr = [...countersState, newCounter];
 
-      await updateCountersState(updatedCountersArr);
+      updateCountersState(updatedCountersArr);
     } catch (error) {
       console.error("Failed to add counter: ", error);
     } finally {

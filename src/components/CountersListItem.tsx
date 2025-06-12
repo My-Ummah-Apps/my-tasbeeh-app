@@ -17,7 +17,7 @@ interface CountersListItemProps {
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
   setActiveColor: React.Dispatch<MaterialColor>;
-  updateCountersState: (arr: counterObjType[]) => Promise<void>;
+  updateCountersState: (arr: counterObjType[]) => void;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
   countersState: counterObjType[];
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -54,7 +54,7 @@ const CountersListItem = ({
                 : { ...counter, isActive: 0 };
             }
           );
-          await updateCountersState(updatedCountersArr);
+          updateCountersState(updatedCountersArr);
           await updateUserPreference("activeColor", color);
 
           try {

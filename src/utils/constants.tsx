@@ -5,6 +5,7 @@ import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { counterObjType, userPreferencesType } from "./types";
 import { EasingDefinition } from "framer-motion";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
+import { Capacitor } from "@capacitor/core";
 
 export const materialColors = [
   "#EF5350",
@@ -174,6 +175,8 @@ export const setStatusAndNavBarBGColor = async (
   backgroundColor: string,
   textColor: Style
 ) => {
-  await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
+  if (Capacitor.getPlatform() === "android") {
+    await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
+  }
   await StatusBar.setStyle({ style: textColor });
 };
