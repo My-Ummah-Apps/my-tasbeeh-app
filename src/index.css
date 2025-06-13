@@ -638,7 +638,8 @@ textarea:focus {
   max-width: 700px;
   border-top: 1px solid var(--border-header-and-nav);
   /* box-shadow: 10px 5px 5px rgb(177, 177, 177); */
-  background: var(--nav-bg-color);
+  /* background: var(--nav-bg-color); */
+  background: var(--body-bg-color);
   z-index: 1;
 }
 

@@ -272,26 +272,26 @@ const SettingsPage = ({
 
         </div>
 */}
-        {/* {Capacitor.isNativePlatform() ? ( */}
-        <section className="individual-section-wrap">
-          <SettingIndividual
-            // indvidualStyles={"rounded-t-md"}
-            headingText={"Notifications"}
-            subText={"Set Notifications"}
-            onClick={() => {
-              checkNotificationPermissions();
-            }}
-          />
-          <BottomSheetNotificationsOptions
-            updateUserPreference={updateUserPreference}
-            activeColor={activeColor}
-            activeCounter={activeCounter}
-            setShowNotificationsSheet={setShowNotificationsSheet}
-            showNotificationsSheet={showNotificationsSheet}
-            userPreferencesState={userPreferencesState}
-          />
-        </section>
-        {/* // ) : null} */}
+        {Capacitor.isNativePlatform() && (
+          <section className="individual-section-wrap">
+            <SettingIndividual
+              // indvidualStyles={"rounded-t-md"}
+              headingText={"Notifications"}
+              subText={"Set Notifications"}
+              onClick={() => {
+                checkNotificationPermissions();
+              }}
+            />
+            <BottomSheetNotificationsOptions
+              updateUserPreference={updateUserPreference}
+              activeColor={activeColor}
+              activeCounter={activeCounter}
+              setShowNotificationsSheet={setShowNotificationsSheet}
+              showNotificationsSheet={showNotificationsSheet}
+              userPreferencesState={userPreferencesState}
+            />
+          </section>
+        )}
         <section className="individual-section-wrap">
           <SettingIndividual
             // indvidualStyles={"rounded-t-md"}
@@ -309,25 +309,26 @@ const SettingsPage = ({
           />
         </section>
         <section className="individual-section-wrap">
-          {/* {Capacitor.isNativePlatform() && ( */}
-          <div className="individual-row-wrap haptic-wrap  p-3">
-            <div className="text-wrap" style={{ display: "block" }}>
-              <p>Haptic Vibration</p>
-              <p>Set vibration on every increment</p>
+          {Capacitor.isNativePlatform() && (
+            <div className="individual-row-wrap haptic-wrap  p-3">
+              <div className="text-wrap" style={{ display: "block" }}>
+                <p>Haptic Vibration</p>
+                <p>Set vibration on every increment</p>
+              </div>
+              <Switch
+                checked={userPreferencesState.haptics === 1 ? true : false}
+                handleColor="white"
+                name={undefined}
+                offColor="white"
+                onChange={async () => {
+                  const hapticsValue =
+                    userPreferencesState.haptics === 0 ? 1 : 0;
+                  await updateUserPreference("haptics", hapticsValue);
+                }}
+                onColor={activeColor}
+              />
             </div>
-            <Switch
-              checked={userPreferencesState.haptics === 1 ? true : false}
-              handleColor="white"
-              name={undefined}
-              offColor="white"
-              onChange={async () => {
-                const hapticsValue = userPreferencesState.haptics === 0 ? 1 : 0;
-                await updateUserPreference("haptics", hapticsValue);
-              }}
-              onColor={activeColor}
-            />
-          </div>
-          {/* // )} */}
+          )}
           <section className="individual-row-wrap p-3">
             <div className="text-wrap " style={{ display: "block" }}>
               <p>Auto Reset Adhkar</p>

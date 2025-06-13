@@ -56,6 +56,49 @@ function App() {
     isActive: 0,
   });
 
+  // const [iapProducts, setIapProducts] = useState(null);
+  // document.addEventListener("deviceready", onDeviceReady, false);
+
+  // function onDeviceReady() {
+  //   Purchases.setDebugLogsEnabled(true);
+
+  //   if (Capacitor.getPlatform() === "ios") {
+  //     Purchases.configureWith({
+  //       apiKey: process.env.REACT_APP_APPLE_APIKEY,
+  //     });
+  //   } else if (Capacitor.getPlatform() === "android") {
+  //     Purchases.configureWith({
+  //       apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
+  //     });
+  //   }
+  // }
+
+  // const productsArray = [
+  //   process.env.REACT_APP_ST,
+  //   process.env.REACT_APP_MT,
+  //   process.env.REACT_APP_LT,
+  //   process.env.REACT_APP_XLT,
+  // ];
+
+  // useEffect(() => {
+  //   if (Capacitor.isNativePlatform()) {
+  //     (async () => {
+  //       const fetchedProducts = await Purchases.getProducts(
+  //         productsArray,
+  //         "inapp"
+  //       );
+  //       fetchedProducts.sort(function (a, b) {
+  //         return a.price - b.price;
+  //       });
+  //       setIapProducts(fetchedProducts);
+  //     })();
+
+  //     return () => {
+  //       // Not required right now, but if needed this will get called when the component unmounts
+  //     };
+  //   }
+  // }, []);
+
   const [countersState, setCountersState] = useState<counterObjType[]>([]);
   const [languageDirection, setLanguageDirection] =
     useState<languageDirection>("neutral");
@@ -249,9 +292,9 @@ function App() {
       }, splash_hide_delay);
     }
 
-    setTimeout(async () => {
-      await SplashScreen.hide({ fadeOutDuration: 250 });
-    }, 500);
+    // setTimeout(async () => {
+    //   await SplashScreen.hide({ fadeOutDuration: 250 });
+    // }, 500);
   };
 
   useEffect(() => {
@@ -284,34 +327,55 @@ function App() {
       );
       assertValidDBResult(DBResultPreferences, "DBResultPreferences");
 
-      if (DBResultPreferences.values.length > 0) {
-        const todaysDate = new Date().toLocaleDateString("en-CA");
+      console.log("DBResultPreferences: ", DBResultPreferences.values);
 
-        const dailyCounterResetPref: PreferenceObjType =
+      if (DBResultPreferences.values.length > 0) {
+        DBResultPreferences = await dbConnection.current!.query(
+          `SELECT * FROM userPreferencesTable`
+        );
+        assertValidDBResult(DBResultPreferences, "DBResultPreferences");
+
+        const rawDailyCounterResetPrefValue =
           DBResultPreferences.values.find(
             (item) => item.preferenceName === "dailyCounterReset"
-          );
+          )?.preferenceValue ?? "0";
 
-        const previousLaunchDatePref: PreferenceObjType =
+        const dailyCounterResetPrefValue: BinaryValue =
+          rawDailyCounterResetPrefValue === "0" ? 0 : 1;
+
+        const previousLaunchDate: string =
           DBResultPreferences.values.find(
             (item) => item.preferenceName === "previousLaunchDate"
-          );
+          )?.preferenceValue ?? 0;
+
+        const todaysDate = new Date().toLocaleDateString("en-CA");
 
         if (
-          previousLaunchDatePref.preferenceValue !== todaysDate &&
-          dailyCounterResetPref.preferenceValue === 1
+          dailyCounterResetPrefValue === 1 &&
+          previousLaunchDate !== todaysDate
         ) {
+          console.log("dailyCounterResetPref: ", dailyCounterResetPrefValue);
+          console.log("previousLaunchDate: ", previousLaunchDate);
+          console.log("todaysDate: ", todaysDate);
+          console.log("previous launch date is different to todays date");
+
           const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
           await dbConnection.current!.run(resetAllCountersStatement);
-        }
 
-        const updatePreviousLaunchDateStatement = `
+          const updatePreviousLaunchDateStatement = `
         UPDATE userPreferencesTable
         SET preferenceValue = ? 
         WHERE preferenceName = 'previousLaunchDate'`;
-        await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
-          todaysDate,
-        ]);
+          await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
+            todaysDate,
+          ]);
+        }
+
+        const resettedCounters = countersState.map((counter) => ({
+          ...counter,
+          count: 0,
+        }));
+        updateCountersState(resettedCounters);
       }
 
       // let DBResultAllCounterData = await dbConnection.current!.query(
@@ -321,11 +385,6 @@ function App() {
       if (DBResultPreferences.values.length === 0) {
         await initiateDefaultPrefsAndCounters();
       }
-
-      DBResultPreferences = await dbConnection.current!.query(
-        `SELECT * FROM userPreferencesTable`
-      );
-      assertValidDBResult(DBResultPreferences, "DBResultPreferences");
 
       const DBResultAllCounterData = await dbConnection.current?.query(
         `SELECT * FROM counterDataTable`
@@ -370,11 +429,6 @@ function App() {
   const handleUserPreferencesDataFromDB = async (
     DBResultPreferences: PreferenceObjType[]
   ) => {
-    // console.log(
-    //   "Existing user, Preferences from DB are: ",
-    //   DBResultPreferences
-    // );
-
     DBResultPreferences.forEach((item) => {
       if (
         item.preferenceValue === "0" ||
