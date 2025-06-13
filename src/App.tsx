@@ -329,54 +329,48 @@ function App() {
 
       console.log("DBResultPreferences: ", DBResultPreferences.values);
 
-      if (DBResultPreferences.values.length > 0) {
-        DBResultPreferences = await dbConnection.current!.query(
-          `SELECT * FROM userPreferencesTable`
-        );
-        assertValidDBResult(DBResultPreferences, "DBResultPreferences");
+      const rawDailyCounterResetPrefValue = DBResultPreferences.values.find(
+        (item) => item.preferenceName === "dailyCounterReset"
+      )?.preferenceValue;
 
-        const rawDailyCounterResetPrefValue =
-          DBResultPreferences.values.find(
-            (item) => item.preferenceName === "dailyCounterReset"
-          )?.preferenceValue ?? "0";
+      const dailyCounterResetPrefValue: BinaryValue =
+        rawDailyCounterResetPrefValue === "0" ? 0 : 1;
 
-        const dailyCounterResetPrefValue: BinaryValue =
-          rawDailyCounterResetPrefValue === "0" ? 0 : 1;
+      const previousLaunchDate: string = DBResultPreferences.values.find(
+        (item) => item.preferenceName === "previousLaunchDate"
+      )?.preferenceValue;
 
-        const previousLaunchDate: string =
-          DBResultPreferences.values.find(
-            (item) => item.preferenceName === "previousLaunchDate"
-          )?.preferenceValue ?? 0;
+      const todaysDate = new Date().toLocaleDateString("en-CA");
 
-        const todaysDate = new Date().toLocaleDateString("en-CA");
+      const resetCounters =
+        dailyCounterResetPrefValue === 1 && previousLaunchDate !== todaysDate;
 
-        if (
-          dailyCounterResetPrefValue === 1 &&
-          previousLaunchDate !== todaysDate
-        ) {
-          console.log("dailyCounterResetPref: ", dailyCounterResetPrefValue);
-          console.log("previousLaunchDate: ", previousLaunchDate);
-          console.log("todaysDate: ", todaysDate);
-          console.log("previous launch date is different to todays date");
+      // if (
+      //   dailyCounterResetPrefValue === 1 &&
+      //   previousLaunchDate !== todaysDate
+      // ) {
+      //   console.log("dailyCounterResetPref: ", dailyCounterResetPrefValue);
+      //   console.log("previousLaunchDate: ", previousLaunchDate);
+      //   console.log("todaysDate: ", todaysDate);
+      //   console.log("previous launch date is different to todays date");
 
-          const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
-          await dbConnection.current!.run(resetAllCountersStatement);
+      //   const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
+      //   await dbConnection.current!.run(resetAllCountersStatement);
 
-          const updatePreviousLaunchDateStatement = `
-        UPDATE userPreferencesTable
-        SET preferenceValue = ? 
-        WHERE preferenceName = 'previousLaunchDate'`;
-          await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
-            todaysDate,
-          ]);
-        }
+      //   const updatePreviousLaunchDateStatement = `
+      //   UPDATE userPreferencesTable
+      //   SET preferenceValue = ?
+      //   WHERE preferenceName = 'previousLaunchDate'`;
+      //   await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
+      //     todaysDate,
+      //   ]);
 
-        const resettedCounters = countersState.map((counter) => ({
-          ...counter,
-          count: 0,
-        }));
-        updateCountersState(resettedCounters);
-      }
+      //   const resettedCounters = countersState.map((counter) => ({
+      //     ...counter,
+      //     count: 0,
+      //   }));
+      //   updateCountersState(resettedCounters);
+      // }
 
       // let DBResultAllCounterData = await dbConnection.current!.query(
       //   `SELECT * FROM counterDataTable`
@@ -396,7 +390,7 @@ function App() {
       await handleUserPreferencesDataFromDB(
         DBResultPreferences.values as PreferenceObjType[]
       );
-      await handleCounterDataFromDB(DBResultAllCounterData);
+      await handleCounterDataFromDB(DBResultAllCounterData, resetCounters);
       await updateUserPreference("isExistingUser", 1);
       await initialiseAppUI();
       await reviewPrompt();
@@ -474,18 +468,46 @@ function App() {
   };
 
   const handleCounterDataFromDB = async (
-    DBResultAllCounterData: DBSQLiteValues
+    DBResultAllCounterData: DBSQLiteValues,
+    resetCounters: boolean
   ) => {
     const countersFromDB = DBResultAllCounterData.values as Array<
       Record<string, any>
     >;
+
+    const todaysDate = new Date().toLocaleDateString("en-CA");
+
+    if (resetCounters) {
+      // console.log("dailyCounterResetPref: ", dailyCounterResetPrefValue);
+      // console.log("previousLaunchDate: ", previousLaunchDate);
+      console.log("todaysDate: ", todaysDate);
+      console.log("previous launch date is different to todays date");
+
+      const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
+      await dbConnection.current!.run(resetAllCountersStatement);
+
+      const updatePreviousLaunchDateStatement = `
+        UPDATE userPreferencesTable
+        SET preferenceValue = ? 
+        WHERE preferenceName = 'previousLaunchDate'`;
+      await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
+        todaysDate,
+      ]);
+
+      // counters = countersState.map((counter) => ({
+      //   ...counter,
+      //   count: 0,
+      // }));
+      // updateCountersState(resettedCounters);
+    }
 
     const counters: counterObjType[] = countersFromDB.map(
       (item): counterObjType => ({
         id: Number(item.id),
         orderIndex: Number(item.index),
         name: item.name,
-        count: Number(item.count),
+        // count: Number(item.count),
+        count: resetCounters ? 0 : Number(item.count),
         target: Number(item.target),
         color: item.color,
         isActive: Number(item.isActive) as BinaryValue,
