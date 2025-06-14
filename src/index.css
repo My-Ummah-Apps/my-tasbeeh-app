@@ -27,6 +27,7 @@
   /* --header-and-nav-bg-color: #f4f4f4; */
   --header-bg-color: rgb(237, 237, 237);
   --nav-bg-color: rgb(242, 242, 242);
+  --nav-border-color: #e2e2e2;
   --text-color-primary: #000;
   --text-color-secondary: #ffffff;
   --setings-page-boxes-bg-color: #f7f7f7;
@@ -47,6 +48,7 @@ body.dark {
   /* Dark mode variables go here */
   --body-bg-color: #242424;
   --nav-bg-color: #212121;
+  --nav-border-color: #1f1f1f;
   --header-bg-color: #242424;
   --text-color-primary: #fff;
   --setings-page-boxes-bg-color: #2f2f2f;
@@ -636,7 +638,8 @@ textarea:focus {
   bottom: 0;
   width: 100%;
   max-width: 700px;
-  border-top: 1px solid var(--border-header-and-nav);
+  /* border-top: 1px solid var(--border-header-and-nav); */
+  border-top: 1px solid var(--nav-border-color);
   /* box-shadow: 10px 5px 5px rgb(177, 177, 177); */
   /* background: var(--nav-bg-color); */
   background: var(--body-bg-color);

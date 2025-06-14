@@ -345,37 +345,6 @@ function App() {
       const resetCounters =
         dailyCounterResetPrefValue === 1 && previousLaunchDate !== todaysDate;
 
-      // if (
-      //   dailyCounterResetPrefValue === 1 &&
-      //   previousLaunchDate !== todaysDate
-      // ) {
-      //   console.log("dailyCounterResetPref: ", dailyCounterResetPrefValue);
-      //   console.log("previousLaunchDate: ", previousLaunchDate);
-      //   console.log("todaysDate: ", todaysDate);
-      //   console.log("previous launch date is different to todays date");
-
-      //   const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
-      //   await dbConnection.current!.run(resetAllCountersStatement);
-
-      //   const updatePreviousLaunchDateStatement = `
-      //   UPDATE userPreferencesTable
-      //   SET preferenceValue = ?
-      //   WHERE preferenceName = 'previousLaunchDate'`;
-      //   await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
-      //     todaysDate,
-      //   ]);
-
-      //   const resettedCounters = countersState.map((counter) => ({
-      //     ...counter,
-      //     count: 0,
-      //   }));
-      //   updateCountersState(resettedCounters);
-      // }
-
-      // let DBResultAllCounterData = await dbConnection.current!.query(
-      //   `SELECT * FROM counterDataTable`
-      // );
-
       if (DBResultPreferences.values.length === 0) {
         await initiateDefaultPrefsAndCounters();
       }
@@ -383,7 +352,6 @@ function App() {
       const DBResultAllCounterData = await dbConnection.current?.query(
         `SELECT * FROM counterDataTable`
       );
-      // console.log("DBResultAllCounterData: ", DBResultAllCounterData?.values);
 
       assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
 
@@ -396,9 +364,6 @@ function App() {
       await reviewPrompt();
     } catch (error) {
       console.error(error);
-    } finally {
-      // await toggleDBConnection("close");
-      // await updateUserPreference("isExistingUser", 1);
     }
   };
 
@@ -478,11 +443,6 @@ function App() {
     const todaysDate = new Date().toLocaleDateString("en-CA");
 
     if (resetCounters) {
-      // console.log("dailyCounterResetPref: ", dailyCounterResetPrefValue);
-      // console.log("previousLaunchDate: ", previousLaunchDate);
-      console.log("todaysDate: ", todaysDate);
-      console.log("previous launch date is different to todays date");
-
       const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
       await dbConnection.current!.run(resetAllCountersStatement);
 
@@ -493,12 +453,6 @@ function App() {
       await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
         todaysDate,
       ]);
-
-      // counters = countersState.map((counter) => ({
-      //   ...counter,
-      //   count: 0,
-      // }));
-      // updateCountersState(resettedCounters);
     }
 
     const counters: counterObjType[] = countersFromDB.map(
