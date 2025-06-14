@@ -140,7 +140,32 @@ function App() {
     localStorage.removeItem("activeColor");
     localStorage.removeItem("dailyCounterReset");
   };
-  // injectDummyData();
+
+  const handleTheme = (theme?: themeType) => {
+    const themeColor = theme ? theme : userPreferencesState.theme;
+    console.log("THEME IS: ", themeColor);
+
+    setTheme(themeColor);
+    let statusBarThemeColor: string = "#242424";
+
+    if (themeColor === "dark") {
+      statusBarThemeColor = "#242424";
+
+      if (Capacitor.isNativePlatform()) {
+        setStatusAndNavBarBGColor(statusBarThemeColor, Style.Dark);
+      }
+      document.body.classList.add("dark");
+    } else if (themeColor === "light") {
+      statusBarThemeColor = "#EDEDED";
+
+      if (Capacitor.isNativePlatform()) {
+        setStatusAndNavBarBGColor(statusBarThemeColor, Style.Light);
+      }
+      document.body.classList.remove("dark");
+    }
+
+    return statusBarThemeColor;
+  };
 
   const migrationToDB = async () => {
     console.log("MIGRATION HAS BEGUN");
@@ -281,8 +306,20 @@ function App() {
     setActiveCounter(activeCounter);
   };
 
-  const initialiseAppUI = async () => {
+  const initialiseAppUI = async (theme: themeType) => {
     const splash_hide_delay = 500;
+    const android_style_delay = 1000;
+    const statusBarThemeColor = handleTheme(theme);
+
+    if (Capacitor.getPlatform() === "android") {
+      setTimeout(() => {
+        if (statusBarThemeColor === "#EDEDED") {
+          StatusBar.setStyle({ style: Style.Light });
+        } else if (statusBarThemeColor === "#242424") {
+          StatusBar.setStyle({ style: Style.Dark });
+        }
+      }, android_style_delay);
+    }
 
     if (Capacitor.isNativePlatform()) {
       setTimeout(() => {
@@ -291,10 +328,6 @@ function App() {
         });
       }, splash_hide_delay);
     }
-
-    // setTimeout(async () => {
-    //   await SplashScreen.hide({ fadeOutDuration: 250 });
-    // }, 500);
   };
 
   useEffect(() => {
@@ -340,6 +373,10 @@ function App() {
         (item) => item.preferenceName === "previousLaunchDate"
       )?.preferenceValue;
 
+      const theme: themeType = DBResultPreferences.values.find(
+        (item) => item.preferenceName === "theme"
+      )?.preferenceValue;
+
       const todaysDate = new Date().toLocaleDateString("en-CA");
 
       const resetCounters =
@@ -360,7 +397,7 @@ function App() {
       );
       await handleCounterDataFromDB(DBResultAllCounterData, resetCounters);
       await updateUserPreference("isExistingUser", 1);
-      await initialiseAppUI();
+      await initialiseAppUI(theme);
       await reviewPrompt();
     } catch (error) {
       console.error(error);
@@ -498,37 +535,9 @@ function App() {
   }, [userPreferencesState.activeColor]);
 
   useEffect(() => {
-    setTheme(userPreferencesState.theme);
-    const android_style_delay = 1000;
-    let statusBarThemeColor: string;
+    console.log("THeme is: ", userPreferencesState.theme);
 
-    const storedTheme = userPreferencesState.theme;
-
-    if (storedTheme === "dark") {
-      statusBarThemeColor = "#242424";
-
-      if (Capacitor.isNativePlatform()) {
-        setStatusAndNavBarBGColor(statusBarThemeColor, Style.Dark);
-      }
-      document.body.classList.add("dark");
-    } else if (storedTheme === "light") {
-      statusBarThemeColor = "#EDEDED";
-
-      if (Capacitor.isNativePlatform()) {
-        setStatusAndNavBarBGColor(statusBarThemeColor, Style.Light);
-      }
-      document.body.classList.remove("dark");
-    }
-
-    if (Capacitor.getPlatform() === "android") {
-      setTimeout(() => {
-        if (statusBarThemeColor === "#EDEDED") {
-          StatusBar.setStyle({ style: Style.Light });
-        } else if (statusBarThemeColor === "#242424") {
-          StatusBar.setStyle({ style: Style.Dark });
-        }
-      }, android_style_delay);
-    }
+    handleTheme();
   }, [userPreferencesState.theme]);
 
   useEffect(() => {

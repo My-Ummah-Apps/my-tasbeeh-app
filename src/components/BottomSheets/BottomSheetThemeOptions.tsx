@@ -40,10 +40,12 @@ const BottomSheetThemeOptions = ({
                   aria-pressed={theme === "light"}
                   className="w-full text-left"
                   onClick={async () => {
+                    console.log("clicked");
+
                     if (theme !== "light") {
-                      if (Capacitor.isNativePlatform()) {
-                        setStatusAndNavBarBGColor("#EDEDED", Style.Light);
-                      }
+                      // if (Capacitor.isNativePlatform()) {
+                      //   setStatusAndNavBarBGColor("#EDEDED", Style.Light);
+                      // }
                       await updateUserPreference("theme", "light");
                     }
                   }}
@@ -58,10 +60,12 @@ const BottomSheetThemeOptions = ({
                   aria-pressed={theme === "dark"}
                   className="w-full text-left"
                   onClick={async () => {
+                    console.log("clicked");
+
                     if (theme !== "dark") {
-                      if (Capacitor.isNativePlatform()) {
-                        setStatusAndNavBarBGColor("#242424", Style.Dark);
-                      }
+                      // if (Capacitor.isNativePlatform()) {
+                      //   setStatusAndNavBarBGColor("#242424", Style.Dark);
+                      // }
                       await updateUserPreference("theme", "dark");
                     }
                   }}
