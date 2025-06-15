@@ -1,8 +1,21 @@
-export const LATEST_APP_VERSION = "2.5";
+export const LATEST_APP_VERSION = "2.6";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "Minor bug fixes",
+        text: (
+          <>
+            <strong>Fixes</strong>: Minor bugs have been fixed
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "2.5",
     changes: [
       {
         heading: "Minor UI & UX Improvements",

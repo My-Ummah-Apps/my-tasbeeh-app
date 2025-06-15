@@ -110,24 +110,6 @@ function App() {
     useState<userPreferencesType>(dictPreferencesDefaultValues);
 
   // @ts-ignore
-  const injectDummyData = () => {
-    localStorage.setItem(
-      "localSavedCountersArray",
-      '[{"counter":"Counter 1","count":2,"isActive":true,"target":50,"id":"372d741c-27a8-4f6f-a53a-847c3c7b29d7"},{"counter":"Counter 2","count":0,"isActive":false,"target":50,"id":"cf1dd17c-9b8b-44ad-bf11-171b71610d40"},{"counter":"Counter 3","count":0,"isActive":false,"target":50,"id":"095717f8-524d-440e-b1b6-e53f65da5b9f"},{"counter":"Counter 4","count":0,"isActive":false,"target":50,"id":"f1cb3c53-b9aa-4d4a-aadf-f239a834a20c"},{"counter":"Counter 5","count":0,"isActive":false,"target":50,"id":"2d9d35e7-0f65-48a0-a1de-106eccc02bba"},{"counter":"Counter 6","count":0,"isActive":false,"target":50,"id":"6b9830f7-86cc-45b2-a7e7-f8c3ea9b9511"},{"counter":"Counter 7","count":0,"isActive":false,"target":50,"id":"2fce9b90-3e6e-402d-97c9-733cd3980460"},{"counter":"Counter 8","count":0,"isActive":false,"target":50,"id":"7c85aee5-84f3-484f-a8cf-2700218baf0e"}]'
-    );
-    localStorage.setItem("theme", '"dark"');
-    localStorage.setItem("morning-notification", "true");
-    localStorage.setItem("afternoon-notification", "true");
-    localStorage.setItem("evening-notification", "true");
-    localStorage.setItem("lastLaunchDate", "02/06/2025");
-    localStorage.setItem("haptics", "false");
-    localStorage.setItem("launch-count", "764");
-    localStorage.setItem("appVersion", "2.5");
-    localStorage.setItem("activeColor", "#AB47BC");
-    localStorage.setItem("dailyCounterReset", "false");
-  };
-
-  // @ts-ignore
   const clearLocalStorage = () => {
     localStorage.removeItem("localSavedCountersArray");
     localStorage.removeItem("theme");
@@ -542,7 +524,7 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("appVersion") !== LATEST_APP_VERSION) {
-      setShowChangelogModal(true);
+      // setShowChangelogModal(true);
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
   }, []);
