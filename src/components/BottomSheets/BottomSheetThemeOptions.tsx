@@ -1,7 +1,7 @@
 import { Sheet } from "react-modal-sheet";
-import { setStatusAndNavBarBGColor, tween_config } from "../../utils/constants";
-import { Capacitor } from "@capacitor/core";
-import { Style } from "@capacitor/status-bar";
+import { tween_config } from "../../utils/constants";
+// import { Capacitor } from "@capacitor/core";
+// import { Style } from "@capacitor/status-bar";
 import { MaterialColor, PreferenceKeyType, themeType } from "../../utils/types";
 import { MdCheck } from "react-icons/md";
 
