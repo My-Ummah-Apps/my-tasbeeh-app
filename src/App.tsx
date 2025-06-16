@@ -344,9 +344,14 @@ function App() {
 
       console.log("DBResultPreferences: ", DBResultPreferences.values);
 
-      const rawDailyCounterResetPrefValue = DBResultPreferences.values.find(
-        (item) => item.preferenceName === "dailyCounterReset"
-      )?.preferenceValue;
+      const rawDailyCounterResetPrefValue =
+        DBResultPreferences.values.find(
+          (item) => item.preferenceName === "dailyCounterReset"
+        )?.preferenceValue ?? "0";
+      console.log(
+        "rawDailyCounterResetPrefValue: ",
+        rawDailyCounterResetPrefValue
+      );
 
       const dailyCounterResetPrefValue: BinaryValue =
         rawDailyCounterResetPrefValue === "0" ? 0 : 1;
@@ -377,7 +382,6 @@ function App() {
       await handleUserPreferencesDataFromDB(
         DBResultPreferences.values as PreferenceObjType[]
       );
-
       await handleCounterDataFromDB(DBResultAllCounterData, resetCounters);
       await updateUserPreference("isExistingUser", 1);
       await initialiseAppUI(theme);
