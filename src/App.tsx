@@ -377,6 +377,7 @@ function App() {
       await handleUserPreferencesDataFromDB(
         DBResultPreferences.values as PreferenceObjType[]
       );
+
       await handleCounterDataFromDB(DBResultAllCounterData, resetCounters);
       await updateUserPreference("isExistingUser", 1);
       await initialiseAppUI(theme);
@@ -462,16 +463,23 @@ function App() {
     const todaysDate = new Date().toLocaleDateString("en-CA");
 
     if (resetCounters) {
-      const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
-      await dbConnection.current!.run(resetAllCountersStatement);
+      try {
+        await toggleDBConnection("open");
+        const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
+        await dbConnection.current!.run(resetAllCountersStatement);
 
-      const updatePreviousLaunchDateStatement = `
-        UPDATE userPreferencesTable
-        SET preferenceValue = ? 
-        WHERE preferenceName = 'previousLaunchDate'`;
-      await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
-        todaysDate,
-      ]);
+        const updatePreviousLaunchDateStatement = `
+          UPDATE userPreferencesTable
+          SET preferenceValue = ? 
+          WHERE preferenceName = 'previousLaunchDate'`;
+        await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
+          todaysDate,
+        ]);
+      } catch (error) {
+        console.error("Error resetting counters: ", error);
+      } finally {
+        toggleDBConnection("close");
+      }
     }
 
     const counters: counterObjType[] = countersFromDB.map(
