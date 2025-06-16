@@ -348,10 +348,10 @@ function App() {
         DBResultPreferences.values.find(
           (item) => item.preferenceName === "dailyCounterReset"
         )?.preferenceValue ?? "0";
-      console.log(
-        "rawDailyCounterResetPrefValue: ",
-        rawDailyCounterResetPrefValue
-      );
+      // console.log(
+      //   "rawDailyCounterResetPrefValue: ",
+      //   rawDailyCounterResetPrefValue
+      // );
 
       const dailyCounterResetPrefValue: BinaryValue =
         rawDailyCounterResetPrefValue === "0" ? 0 : 1;

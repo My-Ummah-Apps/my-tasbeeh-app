@@ -90,16 +90,19 @@ const BottomSheetForm = ({
       return;
     }
 
-    const isDuplicate = countersState.some(
-      (counter) => counter.name.trim().toLowerCase() === inputName.toLowerCase()
-    );
-
-    if (isDuplicate) {
-      showAlert(
-        "Duplicate Tasbeeh",
-        "A tasbeeh with this name already exists. Please choose a different name."
+    if (!counterId) {
+      const isDuplicate = countersState.some(
+        (counter) =>
+          counter.name.trim().toLowerCase() === inputName.toLowerCase()
       );
-      return;
+
+      if (isDuplicate) {
+        showAlert(
+          "Duplicate Tasbeeh",
+          "A tasbeeh with this name already exists. Please choose a different name."
+        );
+        return;
+      }
     }
 
     counterId
