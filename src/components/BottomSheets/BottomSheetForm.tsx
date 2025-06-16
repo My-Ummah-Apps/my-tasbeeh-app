@@ -96,6 +96,8 @@ const BottomSheetForm = ({
           counter.name.trim().toLowerCase() === inputName.toLowerCase()
       );
 
+      console.log("DUPLICATE: ", isDuplicate);
+
       if (isDuplicate) {
         showAlert(
           "Duplicate Tasbeeh",
@@ -104,6 +106,22 @@ const BottomSheetForm = ({
         return;
       }
     }
+    //  else if (counterId) {
+    //   const isDuplicate = countersState.filter(
+    //     (counter) =>
+    //       counter.name.trim().toLowerCase() === inputName.toLowerCase()
+    //   );
+    //   console.log("DUPLICATE1: ", isDuplicate);
+    //   console.log("DUPLICATE1 LENGTH: ", isDuplicate.length);
+    //   if (isDuplicate.length > 1) {
+    //     showAlert(
+    //       "Duplicate Tasbeeh",
+    //       "A tasbeeh with this name already exists. Please choose a different name."
+    //     );
+    //     return;
+    //   }
+    // }
+    // console.log("HELLOOOooooooooo");
 
     counterId
       ? await modifyCounter(counterId, inputName, input.count, input.target)

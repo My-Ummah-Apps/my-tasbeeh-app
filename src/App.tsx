@@ -368,6 +368,8 @@ function App() {
 
       const resetCounters =
         dailyCounterResetPrefValue === 1 && previousLaunchDate !== todaysDate;
+      console.log("TODAYS DATE: ", todaysDate);
+      console.log("PREVIOUS LAUNCH DATE: ", previousLaunchDate);
 
       if (DBResultPreferences.values.length === 0) {
         await initiateDefaultPrefsAndCounters();
