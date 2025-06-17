@@ -52,7 +52,7 @@ function CounterButton({
     try {
       await toggleDBConnection("open");
       const updateCounterCount = `UPDATE counterDataTable SET count = count + 1 WHERE id = ?`;
-      await dbConnection.current?.run(updateCounterCount, [activeCounter.id]);
+      await dbConnection.current!.run(updateCounterCount, [activeCounter.id]);
     } catch (error) {
       console.error("Error incrementing counter: ", error);
     } finally {

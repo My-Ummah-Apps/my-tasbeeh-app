@@ -46,6 +46,8 @@ const CountersListItem = ({
         }}
         onClick={async () => {
           setCounterId(counterItem.id);
+          console.log("ounterItem.id ID IN LIST ITEM: ", counterItem.id);
+
           setActiveColor(color);
           const updatedCountersArr: counterObjType[] = countersState.map(
             (counter: counterObjType) => {

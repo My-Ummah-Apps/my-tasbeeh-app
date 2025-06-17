@@ -14,6 +14,7 @@ import {
   setStatusAndNavBarBGColor,
   showAlert,
   showToast,
+  todaysDate,
   tween_config,
 } from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
@@ -202,7 +203,7 @@ function App() {
         VALUES ${placeholders};
         `;
 
-      await dbConnection.current?.run(insertStmnt, params);
+      await dbConnection.current!.run(insertStmnt, params);
 
       // COUNTERS MIGRATION
 
@@ -369,8 +370,6 @@ function App() {
         (item) => item.preferenceName === "previousLaunchDate"
       )?.preferenceValue;
 
-      const todaysDate = new Date().toLocaleDateString("en-CA");
-
       const resetCounters =
         dailyCounterResetPrefValue === 1 && previousLaunchDate !== todaysDate;
 
@@ -386,7 +385,6 @@ function App() {
       await handleCounterDataFromDB(DBResultAllCounterData, resetCounters);
       await updateUserPreference("isExistingUser", 1);
       await updateUserPreference("previousLaunchDate", todaysDate);
-      console.log("previousLaunchDate updated:");
       await initialiseAppUI(theme);
       await reviewPrompt();
     } catch (error) {
@@ -506,7 +504,7 @@ function App() {
     try {
       await toggleDBConnection("open");
       const query = `INSERT OR REPLACE INTO userPreferencesTable (preferenceName, preferenceValue) VALUES (?, ?)`;
-      await dbConnection.current?.run(query, [preferenceName, preferenceValue]);
+      await dbConnection.current!.run(query, [preferenceName, preferenceValue]);
 
       setUserPreferencesState((userPreferences: userPreferencesType) => ({
         ...userPreferences,
@@ -544,7 +542,7 @@ function App() {
     try {
       await toggleDBConnection("open");
       const resetCounterQuery = `UPDATE counterDataTable SET count = ? WHERE id = ?`;
-      await dbConnection.current?.run(resetCounterQuery, [0, id]);
+      await dbConnection.current!.run(resetCounterQuery, [0, id]);
 
       const updatedCountersArr = countersState.map((counter) => {
         return counter.id === id ? { ...counter, count: 0 } : counter;
@@ -561,7 +559,7 @@ function App() {
     try {
       await toggleDBConnection("open");
       const resetCountersQuery = `UPDATE counterDataTable SET count = 0`;
-      await dbConnection.current?.run(resetCountersQuery);
+      await dbConnection.current!.run(resetCountersQuery);
 
       const resettedCounters = countersState.map((counter) => ({
         ...counter,
@@ -579,7 +577,7 @@ function App() {
     try {
       await toggleDBConnection("open");
 
-      const maxOrderIndexResult = await dbConnection.current?.query(
+      const maxOrderIndexResult = await dbConnection.current!.query(
         `SELECT MAX(orderIndex) AS maxOrderIndex FROM counterDataTable`
       );
       const maxOrderIndex =
@@ -587,7 +585,7 @@ function App() {
       const newOrderIndex = maxOrderIndex + 1;
 
       const insertQuery = `INSERT OR IGNORE into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
-      const insertResult = await dbConnection.current?.run(insertQuery, [
+      const insertResult = await dbConnection.current!.run(insertQuery, [
         newOrderIndex,
         newCounterName,
         0,
@@ -636,7 +634,7 @@ function App() {
       target = ?
       WHERE id = ?`;
 
-      await dbConnection.current?.run(updateCounterQuery, [
+      await dbConnection.current!.run(updateCounterQuery, [
         modifiedCounterName,
         modifiedCount,
         modifiedTarget,
@@ -681,7 +679,7 @@ function App() {
     try {
       await toggleDBConnection("open");
       const deleteQuery = `DELETE FROM counterDataTable WHERE id = ?`;
-      await dbConnection.current?.run(deleteQuery, [id]);
+      await dbConnection.current!.run(deleteQuery, [id]);
       showToast("Tasbeeh deleted", "top", "short");
       updateCountersState(updatedCountersArr);
     } catch (error) {

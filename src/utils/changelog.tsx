@@ -8,7 +8,8 @@ export const changeLogs = [
         heading: "Minor bug fixes",
         text: (
           <>
-            <strong>Fixes</strong>: Minor bugs have been fixed
+            <strong>Hotfix</strong>: Resolved a bug that prevented new users
+            from accessing the app on first launch.
           </>
         ),
       },

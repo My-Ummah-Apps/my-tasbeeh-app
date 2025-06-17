@@ -101,6 +101,8 @@ export function assertValidDBResult(
   }
 }
 
+export const todaysDate = new Date().toLocaleDateString("en-CA");
+
 export const dictPreferencesDefaultValues: userPreferencesType = {
   morningNotification: 0,
   afternoonNotification: 0,
@@ -108,7 +110,7 @@ export const dictPreferencesDefaultValues: userPreferencesType = {
   isExistingUser: 0,
   appLaunchCount: 0,
   haptics: 1,
-  previousLaunchDate: new Date().toLocaleDateString("en-CA"),
+  previousLaunchDate: todaysDate,
   dailyCounterReset: 0,
   activeColor: materialColors[0],
   theme: "light",
