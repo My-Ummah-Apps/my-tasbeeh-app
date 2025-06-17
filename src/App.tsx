@@ -109,7 +109,6 @@ function App() {
   const [userPreferencesState, setUserPreferencesState] =
     useState<userPreferencesType>(dictPreferencesDefaultValues);
 
-  // @ts-ignore
   const clearLocalStorage = () => {
     localStorage.removeItem("localSavedCountersArray");
     localStorage.removeItem("theme");
@@ -244,40 +243,44 @@ function App() {
     console.log("MIGRATION HAS FINISHED, LOCALSTORAGE CLEARED");
   };
 
-  const initiateDefaultPrefsAndCounters = async () => {
-    const params = Object.keys(dictPreferencesDefaultValues)
-      .map((key) => {
-        const value =
-          dictPreferencesDefaultValues[key as keyof userPreferencesType];
-        return [key, Array.isArray(value) ? value.join(",") : value];
-      })
-      .flat();
+  const initialiseDefaultPrefsAndCounters = async () => {
+    try {
+      const params = Object.keys(dictPreferencesDefaultValues)
+        .map((key) => {
+          const value =
+            dictPreferencesDefaultValues[key as keyof userPreferencesType];
+          return [key, Array.isArray(value) ? value.join(",") : value];
+        })
+        .flat();
 
-    const placeholders = Array(params.length / 2)
-      .fill("(?, ?)")
-      .join(", ");
+      const placeholders = Array(params.length / 2)
+        .fill("(?, ?)")
+        .join(", ");
 
-    const insertStmnt = `
-        INSERT OR IGNORE INTO userPreferencesTable (preferenceName, preferenceValue) 
-        VALUES ${placeholders};
-        `;
+      const insertStmnt = `
+            INSERT OR IGNORE INTO userPreferencesTable (preferenceName, preferenceValue) 
+            VALUES ${placeholders};
+            `;
 
-    await dbConnection.current!.run(insertStmnt, params);
+      await dbConnection.current!.run(insertStmnt, params);
 
-    for (let i = 0; i < DEFAULT_COUNTERS.length; i++) {
-      const counterObj = DEFAULT_COUNTERS[i];
-      const isActive = counterObj.isActive === 1 ? 1 : 0;
+      for (let i = 0; i < DEFAULT_COUNTERS.length; i++) {
+        const counterObj = DEFAULT_COUNTERS[i];
+        const isActive = counterObj.isActive === 1 ? 1 : 0;
 
-      const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+        const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
 
-      await dbConnection.current!.run(insertStmnt, [
-        i,
-        counterObj.name,
-        counterObj.count,
-        counterObj.target,
-        null,
-        isActive,
-      ]);
+        await dbConnection.current!.run(insertStmnt, [
+          i,
+          counterObj.name,
+          counterObj.count,
+          counterObj.target,
+          null,
+          isActive,
+        ]);
+      }
+    } catch (error) {
+      console.error("Error initialising default preferences and counters");
     }
   };
 
@@ -333,7 +336,6 @@ function App() {
       if (isDBImported) {
         // await updateUserPreference("isExistingUser", "1");
       }
-      // console.log("fetchDataFromDB HAS RUN");
 
       await toggleDBConnection("open");
 
@@ -342,16 +344,23 @@ function App() {
       );
       assertValidDBResult(DBResultPreferences, "DBResultPreferences");
 
-      console.log("DBResultPreferences: ", DBResultPreferences.values);
+      if (DBResultPreferences.values.length === 0) {
+        await initialiseDefaultPrefsAndCounters();
+        DBResultPreferences = await dbConnection.current!.query(
+          `SELECT * FROM userPreferencesTable`
+        );
+        assertValidDBResult(DBResultPreferences, "DBResultPreferences");
+      }
+
+      const theme: themeType =
+        DBResultPreferences.values.find(
+          (item) => item.preferenceName === "theme"
+        )?.preferenceValue ?? "light";
 
       const rawDailyCounterResetPrefValue =
         DBResultPreferences.values.find(
           (item) => item.preferenceName === "dailyCounterReset"
         )?.preferenceValue ?? "0";
-      // console.log(
-      //   "rawDailyCounterResetPrefValue: ",
-      //   rawDailyCounterResetPrefValue
-      // );
 
       const dailyCounterResetPrefValue: BinaryValue =
         rawDailyCounterResetPrefValue === "0" ? 0 : 1;
@@ -360,22 +369,12 @@ function App() {
         (item) => item.preferenceName === "previousLaunchDate"
       )?.preferenceValue;
 
-      const theme: themeType = DBResultPreferences.values.find(
-        (item) => item.preferenceName === "theme"
-      )?.preferenceValue;
-
       const todaysDate = new Date().toLocaleDateString("en-CA");
 
       const resetCounters =
         dailyCounterResetPrefValue === 1 && previousLaunchDate !== todaysDate;
-      console.log("TODAYS DATE: ", todaysDate);
-      console.log("PREVIOUS LAUNCH DATE: ", previousLaunchDate);
 
-      if (DBResultPreferences.values.length === 0) {
-        await initiateDefaultPrefsAndCounters();
-      }
-
-      const DBResultAllCounterData = await dbConnection.current?.query(
+      const DBResultAllCounterData = await dbConnection.current!.query(
         `SELECT * FROM counterDataTable`
       );
 
@@ -386,6 +385,8 @@ function App() {
       );
       await handleCounterDataFromDB(DBResultAllCounterData, resetCounters);
       await updateUserPreference("isExistingUser", 1);
+      await updateUserPreference("previousLaunchDate", todaysDate);
+      console.log("previousLaunchDate updated:");
       await initialiseAppUI(theme);
       await reviewPrompt();
     } catch (error) {
@@ -425,6 +426,8 @@ function App() {
         );
       }
     });
+
+    // ? Some of the below code may not be required, as default preferences are being initialised within the initialiseDefaultPrefsAndCounters function
 
     const assignPreference = async (
       preference: PreferenceKeyType
@@ -466,21 +469,11 @@ function App() {
       Record<string, any>
     >;
 
-    const todaysDate = new Date().toLocaleDateString("en-CA");
-
     if (resetCounters) {
       try {
         await toggleDBConnection("open");
         const resetAllCountersStatement = `UPDATE counterDataTable SET count = 0`;
         await dbConnection.current!.run(resetAllCountersStatement);
-
-        const updatePreviousLaunchDateStatement = `
-          UPDATE userPreferencesTable
-          SET preferenceValue = ? 
-          WHERE preferenceName = 'previousLaunchDate'`;
-        await dbConnection.current!.run(updatePreviousLaunchDateStatement, [
-          todaysDate,
-        ]);
       } catch (error) {
         console.error("Error resetting counters: ", error);
       } finally {
