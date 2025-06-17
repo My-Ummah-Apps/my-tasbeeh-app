@@ -104,8 +104,6 @@ const BottomSheetForm = ({
       return;
     }
 
-    console.log("HELLOOOooooooooo");
-
     counterId
       ? await modifyCounter(counterId, inputName, input.count, input.target)
       : await addCounter(inputName, Number(input.target));

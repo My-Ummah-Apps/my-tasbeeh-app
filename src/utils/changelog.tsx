@@ -1,8 +1,26 @@
-export const LATEST_APP_VERSION = "2.6";
+export const LATEST_APP_VERSION = "2.7";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "Minor bug fixes",
+        text: (
+          <>
+            <strong>Fixed</strong>: Resolved an issue where a duplicate tasbeeh
+            could be added when modifying an existing tasbeeh.
+            <br></br>
+            <br></br>
+            <strong>Fixed</strong>: Resolved daily reset setting applying
+            immediately instead of from the next day.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "2.6",
     changes: [
       {
         heading: "Minor bug fixes",

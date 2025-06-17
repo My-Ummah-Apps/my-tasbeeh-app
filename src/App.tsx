@@ -125,7 +125,6 @@ function App() {
 
   const handleTheme = (theme?: themeType) => {
     const themeColor = theme ? theme : userPreferencesState.theme;
-    console.log("THEME IS: ", themeColor);
 
     setTheme(themeColor);
     let statusBarThemeColor: string = "#242424";
