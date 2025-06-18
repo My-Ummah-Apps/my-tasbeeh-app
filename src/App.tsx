@@ -481,7 +481,7 @@ function App() {
       } catch (error) {
         console.error("Error resetting counters: ", error);
       } finally {
-        toggleDBConnection("close");
+        await toggleDBConnection("close");
       }
     }
 
