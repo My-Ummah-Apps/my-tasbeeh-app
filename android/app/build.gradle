@@ -7,7 +7,7 @@ android {
         applicationId "com.tasbeeh.my"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2018
+        versionCode 2020
         versionName '2.7'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {

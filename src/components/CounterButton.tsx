@@ -32,7 +32,6 @@ interface CounterButtonProps {
 function CounterButton({
   dbConnection,
   toggleDBConnection,
-  // setUserPreferencesState,
   userPreferencesState,
   activeColor,
   countersState,
@@ -66,11 +65,6 @@ function CounterButton({
         activeCounter.count === activeCounter.target &&
         userPreferencesState.haptics === 1
       ) {
-        // setHaptics(0);
-        // setUserPreferencesState(prev => ({...prev, haptics: 0}))
-        // setTimeout(() => {
-        //   setHaptics(1);
-        // }, 1100);
         hapticsVibrate();
         return;
       }

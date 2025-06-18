@@ -381,7 +381,7 @@ function App() {
         `SELECT * FROM counterDataTable`
       );
 
-      console.log("DBResultAllCounterData: ", DBResultAllCounterData.values);
+      // console.log("DBResultAllCounterData: ", DBResultAllCounterData.values);
 
       assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
 

@@ -14,6 +14,10 @@ export const changeLogs = [
             <br></br>
             <strong>Fixed</strong>: Resolved daily reset setting applying
             immediately instead of from the next day.
+            <br></br>
+            <br></br>
+            <strong>Fixed</strong>: Resolved an issue where no new active
+            tasbeeh was set after deleting the current tasbeeh.
           </>
         ),
       },
