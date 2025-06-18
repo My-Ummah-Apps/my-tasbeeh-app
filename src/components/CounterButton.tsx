@@ -24,7 +24,7 @@ interface CounterButtonProps {
   // >;
   userPreferencesState: userPreferencesType;
   activeColor: MaterialColor;
-  countersArr: counterObjType[];
+  countersState: counterObjType[];
   activeCounter: counterObjType;
   updateCountersState: (arr: counterObjType[]) => void;
 }
@@ -35,12 +35,12 @@ function CounterButton({
   // setUserPreferencesState,
   userPreferencesState,
   activeColor,
-  countersArr,
+  countersState,
   activeCounter,
   updateCountersState,
 }: CounterButtonProps) {
   const setCounterAndHaptics = async () => {
-    const updatedCountersArr = countersArr.map((counter) => {
+    const updatedCountersArr = countersState.map((counter) => {
       const isActive = counter.isActive === 1;
 
       if (isActive) {

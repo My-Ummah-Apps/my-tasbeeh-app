@@ -288,8 +288,13 @@ function App() {
     setCountersState(arr);
     const activeCounter =
       arr.find((counter) => counter.isActive === 1) ?? arr[0];
+
     setActiveCounter(activeCounter);
   };
+
+  // useEffect(() => {
+  //   console.log("countersState: ", countersState);
+  // }, [countersState]);
 
   const initialiseAppUI = async (theme: themeType) => {
     const splash_hide_delay = 500;
@@ -375,6 +380,8 @@ function App() {
       const DBResultAllCounterData = await dbConnection.current!.query(
         `SELECT * FROM counterDataTable`
       );
+
+      console.log("DBResultAllCounterData: ", DBResultAllCounterData.values);
 
       assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
 
@@ -521,8 +528,6 @@ function App() {
   }, [userPreferencesState.activeColor]);
 
   useEffect(() => {
-    console.log("THeme is: ", userPreferencesState.theme);
-
     handleTheme();
   }, [userPreferencesState.theme]);
 
@@ -675,10 +680,38 @@ function App() {
       })
     );
 
+    const remainingCountersAfterDelete: counterObjType[] =
+      remainingCounters.filter((counter) => counter.id !== id);
+
+    // console.log("updatedCountersArr: ", updatedCountersArr);
+
     try {
       await toggleDBConnection("open");
-      const deleteQuery = `DELETE FROM counterDataTable WHERE id = ?`;
-      await dbConnection.current!.run(deleteQuery, [id]);
+      await dbConnection.current!.run(
+        `DELETE FROM counterDataTable WHERE id = ?`,
+        [id]
+      );
+      const isActiveCounterBeingDeleted = countersState.some(
+        (counter) => counter.id === id && counter.isActive === 1
+      );
+
+      // const test = await dbConnection.current!.query(
+      //   `SELECT * FROM counterDataTable`
+      // );
+      // console.log("COUNTERS BEFORE IS ACTIVE BEING RESET: ", test);
+
+      if (isActiveCounterBeingDeleted) {
+        // console.log("UPDATING ISACTIVE COUNTER");
+        await dbConnection.current!.run(
+          `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
+          [remainingCountersAfterDelete[0].id]
+        );
+      }
+      // const test1 = await dbConnection.current!.query(
+      //   `SELECT * FROM counterDataTable`
+      // );
+      // console.log("COUNTERS AFTER IS ACTIVE BEING RESET: ", test1);
+
       showToast("Tasbeeh deleted", "top", "short");
       updateCountersState(updatedCountersArr);
     } catch (error) {
@@ -722,7 +755,7 @@ function App() {
                     activeCounter={activeCounter}
                     resetSingleCounter={resetSingleCounter}
                     updateCountersState={updateCountersState}
-                    countersArr={countersState}
+                    countersState={countersState}
                     setLanguageDirection={setLanguageDirection}
                     languageDirection={languageDirection}
                   />

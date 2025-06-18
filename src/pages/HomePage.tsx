@@ -22,7 +22,7 @@ interface HomePageProps {
   activeCounter: counterObjType;
   resetSingleCounter: (id: number) => Promise<void>;
   updateCountersState: (arr: counterObjType[]) => void;
-  countersArr: counterObjType[];
+  countersState: counterObjType[];
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
 }
@@ -36,7 +36,7 @@ const HomePage = ({
   activeCounter,
   resetSingleCounter,
   updateCountersState,
-  countersArr,
+  countersState,
   setLanguageDirection,
   languageDirection,
 }: HomePageProps) => {
@@ -60,7 +60,7 @@ const HomePage = ({
         toggleDBConnection={toggleDBConnection}
         userPreferencesState={userPreferencesState}
         activeColor={activeColor}
-        countersArr={countersArr}
+        countersState={countersState}
         updateCountersState={updateCountersState}
         activeCounter={activeCounter}
       />
