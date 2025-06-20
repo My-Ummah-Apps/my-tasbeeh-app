@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Sheet } from "react-modal-sheet";
-import { MdDeleteOutline } from "react-icons/md";
-import { showConfirmDialog, showAlert, showToast } from "../../utils/constants";
+import { showAlert } from "../../utils/constants";
 import { counterObjType, MaterialColor } from "../../utils/types";
 import { tween_config } from "../../utils/constants";
 
@@ -10,7 +9,6 @@ interface BottomSheetFormProps {
   countersState: counterObjType[];
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
   counterId: number | null;
-  deleteCounter: (id: number) => Promise<void>;
   activeCounter: counterObjType;
   addCounter: (counterToAdd: string, target: number) => Promise<void>;
   modifyCounter: (
@@ -28,7 +26,6 @@ const BottomSheetForm = ({
   countersState,
   setCounterId,
   counterId,
-  deleteCounter,
   addCounter,
   modifyCounter,
   setShowForm,
@@ -237,27 +234,6 @@ const BottomSheetForm = ({
                 </div>
               </form>
             </div>
-            {counterId && (
-              <div className="form-filled-reset-delete-btns-wrap">
-                <button
-                  className="form-filled-delete-tasbeeh-btn"
-                  onClick={async () => {
-                    const result = await showConfirmDialog(
-                      "Delete Tasbeeh",
-                      "Are you sure you want to delete this Tasbeeh?"
-                    );
-                    if (result) {
-                      await deleteCounter(counterId);
-                      closeFormCleanup();
-                      showToast("Tasbeeh deleted", "bottom", "short");
-                    }
-                  }}
-                >
-                  <p>Delete Tasbeeh</p>
-                  <MdDeleteOutline />
-                </button>
-              </div>
-            )}
           </section>
         </Sheet.Content>
       </Sheet.Container>

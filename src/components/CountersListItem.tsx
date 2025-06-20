@@ -1,5 +1,11 @@
-import { MdEdit } from "react-icons/md";
+import { MdDeleteOutline, MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
+import {
+  IonItem,
+  IonItemSliding,
+  IonItemOptions,
+  IonItemOption,
+} from "@ionic/react";
 import { direction } from "direction";
 import {
   counterObjType,
@@ -8,6 +14,7 @@ import {
   PreferenceKeyType,
 } from "../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
+import { showConfirmDialog, showToast } from "../utils/constants";
 
 interface CountersListItemProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -16,6 +23,7 @@ interface CountersListItemProps {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
+  deleteCounter: (id: number) => Promise<void>;
   setActiveColor: React.Dispatch<MaterialColor>;
   updateCountersState: (arr: counterObjType[]) => void;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
@@ -29,6 +37,7 @@ const CountersListItem = ({
   dbConnection,
   toggleDBConnection,
   updateUserPreference,
+  deleteCounter,
   setActiveColor,
   updateCountersState,
   setCounterId,
@@ -38,66 +47,78 @@ const CountersListItem = ({
   counterItem,
 }: CountersListItemProps) => {
   return (
-    <div className="single-counter-wrap-parent">
-      <div
-        className="single-counter-wrap"
-        style={{
-          backgroundColor: color + "BF",
-        }}
-        onClick={async () => {
-          setCounterId(counterItem.id);
-          setActiveColor(color);
-          const updatedCountersArr: counterObjType[] = countersState.map(
-            (counter: counterObjType) => {
-              return counter.id === counterItem.id
-                ? { ...counter, isActive: 1 }
-                : { ...counter, isActive: 0 };
+    <IonItemSliding>
+      <IonItem mode="ios">
+        {/* <ion-label>Sliding Item with End Options</ion-label> */}
+        <div
+          className="single-counter-wrap"
+          style={{
+            backgroundColor: color + "BF",
+          }}
+          onClick={async () => {
+            setCounterId(counterItem.id);
+            setActiveColor(color);
+            const updatedCountersArr: counterObjType[] = countersState.map(
+              (counter: counterObjType) => {
+                return counter.id === counterItem.id
+                  ? { ...counter, isActive: 1 }
+                  : { ...counter, isActive: 0 };
+              }
+            );
+            updateCountersState(updatedCountersArr);
+            await updateUserPreference("activeColor", color);
+
+            try {
+              await toggleDBConnection("open");
+              await dbConnection.current!.run(
+                `UPDATE counterDataTable SET isActive = 0`
+              );
+              await dbConnection.current!.run(
+                `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
+                [counterItem.id]
+              );
+            } catch (error) {
+              console.error(
+                "Error updating active counter/active color: ",
+                error
+              );
+            } finally {
+              await toggleDBConnection("close");
             }
-          );
-          updateCountersState(updatedCountersArr);
-          await updateUserPreference("activeColor", color);
+          }}
+        >
+          <div className="single-counter-name-and-count-wrap">
+            <Link to="/" style={{ color: "#fff", textDecoration: "none" }}>
+              <div className="single-counter-count">
+                {counterItem.count} / {counterItem.target}
+              </div>
+              <div
+                style={{
+                  textAlign:
+                    direction(counterItem.name) === "ltr" ? "left" : "right",
+                  // direction: direction(counterItem.counter),
+                }}
+                className="single-counter-counter-name"
+              >
+                {counterItem.name}
+              </div>
+            </Link>
+          </div>
 
-          try {
-            await toggleDBConnection("open");
-            await dbConnection.current!.run(
-              `UPDATE counterDataTable SET isActive = 0`
-            );
-
-            await dbConnection.current!.run(
-              `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
-              [counterItem.id]
-            );
-          } catch (error) {
-            console.error(
-              "Error updating active counter/active color: ",
-              error
-            );
-          } finally {
-            await toggleDBConnection("close");
-          }
-        }}
-      >
-        <div className="single-counter-name-and-count-wrap">
-          <Link to="/" style={{ color: "#fff", textDecoration: "none" }}>
-            <div className="single-counter-count">
-              {counterItem.count} / {counterItem.target}
-            </div>
-            <div
-              style={{
-                textAlign:
-                  direction(counterItem.name) === "ltr" ? "left" : "right",
-                // direction: direction(counterItem.counter),
-              }}
-              className="single-counter-counter-name"
-            >
-              {counterItem.name}
-            </div>
-          </Link>
+          <div
+            className="single-counter-overlay"
+            style={{
+              backgroundColor: color,
+              width: (counterItem.count / counterItem.target) * 100 + "%",
+            }}
+          ></div>
         </div>
+      </IonItem>
 
-        <button
-          arial-label="Edit Counter"
-          className="edit-btn-wrap"
+      <IonItemOptions>
+        <IonItemOption
+          mode="ios"
+          className="swipe-options"
           onClick={(e) => {
             e.stopPropagation();
             setCounterId(counterItem.id);
@@ -105,16 +126,25 @@ const CountersListItem = ({
           }}
         >
           <MdEdit />
-        </button>
-        <div
-          className="single-counter-overlay"
-          style={{
-            backgroundColor: color,
-            width: (counterItem.count / counterItem.target) * 100 + "%",
+        </IonItemOption>
+        <IonItemOption
+          mode="ios"
+          className="swipe-options"
+          onClick={async () => {
+            const result = await showConfirmDialog(
+              "Delete Tasbeeh",
+              "Are you sure you want to delete this Tasbeeh?"
+            );
+            if (result) {
+              await deleteCounter(counterItem.id);
+              showToast("Tasbeeh deleted", "bottom", "short");
+            }
           }}
-        ></div>
-      </div>
-    </div>
+        >
+          <MdDeleteOutline />
+        </IonItemOption>
+      </IonItemOptions>
+    </IonItemSliding>
   );
 };
 

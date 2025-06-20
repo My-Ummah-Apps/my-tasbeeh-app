@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { IonList } from "@ionic/react";
+
 import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
 import { materialColors } from "../utils/constants";
@@ -42,7 +44,7 @@ function CountersPage({
   setActiveColor,
   activeCounter,
   updateCountersState,
-  deleteCounter: deleteCounter,
+  deleteCounter,
   countersState,
   modifyCounter,
   addCounter,
@@ -64,19 +66,8 @@ function CountersPage({
           }}
         />
       </header>
-      <BottomSheetForm
-        activeColor={activeColor}
-        countersState={countersState}
-        activeCounter={activeCounter}
-        deleteCounter={deleteCounter}
-        setCounterId={setCounterId}
-        counterId={counterId}
-        setShowForm={setShowForm}
-        showForm={showForm}
-        modifyCounter={modifyCounter}
-        addCounter={addCounter}
-      />
-      <section className="counters-wrap">
+      {/* <section className="counters-wrap"> */}
+      <IonList mode="ios" className="counters-wrap">
         {countersState.map((counterItem: counterObjType, i) => {
           let color = materialColors[i % materialColors.length];
 
@@ -86,6 +77,7 @@ function CountersPage({
               dbConnection={dbConnection}
               toggleDBConnection={toggleDBConnection}
               updateUserPreference={updateUserPreference}
+              deleteCounter={deleteCounter}
               setActiveColor={setActiveColor}
               updateCountersState={updateCountersState}
               countersState={countersState}
@@ -96,7 +88,19 @@ function CountersPage({
             />
           );
         })}
-      </section>
+        {/* </section> */}
+      </IonList>
+      <BottomSheetForm
+        activeColor={activeColor}
+        countersState={countersState}
+        activeCounter={activeCounter}
+        setCounterId={setCounterId}
+        counterId={counterId}
+        setShowForm={setShowForm}
+        showForm={showForm}
+        modifyCounter={modifyCounter}
+        addCounter={addCounter}
+      />
     </motion.main>
   );
 }

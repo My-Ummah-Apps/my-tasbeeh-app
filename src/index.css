@@ -1,3 +1,4 @@
+@import "@ionic/core/css/ionic.bundle.css";
 @import "tailwindcss";
 @layer base {
   *,
@@ -24,6 +25,8 @@
   /* --body-bg-color: #f4f4f4; */
   --body-bg-color: rgb(237, 237, 237);
   --svg-color: #757575;
+  --ion-background-color: rgb(237, 237, 237);
+  --background: rgb(237, 237, 237); /* fallback */
   /* --header-and-nav-bg-color: #f4f4f4; */
   --header-bg-color: rgb(237, 237, 237);
   --nav-bg-color: rgb(242, 242, 242);
@@ -47,6 +50,8 @@
 body.dark {
   /* Dark mode variables go here */
   --body-bg-color: #242424;
+  --ion-background-color: var(--body-bg-color);
+  --background: var(--body-bg-color);
   --nav-bg-color: #212121;
   --nav-border-color: #1f1f1f;
   --header-bg-color: #242424;
@@ -106,6 +111,25 @@ body {
   max-width: 700px;
   overflow: hidden;
 }
+/* 
+ion-list {
+  width: 95%;
+  margin-inline: auto;
+}
+
+ion-item {
+  --background: transparent;
+  --border-color: transparent;
+  --background: var(--body-bg-color);
+  /* border-bottom: 12px solid var(--body-bg-color); */
+
+/* will-change: transform; */
+/* opacity: 0.99; */
+/* } */
+/* ion-item-option.swipe-options {
+  --background: #000000;
+  --color: #fff;
+} */
 
 .sheet-changelog {
   background-color: var(--body-bg-color);
@@ -356,6 +380,7 @@ MdModeEditOutline {
 }
 
 .counters-wrap {
+  background: transparent;
   width: 100%;
   height: 95vh;
   overflow-y: scroll;
@@ -369,7 +394,7 @@ MdModeEditOutline {
 }
 
 .single-counter-name-and-count-wrap,
-.edit-btn-wrap {
+.edit-btn {
   position: relative;
   z-index: 1;
 }
@@ -394,8 +419,8 @@ MdModeEditOutline {
   box-shadow: var(--counters-page-single-counter-box-shadow);
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
   position: relative;
-  /* padding: 0.7rem 0; */
-  margin: 1rem auto;
+  /* margin: 1rem auto; */
+  margin-inline: auto;
   /* clip-path: circle(70% at 50% 50%); */
   /* clip-path: inset(0% 0% 0% 0% round 10px); */
   clip-path: inset(0% 0% 0% 0% round 16px);
@@ -444,7 +469,7 @@ MdModeEditOutline {
   font-weight: 400;
 }
 
-.edit-btn-wrap,
+.edit-btn,
 .reset-btn-wrap {
   margin-right: 0.7rem;
   font-size: 1.2rem;
@@ -746,7 +771,7 @@ input[type="number"] {
   margin: 1rem 0rem; */
 }
 
-.form-filled-delete-tasbeeh-btn {
+.delete-tasbeeh-btn {
   display: flex;
   align-items: center;
   border: 1px solid white;
