@@ -774,6 +774,7 @@ function App() {
                     activeCounter={activeCounter}
                     countersState={countersState}
                     modifyCounter={modifyCounter}
+                    resetSingleCounter={resetSingleCounter}
                     updateCountersState={updateCountersState}
                     addCounter={addCounter}
                     deleteCounter={deleteCounter}

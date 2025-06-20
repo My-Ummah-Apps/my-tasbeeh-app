@@ -1,4 +1,5 @@
-import { MdDeleteOutline, MdEdit } from "react-icons/md";
+import { MdDeleteOutline, MdEdit, MdOutlineRestartAlt } from "react-icons/md";
+
 import { Link } from "react-router-dom";
 import {
   IonItem,
@@ -15,6 +16,7 @@ import {
 } from "../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { showConfirmDialog, showToast } from "../utils/constants";
+import { useRef } from "react";
 
 interface CountersListItemProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -23,6 +25,7 @@ interface CountersListItemProps {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
+  resetSingleCounter: (id: number) => Promise<void>;
   deleteCounter: (id: number) => Promise<void>;
   setActiveColor: React.Dispatch<MaterialColor>;
   updateCountersState: (arr: counterObjType[]) => void;
@@ -37,6 +40,7 @@ const CountersListItem = ({
   dbConnection,
   toggleDBConnection,
   updateUserPreference,
+  resetSingleCounter,
   deleteCounter,
   setActiveColor,
   updateCountersState,
@@ -46,8 +50,12 @@ const CountersListItem = ({
   color,
   counterItem,
 }: CountersListItemProps) => {
+  const slidingRef = useRef<HTMLIonItemSlidingElement | null>(null);
+  const closeOpenSlidingItems = () => {
+    slidingRef.current?.closeOpened();
+  };
   return (
-    <IonItemSliding>
+    <IonItemSliding ref={slidingRef}>
       <IonItem mode="ios">
         {/* <ion-label>Sliding Item with End Options</ion-label> */}
         <div
@@ -123,9 +131,27 @@ const CountersListItem = ({
             e.stopPropagation();
             setCounterId(counterItem.id);
             setShowForm(true);
+            closeOpenSlidingItems();
           }}
         >
-          <MdEdit />
+          <MdEdit className="text-4xl bg-[rgba(92,107,192,0.75)] p-2 rounded-2xl" />
+        </IonItemOption>
+        <IonItemOption
+          mode="ios"
+          className="swipe-options"
+          onClick={async () => {
+            const result = await showConfirmDialog(
+              "Reset Tasbeeh",
+              "Are you sure you want to reset this Tasbeeh to 0?"
+            );
+            if (result) {
+              await resetSingleCounter(counterItem.id);
+              closeOpenSlidingItems();
+              showToast("Tasbeeh reset", "bottom", "short");
+            }
+          }}
+        >
+          <MdOutlineRestartAlt className="text-4xl bg-[rgba(239,128,80,0.75)] p-2 rounded-2xl" />
         </IonItemOption>
         <IonItemOption
           mode="ios"
@@ -141,7 +167,7 @@ const CountersListItem = ({
             }
           }}
         >
-          <MdDeleteOutline />
+          <MdDeleteOutline className="text-4xl bg-[rgba(239,83,80,0.75)] p-2 rounded-2xl" />
         </IonItemOption>
       </IonItemOptions>
     </IonItemSliding>

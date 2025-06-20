@@ -66,7 +66,7 @@ function ActiveCounter({
   return (
     <section className="single-counter-wrap-parent">
       <section
-        className={`single-counter-wrap remove-counter-blinking 
+        className={`single-counter-wrap active-counter remove-counter-blinking 
           `}
         ref={counterTextContainerRef}
         style={{

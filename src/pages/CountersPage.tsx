@@ -33,6 +33,7 @@ interface CountersPageProps {
     modifiedCount: number,
     modifiedTarget: number
   ) => Promise<void>;
+  resetSingleCounter: (id: number) => Promise<void>;
   deleteCounter: (id: number) => Promise<void>;
 }
 
@@ -47,6 +48,7 @@ function CountersPage({
   deleteCounter,
   countersState,
   modifyCounter,
+  resetSingleCounter,
   addCounter,
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
@@ -67,7 +69,7 @@ function CountersPage({
         />
       </header>
       {/* <section className="counters-wrap"> */}
-      <IonList mode="ios" className="counters-wrap">
+      <IonList mode="ios" className="counters-wrap ">
         {countersState.map((counterItem: counterObjType, i) => {
           let color = materialColors[i % materialColors.length];
 
@@ -77,6 +79,7 @@ function CountersPage({
               dbConnection={dbConnection}
               toggleDBConnection={toggleDBConnection}
               updateUserPreference={updateUserPreference}
+              resetSingleCounter={resetSingleCounter}
               deleteCounter={deleteCounter}
               setActiveColor={setActiveColor}
               updateCountersState={updateCountersState}
