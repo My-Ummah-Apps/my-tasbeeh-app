@@ -33,6 +33,7 @@
   --nav-border-color: #e2e2e2;
   --text-color-primary: #000;
   --text-color-secondary: #ffffff;
+  --toast-bg-color: #d8d8d8;
   --setings-page-boxes-bg-color: #f7f7f7;
   --settings-page-borders: #e3e3e3;
   --counters-page-single-counter-box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
@@ -56,6 +57,7 @@ body.dark {
   --nav-border-color: #1f1f1f;
   --header-bg-color: #242424;
   --text-color-primary: #fff;
+  --toast-bg-color: #2e2e2e;
   --setings-page-boxes-bg-color: #2f2f2f;
   --settings-page-borders: #595959;
   --svg-color: #e1e1e1;
@@ -112,6 +114,10 @@ body {
   overflow: hidden;
 }
 
+ion-item-options {
+  padding-right: 0.5rem;
+}
+
 ion-item {
   --border-style: none;
   --padding-start: 0;
@@ -127,6 +133,15 @@ ion-item-option {
   border-bottom: none !important;
   box-shadow: none !important;
   --border-style: none;
+}
+
+ion-item-option::part(native) {
+  padding-inline: 0.5rem;
+}
+
+ion-toast {
+  --background: var(--toast-bg-color);
+  --color: var(--text-color-primary);
 }
 
 .item-options-ios {

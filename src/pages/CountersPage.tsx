@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IonList } from "@ionic/react";
+import { IonList, IonToast } from "@ionic/react";
 
 import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
@@ -53,6 +53,7 @@ function CountersPage({
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
   const [counterId, setCounterId] = useState<number | null>(null);
+  const [showResetToast, setShowResetToast] = useState(false);
 
   return (
     <motion.main
@@ -79,6 +80,7 @@ function CountersPage({
               dbConnection={dbConnection}
               toggleDBConnection={toggleDBConnection}
               updateUserPreference={updateUserPreference}
+              setShowResetToast={setShowResetToast}
               resetSingleCounter={resetSingleCounter}
               deleteCounter={deleteCounter}
               setActiveColor={setActiveColor}
@@ -103,6 +105,14 @@ function CountersPage({
         showForm={showForm}
         modifyCounter={modifyCounter}
         addCounter={addCounter}
+      />
+      <IonToast
+        isOpen={showResetToast}
+        positionAnchor="nav-bar"
+        position="bottom"
+        message="Tasbeeh reset"
+        duration={2000}
+        onDidDismiss={() => setShowResetToast(false)}
       />
     </motion.main>
   );

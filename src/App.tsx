@@ -14,7 +14,6 @@ import {
   materialColors,
   setStatusAndNavBarBGColor,
   showAlert,
-  showToast,
   todaysDate,
   tween_config,
 } from "./utils/constants";
@@ -713,7 +712,6 @@ function App() {
       // );
       // console.log("COUNTERS AFTER IS ACTIVE BEING RESET: ", test1);
 
-      showToast("Tasbeeh deleted", "top", "short");
       updateCountersState(updatedCountersArr);
     } catch (error) {
       console.error("Error deleting counter: ", error);

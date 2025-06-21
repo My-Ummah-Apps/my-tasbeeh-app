@@ -15,7 +15,7 @@ import {
   PreferenceKeyType,
 } from "../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
-import { showConfirmDialog, showToast } from "../utils/constants";
+import { showConfirmDialog } from "../utils/constants";
 import { useRef } from "react";
 
 interface CountersListItemProps {
@@ -25,6 +25,7 @@ interface CountersListItemProps {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
+  setShowResetToast: React.Dispatch<React.SetStateAction<boolean>>;
   resetSingleCounter: (id: number) => Promise<void>;
   deleteCounter: (id: number) => Promise<void>;
   setActiveColor: React.Dispatch<MaterialColor>;
@@ -40,6 +41,7 @@ const CountersListItem = ({
   dbConnection,
   toggleDBConnection,
   updateUserPreference,
+  setShowResetToast,
   resetSingleCounter,
   deleteCounter,
   setActiveColor,
@@ -131,10 +133,12 @@ const CountersListItem = ({
             e.stopPropagation();
             setCounterId(counterItem.id);
             setShowForm(true);
-            closeOpenSlidingItems();
+            setTimeout(() => {
+              closeOpenSlidingItems();
+            }, 500);
           }}
         >
-          <MdEdit className="text-4xl bg-[rgba(92,107,192,0.75)] p-2 rounded-2xl" />
+          <MdEdit className="text-4xl bg-[rgba(92,107,192,0.75)] p-2 rounded-3xl" />
         </IonItemOption>
         <IonItemOption
           mode="ios"
@@ -147,11 +151,11 @@ const CountersListItem = ({
             if (result) {
               await resetSingleCounter(counterItem.id);
               closeOpenSlidingItems();
-              showToast("Tasbeeh reset", "bottom", "short");
+              setShowResetToast(true);
             }
           }}
         >
-          <MdOutlineRestartAlt className="text-4xl bg-[rgba(239,128,80,0.75)] p-2 rounded-2xl" />
+          <MdOutlineRestartAlt className="text-4xl bg-[rgba(239,128,80,0.75)] p-2 rounded-3xl" />
         </IonItemOption>
         <IonItemOption
           mode="ios"
@@ -163,11 +167,11 @@ const CountersListItem = ({
             );
             if (result) {
               await deleteCounter(counterItem.id);
-              showToast("Tasbeeh deleted", "bottom", "short");
+              // showToast("Tasbeeh deleted", "bottom", "short");
             }
           }}
         >
-          <MdDeleteOutline className="text-4xl bg-[rgba(239,83,80,0.75)] p-2 rounded-2xl" />
+          <MdDeleteOutline className="text-4xl bg-[rgba(239,83,80,0.75)] p-2 rounded-3xl" />
         </IonItemOption>
       </IonItemOptions>
     </IonItemSliding>

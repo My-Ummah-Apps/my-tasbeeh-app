@@ -8,7 +8,7 @@ interface NavBarProps {
 
 const NavBar = ({ activeColor }: NavBarProps) => {
   return (
-    <div className="navbar-wrap">
+    <div id="nav-bar" className="navbar-wrap">
       <NavLink className="nav-link" to="/SettingsPage">
         {({ isActive }) => (
           <BsFillNutFill

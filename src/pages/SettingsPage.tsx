@@ -18,7 +18,6 @@ import { LocalNotifications } from "@capacitor/local-notifications";
 import {
   // pageTransitionStyles,
   showConfirmDialog,
-  showToast,
 } from "../utils/constants";
 import {
   counterObjType,
@@ -31,6 +30,7 @@ import SettingIndividual from "../components/SettingIndividual";
 import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
+import { IonToast } from "@ionic/react";
 interface SettingsageProps {
   // setUserPreferencesState: React.Dispatch<
   //   React.SetStateAction<userPreferencesType>
@@ -61,6 +61,7 @@ const SettingsPage = ({
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
   const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
+  const [showAllResetToast, setShowAllResetToast] = useState(false);
 
   const showNotificationsAlert = async () => {
     const { value } = await Dialog.confirm({
@@ -361,7 +362,7 @@ const SettingsPage = ({
                 );
                 if (result) {
                   await resetAllCounters();
-                  showToast("All Adhkar reset to 0", "bottom", "short");
+                  setShowAllResetToast(true);
                 }
               }}
             >
@@ -463,6 +464,14 @@ const SettingsPage = ({
           />
         </div>
       </div>
+      <IonToast
+        isOpen={showAllResetToast}
+        positionAnchor="nav-bar"
+        position="bottom"
+        message="All Adhkar reset to 0"
+        duration={2000}
+        onDidDismiss={() => setShowAllResetToast(false)}
+      />
     </motion.main>
   );
 };
