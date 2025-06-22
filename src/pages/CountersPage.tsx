@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IonList, IonToast } from "@ionic/react";
+import { IonList } from "@ionic/react";
 
 import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
@@ -13,6 +13,7 @@ import {
 import { motion } from "framer-motion";
 import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
+import Toast from "../components/Toast";
 
 interface CountersPageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -54,6 +55,7 @@ function CountersPage({
   const [showForm, setShowForm] = useState(false);
   const [counterId, setCounterId] = useState<number | null>(null);
   const [showResetToast, setShowResetToast] = useState(false);
+  const [showDeleteToast, setShowDeleteToast] = useState(false);
 
   return (
     <motion.main
@@ -81,6 +83,7 @@ function CountersPage({
               toggleDBConnection={toggleDBConnection}
               updateUserPreference={updateUserPreference}
               setShowResetToast={setShowResetToast}
+              setShowDeleteToast={setShowDeleteToast}
               resetSingleCounter={resetSingleCounter}
               deleteCounter={deleteCounter}
               setActiveColor={setActiveColor}
@@ -106,13 +109,15 @@ function CountersPage({
         modifyCounter={modifyCounter}
         addCounter={addCounter}
       />
-      <IonToast
+      <Toast
         isOpen={showResetToast}
-        positionAnchor="nav-bar"
-        position="bottom"
         message="Tasbeeh reset"
-        duration={2000}
-        onDidDismiss={() => setShowResetToast(false)}
+        setShow={setShowResetToast}
+      />
+      <Toast
+        isOpen={showDeleteToast}
+        message="Tasbeeh deleted"
+        setShow={setShowDeleteToast}
       />
     </motion.main>
   );

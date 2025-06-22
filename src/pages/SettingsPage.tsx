@@ -30,7 +30,7 @@ import SettingIndividual from "../components/SettingIndividual";
 import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
-import { IonToast } from "@ionic/react";
+import Toast from "../components/Toast";
 interface SettingsageProps {
   // setUserPreferencesState: React.Dispatch<
   //   React.SetStateAction<userPreferencesType>
@@ -464,13 +464,11 @@ const SettingsPage = ({
           />
         </div>
       </div>
-      <IonToast
+
+      <Toast
         isOpen={showAllResetToast}
-        positionAnchor="nav-bar"
-        position="bottom"
         message="All Adhkar reset to 0"
-        duration={2000}
-        onDidDismiss={() => setShowAllResetToast(false)}
+        setShow={setShowAllResetToast}
       />
     </motion.main>
   );

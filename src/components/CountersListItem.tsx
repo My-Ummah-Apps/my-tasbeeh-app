@@ -26,6 +26,7 @@ interface CountersListItemProps {
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
   setShowResetToast: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowDeleteToast: React.Dispatch<React.SetStateAction<boolean>>;
   resetSingleCounter: (id: number) => Promise<void>;
   deleteCounter: (id: number) => Promise<void>;
   setActiveColor: React.Dispatch<MaterialColor>;
@@ -42,6 +43,7 @@ const CountersListItem = ({
   toggleDBConnection,
   updateUserPreference,
   setShowResetToast,
+  setShowDeleteToast,
   resetSingleCounter,
   deleteCounter,
   setActiveColor,
@@ -167,7 +169,7 @@ const CountersListItem = ({
             );
             if (result) {
               await deleteCounter(counterItem.id);
-              // showToast("Tasbeeh deleted", "bottom", "short");
+              setShowDeleteToast(true);
             }
           }}
         >
