@@ -25,6 +25,7 @@ interface CountersListItemProps {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
+  setShowResetActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setShowResetToast: React.Dispatch<React.SetStateAction<boolean>>;
   setShowDeleteToast: React.Dispatch<React.SetStateAction<boolean>>;
   resetSingleCounter: (id: number) => Promise<void>;
@@ -42,6 +43,7 @@ const CountersListItem = ({
   dbConnection,
   toggleDBConnection,
   updateUserPreference,
+  setShowResetActionSheet,
   setShowResetToast,
   setShowDeleteToast,
   resetSingleCounter,
@@ -146,15 +148,19 @@ const CountersListItem = ({
           mode="ios"
           className="swipe-options"
           onClick={async () => {
+            setCounterId(counterItem.id);
+            console.log("COUNTER ID: ", counterItem.id);
+
             const result = await showConfirmDialog(
               "Reset Tasbeeh",
               "Are you sure you want to reset this Tasbeeh to 0?"
             );
-            if (result) {
-              await resetSingleCounter(counterItem.id);
-              closeOpenSlidingItems();
-              setShowResetToast(true);
-            }
+            setShowResetActionSheet(true);
+            // if (result) {
+            //   await resetSingleCounter(counterItem.id);
+            //   closeOpenSlidingItems();
+            //   setShowResetToast(true);
+            // }
           }}
         >
           <MdOutlineRestartAlt className="text-4xl bg-[rgba(239,128,80,0.75)] p-2 rounded-3xl" />

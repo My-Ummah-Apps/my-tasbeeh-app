@@ -143,7 +143,7 @@ export const tween_config = {
   duration: 0.5,
 };
 
-type ToastOptions = Parameters<typeof Toast.show>[0];
+// type ToastOptions = Parameters<typeof Toast.show>[0];
 
 export const showConfirmDialog = async (title: string, message: string) => {
   const { value } = await Dialog.confirm({
@@ -152,18 +152,6 @@ export const showConfirmDialog = async (title: string, message: string) => {
   });
 
   return value;
-};
-
-export const showToast = async (
-  text: string,
-  position: ToastOptions["position"],
-  duration: ToastOptions["duration"]
-) => {
-  await Toast.show({
-    text,
-    position,
-    duration,
-  });
 };
 
 export const showAlert = async (title: string, message: string) => {

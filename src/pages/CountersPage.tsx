@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import Toast from "../components/Toast";
+import ActionSheet from "../components/ActionSheet";
 
 interface CountersPageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -54,6 +55,7 @@ function CountersPage({
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
   const [counterId, setCounterId] = useState<number | null>(null);
+  const [showResetActionSheet, setShowResetActionSheet] = useState(false);
   const [showResetToast, setShowResetToast] = useState(false);
   const [showDeleteToast, setShowDeleteToast] = useState(false);
 
@@ -82,6 +84,7 @@ function CountersPage({
               dbConnection={dbConnection}
               toggleDBConnection={toggleDBConnection}
               updateUserPreference={updateUserPreference}
+              setShowResetActionSheet={setShowResetActionSheet}
               setShowResetToast={setShowResetToast}
               setShowDeleteToast={setShowDeleteToast}
               resetSingleCounter={resetSingleCounter}
@@ -108,6 +111,26 @@ function CountersPage({
         showForm={showForm}
         modifyCounter={modifyCounter}
         addCounter={addCounter}
+      />
+      <ActionSheet
+        setState={setShowResetActionSheet}
+        isOpen={showResetActionSheet}
+        buttons={[
+          {
+            text: "Reset Tasbeeh",
+            role: "destructive",
+            handler: async () => {
+              await resetSingleCounter(counterId);
+              // closeOpenSlidingItems();
+              setShowResetToast(true);
+            },
+          },
+
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+        ]}
       />
       <Toast
         isOpen={showResetToast}
