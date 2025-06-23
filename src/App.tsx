@@ -57,6 +57,11 @@ function App() {
     isActive: 0,
   });
 
+  const closeSlidingItems = () => {
+    const slidingItems = document.querySelectorAll("ion-item-sliding");
+    slidingItems.forEach((item) => item.closeOpened());
+  };
+
   // const [iapProducts, setIapProducts] = useState(null);
   // document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -107,6 +112,8 @@ function App() {
   const [activeColor, setActiveColor] = useState<MaterialColor>(
     materialColors[0]
   );
+  const [showDeleteToast, setShowDeleteToast] = useState(false);
+  const [showAllResetToast, setShowAllResetToast] = useState(false);
   const [userPreferencesState, setUserPreferencesState] =
     useState<userPreferencesType>(dictPreferencesDefaultValues);
 
@@ -570,6 +577,8 @@ function App() {
         count: 0,
       }));
       updateCountersState(resettedCounters);
+      setShowAllResetToast(true);
+      closeSlidingItems();
     } catch (error) {
       console.error("Error resetting all counters: ", error);
     } finally {
@@ -713,6 +722,8 @@ function App() {
       // console.log("COUNTERS AFTER IS ACTIVE BEING RESET: ", test1);
 
       updateCountersState(updatedCountersArr);
+      setShowDeleteToast(true);
+      closeSlidingItems();
     } catch (error) {
       console.error("Error deleting counter: ", error);
     } finally {
@@ -737,6 +748,9 @@ function App() {
                     activeColor={activeColor}
                     activeCounter={activeCounter}
                     resetAllCounters={resetAllCounters}
+                    showAllResetToast={showAllResetToast}
+                    setShowAllResetToast={setShowAllResetToast}
+                    closeSlidingItems={closeSlidingItems}
                     theme={theme}
                     setShowChangelogModal={setShowChangelogModal}
                   />
@@ -748,7 +762,6 @@ function App() {
                   <HomePage
                     dbConnection={dbConnection}
                     toggleDBConnection={toggleDBConnection}
-                    // setUserPreferencesState={setUserPreferencesState}
                     userPreferencesState={userPreferencesState}
                     activeColor={activeColor}
                     activeCounter={activeCounter}
@@ -771,11 +784,14 @@ function App() {
                     setActiveColor={setActiveColor}
                     activeCounter={activeCounter}
                     countersState={countersState}
+                    closeSlidingItems={closeSlidingItems}
                     modifyCounter={modifyCounter}
                     resetSingleCounter={resetSingleCounter}
                     updateCountersState={updateCountersState}
                     addCounter={addCounter}
                     deleteCounter={deleteCounter}
+                    setShowDeleteToast={setShowDeleteToast}
+                    showDeleteToast={showDeleteToast}
                   />
                 }
               />

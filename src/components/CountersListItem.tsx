@@ -15,7 +15,6 @@ import {
   PreferenceKeyType,
 } from "../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
-import { showConfirmDialog } from "../utils/constants";
 import { useRef } from "react";
 
 interface CountersListItemProps {
@@ -26,10 +25,7 @@ interface CountersListItemProps {
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
   setShowResetActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowResetToast: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowDeleteToast: React.Dispatch<React.SetStateAction<boolean>>;
-  resetSingleCounter: (id: number) => Promise<void>;
-  deleteCounter: (id: number) => Promise<void>;
+  setShowDeleteActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setActiveColor: React.Dispatch<MaterialColor>;
   updateCountersState: (arr: counterObjType[]) => void;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
@@ -44,10 +40,7 @@ const CountersListItem = ({
   toggleDBConnection,
   updateUserPreference,
   setShowResetActionSheet,
-  setShowResetToast,
-  setShowDeleteToast,
-  resetSingleCounter,
-  deleteCounter,
+  setShowDeleteActionSheet,
   setActiveColor,
   updateCountersState,
   setCounterId,
@@ -149,18 +142,7 @@ const CountersListItem = ({
           className="swipe-options"
           onClick={async () => {
             setCounterId(counterItem.id);
-            console.log("COUNTER ID: ", counterItem.id);
-
-            const result = await showConfirmDialog(
-              "Reset Tasbeeh",
-              "Are you sure you want to reset this Tasbeeh to 0?"
-            );
             setShowResetActionSheet(true);
-            // if (result) {
-            //   await resetSingleCounter(counterItem.id);
-            //   closeOpenSlidingItems();
-            //   setShowResetToast(true);
-            // }
           }}
         >
           <MdOutlineRestartAlt className="text-4xl bg-[rgba(239,128,80,0.75)] p-2 rounded-3xl" />
@@ -169,14 +151,8 @@ const CountersListItem = ({
           mode="ios"
           className="swipe-options"
           onClick={async () => {
-            const result = await showConfirmDialog(
-              "Delete Tasbeeh",
-              "Are you sure you want to delete this Tasbeeh?"
-            );
-            if (result) {
-              await deleteCounter(counterItem.id);
-              setShowDeleteToast(true);
-            }
+            setCounterId(counterItem.id);
+            setShowDeleteActionSheet(true);
           }}
         >
           <MdDeleteOutline className="text-4xl bg-[rgba(239,83,80,0.75)] p-2 rounded-3xl" />

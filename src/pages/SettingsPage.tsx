@@ -16,10 +16,6 @@ import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
 
 import {
-  // pageTransitionStyles,
-  showConfirmDialog,
-} from "../utils/constants";
-import {
   counterObjType,
   MaterialColor,
   PreferenceKeyType,
@@ -31,10 +27,8 @@ import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
 import Toast from "../components/Toast";
+import ActionSheet from "../components/ActionSheet";
 interface SettingsageProps {
-  // setUserPreferencesState: React.Dispatch<
-  //   React.SetStateAction<userPreferencesType>
-  // >;
   userPreferencesState: userPreferencesType;
   updateUserPreference: (
     preferenceName: PreferenceKeyType,
@@ -43,6 +37,9 @@ interface SettingsageProps {
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetAllCounters: () => Promise<void>;
+  setShowAllResetToast: React.Dispatch<React.SetStateAction<boolean>>;
+  showAllResetToast: boolean;
+  closeSlidingItems: () => void;
   theme: themeType | null;
   setShowChangelogModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -55,13 +52,15 @@ const SettingsPage = ({
   activeColor,
   activeCounter,
   resetAllCounters,
+  setShowAllResetToast,
+  showAllResetToast,
   theme,
   setShowChangelogModal,
 }: SettingsageProps) => {
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
   const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
-  const [showAllResetToast, setShowAllResetToast] = useState(false);
+  const [showResetAllActionSheet, setShowResetAllActionSheet] = useState(false);
 
   const showNotificationsAlert = async () => {
     const { value } = await Dialog.confirm({
@@ -356,20 +355,36 @@ const SettingsPage = ({
           <div className="reset-adkhar-text-wrap pl-1">
             <p
               onClick={async () => {
-                const result = await showConfirmDialog(
-                  "Reset All Adhkar",
-                  "Are you sure you want to reset all Adkhar to 0?"
-                );
-                if (result) {
-                  await resetAllCounters();
-                  setShowAllResetToast(true);
-                }
+                setShowResetAllActionSheet(true);
               }}
             >
               Reset all Adhkar
             </p>
           </div>
         </section>
+        <ActionSheet
+          setState={setShowResetAllActionSheet}
+          isOpen={showResetAllActionSheet}
+          header="Are you sure?"
+          buttons={[
+            {
+              text: "Reset All Adhkar",
+              role: "destructive",
+              handler: async () => {
+                await resetAllCounters();
+              },
+            },
+            {
+              text: "Cancel",
+              role: "cancel",
+            },
+          ]}
+        />
+        <Toast
+          isOpen={showAllResetToast}
+          message="All Adhkar reset to 0"
+          setShow={setShowAllResetToast}
+        />
         <div className="individual-section-wrap">
           {Capacitor.getPlatform() === "android" && (
             <SettingIndividual
@@ -464,12 +479,6 @@ const SettingsPage = ({
           />
         </div>
       </div>
-
-      <Toast
-        isOpen={showAllResetToast}
-        message="All Adhkar reset to 0"
-        setShow={setShowAllResetToast}
-      />
     </motion.main>
   );
 };

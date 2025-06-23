@@ -29,6 +29,7 @@ interface CountersPageProps {
   updateCountersState: (arr: counterObjType[]) => void;
   countersState: counterObjType[];
   addCounter: (counterToAdd: string, target: number) => Promise<void>;
+  closeSlidingItems: () => void;
   modifyCounter: (
     id: number,
     modifiedCounterName: string,
@@ -37,6 +38,8 @@ interface CountersPageProps {
   ) => Promise<void>;
   resetSingleCounter: (id: number) => Promise<void>;
   deleteCounter: (id: number) => Promise<void>;
+  setShowDeleteToast: React.Dispatch<React.SetStateAction<boolean>>;
+  showDeleteToast: boolean;
 }
 
 function CountersPage({
@@ -47,17 +50,20 @@ function CountersPage({
   setActiveColor,
   activeCounter,
   updateCountersState,
-  deleteCounter,
   countersState,
+  closeSlidingItems,
   modifyCounter,
   resetSingleCounter,
   addCounter,
+  deleteCounter,
+  setShowDeleteToast,
+  showDeleteToast,
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
   const [counterId, setCounterId] = useState<number | null>(null);
   const [showResetActionSheet, setShowResetActionSheet] = useState(false);
+  const [showDeleteActionSheet, setShowDeleteActionSheet] = useState(false);
   const [showResetToast, setShowResetToast] = useState(false);
-  const [showDeleteToast, setShowDeleteToast] = useState(false);
 
   return (
     <motion.main
@@ -73,7 +79,6 @@ function CountersPage({
           }}
         />
       </header>
-      {/* <section className="counters-wrap"> */}
       <IonList mode="ios" className="counters-wrap ">
         {countersState.map((counterItem: counterObjType, i) => {
           let color = materialColors[i % materialColors.length];
@@ -85,10 +90,7 @@ function CountersPage({
               toggleDBConnection={toggleDBConnection}
               updateUserPreference={updateUserPreference}
               setShowResetActionSheet={setShowResetActionSheet}
-              setShowResetToast={setShowResetToast}
-              setShowDeleteToast={setShowDeleteToast}
-              resetSingleCounter={resetSingleCounter}
-              deleteCounter={deleteCounter}
+              setShowDeleteActionSheet={setShowDeleteActionSheet}
               setActiveColor={setActiveColor}
               updateCountersState={updateCountersState}
               countersState={countersState}
@@ -99,7 +101,6 @@ function CountersPage({
             />
           );
         })}
-        {/* </section> */}
       </IonList>
       <BottomSheetForm
         activeColor={activeColor}
@@ -115,20 +116,60 @@ function CountersPage({
       <ActionSheet
         setState={setShowResetActionSheet}
         isOpen={showResetActionSheet}
+        header="Are you sure?"
         buttons={[
           {
             text: "Reset Tasbeeh",
             role: "destructive",
             handler: async () => {
+              if (counterId == null) {
+                console.error(
+                  "CounterId does not exist within Reset Tasbeeh ActionSheet Buttons"
+                );
+                return;
+              }
+
               await resetSingleCounter(counterId);
-              // closeOpenSlidingItems();
+              closeSlidingItems();
               setShowResetToast(true);
+              setCounterId(null);
             },
           },
 
           {
             text: "Cancel",
             role: "cancel",
+            handler: async () => {
+              setCounterId(null);
+            },
+          },
+        ]}
+      />
+      <ActionSheet
+        setState={setShowDeleteActionSheet}
+        isOpen={showDeleteActionSheet}
+        header="Are you sure?"
+        buttons={[
+          {
+            text: "Delete Tasbeeh",
+            role: "destructive",
+            handler: async () => {
+              if (counterId == null) {
+                console.error(
+                  "CounterId does not exist within Delete Tasbeeh ActionSheet Buttons"
+                );
+                return;
+              }
+              await deleteCounter(counterId);
+              setCounterId(null);
+            },
+          },
+          {
+            text: "Cancel",
+            role: "cancel",
+            handler: async () => {
+              setCounterId(null);
+            },
           },
         ]}
       />

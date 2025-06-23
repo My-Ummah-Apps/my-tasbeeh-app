@@ -23,6 +23,7 @@
 :root {
   /* --body-bg-color: #f2f1f6; */
   /* --body-bg-color: #f4f4f4; */
+
   --body-bg-color: rgb(237, 237, 237);
   --svg-color: #757575;
   --ion-background-color: rgb(237, 237, 237);
@@ -142,6 +143,18 @@ ion-item-option::part(native) {
 ion-toast {
   --background: var(--toast-bg-color);
   --color: var(--text-color-primary);
+}
+
+ion-action-sheet.action-sheet {
+  --background: var(--body-bg-color);
+  --button-color: var(--text-color);
+  --cancel-button-background: var(--body-bg-color);
+  --cancel-button-color: var(--text-color);
+}
+
+ion-action-sheet[mode="md"] .action-sheet-title {
+  color: var(--text-color);
+  opacity: 0.6;
 }
 
 .item-options-ios {

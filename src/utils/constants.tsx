@@ -1,6 +1,5 @@
 import { Dialog } from "@capacitor/dialog";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { Toast } from "@capacitor/toast";
 import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { counterObjType, userPreferencesType } from "./types";
 import { EasingDefinition } from "framer-motion";
@@ -144,15 +143,6 @@ export const tween_config = {
 };
 
 // type ToastOptions = Parameters<typeof Toast.show>[0];
-
-export const showConfirmDialog = async (title: string, message: string) => {
-  const { value } = await Dialog.confirm({
-    title,
-    message,
-  });
-
-  return value;
-};
 
 export const showAlert = async (title: string, message: string) => {
   await Dialog.alert({
