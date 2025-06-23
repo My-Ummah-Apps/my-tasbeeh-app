@@ -15,6 +15,7 @@ const ActionSheet = ({
 }: ActionSheetProps) => {
   return (
     <IonActionSheet
+      mode="md"
       className="action-sheet"
       isOpen={isOpen}
       header={header || "Actions"}

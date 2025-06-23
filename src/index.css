@@ -152,7 +152,12 @@ ion-action-sheet.action-sheet {
   --cancel-button-color: var(--text-color);
 }
 
-ion-action-sheet[mode="md"] .action-sheet-title {
+/* ion-action-sheet[mode="md"] .action-sheet-title {
+  color: var(--text-color);
+  opacity: 0.6;
+} */
+
+ion-action-sheet.action-sheet .action-sheet-title {
   color: var(--text-color);
   opacity: 0.6;
 }
