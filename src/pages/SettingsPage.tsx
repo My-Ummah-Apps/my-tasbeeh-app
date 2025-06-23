@@ -365,7 +365,7 @@ const SettingsPage = ({
         <ActionSheet
           setState={setShowResetAllActionSheet}
           isOpen={showResetAllActionSheet}
-          header="Are you sure?"
+          header="Are you sure you want to reset all Adhkar?"
           buttons={[
             {
               text: "Reset All Adhkar",

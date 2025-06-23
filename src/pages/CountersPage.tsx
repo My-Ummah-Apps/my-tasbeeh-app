@@ -116,7 +116,7 @@ function CountersPage({
       <ActionSheet
         setState={setShowResetActionSheet}
         isOpen={showResetActionSheet}
-        header="Are you sure?"
+        header="Are you sure you want to reset this tasbeeh?"
         buttons={[
           {
             text: "Reset Tasbeeh",
@@ -148,7 +148,7 @@ function CountersPage({
       <ActionSheet
         setState={setShowDeleteActionSheet}
         isOpen={showDeleteActionSheet}
-        header="Are you sure?"
+        header="Are you sure you want to delete this tasbeeh?"
         buttons={[
           {
             text: "Delete Tasbeeh",

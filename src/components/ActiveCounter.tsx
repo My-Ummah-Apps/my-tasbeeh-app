@@ -6,6 +6,7 @@ import {
   languageDirection,
   MaterialColor,
 } from "../utils/types";
+import ActionSheet from "./ActionSheet";
 
 interface CounterNameAndNumberProps {
   activeColor: MaterialColor;
@@ -27,6 +28,8 @@ function ActiveCounter({
   const mScrollRef = useRef<HTMLDivElement | null>(null);
 
   const [scroll, setScroll] = useState<boolean>(false);
+  const [showResetActionSheetHomePage, setShowResetActionSheetHomePage] =
+    useState(false);
 
   useEffect(() => {
     const counterTextContainerWidth = counterTextContainerRef.current
@@ -64,91 +67,115 @@ function ActiveCounter({
   };
 
   return (
-    <section className="single-counter-wrap-parent">
-      <section
-        className={`single-counter-wrap active-counter remove-counter-blinking 
+    <>
+      <section className="single-counter-wrap-parent">
+        <section
+          className={`single-counter-wrap active-counter remove-counter-blinking 
           `}
-        ref={counterTextContainerRef}
-        style={{
-          backgroundColor: `${activeColor}BF`,
-        }}
-      >
-        <div className="single-counter-name-and-count-wrap">
-          <div
-            data-testid="counter-progress-percent-text"
-            className="single-counter-count"
-          >
-            {activeCounter.count <= activeCounter.target
-              ? `${Math.floor((activeCounter.count / activeCounter.target) * 100)}%`
-              : "100%"}
-          </div>
+          ref={counterTextContainerRef}
+          style={{
+            backgroundColor: `${activeColor}BF`,
+          }}
+        >
+          <div className="single-counter-name-and-count-wrap">
+            <div
+              data-testid="counter-progress-percent-text"
+              className="single-counter-count"
+            >
+              {activeCounter.count <= activeCounter.target
+                ? `${Math.floor((activeCounter.count / activeCounter.target) * 100)}%`
+                : "100%"}
+            </div>
 
-          <section
-            data-testid="active-counter-name"
-            className="single-counter-counter-name"
-            style={{
-              textAlign: languageDirection === "ltr" ? "left" : "right",
-              direction: languageDirection === "ltr" ? "ltr" : "rtl",
-            }}
-            ref={activeCounterTextRef}
-          >
-            <div className={scroll ? "scroll" : ""}>
-              <div
-                ref={mScrollRef}
-                className={`single-counter-text-wrap ${
-                  scroll
-                    ? languageDirection === "ltr"
-                      ? "scroll-ltr"
-                      : "scroll-rtl"
-                    : ""
-                }`}
-              >
-                <span className="active-counter-name" style={counterNameStyles}>
-                  {activeCounter.name}
-                </span>
-                {scroll && (
+            <section
+              data-testid="active-counter-name"
+              className="single-counter-counter-name"
+              style={{
+                textAlign: languageDirection === "ltr" ? "left" : "right",
+                direction: languageDirection === "ltr" ? "ltr" : "rtl",
+              }}
+              ref={activeCounterTextRef}
+            >
+              <div className={scroll ? "scroll" : ""}>
+                <div
+                  ref={mScrollRef}
+                  className={`single-counter-text-wrap ${
+                    scroll
+                      ? languageDirection === "ltr"
+                        ? "scroll-ltr"
+                        : "scroll-rtl"
+                      : ""
+                  }`}
+                >
                   <span
-                    className={"active-counter-name"}
+                    className="active-counter-name"
                     style={counterNameStyles}
                   >
                     {activeCounter.name}
                   </span>
-                )}
+                  {scroll && (
+                    <span
+                      className={"active-counter-name"}
+                      style={counterNameStyles}
+                    >
+                      {activeCounter.name}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          </section>
-        </div>
-        <button
-          aria-label="Reset Counter"
-          data-testid="counter-reset-btn"
-          className="reset-btn-wrap"
-          onClick={async () => {
-            await resetSingleCounter(activeCounter.id);
-          }}
-        >
-          <MdOutlineRestartAlt />
-        </button>
+            </section>
+          </div>
+          <button
+            aria-label="Reset Counter"
+            data-testid="counter-reset-btn"
+            className="reset-btn-wrap"
+            onClick={async () => {
+              // await resetSingleCounter(activeCounter.id);
+              setShowResetActionSheetHomePage(true);
+            }}
+          >
+            <MdOutlineRestartAlt />
+          </button>
 
-        <div
-          style={{
-            backgroundColor: activeColor,
-            width:
-              activeCounter.target > 0
-                ? `${(activeCounter.count / activeCounter.target) * 100}%`
-                : "100%",
-          }}
-          className="single-counter-overlay"
-        />
+          <div
+            style={{
+              backgroundColor: activeColor,
+              width:
+                activeCounter.target > 0
+                  ? `${(activeCounter.count / activeCounter.target) * 100}%`
+                  : "100%",
+            }}
+            className="single-counter-overlay"
+          />
+        </section>
+        <section
+          className="counter-type-wrap"
+          style={{ position: "absolute", opacity: 0 }}
+        >
+          <div ref={activeCounterTextRef}>
+            <span>{activeCounter.name}</span>
+          </div>
+        </section>
       </section>
-      <section
-        className="counter-type-wrap"
-        style={{ position: "absolute", opacity: 0 }}
-      >
-        <div ref={activeCounterTextRef}>
-          <span>{activeCounter.name}</span>
-        </div>
-      </section>
-    </section>
+      <ActionSheet
+        setState={setShowResetActionSheetHomePage}
+        isOpen={showResetActionSheetHomePage}
+        header="Are you sure you want to reset this tasbeeh?"
+        buttons={[
+          {
+            text: "Reset Tasbeeh",
+            role: "destructive",
+            handler: async () => {
+              await resetSingleCounter(activeCounter.id);
+            },
+          },
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+        ]}
+      />
+    </>
   );
 }
 
