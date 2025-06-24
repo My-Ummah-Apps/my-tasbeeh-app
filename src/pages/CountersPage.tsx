@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IonList, IonReorderGroup, ItemReorderEventDetail } from "@ionic/react";
 
-import { MdAdd } from "react-icons/md";
+import { MdAdd, MdReorder } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
 import { materialColors } from "../utils/constants";
 import {
@@ -74,14 +74,29 @@ function CountersPage({
     }
   }, []);
 
+  const [isReorderModeDisabled, setIsReorderModeDisabled] = useState(false);
+
   function handleReorder(event: CustomEvent<ItemReorderEventDetail>) {
-    // The `from` and `to` properties contain the index of the item
-    // when the drag started and ended, respectively
+    const from = event.detail.from;
+    const to = event.detail.to;
+
+    const [reorderedItem] = countersState.splice(from, 1);
+    console.log("reorderedItem: ", reorderedItem);
+    countersState.splice(to, 0, reorderedItem);
+    console.log("COUNRERS STATE: ", countersState);
+
+    updateCountersState(countersState);
+
     console.log("Dragged from index", event.detail.from, "to", event.detail.to);
 
-    // Finish the reorder and position the item in the DOM based on
-    // where the gesture ended. This method can also be called directly
-    // by the reorder group
+    try {
+      toggleDBConnection("open");
+    } catch (error) {
+      console.error(`Error saving reordered array to database: `, error);
+    } finally {
+      toggleDBConnection("close");
+    }
+
     event.detail.complete();
   }
 
@@ -90,7 +105,12 @@ function CountersPage({
       // {...pageTransitionStyles}
       className={`counters-page-wrap`}
     >
-      <header className="counters-page-header">
+      <header className="counters-page-header flex justify-between items-center">
+        <MdReorder
+          onClick={() => {
+            setIsReorderModeDisabled((prev) => !prev);
+          }}
+        />
         <p>Adhkar</p>
         <MdAdd
           onClick={() => {
@@ -101,7 +121,10 @@ function CountersPage({
       </header>
 
       <IonList mode="ios" className="counters-wrap">
-        <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
+        <IonReorderGroup
+          disabled={!isReorderModeDisabled}
+          onIonItemReorder={handleReorder}
+        >
           {countersState.map((counterItem: counterObjType, i) => {
             let color = materialColors[i % materialColors.length];
 
@@ -111,6 +134,7 @@ function CountersPage({
                 dbConnection={dbConnection}
                 toggleDBConnection={toggleDBConnection}
                 updateUserPreference={updateUserPreference}
+                isReorderModeDisabled={isReorderModeDisabled}
                 setShowResetActionSheet={setShowResetActionSheet}
                 setShowDeleteActionSheet={setShowDeleteActionSheet}
                 setActiveColor={setActiveColor}

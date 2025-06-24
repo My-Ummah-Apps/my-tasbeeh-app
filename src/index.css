@@ -32,8 +32,8 @@
   --header-bg-color: rgb(237, 237, 237);
   --nav-bg-color: rgb(242, 242, 242);
   --nav-border-color: #e2e2e2;
-  --text-color-primary: #000;
-  --text-color-secondary: #ffffff;
+  --text-color: #000;
+  /* --text-color-secondary: #ffffff; */
   --toast-bg-color: #d8d8d8;
   --setings-page-boxes-bg-color: #f7f7f7;
   --settings-page-borders: #e3e3e3;
@@ -57,7 +57,7 @@ body.dark {
   --nav-bg-color: #212121;
   --nav-border-color: #1f1f1f;
   --header-bg-color: #242424;
-  --text-color-primary: #fff;
+  --text-color: #fff;
   --toast-bg-color: #232323;
   --setings-page-boxes-bg-color: #2f2f2f;
   --settings-page-borders: #595959;
@@ -91,7 +91,7 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow: hidden;
-  color: var(--text-color-primary);
+  color: var(--text-color);
   height: 100vh;
   /* width: 100%; */
   max-width: 700px;
@@ -142,7 +142,7 @@ ion-item-option::part(native) {
 
 ion-toast {
   --background: var(--toast-bg-color);
-  --color: var(--text-color-primary);
+  --color: var(--text-color);
 }
 
 ion-action-sheet.action-sheet {
@@ -160,6 +160,11 @@ ion-action-sheet.action-sheet {
 ion-action-sheet.action-sheet .action-sheet-title {
   color: var(--text-color);
   opacity: 0.6;
+}
+
+ion-reorder::part(icon) {
+  color: var(--text-color);
+  margin-inline-start: 12px;
 }
 
 .item-options-ios {
@@ -645,23 +650,20 @@ textarea:focus {
   background: var(--header-bg-color);
   position: relative;
   height: 7vh;
-  color: var(--text-color-primary);
+  color: var(--text-color);
   border-bottom: 1px solid var(--border-header-and-nav);
-  /* position: sticky;
-  top: 0;
-  z-index: 1; */
 }
 
 .settings-page-header p,
-.counters-page-header p,
-.home-page-header p,
-.counters-page-header svg {
+/* .counters-page-header p, */
+.home-page-header p {
+  /* .counters-page-header svg  */
   position: absolute;
   top: 50%;
   font-size: 1.2rem;
 }
 
-.counters-page-header p,
+/* .counters-page-header p, */
 .settings-page-header p,
 .home-page-header p {
   left: 50%;
@@ -671,12 +673,8 @@ textarea:focus {
 .counters-page-header svg {
   font-size: 1.5rem;
   width: 15%;
-  right: 28px;
-  transform: translate(50%, -50%);
-  height: 100%;
-  /* width: 18%; */
+  /* height: 100%; */
   width: clamp(4.375rem, 4.0625rem + 1.4286vw, 4.6875rem);
-  padding: 0 1.2rem 0 1.2rem;
 }
 
 .theme-options-wrap {
@@ -720,7 +718,6 @@ textarea:focus {
 }
 
 .nav-link {
-  /* color: var(--text-color); */
   text-decoration: none;
   text-align: center;
   padding: 1rem 3rem 0.5rem 3rem;
@@ -728,7 +725,6 @@ textarea:focus {
 
 .nav-icon {
   font-size: 1.5rem;
-  /* fill: var(--text-color); */
 }
 
 .target-text {
@@ -746,8 +742,7 @@ textarea:focus {
 input[type="text"],
 input[type="number"] {
   padding: 1rem;
-  /* background: var(--form-input-bg-color);
-  color: var(--text-color); */
+  /* background: var(--form-input-bg-color); */
 }
 
 .form-blank,
@@ -1145,7 +1140,7 @@ input[type="number"] {
 }
 
 .individual-section-wrap {
-  color: var(--text-color-primary);
+  color: var(--text-color);
   position: relative;
   background: var(--setings-page-boxes-bg-color);
   margin: 1rem auto 2rem auto;
@@ -1206,7 +1201,7 @@ input[type="number"] {
 
 .text-wrap {
   align-self: center;
-  color: var(--text-color-primary);
+  color: var(--text-color);
 }
 
 .text-wrap p {
