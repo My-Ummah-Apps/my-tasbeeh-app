@@ -6,6 +6,7 @@ import {
   IonItemSliding,
   IonItemOptions,
   IonItemOption,
+  IonReorder,
 } from "@ionic/react";
 import { direction } from "direction";
 import {
@@ -120,6 +121,7 @@ const CountersListItem = ({
             }}
           ></div>
         </div>
+        <IonReorder slot="end" />
       </IonItem>
 
       <IonItemOptions>

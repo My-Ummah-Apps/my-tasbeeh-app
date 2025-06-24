@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IonList } from "@ionic/react";
+import { IonList, IonReorderGroup, ItemReorderEventDetail } from "@ionic/react";
 
 import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
@@ -65,7 +65,7 @@ function CountersPage({
   const [showDeleteActionSheet, setShowDeleteActionSheet] = useState(false);
   const [showResetToast, setShowResetToast] = useState(false);
   const [showSwipeHint, setShowSwipeHint] = useState(false);
-
+  showSwipeHint;
   useEffect(() => {
     const hasSeenHint = localStorage.getItem("hasSeenSwipeHint");
     if (!hasSeenHint) {
@@ -73,6 +73,17 @@ function CountersPage({
       localStorage.setItem("hasSeenSwipeHint", "true");
     }
   }, []);
+
+  function handleReorder(event: CustomEvent<ItemReorderEventDetail>) {
+    // The `from` and `to` properties contain the index of the item
+    // when the drag started and ended, respectively
+    console.log("Dragged from index", event.detail.from, "to", event.detail.to);
+
+    // Finish the reorder and position the item in the DOM based on
+    // where the gesture ended. This method can also be called directly
+    // by the reorder group
+    event.detail.complete();
+  }
 
   return (
     <motion.main
@@ -88,29 +99,33 @@ function CountersPage({
           }}
         />
       </header>
-      <IonList mode="ios" className="counters-wrap ">
-        {countersState.map((counterItem: counterObjType, i) => {
-          let color = materialColors[i % materialColors.length];
 
-          return (
-            <CountersListItem
-              key={counterItem.id}
-              dbConnection={dbConnection}
-              toggleDBConnection={toggleDBConnection}
-              updateUserPreference={updateUserPreference}
-              setShowResetActionSheet={setShowResetActionSheet}
-              setShowDeleteActionSheet={setShowDeleteActionSheet}
-              setActiveColor={setActiveColor}
-              updateCountersState={updateCountersState}
-              countersState={countersState}
-              setCounterId={setCounterId}
-              setShowForm={setShowForm}
-              color={color}
-              counterItem={counterItem}
-            />
-          );
-        })}
+      <IonList mode="ios" className="counters-wrap">
+        <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
+          {countersState.map((counterItem: counterObjType, i) => {
+            let color = materialColors[i % materialColors.length];
+
+            return (
+              <CountersListItem
+                key={counterItem.id}
+                dbConnection={dbConnection}
+                toggleDBConnection={toggleDBConnection}
+                updateUserPreference={updateUserPreference}
+                setShowResetActionSheet={setShowResetActionSheet}
+                setShowDeleteActionSheet={setShowDeleteActionSheet}
+                setActiveColor={setActiveColor}
+                updateCountersState={updateCountersState}
+                countersState={countersState}
+                setCounterId={setCounterId}
+                setShowForm={setShowForm}
+                color={color}
+                counterItem={counterItem}
+              />
+            );
+          })}
+        </IonReorderGroup>
       </IonList>
+
       <BottomSheetForm
         activeColor={activeColor}
         countersState={countersState}
