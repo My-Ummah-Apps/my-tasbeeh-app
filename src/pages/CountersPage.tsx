@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IonList } from "@ionic/react";
 
 import { MdAdd } from "react-icons/md";
@@ -64,6 +64,15 @@ function CountersPage({
   const [showResetActionSheet, setShowResetActionSheet] = useState(false);
   const [showDeleteActionSheet, setShowDeleteActionSheet] = useState(false);
   const [showResetToast, setShowResetToast] = useState(false);
+  const [showSwipeHint, setShowSwipeHint] = useState(false);
+
+  useEffect(() => {
+    const hasSeenHint = localStorage.getItem("hasSeenSwipeHint");
+    if (!hasSeenHint) {
+      setShowSwipeHint(true);
+      localStorage.setItem("hasSeenSwipeHint", "true");
+    }
+  }, []);
 
   return (
     <motion.main
