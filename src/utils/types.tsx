@@ -15,6 +15,7 @@ export interface userPreferencesType {
   haptics: BinaryValue;
   previousLaunchDate: string;
   dailyCounterReset: BinaryValue;
+  autoSwitchCounter: BinaryValue;
   activeColor: MaterialColor;
   theme: themeType;
 }

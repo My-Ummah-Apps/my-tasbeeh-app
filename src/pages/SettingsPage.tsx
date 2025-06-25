@@ -28,6 +28,7 @@ import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSh
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
 import Toast from "../components/Toast";
 import ActionSheet from "../components/ActionSheet";
+import { IonToggle } from "@ionic/react";
 interface SettingsageProps {
   userPreferencesState: userPreferencesType;
   updateUserPreference: (
@@ -385,6 +386,72 @@ const SettingsPage = ({
           message="All Adhkar reset to 0"
           setShow={setShowAllResetToast}
         />
+        <section className="individual-section-wrap">
+          {Capacitor.isNativePlatform() && (
+            <div className="individual-row-wrap haptic-wrap  p-3">
+              <div className="text-wrap" style={{ display: "block" }}>
+                <p>Haptic Vibration</p>
+                <p>Set vibration on every increment</p>
+              </div>
+              <Switch
+                checked={userPreferencesState.haptics === 1 ? true : false}
+                handleColor="white"
+                name={undefined}
+                offColor="white"
+                onChange={async () => {
+                  const hapticsValue =
+                    userPreferencesState.haptics === 0 ? 1 : 0;
+                  await updateUserPreference("haptics", hapticsValue);
+                }}
+                onColor={activeColor}
+              />
+            </div>
+          )}
+          <section className="individual-row-wrap p-3">
+            <div className="text-wrap " style={{ display: "block" }}>
+              <p>Auto-Switch Tasbeeh</p>
+              <p>
+                Automatically switch to the next counter once the current one
+                reaches its target.
+              </p>
+            </div>
+            <IonToggle
+              color={activeColor}
+              style={{
+                "--ion-color-base":
+                  userPreferencesState.autoSwitchCounter === 1
+                    ? activeColor
+                    : "#ccc",
+                "--ion-color-contrast": "#fff",
+              }}
+              checked={userPreferencesState.autoSwitchCounter === 1}
+              onIonChange={async (e) => {
+                const autoSwitchCounterValue = e.detail.checked ? 1 : 0;
+                await updateUserPreference(
+                  "autoSwitchCounter",
+                  autoSwitchCounterValue
+                );
+              }}
+            ></IonToggle>
+            {/* <Switch
+              checked={
+                userPreferencesState.dailyCounterReset === 1 ? true : false
+              }
+              handleColor="white"
+              name={undefined}
+              offColor="white"
+              onChange={async () => {
+                const dailyCounterResetValue =
+                  userPreferencesState.dailyCounterReset === 0 ? 1 : 0;
+                await updateUserPreference(
+                  "dailyCounterReset",
+                  dailyCounterResetValue
+                );
+              }}
+              onColor={activeColor}
+            /> */}
+          </section>
+        </section>
         <div className="individual-section-wrap">
           {Capacitor.getPlatform() === "android" && (
             <SettingIndividual

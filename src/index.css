@@ -167,6 +167,13 @@ ion-reorder::part(icon) {
   margin-inline-start: 12px;
 }
 
+ion-toggle {
+  padding: 12px;
+
+  --track-background: #ddd;
+  /* --track-background-checked: #ddd; */
+}
+
 .item-options-ios {
   background-color: transparent !important;
   border-bottom: none !important;

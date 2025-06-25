@@ -80,20 +80,18 @@ function CountersPage({
     const from = event.detail.from;
     const to = event.detail.to;
 
-    const [reorderedItem] = countersState.splice(from, 1);
-    console.log("reorderedItem: ", reorderedItem);
-    countersState.splice(to, 0, reorderedItem);
-    console.log("COUNRERS STATE: ", countersState);
-
-    countersState.forEach((counter, index) => (counter.orderIndex = index));
-
-    updateCountersState(countersState);
-
-    // console.log("Dragged from index", event.detail.from, "to", event.detail.to);
+    const updatedCountersState = [...countersState];
+    const [reorderedItem] = updatedCountersState.splice(from, 1);
+    updatedCountersState.splice(to, 0, reorderedItem);
+    updatedCountersState.forEach(
+      (counter, index) => (counter.orderIndex = index)
+    );
+    updateCountersState(updatedCountersState);
+    event.detail.complete();
 
     try {
       await toggleDBConnection("open");
-      for (const counter of countersState) {
+      for (const counter of updatedCountersState) {
         await dbConnection.current!.run(
           `UPDATE counterDataTable SET orderIndex = ? WHERE id = ?`,
           [counter.orderIndex, counter.id]
@@ -104,8 +102,6 @@ function CountersPage({
     } finally {
       await toggleDBConnection("close");
     }
-
-    event.detail.complete();
   };
 
   return (

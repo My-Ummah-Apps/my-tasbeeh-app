@@ -292,16 +292,16 @@ function App() {
   };
 
   const updateCountersState = (arr: counterObjType[]) => {
-    setCountersState(arr);
+    setCountersState([...arr].sort((a, b) => a.orderIndex - b.orderIndex));
     const activeCounter =
       arr.find((counter) => counter.isActive === 1) ?? arr[0];
 
     setActiveCounter(activeCounter);
   };
 
-  // useEffect(() => {
-  //   console.log("countersState: ", countersState);
-  // }, [countersState]);
+  useEffect(() => {
+    console.log("countersState: ", countersState);
+  }, [countersState]);
 
   const initialiseAppUI = async (theme: themeType) => {
     const splash_hide_delay = 500;
@@ -389,6 +389,7 @@ function App() {
       );
 
       // console.log("DBResultAllCounterData: ", DBResultAllCounterData.values);
+      // console.log("DBResultPreferences.values: ", DBResultPreferences.values);
 
       assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
 
@@ -471,6 +472,10 @@ function App() {
 
     await batchAssignPreferences();
   };
+
+  useEffect(() => {
+    console.log("userPreferences: ", userPreferencesState);
+  }, [userPreferencesState]);
 
   const handleCounterDataFromDB = async (
     DBResultAllCounterData: DBSQLiteValues,

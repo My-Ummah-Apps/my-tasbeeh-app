@@ -111,6 +111,7 @@ export const dictPreferencesDefaultValues: userPreferencesType = {
   haptics: 1,
   previousLaunchDate: todaysDate,
   dailyCounterReset: 0,
+  autoSwitchCounter: 0,
   activeColor: materialColors[0],
   theme: "light",
 };
