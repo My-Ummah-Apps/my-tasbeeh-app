@@ -168,7 +168,7 @@ ion-reorder::part(icon) {
 }
 
 ion-toggle {
-  padding: 12px;
+  padding: 12px 0;
 
   --track-background: #ddd;
   /* --track-background-checked: #ddd; */

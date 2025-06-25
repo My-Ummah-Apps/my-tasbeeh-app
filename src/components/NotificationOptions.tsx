@@ -1,5 +1,3 @@
-// @ts-ignore
-import Switch from "react-ios-switch";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import {
   counterObjType,
@@ -8,6 +6,7 @@ import {
   themeType,
   userPreferencesType,
 } from "../utils/types";
+import { IonToggle } from "@ionic/react";
 // import { Capacitor } from "@capacitor/core";
 
 interface NotificationOptionsProps {
@@ -38,21 +37,27 @@ const NotificationOptions = ({
   return (
     <section className="notification-options-wrap">
       <h2 className="notifications-options-heading-text">Notifications</h2>
-      <section className="individual-notification-option-wrap">
+      <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Morning</p>
           <p className="notificatiions-options-sub-text">
             Receive notifications every morning
           </p>
         </div>
-        <Switch
-          checked={
-            userPreferencesState.morningNotification === 1 ? true : false
-          }
-          handleColor="white"
-          offColor="white"
-          onChange={async () => {
-            if (userPreferencesState.morningNotification === 1) {
+        <IonToggle
+          mode="ios"
+          color={activeColor}
+          style={{
+            "--ion-color-base":
+              userPreferencesState.morningNotification === 1
+                ? activeColor
+                : "#ccc",
+            "--ion-color-contrast": "#fff",
+          }}
+          checked={userPreferencesState.morningNotification === 1}
+          onIonChange={async (e) => {
+            const morningNotificationValue = e.detail.checked;
+            if (!morningNotificationValue) {
               await updateUserPreference("morningNotification", 0);
               await cancelNotification(1);
             } else {
@@ -73,9 +78,8 @@ const NotificationOptions = ({
               await updateUserPreference("morningNotification", 1);
             }
           }}
-          onColor={activeColor}
-        />
-      </section>
+        ></IonToggle>
+      </div>
       <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Afternoon</p>
@@ -83,15 +87,20 @@ const NotificationOptions = ({
             Receive notifications every afternoon
           </p>
         </div>
-        <Switch
-          checked={
-            userPreferencesState.afternoonNotification === 1 ? true : false
-          }
-          handleColor="white"
-          name={undefined}
-          offColor="white"
-          onChange={async () => {
-            if (userPreferencesState.afternoonNotification === 1) {
+        <IonToggle
+          mode="ios"
+          color={activeColor}
+          style={{
+            "--ion-color-base":
+              userPreferencesState.afternoonNotification === 1
+                ? activeColor
+                : "#ccc",
+            "--ion-color-contrast": "#fff",
+          }}
+          checked={userPreferencesState.afternoonNotification === 1}
+          onIonChange={async (e) => {
+            const afternoonNotificationValue = e.detail.checked;
+            if (!afternoonNotificationValue) {
               await updateUserPreference("afternoonNotification", 0);
               await cancelNotification(2);
             } else {
@@ -112,8 +121,7 @@ const NotificationOptions = ({
               await updateUserPreference("afternoonNotification", 1);
             }
           }}
-          onColor={activeColor}
-        />
+        ></IonToggle>
       </div>
       <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
@@ -122,15 +130,20 @@ const NotificationOptions = ({
             Receive notifications every evening
           </p>
         </div>
-        <Switch
-          checked={
-            userPreferencesState.eveningNotification === 1 ? true : false
-          }
-          handleColor="white"
-          name={undefined}
-          offColor="white"
-          onChange={async () => {
-            if (userPreferencesState.eveningNotification === 1) {
+        <IonToggle
+          mode="ios"
+          color={activeColor}
+          style={{
+            "--ion-color-base":
+              userPreferencesState.eveningNotification === 1
+                ? activeColor
+                : "#ccc",
+            "--ion-color-contrast": "#fff",
+          }}
+          checked={userPreferencesState.eveningNotification === 1}
+          onIonChange={async (e) => {
+            const eveningNotificationValue = e.detail.checked;
+            if (!eveningNotificationValue) {
               await updateUserPreference("eveningNotification", 0);
               await cancelNotification(3);
             } else {
@@ -151,8 +164,7 @@ const NotificationOptions = ({
               await updateUserPreference("eveningNotification", 1);
             }
           }}
-          onColor={activeColor}
-        />
+        ></IonToggle>
       </div>
     </section>
   );

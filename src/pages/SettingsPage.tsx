@@ -8,8 +8,7 @@ import {
   AndroidSettings,
   IOSSettings,
 } from "capacitor-native-settings";
-// @ts-ignore
-import Switch from "react-ios-switch";
+
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { PURCHASE_TYPE } from "cordova-plugin-purchases";
 import { Share } from "@capacitor/share";
@@ -273,26 +272,26 @@ const SettingsPage = ({
 
         </div>
 */}
-        {Capacitor.isNativePlatform() && (
-          <section className="individual-section-wrap">
-            <SettingIndividual
-              // indvidualStyles={"rounded-t-md"}
-              headingText={"Notifications"}
-              subText={"Set Notifications"}
-              onClick={() => {
-                checkNotificationPermissions();
-              }}
-            />
-            <BottomSheetNotificationsOptions
-              updateUserPreference={updateUserPreference}
-              activeColor={activeColor}
-              activeCounter={activeCounter}
-              setShowNotificationsSheet={setShowNotificationsSheet}
-              showNotificationsSheet={showNotificationsSheet}
-              userPreferencesState={userPreferencesState}
-            />
-          </section>
-        )}
+        {/* {Capacitor.isNativePlatform() && ( */}
+        <section className="individual-section-wrap">
+          <SettingIndividual
+            // indvidualStyles={"rounded-t-md"}
+            headingText={"Notifications"}
+            subText={"Set Notifications"}
+            onClick={() => {
+              checkNotificationPermissions();
+            }}
+          />
+          <BottomSheetNotificationsOptions
+            updateUserPreference={updateUserPreference}
+            activeColor={activeColor}
+            activeCounter={activeCounter}
+            setShowNotificationsSheet={setShowNotificationsSheet}
+            showNotificationsSheet={showNotificationsSheet}
+            userPreferencesState={userPreferencesState}
+          />
+        </section>
+        {/* // )} */}
         <section className="individual-section-wrap">
           <SettingIndividual
             // indvidualStyles={"rounded-t-md"}
@@ -310,48 +309,52 @@ const SettingsPage = ({
           />
         </section>
         <section className="individual-section-wrap">
-          {Capacitor.isNativePlatform() && (
-            <div className="individual-row-wrap haptic-wrap  p-3">
-              <div className="text-wrap" style={{ display: "block" }}>
-                <p>Haptic Vibration</p>
-                <p>Set vibration on every increment</p>
-              </div>
-              <Switch
-                checked={userPreferencesState.haptics === 1 ? true : false}
-                handleColor="white"
-                name={undefined}
-                offColor="white"
-                onChange={async () => {
-                  const hapticsValue =
-                    userPreferencesState.haptics === 0 ? 1 : 0;
-                  await updateUserPreference("haptics", hapticsValue);
-                }}
-                onColor={activeColor}
-              />
+          {/* {Capacitor.isNativePlatform() && ( */}
+          <div className="individual-row-wrap haptic-wrap  p-3">
+            <div className="text-wrap" style={{ display: "block" }}>
+              <p>Haptic Vibration</p>
+              <p>Set vibration on every increment</p>
             </div>
-          )}
+            <IonToggle
+              mode="ios"
+              color={activeColor}
+              style={{
+                "--ion-color-base":
+                  userPreferencesState.haptics === 1 ? activeColor : "#ccc",
+                "--ion-color-contrast": "#fff",
+              }}
+              checked={userPreferencesState.haptics === 1}
+              onIonChange={async (e) => {
+                const hapticsValue = e.detail.checked ? 1 : 0;
+                await updateUserPreference("haptics", hapticsValue);
+              }}
+            ></IonToggle>
+          </div>
+          {/* // )} */}
           <section className="individual-row-wrap p-3">
             <div className="text-wrap " style={{ display: "block" }}>
               <p>Auto Reset Adhkar</p>
               <p>Adhkar will be reset daily</p>
             </div>
-            <Switch
-              checked={
-                userPreferencesState.dailyCounterReset === 1 ? true : false
-              }
-              handleColor="white"
-              name={undefined}
-              offColor="white"
-              onChange={async () => {
-                const dailyCounterResetValue =
-                  userPreferencesState.dailyCounterReset === 0 ? 1 : 0;
+            <IonToggle
+              mode="ios"
+              color={activeColor}
+              style={{
+                "--ion-color-base":
+                  userPreferencesState.dailyCounterReset === 1
+                    ? activeColor
+                    : "#ccc",
+                "--ion-color-contrast": "#fff",
+              }}
+              checked={userPreferencesState.dailyCounterReset === 1}
+              onIonChange={async (e) => {
+                const dailyCounterResetValue = e.detail.checked ? 1 : 0;
                 await updateUserPreference(
                   "dailyCounterReset",
                   dailyCounterResetValue
                 );
               }}
-              onColor={activeColor}
-            />
+            ></IonToggle>
           </section>
           <div className="reset-adkhar-text-wrap pl-1">
             <p
@@ -387,26 +390,6 @@ const SettingsPage = ({
           setShow={setShowAllResetToast}
         />
         <section className="individual-section-wrap">
-          {Capacitor.isNativePlatform() && (
-            <div className="individual-row-wrap haptic-wrap  p-3">
-              <div className="text-wrap" style={{ display: "block" }}>
-                <p>Haptic Vibration</p>
-                <p>Set vibration on every increment</p>
-              </div>
-              <Switch
-                checked={userPreferencesState.haptics === 1 ? true : false}
-                handleColor="white"
-                name={undefined}
-                offColor="white"
-                onChange={async () => {
-                  const hapticsValue =
-                    userPreferencesState.haptics === 0 ? 1 : 0;
-                  await updateUserPreference("haptics", hapticsValue);
-                }}
-                onColor={activeColor}
-              />
-            </div>
-          )}
           <section className="individual-row-wrap p-3">
             <div className="text-wrap " style={{ display: "block" }}>
               <p>Auto-Switch Tasbeeh</p>
@@ -416,6 +399,7 @@ const SettingsPage = ({
               </p>
             </div>
             <IonToggle
+              mode="ios"
               color={activeColor}
               style={{
                 "--ion-color-base":
@@ -433,23 +417,6 @@ const SettingsPage = ({
                 );
               }}
             ></IonToggle>
-            {/* <Switch
-              checked={
-                userPreferencesState.dailyCounterReset === 1 ? true : false
-              }
-              handleColor="white"
-              name={undefined}
-              offColor="white"
-              onChange={async () => {
-                const dailyCounterResetValue =
-                  userPreferencesState.dailyCounterReset === 0 ? 1 : 0;
-                await updateUserPreference(
-                  "dailyCounterReset",
-                  dailyCounterResetValue
-                );
-              }}
-              onColor={activeColor}
-            /> */}
           </section>
         </section>
         <div className="individual-section-wrap">
