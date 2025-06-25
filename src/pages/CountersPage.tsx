@@ -76,7 +76,7 @@ function CountersPage({
 
   const [isReorderModeDisabled, setIsReorderModeDisabled] = useState(false);
 
-  function handleReorder(event: CustomEvent<ItemReorderEventDetail>) {
+  const handleReorder = async (event: CustomEvent<ItemReorderEventDetail>) => {
     const from = event.detail.from;
     const to = event.detail.to;
 
@@ -85,20 +85,28 @@ function CountersPage({
     countersState.splice(to, 0, reorderedItem);
     console.log("COUNRERS STATE: ", countersState);
 
+    countersState.forEach((counter, index) => (counter.orderIndex = index));
+
     updateCountersState(countersState);
 
-    console.log("Dragged from index", event.detail.from, "to", event.detail.to);
+    // console.log("Dragged from index", event.detail.from, "to", event.detail.to);
 
     try {
-      toggleDBConnection("open");
+      await toggleDBConnection("open");
+      for (const counter of countersState) {
+        await dbConnection.current!.run(
+          `UPDATE counterDataTable SET orderIndex = ? WHERE id = ?`,
+          [counter.orderIndex, counter.id]
+        );
+      }
     } catch (error) {
       console.error(`Error saving reordered array to database: `, error);
     } finally {
-      toggleDBConnection("close");
+      await toggleDBConnection("close");
     }
 
     event.detail.complete();
-  }
+  };
 
   return (
     <motion.main

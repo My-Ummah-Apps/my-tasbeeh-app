@@ -495,9 +495,8 @@ function App() {
     const counters: counterObjType[] = countersFromDB.map(
       (item): counterObjType => ({
         id: Number(item.id),
-        orderIndex: Number(item.index),
+        orderIndex: Number(item.orderIndex),
         name: item.name,
-        // count: Number(item.count),
         count: resetCounters ? 0 : Number(item.count),
         target: Number(item.target),
         color: item.color,
