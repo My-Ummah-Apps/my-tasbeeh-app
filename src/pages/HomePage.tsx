@@ -14,10 +14,8 @@ import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
-  // setUserPreferencesState: React.Dispatch<
-  //   React.SetStateAction<userPreferencesType>
-  // >;
   userPreferencesState: userPreferencesType;
+  updateActiveCounter: (counterId: number, color: string) => Promise<void>;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetSingleCounter: (id: number) => Promise<void>;
@@ -30,8 +28,8 @@ interface HomePageProps {
 const HomePage = ({
   dbConnection,
   toggleDBConnection,
-  // setUserPreferencesState,
   userPreferencesState,
+  updateActiveCounter,
   activeColor,
   activeCounter,
   resetSingleCounter,
@@ -59,6 +57,7 @@ const HomePage = ({
         dbConnection={dbConnection}
         toggleDBConnection={toggleDBConnection}
         userPreferencesState={userPreferencesState}
+        updateActiveCounter={updateActiveCounter}
         activeColor={activeColor}
         countersState={countersState}
         updateCountersState={updateCountersState}

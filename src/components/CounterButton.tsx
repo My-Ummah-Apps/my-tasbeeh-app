@@ -7,6 +7,7 @@ import {
 } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
+import { materialColors } from "../utils/constants";
 
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
@@ -19,10 +20,8 @@ const hapticsVibrate = async () => {
 interface CounterButtonProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
-  // setUserPreferencesState: React.Dispatch<
-  //   React.SetStateAction<userPreferencesType>
-  // >;
   userPreferencesState: userPreferencesType;
+  updateActiveCounter: (counterId: number, color: string) => Promise<void>;
   activeColor: MaterialColor;
   countersState: counterObjType[];
   activeCounter: counterObjType;
@@ -33,6 +32,7 @@ function CounterButton({
   dbConnection,
   toggleDBConnection,
   userPreferencesState,
+  updateActiveCounter,
   activeColor,
   countersState,
   activeCounter,
@@ -60,18 +60,34 @@ function CounterButton({
 
     updateCountersState(updatedCountersArr);
 
-    if (Capacitor.isNativePlatform()) {
-      if (
-        activeCounter.count === activeCounter.target &&
-        userPreferencesState.haptics === 1
-      ) {
-        hapticsVibrate();
-        return;
+    if (activeCounter.count === activeCounter.target) {
+      if (Capacitor.isNativePlatform()) {
+        if (userPreferencesState.haptics === 1) {
+          hapticsVibrate();
+        }
       }
 
-      if (userPreferencesState.haptics === 1) {
-        hapticsImpactMedium();
+      if (userPreferencesState.autoSwitchCounter === 1) {
+        const currentCounterIndex = countersState.findIndex(
+          (counter) => counter.isActive === 1
+        );
+        const nextCounterId = countersState[currentCounterIndex + 1].id;
+        console.log("currentCounter index: ", currentCounterIndex);
+
+        await updateActiveCounter(
+          nextCounterId,
+          materialColors[
+            currentCounterIndex < materialColors.length
+              ? currentCounterIndex + 1
+              : 0
+          ]
+        );
+        console.log("TARGET HIT");
       }
+
+      // if (userPreferencesState.haptics === 1) {
+      //   hapticsImpactMedium();
+      // }
     }
   };
 

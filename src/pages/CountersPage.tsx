@@ -12,21 +12,15 @@ import {
 } from "../utils/types";
 import { motion } from "framer-motion";
 import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
-import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import Toast from "../components/Toast";
 import ActionSheet from "../components/ActionSheet";
 
 interface CountersPageProps {
-  dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
-  toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
-  updateUserPreference: (
-    preferenceName: PreferenceKeyType,
-    preferenceValue: number | MaterialColor
-  ) => Promise<void>;
+  updateActiveCounter: (counterId: number, color: string) => Promise<void>;
+  setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
+  counterId: number | null;
   activeColor: MaterialColor;
-  setActiveColor: React.Dispatch<MaterialColor>;
   activeCounter: counterObjType;
-  updateCountersState: (arr: counterObjType[]) => void;
   countersState: counterObjType[];
   addCounter: (counterToAdd: string, target: number) => Promise<void>;
   closeSlidingItems: () => void;
@@ -43,13 +37,11 @@ interface CountersPageProps {
 }
 
 function CountersPage({
-  dbConnection,
-  toggleDBConnection,
-  updateUserPreference,
+  updateActiveCounter,
+  setCounterId,
+  counterId,
   activeColor,
-  setActiveColor,
   activeCounter,
-  updateCountersState,
   countersState,
   closeSlidingItems,
   modifyCounter,
@@ -60,7 +52,6 @@ function CountersPage({
   showDeleteToast,
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
-  const [counterId, setCounterId] = useState<number | null>(null);
   const [showResetActionSheet, setShowResetActionSheet] = useState(false);
   const [showDeleteActionSheet, setShowDeleteActionSheet] = useState(false);
   const [showResetToast, setShowResetToast] = useState(false);
@@ -96,14 +87,9 @@ function CountersPage({
           return (
             <CountersListItem
               key={counterItem.id}
-              dbConnection={dbConnection}
-              toggleDBConnection={toggleDBConnection}
-              updateUserPreference={updateUserPreference}
+              updateActiveCounter={updateActiveCounter}
               setShowResetActionSheet={setShowResetActionSheet}
               setShowDeleteActionSheet={setShowDeleteActionSheet}
-              setActiveColor={setActiveColor}
-              updateCountersState={updateCountersState}
-              countersState={countersState}
               setCounterId={setCounterId}
               setShowForm={setShowForm}
               color={color}

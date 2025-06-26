@@ -107,6 +107,7 @@ function App() {
   // }, []);
 
   const [countersState, setCountersState] = useState<counterObjType[]>([]);
+  const [counterId, setCounterId] = useState<number | null>(null);
   const [languageDirection, setLanguageDirection] =
     useState<languageDirection>("neutral");
   const [theme, setTheme] = useState<themeType | null>(null);
@@ -732,6 +733,37 @@ function App() {
     }
   };
 
+  const updateActiveCounter = async (counterId: number, color: string) => {
+    console.log("updateActiveCounter TRIGGERED");
+
+    setCounterId(counterId);
+    setActiveColor(color);
+    const updatedCountersArr: counterObjType[] = countersState.map(
+      (counter: counterObjType) => {
+        return counter.id === counterId
+          ? { ...counter, isActive: 1 }
+          : { ...counter, isActive: 0 };
+      }
+    );
+    updateCountersState(updatedCountersArr);
+    await updateUserPreference("activeColor", color);
+
+    try {
+      await toggleDBConnection("open");
+      await dbConnection.current!.run(
+        `UPDATE counterDataTable SET isActive = 0`
+      );
+      await dbConnection.current!.run(
+        `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
+        [counterId]
+      );
+    } catch (error) {
+      console.error("Error updating active counter/active color: ", error);
+    } finally {
+      await toggleDBConnection("close");
+    }
+  };
+
   return (
     <IonApp>
       <BrowserRouter>
@@ -767,6 +799,7 @@ function App() {
                     dbConnection={dbConnection}
                     toggleDBConnection={toggleDBConnection}
                     userPreferencesState={userPreferencesState}
+                    updateActiveCounter={updateActiveCounter}
                     activeColor={activeColor}
                     activeCounter={activeCounter}
                     resetSingleCounter={resetSingleCounter}
@@ -784,8 +817,11 @@ function App() {
                     dbConnection={dbConnection}
                     toggleDBConnection={toggleDBConnection}
                     updateUserPreference={updateUserPreference}
+                    updateActiveCounter={updateActiveCounter}
                     activeColor={activeColor}
                     setActiveColor={setActiveColor}
+                    setCounterId={setCounterId}
+                    counterId={counterId}
                     activeCounter={activeCounter}
                     countersState={countersState}
                     closeSlidingItems={closeSlidingItems}

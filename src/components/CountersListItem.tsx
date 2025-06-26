@@ -9,43 +9,24 @@ import {
   IonReorder,
 } from "@ionic/react";
 import { direction } from "direction";
-import {
-  counterObjType,
-  DBConnectionStateType,
-  MaterialColor,
-  PreferenceKeyType,
-} from "../utils/types";
-import { SQLiteDBConnection } from "@capacitor-community/sqlite";
-import { useRef } from "react";
+import { counterObjType, MaterialColor } from "../utils/types";
+import { useEffect, useRef } from "react";
 
 interface CountersListItemProps {
-  dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
-  toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
-  updateUserPreference: (
-    preferenceName: PreferenceKeyType,
-    preferenceValue: number | MaterialColor
-  ) => Promise<void>;
+  updateActiveCounter: (counterId: number, color: string) => Promise<void>;
   setShowResetActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setShowDeleteActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setActiveColor: React.Dispatch<MaterialColor>;
-  updateCountersState: (arr: counterObjType[]) => void;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
-  countersState: counterObjType[];
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   color: MaterialColor;
   counterItem: counterObjType;
 }
 
 const CountersListItem = ({
-  dbConnection,
-  toggleDBConnection,
-  updateUserPreference,
+  updateActiveCounter,
   setShowResetActionSheet,
   setShowDeleteActionSheet,
-  setActiveColor,
-  updateCountersState,
   setCounterId,
-  countersState,
   setShowForm,
   color,
   counterItem,
@@ -54,6 +35,7 @@ const CountersListItem = ({
   const closeOpenSlidingItems = () => {
     slidingRef.current?.closeOpened();
   };
+
   return (
     <IonItemSliding disabled={false} ref={slidingRef}>
       <IonItem mode="ios">
@@ -63,35 +45,7 @@ const CountersListItem = ({
             backgroundColor: color + "BF",
           }}
           onClick={async () => {
-            setCounterId(counterItem.id);
-            setActiveColor(color);
-            const updatedCountersArr: counterObjType[] = countersState.map(
-              (counter: counterObjType) => {
-                return counter.id === counterItem.id
-                  ? { ...counter, isActive: 1 }
-                  : { ...counter, isActive: 0 };
-              }
-            );
-            updateCountersState(updatedCountersArr);
-            await updateUserPreference("activeColor", color);
-
-            try {
-              await toggleDBConnection("open");
-              await dbConnection.current!.run(
-                `UPDATE counterDataTable SET isActive = 0`
-              );
-              await dbConnection.current!.run(
-                `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
-                [counterItem.id]
-              );
-            } catch (error) {
-              console.error(
-                "Error updating active counter/active color: ",
-                error
-              );
-            } finally {
-              await toggleDBConnection("close");
-            }
+            updateActiveCounter(counterItem.id, color);
           }}
         >
           <div className="single-counter-name-and-count-wrap w-[95%]">
@@ -111,7 +65,6 @@ const CountersListItem = ({
               </div>
             </Link>
           </div>
-
           <div
             className="single-counter-overlay"
             style={{
