@@ -7,7 +7,6 @@ import {
   userPreferencesType,
 } from "../utils/types";
 import { IonToggle } from "@ionic/react";
-// import { Capacitor } from "@capacitor/core";
 
 interface NotificationOptionsProps {
   updateUserPreference: (

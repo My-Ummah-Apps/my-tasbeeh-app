@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { IonApp } from "@ionic/react";
 
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
@@ -473,10 +474,6 @@ function App() {
     await batchAssignPreferences();
   };
 
-  useEffect(() => {
-    console.log("userPreferences: ", userPreferencesState);
-  }, [userPreferencesState]);
-
   const handleCounterDataFromDB = async (
     DBResultAllCounterData: DBSQLiteValues,
     resetCounters: boolean
@@ -736,7 +733,7 @@ function App() {
   };
 
   return (
-    <>
+    <IonApp>
       <BrowserRouter>
         <section className="App">
           <AnimatePresence>
@@ -745,10 +742,13 @@ function App() {
                 path="SettingsPage"
                 element={
                   <SettingsPage
+                    toggleDBConnection={toggleDBConnection}
                     // iapProducts={iapProducts}
                     // setUserPreferencesState={setUserPreferencesState}
                     userPreferencesState={userPreferencesState}
                     updateUserPreference={updateUserPreference}
+                    updateCountersState={updateCountersState}
+                    countersState={countersState}
                     activeColor={activeColor}
                     activeCounter={activeCounter}
                     resetAllCounters={resetAllCounters}
@@ -848,7 +848,7 @@ function App() {
           onTap={() => setShowChangelogModal(false)}
         />
       </Sheet>
-    </>
+    </IonApp>
   );
 }
 

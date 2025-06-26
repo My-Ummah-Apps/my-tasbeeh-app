@@ -75,7 +75,7 @@ export const changeLogs = [
         text: (
           <>
             <strong>Fixed</strong>: Issue with custom added Tasbeeh disappearing
-            when the 'Auto Reset Adhkar' feature was being used.
+            when the 'Auto Reset Tasabeeh' feature was being used.
           </>
         ),
       },

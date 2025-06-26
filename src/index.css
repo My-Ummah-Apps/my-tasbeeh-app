@@ -152,10 +152,19 @@ ion-action-sheet.action-sheet {
   --cancel-button-color: var(--text-color);
 }
 
-/* ion-action-sheet[mode="md"] .action-sheet-title {
-  color: var(--text-color);
-  opacity: 0.6;
-} */
+ion-toolbar {
+  --background: var(--body-bg-color);
+  --color: white;
+  margin-bottom: 1rem;
+
+  /* --border-color: #f24aec; */
+  --border-width: 4px 0;
+  --border-style: double;
+
+  /* --min-height: 80px;
+  --padding-top: 20px;
+  --padding-bottom: 20px; */
+}
 
 ion-action-sheet.action-sheet .action-sheet-title {
   color: var(--text-color);
@@ -164,12 +173,11 @@ ion-action-sheet.action-sheet .action-sheet-title {
 
 ion-reorder::part(icon) {
   color: var(--text-color);
-  margin-inline-start: 12px;
+  margin-inline-start: 0.7rem;
 }
 
 ion-toggle {
-  padding: 12px 0;
-
+  padding-left: 3rem;
   --track-background: #ddd;
   /* --track-background-checked: #ddd; */
 }
@@ -439,7 +447,7 @@ MdModeEditOutline {
 }
 
 .single-counter-name-and-count-wrap {
-  width: 85%;
+  /* width: 85%; */
   padding: 0.7rem 0;
 }
 
@@ -479,7 +487,6 @@ MdModeEditOutline {
 
 .active-counter {
   width: 95%;
-  /* margin-inline: auto; */
 }
 
 /* This style is to do with turning each counter into a progress bar */
@@ -662,15 +669,15 @@ textarea:focus {
 }
 
 .settings-page-header p,
-/* .counters-page-header p, */
-.home-page-header p {
-  /* .counters-page-header svg  */
+.counters-page-header p,
+.home-page-header p,
+.counters-page-header svg {
   position: absolute;
   top: 50%;
   font-size: 1.2rem;
 }
 
-/* .counters-page-header p, */
+.counters-page-header p,
 .settings-page-header p,
 .home-page-header p {
   left: 50%;
@@ -1175,12 +1182,15 @@ input[type="number"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4rem;
   padding: 1.5rem 1rem;
 }
 
 .individual-notification-option-wrap:not(:last-child) {
   border-bottom: 1px solid var(--settings-page-borders);
+}
+
+.individual-notification-option-wrap:last-child {
+  margin-bottom: 2rem;
 }
 
 .notificatiions-options-sub-text {

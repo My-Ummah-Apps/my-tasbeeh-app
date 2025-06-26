@@ -74,48 +74,13 @@ function CountersPage({
     }
   }, []);
 
-  const [isReorderModeDisabled, setIsReorderModeDisabled] = useState(false);
-
-  const handleReorder = async (event: CustomEvent<ItemReorderEventDetail>) => {
-    const from = event.detail.from;
-    const to = event.detail.to;
-
-    const updatedCountersState = [...countersState];
-    const [reorderedItem] = updatedCountersState.splice(from, 1);
-    updatedCountersState.splice(to, 0, reorderedItem);
-    updatedCountersState.forEach(
-      (counter, index) => (counter.orderIndex = index)
-    );
-    updateCountersState(updatedCountersState);
-    event.detail.complete();
-
-    try {
-      await toggleDBConnection("open");
-      for (const counter of updatedCountersState) {
-        await dbConnection.current!.run(
-          `UPDATE counterDataTable SET orderIndex = ? WHERE id = ?`,
-          [counter.orderIndex, counter.id]
-        );
-      }
-    } catch (error) {
-      console.error(`Error saving reordered array to database: `, error);
-    } finally {
-      await toggleDBConnection("close");
-    }
-  };
-
   return (
     <motion.main
       // {...pageTransitionStyles}
       className={`counters-page-wrap`}
     >
       <header className="counters-page-header flex justify-between items-center">
-        <MdReorder
-          onClick={() => {
-            setIsReorderModeDisabled((prev) => !prev);
-          }}
-        />
-        <p>Adhkar</p>
+        <p>Tasabeeh</p>
         <MdAdd
           onClick={() => {
             setCounterId(null);
@@ -125,33 +90,27 @@ function CountersPage({
       </header>
 
       <IonList mode="ios" className="counters-wrap">
-        <IonReorderGroup
-          disabled={!isReorderModeDisabled}
-          onIonItemReorder={handleReorder}
-        >
-          {countersState.map((counterItem: counterObjType, i) => {
-            let color = materialColors[i % materialColors.length];
+        {countersState.map((counterItem: counterObjType, i) => {
+          let color = materialColors[i % materialColors.length];
 
-            return (
-              <CountersListItem
-                key={counterItem.id}
-                dbConnection={dbConnection}
-                toggleDBConnection={toggleDBConnection}
-                updateUserPreference={updateUserPreference}
-                isReorderModeDisabled={isReorderModeDisabled}
-                setShowResetActionSheet={setShowResetActionSheet}
-                setShowDeleteActionSheet={setShowDeleteActionSheet}
-                setActiveColor={setActiveColor}
-                updateCountersState={updateCountersState}
-                countersState={countersState}
-                setCounterId={setCounterId}
-                setShowForm={setShowForm}
-                color={color}
-                counterItem={counterItem}
-              />
-            );
-          })}
-        </IonReorderGroup>
+          return (
+            <CountersListItem
+              key={counterItem.id}
+              dbConnection={dbConnection}
+              toggleDBConnection={toggleDBConnection}
+              updateUserPreference={updateUserPreference}
+              setShowResetActionSheet={setShowResetActionSheet}
+              setShowDeleteActionSheet={setShowDeleteActionSheet}
+              setActiveColor={setActiveColor}
+              updateCountersState={updateCountersState}
+              countersState={countersState}
+              setCounterId={setCounterId}
+              setShowForm={setShowForm}
+              color={color}
+              counterItem={counterItem}
+            />
+          );
+        })}
       </IonList>
 
       <BottomSheetForm
@@ -187,7 +146,6 @@ function CountersPage({
               setCounterId(null);
             },
           },
-
           {
             text: "Cancel",
             role: "cancel",

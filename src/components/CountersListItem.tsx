@@ -25,7 +25,6 @@ interface CountersListItemProps {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor
   ) => Promise<void>;
-  isReorderModeDisabled: boolean;
   setShowResetActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setShowDeleteActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setActiveColor: React.Dispatch<MaterialColor>;
@@ -41,7 +40,6 @@ const CountersListItem = ({
   dbConnection,
   toggleDBConnection,
   updateUserPreference,
-  isReorderModeDisabled,
   setShowResetActionSheet,
   setShowDeleteActionSheet,
   setActiveColor,
@@ -57,7 +55,7 @@ const CountersListItem = ({
     slidingRef.current?.closeOpened();
   };
   return (
-    <IonItemSliding disabled={isReorderModeDisabled} ref={slidingRef}>
+    <IonItemSliding disabled={false} ref={slidingRef}>
       <IonItem mode="ios">
         <div
           className="single-counter-wrap"
@@ -96,7 +94,7 @@ const CountersListItem = ({
             }
           }}
         >
-          <div className="single-counter-name-and-count-wrap">
+          <div className="single-counter-name-and-count-wrap w-[95%]">
             <Link to="/" style={{ color: "#fff", textDecoration: "none" }}>
               <div className="single-counter-count">
                 {counterItem.count} / {counterItem.target}

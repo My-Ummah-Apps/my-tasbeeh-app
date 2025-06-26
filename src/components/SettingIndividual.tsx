@@ -1,11 +1,13 @@
 import { MdOutlineChevronRight } from "react-icons/md";
 
 const SettingIndividual = ({
+  id,
   headingText,
   subText,
   indvidualStyles,
   onClick,
 }: {
+  id?: string;
   headingText: string;
   subText: string;
   indvidualStyles?: string;
@@ -13,6 +15,7 @@ const SettingIndividual = ({
 }) => {
   return (
     <section
+      id={id || ""}
       // style={{ borderTopRightRadius: indvidualStyles }}
       className={`flex items-center justify-between mx-auto p-3 ${indvidualStyles}`}
       onClick={onClick}

@@ -77,7 +77,7 @@ function ActiveCounter({
             backgroundColor: `${activeColor}BF`,
           }}
         >
-          <div className="single-counter-name-and-count-wrap">
+          <div className="w-[85%] single-counter-name-and-count-wrap">
             <div
               data-testid="counter-progress-percent-text"
               className="single-counter-count"
