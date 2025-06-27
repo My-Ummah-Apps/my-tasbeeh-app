@@ -58,9 +58,6 @@ interface SettingsageProps {
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   countersState: counterObjType[];
-  resetAllCounters: () => Promise<void>;
-  setShowAllResetToast: React.Dispatch<React.SetStateAction<boolean>>;
-  showAllResetToast: boolean;
   closeSlidingItems: () => void;
   theme: themeType | null;
   setShowChangelogModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -72,21 +69,16 @@ const SettingsPage = ({
   // iapProducts,
   updateUserPreference,
   updateCountersState,
-  // setUserPreferencesState,
   userPreferencesState,
   activeColor,
   activeCounter,
   countersState,
-  resetAllCounters,
-  setShowAllResetToast,
-  showAllResetToast,
   theme,
   setShowChangelogModal,
 }: SettingsageProps) => {
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
   const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
-  const [showResetAllActionSheet, setShowResetAllActionSheet] = useState(false);
   const [presentingElement, setPresentingElement] =
     useState<HTMLElement | null>(null);
 
@@ -424,7 +416,7 @@ const SettingsPage = ({
             </section>
             {Capacitor.isNativePlatform() && (
               <section className="individual-section-wrap">
-                <div className="individual-row-wrap haptic-wrap  p-3">
+                <div className="individual-row-wrap haptic-wrap p-3">
                   <div className="text-wrap" style={{ display: "block" }}>
                     <p>Haptic Vibration</p>
                     <p>Set vibration on every increment</p>
@@ -446,41 +438,9 @@ const SettingsPage = ({
                     }}
                   ></IonToggle>
                 </div>
-
-                <div className="reset-adkhar-text-wrap pl-1">
-                  <p
-                    onClick={async () => {
-                      setShowResetAllActionSheet(true);
-                    }}
-                  >
-                    Reset all Tasabeeh
-                  </p>
-                </div>
               </section>
             )}
-            <ActionSheet
-              setState={setShowResetAllActionSheet}
-              isOpen={showResetAllActionSheet}
-              header="Are you sure you want to reset all Tasabeeh?"
-              buttons={[
-                {
-                  text: "Reset All Tasabeeh",
-                  role: "destructive",
-                  handler: async () => {
-                    await resetAllCounters();
-                  },
-                },
-                {
-                  text: "Cancel",
-                  role: "cancel",
-                },
-              ]}
-            />
-            <Toast
-              isOpen={showAllResetToast}
-              message="All Tasabeeh reset to 0"
-              setShow={setShowAllResetToast}
-            />
+
             <section className="individual-section-wrap">
               <section className="individual-row-wrap p-3">
                 <div className="text-wrap " style={{ display: "block" }}>

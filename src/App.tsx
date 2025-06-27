@@ -800,9 +800,6 @@ function App() {
                     countersState={countersState}
                     activeColor={activeColor}
                     activeCounter={activeCounter}
-                    resetAllCounters={resetAllCounters}
-                    showAllResetToast={showAllResetToast}
-                    setShowAllResetToast={setShowAllResetToast}
                     closeSlidingItems={closeSlidingItems}
                     theme={theme}
                     setShowChangelogModal={setShowChangelogModal}
@@ -843,6 +840,9 @@ function App() {
                     closeSlidingItems={closeSlidingItems}
                     modifyCounter={modifyCounter}
                     resetSingleCounter={resetSingleCounter}
+                    resetAllCounters={resetAllCounters}
+                    showAllResetToast={showAllResetToast}
+                    setShowAllResetToast={setShowAllResetToast}
                     addCounter={addCounter}
                     deleteCounter={deleteCounter}
                     setShowDeleteToast={setShowDeleteToast}

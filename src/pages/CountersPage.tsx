@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IonList } from "@ionic/react";
 
-import { MdAdd } from "react-icons/md";
+import { MdAdd, MdOutlineRestartAlt } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
 import { materialColors } from "../utils/constants";
 import { counterObjType, MaterialColor } from "../utils/types";
@@ -30,6 +30,9 @@ interface CountersPageProps {
     modifiedTarget: number
   ) => Promise<void>;
   resetSingleCounter: (id: number) => Promise<void>;
+  resetAllCounters: () => Promise<void>;
+  setShowAllResetToast: React.Dispatch<React.SetStateAction<boolean>>;
+  showAllResetToast: boolean;
   deleteCounter: (id: number) => Promise<void>;
   setShowDeleteToast: React.Dispatch<React.SetStateAction<boolean>>;
   showDeleteToast: boolean;
@@ -45,6 +48,9 @@ function CountersPage({
   closeSlidingItems,
   modifyCounter,
   resetSingleCounter,
+  resetAllCounters,
+  showAllResetToast,
+  setShowAllResetToast,
   addCounter,
   deleteCounter,
   setShowDeleteToast,
@@ -53,6 +59,7 @@ function CountersPage({
   const [showForm, setShowForm] = useState(false);
   const [showResetActionSheet, setShowResetActionSheet] = useState(false);
   const [showDeleteActionSheet, setShowDeleteActionSheet] = useState(false);
+  const [showResetAllActionSheet, setShowResetAllActionSheet] = useState(false);
   const [showResetToast, setShowResetToast] = useState(false);
   const [showSwipeHint, setShowSwipeHint] = useState(false);
   showSwipeHint;
@@ -70,7 +77,11 @@ function CountersPage({
       className={`counters-page-wrap`}
     >
       <header className="counters-page-header flex justify-between items-center">
-        <div></div>
+        <MdOutlineRestartAlt
+          onClick={async () => {
+            setShowResetAllActionSheet(true);
+          }}
+        />
         <p>Tasabeeh</p>
         <MdAdd
           onClick={() => {
@@ -79,6 +90,29 @@ function CountersPage({
           }}
         />
       </header>
+      <ActionSheet
+        setState={setShowResetAllActionSheet}
+        isOpen={showResetAllActionSheet}
+        header="Are you sure you want to reset all Tasabeeh?"
+        buttons={[
+          {
+            text: "Reset All Tasabeeh",
+            role: "destructive",
+            handler: async () => {
+              await resetAllCounters();
+            },
+          },
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+        ]}
+      />
+      <Toast
+        isOpen={showAllResetToast}
+        message="All Tasabeeh reset to 0"
+        setShow={setShowAllResetToast}
+      />
 
       <IonList mode="ios" className="counters-wrap">
         {countersState.map((counterItem: counterObjType, i) => {
