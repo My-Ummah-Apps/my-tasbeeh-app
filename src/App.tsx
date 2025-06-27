@@ -48,6 +48,7 @@ function App() {
   } = useSQLiteDB();
 
   const [showChangelogModal, setShowChangelogModal] = useState(false);
+  const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [activeCounter, setActiveCounter] = useState<counterObjType>({
     id: -1,
     orderIndex: -1,
@@ -118,6 +119,7 @@ function App() {
   const [showAllResetToast, setShowAllResetToast] = useState(false);
   const [userPreferencesState, setUserPreferencesState] =
     useState<userPreferencesType>(dictPreferencesDefaultValues);
+  const [showNextCounterToast, setShowNextCounterToast] = useState(false);
 
   const clearLocalStorage = () => {
     localStorage.removeItem("localSavedCountersArray");
@@ -300,10 +302,6 @@ function App() {
 
     setActiveCounter(activeCounter);
   };
-
-  useEffect(() => {
-    console.log("countersState: ", countersState);
-  }, [countersState]);
 
   const initialiseAppUI = async (theme: themeType) => {
     const splash_hide_delay = 500;
@@ -514,7 +512,7 @@ function App() {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType | string
   ) => {
-    // console.log("updateUserPreference has run");
+    console.log("updateUserPreference HAS RUN");
 
     try {
       await toggleDBConnection("open");
@@ -733,11 +731,14 @@ function App() {
     }
   };
 
-  const updateActiveCounter = async (counterId: number, color: string) => {
-    console.log("updateActiveCounter TRIGGERED");
-
+  const updateActiveCounter = async (
+    counterId: number,
+    color: string,
+    delay?: boolean
+  ) => {
+    console.log("DELAY: ", delay);
     setCounterId(counterId);
-    setActiveColor(color);
+
     const updatedCountersArr: counterObjType[] = countersState.map(
       (counter: counterObjType) => {
         return counter.id === counterId
@@ -745,8 +746,23 @@ function App() {
           : { ...counter, isActive: 0 };
       }
     );
-    updateCountersState(updatedCountersArr);
-    await updateUserPreference("activeColor", color);
+    const test = async () => {
+      setActiveColor(color);
+      updateCountersState(updatedCountersArr);
+      await updateUserPreference("activeColor", color);
+    };
+
+    if (delay) {
+      console.log("DELAY CONDITION HIT");
+      setIsNextCounterLoading(true);
+      setShowNextCounterToast(true);
+      setTimeout(async () => {
+        test();
+        setIsNextCounterLoading(false);
+      }, 2000);
+    } else {
+      await test();
+    }
 
     try {
       await toggleDBConnection("open");
@@ -774,6 +790,7 @@ function App() {
                 path="SettingsPage"
                 element={
                   <SettingsPage
+                    dbConnection={dbConnection}
                     toggleDBConnection={toggleDBConnection}
                     // iapProducts={iapProducts}
                     // setUserPreferencesState={setUserPreferencesState}
@@ -798,6 +815,9 @@ function App() {
                   <HomePage
                     dbConnection={dbConnection}
                     toggleDBConnection={toggleDBConnection}
+                    setShowNextCounterToast={setShowNextCounterToast}
+                    isNextCounterLoading={isNextCounterLoading}
+                    showNextCounterToast={showNextCounterToast}
                     userPreferencesState={userPreferencesState}
                     updateActiveCounter={updateActiveCounter}
                     activeColor={activeColor}
@@ -814,12 +834,8 @@ function App() {
                 path="CountersPage"
                 element={
                   <CountersPage
-                    dbConnection={dbConnection}
-                    toggleDBConnection={toggleDBConnection}
-                    updateUserPreference={updateUserPreference}
                     updateActiveCounter={updateActiveCounter}
                     activeColor={activeColor}
-                    setActiveColor={setActiveColor}
                     setCounterId={setCounterId}
                     counterId={counterId}
                     activeCounter={activeCounter}
@@ -827,7 +843,6 @@ function App() {
                     closeSlidingItems={closeSlidingItems}
                     modifyCounter={modifyCounter}
                     resetSingleCounter={resetSingleCounter}
-                    updateCountersState={updateCountersState}
                     addCounter={addCounter}
                     deleteCounter={deleteCounter}
                     setShowDeleteToast={setShowDeleteToast}

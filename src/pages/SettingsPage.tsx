@@ -16,6 +16,7 @@ import { LocalNotifications } from "@capacitor/local-notifications";
 
 import {
   counterObjType,
+  DBConnectionStateType,
   MaterialColor,
   PreferenceKeyType,
   themeType,
@@ -44,7 +45,9 @@ import {
   IonReorder,
   ItemReorderEventDetail,
 } from "@ionic/react";
+import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 interface SettingsageProps {
+  dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   userPreferencesState: userPreferencesType;
   updateUserPreference: (
@@ -64,6 +67,7 @@ interface SettingsageProps {
 }
 
 const SettingsPage = ({
+  dbConnection,
   toggleDBConnection,
   // iapProducts,
   updateUserPreference,
@@ -93,9 +97,9 @@ const SettingsPage = ({
     setPresentingElement(pageRef.current);
   }, []);
 
-  function dismiss() {
-    modalRef.current?.dismiss();
-  }
+  // function dismiss() {
+  //   modalRef.current?.dismiss();
+  // }
 
   const handleReorder = async (event: CustomEvent<ItemReorderEventDetail>) => {
     const from = event.detail.from;
@@ -249,15 +253,11 @@ const SettingsPage = ({
             style={{ "--background": "#1e1e1e", "--color": "#ffffff" }}
           >
             <IonToolbar>
-              <IonButtons slot="start">
-                <IonButton onClick={() => modalRef.current?.dismiss()}>
-                  Cancel
-                </IonButton>
-              </IonButtons>
+              <IonButtons slot="start"></IonButtons>
               <IonTitle>Re-order your Tasabeeh</IonTitle>
               <IonButtons slot="end">
-                <IonButton strong={true} onClick={() => confirm()}>
-                  Confirm
+                <IonButton onClick={() => modalRef.current?.dismiss()}>
+                  Close
                 </IonButton>
               </IonButtons>
             </IonToolbar>
@@ -513,7 +513,7 @@ const SettingsPage = ({
                 <div className="text-wrap " style={{ display: "block" }}>
                   <p>Auto-Switch Tasbeeh</p>
                   <p>
-                    Automatically switch to the next counter once the current
+                    Automatically switch to the next tasbeeh once the current
                     tasbeeh reaches its target.
                   </p>
                 </div>

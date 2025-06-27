@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
-import { IonList, IonReorderGroup, ItemReorderEventDetail } from "@ionic/react";
+import { IonList } from "@ionic/react";
 
-import { MdAdd, MdReorder } from "react-icons/md";
+import { MdAdd } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
 import { materialColors } from "../utils/constants";
-import {
-  counterObjType,
-  DBConnectionStateType,
-  MaterialColor,
-  PreferenceKeyType,
-} from "../utils/types";
+import { counterObjType, MaterialColor } from "../utils/types";
 import { motion } from "framer-motion";
 import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
 import Toast from "../components/Toast";
 import ActionSheet from "../components/ActionSheet";
 
 interface CountersPageProps {
-  updateActiveCounter: (counterId: number, color: string) => Promise<void>;
+  updateActiveCounter: (
+    counterId: number,
+    color: string,
+    delay?: boolean
+  ) => Promise<void>;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
   counterId: number | null;
   activeColor: MaterialColor;
@@ -71,6 +70,7 @@ function CountersPage({
       className={`counters-page-wrap`}
     >
       <header className="counters-page-header flex justify-between items-center">
+        <div></div>
         <p>Tasabeeh</p>
         <MdAdd
           onClick={() => {

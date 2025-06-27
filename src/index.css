@@ -158,7 +158,7 @@ ion-toolbar {
   margin-bottom: 1rem;
 
   /* --border-color: #f24aec; */
-  --border-width: 4px 0;
+  /* --border-width: 4px 0; */
   --border-style: double;
 
   /* --min-height: 80px;
@@ -659,7 +659,6 @@ textarea:focus {
 .settings-page-header,
 .counters-page-header,
 .home-page-header {
-  /* padding-top: env(safe-area-inset-top); */
   margin-top: 1rem;
   background: var(--header-bg-color);
   position: relative;
@@ -670,8 +669,7 @@ textarea:focus {
 
 .settings-page-header p,
 .counters-page-header p,
-.home-page-header p,
-.counters-page-header svg {
+.home-page-header p {
   position: absolute;
   top: 50%;
   font-size: 1.2rem;
@@ -685,9 +683,7 @@ textarea:focus {
 }
 
 .counters-page-header svg {
-  font-size: 1.5rem;
-  width: 15%;
-  /* height: 100%; */
+  font-size: 2rem;
   width: clamp(4.375rem, 4.0625rem + 1.4286vw, 4.6875rem);
 }
 

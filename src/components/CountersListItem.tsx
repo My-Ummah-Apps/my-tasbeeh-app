@@ -10,10 +10,14 @@ import {
 } from "@ionic/react";
 import { direction } from "direction";
 import { counterObjType, MaterialColor } from "../utils/types";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 interface CountersListItemProps {
-  updateActiveCounter: (counterId: number, color: string) => Promise<void>;
+  updateActiveCounter: (
+    counterId: number,
+    color: string,
+    delay?: boolean
+  ) => Promise<void>;
   setShowResetActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setShowDeleteActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;

@@ -1,4 +1,4 @@
-import { Haptics, ImpactStyle } from "@capacitor/haptics";
+import { Haptics } from "@capacitor/haptics";
 import {
   counterObjType,
   DBConnectionStateType,
@@ -9,9 +9,9 @@ import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { materialColors } from "../utils/constants";
 
-const hapticsImpactMedium = async () => {
-  await Haptics.impact({ style: ImpactStyle.Medium });
-};
+// const hapticsImpactMedium = async () => {
+//   await Haptics.impact({ style: ImpactStyle.Medium });
+// };
 
 const hapticsVibrate = async () => {
   await Haptics.vibrate({ duration: 1000 });
@@ -21,7 +21,11 @@ interface CounterButtonProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   userPreferencesState: userPreferencesType;
-  updateActiveCounter: (counterId: number, color: string) => Promise<void>;
+  updateActiveCounter: (
+    counterId: number,
+    color: string,
+    delay?: boolean
+  ) => Promise<void>;
   activeColor: MaterialColor;
   countersState: counterObjType[];
   activeCounter: counterObjType;
@@ -71,17 +75,22 @@ function CounterButton({
         const currentCounterIndex = countersState.findIndex(
           (counter) => counter.isActive === 1
         );
-        const nextCounterId = countersState[currentCounterIndex + 1].id;
-        console.log("currentCounter index: ", currentCounterIndex);
 
-        await updateActiveCounter(
-          nextCounterId,
+        const nextCounterId =
+          countersState[
+            currentCounterIndex < countersState.length - 1
+              ? currentCounterIndex + 1
+              : 0
+          ].id;
+
+        const nextCounterColor =
           materialColors[
             currentCounterIndex < materialColors.length
               ? currentCounterIndex + 1
               : 0
-          ]
-        );
+          ];
+
+        await updateActiveCounter(nextCounterId, nextCounterColor, true);
         console.log("TARGET HIT");
       }
 

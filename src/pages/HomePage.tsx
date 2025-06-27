@@ -10,12 +10,20 @@ import {
   userPreferencesType,
 } from "../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
+import Toast from "../components/Toast";
 
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
+  showNextCounterToast: boolean;
+  isNextCounterLoading: boolean;
+  setShowNextCounterToast: React.Dispatch<React.SetStateAction<boolean>>;
   userPreferencesState: userPreferencesType;
-  updateActiveCounter: (counterId: number, color: string) => Promise<void>;
+  updateActiveCounter: (
+    counterId: number,
+    color: string,
+    delay?: boolean
+  ) => Promise<void>;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetSingleCounter: (id: number) => Promise<void>;
@@ -28,6 +36,9 @@ interface HomePageProps {
 const HomePage = ({
   dbConnection,
   toggleDBConnection,
+  setShowNextCounterToast,
+  isNextCounterLoading,
+  showNextCounterToast,
   userPreferencesState,
   updateActiveCounter,
   activeColor,
@@ -43,6 +54,21 @@ const HomePage = ({
       // {...pageTransitionStyles}
       className="main-page-wrap"
     >
+      {isNextCounterLoading && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            zIndex: 9999,
+            pointerEvents: "auto",
+          }}
+        />
+      )}
+
       <header className="home-page-header">
         <p>Home</p>
       </header>
@@ -62,6 +88,12 @@ const HomePage = ({
         countersState={countersState}
         updateCountersState={updateCountersState}
         activeCounter={activeCounter}
+      />
+      <Toast
+        isOpen={showNextCounterToast}
+        message="Loading next counter..."
+        setShow={setShowNextCounterToast}
+        duration={1500}
       />
     </motion.main>
   );
