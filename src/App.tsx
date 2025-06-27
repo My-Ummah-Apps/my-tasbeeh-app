@@ -781,7 +781,7 @@ function App() {
   };
 
   return (
-    <IonApp>
+    <>
       <BrowserRouter>
         <section className="App">
           <AnimatePresence>
@@ -899,7 +899,7 @@ function App() {
           onTap={() => setShowChangelogModal(false)}
         />
       </Sheet>
-    </IonApp>
+    </>
   );
 }
 
