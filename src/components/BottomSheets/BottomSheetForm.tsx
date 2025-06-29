@@ -3,8 +3,17 @@ import { Sheet } from "react-modal-sheet";
 import { showAlert } from "../../utils/constants";
 import { counterObjType, MaterialColor } from "../../utils/types";
 import { tween_config } from "../../utils/constants";
+import {
+  IonButton,
+  IonButtons,
+  IonHeader,
+  IonModal,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
 
 interface BottomSheetFormProps {
+  triggerId: string;
   activeColor: MaterialColor;
   countersState: counterObjType[];
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
@@ -22,6 +31,7 @@ interface BottomSheetFormProps {
 }
 
 const BottomSheetForm = ({
+  triggerId,
   activeColor,
   countersState,
   setCounterId,
@@ -109,140 +119,140 @@ const BottomSheetForm = ({
   };
 
   return (
-    <Sheet
-      style={{ willChange: "transform" }}
-      disableDrag={false}
-      isOpen={showForm}
-      onClose={() => {
-        closeFormCleanup();
-      }}
-      detent="full-height"
-      tweenConfig={tween_config}
+    <IonModal
+      // ref={modal}
+      trigger={triggerId}
+      // onWillDismiss={(event) => onWillDismiss(event)}
     >
-      <Sheet.Container>
-        <Sheet.Header />
-        <Sheet.Content>
-          <section className="form-wrap form-blank">
-            <div className="form-filled-save-and-cancel-btn-wrap">
-              <button
-                onClick={() => {
-                  closeFormCleanup();
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonButton onClick={() => modal.current?.dismiss()}>
+              Cancel
+            </IonButton>
+          </IonButtons>
+          <IonTitle>Welcome</IonTitle>
+          <IonButtons slot="end">
+            <IonButton strong={true} onClick={() => confirm()}>
+              Confirm
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <section className="form-wrap form-blank">
+        <div className="form-filled-save-and-cancel-btn-wrap">
+          <button
+            onClick={() => {
+              closeFormCleanup();
+            }}
+            className="form-filled-cancel-btn"
+            style={{ backgroundColor: "transparent" }}
+          >
+            Cancel
+          </button>
+          <h1 className="form-blank-and-form-filled-header-text">
+            {counterId ? "Edit Tasbeeh" : "Add Tasbeeh"}
+          </h1>
+          <button
+            form="form"
+            className="form-filled-save-btn"
+            style={{ backgroundColor: activeColor }}
+          >
+            Save
+          </button>
+        </div>
+        <div className="form-wrap form-filled">
+          <form id="form" onSubmit={submitCounter}>
+            <div className="form-filled-counter-name-input-wrap">
+              <p>Dhikr Name</p>
+              <textarea
+                ref={counterNameField}
+                dir="auto"
+                className="form-textarea"
+                onChange={(e) => {
+                  setInput((prev) => ({ ...prev, name: e.target.value }));
+                  increaseTextAreaHeight(e);
                 }}
-                className="form-filled-cancel-btn"
-                style={{ backgroundColor: "transparent" }}
+                value={input.name}
+                required
+              />
+              <p
+                style={{
+                  color: "red",
+                  visibility:
+                    input.name.trim() === "" && submitted
+                      ? "visible"
+                      : "hidden",
+                }}
               >
-                Cancel
-              </button>
-              <h1 className="form-blank-and-form-filled-header-text">
-                {counterId ? "Edit Tasbeeh" : "Add Tasbeeh"}
-              </h1>
-              <button
-                form="form"
-                className="form-filled-save-btn"
-                style={{ backgroundColor: activeColor }}
-              >
-                Save
-              </button>
+                Please enter a name
+              </p>
             </div>
-
-            <div className="form-wrap form-filled">
-              <form id="form" onSubmit={submitCounter}>
-                <div className="form-filled-counter-name-input-wrap">
-                  <p>Dhikr Name</p>
-                  <textarea
-                    ref={counterNameField}
-                    dir="auto"
-                    className="form-textarea"
+            <div className="count-and-target-input-wrap">
+              {counterId && (
+                <div className="current-count-input-wrap">
+                  <p>Count</p>
+                  <input
+                    className="form-input"
+                    maxLength={5}
                     onChange={(e) => {
-                      setInput((prev) => ({ ...prev, name: e.target.value }));
-                      increaseTextAreaHeight(e);
+                      if (/[^0-9]+/.test(e.target.value)) return;
+
+                      setInput((prev) => ({
+                        ...prev,
+                        count: Number(e.target.value),
+                      }));
                     }}
-                    value={input.name}
+                    value={input.count}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     required
                   />
-                  <p
+                  {/* <p
                     style={{
                       color: "red",
                       visibility:
-                        input.name.trim() === "" && submitted
-                          ? "visible"
-                          : "hidden",
+                        !input.count && submitted ? "visible" : "hidden",
                     }}
                   >
-                    Please enter a name
-                  </p>
+                    Target must be above 0
+                  </p> */}
                 </div>
-                <div className="count-and-target-input-wrap">
-                  {counterId && (
-                    <div className="current-count-input-wrap">
-                      <p>Count</p>
-                      <input
-                        className="form-input"
-                        maxLength={5}
-                        onChange={(e) => {
-                          if (/[^0-9]+/.test(e.target.value)) return;
+              )}
 
-                          setInput((prev) => ({
-                            ...prev,
-                            count: Number(e.target.value),
-                          }));
-                        }}
-                        value={input.count}
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        required
-                      />
-                      {/* <p
-                        style={{
-                          color: "red",
-                          visibility:
-                            !input.count && submitted ? "visible" : "hidden",
-                        }}
-                      >
-                        Target must be above 0
-                      </p> */}
-                    </div>
-                  )}
-
-                  <div className="target-input-wrap">
-                    <p>Target</p>
-                    <input
-                      onChange={(e) => {
-                        if (/[^0-9]+/.test(e.target.value)) return;
-                        setInput((prev) => ({
-                          ...prev,
-                          target: Number(e.target.value),
-                        }));
-                      }}
-                      className="form-input"
-                      maxLength={5}
-                      value={input.target}
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      required
-                    />
-                    <p
-                      style={{
-                        color: "red",
-                        visibility:
-                          input.target < 1 && submitted ? "visible" : "hidden",
-                      }}
-                    >
-                      Target must be above 0
-                    </p>
-                  </div>
-                </div>
-              </form>
+              <div className="target-input-wrap">
+                <p>Target</p>
+                <input
+                  onChange={(e) => {
+                    if (/[^0-9]+/.test(e.target.value)) return;
+                    setInput((prev) => ({
+                      ...prev,
+                      target: Number(e.target.value),
+                    }));
+                  }}
+                  className="form-input"
+                  maxLength={5}
+                  value={input.target}
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  required
+                />
+                <p
+                  style={{
+                    color: "red",
+                    visibility:
+                      input.target < 1 && submitted ? "visible" : "hidden",
+                  }}
+                >
+                  Target must be above 0
+                </p>
+              </div>
             </div>
-          </section>
-        </Sheet.Content>
-      </Sheet.Container>
-      <Sheet.Backdrop
-        onTap={() => {
-          closeFormCleanup();
-        }}
-      />
-    </Sheet>
+          </form>
+        </div>
+      </section>
+      ;
+    </IonModal>
   );
 };
 

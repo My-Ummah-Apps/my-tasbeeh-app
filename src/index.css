@@ -699,7 +699,7 @@ textarea:focus {
 }
 
 .counters-page-header svg {
-  font-size: 2rem;
+  font-size: 1.7rem;
   width: clamp(4.375rem, 4.0625rem + 1.4286vw, 4.6875rem);
 }
 
@@ -1226,22 +1226,6 @@ input[type="number"] {
 .icon {
   margin-right: 1rem;
 }
-
-/* .text-wrap {
-  align-self: center;
-  color: var(--text-color);
-}
-
-.text-wrap p {
-  font-size: 0.8rem;
-  font-weight: 300;
-} */
-
-/* .text-wrap p:first-of-type {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  font-weight: normal;
-} */
 
 .reset-adkhar-text-wrap {
   border-top: 1px solid var(--settings-page-borders);
