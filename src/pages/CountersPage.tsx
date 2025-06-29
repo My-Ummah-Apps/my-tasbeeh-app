@@ -84,10 +84,9 @@ function CountersPage({
         />
         <p>Tasabeeh</p>
         <MdAdd
-          id="open-new-counter-form-modal"
           onClick={() => {
             setCounterId(null);
-            // setShowForm(true);
+            setShowForm(true);
           }}
         />
       </header>
@@ -135,7 +134,6 @@ function CountersPage({
       </IonList>
 
       <BottomSheetForm
-        triggerId="open-new-counter-form-modal"
         activeColor={activeColor}
         countersState={countersState}
         activeCounter={activeCounter}
