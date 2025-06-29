@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { IonApp } from "@ionic/react";
 
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
@@ -38,6 +37,7 @@ import {
 import { AnimatePresence } from "framer-motion";
 import useSQLiteDB from "./utils/useSqliteDB";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
+import { IonApp } from "@ionic/react";
 
 function App() {
   const {
@@ -733,7 +733,7 @@ function App() {
 
   const updateActiveCounter = async (
     counterId: number,
-    color: string,
+    color: MaterialColor,
     delay?: boolean
   ) => {
     console.log("DELAY: ", delay);
@@ -781,7 +781,7 @@ function App() {
   };
 
   return (
-    <>
+    <IonApp>
       <BrowserRouter>
         <section className="App">
           <AnimatePresence>
@@ -899,7 +899,7 @@ function App() {
           onTap={() => setShowChangelogModal(false)}
         />
       </Sheet>
-    </>
+    </IonApp>
   );
 }
 

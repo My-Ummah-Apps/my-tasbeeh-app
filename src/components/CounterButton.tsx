@@ -23,7 +23,7 @@ interface CounterButtonProps {
   userPreferencesState: userPreferencesType;
   updateActiveCounter: (
     counterId: number,
-    color: string,
+    color: MaterialColor,
     delay?: boolean
   ) => Promise<void>;
   activeColor: MaterialColor;

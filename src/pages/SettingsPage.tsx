@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Capacitor } from "@capacitor/core";
 import { Dialog } from "@capacitor/dialog";
 import { motion } from "framer-motion";
@@ -27,7 +27,7 @@ import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
 
-import { IonToggle } from "@ionic/react";
+import { IonPage, IonToggle } from "@ionic/react";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import BottomSheetReorderCounters from "../components/BottomSheets/BottomSheetReorderCounters";
 interface SettingsageProps {
@@ -61,23 +61,13 @@ const SettingsPage = ({
   setShowChangelogModal,
 }: SettingsageProps) => {
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
-  const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
+  // const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
   const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
-  const [presentingElement, setPresentingElement] =
-    useState<HTMLElement | null>(null);
+
   const [showReorderCountersModal, setShowReorderCountersModal] =
     useState(false);
 
   const pageRef = useRef(null);
-  const modalRef = useRef<HTMLIonModalElement>(null);
-
-  useEffect(() => {
-    setPresentingElement(pageRef.current);
-  }, []);
-
-  // function dismiss() {
-  //   modalRef.current?.dismiss();
-  // }
 
   const showNotificationsAlert = async () => {
     const { value } = await Dialog.confirm({
@@ -188,7 +178,7 @@ const SettingsPage = ({
   };
 
   return (
-    <section ref={pageRef}>
+    <IonPage ref={pageRef}>
       <motion.main
         // ref={pageRef}
         // {...pageTransitionStyles}
@@ -355,8 +345,12 @@ const SettingsPage = ({
           <section className="individual-section-wrap">
             <section className="individual-row-wrap p-3">
               <div className="text-wrap " style={{ display: "block" }}>
-                <p>Auto Reset Tasabeeh</p>
-                <p>Tasabeeh will be reset daily</p>
+                <p className="pt-[0.3rem] pb-[0.1rem] text-lg">
+                  Auto Reset Tasabeeh
+                </p>
+                <p className="pt-[0.3rem]  pb-[0.1rem] text-[0.8rem] font-light">
+                  Tasabeeh will be reset daily
+                </p>
               </div>
               <IonToggle
                 mode="ios"
@@ -382,8 +376,10 @@ const SettingsPage = ({
           <section className="individual-section-wrap">
             <section className="individual-row-wrap p-3">
               <div className="text-wrap " style={{ display: "block" }}>
-                <p>Auto-Switch Tasbeeh</p>
-                <p>
+                <p className="pt-[0.3rem] pb-[0.1rem] text-lg">
+                  Auto-Switch Tasbeeh
+                </p>
+                <p className="pt-[0.3rem] pb-[0.1rem] text-[0.8rem] font-light">
                   Automatically switch to the next tasbeeh once the current
                   tasbeeh reaches its target.
                 </p>
@@ -511,19 +507,17 @@ const SettingsPage = ({
               }}
             />
             <SettingIndividual
+              id="open-about-us-modal"
               headingText={"About"}
               subText={"About us"}
               // indvidualStyles={"rounded-b-md"}
-              onClick={() => setShowAboutUsSheet(true)}
+              // onClick={() => setShowAboutUsSheet(true)}
             />
-            <BottomSheetAboutUs
-              setShowAboutUsSheet={setShowAboutUsSheet}
-              showAboutUsSheet={showAboutUsSheet}
-            />
+            <BottomSheetAboutUs id="open-about-us-modal" />
           </div>
         </div>
       </motion.main>
-    </section>
+    </IonPage>
   );
 };
 

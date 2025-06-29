@@ -1,4 +1,5 @@
-@import "@ionic/core/css/ionic.bundle.css";
+/* @import "@ionic/core/css/ionic.bundle.css"; */
+
 @import "tailwindcss";
 @layer base {
   *,
@@ -92,7 +93,7 @@ body {
   scrollbar-width: none;
   overflow: hidden;
   color: var(--text-color);
-  height: 100vh;
+  /* height: 100vh; */
   /* width: 100%; */
   max-width: 700px;
   margin-inline: auto;
@@ -181,6 +182,20 @@ ion-toggle {
   padding-left: 3rem;
   --track-background: #ddd;
   /* --track-background-checked: #ddd; */
+}
+
+ion-modal {
+  --background: var(--form-wrap-bg-color);
+  color: var(--text-color);
+}
+
+.modal-fit-content {
+  --height: auto;
+}
+
+.modal-fit-content::part(backdrop) {
+  pointer-events: all;
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .item-options-ios {
@@ -1212,7 +1227,7 @@ input[type="number"] {
   margin-right: 1rem;
 }
 
-.text-wrap {
+/* .text-wrap {
   align-self: center;
   color: var(--text-color);
 }
@@ -1220,13 +1235,13 @@ input[type="number"] {
 .text-wrap p {
   font-size: 0.8rem;
   font-weight: 300;
-}
+} */
 
-.text-wrap p:first-of-type {
+/* .text-wrap p:first-of-type {
   margin-bottom: 0.5rem;
   font-size: 1rem;
   font-weight: normal;
-}
+} */
 
 .reset-adkhar-text-wrap {
   border-top: 1px solid var(--settings-page-borders);
