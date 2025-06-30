@@ -1,9 +1,9 @@
-import { IonToast } from "@ionic/react";
+import { IonToast, ToastButton } from "@ionic/react";
 
 interface IonToastProps {
   isOpen: boolean;
   message: string;
-  buttons?: {};
+  buttons?: (string | ToastButton)[] | undefined;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   duration?: number;
 }

@@ -103,6 +103,7 @@ const HomePage = ({
         activeCounter={activeCounter}
       />
       <Toast
+        // isOpen={showNextCounterToast}
         isOpen={showNextCounterToast}
         message={`Loading next counter in ${count}`}
         buttons={[
