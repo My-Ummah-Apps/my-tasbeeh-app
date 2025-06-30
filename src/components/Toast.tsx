@@ -3,16 +3,24 @@ import { IonToast } from "@ionic/react";
 interface IonToastProps {
   isOpen: boolean;
   message: string;
+  buttons?: {};
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   duration?: number;
 }
 
-const Toast = ({ isOpen, message, setShow, duration }: IonToastProps) => {
+const Toast = ({
+  isOpen,
+  message,
+  buttons,
+  setShow,
+  duration,
+}: IonToastProps) => {
   return (
     <IonToast
       isOpen={isOpen}
       positionAnchor="nav-bar"
       message={message}
+      buttons={buttons}
       duration={duration || 2000}
       onDidDismiss={() => setShow(false)}
     />

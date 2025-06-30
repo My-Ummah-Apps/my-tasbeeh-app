@@ -11,6 +11,7 @@ import {
 } from "../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import Toast from "../components/Toast";
+import { useEffect, useState } from "react";
 
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -49,6 +50,18 @@ const HomePage = ({
   setLanguageDirection,
   languageDirection,
 }: HomePageProps) => {
+  const [count, setCount] = useState(3);
+
+  useEffect(() => {
+    if (count === 0 && !showNextCounterToast) {
+      setCount(3);
+    }
+
+    if (showNextCounterToast) {
+      count > 0 && setTimeout(() => setCount(count - 1), 1000);
+    }
+  }, [count, showNextCounterToast]);
+
   return (
     <motion.main
       // {...pageTransitionStyles}
@@ -91,9 +104,25 @@ const HomePage = ({
       />
       <Toast
         isOpen={showNextCounterToast}
-        message="Loading next counter..."
+        message={`Loading next counter in ${count}`}
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+            handler: () => {
+              console.log("More Info clicked");
+            },
+          },
+          {
+            text: "Switch now",
+            role: "switch now",
+            handler: () => {
+              console.log("Dismiss clicked");
+            },
+          },
+        ]}
         setShow={setShowNextCounterToast}
-        duration={1500}
+        duration={3000}
       />
     </motion.main>
   );

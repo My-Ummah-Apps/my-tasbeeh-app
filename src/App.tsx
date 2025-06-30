@@ -746,6 +746,7 @@ function App() {
           : { ...counter, isActive: 0 };
       }
     );
+
     const test = async () => {
       setActiveColor(color);
       updateCountersState(updatedCountersArr);
@@ -759,7 +760,7 @@ function App() {
       setTimeout(async () => {
         test();
         setIsNextCounterLoading(false);
-      }, 2000);
+      }, 3000);
     } else {
       await test();
     }
@@ -812,8 +813,8 @@ function App() {
                   <HomePage
                     dbConnection={dbConnection}
                     toggleDBConnection={toggleDBConnection}
-                    setShowNextCounterToast={setShowNextCounterToast}
                     isNextCounterLoading={isNextCounterLoading}
+                    setShowNextCounterToast={setShowNextCounterToast}
                     showNextCounterToast={showNextCounterToast}
                     userPreferencesState={userPreferencesState}
                     updateActiveCounter={updateActiveCounter}

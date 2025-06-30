@@ -61,6 +61,7 @@ const BottomSheetReorderCounters = ({
       onClose={() => setShowReorderCountersModal(false)}
       detent="content-height"
       tweenConfig={tween_config}
+      drag={false}
     >
       <Sheet.Container>
         <Sheet.Header style={bottomSheetHeaderHeight} />

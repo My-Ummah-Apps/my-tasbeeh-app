@@ -189,6 +189,12 @@ ion-modal {
   color: var(--text-color);
 }
 
+ion-toast::part(button) {
+  border-left: 1px solid #212121;
+  color: #ffffff;
+  font-size: 15px;
+}
+
 .modal-fit-content {
   --height: auto;
 }

@@ -9,13 +9,13 @@ import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { materialColors } from "../utils/constants";
 
-// const hapticsImpactMedium = async () => {
-//   await Haptics.impact({ style: ImpactStyle.Medium });
-// };
-
-const hapticsVibrate = async () => {
-  await Haptics.vibrate({ duration: 1000 });
+const hapticsImpactMedium = async () => {
+  await Haptics.impact({ style: ImpactStyle.Medium });
 };
+
+// const hapticsVibrate = async () => {
+//   await Haptics.vibrate({ duration: 1000 });
+// };
 
 interface CounterButtonProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -65,10 +65,9 @@ function CounterButton({
     updateCountersState(updatedCountersArr);
 
     if (activeCounter.count === activeCounter.target) {
-      if (Capacitor.isNativePlatform()) {
-        if (userPreferencesState.haptics === 1) {
-          hapticsVibrate();
-        }
+      if (Capacitor.isNativePlatform() && userPreferencesState.haptics === 1) {
+        // hapticsVibrate();
+        hapticsImpactMedium();
       }
 
       if (userPreferencesState.autoSwitchCounter === 1) {
@@ -93,10 +92,6 @@ function CounterButton({
         await updateActiveCounter(nextCounterId, nextCounterColor, true);
         console.log("TARGET HIT");
       }
-
-      // if (userPreferencesState.haptics === 1) {
-      //   hapticsImpactMedium();
-      // }
     }
   };
 
