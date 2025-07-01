@@ -2,6 +2,7 @@ import { IonToast, ToastButton } from "@ionic/react";
 
 interface IonToastProps {
   isOpen: boolean;
+  setIsNextCounterLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   message: string;
   buttons?: (string | ToastButton)[] | undefined;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,6 +11,7 @@ interface IonToastProps {
 
 const Toast = ({
   isOpen,
+  setIsNextCounterLoading,
   message,
   buttons,
   setShow,
@@ -18,6 +20,9 @@ const Toast = ({
   return (
     <IonToast
       isOpen={isOpen}
+      onWillDismiss={() => {
+        if (setIsNextCounterLoading) setIsNextCounterLoading(false);
+      }}
       positionAnchor="nav-bar"
       message={message}
       buttons={buttons}

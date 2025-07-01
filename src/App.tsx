@@ -48,7 +48,7 @@ function App() {
   } = useSQLiteDB();
 
   const [showChangelogModal, setShowChangelogModal] = useState(false);
-  const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
+  // const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [activeCounter, setActiveCounter] = useState<counterObjType>({
     id: -1,
     orderIndex: -1,
@@ -119,7 +119,6 @@ function App() {
   const [showAllResetToast, setShowAllResetToast] = useState(false);
   const [userPreferencesState, setUserPreferencesState] =
     useState<userPreferencesType>(dictPreferencesDefaultValues);
-  const [showNextCounterToast, setShowNextCounterToast] = useState(false);
 
   const clearLocalStorage = () => {
     localStorage.removeItem("localSavedCountersArray");
@@ -733,10 +732,8 @@ function App() {
 
   const updateActiveCounter = async (
     counterId: number,
-    color: MaterialColor,
-    delay?: boolean
+    color: MaterialColor
   ) => {
-    console.log("DELAY: ", delay);
     setCounterId(counterId);
 
     const updatedCountersArr: counterObjType[] = countersState.map(
@@ -747,23 +744,9 @@ function App() {
       }
     );
 
-    const test = async () => {
-      setActiveColor(color);
-      updateCountersState(updatedCountersArr);
-      await updateUserPreference("activeColor", color);
-    };
-
-    if (delay) {
-      console.log("DELAY CONDITION HIT");
-      setIsNextCounterLoading(true);
-      setShowNextCounterToast(true);
-      setTimeout(async () => {
-        test();
-        setIsNextCounterLoading(false);
-      }, 3000);
-    } else {
-      await test();
-    }
+    setActiveColor(color);
+    updateCountersState(updatedCountersArr);
+    await updateUserPreference("activeColor", color);
 
     try {
       await toggleDBConnection("open");
@@ -813,9 +796,6 @@ function App() {
                   <HomePage
                     dbConnection={dbConnection}
                     toggleDBConnection={toggleDBConnection}
-                    isNextCounterLoading={isNextCounterLoading}
-                    setShowNextCounterToast={setShowNextCounterToast}
-                    showNextCounterToast={showNextCounterToast}
                     userPreferencesState={userPreferencesState}
                     updateActiveCounter={updateActiveCounter}
                     activeColor={activeColor}

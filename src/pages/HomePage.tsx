@@ -12,18 +12,15 @@ import {
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import Toast from "../components/Toast";
 import { useEffect, useState } from "react";
+import { nextCounterDelay } from "../utils/constants";
 
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
-  showNextCounterToast: boolean;
-  isNextCounterLoading: boolean;
-  setShowNextCounterToast: React.Dispatch<React.SetStateAction<boolean>>;
   userPreferencesState: userPreferencesType;
   updateActiveCounter: (
     counterId: number,
-    color: MaterialColor,
-    delay?: boolean
+    color: MaterialColor
   ) => Promise<void>;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
@@ -37,9 +34,6 @@ interface HomePageProps {
 const HomePage = ({
   dbConnection,
   toggleDBConnection,
-  setShowNextCounterToast,
-  isNextCounterLoading,
-  showNextCounterToast,
   userPreferencesState,
   updateActiveCounter,
   activeColor,
@@ -51,6 +45,8 @@ const HomePage = ({
   languageDirection,
 }: HomePageProps) => {
   const [count, setCount] = useState(3);
+  const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
+  const [showNextCounterToast, setShowNextCounterToast] = useState(false);
 
   useEffect(() => {
     if (count === 0 && !showNextCounterToast) {
@@ -61,6 +57,12 @@ const HomePage = ({
       count > 0 && setTimeout(() => setCount(count - 1), 1000);
     }
   }, [count, showNextCounterToast]);
+
+  useEffect(() => {
+    if (showNextCounterToast) {
+      setIsNextCounterLoading(true);
+    }
+  }, [showNextCounterToast]);
 
   return (
     <motion.main
@@ -83,7 +85,7 @@ const HomePage = ({
       )}
 
       <header className="home-page-header">
-        <p>Home</p>
+        <p>Home1</p>
       </header>
       <ActiveCounter
         activeColor={activeColor}
@@ -95,6 +97,7 @@ const HomePage = ({
       <CounterButton
         dbConnection={dbConnection}
         toggleDBConnection={toggleDBConnection}
+        setShowNextCounterToast={setShowNextCounterToast}
         userPreferencesState={userPreferencesState}
         updateActiveCounter={updateActiveCounter}
         activeColor={activeColor}
@@ -103,27 +106,27 @@ const HomePage = ({
         activeCounter={activeCounter}
       />
       <Toast
-        // isOpen={showNextCounterToast}
         isOpen={showNextCounterToast}
-        message={`Loading next counter in ${count}`}
-        buttons={[
-          {
-            text: "Cancel",
-            role: "cancel",
-            handler: () => {
-              console.log("More Info clicked");
-            },
-          },
-          {
-            text: "Switch now",
-            role: "switch now",
-            handler: () => {
-              console.log("Dismiss clicked");
-            },
-          },
-        ]}
+        setIsNextCounterLoading={setIsNextCounterLoading}
+        message={`Loading next tasbeeh in ${count}`}
+        // buttons={[
+        //   {
+        //     text: "Cancel",
+        //     role: "cancel",
+        //     handler: () => {
+        //       console.log("More Info clicked");
+        //     },
+        //   },
+        //   {
+        //     text: "Switch now",
+        //     role: "switch now",
+        //     handler: () => {
+        //       console.log("Dismiss clicked");
+        //     },
+        //   },
+        // ]}
         setShow={setShowNextCounterToast}
-        duration={3000}
+        duration={nextCounterDelay}
       />
     </motion.main>
   );

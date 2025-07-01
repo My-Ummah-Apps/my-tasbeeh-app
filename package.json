@@ -26,6 +26,7 @@
     "@vitejs/plugin-react-swc": "^3.7.0",
     "capacitor-native-settings": "^7.0.1",
     "direction": "^2.0.1",
+    "dotenv": "^17.0.0",
     "framer-motion": "^11.5.4",
     "motion": "^12.12.1",
     "react": "^18.3.1",

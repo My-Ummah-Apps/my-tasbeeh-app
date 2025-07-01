@@ -1,4 +1,4 @@
-import { Haptics } from "@capacitor/haptics";
+import { Haptics, ImpactStyle } from "@capacitor/haptics";
 import {
   counterObjType,
   DBConnectionStateType,
@@ -7,24 +7,28 @@ import {
 } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
-import { materialColors } from "../utils/constants";
+import {
+  materialColors,
+  nextCounterDelay,
+  showAlert,
+} from "../utils/constants";
 
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
 };
 
-// const hapticsVibrate = async () => {
-//   await Haptics.vibrate({ duration: 1000 });
-// };
+const hapticsVibrate = async (duration: number) => {
+  await Haptics.vibrate({ duration: duration });
+};
 
 interface CounterButtonProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   userPreferencesState: userPreferencesType;
+  setShowNextCounterToast: React.Dispatch<React.SetStateAction<boolean>>;
   updateActiveCounter: (
     counterId: number,
-    color: MaterialColor,
-    delay?: boolean
+    color: MaterialColor
   ) => Promise<void>;
   activeColor: MaterialColor;
   countersState: counterObjType[];
@@ -36,6 +40,7 @@ function CounterButton({
   dbConnection,
   toggleDBConnection,
   userPreferencesState,
+  setShowNextCounterToast,
   updateActiveCounter,
   activeColor,
   countersState,
@@ -43,6 +48,10 @@ function CounterButton({
   updateCountersState,
 }: CounterButtonProps) {
   const setCounterAndHaptics = async () => {
+    if (Capacitor.isNativePlatform() && userPreferencesState.haptics === 1) {
+      hapticsImpactMedium();
+    }
+
     const updatedCountersArr = countersState.map((counter) => {
       const isActive = counter.isActive === 1;
 
@@ -65,12 +74,10 @@ function CounterButton({
     updateCountersState(updatedCountersArr);
 
     if (activeCounter.count === activeCounter.target) {
-      if (Capacitor.isNativePlatform() && userPreferencesState.haptics === 1) {
-        // hapticsVibrate();
-        hapticsImpactMedium();
-      }
-
       if (userPreferencesState.autoSwitchCounter === 1) {
+        if (Capacitor.isNativePlatform()) {
+          hapticsVibrate(2000);
+        }
         const currentCounterIndex = countersState.findIndex(
           (counter) => counter.isActive === 1
         );
@@ -89,8 +96,28 @@ function CounterButton({
               : 0
           ];
 
-        await updateActiveCounter(nextCounterId, nextCounterColor, true);
-        console.log("TARGET HIT");
+        if (currentCounterIndex !== countersState.length - 1) {
+          setShowNextCounterToast(true);
+        } else {
+          showAlert(
+            "No More Counters",
+            "You've reached the end of your tasbeeh list."
+          );
+          return;
+        }
+
+        const delay = (ms: number) => {
+          return new Promise((resolve) => setTimeout(resolve, ms));
+        };
+
+        const delayActiveCounterUpdate = async () => {
+          await delay(nextCounterDelay);
+          await updateActiveCounter(nextCounterId, nextCounterColor);
+        };
+
+        await delayActiveCounterUpdate();
+      } else if (Capacitor.isNativePlatform()) {
+        hapticsVibrate(1250);
       }
     }
   };

@@ -15,8 +15,7 @@ import { useRef } from "react";
 interface CountersListItemProps {
   updateActiveCounter: (
     counterId: number,
-    color: MaterialColor,
-    delay?: boolean
+    color: MaterialColor
   ) => Promise<void>;
   setShowResetActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setShowDeleteActionSheet: React.Dispatch<React.SetStateAction<boolean>>;

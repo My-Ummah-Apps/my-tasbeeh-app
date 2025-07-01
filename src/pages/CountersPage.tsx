@@ -13,8 +13,7 @@ import ActionSheet from "../components/ActionSheet";
 interface CountersPageProps {
   updateActiveCounter: (
     counterId: number,
-    color: MaterialColor,
-    delay?: boolean
+    color: MaterialColor
   ) => Promise<void>;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
   counterId: number | null;

@@ -161,3 +161,5 @@ export const setStatusAndNavBarBGColor = async (
   }
   await StatusBar.setStyle({ style: textColor });
 };
+
+export const nextCounterDelay = 3000;
