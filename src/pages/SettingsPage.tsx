@@ -67,6 +67,23 @@ const SettingsPage = ({
   const [showReorderCountersModal, setShowReorderCountersModal] =
     useState(false);
 
+  const isAndroid = Capacitor.getPlatform() === "android";
+
+  const hexToRgb = (hex: string) => {
+    const [r, g, b] = hex
+      .replace(/^#/, "")
+      .match(/.{2}/g)!
+      .map((x) => parseInt(x, 16));
+    return `${r}, ${g}, ${b}`;
+  };
+
+  const androidToggleStyles = {
+    "--handle-background": activeColor,
+    "--handle-background-checked": activeColor,
+    "--background": "transparent",
+    "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
+  };
+
   const pageRef = useRef(null);
 
   const showNotificationsAlert = async () => {
@@ -325,12 +342,13 @@ const SettingsPage = ({
                   <p>Set vibration on every increment</p>
                 </div>
                 <IonToggle
-                  mode="ios"
+                  // mode="ios"
                   color={activeColor}
                   style={{
                     "--ion-color-base":
                       userPreferencesState.haptics === 1 ? activeColor : "#ccc",
                     "--ion-color-contrast": "#fff",
+                    ...(isAndroid ? androidToggleStyles : {}),
                   }}
                   checked={userPreferencesState.haptics === 1}
                   onIonChange={async (e) => {
@@ -353,14 +371,18 @@ const SettingsPage = ({
                 </p>
               </div>
               <IonToggle
-                mode="ios"
-                color={activeColor}
+                mode="md"
                 style={{
                   "--ion-color-base":
                     userPreferencesState.dailyCounterReset === 1
                       ? activeColor
                       : "#ccc",
                   "--ion-color-contrast": "#fff",
+                  ...(isAndroid ? androidToggleStyles : {}),
+                  "--handle-background": activeColor,
+                  "--handle-background-checked": activeColor,
+                  "--background": "transparent",
+                  "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
                 }}
                 checked={userPreferencesState.dailyCounterReset === 1}
                 onIonChange={async (e) => {
@@ -385,7 +407,7 @@ const SettingsPage = ({
                 </p>
               </div>
               <IonToggle
-                mode="ios"
+                // mode="md"
                 color={activeColor}
                 style={{
                   "--ion-color-base":
@@ -393,6 +415,7 @@ const SettingsPage = ({
                       ? activeColor
                       : "#ccc",
                   "--ion-color-contrast": "#fff",
+                  ...(isAndroid ? androidToggleStyles : {}),
                 }}
                 checked={userPreferencesState.autoSwitchCounter === 1}
                 onIonChange={async (e) => {

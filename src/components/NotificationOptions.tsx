@@ -44,7 +44,7 @@ const NotificationOptions = ({
           </p>
         </div>
         <IonToggle
-          mode="ios"
+          // mode="ios"
           color={activeColor}
           style={{
             "--ion-color-base":
@@ -87,7 +87,7 @@ const NotificationOptions = ({
           </p>
         </div>
         <IonToggle
-          mode="ios"
+          // mode="ios"
           color={activeColor}
           style={{
             "--ion-color-base":
@@ -130,7 +130,7 @@ const NotificationOptions = ({
           </p>
         </div>
         <IonToggle
-          mode="ios"
+          // mode="ios"
           color={activeColor}
           style={{
             "--ion-color-base":

@@ -13,6 +13,7 @@ import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import Toast from "../components/Toast";
 import { useEffect, useState } from "react";
 import { nextCounterDelay } from "../utils/constants";
+import { IonAlert } from "@ionic/react";
 
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -47,6 +48,7 @@ const HomePage = ({
   const [count, setCount] = useState(3);
   const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [showNextCounterToast, setShowNextCounterToast] = useState(false);
+  const [showEndOfListAlert, setShowEndOfListAlert] = useState(false);
 
   useEffect(() => {
     if (count === 0 && !showNextCounterToast) {
@@ -98,6 +100,7 @@ const HomePage = ({
         dbConnection={dbConnection}
         toggleDBConnection={toggleDBConnection}
         setShowNextCounterToast={setShowNextCounterToast}
+        setShowEndOfListAlert={setShowEndOfListAlert}
         userPreferencesState={userPreferencesState}
         updateActiveCounter={updateActiveCounter}
         activeColor={activeColor}
@@ -127,6 +130,13 @@ const HomePage = ({
         // ]}
         setShow={setShowNextCounterToast}
         duration={nextCounterDelay}
+      />
+      <IonAlert
+        isOpen={showEndOfListAlert}
+        header="No More Tasbeeh left"
+        message="You've reached the end of your tasbeeh list."
+        buttons={["OK"]}
+        backdropDismiss={false}
       />
     </motion.main>
   );

@@ -183,7 +183,6 @@ ion-reorder::part(icon) {
 ion-toggle {
   padding-left: 3rem;
   --track-background: #ddd;
-  /* --track-background-checked: #ddd; */
 }
 
 ion-modal {

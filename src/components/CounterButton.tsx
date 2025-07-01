@@ -7,11 +7,7 @@ import {
 } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
-import {
-  materialColors,
-  nextCounterDelay,
-  showAlert,
-} from "../utils/constants";
+import { materialColors, nextCounterDelay } from "../utils/constants";
 
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
@@ -26,6 +22,7 @@ interface CounterButtonProps {
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   userPreferencesState: userPreferencesType;
   setShowNextCounterToast: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowEndOfListAlert: React.Dispatch<React.SetStateAction<boolean>>;
   updateActiveCounter: (
     counterId: number,
     color: MaterialColor
@@ -41,13 +38,16 @@ function CounterButton({
   toggleDBConnection,
   userPreferencesState,
   setShowNextCounterToast,
+  setShowEndOfListAlert,
   updateActiveCounter,
   activeColor,
   countersState,
   activeCounter,
   updateCountersState,
 }: CounterButtonProps) {
-  const setCounterAndHaptics = async () => {
+  const handleCounterButtonClick = async () => {
+    console.log("HAS RUN");
+
     if (Capacitor.isNativePlatform() && userPreferencesState.haptics === 1) {
       hapticsImpactMedium();
     }
@@ -61,6 +61,8 @@ function CounterButton({
       return { ...counter };
     });
 
+    updateCountersState(updatedCountersArr);
+
     try {
       await toggleDBConnection("open");
       const updateCounterCount = `UPDATE counterDataTable SET count = count + 1 WHERE id = ?`;
@@ -70,8 +72,6 @@ function CounterButton({
     } finally {
       await toggleDBConnection("close");
     }
-
-    updateCountersState(updatedCountersArr);
 
     if (activeCounter.count === activeCounter.target) {
       if (userPreferencesState.autoSwitchCounter === 1) {
@@ -99,10 +99,7 @@ function CounterButton({
         if (currentCounterIndex !== countersState.length - 1) {
           setShowNextCounterToast(true);
         } else {
-          showAlert(
-            "No More Counters",
-            "You've reached the end of your tasbeeh list."
-          );
+          setShowEndOfListAlert(true);
           return;
         }
 
@@ -131,7 +128,7 @@ function CounterButton({
         boxShadow: `0px 0px 10px ${activeColor}`,
       }}
       onClick={() => {
-        setCounterAndHaptics();
+        handleCounterButtonClick();
       }}
       className={`increment-btn`}
     >
