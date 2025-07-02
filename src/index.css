@@ -182,7 +182,7 @@ ion-reorder::part(icon) {
 
 ion-toggle {
   padding-left: 3rem;
-  --track-background: #ddd;
+  --track-background: #e1e1e1;
 }
 
 ion-modal {
@@ -191,9 +191,9 @@ ion-modal {
 }
 
 ion-toast::part(button) {
-  border-left: 1px solid #212121;
-  color: #ffffff;
-  font-size: 15px;
+  /* border-left: 1px solid #dddddd; */
+  color: var(--toast-text-color);
+  /* font-size: 1rem; */
 }
 
 .modal-fit-content {

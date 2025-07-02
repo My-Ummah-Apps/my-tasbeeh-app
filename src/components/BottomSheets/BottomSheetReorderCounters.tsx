@@ -67,7 +67,7 @@ const BottomSheetReorderCounters = ({
         <Sheet.Header style={bottomSheetHeaderHeight} />
         <Sheet.Content className="sheet-changelog">
           <h1 className="text-sm text-center">Re-order your Tasabeeh</h1>
-          <IonList mode="ios">
+          <IonList>
             <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
               {countersState.map((counterItem: counterObjType) => {
                 return (

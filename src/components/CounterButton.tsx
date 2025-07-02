@@ -22,9 +22,8 @@ interface CounterButtonProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   userPreferencesState: userPreferencesType;
+  isAutoSwitchCancelled: MutableRefObject<boolean>;
   setShowNextCounterToast: React.Dispatch<React.SetStateAction<boolean>>;
-  setAutoSwitchCancelled: React.Dispatch<React.SetStateAction<boolean>>;
-  autoSwitchCancelled: boolean;
   setShowEndOfListAlert: React.Dispatch<React.SetStateAction<boolean>>;
   updateActiveCounter: (
     counterId: number,
@@ -40,9 +39,8 @@ function CounterButton({
   dbConnection,
   toggleDBConnection,
   userPreferencesState,
+  isAutoSwitchCancelled,
   setShowNextCounterToast,
-  setAutoSwitchCancelled,
-  autoSwitchCancelled,
   setShowEndOfListAlert,
   updateActiveCounter,
   activeColor,
@@ -53,7 +51,7 @@ function CounterButton({
   const buttonRef = useRef(null);
 
   const handleCounterButtonClick = async () => {
-    console.log("autoSwitchCancelled: ", autoSwitchCancelled);
+    console.log("isAutoSwitchCancelled: ", isAutoSwitchCancelled);
 
     if (Capacitor.isNativePlatform() && userPreferencesState.haptics === 1) {
       hapticsImpactMedium();
@@ -112,43 +110,22 @@ function CounterButton({
 
         const delay = async (delayTimer: number) => {
           return new Promise((resolve) => setTimeout(resolve, delayTimer));
-          // const timeoutId = setTimeout(() => {
-          // }, nextCounterDelay);
-          // const resp = await new Promise(function (resolve) {
-          //   setTimeout(() => {
-          //     resolve("Promise resolved");
-          //   }, delayTimer);
-          //   buttonRef.current?.addEventListener("click", () => {
-          //     resolve("Promise resolved");
-          //   });
-          // });
-          // resp();
         };
-
-        // await new Promise(function (resolve) {
-        //   setTimeout(() => {
-        //     resolve("Promise resolved by timeout");
-        //   }, nextCounterDelay);
-
-        //   buttonRef.current?.addEventListener("click", () => {
-        //     resolve("Promise resolved by button");
-        //   });
-        // });
 
         const delayActiveCounterUpdate = async () => {
           await delay(nextCounterDelay);
           console.log(
             "autoSwitchCancelled within delay function is: ",
-            autoSwitchCancelled
+            isAutoSwitchCancelled
           );
 
-          if (!autoSwitchCancelled) {
+          if (!isAutoSwitchCancelled.current) {
             await updateActiveCounter(nextCounterId, nextCounterColor);
           }
         };
 
         await delayActiveCounterUpdate();
-        setAutoSwitchCancelled(false);
+        isAutoSwitchCancelled.current = false;
       } else if (Capacitor.isNativePlatform()) {
         hapticsVibrate(1250);
       }

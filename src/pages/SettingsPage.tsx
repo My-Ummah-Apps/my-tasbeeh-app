@@ -67,22 +67,22 @@ const SettingsPage = ({
   const [showReorderCountersModal, setShowReorderCountersModal] =
     useState(false);
 
-  const isAndroid = Capacitor.getPlatform() === "android";
+  // const isAndroid = Capacitor.getPlatform() === "android";
 
-  const hexToRgb = (hex: string) => {
-    const [r, g, b] = hex
-      .replace(/^#/, "")
-      .match(/.{2}/g)!
-      .map((x) => parseInt(x, 16));
-    return `${r}, ${g}, ${b}`;
-  };
+  // const hexToRgb = (hex: string) => {
+  //   const [r, g, b] = hex
+  //     .replace(/^#/, "")
+  //     .match(/.{2}/g)!
+  //     .map((x) => parseInt(x, 16));
+  //   return `${r}, ${g}, ${b}`;
+  // };
 
-  const androidToggleStyles = {
-    "--handle-background": activeColor,
-    "--handle-background-checked": activeColor,
-    "--background": "transparent",
-    "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
-  };
+  // const androidToggleStyles = {
+  //   "--handle-background": activeColor,
+  //   "--handle-background-checked": activeColor,
+  //   "--background": "transparent",
+  //   "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
+  // };
 
   const pageRef = useRef(null);
 
@@ -342,13 +342,13 @@ const SettingsPage = ({
                   <p>Set vibration on every increment</p>
                 </div>
                 <IonToggle
-                  mode="ios"
                   color={activeColor}
+                  mode="ios"
                   style={{
                     "--ion-color-base":
                       userPreferencesState.haptics === 1 ? activeColor : "#ccc",
-                    "--ion-color-contrast": "#fff",
-                    ...(isAndroid ? androidToggleStyles : {}),
+                    // "--ion-color-contrast": "#fff",
+                    // ...(isAndroid ? androidToggleStyles : {}),
                   }}
                   checked={userPreferencesState.haptics === 1}
                   onIonChange={async (e) => {
@@ -372,17 +372,18 @@ const SettingsPage = ({
               </div>
               <IonToggle
                 mode="ios"
+                color={activeColor}
                 style={{
                   "--ion-color-base":
                     userPreferencesState.dailyCounterReset === 1
                       ? activeColor
                       : "#ccc",
-                  "--ion-color-contrast": "#fff",
-                  ...(isAndroid ? androidToggleStyles : {}),
-                  "--handle-background": activeColor,
-                  "--handle-background-checked": activeColor,
-                  "--background": "transparent",
-                  "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
+                  // "--ion-color-contrast": "#fff",
+                  // ...(isAndroid ? androidToggleStyles : {}),
+                  // "--handle-background": activeColor,
+                  // "--handle-background-checked": activeColor,
+                  // "--background": "gray",
+                  // "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
                 }}
                 checked={userPreferencesState.dailyCounterReset === 1}
                 onIonChange={async (e) => {
@@ -414,8 +415,8 @@ const SettingsPage = ({
                     userPreferencesState.autoSwitchCounter === 1
                       ? activeColor
                       : "#ccc",
-                  "--ion-color-contrast": "#fff",
-                  ...(isAndroid ? androidToggleStyles : {}),
+                  // "--ion-color-contrast": "#fff",
+                  // ...(isAndroid ? androidToggleStyles : {}),
                 }}
                 checked={userPreferencesState.autoSwitchCounter === 1}
                 onIonChange={async (e) => {

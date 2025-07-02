@@ -11,7 +11,7 @@ import {
 } from "../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import Toast from "../components/Toast";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { nextCounterDelay } from "../utils/constants";
 import { IonAlert } from "@ionic/react";
 
@@ -49,7 +49,7 @@ const HomePage = ({
   const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [showNextCounterToast, setShowNextCounterToast] = useState(false);
   const [showEndOfListAlert, setShowEndOfListAlert] = useState(false);
-  const [autoSwitchCancelled, setAutoSwitchCancelled] = useState(false);
+  let isAutoSwitchCancelled = useRef(false);
 
   useEffect(() => {
     if (count === 0 && !showNextCounterToast) {
@@ -101,8 +101,7 @@ const HomePage = ({
         dbConnection={dbConnection}
         toggleDBConnection={toggleDBConnection}
         setShowNextCounterToast={setShowNextCounterToast}
-        setAutoSwitchCancelled={setAutoSwitchCancelled}
-        autoSwitchCancelled={autoSwitchCancelled}
+        isAutoSwitchCancelled={isAutoSwitchCancelled}
         setShowEndOfListAlert={setShowEndOfListAlert}
         userPreferencesState={userPreferencesState}
         updateActiveCounter={updateActiveCounter}
@@ -112,6 +111,7 @@ const HomePage = ({
         activeCounter={activeCounter}
       />
       <Toast
+        // isOpen={showNextCounterToast}
         isOpen={showNextCounterToast}
         setIsNextCounterLoading={setIsNextCounterLoading}
         message={`Loading next tasbeeh in ${count}`}
@@ -120,7 +120,7 @@ const HomePage = ({
             text: "Cancel",
             role: "cancel",
             handler: () => {
-              setAutoSwitchCancelled(true);
+              isAutoSwitchCancelled.current = true;
               console.log("Cancelled");
             },
           },
