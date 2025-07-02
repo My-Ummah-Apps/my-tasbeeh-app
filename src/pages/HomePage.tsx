@@ -49,6 +49,7 @@ const HomePage = ({
   const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [showNextCounterToast, setShowNextCounterToast] = useState(false);
   const [showEndOfListAlert, setShowEndOfListAlert] = useState(false);
+  const [autoSwitchCancelled, setAutoSwitchCancelled] = useState(false);
 
   useEffect(() => {
     if (count === 0 && !showNextCounterToast) {
@@ -100,6 +101,8 @@ const HomePage = ({
         dbConnection={dbConnection}
         toggleDBConnection={toggleDBConnection}
         setShowNextCounterToast={setShowNextCounterToast}
+        setAutoSwitchCancelled={setAutoSwitchCancelled}
+        autoSwitchCancelled={autoSwitchCancelled}
         setShowEndOfListAlert={setShowEndOfListAlert}
         userPreferencesState={userPreferencesState}
         updateActiveCounter={updateActiveCounter}
@@ -112,22 +115,23 @@ const HomePage = ({
         isOpen={showNextCounterToast}
         setIsNextCounterLoading={setIsNextCounterLoading}
         message={`Loading next tasbeeh in ${count}`}
-        // buttons={[
-        //   {
-        //     text: "Cancel",
-        //     role: "cancel",
-        //     handler: () => {
-        //       console.log("More Info clicked");
-        //     },
-        //   },
-        //   {
-        //     text: "Switch now",
-        //     role: "switch now",
-        //     handler: () => {
-        //       console.log("Dismiss clicked");
-        //     },
-        //   },
-        // ]}
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+            handler: () => {
+              setAutoSwitchCancelled(true);
+              console.log("Cancelled");
+            },
+          },
+          // {
+          //   text: "Switch now",
+          //   role: "switch now",
+          //   handler: () => {
+          //     console.log("Switched now");
+          //   },
+          // },
+        ]}
         setShow={setShowNextCounterToast}
         duration={nextCounterDelay}
       />

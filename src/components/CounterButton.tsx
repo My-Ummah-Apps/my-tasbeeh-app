@@ -8,6 +8,7 @@ import {
 import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { materialColors, nextCounterDelay } from "../utils/constants";
+import { MutableRefObject, useRef } from "react";
 
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
@@ -22,6 +23,8 @@ interface CounterButtonProps {
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   userPreferencesState: userPreferencesType;
   setShowNextCounterToast: React.Dispatch<React.SetStateAction<boolean>>;
+  setAutoSwitchCancelled: React.Dispatch<React.SetStateAction<boolean>>;
+  autoSwitchCancelled: boolean;
   setShowEndOfListAlert: React.Dispatch<React.SetStateAction<boolean>>;
   updateActiveCounter: (
     counterId: number,
@@ -38,6 +41,8 @@ function CounterButton({
   toggleDBConnection,
   userPreferencesState,
   setShowNextCounterToast,
+  setAutoSwitchCancelled,
+  autoSwitchCancelled,
   setShowEndOfListAlert,
   updateActiveCounter,
   activeColor,
@@ -45,8 +50,10 @@ function CounterButton({
   activeCounter,
   updateCountersState,
 }: CounterButtonProps) {
+  const buttonRef = useRef(null);
+
   const handleCounterButtonClick = async () => {
-    console.log("HAS RUN");
+    console.log("autoSwitchCancelled: ", autoSwitchCancelled);
 
     if (Capacitor.isNativePlatform() && userPreferencesState.haptics === 1) {
       hapticsImpactMedium();
@@ -103,16 +110,45 @@ function CounterButton({
           return;
         }
 
-        const delay = (ms: number) => {
-          return new Promise((resolve) => setTimeout(resolve, ms));
+        const delay = async (delayTimer: number) => {
+          return new Promise((resolve) => setTimeout(resolve, delayTimer));
+          // const timeoutId = setTimeout(() => {
+          // }, nextCounterDelay);
+          // const resp = await new Promise(function (resolve) {
+          //   setTimeout(() => {
+          //     resolve("Promise resolved");
+          //   }, delayTimer);
+          //   buttonRef.current?.addEventListener("click", () => {
+          //     resolve("Promise resolved");
+          //   });
+          // });
+          // resp();
         };
+
+        // await new Promise(function (resolve) {
+        //   setTimeout(() => {
+        //     resolve("Promise resolved by timeout");
+        //   }, nextCounterDelay);
+
+        //   buttonRef.current?.addEventListener("click", () => {
+        //     resolve("Promise resolved by button");
+        //   });
+        // });
 
         const delayActiveCounterUpdate = async () => {
           await delay(nextCounterDelay);
-          await updateActiveCounter(nextCounterId, nextCounterColor);
+          console.log(
+            "autoSwitchCancelled within delay function is: ",
+            autoSwitchCancelled
+          );
+
+          if (!autoSwitchCancelled) {
+            await updateActiveCounter(nextCounterId, nextCounterColor);
+          }
         };
 
         await delayActiveCounterUpdate();
+        setAutoSwitchCancelled(false);
       } else if (Capacitor.isNativePlatform()) {
         hapticsVibrate(1250);
       }
@@ -121,6 +157,7 @@ function CounterButton({
 
   return (
     <button
+      ref={buttonRef}
       data-testid="counter-increment-button"
       aria-label={`Increase counter for ${activeCounter.name}, current value is ${activeCounter.count}`}
       style={{

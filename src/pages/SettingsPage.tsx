@@ -342,7 +342,7 @@ const SettingsPage = ({
                   <p>Set vibration on every increment</p>
                 </div>
                 <IonToggle
-                  // mode="ios"
+                  mode="ios"
                   color={activeColor}
                   style={{
                     "--ion-color-base":
@@ -371,7 +371,7 @@ const SettingsPage = ({
                 </p>
               </div>
               <IonToggle
-                mode="md"
+                mode="ios"
                 style={{
                   "--ion-color-base":
                     userPreferencesState.dailyCounterReset === 1
@@ -407,7 +407,7 @@ const SettingsPage = ({
                 </p>
               </div>
               <IonToggle
-                // mode="md"
+                mode="ios"
                 color={activeColor}
                 style={{
                   "--ion-color-base":
