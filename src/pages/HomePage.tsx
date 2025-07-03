@@ -52,12 +52,12 @@ const HomePage = ({
   let isAutoSwitchCancelled = useRef(false);
 
   useEffect(() => {
-    if (count === 0 && !showNextCounterToast) {
+    if (count === 1 && !showNextCounterToast) {
       setCount(3);
     }
 
     if (showNextCounterToast) {
-      count > 0 && setTimeout(() => setCount(count - 1), 1000);
+      count > 1 && setTimeout(() => setCount(count - 1), 1000);
     }
   }, [count, showNextCounterToast]);
 
@@ -66,6 +66,33 @@ const HomePage = ({
       setIsNextCounterLoading(true);
     }
   }, [showNextCounterToast]);
+
+  const cancellableDelay = () => {
+    console.log("cancellableDelay has run");
+
+    let timeoutId: ReturnType<typeof setTimeout>;
+    let rejectFn: (reason?: any) => void;
+
+    const initiateDelay = () => {
+      return new Promise((resolve, reject) => {
+        timeoutId = setTimeout(resolve, nextCounterDelay);
+        rejectFn = reject;
+      });
+    };
+
+    const cancelDelay = () => {
+      console.log("CANCELLING DELAY");
+      clearTimeout(timeoutId);
+      if (rejectFn) rejectFn();
+    };
+
+    return {
+      initiateDelay,
+      cancelDelay,
+    };
+  };
+
+  const cancellableDelayRef = useRef(cancellableDelay());
 
   return (
     <motion.main
@@ -88,7 +115,7 @@ const HomePage = ({
       )}
 
       <header className="home-page-header">
-        <p>Home1</p>
+        <p>Home</p>
       </header>
       <ActiveCounter
         activeColor={activeColor}
@@ -101,6 +128,7 @@ const HomePage = ({
         dbConnection={dbConnection}
         toggleDBConnection={toggleDBConnection}
         setShowNextCounterToast={setShowNextCounterToast}
+        cancellableDelayRef={cancellableDelayRef}
         isAutoSwitchCancelled={isAutoSwitchCancelled}
         setShowEndOfListAlert={setShowEndOfListAlert}
         userPreferencesState={userPreferencesState}
@@ -111,7 +139,6 @@ const HomePage = ({
         activeCounter={activeCounter}
       />
       <Toast
-        // isOpen={showNextCounterToast}
         isOpen={showNextCounterToast}
         setIsNextCounterLoading={setIsNextCounterLoading}
         message={`Loading next tasbeeh in ${count}`}
@@ -121,19 +148,18 @@ const HomePage = ({
             role: "cancel",
             handler: () => {
               isAutoSwitchCancelled.current = true;
-              console.log("Cancelled");
             },
           },
-          // {
-          //   text: "Switch now",
-          //   role: "switch now",
-          //   handler: () => {
-          //     console.log("Switched now");
-          //   },
-          // },
+          {
+            text: "Switch now",
+            role: "switch now",
+            handler: () => {
+              cancellableDelayRef.current.cancelDelay();
+            },
+          },
         ]}
         setShow={setShowNextCounterToast}
-        duration={nextCounterDelay}
+        duration={nextCounterDelay - 250}
       />
       <IonAlert
         isOpen={showEndOfListAlert}

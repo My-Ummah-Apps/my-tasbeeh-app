@@ -7,7 +7,7 @@ import {
 } from "../utils/types";
 import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
-import { materialColors, nextCounterDelay } from "../utils/constants";
+import { materialColors } from "../utils/constants";
 import { MutableRefObject, useRef } from "react";
 
 const hapticsImpactMedium = async () => {
@@ -22,6 +22,10 @@ interface CounterButtonProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   userPreferencesState: userPreferencesType;
+  cancellableDelayRef: MutableRefObject<{
+    initiateDelay: () => Promise<unknown>;
+    cancelDelay: () => void;
+  }>;
   isAutoSwitchCancelled: MutableRefObject<boolean>;
   setShowNextCounterToast: React.Dispatch<React.SetStateAction<boolean>>;
   setShowEndOfListAlert: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,6 +43,7 @@ function CounterButton({
   dbConnection,
   toggleDBConnection,
   userPreferencesState,
+  cancellableDelayRef,
   isAutoSwitchCancelled,
   setShowNextCounterToast,
   setShowEndOfListAlert,
@@ -108,16 +113,12 @@ function CounterButton({
           return;
         }
 
-        const delay = async (delayTimer: number) => {
-          return new Promise((resolve) => setTimeout(resolve, delayTimer));
-        };
-
         const delayActiveCounterUpdate = async () => {
-          await delay(nextCounterDelay);
-          console.log(
-            "autoSwitchCancelled within delay function is: ",
-            isAutoSwitchCancelled
-          );
+          try {
+            await cancellableDelayRef.current.initiateDelay();
+          } catch (error) {
+            console.error("Delay cancelled");
+          }
 
           if (!isAutoSwitchCancelled.current) {
             await updateActiveCounter(nextCounterId, nextCounterColor);

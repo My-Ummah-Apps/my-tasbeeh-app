@@ -511,8 +511,6 @@ function App() {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType | string
   ) => {
-    console.log("updateUserPreference HAS RUN");
-
     try {
       await toggleDBConnection("open");
       const query = `INSERT OR REPLACE INTO userPreferencesTable (preferenceName, preferenceValue) VALUES (?, ?)`;
