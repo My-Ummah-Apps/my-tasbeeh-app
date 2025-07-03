@@ -5,6 +5,7 @@ import {
   MaterialColor,
   userPreferencesType,
 } from "../utils/types";
+import { motion } from "framer-motion";
 import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { materialColors } from "../utils/constants";
@@ -25,7 +26,7 @@ interface CounterButtonProps {
   cancellableDelayRef: MutableRefObject<{
     initiateDelay: () => Promise<unknown>;
     cancelDelay: () => void;
-  }>;
+  } | null>;
   isAutoSwitchCancelled: MutableRefObject<boolean>;
   setShowNextCounterToast: React.Dispatch<React.SetStateAction<boolean>>;
   setShowEndOfListAlert: React.Dispatch<React.SetStateAction<boolean>>;
@@ -54,9 +55,25 @@ function CounterButton({
   updateCountersState,
 }: CounterButtonProps) {
   const buttonRef = useRef(null);
+  // const controls = useAnimation();
+
+  // useEffect(() => {
+  //   controls.start({
+  //     scale: [1, 1.15, 1],
+  //     // rotate: [0, 5, -5, 0],
+  //     // y: [0, -10, 0],
+  //     // transition: { type: "spring", stiffness: 300, damping: 10 },
+  //     boxShadow: [
+  //       `0px 0px 10px ${activeColor}`,
+  //       `0px 0px 25px ${activeColor}`,
+  //       `0px 0px 10px ${activeColor}`,
+  //     ],
+  //     transition: { duration: 0.6, ease: "easeInOut" },
+  //   });
+  // }, [activeCounter.id]);
 
   const handleCounterButtonClick = async () => {
-    console.log("isAutoSwitchCancelled: ", isAutoSwitchCancelled);
+    console.log("isAutoSwitchCancelled: ", isAutoSwitchCancelled.current);
 
     if (Capacitor.isNativePlatform() && userPreferencesState.haptics === 1) {
       hapticsImpactMedium();
@@ -115,7 +132,7 @@ function CounterButton({
 
         const delayActiveCounterUpdate = async () => {
           try {
-            await cancellableDelayRef.current.initiateDelay();
+            await cancellableDelayRef.current!.initiateDelay();
           } catch (error) {
             console.error("Delay cancelled");
           }
@@ -124,7 +141,6 @@ function CounterButton({
             await updateActiveCounter(nextCounterId, nextCounterColor);
           }
         };
-
         await delayActiveCounterUpdate();
         isAutoSwitchCancelled.current = false;
       } else if (Capacitor.isNativePlatform()) {
@@ -134,8 +150,9 @@ function CounterButton({
   };
 
   return (
-    <button
+    <motion.button
       ref={buttonRef}
+      // animate={controls}
       data-testid="counter-increment-button"
       aria-label={`Increase counter for ${activeCounter.name}, current value is ${activeCounter.count}`}
       style={{
@@ -158,7 +175,7 @@ function CounterButton({
           of {activeCounter.target}
         </div>
       </div>
-    </button>
+    </motion.button>
   );
 }
 

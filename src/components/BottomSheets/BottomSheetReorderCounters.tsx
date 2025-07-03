@@ -1,19 +1,23 @@
 import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
   IonItem,
   IonLabel,
   IonList,
+  IonModal,
   IonReorder,
   IonReorderGroup,
+  IonTitle,
+  IonToolbar,
   ItemReorderEventDetail,
 } from "@ionic/react";
 import { counterObjType, DBConnectionStateType } from "../../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
-import { Sheet } from "react-modal-sheet";
-import { bottomSheetHeaderHeight, tween_config } from "../../utils/constants";
+import { useRef } from "react";
 
 interface BottomSheetReorderCountersProps {
-  setShowReorderCountersModal: React.Dispatch<React.SetStateAction<boolean>>;
-  showReorderCountersModal: boolean;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   countersState: counterObjType[];
@@ -21,13 +25,13 @@ interface BottomSheetReorderCountersProps {
 }
 
 const BottomSheetReorderCounters = ({
-  setShowReorderCountersModal,
-  showReorderCountersModal,
   toggleDBConnection,
   dbConnection,
   countersState,
   updateCountersState,
 }: BottomSheetReorderCountersProps) => {
+  const modal = useRef<HTMLIonModalElement>(null);
+
   const handleReorder = async (event: CustomEvent<ItemReorderEventDetail>) => {
     const from = event.detail.from;
     const to = event.detail.to;
@@ -56,40 +60,36 @@ const BottomSheetReorderCounters = ({
     }
   };
   return (
-    <Sheet
-      isOpen={showReorderCountersModal}
-      onClose={() => setShowReorderCountersModal(false)}
-      detent="content-height"
-      tweenConfig={tween_config}
-      drag={false}
+    <IonModal
+      ref={modal}
+      trigger="open-reorder-counters-modal"
+      // onWillDismiss={(event) => onWillDismiss(event)}
     >
-      <Sheet.Container>
-        <Sheet.Header style={bottomSheetHeaderHeight} />
-        <Sheet.Content className="sheet-changelog">
-          <h1 className="text-sm text-center">Re-order your Tasabeeh</h1>
-          <IonList>
-            <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
-              {countersState.map((counterItem: counterObjType) => {
-                return (
-                  <IonItem
-                    key={counterItem.id}
-                    mode="ios"
-                    className="text-white"
-                  >
-                    <IonLabel>{counterItem.name}</IonLabel>
-                    <IonReorder slot="end"></IonReorder>
-                  </IonItem>
-                );
-              })}
-            </IonReorderGroup>
-          </IonList>
-        </Sheet.Content>
-      </Sheet.Container>
-      <Sheet.Backdrop
-        // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-        onTap={() => setShowReorderCountersModal(false)}
-      />
-    </Sheet>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Re-order Your Tasbeeh</IonTitle>
+          <IonButtons slot="end">
+            <IonButton strong={true} onClick={() => modal.current?.dismiss()}>
+              Close
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent className="ion-padding">
+        <IonList className="ion-list-reorder-counters">
+          <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
+            {countersState.map((counterItem: counterObjType) => {
+              return (
+                <IonItem key={counterItem.id} mode="ios" className="text-white">
+                  <IonLabel>{counterItem.name}</IonLabel>
+                  <IonReorder slot="end"></IonReorder>
+                </IonItem>
+              );
+            })}
+          </IonReorderGroup>
+        </IonList>
+      </IonContent>
+    </IonModal>
   );
 };
 

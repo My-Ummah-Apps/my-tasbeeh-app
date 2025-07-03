@@ -92,7 +92,13 @@ const HomePage = ({
     };
   };
 
-  const cancellableDelayRef = useRef(cancellableDelay());
+  const cancellableDelayRef = useRef<ReturnType<
+    typeof cancellableDelay
+  > | null>(null);
+
+  if (cancellableDelayRef.current === null) {
+    cancellableDelayRef.current = cancellableDelay();
+  }
 
   return (
     <motion.main
@@ -148,13 +154,14 @@ const HomePage = ({
             role: "cancel",
             handler: () => {
               isAutoSwitchCancelled.current = true;
+              cancellableDelayRef.current?.cancelDelay();
             },
           },
           {
             text: "Switch now",
             role: "switch now",
             handler: () => {
-              cancellableDelayRef.current.cancelDelay();
+              cancellableDelayRef.current?.cancelDelay();
             },
           },
         ]}

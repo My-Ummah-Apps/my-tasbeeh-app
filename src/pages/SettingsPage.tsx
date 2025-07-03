@@ -64,9 +64,6 @@ const SettingsPage = ({
   // const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
   const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
 
-  const [showReorderCountersModal, setShowReorderCountersModal] =
-    useState(false);
-
   // const isAndroid = Capacitor.getPlatform() === "android";
 
   // const hexToRgb = (hex: string) => {
@@ -429,17 +426,12 @@ const SettingsPage = ({
               ></IonToggle>
             </section>
             <SettingIndividual
-              id="open-modal"
+              id="open-reorder-counters-modal"
               headingText={"Re-order tasabeeh"}
               subText={"Customise the sequence of your tasabeeh list"}
-              onClick={() => {
-                setShowReorderCountersModal(true);
-              }}
             />
           </section>
           <BottomSheetReorderCounters
-            setShowReorderCountersModal={setShowReorderCountersModal}
-            showReorderCountersModal={showReorderCountersModal}
             toggleDBConnection={toggleDBConnection}
             dbConnection={dbConnection}
             countersState={countersState}

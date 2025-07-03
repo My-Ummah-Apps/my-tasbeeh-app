@@ -196,6 +196,10 @@ ion-toast::part(button) {
   /* font-size: 1rem; */
 }
 
+.ion-list-reorder-counters {
+  /* background-color: var(--body-bg-color); */
+}
+
 .modal-fit-content {
   --height: auto;
 }
@@ -332,8 +336,6 @@ ion-toast::part(button) {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 300px;
-  width: 300px; */
   width: clamp(200px, 80vw, 400px);
   height: clamp(200px, 80vw, 400px);
   margin: 5rem auto;
@@ -358,16 +360,6 @@ ion-toast::part(button) {
 .increment-btn-target {
   font-size: 1.5rem;
   margin-top: 5rem;
-}
-
-.fade-up-animation {
-  -webkit-animation: fadeInUp 500ms ease-in forwards;
-  animation: fadeInUp 500ms ease-in forwards;
-}
-
-.fade-down-animation {
-  -webkit-animation: fadeInDown 1000ms ease-in forwards;
-  animation: fadeInDown 1000ms ease-in forwards;
 }
 
 /* COUNTERS PAGE */
