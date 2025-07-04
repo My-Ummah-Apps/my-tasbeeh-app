@@ -1,25 +1,18 @@
 import { ActionSheetButton, IonActionSheet } from "@ionic/react";
 
 interface ActionSheetProps {
-  isOpen: boolean;
-  setState: React.Dispatch<React.SetStateAction<boolean>>;
+  trigger?: string;
   header?: string;
   buttons: ActionSheetButton[];
 }
 
-const ActionSheet = ({
-  isOpen,
-  setState,
-  buttons,
-  header,
-}: ActionSheetProps) => {
+const ActionSheet = ({ trigger, buttons, header }: ActionSheetProps) => {
   return (
     <IonActionSheet
       className="action-sheet"
-      isOpen={isOpen}
+      trigger={trigger}
       header={header || "Actions"}
       buttons={buttons}
-      onDidDismiss={() => setState(false)}
     ></IonActionSheet>
   );
 };

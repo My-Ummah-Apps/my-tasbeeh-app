@@ -21,7 +21,7 @@ const SettingIndividual = ({
       onClick={onClick}
     >
       <div className="">
-        <p className="pt-[0.3rem] pb-[0.1rem] text-lg">{headingText}</p>
+        <p className="pt-[0.3rem] pb-[0.1rem]">{headingText}</p>
         <p className="pt-[0.3rem]  pb-[0.1rem] text-[0.8rem] font-light">
           {subText}
         </p>

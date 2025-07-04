@@ -333,10 +333,12 @@ const SettingsPage = ({
           </section>
           {Capacitor.isNativePlatform() && (
             <section className="individual-section-wrap">
-              <div className="individual-row-wrap haptic-wrap p-3">
+              <div className="individual-row-wrap p-3">
                 <div className="text-wrap" style={{ display: "block" }}>
-                  <p>Haptic Vibration</p>
-                  <p>Set vibration on every increment</p>
+                  <p className="pt-[0.3rem] pb-[0.1rem]">Haptic Vibration</p>
+                  <p className="pt-[0.3rem]  pb-[0.1rem] text-[0.8rem] font-light">
+                    Set vibration on every increment
+                  </p>
                 </div>
                 <IonToggle
                   color={activeColor}
@@ -360,9 +362,7 @@ const SettingsPage = ({
           <section className="individual-section-wrap">
             <section className="individual-row-wrap p-3">
               <div className="text-wrap " style={{ display: "block" }}>
-                <p className="pt-[0.3rem] pb-[0.1rem] text-lg">
-                  Auto Reset Tasbeehs
-                </p>
+                <p className="pt-[0.3rem] pb-[0.1rem]">Auto Reset Tasbeehs</p>
                 <p className="pt-[0.3rem]  pb-[0.1rem] text-[0.8rem] font-light">
                   All tasbeehs will be reset daily
                 </p>
@@ -396,9 +396,7 @@ const SettingsPage = ({
           <section className="individual-section-wrap">
             <section className="individual-row-wrap p-3">
               <div className="text-wrap " style={{ display: "block" }}>
-                <p className="pt-[0.3rem] pb-[0.1rem] text-lg">
-                  Auto-Switch Tasbeeh
-                </p>
+                <p className="pt-[0.3rem] pb-[0.1rem]">Auto-Switch Tasbeeh</p>
                 <p className="pt-[0.3rem] pb-[0.1rem] text-[0.8rem] font-light">
                   Automatically switch to the next tasbeeh once the current
                   tasbeeh reaches its target.

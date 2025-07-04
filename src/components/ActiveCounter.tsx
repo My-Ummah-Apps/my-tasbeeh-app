@@ -28,8 +28,6 @@ function ActiveCounter({
   const mScrollRef = useRef<HTMLDivElement | null>(null);
 
   const [scroll, setScroll] = useState<boolean>(false);
-  const [showResetActionSheetHomePage, setShowResetActionSheetHomePage] =
-    useState(false);
 
   useEffect(() => {
     const counterTextContainerWidth = counterTextContainerRef.current
@@ -128,11 +126,8 @@ function ActiveCounter({
           <button
             aria-label="Reset Counter"
             data-testid="counter-reset-btn"
+            id="open-reset-single-counter-action-sheet-homepage"
             className="reset-btn-wrap"
-            onClick={async () => {
-              // await resetSingleCounter(activeCounter.id);
-              setShowResetActionSheetHomePage(true);
-            }}
           >
             <MdOutlineRestartAlt />
           </button>
@@ -158,8 +153,7 @@ function ActiveCounter({
         </section>
       </section>
       <ActionSheet
-        setState={setShowResetActionSheetHomePage}
-        isOpen={showResetActionSheetHomePage}
+        trigger="open-reset-single-counter-action-sheet-homepage"
         header="Are you sure you want to reset this tasbeeh?"
         buttons={[
           {

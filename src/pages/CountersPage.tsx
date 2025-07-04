@@ -57,9 +57,6 @@ function CountersPage({
   showDeleteToast,
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
-  const [showResetActionSheet, setShowResetActionSheet] = useState(false);
-  const [showDeleteActionSheet, setShowDeleteActionSheet] = useState(false);
-  const [showResetAllActionSheet, setShowResetAllActionSheet] = useState(false);
   const [showResetToast, setShowResetToast] = useState(false);
   const [showSwipeHint, setShowSwipeHint] = useState(false);
   showSwipeHint;
@@ -87,11 +84,7 @@ function CountersPage({
       className={`counters-page-wrap`}
     >
       <header className="counters-page-header flex justify-between items-center">
-        <MdOutlineRestartAlt
-          onClick={async () => {
-            setShowResetAllActionSheet(true);
-          }}
-        />
+        <MdOutlineRestartAlt id="open-reset-all-counters-action-sheet" />
         <p>Tasbeehs</p>
         <MdAdd
           onClick={() => {
@@ -101,8 +94,7 @@ function CountersPage({
         />
       </header>
       <ActionSheet
-        setState={setShowResetAllActionSheet}
-        isOpen={showResetAllActionSheet}
+        trigger="open-reset-all-counters-action-sheet"
         header="Are you sure you want to reset all Tasbeehs?"
         buttons={[
           {
@@ -132,8 +124,6 @@ function CountersPage({
             <CountersListItem
               key={counterItem.id}
               updateActiveCounter={updateActiveCounter}
-              setShowResetActionSheet={setShowResetActionSheet}
-              setShowDeleteActionSheet={setShowDeleteActionSheet}
               setCounterId={setCounterId}
               setShowForm={setShowForm}
               color={color}
@@ -155,8 +145,7 @@ function CountersPage({
         addCounter={addCounter}
       />
       <ActionSheet
-        setState={setShowResetActionSheet}
-        isOpen={showResetActionSheet}
+        trigger="open-reset-single-counter-action-sheet"
         header="Are you sure you want to reset this tasbeeh?"
         buttons={[
           {
@@ -186,8 +175,7 @@ function CountersPage({
         ]}
       />
       <ActionSheet
-        setState={setShowDeleteActionSheet}
-        isOpen={showDeleteActionSheet}
+        trigger="open-delete-counter-action-sheet"
         header="Are you sure you want to delete this tasbeeh?"
         buttons={[
           {
