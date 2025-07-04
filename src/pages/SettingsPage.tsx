@@ -361,10 +361,10 @@ const SettingsPage = ({
             <section className="individual-row-wrap p-3">
               <div className="text-wrap " style={{ display: "block" }}>
                 <p className="pt-[0.3rem] pb-[0.1rem] text-lg">
-                  Auto Reset Tasabeeh
+                  Auto Reset Tasbeehs
                 </p>
                 <p className="pt-[0.3rem]  pb-[0.1rem] text-[0.8rem] font-light">
-                  Tasabeeh will be reset daily
+                  All tasbeehs will be reset daily
                 </p>
               </div>
               <IonToggle
@@ -427,8 +427,8 @@ const SettingsPage = ({
             </section>
             <SettingIndividual
               id="open-reorder-counters-modal"
-              headingText={"Re-order tasabeeh"}
-              subText={"Customise the sequence of your tasabeeh list"}
+              headingText={"Re-order tasbeehs"}
+              subText={"Customise the sequence of your tasbeeh list"}
             />
           </section>
           <BottomSheetReorderCounters

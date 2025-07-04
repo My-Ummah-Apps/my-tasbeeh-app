@@ -148,7 +148,7 @@ const BottomSheetForm = ({
             <div className="form-wrap form-filled">
               <form id="form" onSubmit={submitCounter}>
                 <div className="form-filled-counter-name-input-wrap">
-                  <p>Dhikr Name</p>
+                  <p>Tasbeeh Name</p>
                   <textarea
                     ref={counterNameField}
                     dir="auto"

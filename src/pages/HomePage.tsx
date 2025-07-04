@@ -170,9 +170,9 @@ const HomePage = ({
       />
       <IonAlert
         isOpen={showEndOfListAlert}
-        header="No More Tasbeeh left"
+        header="No More Tasbeehs left"
         message="You've reached the end of your tasbeeh list."
-        buttons={["OK"]}
+        buttons={["GOT IT"]}
         backdropDismiss={false}
       />
     </motion.main>

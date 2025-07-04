@@ -1,6 +1,8 @@
 /* @import "@ionic/core/css/ionic.bundle.css"; */
 
+/* @import "./theme/md3/theme.css"; */
 @import "tailwindcss";
+
 @layer base {
   *,
   *::before,
@@ -22,6 +24,13 @@
 }
 
 :root {
+  /* --md-sys-surface: var(--body-bg-color);
+  --md-sys-on-surface: var(--text-color, inherit);
+  --md-sys-color-primary: transparent;
+  --md-sys-color-secondary: transparent;
+  --md-sys-color-surface: transparent;
+  --md-sys-color-on-primary: inherit;
+  --md-sys-color-on-surface: inherit; */
   /* --body-bg-color: #f2f1f6; */
   /* --body-bg-color: #f4f4f4; */
 
@@ -106,7 +115,7 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-color: var(--body-bg-color);
+  background-color: var(--body-bg-color) !important;
 }
 
 .body::-webkit-scrollbar {
@@ -194,6 +203,10 @@ ion-toast::part(button) {
   /* border-left: 1px solid #dddddd; */
   color: var(--toast-text-color);
   /* font-size: 1rem; */
+}
+
+body.dark ion-alert {
+  --ion-text-color: #fff !important;
 }
 
 .ion-list-reorder-counters {

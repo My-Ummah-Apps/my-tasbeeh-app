@@ -15,6 +15,12 @@ import "@ionic/react/css/typography.css";
 // import '@ionic/react/css/display.css';
 
 import { setupIonicReact } from "@ionic/react";
+// @ts-ignore
+window.Ionic = window.Ionic || {};
+//@ts-ignore
+window.Ionic.config = window.Ionic.config || {};
+//@ts-ignore
+window.Ionic.config.mode = "md";
 
 setupIonicReact();
 

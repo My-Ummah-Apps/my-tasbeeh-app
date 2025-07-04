@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
 import Toast from "../components/Toast";
 import ActionSheet from "../components/ActionSheet";
+import { useLocation } from "react-router-dom";
 
 interface CountersPageProps {
   updateActiveCounter: (
@@ -70,6 +71,16 @@ function CountersPage({
     }
   }, []);
 
+  const location = useLocation();
+
+  useEffect(() => {
+    return () => {
+      setShowResetToast(false);
+      setShowDeleteToast(false);
+      setShowAllResetToast(false);
+    };
+  }, [location.pathname]);
+
   return (
     <motion.main
       // {...pageTransitionStyles}
@@ -81,7 +92,7 @@ function CountersPage({
             setShowResetAllActionSheet(true);
           }}
         />
-        <p>Tasabeeh</p>
+        <p>Tasbeehs</p>
         <MdAdd
           onClick={() => {
             setCounterId(null);
@@ -92,10 +103,10 @@ function CountersPage({
       <ActionSheet
         setState={setShowResetAllActionSheet}
         isOpen={showResetAllActionSheet}
-        header="Are you sure you want to reset all Tasabeeh?"
+        header="Are you sure you want to reset all Tasbeehs?"
         buttons={[
           {
-            text: "Reset All Tasabeeh",
+            text: "Reset All Tasbeehs",
             role: "destructive",
             handler: async () => {
               await resetAllCounters();
@@ -109,7 +120,7 @@ function CountersPage({
       />
       <Toast
         isOpen={showAllResetToast}
-        message="All Tasabeeh reset to 0"
+        message="All Tasbeehs reset to 0"
         setShow={setShowAllResetToast}
       />
 
