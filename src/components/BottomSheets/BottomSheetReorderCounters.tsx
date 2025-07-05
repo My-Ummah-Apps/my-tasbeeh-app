@@ -63,15 +63,20 @@ const BottomSheetReorderCounters = ({
     <IonModal
       ref={modal}
       trigger="open-reorder-counters-modal"
+      // breakpoints={[0, 0.5, 1]}
+      // initialBreakpoint={0.5}
+      breakpoints={[0, 0.95]}
+      initialBreakpoint={0.95}
+      handleBehavior="cycle"
       // onWillDismiss={(event) => onWillDismiss(event)}
     >
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar className="mt-5">
           <IonTitle>Re-order Your Tasbeeh</IonTitle>
           <IonButtons slot="end">
-            <IonButton strong={true} onClick={() => modal.current?.dismiss()}>
+            {/* <IonButton strong={true} onClick={() => modal.current?.dismiss()}>
               Close
-            </IonButton>
+            </IonButton> */}
           </IonButtons>
         </IonToolbar>
       </IonHeader>

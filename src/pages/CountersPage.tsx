@@ -59,6 +59,9 @@ function CountersPage({
   const [showForm, setShowForm] = useState(false);
   const [showResetToast, setShowResetToast] = useState(false);
   const [showSwipeHint, setShowSwipeHint] = useState(false);
+  const [showResetActionSheet, setShowResetActionSheet] = useState(false);
+  const [showDeleteActionSheet, setShowDeleteActionSheet] = useState(false);
+
   showSwipeHint;
   useEffect(() => {
     const hasSeenHint = localStorage.getItem("hasSeenSwipeHint");
@@ -124,6 +127,8 @@ function CountersPage({
             <CountersListItem
               key={counterItem.id}
               updateActiveCounter={updateActiveCounter}
+              setShowResetActionSheet={setShowResetActionSheet}
+              setShowDeleteActionSheet={setShowDeleteActionSheet}
               setCounterId={setCounterId}
               setShowForm={setShowForm}
               color={color}
@@ -145,7 +150,8 @@ function CountersPage({
         addCounter={addCounter}
       />
       <ActionSheet
-        trigger="open-reset-single-counter-action-sheet"
+        setState={setShowResetActionSheet}
+        isOpen={showResetActionSheet}
         header="Are you sure you want to reset this tasbeeh?"
         buttons={[
           {
@@ -175,7 +181,8 @@ function CountersPage({
         ]}
       />
       <ActionSheet
-        trigger="open-delete-counter-action-sheet"
+        setState={setShowDeleteActionSheet}
+        isOpen={showDeleteActionSheet}
         header="Are you sure you want to delete this tasbeeh?"
         buttons={[
           {

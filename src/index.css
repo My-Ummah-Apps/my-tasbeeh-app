@@ -1404,6 +1404,11 @@ input[type="number"] {
   .navbar-wrap {
     /* padding-bottom: env(safe-area-inset-bottom); */
   }
+  .settings-page-header,
+  .counters-page-header,
+  .home-page-header {
+    margin-top: 0;
+  }
   .counter-page-single-counter {
   }
   .counter-page-single-counter.active {

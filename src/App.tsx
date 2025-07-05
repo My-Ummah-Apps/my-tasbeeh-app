@@ -37,7 +37,6 @@ import {
 import { AnimatePresence } from "framer-motion";
 import useSQLiteDB from "./utils/useSqliteDB";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
-import { IonApp } from "@ionic/react";
 
 function App() {
   const {
@@ -763,7 +762,8 @@ function App() {
   };
 
   return (
-    <IonApp>
+    // <IonApp>
+    <section>
       <BrowserRouter>
         <section className="App">
           <AnimatePresence>
@@ -878,7 +878,8 @@ function App() {
           onTap={() => setShowChangelogModal(false)}
         />
       </Sheet>
-    </IonApp>
+      {/* </IonApp> */}
+    </section>
   );
 }
 

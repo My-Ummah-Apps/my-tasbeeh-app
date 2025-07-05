@@ -73,8 +73,6 @@ function CounterButton({
   // }, [activeCounter.id]);
 
   const handleCounterButtonClick = async () => {
-    console.log("isAutoSwitchCancelled: ", isAutoSwitchCancelled.current);
-
     if (Capacitor.isNativePlatform() && userPreferencesState.haptics === 1) {
       hapticsImpactMedium();
     }
@@ -116,15 +114,32 @@ function CounterButton({
               : 0
           ].id;
 
-        const nextCounterColor =
-          materialColors[
-            currentCounterIndex < materialColors.length
-              ? currentCounterIndex + 1
-              : 0
-          ];
+        let nextCounterColor;
+        let nextCounterColorIndex = 0;
+
+        console.log(currentCounterIndex, materialColors.length);
+        console.log(
+          "currentCounterIndex < materialColors.length: ",
+          currentCounterIndex < materialColors.length
+        );
 
         if (currentCounterIndex !== countersState.length - 1) {
           setShowNextCounterToast(true);
+          if (currentCounterIndex === materialColors.length - 1) {
+            console.log("END OF MATERIACOLORS, RESETTING TO 0");
+
+            nextCounterColorIndex = 0;
+            nextCounterColor = materialColors[nextCounterColorIndex];
+          } else {
+            console.log(
+              "NOT END OF MATERIACOLORS, CURRENT COLOR IS: ,",
+              materialColors[nextCounterColorIndex],
+              "NEXT UP: ",
+              materialColors[nextCounterColorIndex + 1]
+            );
+            nextCounterColor = materialColors[nextCounterColorIndex + 1];
+          }
+          console.log("Next color: ", nextCounterColor);
         } else {
           setShowEndOfListAlert(true);
           return;

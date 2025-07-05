@@ -17,6 +17,8 @@ interface CountersListItemProps {
     counterId: number,
     color: MaterialColor
   ) => Promise<void>;
+  setShowResetActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowDeleteActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   color: MaterialColor;
@@ -25,6 +27,8 @@ interface CountersListItemProps {
 
 const CountersListItem = ({
   updateActiveCounter,
+  setShowResetActionSheet,
+  setShowDeleteActionSheet,
   setCounterId,
   setShowForm,
   color,
@@ -91,21 +95,21 @@ const CountersListItem = ({
           <MdEdit className="text-4xl bg-[rgba(92,107,192,0.75)] p-2 rounded-3xl" />
         </IonItemOption>
         <IonItemOption
-          id="open-reset-single-counter-action-sheet"
           mode="ios"
           className="swipe-options"
           onClick={async () => {
             setCounterId(counterItem.id);
+            setShowResetActionSheet(true);
           }}
         >
           <MdOutlineRestartAlt className="text-4xl bg-[rgba(239,128,80,0.75)] p-2 rounded-3xl" />
         </IonItemOption>
         <IonItemOption
-          id="open-delete-counter-action-sheet"
           mode="ios"
           className="swipe-options"
           onClick={async () => {
             setCounterId(counterItem.id);
+            setShowDeleteActionSheet(true);
           }}
         >
           <MdDeleteOutline className="text-4xl bg-[rgba(239,83,80,0.75)] p-2 rounded-3xl" />

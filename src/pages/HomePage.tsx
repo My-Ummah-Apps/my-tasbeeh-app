@@ -68,8 +68,6 @@ const HomePage = ({
   }, [showNextCounterToast]);
 
   const cancellableDelay = () => {
-    console.log("cancellableDelay has run");
-
     let timeoutId: ReturnType<typeof setTimeout>;
     let rejectFn: (reason?: any) => void;
 
