@@ -14,6 +14,7 @@ import Toast from "../components/Toast";
 import { useEffect, useRef, useState } from "react";
 import { nextCounterDelay } from "../utils/constants";
 import { IonAlert } from "@ionic/react";
+import Overlay from "../components/Overlay";
 
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -103,20 +104,7 @@ const HomePage = ({
       // {...pageTransitionStyles}
       className="main-page-wrap"
     >
-      {isNextCounterLoading && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
-            zIndex: 9999,
-            pointerEvents: "auto",
-          }}
-        />
-      )}
+      {isNextCounterLoading && <Overlay />}
 
       <header className="home-page-header">
         <p>Home</p>

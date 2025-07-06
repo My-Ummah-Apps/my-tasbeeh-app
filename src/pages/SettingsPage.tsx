@@ -8,6 +8,9 @@ import {
   AndroidSettings,
   IOSSettings,
 } from "capacitor-native-settings";
+// @ts-ignore
+
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { PURCHASE_TYPE } from "cordova-plugin-purchases";
@@ -27,7 +30,7 @@ import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
 
-import { IonPage, IonToggle } from "@ionic/react";
+import { IonToggle } from "@ionic/react";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import BottomSheetReorderCounters from "../components/BottomSheets/BottomSheetReorderCounters";
 interface SettingsageProps {
@@ -60,9 +63,41 @@ const SettingsPage = ({
   theme,
   setShowChangelogModal,
 }: SettingsageProps) => {
+  const pageRef = useRef<HTMLDivElement>(null);
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   // const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
   const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
+
+  const modalRef = useRef(null);
+
+  // useEffect(() => {
+  //   const modalEl = modalRef.current;
+  //   const pageEl = pageRef.current;
+  //   if (!modalEl || !pageEl) return;
+
+  //   const onPresent = () => {
+  //     disableBodyScroll(pageEl);
+  //   };
+
+  //   const onDismiss = () => {
+  //     enableBodyScroll(pageEl);
+  //   };
+  //   // @ts-ignore
+  //   modalEl.addEventListener("ionModalDidPresent", onPresent);
+  //   // @ts-ignore
+
+  //   modalEl.addEventListener("ionModalDidDismiss", onDismiss);
+
+  //   return () => {
+  //     // @ts-ignore
+
+  //     modalEl.removeEventListener("ionModalDidPresent", onPresent);
+  //     // @ts-ignore
+
+  //     modalEl.removeEventListener("ionModalDidDismiss", onDismiss);
+  //     enableBodyScroll(pageEl); // failsafe
+  //   };
+  // }, []);
 
   // const isAndroid = Capacitor.getPlatform() === "android";
 
@@ -80,8 +115,6 @@ const SettingsPage = ({
   //   "--background": "transparent",
   //   "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
   // };
-
-  const pageRef = useRef(null);
 
   const showNotificationsAlert = async () => {
     const { value } = await Dialog.confirm({
@@ -192,9 +225,8 @@ const SettingsPage = ({
   };
 
   return (
-    <IonPage ref={pageRef}>
+    <section ref={pageRef}>
       <motion.main
-        // ref={pageRef}
         // {...pageTransitionStyles}
         className="settings-page-wrap"
       >
@@ -430,6 +462,8 @@ const SettingsPage = ({
             />
           </section>
           <BottomSheetReorderCounters
+            ref={modalRef}
+            triggerId="open-reorder-counters-modal"
             toggleDBConnection={toggleDBConnection}
             dbConnection={dbConnection}
             countersState={countersState}
@@ -527,11 +561,14 @@ const SettingsPage = ({
               // indvidualStyles={"rounded-b-md"}
               // onClick={() => setShowAboutUsSheet(true)}
             />
-            <BottomSheetAboutUs id="open-about-us-modal" />
+            <BottomSheetAboutUs
+              ref={modalRef}
+              triggerId="open-about-us-modal"
+            />
           </div>
         </div>
       </motion.main>
-    </IonPage>
+    </section>
   );
 };
 

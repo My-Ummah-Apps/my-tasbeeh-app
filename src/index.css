@@ -100,11 +100,11 @@ button:focus {
 }
 
 body {
+  /* height: 100%; */
+  overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  overflow: hidden;
   color: var(--text-color);
-  /* height: 100vh; */
   /* width: 100%; */
   max-width: 700px;
   margin-inline: auto;
@@ -118,13 +118,19 @@ body {
   background-color: var(--body-bg-color) !important;
 }
 
+.no-scroll {
+  overflow: hidden !important;
+  position: fixed; /* prevents scroll position jumping */
+  width: 100%;
+}
+
 .body::-webkit-scrollbar {
   display: none;
 }
 
 .app {
   max-width: 700px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 ion-item-options {
@@ -207,6 +213,11 @@ ion-toast::part(button) {
 
 body.dark ion-alert {
   --ion-text-color: #fff !important;
+  --background: var(--body-bg-color);
+}
+
+.modal-header {
+  background-color: var(--body-bg-color);
 }
 
 .ion-list-reorder-counters {
@@ -377,6 +388,11 @@ body.dark ion-alert {
 
 /* COUNTERS PAGE */
 
+.slide-to-reveal-options-wrap {
+  background-color: var(--body-bg-color);
+  color: var(--text-color);
+}
+
 .counter {
   white-space: nowrap;
   overflow: hidden;
@@ -525,22 +541,6 @@ MdModeEditOutline {
   overflow: hidden;
 }
 
-@keyframes counterWidthAnimation {
-  0% {
-    max-width: 0;
-  }
-  100% {
-    max-width: 100%;
-  }
-}
-
-.width-animation {
-  animation-name: counterWidthAnimation;
-  animation-duration: 1s;
-  animation-direction: forwards;
-  overflow: hidden;
-}
-
 .single-counter-counter-name {
   font-size: 1.3rem;
   white-space: nowrap;
@@ -676,7 +676,14 @@ textarea:focus {
 
 /* SETTINGS PAGE */
 
+/* body {
+  height: 100%;
+  overflow: hidden;
+} */
+
 .settings-page-options-and-info-wrap {
+  /* height: 100%;
+  overflow: hidden; */
   width: 100%;
   height: 95vh;
   overflow-y: scroll;

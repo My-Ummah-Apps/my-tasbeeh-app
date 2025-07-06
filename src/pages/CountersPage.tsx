@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { IonList } from "@ionic/react";
+import slideToRevealImg from "/src/images/slide-to-reveal.png";
 
 import { MdAdd, MdOutlineRestartAlt } from "react-icons/md";
 import CountersListItem from "../components/CountersListItem";
@@ -10,6 +11,7 @@ import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
 import Toast from "../components/Toast";
 import ActionSheet from "../components/ActionSheet";
 import { useLocation } from "react-router-dom";
+import Overlay from "../components/Overlay";
 
 interface CountersPageProps {
   updateActiveCounter: (
@@ -62,7 +64,6 @@ function CountersPage({
   const [showResetActionSheet, setShowResetActionSheet] = useState(false);
   const [showDeleteActionSheet, setShowDeleteActionSheet] = useState(false);
 
-  showSwipeHint;
   useEffect(() => {
     const hasSeenHint = localStorage.getItem("hasSeenSwipeHint");
     if (!hasSeenHint) {
@@ -218,6 +219,40 @@ function CountersPage({
         message="Tasbeeh deleted"
         setShow={setShowDeleteToast}
       />
+
+      {/* <IonBackdrop
+        visible={true}
+        tappable={true}
+        // onClick={onDismiss}
+      /> */}
+
+      {showSwipeHint && (
+        <>
+          <Overlay />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="slide-to-reveal-options-wrap fixed z-[10001] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+          text-center px-6 py-5 rounded-xl shadow-xl w-[90%]"
+          >
+            <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
+            <h2 className="text-lg font-semibold mb-2">{"Swipe to reveal"}</h2>
+            <p className="text-base mb-5">
+              {"Swipe left on a tasbeeh to reveal more options"}
+            </p>
+            <p
+              className="pt-5 text-right"
+              onClick={() => {
+                setShowSwipeHint(false);
+              }}
+            >
+              GOT IT
+            </p>
+          </motion.div>
+        </>
+      )}
     </motion.main>
   );
 }

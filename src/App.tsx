@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { IonApp } from "@ionic/react";
 
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
@@ -528,6 +529,7 @@ function App() {
 
   useEffect(() => {
     setActiveColor(userPreferencesState.activeColor);
+    console.log("Active color set: ", activeColor);
   }, [userPreferencesState.activeColor]);
 
   useEffect(() => {
@@ -741,7 +743,7 @@ function App() {
       }
     );
 
-    setActiveColor(color);
+    // setActiveColor(color);
     updateCountersState(updatedCountersArr);
     await updateUserPreference("activeColor", color);
 
@@ -878,8 +880,8 @@ function App() {
           onTap={() => setShowChangelogModal(false)}
         />
       </Sheet>
-      {/* </IonApp> */}
     </section>
+    // </IonApp>
   );
 }
 

@@ -1,23 +1,22 @@
+// @ts-ignore
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import MyUmmahAppsLogo from "/src//images/My-Ummah-Apps-72ppi.png";
 import { IonModal } from "@ionic/react";
 
 interface BottomSheetAboutUsProps {
-  id: string;
+  ref?: any;
+  triggerId: string;
 }
 
-const BottomSheetAboutUs = ({ id }: BottomSheetAboutUsProps) => {
+const BottomSheetAboutUs = ({ ref, triggerId }: BottomSheetAboutUsProps) => {
   return (
     <IonModal
-      onDidPresent={() => {
-        document.body.style.overflow = "hidden";
-      }}
-      onDidDismiss={() => {
-        document.body.style.overflow = "";
-      }}
+      ref={ref}
+      mode="ios"
+      expandToScroll={false}
       // canDismiss={true}
       className="modal-fit-content"
-      // ref={aboutUsModal}
-      trigger={id}
+      trigger={triggerId}
       initialBreakpoint={1}
       breakpoints={[0, 1]}
     >

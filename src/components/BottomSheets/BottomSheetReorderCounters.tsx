@@ -1,23 +1,19 @@
 import {
-  IonButton,
-  IonButtons,
   IonContent,
-  IonHeader,
   IonItem,
   IonLabel,
   IonList,
   IonModal,
   IonReorder,
   IonReorderGroup,
-  IonTitle,
-  IonToolbar,
   ItemReorderEventDetail,
 } from "@ionic/react";
 import { counterObjType, DBConnectionStateType } from "../../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
-import { useRef } from "react";
 
 interface BottomSheetReorderCountersProps {
+  ref: any;
+  triggerId: string;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   countersState: counterObjType[];
@@ -25,13 +21,13 @@ interface BottomSheetReorderCountersProps {
 }
 
 const BottomSheetReorderCounters = ({
+  ref,
+  triggerId,
   toggleDBConnection,
   dbConnection,
   countersState,
   updateCountersState,
 }: BottomSheetReorderCountersProps) => {
-  const modal = useRef<HTMLIonModalElement>(null);
-
   const handleReorder = async (event: CustomEvent<ItemReorderEventDetail>) => {
     const from = event.detail.from;
     const to = event.detail.to;
@@ -61,25 +57,18 @@ const BottomSheetReorderCounters = ({
   };
   return (
     <IonModal
-      ref={modal}
-      trigger="open-reorder-counters-modal"
-      // breakpoints={[0, 0.5, 1]}
-      // initialBreakpoint={0.5}
-      breakpoints={[0, 0.95]}
-      initialBreakpoint={0.95}
-      handleBehavior="cycle"
+      mode="ios"
+      ref={ref}
+      trigger={triggerId}
+      // className="modal-fit-content"
+      initialBreakpoint={1}
+      breakpoints={[0, 1]}
+      // handleBehavior="cycle"
       // onWillDismiss={(event) => onWillDismiss(event)}
     >
-      <IonHeader>
-        <IonToolbar className="mt-5">
-          <IonTitle>Re-order Your Tasbeeh</IonTitle>
-          <IonButtons slot="end">
-            {/* <IonButton strong={true} onClick={() => modal.current?.dismiss()}>
-              Close
-            </IonButton> */}
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+      <h1 className="modal-header py-10 text-center text-2xl">
+        Re-order Tasbeehs
+      </h1>
       <IonContent className="ion-padding">
         <IonList className="ion-list-reorder-counters">
           <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
