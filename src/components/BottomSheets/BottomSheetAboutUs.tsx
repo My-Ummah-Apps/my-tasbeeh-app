@@ -4,14 +4,17 @@ import MyUmmahAppsLogo from "/src//images/My-Ummah-Apps-72ppi.png";
 import { IonModal } from "@ionic/react";
 
 interface BottomSheetAboutUsProps {
-  ref?: any;
+  // modalRef: HTMLIonModalElement | null;
   triggerId: string;
 }
 
-const BottomSheetAboutUs = ({ ref, triggerId }: BottomSheetAboutUsProps) => {
+const BottomSheetAboutUs = ({
+  // modalRef,
+  triggerId,
+}: BottomSheetAboutUsProps) => {
   return (
     <IonModal
-      ref={ref}
+      // ref={modalRef}
       mode="ios"
       expandToScroll={false}
       // canDismiss={true}

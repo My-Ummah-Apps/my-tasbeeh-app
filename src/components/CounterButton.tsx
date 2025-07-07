@@ -14,6 +14,9 @@ import { MutableRefObject, useRef } from "react";
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
 };
+const hapticsImpactHeavy = async () => {
+  await Haptics.impact({ style: ImpactStyle.Heavy });
+};
 
 const hapticsVibrate = async (duration: number) => {
   await Haptics.vibrate({ duration: duration });
@@ -55,6 +58,8 @@ function CounterButton({
   updateCountersState,
 }: CounterButtonProps) {
   const buttonRef = useRef(null);
+  // const hapticInterval = useRef<number | null>(null);
+
   // const controls = useAnimation();
 
   // useEffect(() => {
@@ -103,8 +108,16 @@ function CounterButton({
         if (Capacitor.isNativePlatform()) {
           hapticsVibrate(2000);
         }
+
         const currentCounterIndex = countersState.findIndex(
           (counter) => counter.isActive === 1
+        );
+
+        console.log(
+          "currentCounterIndex: ",
+          currentCounterIndex,
+          "materialColors length: ",
+          materialColors.length
         );
 
         const nextCounterId =
@@ -114,36 +127,38 @@ function CounterButton({
               : 0
           ].id;
 
-        let nextCounterColor;
+        let nextCounterColor: MaterialColor;
         let nextCounterColorIndex = 0;
 
-        console.log(currentCounterIndex, materialColors.length);
-        console.log(
-          "currentCounterIndex < materialColors.length: ",
-          currentCounterIndex < materialColors.length
-        );
+        const isCountersMoreThanColors =
+          countersState.length > materialColors.length;
+        const isLastCounter = currentCounterIndex === countersState.length - 1;
 
-        if (currentCounterIndex !== countersState.length - 1) {
-          setShowNextCounterToast(true);
-          if (currentCounterIndex === materialColors.length - 1) {
-            console.log("END OF MATERIACOLORS, RESETTING TO 0");
+        console.log("isCountersMoreThanColors: ", isCountersMoreThanColors);
+        console.log("isLastCounter: ", isLastCounter);
 
-            nextCounterColorIndex = 0;
-            nextCounterColor = materialColors[nextCounterColorIndex];
-          } else {
-            console.log(
-              "NOT END OF MATERIACOLORS, CURRENT COLOR IS: ,",
-              materialColors[nextCounterColorIndex],
-              "NEXT UP: ",
-              materialColors[nextCounterColorIndex + 1]
-            );
-            nextCounterColor = materialColors[nextCounterColorIndex + 1];
-          }
-          console.log("Next color: ", nextCounterColor);
-        } else {
+        if (isLastCounter) {
           setShowEndOfListAlert(true);
           return;
         }
+
+        if (isCountersMoreThanColors) {
+          console.log("isCountersMoreThanColors");
+          if (activeColor === materialColors[materialColors.length - 1]) {
+            console.log("RESETTING TO 0");
+            nextCounterColorIndex = 0;
+          } else {
+            nextCounterColorIndex += 1;
+          }
+        } else if (!isCountersMoreThanColors) {
+          console.log("INCREMENTING BY ONE");
+          nextCounterColorIndex += currentCounterIndex + 1;
+        }
+
+        console.log("nextCounterColorIndex is: ", nextCounterColorIndex);
+
+        setShowNextCounterToast(true);
+        nextCounterColor = materialColors[nextCounterColorIndex];
 
         const delayActiveCounterUpdate = async () => {
           try {
@@ -156,6 +171,11 @@ function CounterButton({
             await updateActiveCounter(nextCounterId, nextCounterColor);
           }
         };
+
+        // if (hapticInterval.current !== null) {
+        //   clearInterval(hapticInterval.current);
+        // }
+
         await delayActiveCounterUpdate();
         isAutoSwitchCancelled.current = false;
       } else if (Capacitor.isNativePlatform()) {

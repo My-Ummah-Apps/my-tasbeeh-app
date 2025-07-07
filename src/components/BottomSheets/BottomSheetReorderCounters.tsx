@@ -12,7 +12,7 @@ import { counterObjType, DBConnectionStateType } from "../../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 
 interface BottomSheetReorderCountersProps {
-  ref: any;
+  // ref: HTMLIonModalElement | null;
   triggerId: string;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -21,7 +21,7 @@ interface BottomSheetReorderCountersProps {
 }
 
 const BottomSheetReorderCounters = ({
-  ref,
+  // ref,
   triggerId,
   toggleDBConnection,
   dbConnection,
@@ -58,7 +58,7 @@ const BottomSheetReorderCounters = ({
   return (
     <IonModal
       mode="ios"
-      ref={ref}
+      // ref={ref}
       trigger={triggerId}
       // className="modal-fit-content"
       initialBreakpoint={1}
@@ -74,7 +74,11 @@ const BottomSheetReorderCounters = ({
           <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
             {countersState.map((counterItem: counterObjType) => {
               return (
-                <IonItem key={counterItem.id} mode="ios" className="text-white">
+                <IonItem
+                  key={counterItem.id}
+                  mode="ios"
+                  className="text-white py-1"
+                >
                   <IonLabel>{counterItem.name}</IonLabel>
                   <IonReorder slot="end"></IonReorder>
                 </IonItem>

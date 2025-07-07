@@ -68,7 +68,7 @@ const SettingsPage = ({
   // const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
   const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
 
-  const modalRef = useRef(null);
+  // const modalRef = useRef(null);
 
   // useEffect(() => {
   //   const modalEl = modalRef.current;
@@ -431,7 +431,7 @@ const SettingsPage = ({
                 <p className="pt-[0.3rem] pb-[0.1rem]">Auto-Switch Tasbeeh</p>
                 <p className="pt-[0.3rem] pb-[0.1rem] text-[0.8rem] font-light">
                   Automatically switch to the next tasbeeh once the current
-                  tasbeeh reaches its target.
+                  tasbeeh reaches its target
                 </p>
               </div>
               <IonToggle
@@ -462,7 +462,7 @@ const SettingsPage = ({
             />
           </section>
           <BottomSheetReorderCounters
-            ref={modalRef}
+            // modalRef={modalRef}
             triggerId="open-reorder-counters-modal"
             toggleDBConnection={toggleDBConnection}
             dbConnection={dbConnection}
@@ -562,7 +562,7 @@ const SettingsPage = ({
               // onClick={() => setShowAboutUsSheet(true)}
             />
             <BottomSheetAboutUs
-              ref={modalRef}
+              // modalRef={modalRef}
               triggerId="open-about-us-modal"
             />
           </div>

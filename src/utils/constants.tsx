@@ -9,16 +9,16 @@ import { Capacitor } from "@capacitor/core";
 export const materialColors = [
   "#EF5350",
   "#EC407A",
-  // "#AB47BC",
-  // "#7E57C2",
-  // "#5C6BC0",
-  // "#42A5F5",
-  // "#29B6F6",
-  // "#26C6DA",
-  // "#26A69A",
-  // "#66BB6A",
-  // "#9CCC65",
-  // "#FF7043",
+  "#AB47BC",
+  "#7E57C2",
+  "#5C6BC0",
+  "#42A5F5",
+  "#29B6F6",
+  "#26C6DA",
+  "#26A69A",
+  "#66BB6A",
+  "#9CCC65",
+  "#FF7043",
 ] as const;
 
 export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
