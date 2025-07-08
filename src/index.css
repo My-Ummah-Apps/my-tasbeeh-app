@@ -159,6 +159,10 @@ ion-item-option::part(native) {
   padding-inline: 0.5rem;
 }
 
+.form-ion-item {
+  --border-radius: 0.3rem;
+}
+
 ion-toast {
   --background: var(--toast-bg-color);
   --color: var(--toast-text-color);
@@ -811,37 +815,44 @@ input[type="number"] {
   font-size: 0.8rem;
 }
 
+.form-wrap button {
+  padding: 0.7rem !important;
+  width: 40%;
+  margin: 0.5rem 0;
+  border-radius: 0.5rem;
+}
+
 .theme-options-wrap,
 .reset-all-alert-box-wrap,
 .tip-box-wrap {
   box-shadow: var(--form-box-shadow);
 }
 
-.form-filled-reset-delete-btns-wrap {
+/* .form-filled-reset-delete-btns-wrap {
   margin: 1rem 0;
   padding-inline: 1rem;
   position: absolute;
   bottom: 10px;
   /* text-align: right; */
-  /* display: flex;
+/* display: flex;
   justify-content: space-between; */
 
-  /* padding: 0.5rem 1rem; */
-  /* border-bottom: 1px solid var(--border-form); */
-}
+/* padding: 0.5rem 1rem; */
+/* border-bottom: 1px solid var(--border-form); */
+/* } */
 
-.form-filled-reset-delete-btns-wrap svg {
+/* .form-filled-reset-delete-btns-wrap svg {
   padding: 4px;
   font-size: 2rem;
-}
+} */
 
-.form-filled-reset-delete-btns-wrap > button {
+/* .form-filled-reset-delete-btns-wrap > button {
   background-color: rgb(255, 71, 71);
   color: #fff;
   padding: 0.5rem 0.5rem;
   border: none;
   border-radius: 0.5rem;
-}
+} */
 
 .form-filled-reset-delete-btns-wrap > button:nth-child(1) {
   background-color: #dc2626;
@@ -946,12 +957,12 @@ input[type="number"] {
   background-color: var(--form-wrap-bg-color) !important;
 }
 
-.form-blank-and-form-filled-header-text {
+/* .form-blank-and-form-filled-header-text {
   font-size: 1rem;
   font-weight: 400;
   text-align: center;
   margin: 0 2rem;
-}
+} */
 
 .form-wrap input {
   border: none;
@@ -982,40 +993,6 @@ input[type="number"] {
   border: none;
   border-radius: 0.5rem;
   padding: 1rem 0.5rem;
-}
-
-.form-filled-save-and-cancel-btn-wrap,
-.form-blank-save-and-cancel-btn-wrap {
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: var(--form-wrap-bg-color);
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  margin-inline: 0.5rem;
-  margin-bottom: 3rem;
-}
-
-.form-filled-save-and-cancel-btn-wrap > button,
-.form-blank-save-and-cancel-btn-wrap > button {
-  padding: 1rem 0;
-  border-radius: 0.7rem;
-  flex: 1;
-  text-align: center;
-}
-
-.form-blank-save-btn,
-.form-filled-save-btn {
-  border: none;
-  color: #fff;
-}
-
-.form-blank-cancel-btn,
-.form-filled-cancel-btn {
-  border: 1px solid rgba(154, 154, 154, 0.49);
-  color: var(--text-color);
 }
 
 .form-alert-styles {
