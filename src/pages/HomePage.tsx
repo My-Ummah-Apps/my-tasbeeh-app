@@ -80,7 +80,6 @@ const HomePage = ({
     };
 
     const cancelDelay = () => {
-      console.log("CANCELLING DELAY");
       clearTimeout(timeoutId);
       if (rejectFn) rejectFn();
     };

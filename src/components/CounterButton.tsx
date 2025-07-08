@@ -14,9 +14,9 @@ import { MutableRefObject, useRef } from "react";
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
 };
-const hapticsImpactHeavy = async () => {
-  await Haptics.impact({ style: ImpactStyle.Heavy });
-};
+// const hapticsImpactHeavy = async () => {
+//   await Haptics.impact({ style: ImpactStyle.Heavy });
+// };
 
 const hapticsVibrate = async (duration: number) => {
   await Haptics.vibrate({ duration: duration });
@@ -58,6 +58,7 @@ function CounterButton({
   updateCountersState,
 }: CounterButtonProps) {
   const buttonRef = useRef(null);
+  let nextCounterColorIndex = useRef(0);
   // const hapticInterval = useRef<number | null>(null);
 
   // const controls = useAnimation();
@@ -128,7 +129,7 @@ function CounterButton({
           ].id;
 
         let nextCounterColor: MaterialColor;
-        let nextCounterColorIndex = 0;
+        // let nextCounterColorIndex;
 
         const isCountersMoreThanColors =
           countersState.length > materialColors.length;
@@ -144,21 +145,39 @@ function CounterButton({
 
         if (isCountersMoreThanColors) {
           console.log("isCountersMoreThanColors");
+          console.log("Active color is: ", activeColor);
+          console.log(
+            "Final color in materialColors Arr: ",
+            materialColors[materialColors.length - 1]
+          );
+
           if (activeColor === materialColors[materialColors.length - 1]) {
             console.log("RESETTING TO 0");
-            nextCounterColorIndex = 0;
+            nextCounterColorIndex.current = 0;
           } else {
-            nextCounterColorIndex += 1;
+            console.log(
+              "INCREMENTING BY ONE, BEFORE INCREMENT: ",
+              nextCounterColorIndex.current
+            );
+
+            nextCounterColorIndex.current += 1;
+            console.log(
+              "INCREMENTING BY ONE, AFTER INCREMENT: ",
+              nextCounterColorIndex.current
+            );
           }
         } else if (!isCountersMoreThanColors) {
-          console.log("INCREMENTING BY ONE");
-          nextCounterColorIndex += currentCounterIndex + 1;
+          console.log("!isCountersMoreThanColors, INCREMENTING BY ONE");
+          nextCounterColorIndex.current += currentCounterIndex + 1;
         }
 
-        console.log("nextCounterColorIndex is: ", nextCounterColorIndex);
+        console.log(
+          "nextCounterColorIndex.current is: ",
+          nextCounterColorIndex.current
+        );
 
         setShowNextCounterToast(true);
-        nextCounterColor = materialColors[nextCounterColorIndex];
+        nextCounterColor = materialColors[nextCounterColorIndex.current];
 
         const delayActiveCounterUpdate = async () => {
           try {

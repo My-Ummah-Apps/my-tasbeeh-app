@@ -54,7 +54,7 @@ function ActiveCounter({
       const scrollSpeed = activeCounterTextRef.current.innerText.length * 0.3;
       mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
     } else {
-      console.error("Error in setting scroll");
+      console.warn("Scroll refs not ready, skipping scroll setup.");
     }
   }, [activeCounter.name]);
 

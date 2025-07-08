@@ -24,7 +24,6 @@
     "@tailwindcss/vite": "^4.1.6",
     "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
-    "body-scroll-lock": "^4.0.0-beta.0",
     "capacitor-native-settings": "^7.0.1",
     "direction": "^2.0.1",
     "dotenv": "^17.0.0",

@@ -66,7 +66,6 @@ const SettingsPage = ({
   const pageRef = useRef<HTMLDivElement>(null);
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   // const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
-  const [showThemeOptionsSheet, setShowThemeOptionsSheet] = useState(false);
 
   // const modalRef = useRef(null);
 
@@ -327,39 +326,36 @@ const SettingsPage = ({
 
         </div>
 */}
-          {Capacitor.isNativePlatform() && (
-            <section className="individual-section-wrap">
-              <SettingIndividual
-                // indvidualStyles={"rounded-t-md"}
-                headingText={"Notifications"}
-                subText={"Set Notifications"}
-                onClick={() => {
-                  checkNotificationPermissions();
-                }}
-              />
-              <BottomSheetNotificationsOptions
-                updateUserPreference={updateUserPreference}
-                activeColor={activeColor}
-                activeCounter={activeCounter}
-                setShowNotificationsSheet={setShowNotificationsSheet}
-                showNotificationsSheet={showNotificationsSheet}
-                userPreferencesState={userPreferencesState}
-              />
-            </section>
-          )}
+          {/* {Capacitor.isNativePlatform() && ( */}
           <section className="individual-section-wrap">
             <SettingIndividual
               // indvidualStyles={"rounded-t-md"}
-              headingText={"Theme"}
-              subText={"Select Theme"}
+              id="open-notifications-sheet"
+              headingText={"Notifications"}
+              subText={"Set Notifications"}
               onClick={() => {
-                setShowThemeOptionsSheet(true);
+                checkNotificationPermissions();
               }}
             />
-            <BottomSheetThemeOptions
+            <BottomSheetNotificationsOptions
+              triggerId="open-notifications-sheet"
               updateUserPreference={updateUserPreference}
-              setShowThemeOptionsSheet={setShowThemeOptionsSheet}
-              showThemeOptionsSheet={showThemeOptionsSheet}
+              activeColor={activeColor}
+              activeCounter={activeCounter}
+              userPreferencesState={userPreferencesState}
+            />
+          </section>
+          {/* // )} */}
+          <section className="individual-section-wrap theme-setting-wrap">
+            <SettingIndividual
+              id="open-theme-options-sheet"
+              // indvidualStyles={"rounded-t-md"}
+              headingText={"Theme"}
+              subText={"Select Theme"}
+            />
+            <BottomSheetThemeOptions
+              triggerId="open-theme-options-sheet"
+              updateUserPreference={updateUserPreference}
               theme={theme}
             />
           </section>

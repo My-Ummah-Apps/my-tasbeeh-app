@@ -1,4 +1,3 @@
-import { tween_config } from "../../utils/constants";
 import {
   counterObjType,
   MaterialColor,
@@ -6,10 +5,12 @@ import {
   themeType,
   userPreferencesType,
 } from "../../utils/types";
-import { Sheet } from "react-modal-sheet";
+
 import NotificationOptions from "../NotificationOptions";
+import { IonModal } from "@ionic/react";
 
 interface BottomSheetNotificationsOptionsProps {
+  triggerId: string;
   updateUserPreference: (
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType
@@ -17,43 +18,35 @@ interface BottomSheetNotificationsOptionsProps {
   userPreferencesState: userPreferencesType;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
-  setShowNotificationsSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  showNotificationsSheet: boolean;
 }
 
 const BottomSheetNotificationsOptions = ({
+  triggerId,
   updateUserPreference,
   userPreferencesState,
   activeColor,
   activeCounter,
-  setShowNotificationsSheet,
-  showNotificationsSheet,
 }: BottomSheetNotificationsOptionsProps) => {
   return (
-    <Sheet
-      disableDrag={false}
-      isOpen={showNotificationsSheet}
-      onClose={() => setShowNotificationsSheet(false)}
-      detent="content-height"
-      tweenConfig={tween_config}
+    <IonModal
+      // ref={modalRef}
+      mode="ios"
+      expandToScroll={false}
+      // canDismiss={true}
+      className="modal-fit-content"
+      trigger={triggerId}
+      initialBreakpoint={1}
+      breakpoints={[0, 1]}
     >
-      <Sheet.Container>
-        <Sheet.Header />
-        <Sheet.Content>
-          {" "}
-          <NotificationOptions
-            updateUserPreference={updateUserPreference}
-            activeColor={activeColor}
-            activeCounter={activeCounter}
-            userPreferencesState={userPreferencesState}
-          />
-        </Sheet.Content>
-      </Sheet.Container>
-      <Sheet.Backdrop
-        // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-        onTap={() => setShowNotificationsSheet(false)}
+      <NotificationOptions
+        updateUserPreference={updateUserPreference}
+        activeColor={activeColor}
+        activeCounter={activeCounter}
+        userPreferencesState={userPreferencesState}
       />
-    </Sheet>
+
+      {/* // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }} */}
+    </IonModal>
   );
 };
 

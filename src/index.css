@@ -1199,6 +1199,10 @@ input[type="number"] {
   border-bottom: 1px solid var(--settings-page-borders);
 }
 
+.theme-setting-wrap {
+  border: none;
+}
+
 .notification-ul-wrap {
   background-color: var(--form-wrap-bg-color) !important;
 }

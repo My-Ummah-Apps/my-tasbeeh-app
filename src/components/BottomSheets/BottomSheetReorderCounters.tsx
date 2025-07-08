@@ -61,8 +61,8 @@ const BottomSheetReorderCounters = ({
       // ref={ref}
       trigger={triggerId}
       // className="modal-fit-content"
-      initialBreakpoint={1}
-      breakpoints={[0, 1]}
+      initialBreakpoint={0.95}
+      breakpoints={[0, 0.95]}
       // handleBehavior="cycle"
       // onWillDismiss={(event) => onWillDismiss(event)}
     >
