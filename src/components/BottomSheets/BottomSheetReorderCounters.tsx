@@ -66,9 +66,7 @@ const BottomSheetReorderCounters = ({
       // handleBehavior="cycle"
       // onWillDismiss={(event) => onWillDismiss(event)}
     >
-      <h1 className="modal-header py-10 text-center text-2xl">
-        Re-order Tasbeehs
-      </h1>
+      <h1 className="modal-header-text ">Re-order Tasbeehs</h1>
       <IonContent className="ion-padding">
         <IonList className="ion-list-reorder-counters">
           <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>

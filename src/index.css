@@ -216,8 +216,10 @@ body.dark ion-alert {
   --background: var(--body-bg-color);
 }
 
-.modal-header {
-  background-color: var(--body-bg-color);
+.modal-header-text {
+  text-align: center;
+  margin: 3rem 0 2rem 0;
+  font-size: 1.4rem;
 }
 
 .ion-list-reorder-counters {
@@ -1195,7 +1197,7 @@ input[type="number"] {
   padding: 0.1rem 0;
 }
 
-.individual-section-wrap section:not(:last-child) {
+.setting-bottom-border section:not(:last-child) {
   border-bottom: 1px solid var(--settings-page-borders);
 }
 

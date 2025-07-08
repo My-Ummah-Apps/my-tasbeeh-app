@@ -114,70 +114,29 @@ function CounterButton({
           (counter) => counter.isActive === 1
         );
 
-        console.log(
-          "currentCounterIndex: ",
-          currentCounterIndex,
-          "materialColors length: ",
-          materialColors.length
-        );
+        // const nextCounterId =
+        //   countersState[
+        //     currentCounterIndex < countersState.length - 1
+        //       ? currentCounterIndex + 1
+        //       : 0
+        //   ].id;
 
-        const nextCounterId =
-          countersState[
-            currentCounterIndex < countersState.length - 1
-              ? currentCounterIndex + 1
-              : 0
-          ].id;
-
-        let nextCounterColor: MaterialColor;
-        // let nextCounterColorIndex;
-
-        const isCountersMoreThanColors =
-          countersState.length > materialColors.length;
         const isLastCounter = currentCounterIndex === countersState.length - 1;
-
-        console.log("isCountersMoreThanColors: ", isCountersMoreThanColors);
-        console.log("isLastCounter: ", isLastCounter);
 
         if (isLastCounter) {
           setShowEndOfListAlert(true);
           return;
         }
 
-        if (isCountersMoreThanColors) {
-          console.log("isCountersMoreThanColors");
-          console.log("Active color is: ", activeColor);
-          console.log(
-            "Final color in materialColors Arr: ",
-            materialColors[materialColors.length - 1]
-          );
+        const nextCounterIndex = currentCounterIndex + 1;
+        const nextCounterId = countersState[nextCounterIndex].id;
 
-          if (activeColor === materialColors[materialColors.length - 1]) {
-            console.log("RESETTING TO 0");
-            nextCounterColorIndex.current = 0;
-          } else {
-            console.log(
-              "INCREMENTING BY ONE, BEFORE INCREMENT: ",
-              nextCounterColorIndex.current
-            );
-
-            nextCounterColorIndex.current += 1;
-            console.log(
-              "INCREMENTING BY ONE, AFTER INCREMENT: ",
-              nextCounterColorIndex.current
-            );
-          }
-        } else if (!isCountersMoreThanColors) {
-          console.log("!isCountersMoreThanColors, INCREMENTING BY ONE");
-          nextCounterColorIndex.current += currentCounterIndex + 1;
-        }
-
-        console.log(
-          "nextCounterColorIndex.current is: ",
-          nextCounterColorIndex.current
-        );
+        // Use modulo to ensure we stay within color bounds
+        nextCounterColorIndex.current =
+          (nextCounterColorIndex.current + 1) % materialColors.length;
+        const nextCounterColor = materialColors[nextCounterColorIndex.current];
 
         setShowNextCounterToast(true);
-        nextCounterColor = materialColors[nextCounterColorIndex.current];
 
         const delayActiveCounterUpdate = async () => {
           try {

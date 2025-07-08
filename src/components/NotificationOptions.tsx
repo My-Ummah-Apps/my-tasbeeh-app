@@ -35,7 +35,7 @@ const NotificationOptions = ({
 
   return (
     <section className="notification-options-wrap">
-      <h2 className="notifications-options-heading-text">Notifications</h2>
+      <h1 className="modal-header-text">Notifications</h1>
       <div className="individual-notification-option-wrap">
         <div className="individual-notification-text-wrap">
           <p>Morning</p>

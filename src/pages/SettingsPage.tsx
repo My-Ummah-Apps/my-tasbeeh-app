@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Capacitor } from "@capacitor/core";
 import { Dialog } from "@capacitor/dialog";
 import { motion } from "framer-motion";
@@ -64,7 +64,6 @@ const SettingsPage = ({
   setShowChangelogModal,
 }: SettingsageProps) => {
   const pageRef = useRef<HTMLDivElement>(null);
-  const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
   // const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
 
   // const modalRef = useRef(null);
@@ -143,14 +142,14 @@ const SettingsPage = ({
     if (userNotificationPermission === "denied") {
       showNotificationsAlert();
     } else if (checkPermission.display === "granted") {
-      setShowNotificationsSheet(true);
+      // setShowNotificationsSheet(true);
     } else if (
       checkPermission.display === "prompt" ||
       checkPermission.display === "prompt-with-rationale"
     ) {
       const requestPermission = await LocalNotifications.requestPermissions();
       if (requestPermission.display === "granted") {
-        setShowNotificationsSheet(true);
+        // setShowNotificationsSheet(true);
       }
     }
   }
@@ -326,26 +325,26 @@ const SettingsPage = ({
 
         </div>
 */}
-          {/* {Capacitor.isNativePlatform() && ( */}
-          <section className="individual-section-wrap">
-            <SettingIndividual
-              // indvidualStyles={"rounded-t-md"}
-              id="open-notifications-sheet"
-              headingText={"Notifications"}
-              subText={"Set Notifications"}
-              onClick={() => {
-                checkNotificationPermissions();
-              }}
-            />
-            <BottomSheetNotificationsOptions
-              triggerId="open-notifications-sheet"
-              updateUserPreference={updateUserPreference}
-              activeColor={activeColor}
-              activeCounter={activeCounter}
-              userPreferencesState={userPreferencesState}
-            />
-          </section>
-          {/* // )} */}
+          {Capacitor.isNativePlatform() && (
+            <section className="individual-section-wrap">
+              <SettingIndividual
+                // indvidualStyles={"rounded-t-md"}
+                id="open-notifications-sheet"
+                headingText={"Notifications"}
+                subText={"Set Notifications"}
+                onClick={() => {
+                  checkNotificationPermissions();
+                }}
+              />
+              <BottomSheetNotificationsOptions
+                triggerId="open-notifications-sheet"
+                updateUserPreference={updateUserPreference}
+                activeColor={activeColor}
+                activeCounter={activeCounter}
+                userPreferencesState={userPreferencesState}
+              />
+            </section>
+          )}
           <section className="individual-section-wrap theme-setting-wrap">
             <SettingIndividual
               id="open-theme-options-sheet"
@@ -421,7 +420,7 @@ const SettingsPage = ({
               ></IonToggle>
             </section>
           </section>
-          <section className="individual-section-wrap">
+          <section className="individual-section-wrap setting-bottom-border">
             <section className="individual-row-wrap p-3">
               <div className="text-wrap " style={{ display: "block" }}>
                 <p className="pt-[0.3rem] pb-[0.1rem]">Auto-Switch Tasbeeh</p>
@@ -510,6 +509,7 @@ const SettingsPage = ({
               />
             )}
             <SettingIndividual
+              id="open-changelog-modal"
               headingText={"Changelog"}
               subText={"View Changelog"}
               onClick={() => {
