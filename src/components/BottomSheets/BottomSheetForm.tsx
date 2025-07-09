@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { showAlert } from "../../utils/constants";
 import { counterObjType, MaterialColor } from "../../utils/types";
-import { IonInput, IonItem, IonModal } from "@ionic/react";
+import { IonModal, IonTextarea, IonItem, IonInput } from "@ionic/react";
 
 interface BottomSheetFormProps {
   activeColor: MaterialColor;
@@ -47,29 +47,11 @@ const BottomSheetForm = ({
     });
   }, [counterId]);
 
-  const increaseTextAreaHeight = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    if (counterNameField.current) {
-      counterNameField.current.style.height = `${e.target.scrollHeight}px`;
-    }
-  };
-
-  useEffect(() => {
-    if (counterNameField.current) {
-      // if (!counterId) {
-      // counterNameField.current.style.height = "1px";
-      // }
-      // console.log("scrollHeight: ", counterNameField.current.scrollHeight);
-      counterNameField.current.style.height = `${
-        counterNameField.current.scrollHeight + 0.5
-      }px`;
-    }
-  }, [showForm]);
-
   const closeFormCleanup = () => {
     setShowForm(false);
+    // setTimeout(() => {
     setInput({ name: "", count: 0, target: 0 });
+    // }, 500);
     setCounterId(null);
     setSubmitted(false);
   };
@@ -117,7 +99,7 @@ const BottomSheetForm = ({
       initialBreakpoint={0.95}
       breakpoints={[0, 0.95]}
       // handleBehavior="cycle"
-      onDidDismiss={() => {
+      onWillDismiss={() => {
         closeFormCleanup();
       }}
       // onWillDismiss={(event) => onWillDismiss(event)}
@@ -126,23 +108,28 @@ const BottomSheetForm = ({
         <h1 className="text-center mt-7 mb-5 text-lg">
           {counterId ? "Edit Tasbeeh" : "Add Tasbeeh"}
         </h1>
-
         <div className="form-wrap form-filled">
           <form id="form" onSubmit={submitCounter}>
-            <div className="form-filled-counter-name-input-wrap">
-              <p>Tasbeeh Name</p>
-              <textarea
-                ref={counterNameField}
+            <IonItem>
+              <IonTextarea
+                style={{
+                  "--border-color": activeColor,
+                  "--highlight-color-focused": activeColor,
+                }}
+                className="bg-stone-900 mb-5"
+                label="Tasbeeh Name"
+                labelPlacement="floating"
                 dir="auto"
-                className="form-textarea"
-                onChange={(e) => {
-                  setInput((prev) => ({ ...prev, name: e.target.value }));
-                  increaseTextAreaHeight(e);
+                autoGrow={true}
+                onIonInput={(e) => {
+                  const textAreaInputVal = e.detail.value ? e.detail.value : "";
+                  setInput((prev) => ({ ...prev, name: textAreaInputVal }));
                 }}
                 value={input.name}
                 required
-              />
-              <p
+              ></IonTextarea>
+            </IonItem>
+            {/* <p
                 style={{
                   color: "red",
                   visibility:
@@ -153,96 +140,68 @@ const BottomSheetForm = ({
               >
                 Please enter a name
               </p>
-            </div>
-            <div className="flex gap-3 mx-5">
+            </div>  */}
+
+            <div className="flex">
               {counterId && (
-                <IonItem className="form-ion-item">
+                <IonItem>
                   <IonInput
-                    className=""
-                    pattern="[0-9]*"
+                    className="form-ion-input"
+                    maxlength={5}
                     label="Count"
                     labelPlacement="floating"
-                    maxlength={5}
-                    required={true}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    required
                     onIonInput={(e) => {
-                      const inputVal = e.detail.value || "";
-                      if (inputVal === "") return;
-                      if (/[^0-9]+/.test(inputVal)) return;
+                      const countFieldInputVal = e.detail.value || "";
+                      if (countFieldInputVal === "") return;
+                      if (/[^0-9]+/.test(countFieldInputVal)) return;
                       setInput((prev) => ({
                         ...prev,
-                        count: Number(inputVal),
+                        count: Number(countFieldInputVal),
                       }));
                     }}
+                    value={String(input.count)}
                   ></IonInput>
                 </IonItem>
-                // <div className="current-count-input-wrap">
-                //   <p>Count</p>
-                //   <input
-                //     className="form-input"
-                //  onChange={(e) => {
-                //                       if (/[^0-9]+/.test(e.target.value)) return;
-                //                       setInput((prev) => ({
-                //                         ...prev,
-                //                         count: Number(e.target.value),
-                //                       }));
-                //                     }}
-                //     value={input.count}
-                //     inputMode="numeric"
-                //     pattern="[0-9]*"
-                //     required
-                //   />
-
-                // </div>
               )}
-
-              <IonItem className="form-ion-item">
-                <IonInput
-                  className=""
-                  pattern="[0-9]*"
-                  label="Target"
-                  labelPlacement="floating"
-                  maxlength={5}
-                  required={true}
-                  onIonInput={(e) => {
-                    const inputVal = e.detail.value || "";
-                    if (inputVal === "") return;
-                    if (/[^0-9]+/.test(inputVal)) return;
-                    setInput((prev) => ({
-                      ...prev,
-                      count: Number(inputVal),
-                    }));
-                  }}
-                ></IonInput>
-              </IonItem>
-              {/* <div className="target-input-wrap">
-                <p>Target</p>
-                <input
-                  onChange={(e) => {
-                    if (/[^0-9]+/.test(e.target.value)) return;
-                    setInput((prev) => ({
-                      ...prev,
-                      target: Number(e.target.value),
-                    }));
-                  }}
-                  className="form-input"
-                  maxLength={5}
-                  value={input.target}
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  required
-                />
+              <div>
+                <IonItem>
+                  <IonInput
+                    className="form-ion-input"
+                    fill="outline"
+                    maxlength={5}
+                    label="Target"
+                    labelPlacement="floating"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    errorText="Target must be above 0"
+                    required
+                    onIonInput={(e) => {
+                      const targetFieldInputVal = (e.detail.value || "").trim();
+                      if (targetFieldInputVal === "") return;
+                      if (/[^0-9]+/.test(targetFieldInputVal)) return;
+                      setInput((prev) => ({
+                        ...prev,
+                        target: Number(targetFieldInputVal),
+                      }));
+                    }}
+                    value={String(input.target)}
+                  />
+                </IonItem>
                 <p
+                  className="block"
                   style={{
                     color: "red",
-                    visibility:
-                      input.target < 1 && submitted ? "visible" : "hidden",
+                    visibility: input.target < 1 ? "visible" : "hidden",
                   }}
                 >
                   Target must be above 0
                 </p>
-              </div> */}
+              </div>
             </div>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center mt-10">
               <button
                 form="form"
                 className="block w-1/3"
@@ -253,6 +212,7 @@ const BottomSheetForm = ({
               <button
                 onClick={() => {
                   closeFormCleanup();
+                  setShowForm(false);
                 }}
                 className="block w-1/3"
                 style={{ backgroundColor: "transparent" }}

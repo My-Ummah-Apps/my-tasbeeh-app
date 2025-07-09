@@ -139,13 +139,19 @@ ion-item-options {
 
 ion-item {
   --border-style: none;
+  /* 
   --padding-start: 0;
   --padding-end: 0;
   --inner-padding-end: 0;
-  --inner-padding-start: 0;
+  --inner-padding-start: 0; */
   color: var(--text-color);
-  width: 95%;
+  /* width: 95%; */
+  /* width: 50% !important; */
   margin-inline: auto;
+}
+
+.form-ion-input {
+  /* width: 20% !important; */
 }
 
 ion-item-option {
@@ -816,10 +822,19 @@ input[type="number"] {
 }
 
 .form-wrap button {
-  padding: 0.7rem !important;
-  width: 40%;
-  margin: 0.5rem 0;
-  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  padding: 1rem !important;
+  width: 60%;
+  margin-bottom: 0.5rem;
+  border-radius: 0.8rem;
+}
+
+.form-wrap button:first-of-type {
+  color: white;
+}
+
+.form-wrap button:nth-of-type(2) {
+  color: var(--text-color);
 }
 
 .theme-options-wrap,
@@ -950,7 +965,7 @@ input[type="number"] {
 .form-filled-dhikr-name-and-reset-icon-wrap p,
 .form-filled-counter-name-input-wrap p {
   text-align: center;
-  margin: 0.3rem 0 1rem 0;
+  margin-bottom: 0.5rem;
 }
 
 .react-modal-sheet-container {
