@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { showAlert } from "../../utils/constants";
 import { counterObjType, MaterialColor } from "../../utils/types";
 import { IonModal, IonTextarea, IonItem, IonInput } from "@ionic/react";
@@ -30,28 +30,12 @@ const BottomSheetForm = ({
   setShowForm,
   showForm,
 }: BottomSheetFormProps) => {
-  const counterNameField = useRef<HTMLTextAreaElement | null>(null);
   const [submitted, setSubmitted] = useState(false);
+
   const [input, setInput] = useState({ name: "", count: 0, target: 0 });
-
-  useEffect(() => {
-    const clickedCounter = countersState.find(
-      (counter) => counter.id === counterId
-    );
-    const isEditingCounter = !!clickedCounter;
-
-    setInput({
-      name: isEditingCounter ? clickedCounter.name : "",
-      count: isEditingCounter ? clickedCounter.count : 0,
-      target: isEditingCounter ? clickedCounter.target : 0,
-    });
-  }, [counterId]);
 
   const closeFormCleanup = () => {
     setShowForm(false);
-    // setTimeout(() => {
-    setInput({ name: "", count: 0, target: 0 });
-    // }, 500);
     setCounterId(null);
     setSubmitted(false);
   };
@@ -99,10 +83,21 @@ const BottomSheetForm = ({
       initialBreakpoint={0.95}
       breakpoints={[0, 0.95]}
       // handleBehavior="cycle"
+      onWillPresent={() => {
+        const clickedCounter = countersState.find(
+          (counter) => counter.id === counterId
+        );
+        const isEditingCounter = !!clickedCounter;
+
+        setInput({
+          name: isEditingCounter ? clickedCounter.name : "",
+          count: isEditingCounter ? clickedCounter.count : 0,
+          target: isEditingCounter ? clickedCounter.target : 0,
+        });
+      }}
       onWillDismiss={() => {
         closeFormCleanup();
       }}
-      // onWillDismiss={(event) => onWillDismiss(event)}
     >
       <section className="form-wrap form-blank">
         <h1 className="text-center mt-7 mb-5 text-lg">
@@ -126,21 +121,17 @@ const BottomSheetForm = ({
                   setInput((prev) => ({ ...prev, name: textAreaInputVal }));
                 }}
                 value={input.name}
-                required
               ></IonTextarea>
             </IonItem>
-            {/* <p
-                style={{
-                  color: "red",
-                  visibility:
-                    input.name.trim() === "" && submitted
-                      ? "visible"
-                      : "hidden",
-                }}
-              >
-                Please enter a name
-              </p>
-            </div>  */}
+            <p
+              style={{
+                color: "red",
+                visibility:
+                  input.name.trim() === "" && submitted ? "visible" : "hidden",
+              }}
+            >
+              Please enter a name
+            </p>
 
             <div className="flex">
               {counterId && (
@@ -176,7 +167,6 @@ const BottomSheetForm = ({
                     labelPlacement="floating"
                     inputMode="numeric"
                     pattern="[0-9]*"
-                    errorText="Target must be above 0"
                     required
                     onIonInput={(e) => {
                       const targetFieldInputVal = (e.detail.value || "").trim();
@@ -194,7 +184,8 @@ const BottomSheetForm = ({
                   className="block"
                   style={{
                     color: "red",
-                    visibility: input.target < 1 ? "visible" : "hidden",
+                    visibility:
+                      input.target < 1 && submitted ? "visible" : "hidden",
                   }}
                 >
                   Target must be above 0
@@ -211,7 +202,7 @@ const BottomSheetForm = ({
               </button>
               <button
                 onClick={() => {
-                  closeFormCleanup();
+                  // closeFormCleanup();
                   setShowForm(false);
                 }}
                 className="block w-1/3"
