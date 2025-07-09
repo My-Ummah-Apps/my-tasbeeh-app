@@ -99,19 +99,19 @@ const BottomSheetForm = ({
         closeFormCleanup();
       }}
     >
-      <section className="form-wrap form-blank">
+      <section className="form-wrap">
         <h1 className="text-center mt-7 mb-5 text-lg">
           {counterId ? "Edit Tasbeeh" : "Add Tasbeeh"}
         </h1>
-        <div className="form-wrap form-filled">
+        <div className="form-wrap">
           <form id="form" onSubmit={submitCounter}>
-            <IonItem>
+            <IonItem lines="inset">
               <IonTextarea
-                style={{
-                  "--border-color": activeColor,
-                  "--highlight-color-focused": activeColor,
-                }}
-                className="bg-stone-900 mb-5"
+                className="form-textarea"
+                // style={{
+                //   "--border-color": activeColor,
+                //   "--highlight-color-focused": activeColor,
+                // }}
                 label="Tasbeeh Name"
                 labelPlacement="floating"
                 dir="auto"
