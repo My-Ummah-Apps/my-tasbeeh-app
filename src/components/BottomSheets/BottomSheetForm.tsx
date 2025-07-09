@@ -103,7 +103,7 @@ const BottomSheetForm = ({
         <h1 className="text-center mt-7 mb-5 text-lg">
           {counterId ? "Edit Tasbeeh" : "Add Tasbeeh"}
         </h1>
-        <div className="form-wrap">
+        <section className="form-wrap">
           <form id="form" onSubmit={submitCounter}>
             <IonItem lines="inset">
               <IonTextarea
@@ -124,6 +124,7 @@ const BottomSheetForm = ({
               ></IonTextarea>
             </IonItem>
             <p
+              className="text-xs text-center mb-2"
               style={{
                 color: "red",
                 visibility:
@@ -133,7 +134,7 @@ const BottomSheetForm = ({
               Please enter a name
             </p>
 
-            <div className="flex">
+            <div className={`flex gap-4 ${!counterId ? "justify-center" : ""}`}>
               {counterId && (
                 <IonItem>
                   <IonInput
@@ -160,7 +161,7 @@ const BottomSheetForm = ({
               <div>
                 <IonItem>
                   <IonInput
-                    className="form-ion-input"
+                    className={`form-ion-input`}
                     fill="outline"
                     maxlength={5}
                     label="Target"
@@ -181,7 +182,7 @@ const BottomSheetForm = ({
                   />
                 </IonItem>
                 <p
-                  className="block"
+                  className="block text-xs text-center"
                   style={{
                     color: "red",
                     visibility:
@@ -192,7 +193,7 @@ const BottomSheetForm = ({
                 </p>
               </div>
             </div>
-            <div className="flex flex-col items-center mt-10">
+            <div className="flex flex-col items-center mt-2">
               <button
                 form="form"
                 className="block w-1/3"
@@ -212,7 +213,7 @@ const BottomSheetForm = ({
               </button>
             </div>
           </form>
-        </div>
+        </section>
       </section>
     </IonModal>
   );
