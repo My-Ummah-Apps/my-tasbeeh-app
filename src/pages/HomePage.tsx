@@ -1,6 +1,6 @@
 import ActiveCounter from "../components/ActiveCounter";
 import CounterButton from "../components/CounterButton";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 // import { pageTransitionStyles } from "../utils/constants";
 import {
   counterObjType,
@@ -99,7 +99,7 @@ const HomePage = ({
   }
 
   return (
-    <motion.main
+    <section
       // {...pageTransitionStyles}
       className="main-page-wrap"
     >
@@ -108,6 +108,7 @@ const HomePage = ({
       <header className="home-page-header">
         <p>Home</p>
       </header>
+      {/* <motion.section {...pageTransitionStyles}> */}
       <ActiveCounter
         activeColor={activeColor}
         activeCounter={activeCounter}
@@ -160,7 +161,8 @@ const HomePage = ({
         buttons={["GOT IT"]}
         backdropDismiss={false}
       />
-    </motion.main>
+      {/* </motion.section> */}
+    </section>
   );
 };
 

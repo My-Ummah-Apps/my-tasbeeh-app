@@ -29,7 +29,7 @@ const BottomSheetThemeOptions = ({
       // handleBehavior="cycle"
       // onWillDismiss={(event) => onWillDismiss(event)}
     >
-      <section className="mb-10 ">
+      <section className="theme-sheet-content-wrap pb-10">
         <h1 className="modal-header-text">Themes</h1>
         <ul className="my-5 notification-ul-wrap">
           {/* // TODO: May need to add aria-pressed to each button */}

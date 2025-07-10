@@ -72,11 +72,7 @@ const BottomSheetReorderCounters = ({
           <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
             {countersState.map((counterItem: counterObjType) => {
               return (
-                <IonItem
-                  key={counterItem.id}
-                  mode="ios"
-                  className="text-white py-1"
-                >
+                <IonItem key={counterItem.id} mode="ios" className="text-white">
                   <IonLabel>{counterItem.name}</IonLabel>
                   <IonReorder slot="end"></IonReorder>
                 </IonItem>

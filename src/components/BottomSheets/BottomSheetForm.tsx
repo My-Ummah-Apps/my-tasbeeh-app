@@ -98,7 +98,7 @@ const BottomSheetForm = ({
         closeFormCleanup();
       }}
     >
-      <section className="form-wrap">
+      <section>
         <h1 className="text-center mt-7 mb-5 text-lg">
           {counterId ? "Edit Tasbeeh" : "Add Tasbeeh"}
         </h1>
