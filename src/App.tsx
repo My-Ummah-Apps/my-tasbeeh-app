@@ -120,6 +120,8 @@ function App() {
   const [showAllResetToast, setShowAllResetToast] = useState(false);
   const [userPreferencesState, setUserPreferencesState] =
     useState<userPreferencesType>(dictPreferencesDefaultValues);
+  const [showAddSuccessToast, setShowAddSuccessToast] = useState(false);
+  const [showEditSuccessToast, setShowEditSuccessToast] = useState(false);
 
   const clearLocalStorage = () => {
     localStorage.removeItem("localSavedCountersArray");
@@ -622,8 +624,8 @@ function App() {
         isActive: 0,
       };
       const updatedCountersArr = [...countersState, newCounter];
-
       updateCountersState(updatedCountersArr);
+      setShowAddSuccessToast(true);
     } catch (error) {
       console.error("Failed to add counter: ", error);
     } finally {
@@ -670,6 +672,7 @@ function App() {
     });
 
     updateCountersState(updatedCountersArr);
+    setShowEditSuccessToast(true);
   };
 
   const deleteCounter = async (id: number) => {
@@ -829,6 +832,10 @@ function App() {
                     deleteCounter={deleteCounter}
                     setShowDeleteToast={setShowDeleteToast}
                     showDeleteToast={showDeleteToast}
+                    setShowAddSuccessToast={setShowAddSuccessToast}
+                    showAddSuccessToast={showAddSuccessToast}
+                    setShowEditSuccessToast={setShowEditSuccessToast}
+                    showEditSuccessToast={showEditSuccessToast}
                   />
                 }
               />

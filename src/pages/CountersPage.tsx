@@ -38,6 +38,10 @@ interface CountersPageProps {
   deleteCounter: (id: number) => Promise<void>;
   setShowDeleteToast: React.Dispatch<React.SetStateAction<boolean>>;
   showDeleteToast: boolean;
+  setShowAddSuccessToast: React.Dispatch<React.SetStateAction<boolean>>;
+  showAddSuccessToast: boolean;
+  setShowEditSuccessToast: React.Dispatch<React.SetStateAction<boolean>>;
+  showEditSuccessToast: boolean;
 }
 
 function CountersPage({
@@ -57,6 +61,10 @@ function CountersPage({
   deleteCounter,
   setShowDeleteToast,
   showDeleteToast,
+  setShowAddSuccessToast,
+  showAddSuccessToast,
+  setShowEditSuccessToast,
+  showEditSuccessToast,
 }: CountersPageProps) {
   const [showForm, setShowForm] = useState(false);
   const [showResetToast, setShowResetToast] = useState(false);
@@ -219,12 +227,16 @@ function CountersPage({
         message="Tasbeeh deleted"
         setShow={setShowDeleteToast}
       />
-
-      {/* <IonBackdrop
-        visible={true}
-        tappable={true}
-        // onClick={onDismiss}
-      /> */}
+      <Toast
+        isOpen={showEditSuccessToast}
+        message="Tasbeeh edited successfully"
+        setShow={setShowEditSuccessToast}
+      />
+      <Toast
+        isOpen={showAddSuccessToast}
+        message="Tasbeeh added successfully"
+        setShow={setShowAddSuccessToast}
+      />
 
       {showSwipeHint && (
         <>
