@@ -31,10 +31,10 @@ const BottomSheetForm = ({
   showForm,
 }: BottomSheetFormProps) => {
   const [submitted, setSubmitted] = useState(false);
-
-  const [input, setInput] = useState({ name: "", count: 0, target: 0 });
+  const [input, setInput] = useState({ name: "", count: "", target: "" });
 
   const closeFormCleanup = () => {
+    console.log("FORM IS BEING CLEANED UP");
     setShowForm(false);
     setCounterId(null);
     setSubmitted(false);
@@ -47,8 +47,10 @@ const BottomSheetForm = ({
     setSubmitted(true);
 
     const inputName = input.name.trim();
+    const inputCount = Number(input.count);
+    const inputTarget = Number(input.target);
 
-    if (inputName === "" || input.count < 0 || input.target < 1) {
+    if (inputName === "" || inputCount < 0 || inputTarget < 1) {
       return;
     }
 
@@ -67,8 +69,8 @@ const BottomSheetForm = ({
     }
 
     counterId
-      ? await modifyCounter(counterId, inputName, input.count, input.target)
-      : await addCounter(inputName, Number(input.target));
+      ? await modifyCounter(counterId, inputName, inputCount, inputTarget)
+      : await addCounter(inputName, inputTarget);
 
     closeFormCleanup();
   };
@@ -77,12 +79,8 @@ const BottomSheetForm = ({
     <IonModal
       mode="ios"
       isOpen={showForm}
-      // ref={ref}
-      // trigger={triggerId}
-      // className="modal-fit-content"
-      initialBreakpoint={0.95}
-      breakpoints={[0, 0.95]}
-      // handleBehavior="cycle"
+      initialBreakpoint={0.97}
+      breakpoints={[0, 0.97]}
       onWillPresent={() => {
         const clickedCounter = countersState.find(
           (counter) => counter.id === counterId
@@ -91,11 +89,12 @@ const BottomSheetForm = ({
 
         setInput({
           name: isEditingCounter ? clickedCounter.name : "",
-          count: isEditingCounter ? clickedCounter.count : 0,
-          target: isEditingCounter ? clickedCounter.target : 0,
+          count: isEditingCounter ? String(clickedCounter.count) : "",
+          target: isEditingCounter ? String(clickedCounter.target) : "",
         });
       }}
       onWillDismiss={() => {
+        console.log("onWillDismiss has run");
         closeFormCleanup();
       }}
     >
@@ -133,7 +132,6 @@ const BottomSheetForm = ({
             >
               Please enter a name
             </p>
-
             <div className={`flex gap-4 ${!counterId ? "justify-center" : ""}`}>
               {counterId && (
                 <IonItem>
@@ -146,15 +144,15 @@ const BottomSheetForm = ({
                     pattern="[0-9]*"
                     required
                     onIonInput={(e) => {
-                      const countFieldInputVal = e.detail.value || "";
-                      if (countFieldInputVal === "") return;
-                      if (/[^0-9]+/.test(countFieldInputVal)) return;
+                      const countFieldInputVal = (e.detail.value || "").trim();
+                      // if (countFieldInputVal === "") return;
+                      // if (/[^0-9]+/.test(countFieldInputVal)) return;
                       setInput((prev) => ({
                         ...prev,
-                        count: Number(countFieldInputVal),
+                        count: countFieldInputVal,
                       }));
                     }}
-                    value={String(input.count)}
+                    value={input.count}
                   ></IonInput>
                 </IonItem>
               )}
@@ -171,14 +169,14 @@ const BottomSheetForm = ({
                     required
                     onIonInput={(e) => {
                       const targetFieldInputVal = (e.detail.value || "").trim();
-                      if (targetFieldInputVal === "") return;
-                      if (/[^0-9]+/.test(targetFieldInputVal)) return;
                       setInput((prev) => ({
                         ...prev,
-                        target: Number(targetFieldInputVal),
+                        target: targetFieldInputVal,
                       }));
+                      // if (targetFieldInputVal === "") return;
+                      // if (/[^0-9]+/.test(targetFieldInputVal)) return;
                     }}
-                    value={String(input.target)}
+                    value={input.target}
                   />
                 </IonItem>
                 <p
@@ -186,7 +184,9 @@ const BottomSheetForm = ({
                   style={{
                     color: "red",
                     visibility:
-                      input.target < 1 && submitted ? "visible" : "hidden",
+                      Number(input.target) < 1 && submitted
+                        ? "visible"
+                        : "hidden",
                   }}
                 >
                   Target must be above 0
@@ -202,6 +202,7 @@ const BottomSheetForm = ({
                 Save
               </button>
               <button
+                type="button"
                 onClick={() => {
                   // closeFormCleanup();
                   setShowForm(false);
