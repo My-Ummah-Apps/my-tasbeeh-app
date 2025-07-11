@@ -61,8 +61,8 @@ const BottomSheetReorderCounters = ({
       // ref={ref}
       trigger={triggerId}
       // className="modal-fit-content"
-      initialBreakpoint={0.95}
-      breakpoints={[0, 0.95]}
+      initialBreakpoint={0.97}
+      breakpoints={[0, 0.97]}
       // handleBehavior="cycle"
       // onWillDismiss={(event) => onWillDismiss(event)}
     >
@@ -73,7 +73,9 @@ const BottomSheetReorderCounters = ({
             {countersState.map((counterItem: counterObjType) => {
               return (
                 <IonItem key={counterItem.id} mode="ios" className="text-white">
-                  <IonLabel>{counterItem.name}</IonLabel>
+                  <IonLabel className="whitespace-nowrap overflow-hidden text-ellipsis">
+                    {counterItem.name}
+                  </IonLabel>
                   <IonReorder slot="end"></IonReorder>
                 </IonItem>
               );

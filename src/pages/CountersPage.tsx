@@ -97,7 +97,7 @@ function CountersPage({
     >
       <header className="counters-page-header flex justify-between items-center">
         <MdOutlineRestartAlt id="open-reset-all-counters-action-sheet" />
-        <p>Tasbeehs</p>
+        <h1>Tasbeehs</h1>
         <MdAdd
           onClick={() => {
             setCounterId(null);

@@ -41,7 +41,7 @@ const CountersListItem = ({
 
   return (
     <IonItemSliding disabled={false} ref={slidingRef}>
-      <IonItem mode="ios">
+      <IonItem className="ion-item-counters-page" mode="ios">
         <div
           className="single-counter-wrap"
           style={{

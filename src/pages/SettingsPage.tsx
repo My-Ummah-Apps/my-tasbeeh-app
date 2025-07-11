@@ -224,13 +224,13 @@ const SettingsPage = ({
 
   return (
     <section ref={pageRef}>
+      <header className="settings-page-header">
+        <h1>Settings</h1>
+      </header>
       <motion.main
         // {...pageTransitionStyles}
         className="settings-page-wrap"
       >
-        <header className="settings-page-header">
-          <p>Settings</p>
-        </header>
         <div className="settings-page-options-and-info-wrap">
           {/* <div className="individual-section-wrap">
           <div
@@ -465,7 +465,7 @@ const SettingsPage = ({
             updateCountersState={updateCountersState}
           />
 
-          <div className="individual-section-wrap">
+          <section className="individual-section-wrap setting-bottom-border">
             {Capacitor.getPlatform() === "android" && (
               <SettingIndividual
                 // indvidualStyles={"rounded-t-md"}
@@ -554,14 +554,14 @@ const SettingsPage = ({
               id="open-about-us-modal"
               headingText={"About"}
               subText={"About us"}
-              // indvidualStyles={"rounded-b-md"}
+              indvidualStyles={"rounded-b-md border-0"}
               // onClick={() => setShowAboutUsSheet(true)}
             />
             <BottomSheetAboutUs
               // modalRef={modalRef}
               triggerId="open-about-us-modal"
             />
-          </div>
+          </section>
         </div>
       </motion.main>
     </section>

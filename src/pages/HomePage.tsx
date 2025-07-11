@@ -106,7 +106,7 @@ const HomePage = ({
       {isNextCounterLoading && <Overlay />}
 
       <header className="home-page-header">
-        <p>Home</p>
+        <h1>Home</h1>
       </header>
       {/* <motion.section {...pageTransitionStyles}> */}
       <ActiveCounter
