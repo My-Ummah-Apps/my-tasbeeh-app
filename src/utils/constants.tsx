@@ -2,7 +2,7 @@ import { Dialog } from "@capacitor/dialog";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { counterObjType, userPreferencesType } from "./types";
-import { EasingDefinition } from "framer-motion";
+// import { EasingDefinition } from "framer-motion";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
 import { Capacitor } from "@capacitor/core";
 
@@ -136,11 +136,6 @@ export const bottomSheetContainerStyles = {
 
 export const sheetBackdropColor = {
   backgroundColor: "rgba(0, 0, 0, 0.7)",
-};
-
-export const tween_config = {
-  ease: "easeInOut" as EasingDefinition,
-  duration: 0.5,
 };
 
 // type ToastOptions = Parameters<typeof Toast.show>[0];

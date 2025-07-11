@@ -246,50 +246,28 @@ ion-list.ion-list-reorder-counters ion-item {
   --border-style: none;
 }
 
-.sheet-changelog {
-  background-color: var(--body-bg-color);
-  overflow: scroll;
-}
-
-.changelog-content-wrap {
-  margin: 1rem 1.5rem 0 1.5rem;
-}
-
-.sheet-changelog > h1 {
-  /* font-weight: 500; */
-  font-size: 2rem;
-  margin: 2rem 2rem 1rem 2rem;
-}
-
 .sheet-changelog:last-child {
   margin-bottom: 6rem;
 }
 
 .changelog-individual-change-wrap {
-  margin: 1rem 0;
-  padding: 1rem;
-  border: 1px solid var(--border-form);
-  border-radius: 1rem;
+  /* border: 1px solid var(--border-form); */
+  border-bottom: 1px solid var(--border-form);
 }
 
-.changelog-individual-change-wrap > h2 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
+.ion-content-changelog-wrap p,
+h1,
+h2 {
+  color: var(--text-color);
+}
+
+.ion-content-changelog-wrap:last-child {
+  /* padding-bottom: 30rem !important; */
 }
 
 .sheet-changelog-close-btn {
-  font-size: 1rem;
-  position: fixed;
-  bottom: 7%;
-  left: 50%;
-  transform: translate(-50%, 50%);
-  border: none;
-  border-radius: 1rem;
-  background-color: #5c6bc0;
-  color: #fff;
-  width: 90%;
   padding: 1.5rem;
+  border-radius: 0.7rem;
 }
 
 .counter-type-wrap {

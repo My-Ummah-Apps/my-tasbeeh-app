@@ -6,7 +6,6 @@ import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
-import { Sheet } from "react-modal-sheet";
 
 import {
   assertValidDBResult,
@@ -16,14 +15,13 @@ import {
   setStatusAndNavBarBGColor,
   showAlert,
   todaysDate,
-  tween_config,
 } from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
 import NavBar from "./components/NavBar";
 import HomePage from "./pages/HomePage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
-import { changeLogs, LATEST_APP_VERSION } from "./utils/changelog";
+import { LATEST_APP_VERSION } from "./utils/changelog";
 import {
   counterObjType,
   languageDirection,
@@ -39,6 +37,7 @@ import { AnimatePresence } from "framer-motion";
 import useSQLiteDB from "./utils/useSqliteDB";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
 import { IonApp } from "@ionic/react";
+import BottomSheetChangelog from "./components/BottomSheets/BottomSheetChangelog";
 
 function App() {
   const {
@@ -48,7 +47,8 @@ function App() {
     toggleDBConnection,
   } = useSQLiteDB();
 
-  const [showChangelogModal, setShowChangelogModal] = useState(false);
+  const [showChangelogBottomSheet, setShowChangelogBottomSheet] =
+    useState(false);
   // const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [activeCounter, setActiveCounter] = useState<counterObjType>({
     id: -1,
@@ -541,7 +541,7 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("appVersion") !== LATEST_APP_VERSION) {
-      // setShowChangelogModal(true);
+      // setShowChangelogBottomSheet(true);
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
   }, []);
@@ -790,7 +790,7 @@ function App() {
                     activeCounter={activeCounter}
                     closeSlidingItems={closeSlidingItems}
                     theme={theme}
-                    setShowChangelogModal={setShowChangelogModal}
+                    setShowChangelogBottomSheet={setShowChangelogBottomSheet}
                   />
                 }
               />
@@ -844,50 +844,10 @@ function App() {
           <NavBar activeColor={activeColor} />
         </section>
       </BrowserRouter>
-      <Sheet
-        disableDrag
-        isOpen={showChangelogModal}
-        onClose={() => setShowChangelogModal(false)}
-        detent="full-height"
-        tweenConfig={tween_config}
-      >
-        <Sheet.Container>
-          {/* <Sheet.Header /> */}
-          <Sheet.Content className="sheet-changelog">
-            <h1>Whats new?</h1>
-            {changeLogs.map((item, i) => (
-              <section key={i} className="changelog-content-wrap">
-                {/* <p>v{item.versionNum}</p> */}
-                <p>
-                  {item.versionNum === LATEST_APP_VERSION
-                    ? `v${item.versionNum} - Latest Version`
-                    : `v${item.versionNum}`}
-                </p>
-                {item.changes.map((item) => (
-                  <section
-                    key={item.heading}
-                    className="changelog-individual-change-wrap"
-                  >
-                    <h2>{item.heading}</h2>
-                    <p>{item.text}</p>
-                  </section>
-                ))}
-              </section>
-            ))}
-            <button
-              onClick={() => setShowChangelogModal(false)}
-              className="sheet-changelog-close-btn"
-            >
-              Close
-            </button>
-            {/* <SheetCloseBtn closeModalState={setShowChangelogModal} /> */}
-          </Sheet.Content>
-        </Sheet.Container>
-        <Sheet.Backdrop
-          // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
-          onTap={() => setShowChangelogModal(false)}
-        />
-      </Sheet>
+      <BottomSheetChangelog
+        showChangelogBottomSheet={showChangelogBottomSheet}
+        setShowChangelogBottomSheet={setShowChangelogBottomSheet}
+      />
       {/* </section> */}
     </IonApp>
   );

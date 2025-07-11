@@ -47,7 +47,7 @@ interface SettingsageProps {
   countersState: counterObjType[];
   closeSlidingItems: () => void;
   theme: themeType | null;
-  setShowChangelogModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowChangelogBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SettingsPage = ({
@@ -61,7 +61,7 @@ const SettingsPage = ({
   activeCounter,
   countersState,
   theme,
-  setShowChangelogModal,
+  setShowChangelogBottomSheet,
 }: SettingsageProps) => {
   const pageRef = useRef<HTMLDivElement>(null);
   // const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
@@ -513,7 +513,7 @@ const SettingsPage = ({
               headingText={"Changelog"}
               subText={"View Changelog"}
               onClick={() => {
-                setShowChangelogModal(true);
+                setShowChangelogBottomSheet(true);
               }}
             />
             <SettingIndividual
