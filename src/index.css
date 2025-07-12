@@ -53,7 +53,7 @@
   --border-header-and-nav: none;
   --border-form: #d5d5d5;
   --form-wrap-bg-color: #f4f4f4;
-  --form-input-bg-color: #e9e9e9d5;
+  --form-input-bg-color: rgba(197, 197, 197, 0.5);
   --form-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.6);
   --settings-page-box-shadow: 0 0px 5px 0 rgba(132, 132, 132, 0.2);
 }
@@ -62,7 +62,7 @@
 
 body.dark {
   /* Dark mode variables go here */
-  --body-bg-color: #242424;
+  --body-bg-color: rgb(36, 36, 36);
   --ion-background-color: var(--body-bg-color);
   --background: var(--body-bg-color);
   --nav-bg-color: #212121;
@@ -80,7 +80,7 @@ body.dark {
   --border-header-and-nav: none;
   /* --form-wrap-bg-color: #2f2f2f; */
   --form-wrap-bg-color: #272727;
-  --form-input-bg-color: #3e3e3e;
+  --form-input-bg-color: rgb(42, 42, 42);
   --form-box-shadow: none;
   --settings-page-box-shadow: none;
 }
@@ -139,8 +139,8 @@ ion-item-options {
 
 ion-item {
   --border-style: none;
-  --padding-start: 0.4rem;
-  --inner-padding-end: 0.4rem;
+  --padding-start: 0.6rem;
+  --inner-padding-end: 0.6rem;
   color: var(--text-color);
   margin-inline: auto;
 }
@@ -262,7 +262,7 @@ h2 {
 }
 
 .ion-content-changelog-wrap:last-child {
-  /* padding-bottom: 30rem !important; */
+  padding-bottom: 30rem !important;
 }
 
 .sheet-changelog-close-btn {
@@ -505,7 +505,7 @@ textarea:focus {
 
 input[type="text"],
 input[type="number"] {
-  padding: 1rem;
+  /* padding: 1rem; */
   /* background: var(--form-input-bg-color); */
 }
 
@@ -515,9 +515,16 @@ input[type="number"] {
   margin-inline: auto;
 }
 
-.form-textarea {
+.form-textarea,
+.form-input {
   max-height: 200px !important;
+  border-bottom: 1px solid var(--border-form) !important;
 }
+/* 
+ion-textarea {
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+} */
 
 .form-wrap button {
   font-size: 1.1rem;
@@ -632,7 +639,7 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type="number"] {
-  -moz-appearance: textfield;
+  /* -moz-appearance: textfield; */
 }
 
 /* SETTINGS PAGE */

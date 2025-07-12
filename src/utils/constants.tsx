@@ -2,7 +2,6 @@ import { Dialog } from "@capacitor/dialog";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { counterObjType, userPreferencesType } from "./types";
-// import { EasingDefinition } from "framer-motion";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
 import { Capacitor } from "@capacitor/core";
 

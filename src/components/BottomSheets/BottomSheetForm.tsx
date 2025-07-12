@@ -105,10 +105,10 @@ const BottomSheetForm = ({
         <section className="form-wrap">
           <form id="form" onSubmit={submitCounter}>
             <IonItem
-              lines="inset"
+              // lines="inset"
               style={{
-                "--highlight-color-focused": activeColor,
-                "--highlight-color": activeColor,
+                "--highlight-color-focused": "#ffffff",
+                "--highlight-color": "#ffffff",
               }}
             >
               <IonTextarea
@@ -138,7 +138,7 @@ const BottomSheetForm = ({
               {counterId && (
                 <IonItem>
                   <IonInput
-                    className="form-ion-input"
+                    className="form-input"
                     maxlength={5}
                     label="Count"
                     labelPlacement="floating"
@@ -148,7 +148,6 @@ const BottomSheetForm = ({
                     onIonInput={(e) => {
                       const countFieldInputVal = (e.detail.value || "").trim();
                       // if (/[^0-9]+/.test(countFieldInputVal)) return;
-
                       setInput((prev) => ({
                         ...prev,
                         count: countFieldInputVal,
@@ -161,8 +160,7 @@ const BottomSheetForm = ({
               <div>
                 <IonItem>
                   <IonInput
-                    className={`form-ion-input`}
-                    fill="outline"
+                    className="form-input"
                     maxlength={5}
                     label="Target"
                     labelPlacement="floating"

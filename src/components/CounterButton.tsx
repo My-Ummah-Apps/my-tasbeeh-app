@@ -131,9 +131,8 @@ function CounterButton({
         const nextCounterIndex = currentCounterIndex + 1;
         const nextCounterId = countersState[nextCounterIndex].id;
 
-        // Use modulo to ensure we stay within color bounds
         nextCounterColorIndex.current =
-          (nextCounterColorIndex.current + 1) % materialColors.length;
+          (currentCounterIndex + 1) % materialColors.length;
         const nextCounterColor = materialColors[nextCounterColorIndex.current];
 
         setShowNextCounterToast(true);
