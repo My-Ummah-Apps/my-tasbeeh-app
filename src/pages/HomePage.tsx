@@ -99,14 +99,14 @@ const HomePage = ({
   }
 
   return (
-    <>
+    <section className="home-page-wrap">
       {isNextCounterLoading && <Overlay />}
       <header className="home-page-header">
         <h1>Home</h1>
       </header>
 
       <motion.main
-        className="main-page-wrap"
+        className="home-page-content-wrap"
         //  {...pageTransitionStyles}
       >
         <ActiveCounter
@@ -162,7 +162,7 @@ const HomePage = ({
           backdropDismiss={false}
         />
       </motion.main>
-    </>
+    </section>
   );
 };
 

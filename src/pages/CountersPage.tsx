@@ -91,7 +91,7 @@ function CountersPage({
   }, [location.pathname]);
 
   return (
-    <>
+    <section className="counters-page-wrap">
       <header className="counters-page-header flex justify-between items-center">
         <MdOutlineRestartAlt id="open-reset-all-counters-action-sheet" />
         <h1>Tasbeehs</h1>
@@ -103,15 +103,15 @@ function CountersPage({
         />
       </header>
       <motion.main
-        className="counters-page-wrap"
+        className="counters-page-content-wrap"
         //  {...pageTransitionStyles}
       >
         <ActionSheet
           trigger="open-reset-all-counters-action-sheet"
-          header="Are you sure you want to reset all Tasbeehs?"
+          header="Are you sure you want to reset all Tasbeehs to 0?"
           buttons={[
             {
-              text: "Reset All Tasbeehs",
+              text: "Reset All Tasbeehs to 0",
               role: "destructive",
               handler: async () => {
                 await resetAllCounters();
@@ -268,7 +268,7 @@ function CountersPage({
           </>
         )}
       </motion.main>
-    </>
+    </section>
   );
 }
 

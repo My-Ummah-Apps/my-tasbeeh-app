@@ -189,13 +189,13 @@ const SettingsPage = ({
   };
 
   return (
-    <>
+    <section className="settings-page-wrap">
       <header className="settings-page-header">
         <h1>Settings</h1>
       </header>
       <motion.main
         // {...pageTransitionStyles}
-        className="settings-page-wrap"
+        className="settings-page-content-wrap"
       >
         <div className="settings-page-options-and-info-wrap">
           {/* <div className="individual-section-wrap">
@@ -530,7 +530,7 @@ const SettingsPage = ({
           </section>
         </div>
       </motion.main>
-    </>
+    </section>
   );
 };
 

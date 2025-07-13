@@ -130,7 +130,15 @@ body {
 
 .app {
   max-width: 700px;
+
   /* overflow: hidden; */
+}
+
+.settings-page-wrap,
+.counters-page-wrap,
+.home-page-wrap {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 ion-item-options {
@@ -420,8 +428,8 @@ textarea:focus {
   /* outline: 1px solid #cecece; */
 }
 
-.settings-page-wrap,
-.counters-page-wrap {
+.settings-page-content-wrap,
+.counters-page-content-wrap {
   /* height: 95vh; */
   height: 100vh;
 }
@@ -652,13 +660,11 @@ input[type="number"] {
   /* -moz-appearance: textfield; */
 }
 
-/* SETTINGS PAGE */
-
-.settings-page-wrap,
-.counters-page-wrap,
-.main-page-wrap {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
+.settings-page-content-wrap,
+.counters-page-content-wrap,
+.home-page-content-wrap {
+  /* padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left); */
   overflow-x: hidden;
   padding-bottom: 20vh;
 }

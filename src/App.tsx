@@ -46,7 +46,7 @@ function App() {
   const [showChangelogBottomSheet, setShowChangelogBottomSheet] =
     useState(false);
   const [showMajorUpdateBottomSheet, setShowMajorUpdateBottomSheet] =
-    useState(true);
+    useState(false);
   // const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [activeCounter, setActiveCounter] = useState<counterObjType>({
     id: -1,
@@ -540,6 +540,7 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("appVersion") !== LATEST_APP_VERSION) {
       // setShowChangelogBottomSheet(true);
+      setShowMajorUpdateBottomSheet(true);
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
   }, []);
@@ -846,10 +847,11 @@ function App() {
         showChangelogBottomSheet={showChangelogBottomSheet}
         setShowChangelogBottomSheet={setShowChangelogBottomSheet}
       />
-      <BottomSheetMajorUpdate
-        setShowMajorUpdateBottomSheet={setShowMajorUpdateBottomSheet}
-        showMajorUpdateBottomSheet={showMajorUpdateBottomSheet}
-      />
+      {showMajorUpdateBottomSheet && (
+        <BottomSheetMajorUpdate
+          setShowMajorUpdateBottomSheet={setShowMajorUpdateBottomSheet}
+        />
+      )}
       {/* </section> */}
     </IonApp>
   );

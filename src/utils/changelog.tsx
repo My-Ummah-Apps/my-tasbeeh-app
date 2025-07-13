@@ -1,8 +1,45 @@
-export const LATEST_APP_VERSION = "2.7";
+export const LATEST_APP_VERSION = "2.8";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "Auto Tasbeeh Switch",
+        text: (
+          <>
+            <strong>New</strong>: Enable this from the settings page to make
+            your dhikr seamless — once a tasbeeh hits its target, the app will
+            automatically move on to the next one in your tasbeeh list. You can
+            also re-order your list from the settings page to control which
+            tasbeeh comes next.
+          </>
+        ),
+      },
+      {
+        heading: "Performance Improvements",
+        text: (
+          <>
+            <strong>Improved</strong>: Bottom sheets are now smoother and more
+            responsive.
+          </>
+        ),
+      },
+      {
+        heading: "UX Enhancements",
+        text: (
+          <>
+            <strong>Change</strong>: The reset-all-tasbeeh option has been moved
+            from the settings page to the tasbeeh page, so it's now right where
+            your tasbeehs are managed, other small improvements have also been
+            made.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "2.7",
     changes: [
       {
         heading: "Minor bug fixes",

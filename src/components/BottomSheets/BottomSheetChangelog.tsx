@@ -37,17 +37,15 @@ const BottomSheetChangelog = ({
                 key={item.heading}
                 className="changelog-individual-change-wrap my-4 p-4"
               >
-                <h2 className="text-[1.2rem] font-medium mb-2">
-                  {item.heading}
-                </h2>
-                <p>{item.text}</p>
+                <h2 className="font-medium mb-2 text-lg">{item.heading}</h2>
+                <p className="text-sm">{item.text}</p>
               </section>
             ))}
           </section>
         ))}
         <button
           onClick={() => setShowChangelogBottomSheet(false)}
-          className="sheet-changelog-close-btn text-base fixed bottom-[8%] left-1/2 -translate-x-1/2 translate-y-1/2 border-none bg-[#5c6bc0] text-white w-[90%] p-6"
+          className="sheet-changelog-close-btn text-base fixed bottom-[10%] left-1/2 -translate-x-1/2 translate-y-1/2 border-none bg-[#5c6bc0] text-white w-[90%] p-6"
         >
           Close
         </button>
