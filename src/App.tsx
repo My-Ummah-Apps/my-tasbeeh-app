@@ -38,17 +38,15 @@ import useSQLiteDB from "./utils/useSqliteDB";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
 import { IonApp } from "@ionic/react";
 import BottomSheetChangelog from "./components/BottomSheets/BottomSheetChangelog";
+import BottomSheetMajorUpdate from "./components/BottomSheets/BottomSheetMajorUpdate";
 
 function App() {
-  const {
-    isDBInitialised,
-    // sqliteConnection,
-    dbConnection,
-    toggleDBConnection,
-  } = useSQLiteDB();
+  const { isDBInitialised, dbConnection, toggleDBConnection } = useSQLiteDB();
 
   const [showChangelogBottomSheet, setShowChangelogBottomSheet] =
     useState(false);
+  const [showMajorUpdateBottomSheet, setShowMajorUpdateBottomSheet] =
+    useState(true);
   // const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [activeCounter, setActiveCounter] = useState<counterObjType>({
     id: -1,
@@ -847,6 +845,10 @@ function App() {
       <BottomSheetChangelog
         showChangelogBottomSheet={showChangelogBottomSheet}
         setShowChangelogBottomSheet={setShowChangelogBottomSheet}
+      />
+      <BottomSheetMajorUpdate
+        setShowMajorUpdateBottomSheet={setShowMajorUpdateBottomSheet}
+        showMajorUpdateBottomSheet={showMajorUpdateBottomSheet}
       />
       {/* </section> */}
     </IonApp>

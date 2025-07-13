@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { Capacitor } from "@capacitor/core";
 import { Dialog } from "@capacitor/dialog";
 import { motion } from "framer-motion";
@@ -33,6 +32,7 @@ import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetTheme
 import { IonToggle } from "@ionic/react";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import BottomSheetReorderCounters from "../components/BottomSheets/BottomSheetReorderCounters";
+
 interface SettingsageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
@@ -63,40 +63,6 @@ const SettingsPage = ({
   theme,
   setShowChangelogBottomSheet,
 }: SettingsageProps) => {
-  const pageRef = useRef<HTMLDivElement>(null);
-  // const [showAboutUsSheet, setShowAboutUsSheet] = useState(false);
-
-  // const modalRef = useRef(null);
-
-  // useEffect(() => {
-  //   const modalEl = modalRef.current;
-  //   const pageEl = pageRef.current;
-  //   if (!modalEl || !pageEl) return;
-
-  //   const onPresent = () => {
-  //     disableBodyScroll(pageEl);
-  //   };
-
-  //   const onDismiss = () => {
-  //     enableBodyScroll(pageEl);
-  //   };
-  //   // @ts-ignore
-  //   modalEl.addEventListener("ionModalDidPresent", onPresent);
-  //   // @ts-ignore
-
-  //   modalEl.addEventListener("ionModalDidDismiss", onDismiss);
-
-  //   return () => {
-  //     // @ts-ignore
-
-  //     modalEl.removeEventListener("ionModalDidPresent", onPresent);
-  //     // @ts-ignore
-
-  //     modalEl.removeEventListener("ionModalDidDismiss", onDismiss);
-  //     enableBodyScroll(pageEl); // failsafe
-  //   };
-  // }, []);
-
   // const isAndroid = Capacitor.getPlatform() === "android";
 
   // const hexToRgb = (hex: string) => {
@@ -223,7 +189,7 @@ const SettingsPage = ({
   };
 
   return (
-    <section ref={pageRef}>
+    <>
       <header className="settings-page-header">
         <h1>Settings</h1>
       </header>
@@ -564,7 +530,7 @@ const SettingsPage = ({
           </section>
         </div>
       </motion.main>
-    </section>
+    </>
   );
 };
 

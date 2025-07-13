@@ -58,7 +58,7 @@ function CounterButton({
   updateCountersState,
 }: CounterButtonProps) {
   const buttonRef = useRef(null);
-  let nextCounterColorIndex = useRef(0);
+
   // const hapticInterval = useRef<number | null>(null);
 
   // const controls = useAnimation();
@@ -114,13 +114,6 @@ function CounterButton({
           (counter) => counter.isActive === 1
         );
 
-        // const nextCounterId =
-        //   countersState[
-        //     currentCounterIndex < countersState.length - 1
-        //       ? currentCounterIndex + 1
-        //       : 0
-        //   ].id;
-
         const isLastCounter = currentCounterIndex === countersState.length - 1;
 
         if (isLastCounter) {
@@ -130,10 +123,8 @@ function CounterButton({
 
         const nextCounterIndex = currentCounterIndex + 1;
         const nextCounterId = countersState[nextCounterIndex].id;
-
-        nextCounterColorIndex.current =
-          (currentCounterIndex + 1) % materialColors.length;
-        const nextCounterColor = materialColors[nextCounterColorIndex.current];
+        const nextCounterColor =
+          materialColors[nextCounterIndex % materialColors.length];
 
         setShowNextCounterToast(true);
 

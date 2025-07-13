@@ -212,6 +212,10 @@ ion-toast::part(button) {
   /* font-size: 1rem; */
 }
 
+ion-modal::part(backdrop) {
+  background-color: rgba(0, 0, 0, 1) !important;
+}
+
 body.dark ion-alert {
   --ion-text-color: #fff !important;
   --background: var(--body-bg-color);
@@ -515,16 +519,22 @@ input[type="number"] {
   margin-inline: auto;
 }
 
+.form-textarea {
+  max-height: 250px !important;
+}
+
 .form-textarea,
 .form-input {
-  max-height: 200px !important;
-  border-bottom: 1px solid var(--border-form) !important;
+  /* border-bottom: 1px solid var(--border-form) !important; */
+  /* --border-style: 1px solid var(--border-form) !important; */
 }
-/* 
-ion-textarea {
-  --padding-top: 0px;
-  --padding-bottom: 0px;
-} */
+
+ion-input .native-input,
+ion-textarea .native-textarea {
+  border: none;
+  border-bottom: 1px solid #ccc !important;
+  padding-bottom: 4px;
+}
 
 .form-wrap button {
   font-size: 1.1rem;

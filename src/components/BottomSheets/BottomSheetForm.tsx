@@ -112,6 +112,9 @@ const BottomSheetForm = ({
               }}
             >
               <IonTextarea
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onTouchEnd={(e) => e.stopPropagation()}
                 className="form-textarea"
                 label="Tasbeeh Name"
                 labelPlacement="floating"
