@@ -87,6 +87,8 @@ function CountersPage({
       setShowResetToast(false);
       setShowDeleteToast(false);
       setShowAllResetToast(false);
+      setShowAddSuccessToast(false);
+      setShowEditSuccessToast(false);
     };
   }, [location.pathname]);
 
@@ -111,7 +113,7 @@ function CountersPage({
           header="Are you sure you want to reset all Tasbeehs to 0?"
           buttons={[
             {
-              text: "Reset All Tasbeehs to 0",
+              text: "Reset All Tasbeehs",
               role: "destructive",
               handler: async () => {
                 await resetAllCounters();
@@ -219,7 +221,7 @@ function CountersPage({
         />
         <Toast
           isOpen={showResetToast}
-          message="Tasbeeh reset"
+          message="Tasbeeh reset to 0"
           setShow={setShowResetToast}
         />
         <Toast

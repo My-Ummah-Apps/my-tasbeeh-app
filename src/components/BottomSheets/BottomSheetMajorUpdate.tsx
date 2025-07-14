@@ -18,15 +18,22 @@ const BottomSheetMajorUpdate = ({
         right: 0,
         bottom: 0,
         backgroundColor: "rgb(36, 36, 36)",
+        color: "#fff",
         zIndex: 9999,
         padding: 20,
         overflowY: "auto",
+        paddingTop: "calc(env(safe-area-inset-top) + 20px)",
+        paddingBottom: "calc(env(safe-area-inset-bottom) + 20px)",
+        paddingLeft: "calc(env(safe-area-inset-left) + 20px)",
+        paddingRight: "calc(env(safe-area-inset-right) + 20px)",
       }}
     >
-      <p className="bg-[#9332ed] p-2 rounded-2xl mb-4 inline-block text-sm">
+      <p className="bg-[#9332ed] p-2 rounded-2xl mt-4 mb-4 inline-block text-sm">
         MAJOR UPDATE
       </p>
-      <h1 className="text-3xl font-bold">Auto Tasbeeh Switch</h1>
+      <h1 style={{ color: "#fff" }} className="text-3xl font-bold">
+        Auto Tasbeeh Switch
+      </h1>
       <p className="mt-2 mb-6 text-sm">
         A new option to automatically switch tasbeehs when a target is reached
         has been added.

@@ -152,7 +152,7 @@ const HomePage = ({
             },
           ]}
           setShow={setShowNextCounterToast}
-          duration={nextCounterDelay - 250}
+          duration={nextCounterDelay - 500}
         />
         <IonAlert
           isOpen={showEndOfListAlert}

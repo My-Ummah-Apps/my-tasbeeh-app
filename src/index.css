@@ -430,8 +430,8 @@ textarea:focus {
 
 .settings-page-content-wrap,
 .counters-page-content-wrap {
-  /* height: 95vh; */
-  height: 100vh;
+  height: 90vh;
+  /* height: 100vh; */
 }
 
 /* SETTINGS PAGE */
@@ -533,15 +533,16 @@ input[type="number"] {
 
 .form-textarea,
 .form-input {
-  /* border-bottom: 1px solid var(--border-form) !important; */
+  border-bottom: 1px solid var(--border-form) !important;
   /* --border-style: 1px solid var(--border-form) !important; */
 }
 
-ion-input .native-input,
+ion-input .native-wrapper,
 ion-textarea .native-textarea {
-  border: none;
+  /* --border-style: 1px solid var(--border-form) !important; */
+  /* border: none;
   border-bottom: 1px solid #ccc !important;
-  padding-bottom: 4px;
+  padding-bottom: 4px; */
 }
 
 .form-wrap button {

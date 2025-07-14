@@ -354,7 +354,20 @@ function App() {
       let DBResultPreferences = await dbConnection.current!.query(
         `SELECT * FROM userPreferencesTable`
       );
+
       assertValidDBResult(DBResultPreferences, "DBResultPreferences");
+
+      const isExistingUser = DBResultPreferences.values.find(
+        (item) => item.preferenceName === "isExistingUser"
+      );
+
+      if (
+        localStorage.getItem("appVersion") !== LATEST_APP_VERSION &&
+        isExistingUser
+      ) {
+        // setShowChangelogBottomSheet(true);
+        setShowMajorUpdateBottomSheet(true);
+      }
 
       if (DBResultPreferences.values.length === 0) {
         await initialiseDefaultPrefsAndCounters();
@@ -401,6 +414,7 @@ function App() {
       await updateUserPreference("previousLaunchDate", todaysDate);
       await initialiseAppUI(theme);
       await reviewPrompt();
+      localStorage.setItem("appVersion", LATEST_APP_VERSION);
     } catch (error) {
       console.error(error);
     }
@@ -537,13 +551,13 @@ function App() {
     handleTheme();
   }, [userPreferencesState.theme]);
 
-  useEffect(() => {
-    if (localStorage.getItem("appVersion") !== LATEST_APP_VERSION) {
-      // setShowChangelogBottomSheet(true);
-      setShowMajorUpdateBottomSheet(true);
-      localStorage.setItem("appVersion", LATEST_APP_VERSION);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("appVersion") !== LATEST_APP_VERSION) {
+  //     // setShowChangelogBottomSheet(true);
+  //     setShowMajorUpdateBottomSheet(true);
+  //     localStorage.setItem("appVersion", LATEST_APP_VERSION);
+  //   }
+  // }, []);
 
   if (Capacitor.getPlatform() === "ios") {
     Keyboard.setAccessoryBarVisible({ isVisible: true });
