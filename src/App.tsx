@@ -544,7 +544,6 @@ function App() {
 
   useEffect(() => {
     setActiveColor(userPreferencesState.activeColor);
-    console.log("Active color set: ", activeColor);
   }, [userPreferencesState.activeColor]);
 
   useEffect(() => {

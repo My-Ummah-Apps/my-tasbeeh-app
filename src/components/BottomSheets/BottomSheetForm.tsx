@@ -34,7 +34,6 @@ const BottomSheetForm = ({
   const [input, setInput] = useState({ name: "", count: "", target: "" });
 
   const closeFormCleanup = () => {
-    console.log("FORM IS BEING CLEANED UP");
     setShowForm(false);
     setCounterId(null);
     setSubmitted(false);

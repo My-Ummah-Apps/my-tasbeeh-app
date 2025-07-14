@@ -38,7 +38,6 @@ const BottomSheetThemeOptions = ({
               aria-pressed={theme === "light"}
               className="w-full text-left"
               onClick={async () => {
-                console.log("clicked");
                 if (theme !== "light") {
                   // if (Capacitor.isNativePlatform()) {
                   //   setStatusAndNavBarBGColor("#EDEDED", Style.Light);
@@ -55,8 +54,6 @@ const BottomSheetThemeOptions = ({
             <button
               aria-pressed={theme === "dark"}
               onClick={async () => {
-                console.log("clicked");
-
                 if (theme !== "dark") {
                   // if (Capacitor.isNativePlatform()) {
                   //   setStatusAndNavBarBGColor("#242424", Style.Dark);
