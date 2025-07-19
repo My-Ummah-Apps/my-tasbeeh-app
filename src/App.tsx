@@ -366,7 +366,7 @@ function App() {
         isExistingUser
       ) {
         // setShowChangelogBottomSheet(true);
-        setShowMajorUpdateBottomSheet(true);
+        // setShowMajorUpdateBottomSheet(true);
       }
 
       if (DBResultPreferences.values.length === 0) {
@@ -549,14 +549,6 @@ function App() {
   useEffect(() => {
     handleTheme();
   }, [userPreferencesState.theme]);
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("appVersion") !== LATEST_APP_VERSION) {
-  //     // setShowChangelogBottomSheet(true);
-  //     setShowMajorUpdateBottomSheet(true);
-  //     localStorage.setItem("appVersion", LATEST_APP_VERSION);
-  //   }
-  // }, []);
 
   if (Capacitor.getPlatform() === "ios") {
     Keyboard.setAccessoryBarVisible({ isVisible: true });

@@ -1,4 +1,4 @@
-export const LATEST_APP_VERSION = "2.8";
+export const LATEST_APP_VERSION = "2.9";
 
 export const changeLogs = [
   {
@@ -8,10 +8,25 @@ export const changeLogs = [
         heading: "Auto Tasbeeh Switch",
         text: (
           <>
-            <strong>New</strong>: Enable this from the settings page to make
-            your dhikr seamless — once a tasbeeh hits its target, the app will
-            automatically move on to the next one in your tasbeeh list. You can
-            also re-order your list from the settings page to control which
+            <strong>Fix</strong>: Resolved issue with reorder counter sheet
+            being dragged up/down while the content within it was being
+            scrolled.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "2.8",
+    changes: [
+      {
+        heading: "Auto Tasbeeh Switch",
+        text: (
+          <>
+            <strong>New Feature</strong>: Enable this from the settings page to
+            make your dhikr seamless — once a tasbeeh hits its target, the app
+            will automatically move on to the next one in your tasbeeh list. You
+            can also re-order your list from the settings page to control which
             tasbeeh comes next.
           </>
         ),
