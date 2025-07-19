@@ -236,6 +236,10 @@ body.dark ion-alert {
   font-size: 1.4rem;
 }
 
+ion-list.ion-list-reorder-counters {
+  margin-bottom: 1rem;
+}
+
 ion-list.ion-list-reorder-counters,
 ion-list.ion-list-reorder-counters ion-reorder-group,
 ion-list.ion-list-reorder-counters ion-item {

@@ -57,12 +57,11 @@ const BottomSheetReorderCounters = ({
   };
   return (
     <IonModal
+      style={{ "--height": "95vh" }}
       mode="ios"
-      // ref={ref}
       trigger={triggerId}
-      // className="modal-fit-content"
-      initialBreakpoint={0.97}
-      breakpoints={[0, 0.97]}
+      initialBreakpoint={1}
+      breakpoints={[0, 1]}
       // handleBehavior="cycle"
       // onWillDismiss={(event) => onWillDismiss(event)}
     >
