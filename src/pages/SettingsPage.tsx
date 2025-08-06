@@ -7,9 +7,16 @@ import {
   AndroidSettings,
   IOSSettings,
 } from "capacitor-native-settings";
-// @ts-ignore
 
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import {
+  IonPage,
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
+
+// import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 // import { Purchases } from "@awesome-cordova-plugins/purchases";
 // import { PURCHASE_TYPE } from "cordova-plugin-purchases";
@@ -189,16 +196,20 @@ const SettingsPage = ({
   };
 
   return (
-    <section className="settings-page-wrap">
-      <header className="settings-page-header">
-        <h1>Settings</h1>
-      </header>
-      <motion.main
-        // {...pageTransitionStyles}
-        className="settings-page-content-wrap"
-      >
-        <div className="settings-page-options-and-info-wrap">
-          {/* <div className="individual-section-wrap">
+    <IonPage>
+      <IonHeader className="ion-no-border">
+        <IonToolbar className="header-toolbar">
+          <IonTitle>Settings</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <section className="settings-page-wrap">
+          <motion.main
+            // {...pageTransitionStyles}
+            className="settings-page-content-wrap"
+          >
+            <div className="settings-page-options-and-info-wrap">
+              {/* <div className="individual-section-wrap">
           <div
             className="support-box-wrap"
             onClick={() => {
@@ -291,246 +302,256 @@ const SettingsPage = ({
 
         </div>
 */}
-          {Capacitor.isNativePlatform() && (
-            <section className="individual-section-wrap">
-              <SettingIndividual
-                // indvidualStyles={"rounded-t-md"}
-                id="open-notifications-sheet"
-                headingText={"Notifications"}
-                subText={"Set Notifications"}
-                onClick={() => {
-                  checkNotificationPermissions();
-                }}
-              />
-              <BottomSheetNotificationsOptions
-                triggerId="open-notifications-sheet"
-                updateUserPreference={updateUserPreference}
-                activeColor={activeColor}
-                activeCounter={activeCounter}
-                userPreferencesState={userPreferencesState}
-              />
-            </section>
-          )}
-          <section className="individual-section-wrap theme-setting-wrap">
-            <SettingIndividual
-              id="open-theme-options-sheet"
-              // indvidualStyles={"rounded-t-md"}
-              headingText={"Theme"}
-              subText={"Select Theme"}
-            />
-            <BottomSheetThemeOptions
-              triggerId="open-theme-options-sheet"
-              updateUserPreference={updateUserPreference}
-              theme={theme}
-            />
-          </section>
-          {Capacitor.isNativePlatform() && (
-            <section className="individual-section-wrap">
-              <div className="individual-row-wrap p-3">
-                <div className="text-wrap" style={{ display: "block" }}>
-                  <p className="pt-[0.3rem] pb-[0.1rem]">Haptic Vibration</p>
-                  <p className="pt-[0.3rem]  pb-[0.1rem] text-[0.8rem] font-light">
-                    Set vibration on every increment
-                  </p>
-                </div>
-                <IonToggle
-                  color={activeColor}
-                  mode="ios"
-                  style={{
-                    "--ion-color-base":
-                      userPreferencesState.haptics === 1 ? activeColor : "#ccc",
-                    // "--ion-color-contrast": "#fff",
-                    // ...(isAndroid ? androidToggleStyles : {}),
-                  }}
-                  checked={userPreferencesState.haptics === 1}
-                  onIonChange={async (e) => {
-                    const hapticsValue = e.detail.checked ? 1 : 0;
-                    await updateUserPreference("haptics", hapticsValue);
-                  }}
-                ></IonToggle>
-              </div>
-            </section>
-          )}
+              {Capacitor.isNativePlatform() && (
+                <section className="individual-section-wrap">
+                  <SettingIndividual
+                    // indvidualStyles={"rounded-t-md"}
+                    id="open-notifications-sheet"
+                    headingText={"Notifications"}
+                    subText={"Set Notifications"}
+                    onClick={() => {
+                      checkNotificationPermissions();
+                    }}
+                  />
+                  <BottomSheetNotificationsOptions
+                    triggerId="open-notifications-sheet"
+                    updateUserPreference={updateUserPreference}
+                    activeColor={activeColor}
+                    activeCounter={activeCounter}
+                    userPreferencesState={userPreferencesState}
+                  />
+                </section>
+              )}
+              <section className="individual-section-wrap theme-setting-wrap">
+                <SettingIndividual
+                  id="open-theme-options-sheet"
+                  // indvidualStyles={"rounded-t-md"}
+                  headingText={"Theme"}
+                  subText={"Select Theme"}
+                />
+                <BottomSheetThemeOptions
+                  triggerId="open-theme-options-sheet"
+                  updateUserPreference={updateUserPreference}
+                  theme={theme}
+                />
+              </section>
+              {Capacitor.isNativePlatform() && (
+                <section className="individual-section-wrap">
+                  <div className="individual-row-wrap p-3">
+                    <div className="text-wrap" style={{ display: "block" }}>
+                      <p className="pt-[0.3rem] pb-[0.1rem]">
+                        Haptic Vibration
+                      </p>
+                      <p className="pt-[0.3rem]  pb-[0.1rem] text-[0.8rem] font-light">
+                        Set vibration on every increment
+                      </p>
+                    </div>
+                    <IonToggle
+                      color={activeColor}
+                      mode="ios"
+                      style={{
+                        "--ion-color-base":
+                          userPreferencesState.haptics === 1
+                            ? activeColor
+                            : "#ccc",
+                        // "--ion-color-contrast": "#fff",
+                        // ...(isAndroid ? androidToggleStyles : {}),
+                      }}
+                      checked={userPreferencesState.haptics === 1}
+                      onIonChange={async (e) => {
+                        const hapticsValue = e.detail.checked ? 1 : 0;
+                        await updateUserPreference("haptics", hapticsValue);
+                      }}
+                    ></IonToggle>
+                  </div>
+                </section>
+              )}
 
-          <section className="individual-section-wrap">
-            <section className="individual-row-wrap p-3">
-              <div className="text-wrap " style={{ display: "block" }}>
-                <p className="pt-[0.3rem] pb-[0.1rem]">Daily Tasbeeh Reset</p>
-                <p className="pt-[0.3rem]  pb-[0.1rem] text-[0.8rem] font-light">
-                  All tasbeehs will be reset daily
-                </p>
-              </div>
-              <IonToggle
-                mode="ios"
-                color={activeColor}
-                style={{
-                  "--ion-color-base":
-                    userPreferencesState.dailyCounterReset === 1
-                      ? activeColor
-                      : "#ccc",
-                  // "--ion-color-contrast": "#fff",
-                  // ...(isAndroid ? androidToggleStyles : {}),
-                  // "--handle-background": activeColor,
-                  // "--handle-background-checked": activeColor,
-                  // "--background": "gray",
-                  // "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
-                }}
-                checked={userPreferencesState.dailyCounterReset === 1}
-                onIonChange={async (e) => {
-                  const dailyCounterResetValue = e.detail.checked ? 1 : 0;
-                  await updateUserPreference(
-                    "dailyCounterReset",
-                    dailyCounterResetValue
-                  );
-                }}
-              ></IonToggle>
-            </section>
-          </section>
-          <section className="individual-section-wrap setting-bottom-border">
-            <section className="individual-row-wrap p-3">
-              <div className="text-wrap " style={{ display: "block" }}>
-                <p className="pt-[0.3rem] pb-[0.1rem]">Auto-Switch Tasbeeh</p>
-                <p className="pt-[0.3rem] pb-[0.1rem] text-[0.8rem] font-light">
-                  Automatically switch to the next tasbeeh once the current
-                  tasbeeh reaches its target
-                </p>
-              </div>
-              <IonToggle
-                mode="ios"
-                color={activeColor}
-                style={{
-                  "--ion-color-base":
-                    userPreferencesState.autoSwitchCounter === 1
-                      ? activeColor
-                      : "#ccc",
-                  // "--ion-color-contrast": "#fff",
-                  // ...(isAndroid ? androidToggleStyles : {}),
-                }}
-                checked={userPreferencesState.autoSwitchCounter === 1}
-                onIonChange={async (e) => {
-                  const autoSwitchCounterValue = e.detail.checked ? 1 : 0;
-                  await updateUserPreference(
-                    "autoSwitchCounter",
-                    autoSwitchCounterValue
-                  );
-                }}
-              ></IonToggle>
-            </section>
-            <SettingIndividual
-              id="open-reorder-counters-modal"
-              headingText={"Re-order tasbeehs"}
-              subText={"Customise the sequence of your tasbeeh list"}
-            />
-          </section>
-          <BottomSheetReorderCounters
-            // modalRef={modalRef}
-            triggerId="open-reorder-counters-modal"
-            toggleDBConnection={toggleDBConnection}
-            dbConnection={dbConnection}
-            countersState={countersState}
-            updateCountersState={updateCountersState}
-          />
+              <section className="individual-section-wrap">
+                <section className="individual-row-wrap p-3">
+                  <div className="text-wrap " style={{ display: "block" }}>
+                    <p className="pt-[0.3rem] pb-[0.1rem]">
+                      Daily Tasbeeh Reset
+                    </p>
+                    <p className="pt-[0.3rem]  pb-[0.1rem] text-[0.8rem] font-light">
+                      All tasbeehs will be reset daily
+                    </p>
+                  </div>
+                  <IonToggle
+                    mode="ios"
+                    color={activeColor}
+                    style={{
+                      "--ion-color-base":
+                        userPreferencesState.dailyCounterReset === 1
+                          ? activeColor
+                          : "#ccc",
+                      // "--ion-color-contrast": "#fff",
+                      // ...(isAndroid ? androidToggleStyles : {}),
+                      // "--handle-background": activeColor,
+                      // "--handle-background-checked": activeColor,
+                      // "--background": "gray",
+                      // "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
+                    }}
+                    checked={userPreferencesState.dailyCounterReset === 1}
+                    onIonChange={async (e) => {
+                      const dailyCounterResetValue = e.detail.checked ? 1 : 0;
+                      await updateUserPreference(
+                        "dailyCounterReset",
+                        dailyCounterResetValue
+                      );
+                    }}
+                  ></IonToggle>
+                </section>
+              </section>
+              <section className="individual-section-wrap setting-bottom-border">
+                <section className="individual-row-wrap p-3">
+                  <div className="text-wrap " style={{ display: "block" }}>
+                    <p className="pt-[0.3rem] pb-[0.1rem]">
+                      Auto-Switch Tasbeeh
+                    </p>
+                    <p className="pt-[0.3rem] pb-[0.1rem] text-[0.8rem] font-light">
+                      Automatically switch to the next tasbeeh once the current
+                      tasbeeh reaches its target
+                    </p>
+                  </div>
+                  <IonToggle
+                    mode="ios"
+                    color={activeColor}
+                    style={{
+                      "--ion-color-base":
+                        userPreferencesState.autoSwitchCounter === 1
+                          ? activeColor
+                          : "#ccc",
+                      // "--ion-color-contrast": "#fff",
+                      // ...(isAndroid ? androidToggleStyles : {}),
+                    }}
+                    checked={userPreferencesState.autoSwitchCounter === 1}
+                    onIonChange={async (e) => {
+                      const autoSwitchCounterValue = e.detail.checked ? 1 : 0;
+                      await updateUserPreference(
+                        "autoSwitchCounter",
+                        autoSwitchCounterValue
+                      );
+                    }}
+                  ></IonToggle>
+                </section>
+                <SettingIndividual
+                  id="open-reorder-counters-modal"
+                  headingText={"Re-order tasbeehs"}
+                  subText={"Customise the sequence of your tasbeeh list"}
+                />
+              </section>
+              <BottomSheetReorderCounters
+                // modalRef={modalRef}
+                triggerId="open-reorder-counters-modal"
+                toggleDBConnection={toggleDBConnection}
+                dbConnection={dbConnection}
+                countersState={countersState}
+                updateCountersState={updateCountersState}
+              />
 
-          <section className="individual-section-wrap setting-bottom-border">
-            {Capacitor.getPlatform() === "android" && (
-              <SettingIndividual
-                // indvidualStyles={"rounded-t-md"}
-                headingText={"Review"}
-                subText={"Rate us on the Google Play Store"}
-                onClick={() => {
-                  link(
-                    "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
-                  );
-                }}
-              />
-            )}
-            {Capacitor.getPlatform() === "ios" && (
-              <SettingIndividual
-                // indvidualStyles={"rounded-t-md"}
-                headingText={"Review"}
-                subText={"Rate us on the App Store"}
-                onClick={() => {
-                  link(
-                    "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967"
-                  );
-                }}
-              />
-            )}
-            {Capacitor.isNativePlatform() && (
-              <SettingIndividual
-                // indvidualStyles={"rounded-t-md"}
-                headingText={"Share"}
-                subText={"Share application"}
-                onClick={() => {
-                  if (Capacitor.getPlatform() === "android") {
-                    shareThisAppLink(
-                      "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
+              <section className="individual-section-wrap setting-bottom-border">
+                {Capacitor.getPlatform() === "android" && (
+                  <SettingIndividual
+                    // indvidualStyles={"rounded-t-md"}
+                    headingText={"Review"}
+                    subText={"Rate us on the Google Play Store"}
+                    onClick={() => {
+                      link(
+                        "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
+                      );
+                    }}
+                  />
+                )}
+                {Capacitor.getPlatform() === "ios" && (
+                  <SettingIndividual
+                    // indvidualStyles={"rounded-t-md"}
+                    headingText={"Review"}
+                    subText={"Rate us on the App Store"}
+                    onClick={() => {
+                      link(
+                        "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967"
+                      );
+                    }}
+                  />
+                )}
+                {Capacitor.isNativePlatform() && (
+                  <SettingIndividual
+                    // indvidualStyles={"rounded-t-md"}
+                    headingText={"Share"}
+                    subText={"Share application"}
+                    onClick={() => {
+                      if (Capacitor.getPlatform() === "android") {
+                        shareThisAppLink(
+                          "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
+                        );
+                      } else if (Capacitor.getPlatform() === "ios") {
+                        shareThisAppLink(
+                          "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967"
+                        );
+                      }
+                    }}
+                  />
+                )}
+                <SettingIndividual
+                  id="open-changelog-modal"
+                  headingText={"Changelog"}
+                  subText={"View Changelog"}
+                  onClick={() => {
+                    setShowChangelogBottomSheet(true);
+                  }}
+                />
+                <SettingIndividual
+                  headingText={"Feedback"}
+                  subText={"Send us your feedback"}
+                  // indvidualStyles={"rounded-b-md"}
+                  onClick={() => {
+                    link(
+                      "mailto: contact@myummahapps.com?subject=My Tasbeeh App Feedback"
                     );
-                  } else if (Capacitor.getPlatform() === "ios") {
-                    shareThisAppLink(
-                      "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967"
+                  }}
+                />
+                <SettingIndividual
+                  headingText={"Website"}
+                  subText={"Visit our website"}
+                  // indvidualStyles={"rounded-b-md"}
+                  onClick={() => {
+                    link("https://myummahapps.com/");
+                  }}
+                />
+                <SettingIndividual
+                  headingText={"Privacy Policy"}
+                  subText={"View Privacy Policy"}
+                  onClick={() => {
+                    link(
+                      "https://sites.google.com/view/mytasbeehprivacypolicy/home"
                     );
-                  }
-                }}
-              />
-            )}
-            <SettingIndividual
-              id="open-changelog-modal"
-              headingText={"Changelog"}
-              subText={"View Changelog"}
-              onClick={() => {
-                setShowChangelogBottomSheet(true);
-              }}
-            />
-            <SettingIndividual
-              headingText={"Feedback"}
-              subText={"Send us your feedback"}
-              // indvidualStyles={"rounded-b-md"}
-              onClick={() => {
-                link(
-                  "mailto: contact@myummahapps.com?subject=My Tasbeeh App Feedback"
-                );
-              }}
-            />
-            <SettingIndividual
-              headingText={"Website"}
-              subText={"Visit our website"}
-              // indvidualStyles={"rounded-b-md"}
-              onClick={() => {
-                link("https://myummahapps.com/");
-              }}
-            />
-            <SettingIndividual
-              headingText={"Privacy Policy"}
-              subText={"View Privacy Policy"}
-              onClick={() => {
-                link(
-                  "https://sites.google.com/view/mytasbeehprivacypolicy/home"
-                );
-              }}
-            />
-            <SettingIndividual
-              headingText={"Source Code"}
-              subText={"View Source Code"}
-              onClick={() => {
-                link("https://github.com/My-Ummah-Apps/my-tasbeeh-app");
-              }}
-            />
-            <SettingIndividual
-              id="open-about-us-modal"
-              headingText={"About"}
-              subText={"About us"}
-              indvidualStyles={"rounded-b-md border-0"}
-              // onClick={() => setShowAboutUsSheet(true)}
-            />
-            <BottomSheetAboutUs
-              // modalRef={modalRef}
-              triggerId="open-about-us-modal"
-            />
-          </section>
-        </div>
-      </motion.main>
-    </section>
+                  }}
+                />
+                <SettingIndividual
+                  headingText={"Source Code"}
+                  subText={"View Source Code"}
+                  onClick={() => {
+                    link("https://github.com/My-Ummah-Apps/my-tasbeeh-app");
+                  }}
+                />
+                <SettingIndividual
+                  id="open-about-us-modal"
+                  headingText={"About"}
+                  subText={"About us"}
+                  indvidualStyles={"rounded-b-md border-0"}
+                  // onClick={() => setShowAboutUsSheet(true)}
+                />
+                <BottomSheetAboutUs
+                  // modalRef={modalRef}
+                  triggerId="open-about-us-modal"
+                />
+              </section>
+            </div>
+          </motion.main>
+        </section>
+      </IonContent>
+    </IonPage>
   );
 };
 

@@ -1,8 +1,19 @@
 import { useEffect, useState } from "react";
-import { IonList } from "@ionic/react";
+
 import slideToRevealImg from "/src/images/slide-to-reveal.png";
 
-import { MdAdd, MdOutlineRestartAlt } from "react-icons/md";
+import {
+  IonList,
+  IonPage,
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+} from "@ionic/react";
+
 import CountersListItem from "../components/CountersListItem";
 import { materialColors } from "../utils/constants";
 import { counterObjType, MaterialColor } from "../utils/types";
@@ -12,6 +23,8 @@ import Toast from "../components/Toast";
 import ActionSheet from "../components/ActionSheet";
 import { useLocation } from "react-router-dom";
 import Overlay from "../components/Overlay";
+import { MdAdd, MdOutlineRestartAlt } from "react-icons/md";
+import { add, refresh } from "ionicons/icons";
 
 interface CountersPageProps {
   updateActiveCounter: (
@@ -93,184 +106,208 @@ function CountersPage({
   }, [location.pathname]);
 
   return (
-    <section className="counters-page-wrap">
-      <header className="counters-page-header flex justify-between items-center">
-        <MdOutlineRestartAlt id="open-reset-all-counters-action-sheet" />
-        <h1>Tasbeehs</h1>
-        <MdAdd
-          onClick={() => {
-            setCounterId(null);
-            setShowForm(true);
-          }}
-        />
-      </header>
-      <motion.main
-        className="counters-page-content-wrap"
-        //  {...pageTransitionStyles}
-      >
-        <ActionSheet
-          trigger="open-reset-all-counters-action-sheet"
-          header="Are you sure you want to reset all Tasbeehs to 0?"
-          buttons={[
-            {
-              text: "Reset All Tasbeehs",
-              role: "destructive",
-              handler: async () => {
-                await resetAllCounters();
-              },
-            },
-            {
-              text: "Cancel",
-              role: "cancel",
-            },
-          ]}
-        />
-        <Toast
-          isOpen={showAllResetToast}
-          message="All Tasbeehs reset to 0"
-          setShow={setShowAllResetToast}
-        />
-
-        <IonList mode="ios" className="counters-wrap">
-          {countersState.map((counterItem: counterObjType, i) => {
-            let color = materialColors[i % materialColors.length];
-
-            return (
-              <CountersListItem
-                key={counterItem.id}
-                updateActiveCounter={updateActiveCounter}
-                setShowResetActionSheet={setShowResetActionSheet}
-                setShowDeleteActionSheet={setShowDeleteActionSheet}
-                setCounterId={setCounterId}
-                setShowForm={setShowForm}
-                color={color}
-                counterItem={counterItem}
-              />
-            );
-          })}
-        </IonList>
-        <BottomSheetForm
-          activeColor={activeColor}
-          countersState={countersState}
-          activeCounter={activeCounter}
-          setCounterId={setCounterId}
-          counterId={counterId}
-          setShowForm={setShowForm}
-          showForm={showForm}
-          modifyCounter={modifyCounter}
-          addCounter={addCounter}
-        />
-        <ActionSheet
-          setState={setShowResetActionSheet}
-          isOpen={showResetActionSheet}
-          header="Are you sure you want to reset this tasbeeh?"
-          buttons={[
-            {
-              text: "Reset Tasbeeh",
-              role: "destructive",
-              handler: async () => {
-                if (counterId == null) {
-                  console.error(
-                    "CounterId does not exist within Reset Tasbeeh ActionSheet Buttons"
-                  );
-                  return;
-                }
-
-                await resetSingleCounter(counterId);
-                closeSlidingItems();
-                setShowResetToast(true);
-                setCounterId(null);
-              },
-            },
-            {
-              text: "Cancel",
-              role: "cancel",
-              handler: async () => {
-                setCounterId(null);
-              },
-            },
-          ]}
-        />
-        <ActionSheet
-          setState={setShowDeleteActionSheet}
-          isOpen={showDeleteActionSheet}
-          header="Are you sure you want to delete this tasbeeh?"
-          buttons={[
-            {
-              text: "Delete Tasbeeh",
-              role: "destructive",
-              handler: async () => {
-                if (counterId == null) {
-                  console.error(
-                    "CounterId does not exist within Delete Tasbeeh ActionSheet Buttons"
-                  );
-                  return;
-                }
-                await deleteCounter(counterId);
-                setCounterId(null);
-              },
-            },
-            {
-              text: "Cancel",
-              role: "cancel",
-              handler: async () => {
-                setCounterId(null);
-              },
-            },
-          ]}
-        />
-        <Toast
-          isOpen={showResetToast}
-          message="Tasbeeh reset to 0"
-          setShow={setShowResetToast}
-        />
-        <Toast
-          isOpen={showDeleteToast}
-          message="Tasbeeh deleted"
-          setShow={setShowDeleteToast}
-        />
-        <Toast
-          isOpen={showEditSuccessToast}
-          message="Tasbeeh edited successfully"
-          setShow={setShowEditSuccessToast}
-        />
-        <Toast
-          isOpen={showAddSuccessToast}
-          message="Tasbeeh added successfully"
-          setShow={setShowAddSuccessToast}
-        />
-
-        {showSwipeHint && (
-          <>
-            <Overlay />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="slide-to-reveal-options-wrap fixed z-[10001] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-          text-center px-6 py-5 rounded-xl shadow-xl w-[90%]"
+    <IonPage>
+      <IonHeader className="ion-no-border">
+        <IonToolbar className="header-toolbar">
+          <IonTitle>Tasbeehs</IonTitle>
+          <IonButtons slot="secondary">
+            <IonButton
+              id="open-reset-all-counters-action-sheet"
+              style={{
+                "--padding-end": "12px",
+                "--ripple-color": "transparent",
+              }}
             >
-              <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
-              <h2 className="text-lg font-semibold mb-2">
-                {"Swipe to reveal"}
-              </h2>
-              <p className="text-base mb-5">
-                {"Swipe left on a tasbeeh to reveal more options"}
-              </p>
-              <p
-                className="pt-5 text-right"
-                onClick={() => {
-                  setShowSwipeHint(false);
-                }}
+              <IonIcon icon={refresh} />
+            </IonButton>
+          </IonButtons>
+          <IonButtons slot="primary">
+            <IonButton
+              onClick={() => {
+                setCounterId(null);
+                setShowForm(true);
+              }}
+              style={{
+                "--padding-end": "12px",
+                "--ripple-color": "transparent",
+              }}
+            >
+              {" "}
+              <IonIcon icon={add} />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <motion.main
+        // className="counters-page-content-wrap"
+        //  {...pageTransitionStyles}
+        >
+          <ActionSheet
+            trigger="open-reset-all-counters-action-sheet"
+            header="Are you sure you want to reset all Tasbeehs to 0?"
+            buttons={[
+              {
+                text: "Reset All Tasbeehs",
+                role: "destructive",
+                handler: async () => {
+                  await resetAllCounters();
+                },
+              },
+              {
+                text: "Cancel",
+                role: "cancel",
+              },
+            ]}
+          />
+          <Toast
+            isOpen={showAllResetToast}
+            message="All Tasbeehs reset to 0"
+            setShow={setShowAllResetToast}
+          />
+
+          <IonList mode="ios" className="counters-wrap">
+            {countersState.map((counterItem: counterObjType, i) => {
+              let color = materialColors[i % materialColors.length];
+
+              return (
+                <CountersListItem
+                  key={counterItem.id}
+                  updateActiveCounter={updateActiveCounter}
+                  setShowResetActionSheet={setShowResetActionSheet}
+                  setShowDeleteActionSheet={setShowDeleteActionSheet}
+                  setCounterId={setCounterId}
+                  setShowForm={setShowForm}
+                  color={color}
+                  counterItem={counterItem}
+                />
+              );
+            })}
+          </IonList>
+          <BottomSheetForm
+            activeColor={activeColor}
+            countersState={countersState}
+            activeCounter={activeCounter}
+            setCounterId={setCounterId}
+            counterId={counterId}
+            setShowForm={setShowForm}
+            showForm={showForm}
+            modifyCounter={modifyCounter}
+            addCounter={addCounter}
+          />
+          <ActionSheet
+            setState={setShowResetActionSheet}
+            isOpen={showResetActionSheet}
+            header="Are you sure you want to reset this tasbeeh?"
+            buttons={[
+              {
+                text: "Reset Tasbeeh",
+                role: "destructive",
+                handler: async () => {
+                  if (counterId == null) {
+                    console.error(
+                      "CounterId does not exist within Reset Tasbeeh ActionSheet Buttons"
+                    );
+                    return;
+                  }
+
+                  await resetSingleCounter(counterId);
+                  closeSlidingItems();
+                  setShowResetToast(true);
+                  setCounterId(null);
+                },
+              },
+              {
+                text: "Cancel",
+                role: "cancel",
+                handler: async () => {
+                  setCounterId(null);
+                },
+              },
+            ]}
+          />
+          <ActionSheet
+            setState={setShowDeleteActionSheet}
+            isOpen={showDeleteActionSheet}
+            header="Are you sure you want to delete this tasbeeh?"
+            buttons={[
+              {
+                text: "Delete Tasbeeh",
+                role: "destructive",
+                handler: async () => {
+                  if (counterId == null) {
+                    console.error(
+                      "CounterId does not exist within Delete Tasbeeh ActionSheet Buttons"
+                    );
+                    return;
+                  }
+                  await deleteCounter(counterId);
+                  setCounterId(null);
+                },
+              },
+              {
+                text: "Cancel",
+                role: "cancel",
+                handler: async () => {
+                  setCounterId(null);
+                },
+              },
+            ]}
+          />
+          <Toast
+            isOpen={showResetToast}
+            message="Tasbeeh reset to 0"
+            setShow={setShowResetToast}
+          />
+          <Toast
+            isOpen={showDeleteToast}
+            message="Tasbeeh deleted"
+            setShow={setShowDeleteToast}
+          />
+          <Toast
+            isOpen={showEditSuccessToast}
+            message="Tasbeeh edited successfully"
+            setShow={setShowEditSuccessToast}
+          />
+          <Toast
+            isOpen={showAddSuccessToast}
+            message="Tasbeeh added successfully"
+            setShow={setShowAddSuccessToast}
+          />
+
+          {showSwipeHint && (
+            <>
+              <Overlay />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="slide-to-reveal-options-wrap fixed z-[10001] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+          text-center px-6 py-5 rounded-xl shadow-xl w-[90%]"
               >
-                GOT IT
-              </p>
-            </motion.div>
-          </>
-        )}
-      </motion.main>
-    </section>
+                <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
+                <h2 className="text-lg font-semibold mb-2">
+                  {"Swipe to reveal"}
+                </h2>
+                <p className="text-base mb-5">
+                  {"Swipe left on a tasbeeh to reveal more options"}
+                </p>
+                <p
+                  className="pt-5 text-right"
+                  onClick={() => {
+                    setShowSwipeHint(false);
+                  }}
+                >
+                  GOT IT
+                </p>
+              </motion.div>
+            </>
+          )}
+        </motion.main>
+        {/* </section> */}
+      </IonContent>
+    </IonPage>
   );
 }
 

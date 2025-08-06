@@ -1,6 +1,18 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 // import { IonApp } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import {
+  IonApp,
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+} from "@ionic/react";
+
+import { homeOutline, listOutline, settingsOutline } from "ionicons/icons";
 
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
@@ -17,7 +29,6 @@ import {
   todaysDate,
 } from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
-import NavBar from "./components/NavBar";
 import HomePage from "./pages/HomePage";
 import CountersPage from "./pages/CountersPage";
 import SettingsPage from "./pages/SettingsPage";
@@ -33,10 +44,9 @@ import {
   BinaryValue,
 } from "./utils/types";
 
-import { AnimatePresence } from "framer-motion";
+// import { AnimatePresence } from "framer-motion";
 import useSQLiteDB from "./utils/useSqliteDB";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
-import { IonApp } from "@ionic/react";
 import BottomSheetChangelog from "./components/BottomSheets/BottomSheetChangelog";
 import BottomSheetMajorUpdate from "./components/BottomSheets/BottomSheetMajorUpdate";
 
@@ -773,91 +783,109 @@ function App() {
 
   return (
     <IonApp>
-      {/* <section> */}
-      <BrowserRouter>
-        <section className="App">
-          <AnimatePresence>
-            <Routes>
-              <Route
-                path="SettingsPage"
-                element={
-                  <SettingsPage
-                    dbConnection={dbConnection}
-                    toggleDBConnection={toggleDBConnection}
-                    // iapProducts={iapProducts}
-                    // setUserPreferencesState={setUserPreferencesState}
-                    userPreferencesState={userPreferencesState}
-                    updateUserPreference={updateUserPreference}
-                    updateCountersState={updateCountersState}
-                    countersState={countersState}
-                    activeColor={activeColor}
-                    activeCounter={activeCounter}
-                    closeSlidingItems={closeSlidingItems}
-                    theme={theme}
-                    setShowChangelogBottomSheet={setShowChangelogBottomSheet}
-                  />
-                }
-              />
-              <Route
-                index
-                element={
-                  <HomePage
-                    dbConnection={dbConnection}
-                    toggleDBConnection={toggleDBConnection}
-                    userPreferencesState={userPreferencesState}
-                    updateActiveCounter={updateActiveCounter}
-                    activeColor={activeColor}
-                    activeCounter={activeCounter}
-                    resetSingleCounter={resetSingleCounter}
-                    updateCountersState={updateCountersState}
-                    countersState={countersState}
-                    setLanguageDirection={setLanguageDirection}
-                    languageDirection={languageDirection}
-                  />
-                }
-              />
-              <Route
-                path="CountersPage"
-                element={
-                  <CountersPage
-                    updateActiveCounter={updateActiveCounter}
-                    activeColor={activeColor}
-                    setCounterId={setCounterId}
-                    counterId={counterId}
-                    activeCounter={activeCounter}
-                    countersState={countersState}
-                    closeSlidingItems={closeSlidingItems}
-                    modifyCounter={modifyCounter}
-                    resetSingleCounter={resetSingleCounter}
-                    resetAllCounters={resetAllCounters}
-                    showAllResetToast={showAllResetToast}
-                    setShowAllResetToast={setShowAllResetToast}
-                    addCounter={addCounter}
-                    deleteCounter={deleteCounter}
-                    setShowDeleteToast={setShowDeleteToast}
-                    showDeleteToast={showDeleteToast}
-                    setShowAddSuccessToast={setShowAddSuccessToast}
-                    showAddSuccessToast={showAddSuccessToast}
-                    setShowEditSuccessToast={setShowEditSuccessToast}
-                    showEditSuccessToast={showEditSuccessToast}
-                  />
-                }
-              />
-            </Routes>
-          </AnimatePresence>
-          <NavBar activeColor={activeColor} />
-        </section>
-      </BrowserRouter>
+      <IonReactRouter>
+        <IonTabs className="app">
+          <IonRouterOutlet
+          //  animated={false}
+          >
+            <Route
+              exact
+              path="/HomePage"
+              render={() => (
+                <HomePage
+                  dbConnection={dbConnection}
+                  toggleDBConnection={toggleDBConnection}
+                  userPreferencesState={userPreferencesState}
+                  updateActiveCounter={updateActiveCounter}
+                  activeColor={activeColor}
+                  activeCounter={activeCounter}
+                  resetSingleCounter={resetSingleCounter}
+                  updateCountersState={updateCountersState}
+                  countersState={countersState}
+                  setLanguageDirection={setLanguageDirection}
+                  languageDirection={languageDirection}
+                />
+              )}
+            />
+
+            <Route
+              exact
+              path="/CountersPage"
+              render={() => (
+                <CountersPage
+                  updateActiveCounter={updateActiveCounter}
+                  activeColor={activeColor}
+                  setCounterId={setCounterId}
+                  counterId={counterId}
+                  activeCounter={activeCounter}
+                  countersState={countersState}
+                  closeSlidingItems={closeSlidingItems}
+                  modifyCounter={modifyCounter}
+                  resetSingleCounter={resetSingleCounter}
+                  resetAllCounters={resetAllCounters}
+                  showAllResetToast={showAllResetToast}
+                  setShowAllResetToast={setShowAllResetToast}
+                  addCounter={addCounter}
+                  deleteCounter={deleteCounter}
+                  setShowDeleteToast={setShowDeleteToast}
+                  showDeleteToast={showDeleteToast}
+                  setShowAddSuccessToast={setShowAddSuccessToast}
+                  showAddSuccessToast={showAddSuccessToast}
+                  setShowEditSuccessToast={setShowEditSuccessToast}
+                  showEditSuccessToast={showEditSuccessToast}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/SettingsPage"
+              render={() => (
+                <SettingsPage
+                  dbConnection={dbConnection}
+                  toggleDBConnection={toggleDBConnection}
+                  // iapProducts={iapProducts}
+                  // setUserPreferencesState={setUserPreferencesState}
+                  userPreferencesState={userPreferencesState}
+                  updateUserPreference={updateUserPreference}
+                  updateCountersState={updateCountersState}
+                  countersState={countersState}
+                  activeColor={activeColor}
+                  activeCounter={activeCounter}
+                  closeSlidingItems={closeSlidingItems}
+                  theme={theme}
+                  setShowChangelogBottomSheet={setShowChangelogBottomSheet}
+                />
+              )}
+            />
+          </IonRouterOutlet>
+
+          <IonTabBar id="nav-bar" slot="bottom">
+            <IonTabButton tab="HomePage" href="/HomePage">
+              <IonIcon icon={homeOutline} />
+              <IonLabel>Home</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="CountersPage" href="/CountersPage">
+              <IonIcon icon={listOutline} />
+              <IonLabel>Tasbeehs</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="SettingsPage" href="/SettingsPage">
+              <IonIcon icon={settingsOutline} />
+              <IonLabel>Settings</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+        <Route exact path="/" render={() => <Redirect to="/HomePage" />} />
+      </IonReactRouter>
       <BottomSheetChangelog
         showChangelogBottomSheet={showChangelogBottomSheet}
         setShowChangelogBottomSheet={setShowChangelogBottomSheet}
       />
+      ;
       {showMajorUpdateBottomSheet && (
         <BottomSheetMajorUpdate
           setShowMajorUpdateBottomSheet={setShowMajorUpdateBottomSheet}
         />
       )}
-      {/* </section> */}
     </IonApp>
   );
 }

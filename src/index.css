@@ -246,6 +246,12 @@ ion-list.ion-list-reorder-counters ion-item {
   --background: var(--body-bg-color) !important;
 }
 
+ion-tab-bar {
+  --background: var(--body-bg-color);
+  /* --color: var(--nav-tab-color); */
+  /* --color-selected: var(--nav-active-tab-color); */
+}
+
 .modal-fit-content {
   --height: auto;
 }
@@ -308,7 +314,8 @@ h2 {
   align-items: center;
   width: clamp(200px, 80vw, 400px);
   height: clamp(200px, 80vw, 400px);
-  margin: 5rem auto;
+  /* margin: 5rem auto; */
+  margin-inline: auto;
   border-radius: 50%;
   line-height: 0vw;
   color: #ced4e2;
@@ -668,10 +675,8 @@ input[type="number"] {
 .settings-page-content-wrap,
 .counters-page-content-wrap,
 .home-page-content-wrap {
-  /* padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left); */
   overflow-x: hidden;
-  padding-bottom: 20vh;
+  /* padding-bottom: 20vh; */
 }
 
 .individual-section-wrap {
@@ -841,9 +846,9 @@ input[type="number"] {
 
 @supports not (-webkit-touch-callout: none) {
   /* CSS for other than iOS devices */
-  .navbar-wrap {
+  /* .navbar-wrap {
     padding-bottom: 1rem;
-  }
+  } */
 }
 
 /* LOADING ICON */
