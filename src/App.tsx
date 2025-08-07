@@ -866,6 +866,7 @@ function App() {
             </IonTabButton>
             <IonTabButton tab="CountersPage" href="/CountersPage">
               <IonIcon icon={listOutline} />
+              {/* <IonIcon icon={reorderFourOutline} /> */}
               <IonLabel>Tasbeehs</IonLabel>
             </IonTabButton>
             <IonTabButton tab="SettingsPage" href="/SettingsPage">
