@@ -337,7 +337,7 @@ const SettingsPage = ({
               </section>
               {Capacitor.isNativePlatform() && (
                 <section className="individual-section-wrap">
-                  <div className="individual-row-wrap p-3">
+                  <div className="p-3 individual-row-wrap">
                     <div className="text-wrap" style={{ display: "block" }}>
                       <p className="pt-[0.3rem] pb-[0.1rem]">
                         Haptic Vibration
@@ -368,7 +368,7 @@ const SettingsPage = ({
               )}
 
               <section className="individual-section-wrap">
-                <section className="individual-row-wrap p-3">
+                <section className="p-3 individual-row-wrap">
                   <div className="text-wrap " style={{ display: "block" }}>
                     <p className="pt-[0.3rem] pb-[0.1rem]">
                       Daily Tasbeeh Reset
@@ -404,7 +404,7 @@ const SettingsPage = ({
                 </section>
               </section>
               <section className="individual-section-wrap setting-bottom-border">
-                <section className="individual-row-wrap p-3">
+                <section className="p-3 individual-row-wrap">
                   <div className="text-wrap " style={{ display: "block" }}>
                     <p className="pt-[0.3rem] pb-[0.1rem]">
                       Auto-Switch Tasbeeh

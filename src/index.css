@@ -1,27 +1,6 @@
-/* @import "@ionic/core/css/ionic.bundle.css"; */
-
-/* @import "./theme/md3/theme.css"; */
-@import "tailwindcss";
-
-@layer base {
-  *,
-  *::before,
-  *::after {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-
-  /* For Firefox. */
-  * {
-    scrollbar-width: none;
-  }
-
-  /* For WebKit (Chrome & Safari). */
-  ::-webkit-scrollbar {
-    display: none;
-  }
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   /* --md-sys-surface: var(--body-bg-color);
@@ -33,7 +12,7 @@
   --md-sys-color-on-surface: inherit; */
   /* --body-bg-color: #f2f1f6; */
   /* --body-bg-color: #f4f4f4; */
-
+  --ion-text-color: rgb(0, 0, 0);
   --body-bg-color: rgb(237, 237, 237);
   --svg-color: #757575;
   --ion-background-color: rgb(237, 237, 237);
@@ -62,6 +41,7 @@
 
 body.dark {
   /* Dark mode variables go here */
+  --ion-text-color: rgb(255, 255, 255);
   --body-bg-color: rgb(36, 36, 36);
   --ion-background-color: var(--body-bg-color);
   --background: var(--body-bg-color);
@@ -134,11 +114,8 @@ body {
   /* overflow: hidden; */
 }
 
-.settings-page-wrap,
-.counters-page-wrap,
-.home-page-wrap {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
+ion-toolbar {
+  color: var(--ion-text-color) !important;
 }
 
 ion-item-options {
@@ -183,7 +160,7 @@ ion-action-sheet.action-sheet {
 ion-toolbar {
   --background: var(--body-bg-color);
   --color: white;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 
   /* --border-color: #f24aec; */
   /* --border-width: 4px 0; */
@@ -247,6 +224,7 @@ ion-list.ion-list-reorder-counters ion-item {
 }
 
 ion-tab-bar {
+  /* padding-bottom: var(--ion-safe-area-bottom); */
   --background: var(--body-bg-color);
   /* --color: var(--nav-tab-color); */
   /* --color-selected: var(--nav-active-tab-color); */
@@ -306,9 +284,11 @@ h2 {
 
 .increment-btn {
   position: absolute;
-  bottom: 5%;
+  bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
+  /* margin-bottom: 5rem; */
+  bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -439,41 +419,7 @@ textarea:focus {
   /* outline: 1px solid #cecece; */
 }
 
-.settings-page-content-wrap,
-.counters-page-content-wrap {
-  height: 90vh;
-  /* height: 100vh; */
-}
-
 /* SETTINGS PAGE */
-
-.settings-page-options-and-info-wrap {
-  width: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  /* padding-bottom: 20vh; */
-}
-
-.settings-page-header,
-.counters-page-header,
-.home-page-header {
-  margin-top: 1rem;
-  background: var(--header-bg-color);
-  position: relative;
-  height: 7vh;
-  color: var(--text-color);
-  border-bottom: 1px solid var(--border-header-and-nav);
-}
-
-.settings-page-header h1,
-.counters-page-header h1,
-.home-page-header h1 {
-  position: absolute;
-  top: 50%;
-  font-size: 1.2rem;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 
 .counters-page-header svg {
   font-size: 1.7rem;
@@ -481,38 +427,6 @@ textarea:focus {
 }
 
 /* NAVBAR */
-
-.navbar-wrap {
-  padding-bottom: env(safe-area-inset-bottom);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  position: fixed;
-  /* position: sticky; */
-  bottom: 0;
-  width: 100%;
-  max-width: 700px;
-  /* border-top: 1px solid var(--border-header-and-nav); */
-  border-top: 1px solid var(--nav-border-color);
-  /* box-shadow: 10px 5px 5px rgb(177, 177, 177); */
-  /* background: var(--nav-bg-color); */
-  background: var(--body-bg-color);
-  z-index: 1;
-}
-
-.navbar svg {
-  font-size: 1.5rem;
-}
-
-.nav-link {
-  text-decoration: none;
-  text-align: center;
-  padding: 1rem 3rem 0.5rem 3rem;
-}
-
-.nav-icon {
-  font-size: 1.5rem;
-}
 
 .target-text {
   position: absolute;
@@ -572,9 +486,9 @@ ion-textarea .native-textarea {
   color: var(--text-color);
 }
 
-.tip-box-wrap {
+/* .tip-box-wrap {
   box-shadow: var(--form-box-shadow);
-}
+} */
 
 .remove-counter-blinking * {
   backface-visibility: hidden;
@@ -672,13 +586,6 @@ input[type="number"] {
   /* -moz-appearance: textfield; */
 }
 
-.settings-page-content-wrap,
-.counters-page-content-wrap,
-.home-page-content-wrap {
-  overflow-x: hidden;
-  /* padding-bottom: 20vh; */
-}
-
 .individual-section-wrap {
   color: var(--text-color);
   position: relative;
@@ -755,7 +662,7 @@ input[type="number"] {
   align-items: center;
 }
 
-.support-box-wrap {
+/* .support-box-wrap {
   padding: 0 !important;
 }
 
@@ -793,10 +700,8 @@ input[type="number"] {
 
 .tip-jar-box-text {
   text-align: center;
-  /* padding: 1rem; */
   padding: 0 13px 22px 13px;
   color: #fff;
-
   line-height: 20px;
   width: 100%;
 }
@@ -807,7 +712,7 @@ input[type="number"] {
   align-items: center;
   padding: 1rem 0;
   width: 90%;
-}
+} */
 
 #open-about-us-modal {
   border: none;
@@ -831,12 +736,6 @@ input[type="number"] {
 /* IOS */
 @supports (-webkit-touch-callout: none) {
   /* CSS specific to iOS devices */
-
-  .settings-page-header,
-  .counters-page-header,
-  .home-page-header {
-    margin-top: 0;
-  }
 
   .counter-page-single-counter.active {
     -webkit-filter: drop-shadow(0 0 1px black);

@@ -109,7 +109,7 @@ const HomePage = ({
   return (
     <IonPage>
       <IonHeader className="ion-no-border">
-        <IonToolbar className="header-toolbar">
+        <IonToolbar mode="md" className="header-toolbar">
           <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -117,63 +117,63 @@ const HomePage = ({
         {/* <section className="home-page-wrap"> */}
         {isNextCounterLoading && <Overlay />}
 
-        <motion.main
+        {/* <motion.main
           className="home-page-content-wrap"
           //  {...pageTransitionStyles}
-        >
-          <ActiveCounter
-            activeColor={activeColor}
-            activeCounter={activeCounter}
-            resetSingleCounter={resetSingleCounter}
-            setLanguageDirection={setLanguageDirection}
-            languageDirection={languageDirection}
-          />
-          <CounterButton
-            dbConnection={dbConnection}
-            toggleDBConnection={toggleDBConnection}
-            setShowNextCounterToast={setShowNextCounterToast}
-            cancellableDelayRef={cancellableDelayRef}
-            isAutoSwitchCancelled={isAutoSwitchCancelled}
-            setShowEndOfListAlert={setShowEndOfListAlert}
-            userPreferencesState={userPreferencesState}
-            updateActiveCounter={updateActiveCounter}
-            activeColor={activeColor}
-            countersState={countersState}
-            updateCountersState={updateCountersState}
-            activeCounter={activeCounter}
-          />
-          <Toast
-            isOpen={showNextCounterToast}
-            setIsNextCounterLoading={setIsNextCounterLoading}
-            message={`Loading next tasbeeh in ${count}`}
-            buttons={[
-              {
-                text: "Cancel",
-                role: "cancel",
-                handler: () => {
-                  isAutoSwitchCancelled.current = true;
-                  cancellableDelayRef.current?.cancelDelay();
-                },
+        > */}
+        <ActiveCounter
+          activeColor={activeColor}
+          activeCounter={activeCounter}
+          resetSingleCounter={resetSingleCounter}
+          setLanguageDirection={setLanguageDirection}
+          languageDirection={languageDirection}
+        />
+        <CounterButton
+          dbConnection={dbConnection}
+          toggleDBConnection={toggleDBConnection}
+          setShowNextCounterToast={setShowNextCounterToast}
+          cancellableDelayRef={cancellableDelayRef}
+          isAutoSwitchCancelled={isAutoSwitchCancelled}
+          setShowEndOfListAlert={setShowEndOfListAlert}
+          userPreferencesState={userPreferencesState}
+          updateActiveCounter={updateActiveCounter}
+          activeColor={activeColor}
+          countersState={countersState}
+          updateCountersState={updateCountersState}
+          activeCounter={activeCounter}
+        />
+        <Toast
+          isOpen={showNextCounterToast}
+          setIsNextCounterLoading={setIsNextCounterLoading}
+          message={`Loading next tasbeeh in ${count}`}
+          buttons={[
+            {
+              text: "Cancel",
+              role: "cancel",
+              handler: () => {
+                isAutoSwitchCancelled.current = true;
+                cancellableDelayRef.current?.cancelDelay();
               },
-              {
-                text: "Switch now",
-                role: "switch now",
-                handler: () => {
-                  cancellableDelayRef.current?.cancelDelay();
-                },
+            },
+            {
+              text: "Switch now",
+              role: "switch now",
+              handler: () => {
+                cancellableDelayRef.current?.cancelDelay();
               },
-            ]}
-            setShow={setShowNextCounterToast}
-            duration={nextCounterDelay - 500}
-          />
-          <IonAlert
-            isOpen={showEndOfListAlert}
-            header="No More Tasbeehs left"
-            message="You've reached the end of your tasbeeh list."
-            buttons={["GOT IT"]}
-            backdropDismiss={false}
-          />
-        </motion.main>
+            },
+          ]}
+          setShow={setShowNextCounterToast}
+          duration={nextCounterDelay - 500}
+        />
+        <IonAlert
+          isOpen={showEndOfListAlert}
+          header="No More Tasbeehs left"
+          message="You've reached the end of your tasbeeh list."
+          buttons={["GOT IT"]}
+          backdropDismiss={false}
+        />
+        {/* </motion.main> */}
         {/* </section> */}
       </IonContent>
     </IonPage>

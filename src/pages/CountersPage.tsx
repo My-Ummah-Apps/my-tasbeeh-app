@@ -23,7 +23,6 @@ import Toast from "../components/Toast";
 import ActionSheet from "../components/ActionSheet";
 import { useLocation } from "react-router-dom";
 import Overlay from "../components/Overlay";
-import { MdAdd, MdOutlineRestartAlt } from "react-icons/md";
 import { add, refresh } from "ionicons/icons";
 
 interface CountersPageProps {
