@@ -1,6 +1,6 @@
 import ActiveCounter from "../components/ActiveCounter";
 import CounterButton from "../components/CounterButton";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 
 import {
   IonPage,
@@ -109,7 +109,7 @@ const HomePage = ({
   return (
     <IonPage>
       <IonHeader className="ion-no-border">
-        <IonToolbar mode="md" className="header-toolbar">
+        <IonToolbar className="header-toolbar">
           <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>

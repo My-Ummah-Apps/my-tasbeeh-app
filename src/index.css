@@ -284,16 +284,14 @@ h2 {
 
 .increment-btn {
   position: absolute;
-  bottom: 10%;
+  bottom: calc(20px + 2vh);
   left: 50%;
   transform: translateX(-50%);
-  /* margin-bottom: 5rem; */
-  bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: clamp(200px, 80vw, 400px);
-  height: clamp(200px, 80vw, 400px);
+  width: clamp(230px, 85vw, 450px);
+  height: clamp(230px, 85vw, 450px);
   /* margin: 5rem auto; */
   margin-inline: auto;
   border-radius: 50%;
