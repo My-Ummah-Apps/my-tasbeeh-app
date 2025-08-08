@@ -213,7 +213,7 @@ body.dark ion-alert {
 .modal-header-text {
   background-color: var(--body-bg-color);
   text-align: center;
-  padding: 3rem 0 2rem 0;
+  padding-top: 1rem;
   font-size: 1.4rem;
 }
 
@@ -225,6 +225,7 @@ ion-list.ion-list-reorder-counters,
 ion-list.ion-list-reorder-counters ion-reorder-group,
 ion-list.ion-list-reorder-counters ion-item {
   --background: var(--body-bg-color) !important;
+  color: var(--ion-text-color);
 }
 
 ion-tab-bar {
@@ -232,6 +233,13 @@ ion-tab-bar {
   --background: var(--body-bg-color);
   --color: var(--nav-tab-color);
   --color-selected: var(--nav-active-tab-color);
+}
+
+ion-toggle {
+  /* padding: 12px; */
+  /* --track-background: #ddd;
+  --track-background-checked: #555 !important;
+  --handle-background: #eb7769; */
 }
 
 .modal-fit-content {

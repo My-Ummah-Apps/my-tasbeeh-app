@@ -14,6 +14,7 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
+  isPlatform,
 } from "@ionic/react";
 
 // import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
@@ -39,6 +40,7 @@ import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetTheme
 import { IonToggle } from "@ionic/react";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import BottomSheetReorderCounters from "../components/BottomSheets/BottomSheetReorderCounters";
+import { toggleStyles } from "../utils/constants";
 
 interface SettingsageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -70,23 +72,6 @@ const SettingsPage = ({
   theme,
   setShowChangelogBottomSheet,
 }: SettingsageProps) => {
-  // const isAndroid = Capacitor.getPlatform() === "android";
-
-  // const hexToRgb = (hex: string) => {
-  //   const [r, g, b] = hex
-  //     .replace(/^#/, "")
-  //     .match(/.{2}/g)!
-  //     .map((x) => parseInt(x, 16));
-  //   return `${r}, ${g}, ${b}`;
-  // };
-
-  // const androidToggleStyles = {
-  //   "--handle-background": activeColor,
-  //   "--handle-background-checked": activeColor,
-  //   "--background": "transparent",
-  //   "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
-  // };
-
   const showNotificationsAlert = async () => {
     const { value } = await Dialog.confirm({
       title: "Open Settings",
@@ -126,6 +111,17 @@ const SettingsPage = ({
       }
     }
   }
+
+  // const toggleStyles = () => {
+  //   return {
+  //     "--track-background-checked": activeColor + "90",
+  //     ...(isPlatform("android") && {
+  //       "--handle-background-checked": activeColor,
+  //     }),
+  //     "--ion-color-base":
+  //       userPreferencesState.autoSwitchCounter === 1 ? activeColor : "#ccc",
+  //   };
+  // };
 
   // async function triggerPurchase(tipAmount) {
   //   try {
@@ -347,16 +343,8 @@ const SettingsPage = ({
                       </p>
                     </div>
                     <IonToggle
-                      color={activeColor}
-                      mode="ios"
-                      style={{
-                        "--ion-color-base":
-                          userPreferencesState.haptics === 1
-                            ? activeColor
-                            : "#ccc",
-                        // "--ion-color-contrast": "#fff",
-                        // ...(isAndroid ? androidToggleStyles : {}),
-                      }}
+                      color={isPlatform("ios") ? activeColor : ""}
+                      style={toggleStyles(userPreferencesState, activeColor)}
                       checked={userPreferencesState.haptics === 1}
                       onIonChange={async (e) => {
                         const hapticsValue = e.detail.checked ? 1 : 0;
@@ -378,20 +366,8 @@ const SettingsPage = ({
                     </p>
                   </div>
                   <IonToggle
-                    mode="ios"
-                    color={activeColor}
-                    style={{
-                      "--ion-color-base":
-                        userPreferencesState.dailyCounterReset === 1
-                          ? activeColor
-                          : "#ccc",
-                      // "--ion-color-contrast": "#fff",
-                      // ...(isAndroid ? androidToggleStyles : {}),
-                      // "--handle-background": activeColor,
-                      // "--handle-background-checked": activeColor,
-                      // "--background": "gray",
-                      // "--track-background-checked": `rgba(${hexToRgb(activeColor)}, 0.7)`,
-                    }}
+                    color={isPlatform("ios") ? activeColor : ""}
+                    style={toggleStyles(userPreferencesState, activeColor)}
                     checked={userPreferencesState.dailyCounterReset === 1}
                     onIonChange={async (e) => {
                       const dailyCounterResetValue = e.detail.checked ? 1 : 0;
@@ -415,16 +391,8 @@ const SettingsPage = ({
                     </p>
                   </div>
                   <IonToggle
-                    mode="ios"
-                    color={activeColor}
-                    style={{
-                      "--ion-color-base":
-                        userPreferencesState.autoSwitchCounter === 1
-                          ? activeColor
-                          : "#ccc",
-                      // "--ion-color-contrast": "#fff",
-                      // ...(isAndroid ? androidToggleStyles : {}),
-                    }}
+                    color={isPlatform("ios") ? activeColor : ""}
+                    style={toggleStyles(userPreferencesState, activeColor)}
                     checked={userPreferencesState.autoSwitchCounter === 1}
                     onIonChange={async (e) => {
                       const autoSwitchCounterValue = e.detail.checked ? 1 : 0;

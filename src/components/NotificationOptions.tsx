@@ -6,7 +6,8 @@ import {
   themeType,
   userPreferencesType,
 } from "../utils/types";
-import { IonToggle } from "@ionic/react";
+import { IonToggle, isPlatform } from "@ionic/react";
+import { toggleStyles } from "../utils/constants";
 
 interface NotificationOptionsProps {
   updateUserPreference: (
@@ -44,15 +45,9 @@ const NotificationOptions = ({
           </p>
         </div>
         <IonToggle
-          mode="ios"
-          color={activeColor}
-          style={{
-            "--ion-color-base":
-              userPreferencesState.morningNotification === 1
-                ? activeColor
-                : "#ccc",
-            "--ion-color-contrast": "#fff",
-          }}
+          mode={isPlatform("ios") ? "ios" : "md"}
+          color={isPlatform("ios") ? activeColor : ""}
+          style={toggleStyles(userPreferencesState, activeColor)}
           checked={userPreferencesState.morningNotification === 1}
           onIonChange={async (e) => {
             const morningNotificationValue = e.detail.checked;
@@ -87,15 +82,9 @@ const NotificationOptions = ({
           </p>
         </div>
         <IonToggle
-          mode="ios"
-          color={activeColor}
-          style={{
-            "--ion-color-base":
-              userPreferencesState.afternoonNotification === 1
-                ? activeColor
-                : "#ccc",
-            "--ion-color-contrast": "#fff",
-          }}
+          mode={isPlatform("ios") ? "ios" : "md"}
+          color={isPlatform("ios") ? activeColor : ""}
+          style={toggleStyles(userPreferencesState, activeColor)}
           checked={userPreferencesState.afternoonNotification === 1}
           onIonChange={async (e) => {
             const afternoonNotificationValue = e.detail.checked;
@@ -130,15 +119,9 @@ const NotificationOptions = ({
           </p>
         </div>
         <IonToggle
-          mode="ios"
-          color={activeColor}
-          style={{
-            "--ion-color-base":
-              userPreferencesState.eveningNotification === 1
-                ? activeColor
-                : "#ccc",
-            "--ion-color-contrast": "#fff",
-          }}
+          mode={isPlatform("ios") ? "ios" : "md"}
+          color={isPlatform("ios") ? activeColor : ""}
+          style={toggleStyles(userPreferencesState, activeColor)}
           checked={userPreferencesState.eveningNotification === 1}
           onIonChange={async (e) => {
             const eveningNotificationValue = e.detail.checked;

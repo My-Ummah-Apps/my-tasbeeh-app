@@ -1,9 +1,10 @@
 import { Dialog } from "@capacitor/dialog";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
-import { counterObjType, userPreferencesType } from "./types";
+import { counterObjType, MaterialColor, userPreferencesType } from "./types";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
 import { Capacitor } from "@capacitor/core";
+import { isPlatform } from "@ionic/react";
 
 export const materialColors = [
   "#EF5350",
@@ -157,3 +158,17 @@ export const setStatusAndNavBarBGColor = async (
 };
 
 export const nextCounterDelay = 3000;
+
+export const toggleStyles = (
+  userPreferencesState: userPreferencesType,
+  activeColor: MaterialColor
+) => {
+  return {
+    "--track-background-checked": activeColor + "90",
+    ...(isPlatform("android") && {
+      "--handle-background-checked": activeColor,
+    }),
+    "--ion-color-base":
+      userPreferencesState.autoSwitchCounter === 1 ? activeColor : "#ccc",
+  };
+};
