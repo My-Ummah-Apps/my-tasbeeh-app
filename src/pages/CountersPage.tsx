@@ -117,7 +117,10 @@ function CountersPage({
                 "--ripple-color": "transparent",
               }}
             >
-              <IonIcon icon={refresh} />
+              <IonIcon
+                className="text-2xl text-[var(--ion-text-color)]"
+                icon={refresh}
+              />
             </IonButton>
           </IonButtons>
           <IonButtons slot="primary">
@@ -132,7 +135,10 @@ function CountersPage({
               }}
             >
               {" "}
-              <IonIcon icon={add} />
+              <IonIcon
+                className="text-2xl text-[var(--ion-text-color)]"
+                icon={add}
+              />
             </IonButton>
           </IonButtons>
         </IonToolbar>
@@ -286,10 +292,10 @@ function CountersPage({
           text-center px-6 py-5 rounded-xl shadow-xl w-[90%]"
               >
                 <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
-                <h2 className="text-lg font-semibold mb-2">
+                <h2 className="mb-2 text-lg font-semibold">
                   {"Swipe to reveal"}
                 </h2>
-                <p className="text-base mb-5">
+                <p className="mb-5 text-base">
                   {"Swipe left on a tasbeeh to reveal more options"}
                 </p>
                 <p
