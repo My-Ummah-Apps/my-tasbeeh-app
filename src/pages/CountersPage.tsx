@@ -289,7 +289,7 @@ function CountersPage({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="z-[10001] mx-auto fixed bottom-[0vh]
+            className="z-[10001] fixed bottom-[calc(20px+10vh)]
           text-center px-6 py-5 rounded-xl shadow-xl bg-[var(--body-bg-color)] color-[var(--text-color)]"
           >
             <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
@@ -298,7 +298,6 @@ function CountersPage({
               {"Swipe left on a tasbeeh to reveal more options"}
             </p>
             <IonButton
-              size="large"
               className="mt-5"
               onClick={() => {
                 setShowSwipeHint(false);
