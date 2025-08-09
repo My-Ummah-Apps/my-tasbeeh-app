@@ -4,7 +4,7 @@
 
 :root {
   /* --md-sys-surface: var(--body-bg-color);
-  --md-sys-on-surface: var(--text-color, inherit);
+  --md-sys-on-surface: var(ion-text-color, inherit);
   --md-sys-color-primary: transparent;
   --md-sys-color-secondary: transparent;
   --md-sys-color-surface: transparent;
@@ -22,10 +22,8 @@
   --navbar-bg-color: rgb(232, 232, 232);
   /* --nav-bg-color: rgb(242, 242, 242); */
   --nav-border-color: #e2e2e2;
-  --text-color: #000;
   --nav-tab-color: #373737;
   --nav-active-tab-color: #3880ff;
-  /* --text-color-secondary: #ffffff; */
   --toast-bg-color: #262626;
   --toast-text-color: #fff;
   --setings-page-boxes-bg-color: #f7f7f7;
@@ -52,7 +50,6 @@ body.dark {
   --nav-border-color: #1f1f1f;
   --header-bg-color: #242424;
   --navbar-bg-color: rgb(34, 34, 34);
-  --text-color: #fff;
   --nav-tab-color: grey;
   --nav-active-tab-color: white;
   --toast-bg-color: #d4d4d4;
@@ -90,7 +87,7 @@ body {
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  color: var(--text-color);
+  color: var(ion-text-color);
   /* width: 100%; */
   max-width: 700px;
   margin-inline: auto;
@@ -132,7 +129,7 @@ ion-item {
   --border-style: none;
   --padding-start: 0.6rem;
   --inner-padding-end: 0.6rem;
-  color: var(--text-color);
+  color: var(ion-text-color);
   margin-inline: auto;
 }
 
@@ -158,9 +155,9 @@ ion-toast {
 
 ion-action-sheet.action-sheet {
   --background: var(--body-bg-color);
-  --button-color: var(--text-color);
+  --button-color: var(ion-text-color);
   --cancel-button-background: var(--body-bg-color);
-  --cancel-button-color: var(--text-color);
+  --cancel-button-color: var(ion-text-color);
 }
 
 /* ion-button {
@@ -183,12 +180,12 @@ ion-toolbar {
 }
 
 ion-action-sheet.action-sheet .action-sheet-title {
-  color: var(--text-color);
+  color: var(ion-text-color);
   opacity: 0.6;
 }
 
 ion-reorder::part(icon) {
-  color: var(--text-color);
+  color: var(ion-text-color);
   margin-inline-start: 0.7rem;
 }
 
@@ -199,7 +196,7 @@ ion-toggle {
 
 ion-modal {
   --background: var(--body-bg-color);
-  color: var(--text-color);
+  color: var(ion-text-color);
 }
 
 ion-toast::part(button) {
@@ -281,7 +278,7 @@ ion-toggle {
 .ion-content-changelog-wrap p,
 h1,
 h2 {
-  color: var(--text-color);
+  color: var(ion-text-color);
 }
 
 .ion-content-changelog-wrap:last-child {
@@ -467,22 +464,6 @@ ion-textarea .native-textarea {
   padding-bottom: 4px; */
 }
 
-.form-wrap button {
-  font-size: 1.1rem;
-  padding: 1rem !important;
-  width: 60%;
-  margin-bottom: 0.5rem;
-  border-radius: 0.8rem;
-}
-
-.form-wrap button:first-of-type {
-  color: white;
-}
-
-.form-wrap button:nth-of-type(2) {
-  color: var(--text-color);
-}
-
 /* .tip-box-wrap {
   box-shadow: var(--form-box-shadow);
 } */
@@ -584,7 +565,7 @@ input[type="number"] {
 }
 
 .individual-section-wrap {
-  color: var(--text-color);
+  color: var(ion-text-color);
   position: relative;
   background: var(--setings-page-boxes-bg-color);
   margin: 1rem auto 2rem auto;
@@ -609,12 +590,6 @@ input[type="number"] {
 
 .theme-sheet-content-wrap {
   background-color: var(--body-bg-color) !important;
-}
-
-.notifications-options-heading-text {
-  text-align: center;
-  margin-block: 1rem;
-  font-weight: 400;
 }
 
 .individual-notification-option-wrap {
@@ -710,10 +685,6 @@ input[type="number"] {
   padding: 1rem 0;
   width: 90%;
 } */
-
-#open-about-us-modal {
-  border: none;
-}
 
 /* TOGGLE OVERRIDES AND STYLING ON SETTINGS PAGE */
 

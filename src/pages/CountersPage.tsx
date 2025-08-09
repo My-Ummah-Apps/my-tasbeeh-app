@@ -290,7 +290,7 @@ function CountersPage({
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="z-[10001] fixed bottom-[calc(20px+10vh)]
-          text-center px-6 py-5 rounded-xl shadow-xl bg-[var(--body-bg-color)] color-[var(--text-color)]"
+          text-center px-6 py-5 rounded-xl shadow-xl bg-[var(--body-bg-color)] color-[var(ion-text-color)]"
           >
             <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
             <h2 className="mb-2 text-lg font-semibold">{"Swipe to reveal"}</h2>

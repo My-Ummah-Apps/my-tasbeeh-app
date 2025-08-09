@@ -98,7 +98,7 @@ const BottomSheetForm = ({
       }}
     >
       <section>
-        <h1 className="text-center mt-7 mb-5 text-lg">
+        <h1 className="mb-5 text-lg text-center mt-7">
           {counterId ? "Edit Tasbeeh" : "Add Tasbeeh"}
         </h1>
         <section className="form-wrap">
@@ -127,7 +127,7 @@ const BottomSheetForm = ({
               ></IonTextarea>
             </IonItem>
             <p
-              className="text-xs text-center mb-2"
+              className="mb-2 text-xs text-center"
               style={{
                 color: "red",
                 visibility:
@@ -197,7 +197,7 @@ const BottomSheetForm = ({
             <div className="flex flex-col items-center mt-2">
               <button
                 form="form"
-                className="block w-1/3"
+                className="block w-3/5 p-4 mb-2 text-base text-white rounded-2xl"
                 style={{ backgroundColor: activeColor }}
               >
                 Save
@@ -208,7 +208,7 @@ const BottomSheetForm = ({
                   // closeFormCleanup();
                   setShowForm(false);
                 }}
-                className="block w-1/3"
+                className="block w-3/5 p-4 mb-2 text-base rounded-2xl text-[var(--ion-text-color)]"
                 style={{ backgroundColor: "transparent" }}
               >
                 Cancel
