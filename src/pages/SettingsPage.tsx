@@ -41,6 +41,7 @@ import { IonToggle } from "@ionic/react";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import BottomSheetReorderCounters from "../components/BottomSheets/BottomSheetReorderCounters";
 import { toggleStyles } from "../utils/constants";
+import { useState } from "react";
 
 interface SettingsageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -72,6 +73,8 @@ const SettingsPage = ({
   theme,
   setShowChangelogBottomSheet,
 }: SettingsageProps) => {
+  const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
+
   const showNotificationsAlert = async () => {
     const { value } = await Dialog.confirm({
       title: "Open Settings",
@@ -100,28 +103,19 @@ const SettingsPage = ({
     if (userNotificationPermission === "denied") {
       showNotificationsAlert();
     } else if (checkPermission.display === "granted") {
-      // setShowNotificationsSheet(true);
+      setShowNotificationsSheet(true);
     } else if (
       checkPermission.display === "prompt" ||
       checkPermission.display === "prompt-with-rationale"
     ) {
       const requestPermission = await LocalNotifications.requestPermissions();
       if (requestPermission.display === "granted") {
-        // setShowNotificationsSheet(true);
+        setShowNotificationsSheet(true);
+      } else if (requestPermission.display === "denied") {
+        setShowNotificationsSheet(false);
       }
     }
   }
-
-  // const toggleStyles = () => {
-  //   return {
-  //     "--track-background-checked": activeColor + "90",
-  //     ...(isPlatform("android") && {
-  //       "--handle-background-checked": activeColor,
-  //     }),
-  //     "--ion-color-base":
-  //       userPreferencesState.autoSwitchCounter === 1 ? activeColor : "#ccc",
-  //   };
-  // };
 
   // async function triggerPurchase(tipAmount) {
   //   try {
@@ -195,7 +189,7 @@ const SettingsPage = ({
     <IonPage>
       <IonHeader className="ion-no-border">
         <IonToolbar className="header-toolbar">
-          <IonTitle>Settings</IonTitle>
+          <IonTitle className="">Settings</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -310,7 +304,9 @@ const SettingsPage = ({
                     }}
                   />
                   <BottomSheetNotificationsOptions
-                    triggerId="open-notifications-sheet"
+                    // triggerId="open-notifications-sheet"
+                    setShowNotificationsSheet={setShowNotificationsSheet}
+                    showNotificationsSheet={showNotificationsSheet}
                     updateUserPreference={updateUserPreference}
                     activeColor={activeColor}
                     activeCounter={activeCounter}

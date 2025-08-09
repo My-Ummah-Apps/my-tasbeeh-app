@@ -108,7 +108,7 @@ function CountersPage({
     <IonPage>
       <IonHeader className="ion-no-border">
         <IonToolbar className="header-toolbar">
-          <IonTitle>Tasbeehs</IonTitle>
+          <IonTitle className="">Tasbeehs</IonTitle>
           <IonButtons slot="secondary">
             <IonButton
               id="open-reset-all-counters-action-sheet"
@@ -145,7 +145,7 @@ function CountersPage({
       </IonHeader>
       <IonContent>
         <motion.main
-        // className="counters-page-content-wrap"
+        // className="relative"
         //  {...pageTransitionStyles}
         >
           <ActionSheet
@@ -279,39 +279,36 @@ function CountersPage({
             message="Tasbeeh added successfully"
             setShow={setShowAddSuccessToast}
           />
-
-          {showSwipeHint && (
-            <>
-              <Overlay />
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="slide-to-reveal-options-wrap fixed z-[10001] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-          text-center px-6 py-5 rounded-xl shadow-xl w-[90%]"
-              >
-                <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
-                <h2 className="mb-2 text-lg font-semibold">
-                  {"Swipe to reveal"}
-                </h2>
-                <p className="mb-5 text-base">
-                  {"Swipe left on a tasbeeh to reveal more options"}
-                </p>
-                <p
-                  className="pt-5 text-right"
-                  onClick={() => {
-                    setShowSwipeHint(false);
-                  }}
-                >
-                  GOT IT
-                </p>
-              </motion.div>
-            </>
-          )}
         </motion.main>
-        {/* </section> */}
       </IonContent>
+      {showSwipeHint && (
+        <>
+          <Overlay />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="z-[10001] mx-auto fixed bottom-[0vh]
+          text-center px-6 py-5 rounded-xl shadow-xl bg-[var(--body-bg-color)] color-[var(--text-color)]"
+          >
+            <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
+            <h2 className="mb-2 text-lg font-semibold">{"Swipe to reveal"}</h2>
+            <p className="mb-5 text-base">
+              {"Swipe left on a tasbeeh to reveal more options"}
+            </p>
+            <IonButton
+              size="large"
+              className="mt-5"
+              onClick={() => {
+                setShowSwipeHint(false);
+              }}
+            >
+              CLOSE
+            </IonButton>
+          </motion.div>
+        </>
+      )}
     </IonPage>
   );
 }

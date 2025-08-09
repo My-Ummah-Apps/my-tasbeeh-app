@@ -110,7 +110,7 @@ const HomePage = ({
     <IonPage>
       <IonHeader className="ion-no-border">
         <IonToolbar className="header-toolbar">
-          <IonTitle>Home</IonTitle>
+          <IonTitle className="">Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

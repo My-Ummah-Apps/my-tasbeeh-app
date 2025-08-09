@@ -19,7 +19,8 @@
   --background: rgb(237, 237, 237); /* fallback */
   /* --header-and-nav-bg-color: #f4f4f4; */
   --header-bg-color: rgb(237, 237, 237);
-  --nav-bg-color: rgb(242, 242, 242);
+  --navbar-bg-color: rgb(232, 232, 232);
+  /* --nav-bg-color: rgb(242, 242, 242); */
   --nav-border-color: #e2e2e2;
   --text-color: #000;
   --nav-tab-color: #373737;
@@ -47,9 +48,10 @@ body.dark {
   --body-bg-color: rgb(36, 36, 36);
   --ion-background-color: var(--body-bg-color);
   --background: var(--body-bg-color);
-  --nav-bg-color: #212121;
+  /* --nav-bg-color: #212121; */
   --nav-border-color: #1f1f1f;
   --header-bg-color: #242424;
+  --navbar-bg-color: rgb(34, 34, 34);
   --text-color: #fff;
   --nav-tab-color: grey;
   --nav-active-tab-color: white;
@@ -93,7 +95,7 @@ body {
   max-width: 700px;
   margin-inline: auto;
   /* font-family: Roboto, sans-serif; */
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   font-weight: 400;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -160,6 +162,11 @@ ion-action-sheet.action-sheet {
   --cancel-button-background: var(--body-bg-color);
   --cancel-button-color: var(--text-color);
 }
+
+/* ion-button {
+  --ripple-color: none !important;
+  color: none !important;
+} */
 
 ion-toolbar {
   --background: var(--body-bg-color);
@@ -231,8 +238,12 @@ ion-list.ion-list-reorder-counters ion-item {
 ion-tab-bar {
   /* padding-bottom: var(--ion-safe-area-bottom); */
   --background: var(--body-bg-color);
-  --color: var(--nav-tab-color);
-  --color-selected: var(--nav-active-tab-color);
+  /* --color: var(--nav-tab-color); */
+  --color-selected: var(--active-tab-color);
+}
+
+ion-tab-button[aria-selected="true"] {
+  /* --color: var(--active-tab-color) !important; */
 }
 
 ion-toggle {
@@ -330,11 +341,6 @@ h2 {
 }
 
 /* COUNTERS PAGE */
-
-.slide-to-reveal-options-wrap {
-  background-color: var(--body-bg-color);
-  color: var(--text-color);
-}
 
 .counter {
   white-space: nowrap;

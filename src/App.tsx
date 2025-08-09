@@ -2,17 +2,7 @@ import { useState, useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
 // import { IonApp } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import {
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-} from "@ionic/react";
-
-import { homeOutline, listOutline, settingsOutline } from "ionicons/icons";
+import { IonApp, IonRouterOutlet, IonTabs } from "@ionic/react";
 
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
@@ -49,6 +39,7 @@ import useSQLiteDB from "./utils/useSqliteDB";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
 import BottomSheetChangelog from "./components/BottomSheets/BottomSheetChangelog";
 import BottomSheetMajorUpdate from "./components/BottomSheets/BottomSheetMajorUpdate";
+import TabBar from "./components/TabBar";
 
 function App() {
   const { isDBInitialised, dbConnection, toggleDBConnection } = useSQLiteDB();
@@ -859,21 +850,7 @@ function App() {
             />
           </IonRouterOutlet>
 
-          <IonTabBar id="nav-bar" slot="bottom">
-            <IonTabButton tab="HomePage" href="/HomePage">
-              <IonIcon icon={homeOutline} />
-              <IonLabel>Home</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="CountersPage" href="/CountersPage">
-              <IonIcon icon={listOutline} />
-              {/* <IonIcon icon={reorderFourOutline} /> */}
-              <IonLabel>Tasbeehs</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="SettingsPage" href="/SettingsPage">
-              <IonIcon icon={settingsOutline} />
-              <IonLabel>Settings</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
+          <TabBar activeColor={activeColor} />
         </IonTabs>
         <Route exact path="/" render={() => <Redirect to="/HomePage" />} />
       </IonReactRouter>

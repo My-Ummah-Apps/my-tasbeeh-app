@@ -28,6 +28,7 @@ const NotificationOptions = ({
     await LocalNotifications.cancel({ notifications: [{ id: id }] });
   };
 
+  // ! If below code is uncommented, createChannel should only be triggered on Android devices, as it will throw an error on iOS
   // LocalNotifications.createChannel({
   //   id: "1",
   //   name: "Notification",

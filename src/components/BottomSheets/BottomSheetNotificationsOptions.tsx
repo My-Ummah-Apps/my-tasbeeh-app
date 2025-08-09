@@ -10,7 +10,9 @@ import NotificationOptions from "../NotificationOptions";
 import { IonModal } from "@ionic/react";
 
 interface BottomSheetNotificationsOptionsProps {
-  triggerId: string;
+  // triggerId: string;
+  setShowNotificationsSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  showNotificationsSheet: boolean;
   updateUserPreference: (
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType
@@ -21,7 +23,9 @@ interface BottomSheetNotificationsOptionsProps {
 }
 
 const BottomSheetNotificationsOptions = ({
-  triggerId,
+  // triggerId,
+  setShowNotificationsSheet,
+  showNotificationsSheet,
   updateUserPreference,
   userPreferencesState,
   activeColor,
@@ -30,11 +34,15 @@ const BottomSheetNotificationsOptions = ({
   return (
     <IonModal
       // ref={modalRef}
+      isOpen={showNotificationsSheet}
       mode="ios"
       expandToScroll={false}
+      onDidDismiss={() => {
+        setShowNotificationsSheet(false);
+      }}
       // canDismiss={true}
       className="modal-fit-content"
-      trigger={triggerId}
+      // trigger={triggerId}
       initialBreakpoint={1}
       breakpoints={[0, 1]}
     >

@@ -107,7 +107,7 @@ function CounterButton({
     if (activeCounter.count === activeCounter.target) {
       if (userPreferencesState.autoSwitchCounter === 1) {
         if (Capacitor.isNativePlatform()) {
-          hapticsVibrate(2000);
+          hapticsVibrate(1500);
         }
 
         const currentCounterIndex = countersState.findIndex(
