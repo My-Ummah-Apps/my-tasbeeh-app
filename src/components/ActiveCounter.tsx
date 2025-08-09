@@ -1,12 +1,13 @@
 import { useRef, useEffect, useState } from "react";
 import { direction } from "direction";
-import { MdOutlineRestartAlt } from "react-icons/md";
 import {
   counterObjType,
   languageDirection,
   MaterialColor,
 } from "../utils/types";
 import ActionSheet from "./ActionSheet";
+import { IonIcon } from "@ionic/react";
+import { refresh } from "ionicons/icons";
 
 interface CounterNameAndNumberProps {
   activeColor: MaterialColor;
@@ -75,7 +76,7 @@ function ActiveCounter({
             backgroundColor: `${activeColor}BF`,
           }}
         >
-          <div className="w-[85%] single-counter-name-and-count-wrap">
+          <div className="w-[85%] relative z-[1] py-[0.7rem]">
             <div
               data-testid="counter-progress-percent-text"
               className="single-counter-count"
@@ -127,9 +128,9 @@ function ActiveCounter({
             aria-label="Reset Counter"
             data-testid="counter-reset-btn"
             id="open-reset-single-counter-action-sheet-homepage"
-            className="reset-btn-wrap"
+            className="mr-[0.7rem] text-[1.2rem] z-10 bg-none border-none text-white inline-flex items-center justify-center cursor-pointer text-[var(--ion-text-color)]"
           >
-            <MdOutlineRestartAlt />
+            <IonIcon className="text-2xl" icon={refresh} />
           </button>
 
           <div
@@ -154,7 +155,7 @@ function ActiveCounter({
       </section>
       <ActionSheet
         trigger="open-reset-single-counter-action-sheet-homepage"
-        header="Are you sure you want to reset this tasbeeh?"
+        header="Are you sure you want to reset this tasbeeh to 0?"
         buttons={[
           {
             text: "Reset Tasbeeh",

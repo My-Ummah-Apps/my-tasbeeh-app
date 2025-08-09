@@ -352,12 +352,6 @@ MdModeEditOutline {
   text-align: center;
 }
 
-.single-counter-name-and-count-wrap {
-  position: relative;
-  z-index: 1;
-  padding: 0.7rem 0;
-}
-
 .single-counter-wrap-parent {
   filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.2));
   /* filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.23)); */
@@ -415,19 +409,6 @@ MdModeEditOutline {
   margin-left: 0.7rem;
   padding: 0.5rem 0;
   font-weight: 400;
-}
-
-.reset-btn-wrap {
-  margin-right: 0.7rem;
-  font-size: 1.2rem;
-  z-index: 10;
-  background: none;
-  border: none;
-  color: white;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 }
 
 input:focus,

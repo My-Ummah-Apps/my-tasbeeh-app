@@ -51,7 +51,7 @@ const CountersListItem = ({
             updateActiveCounter(counterItem.id, color);
           }}
         >
-          <div className="single-counter-name-and-count-wrap w-[95%]">
+          <div className="relative z-[1] py-[0.7rem] px-0 w-[95%]">
             <Link to="/" style={{ color: "#fff", textDecoration: "none" }}>
               <div className="single-counter-count">
                 {counterItem.count} / {counterItem.target}

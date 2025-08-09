@@ -203,7 +203,7 @@ function CountersPage({
           <ActionSheet
             setState={setShowResetActionSheet}
             isOpen={showResetActionSheet}
-            header="Are you sure you want to reset this tasbeeh?"
+            header="Are you sure you want to reset this tasbeeh to 0?"
             buttons={[
               {
                 text: "Reset Tasbeeh",
