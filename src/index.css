@@ -17,10 +17,8 @@
   --svg-color: #757575;
   --ion-background-color: rgb(237, 237, 237);
   --background: rgb(237, 237, 237); /* fallback */
-  /* --header-and-nav-bg-color: #f4f4f4; */
   --header-bg-color: rgb(237, 237, 237);
   --navbar-bg-color: rgb(232, 232, 232);
-  /* --nav-bg-color: rgb(242, 242, 242); */
   --nav-border-color: #e2e2e2;
   --nav-tab-color: #373737;
   --nav-active-tab-color: #3880ff;
@@ -29,7 +27,6 @@
   --setings-page-boxes-bg-color: #f7f7f7;
   --settings-page-borders: #e3e3e3;
   --counters-page-single-counter-box-shadow: 0 8px 15px rgb(0 0 0 / 30%);
-  /* --border-header-and-nav: #d5d5d5; */
   --border-header-and-nav: none;
   --border-form: #d5d5d5;
   --form-wrap-bg-color: #f4f4f4;
@@ -38,15 +35,11 @@
   --settings-page-box-shadow: 0 0px 5px 0 rgba(132, 132, 132, 0.2);
 }
 
-/* DARK MODE */
-
 body.dark {
-  /* Dark mode variables go here */
   --ion-text-color: rgb(255, 255, 255);
   --body-bg-color: rgb(36, 36, 36);
   --ion-background-color: var(--body-bg-color);
   --background: var(--body-bg-color);
-  /* --nav-bg-color: #212121; */
   --nav-border-color: #1f1f1f;
   --header-bg-color: #242424;
   --navbar-bg-color: rgb(34, 34, 34);
@@ -58,10 +51,8 @@ body.dark {
   --settings-page-borders: #595959;
   --svg-color: #e1e1e1;
   --counters-page-single-counter-box-shadow: none;
-  /* --border-header-and-nav: #747474; */
   --border-form: #747474;
   --border-header-and-nav: none;
-  /* --form-wrap-bg-color: #2f2f2f; */
   --form-wrap-bg-color: #272727;
   --form-input-bg-color: rgb(42, 42, 42);
   --form-box-shadow: none;
@@ -235,7 +226,7 @@ ion-list.ion-list-reorder-counters ion-item {
 ion-tab-bar {
   /* padding-bottom: var(--ion-safe-area-bottom); */
   --background: var(--body-bg-color);
-  /* --color: var(--nav-tab-color); */
+  --color: var(--nav-tab-color);
   --color-selected: var(--active-tab-color);
 }
 
