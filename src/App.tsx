@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Redirect, Route } from "react-router-dom";
 // import { IonApp } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
@@ -42,6 +42,7 @@ import BottomSheetMajorUpdate from "./components/BottomSheets/BottomSheetMajorUp
 import TabBar from "./components/TabBar";
 
 function App() {
+  const justLaunched = useRef(true);
   const { isDBInitialised, dbConnection, toggleDBConnection } = useSQLiteDB();
 
   const [showChangelogBottomSheet, setShowChangelogBottomSheet] =
@@ -136,25 +137,41 @@ function App() {
   };
 
   const handleTheme = (theme?: themeType) => {
-    const themeColor = theme ? theme : userPreferencesState.theme;
+    let themeColor = theme ? theme : userPreferencesState.theme;
 
     setTheme(themeColor);
     let statusBarThemeColor: string = "#242424";
 
+    if (themeColor === "system") {
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+      themeColor = media.matches ? "dark" : "light";
+    }
+
     if (themeColor === "dark") {
       statusBarThemeColor = "#242424";
-
+      document.body.classList.add("dark");
       if (Capacitor.isNativePlatform()) {
         setStatusAndNavBarBGColor(statusBarThemeColor, Style.Dark);
       }
-      document.body.classList.add("dark");
     } else if (themeColor === "light") {
       statusBarThemeColor = "#EDEDED";
-
+      document.body.classList.remove("dark");
       if (Capacitor.isNativePlatform()) {
         setStatusAndNavBarBGColor(statusBarThemeColor, Style.Light);
       }
-      document.body.classList.remove("dark");
+    }
+
+    if (Capacitor.isNativePlatform()) {
+      const statusBarIconsColor =
+        statusBarThemeColor === "#EDEDED" ? Style.Light : Style.Dark;
+      if (Capacitor.getPlatform() === "android" && justLaunched.current) {
+        setTimeout(() => {
+          setStatusAndNavBarBGColor(statusBarThemeColor, statusBarIconsColor);
+          justLaunched.current = false;
+        }, 1000);
+      } else {
+        setStatusAndNavBarBGColor(statusBarThemeColor, statusBarIconsColor);
+      }
     }
 
     return statusBarThemeColor;
@@ -548,7 +565,7 @@ function App() {
   }, [userPreferencesState.activeColor]);
 
   useEffect(() => {
-    handleTheme();
+    handleTheme(userPreferencesState.theme);
   }, [userPreferencesState.theme]);
 
   if (Capacitor.getPlatform() === "ios") {

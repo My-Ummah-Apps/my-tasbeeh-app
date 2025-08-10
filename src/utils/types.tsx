@@ -2,7 +2,7 @@ import { materialColors } from "./constants";
 
 export type DBConnectionStateType = "open" | "close";
 
-export type themeType = "light" | "dark";
+export type themeType = "light" | "dark" | "system";
 
 export type BinaryValue = 0 | 1;
 
