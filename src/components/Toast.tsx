@@ -26,7 +26,7 @@ const Toast = ({
       positionAnchor="nav-bar"
       message={message}
       buttons={buttons}
-      duration={duration || 2000}
+      duration={duration || 1500}
       onDidDismiss={() => setShow(false)}
     />
   );

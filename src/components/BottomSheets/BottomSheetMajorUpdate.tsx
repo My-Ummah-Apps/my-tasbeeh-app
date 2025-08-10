@@ -1,6 +1,7 @@
-import { GoRocket } from "react-icons/go";
+// import { GoRocket } from "react-icons/go";
 import { GoZap } from "react-icons/go";
 import { MdOutlinePalette } from "react-icons/md";
+import { LATEST_APP_VERSION } from "../../utils/changelog";
 
 interface BottomSheetMajorUpdateProps {
   setShowMajorUpdateBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,54 +30,39 @@ const BottomSheetMajorUpdate = ({
       }}
     >
       <p className="bg-[#9332ed] p-2 rounded-2xl mt-4 mb-4 inline-block text-sm">
-        MAJOR UPDATE
+        Version {LATEST_APP_VERSION}
       </p>
       <h1 style={{ color: "#fff" }} className="text-3xl font-bold">
-        Auto Tasbeeh Switch
+        UX/UI Improvements
       </h1>
       <p className="mt-2 mb-6 text-sm">
-        A new option to automatically switch tasbeehs when a target is reached
-        has been added.
+        Small changes have been made to the app, see details below.
       </p>
       <section>
-        <div className="flex mb-5 items-center">
+        <div className="flex items-center mb-5">
           <div>
-            <GoRocket className="mr-5 text-3xl text-[#c583f1]" />
+            <GoZap className="mr-5 text-3xl text-[#c583f1]" />
           </div>
           <div>
-            <h2 style={{ color: "#c583f1" }}>Auto Tasbeeh Switch</h2>
+            <h2 style={{ color: "#c583f1" }}>UX Improvements</h2>
             <p className="text-sm">
               {" "}
-              Enable this from the settings page to make your dhikr seamless —
-              once a tasbeeh hits its target, the app will automatically move on
-              to the next one in your tasbeeh list. You can also re-order your
-              list from the settings page to control which tasbeeh comes next.
+              The app’s header and navigation bar have been redesigned, and tab
+              icons have been rearranged to better match your device’s platform
+              style.
             </p>
           </div>
         </div>
-        <div className="flex mb-5 items-center">
-          <div>
-            <GoZap className="mr-5 text-3xl text-[#f7cb22]" />
-          </div>
-          <div>
-            <h2 style={{ color: "#f7cb22" }}>Performance Improvements</h2>
-            <p className="text-sm">
-              {" "}
-              Bottom sheets are now smoother and more responsive.
-            </p>
-          </div>
-        </div>
-        <div className="flex mb-5 items-center">
+        <div className="flex items-center mb-5">
           <div>
             <MdOutlinePalette className="mr-5 text-3xl text-[#ee7578]" />
           </div>
           <div>
-            <h2 style={{ color: "#ee7578" }}>UX Enhancements</h2>
+            <h2 style={{ color: "#ee7578" }}>UI Improvements</h2>
             <p className="text-sm">
               {" "}
-              The reset-all-tasbeeh option has been moved from the settings page
-              to the tasbeeh page, so it's now right where your tasbeehs are
-              managed, other small improvements have also been made.
+              Toast alert display times have been adjusted, along with other
+              small improvements for a smoother experience.
             </p>
           </div>
         </div>

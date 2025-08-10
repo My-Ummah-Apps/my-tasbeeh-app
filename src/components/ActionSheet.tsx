@@ -17,7 +17,8 @@ const ActionSheet = ({
 }: ActionSheetProps) => {
   return (
     <IonActionSheet
-      className="action-sheet"
+      cssClass={"action-sheet"}
+      // className="action-sheet"
       header={header || "Actions"}
       {...(isOpen !== undefined ? { isOpen } : {})}
       {...(trigger ? { trigger } : {})}

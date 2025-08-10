@@ -357,7 +357,7 @@ const SettingsPage = ({
                     <p className="pt-[0.3rem] pb-[0.1rem]">
                       Daily Tasbeeh Reset
                     </p>
-                    <p className="pt-[0.3rem]  pb-[0.1rem] text-[0.8rem] font-light">
+                    <p className="pt-[0.3rem] pb-[0.1rem] text-[0.8rem] font-light">
                       All tasbeehs will be reset daily
                     </p>
                   </div>

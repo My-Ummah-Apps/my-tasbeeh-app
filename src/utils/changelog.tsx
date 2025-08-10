@@ -1,8 +1,32 @@
-export const LATEST_APP_VERSION = "2.9";
+export const LATEST_APP_VERSION = "3.0";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "UI Improvements",
+        text: (
+          <>
+            The app’s header and navigation bar have been redesigned, and tab
+            icons have been rearranged to better match your device’s platform
+            style.
+          </>
+        ),
+      },
+      {
+        heading: "UX Enhancements",
+        text: (
+          <>
+            Toast alert display times have been adjusted, along with other small
+            improvements for a smoother experience.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "2.9",
     changes: [
       {
         heading: "Auto Tasbeeh Switch",

@@ -250,6 +250,13 @@ ion-toggle {
   --handle-background: #eb7769; */
 }
 
+.action-sheet {
+  --background: var(--body-bg-color);
+  --color: var(--ion-text-color);
+  /* --button-background: transparent; */
+  --button-color: var(--ion-text-color);
+}
+
 .modal-fit-content {
   --height: auto;
 }
