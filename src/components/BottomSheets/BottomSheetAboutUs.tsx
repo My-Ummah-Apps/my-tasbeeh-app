@@ -23,7 +23,7 @@ const BottomSheetAboutUs = ({
       initialBreakpoint={1}
       breakpoints={[0, 1]}
     >
-      <section className="aboutus-content-wrap pt-9 pb-5 rounded-lg">
+      <section className="pb-5 rounded-lg aboutus-content-wrap pt-9">
         <div className="text-center">
           <img
             className="block mx-auto mb-2"

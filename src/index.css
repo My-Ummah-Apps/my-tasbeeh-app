@@ -22,7 +22,7 @@
   --nav-border-color: #e2e2e2;
   --nav-tab-color: #373737;
   --nav-active-tab-color: #3880ff;
-  --border-color: rgb(227, 227, 227);
+  --border-color: rgba(219, 219, 219, 1);
   --toast-bg-color: #262626;
   --toast-text-color: #fff;
   --setings-page-boxes-bg-color: #f7f7f7;
@@ -46,7 +46,7 @@ body.dark {
   --navbar-bg-color: rgb(34, 34, 34);
   --nav-tab-color: grey;
   --nav-active-tab-color: white;
-  --border-color: rgb(38, 38, 38);
+  --border-color: rgba(50, 50, 50, 1);
   --toast-bg-color: #d4d4d4;
   --toast-text-color: #000000;
   --setings-page-boxes-bg-color: #2f2f2f;
@@ -215,7 +215,7 @@ body.dark ion-alert {
 }
 
 ion-list.ion-list-reorder-counters {
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 ion-list.ion-list-reorder-counters,
@@ -575,14 +575,9 @@ input[type="number"] {
   padding: 0.1rem 0;
 }
 
-.setting-bottom-border section:not(:last-child) {
+.setting-bottom-border section:not(:last-of-type) {
   border-bottom: 1px solid var(--settings-page-borders);
 }
-
-/* .setting-bottom-border section:last-child {
-  border-bottom: 1px solid red !important;
-  padding: 1rem;
-} */
 
 .theme-setting-wrap {
   border: none;

@@ -49,6 +49,7 @@ function App() {
     useState(false);
   const [showMajorUpdateBottomSheet, setShowMajorUpdateBottomSheet] =
     useState(false);
+
   // const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [activeCounter, setActiveCounter] = useState<counterObjType>({
     id: -1,
@@ -384,7 +385,7 @@ function App() {
         isExistingUser
       ) {
         // setShowChangelogBottomSheet(true);
-        setShowMajorUpdateBottomSheet(true);
+        // setShowMajorUpdateBottomSheet(true);
       }
 
       if (DBResultPreferences.values.length === 0) {
@@ -815,7 +816,6 @@ function App() {
                 />
               )}
             />
-
             <Route
               exact
               path="/CountersPage"

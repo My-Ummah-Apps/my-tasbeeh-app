@@ -57,7 +57,7 @@ const BottomSheetReorderCounters = ({
   };
   return (
     <IonModal
-      style={{ "--height": "95vh" }}
+      style={{ "--height": "91vh" }}
       mode="ios"
       trigger={triggerId}
       initialBreakpoint={1}
@@ -66,13 +66,13 @@ const BottomSheetReorderCounters = ({
       // onWillDismiss={(event) => onWillDismiss(event)}
     >
       <h1 className="modal-header-text ">Re-order Tasbeehs</h1>
-      <IonContent className="ion-padding">
+      <IonContent>
         <IonList className="ion-list-reorder-counters">
           <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
             {countersState.map((counterItem: counterObjType) => {
               return (
                 <IonItem key={counterItem.id} mode="ios" className="text-white">
-                  <IonLabel className="whitespace-nowrap overflow-hidden text-ellipsis">
+                  <IonLabel className="overflow-hidden whitespace-nowrap text-ellipsis">
                     {counterItem.name}
                   </IonLabel>
                   <IonReorder slot="end"></IonReorder>

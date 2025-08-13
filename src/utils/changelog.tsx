@@ -1,16 +1,30 @@
-export const LATEST_APP_VERSION = "3.0";
+export const LATEST_APP_VERSION = "3.1";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
     changes: [
       {
+        heading: "Bug Fix",
+        text: (
+          <>
+            <strong>Fixed</strong>: Resolved issue with long counter names not
+            auto-scrolling properly
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "3.0",
+    changes: [
+      {
         heading: "UI Improvements",
         text: (
           <>
-            The app’s header and navigation bar have been redesigned, and tab
-            icons have been rearranged to better match your device’s platform
-            style.
+            <strong>Improved</strong>: The app’s header and navigation bar have
+            been redesigned, and tab icons have been rearranged to better match
+            your device’s platform style.
           </>
         ),
       },
@@ -18,8 +32,9 @@ export const changeLogs = [
         heading: "UX Enhancements",
         text: (
           <>
-            Toast alert display times have been adjusted, along with other small
-            improvements for a smoother experience.
+            <strong>Improved</strong>: Toast alert display times have been
+            adjusted, along with other small improvements for a smoother
+            experience.
           </>
         ),
       },
@@ -32,7 +47,7 @@ export const changeLogs = [
         heading: "Auto Tasbeeh Switch",
         text: (
           <>
-            <strong>Fix</strong>: Resolved issue with reorder counter sheet
+            <strong>Fixed</strong>: Resolved issue with reorder counter sheet
             being dragged up/down while the content within it was being
             scrolled.
           </>

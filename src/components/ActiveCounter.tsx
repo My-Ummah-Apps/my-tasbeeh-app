@@ -31,32 +31,36 @@ function ActiveCounter({
   const [scroll, setScroll] = useState<boolean>(false);
 
   useEffect(() => {
-    const counterTextContainerWidth = counterTextContainerRef.current
-      ? counterTextContainerRef.current.clientWidth
-      : 0;
-
     if (direction(activeCounter.name) === "ltr") {
       setLanguageDirection("ltr");
     } else if (direction(activeCounter.name) === "rtl") {
       setLanguageDirection("rtl");
     }
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const counterTextContainerWidth = counterTextContainerRef.current
+          ? counterTextContainerRef.current.clientWidth
+          : 0;
 
-    if (
-      activeCounterTextRef.current &&
-      activeCounterTextRef.current.clientWidth < counterTextContainerWidth
-    ) {
-      setScroll(false);
-    } else if (
-      activeCounterTextRef.current &&
-      mScrollRef.current &&
-      activeCounterTextRef.current.clientWidth > counterTextContainerWidth
-    ) {
-      setScroll(true);
-      const scrollSpeed = activeCounterTextRef.current.innerText.length * 0.3;
-      mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
-    } else {
-      console.warn("Scroll refs not ready, skipping scroll setup.");
-    }
+        if (
+          activeCounterTextRef.current &&
+          activeCounterTextRef.current.clientWidth < counterTextContainerWidth
+        ) {
+          setScroll(false);
+        } else if (
+          activeCounterTextRef.current &&
+          mScrollRef.current &&
+          activeCounterTextRef.current.clientWidth > counterTextContainerWidth
+        ) {
+          setScroll(true);
+          const scrollSpeed =
+            activeCounterTextRef.current.innerText.length * 0.3;
+          mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
+        } else {
+          console.warn("Scroll refs not ready, skipping scroll setup.");
+        }
+      }, 0);
+    });
   }, [activeCounter.name]);
 
   const counterNameStyles = {

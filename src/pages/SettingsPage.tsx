@@ -317,7 +317,6 @@ const SettingsPage = ({
               <section className="individual-section-wrap theme-setting-wrap">
                 <SettingIndividual
                   id="open-theme-options-sheet"
-                  // indvidualStyles={"rounded-t-md"}
                   headingText={"Theme"}
                   subText={"Select Theme"}
                 />
@@ -375,8 +374,8 @@ const SettingsPage = ({
                   ></IonToggle>
                 </section>
               </section>
-              <section className="individual-section-wrap setting-bottom-border">
-                <section className="p-3 individual-row-wrap">
+              <section className="individual-section-wrap">
+                <section className="p-3 individual-row-wrap border-b border-[var(--settings-page-borders)]">
                   <div className="text-wrap " style={{ display: "block" }}>
                     <p className="pt-[0.3rem] pb-[0.1rem]">
                       Auto-Switch Tasbeeh
@@ -417,7 +416,6 @@ const SettingsPage = ({
               <section className="individual-section-wrap setting-bottom-border">
                 {Capacitor.getPlatform() === "android" && (
                   <SettingIndividual
-                    // indvidualStyles={"rounded-t-md"}
                     headingText={"Review"}
                     subText={"Rate us on the Google Play Store"}
                     onClick={() => {
@@ -429,7 +427,6 @@ const SettingsPage = ({
                 )}
                 {Capacitor.getPlatform() === "ios" && (
                   <SettingIndividual
-                    // indvidualStyles={"rounded-t-md"}
                     headingText={"Review"}
                     subText={"Rate us on the App Store"}
                     onClick={() => {
@@ -441,7 +438,6 @@ const SettingsPage = ({
                 )}
                 {Capacitor.isNativePlatform() && (
                   <SettingIndividual
-                    // indvidualStyles={"rounded-t-md"}
                     headingText={"Share"}
                     subText={"Share application"}
                     onClick={() => {
@@ -468,7 +464,6 @@ const SettingsPage = ({
                 <SettingIndividual
                   headingText={"Feedback"}
                   subText={"Send us your feedback"}
-                  // indvidualStyles={"rounded-b-md"}
                   onClick={() => {
                     link(
                       "mailto: contact@myummahapps.com?subject=My Tasbeeh App Feedback"
@@ -478,7 +473,6 @@ const SettingsPage = ({
                 <SettingIndividual
                   headingText={"Website"}
                   subText={"Visit our website"}
-                  // indvidualStyles={"rounded-b-md"}
                   onClick={() => {
                     link("https://myummahapps.com/");
                   }}
@@ -504,12 +498,8 @@ const SettingsPage = ({
                   headingText={"About"}
                   subText={"About us"}
                   indvidualStyles={"rounded-b-md border-0"}
-                  // onClick={() => setShowAboutUsSheet(true)}
                 />
-                <BottomSheetAboutUs
-                  // modalRef={modalRef}
-                  triggerId="open-about-us-modal"
-                />
+                <BottomSheetAboutUs triggerId="open-about-us-modal" />
               </section>
             </div>
           </motion.main>
