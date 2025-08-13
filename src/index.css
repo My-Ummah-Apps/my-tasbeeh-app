@@ -22,6 +22,7 @@
   --nav-border-color: #e2e2e2;
   --nav-tab-color: #373737;
   --nav-active-tab-color: #3880ff;
+  --ios-action-sheet-background: #f9f9f9;
   --border-color: rgba(219, 219, 219, 1);
   --toast-bg-color: #262626;
   --toast-text-color: #fff;
@@ -46,6 +47,7 @@ body.dark {
   --navbar-bg-color: rgb(34, 34, 34);
   --nav-tab-color: grey;
   --nav-active-tab-color: white;
+  --ios-action-sheet-background: rgb(36, 36, 36);
   --border-color: rgba(50, 50, 50, 1);
   --toast-bg-color: #d4d4d4;
   --toast-text-color: #000000;
@@ -172,8 +174,28 @@ ion-toolbar {
   --padding-bottom: 20px; */
 }
 
-ion-action-sheet.action-sheet .action-sheet-title {
+ion-action-sheet.action-sheet-custom .action-sheet-title {
   color: var(ion-text-color);
+  --color: var(ion-text-color);
+  /* opacity: 0.7; */
+}
+
+.action-sheet-title.sc-ion-action-sheet-md,
+.sc-ion-action-sheet-md {
+  --color: var(--ion-text-color);
+}
+
+.action-sheet-custom .action-sheet-button.sc-ion-action-sheet-md {
+  --color: var(--ion-text-color);
+  color: var(--ion-text-color);
+}
+
+.action-sheet-group.sc-ion-action-sheet-ios {
+  --background: var(--ios-action-sheet-background);
+  background: var(--ios-action-sheet-background) !important;
+}
+
+.action-sheet-title.sc-ion-action-sheet-md {
   opacity: 0.6;
 }
 
