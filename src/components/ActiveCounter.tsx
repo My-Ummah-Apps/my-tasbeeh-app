@@ -36,6 +36,9 @@ function ActiveCounter({
     } else if (direction(activeCounter.name) === "rtl") {
       setLanguageDirection("rtl");
     }
+    // The reason for the below code being wrapped in requestAnimationFrame and setTimeout is
+    // so that this code runs only after the DOM has fully rendered, without the code
+    // being wrapped counterTextContainerRef can end up being null breaking the scroll functionality
     requestAnimationFrame(() => {
       setTimeout(() => {
         const counterTextContainerWidth = counterTextContainerRef.current
