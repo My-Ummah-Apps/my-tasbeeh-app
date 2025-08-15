@@ -34,6 +34,8 @@ import {
   BinaryValue,
 } from "./utils/types";
 
+console.log("Window object: ", window);
+
 // import { AnimatePresence } from "framer-motion";
 import useSQLiteDB from "./utils/useSqliteDB";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
@@ -354,6 +356,7 @@ function App() {
         }
         // const initialiseAndLoadData = async () => {
         await fetchDataFromDB();
+
         // };
         // initialiseAndLoadData();
       }

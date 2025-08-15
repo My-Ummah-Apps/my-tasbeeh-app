@@ -5,6 +5,7 @@ import {
   SQLiteDBConnection,
   CapacitorSQLite,
 } from "@capacitor-community/sqlite";
+import { seedDB } from "../testDBHelper";
 
 const useSQLiteDB = () => {
   const sqliteConnection = useRef<SQLiteConnection>(); // This is the connection to the dbConnection
@@ -49,6 +50,12 @@ const useSQLiteDB = () => {
 
         await initialiseTables();
         setIsDBInitialised(true);
+
+        // @ts-ignore
+        if (import.meta.env.MODE === "development") {
+          (window as any).sqliteConnection = sqliteConnection;
+          (window as any).dbConnection = dbConnection;
+        }
       } catch (error) {
         console.error("Error initializing database: " + error);
       }
@@ -122,6 +129,11 @@ const useSQLiteDB = () => {
 
       await dbConnection.current.execute(counterDataTable);
       await dbConnection.current.execute(userPreferencesTable);
+
+      // @ts-ignore
+      if (import.meta.env.MODE === "development") {
+        await seedDB();
+      }
     } catch (error) {
       console.error(error);
     } finally {

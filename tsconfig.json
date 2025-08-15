@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    // "module": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["jest", "@ionic/core"],
     "allowJs": false,
