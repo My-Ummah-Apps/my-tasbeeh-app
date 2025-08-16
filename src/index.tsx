@@ -30,6 +30,11 @@ import { JeepSqlite } from "jeep-sqlite/dist/components/jeep-sqlite";
 import { CapacitorSQLite, SQLiteConnection } from "@capacitor-community/sqlite";
 import { Capacitor } from "@capacitor/core";
 
+// @ts-ignore
+// if (import.meta.env.MODE === "development") {
+//   (window as any).dbReady = false;
+// }
+
 window.addEventListener("DOMContentLoaded", async () => {
   try {
     const platform = Capacitor.getPlatform();
