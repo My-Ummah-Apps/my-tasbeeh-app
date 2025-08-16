@@ -131,9 +131,9 @@ const useSQLiteDB = () => {
       await dbConnection.current.execute(userPreferencesTable);
 
       // @ts-ignore
-      if (import.meta.env.MODE === "development") {
-        await seedDB();
-      }
+      // if (import.meta.env.MODE === "development") {
+      //   await seedDB();
+      // }
     } catch (error) {
       console.error(error);
     } finally {

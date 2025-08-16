@@ -1,6 +1,9 @@
 import { LATEST_APP_VERSION } from "../../src/utils/changelog";
-import { DEFAULT_COUNTERS } from "../../src/utils/constants";
-import { counterObjType } from "../../src/utils/types";
+import {
+  DEFAULT_COUNTERS,
+  dictPreferencesDefaultValues,
+} from "../../src/utils/constants";
+import { counterObjType, userPreferencesType } from "../../src/utils/types";
 
 const counterIncrementBtn = () =>
   cy.get('[data-testid="counter-increment-button"]');
@@ -28,7 +31,6 @@ const expectTestIdToContain = (
   value: string,
   assertion: "contain" | "have.text"
 ) => {
-  n;
   cy.get(`[data-testid="${testId}"]`).should(assertion, value);
 };
 
@@ -67,7 +69,52 @@ const expectTestIdToContain = (
 
 describe("New user flow with no data present in localStorage or DB", () => {
   beforeEach(() => {
-    cy.clearLocalStorage();
+    cy.window({ timeout: 10000 }).should((window) => {
+      expect((window as any).dbConnection).to.exist;
+    });
+    cy.window().then(async (window) => {
+      const db = (window as any).dbConnection;
+      console.log("window IS: ", window.dbConnection);
+
+      await db.current.run("DELETE FROM userPreferencesTable");
+      const params = Object.keys(dictPreferencesDefaultValues)
+        .map((key) => {
+          const value =
+            dictPreferencesDefaultValues[key as keyof userPreferencesType];
+          return [key, Array.isArray(value) ? value.join(",") : value];
+        })
+        .flat();
+
+      const placeholders = Array(params.length / 2)
+        .fill("(?, ?)")
+        .join(", ");
+
+      const insertStmnt = `
+            INSERT OR IGNORE INTO userPreferencesTable (preferenceName, preferenceValue) 
+            VALUES ${placeholders};
+            `;
+
+      await db.run(insertStmnt, params);
+
+      await db.run("DELETE FROM counterDataTable");
+
+      for (let i = 0; i < DEFAULT_COUNTERS.length; i++) {
+        const counterObj = DEFAULT_COUNTERS[i];
+        const isActive = counterObj.isActive === 1 ? 1 : 0;
+
+        const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+
+        await db.run(insertStmnt, [
+          i,
+          counterObj.name,
+          counterObj.count,
+          counterObj.target,
+          null,
+          isActive,
+        ]);
+      }
+    });
+    // cy.clearLocalStorage();
     cy.visit("/");
   });
 
