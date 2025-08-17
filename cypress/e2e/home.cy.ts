@@ -14,12 +14,20 @@ const counterProgressText = () =>
   cy.get('[data-testid="counter-progress-percent-text"]');
 const counterTargetText = () => cy.get('data-testid="counter-target-text"');
 
-const assertLocalStorageActiveCounterValue = (num: number) => {
-  cy.window().then((win) => {
-    const counters = JSON.parse(
-      win.localStorage.getItem("localSavedCountersArray") || "[]"
+const assertDatabaseActiveCounterValue = (num: number) => {
+  cy.window().then(async (window) => {
+    const db = (window as any).dbConnection;
+    await db.current.open();
+
+    const countersFromDB = await db.current.query(
+      "SELECT * FROM counterDataTable"
     );
-    const activeCounter = counters.find(
+    const countersFromDBValues = countersFromDB.values;
+
+    // const counters = JSON.parse(
+    //   window.localStorage.getItem("localSavedCountersArray") || "[]"
+    // );
+    const activeCounter = countersFromDBValues.find(
       (counter: counterObjType) => counter.isActive
     );
     expect(activeCounter.count).to.equal(num);
@@ -77,6 +85,7 @@ describe("New user flow with no data present in localStorage or DB", () => {
     cy.window().then(async (window) => {
       const db = (window as any).dbConnection;
       console.log("db IS: ", db);
+
       await db.current.open();
       await db.current.run("DELETE FROM userPreferencesTable");
       const params = Object.keys(dictPreferencesDefaultValues)
@@ -115,24 +124,31 @@ describe("New user flow with no data present in localStorage or DB", () => {
           isActive,
         ]);
       }
+      await db.current.close();
     });
-    // cy.clearLocalStorage();
-    // cy.visit("/");
   });
 
   it("should match DEFAULT_COUNTERS", () => {
-    cy.window().then((win) => {
-      const waitForCounters = () =>
-        JSON.parse(win.localStorage.getItem("localSavedCountersArray") || "[]");
+    cy.window().then(async (window) => {
+      const db = (window as any).dbConnection;
+      await db.current.open();
 
-      cy.wrap(null).should(() => {
-        const counters = waitForCounters();
-        expect(counters.length).to.be.greaterThan(0);
+      const countersFromDB = await db.current.query(
+        "SELECT * FROM counterDataTable"
+      );
+      const countersFromDBValues = countersFromDB.values;
+      console.log("countersFromDB.value ", countersFromDB.values);
+      console.log("DEFAULT_COUNTERS: ", DEFAULT_COUNTERS);
 
-        const removeIds = (arr: counterObjType[]) =>
-          arr.map(({ id, ...counter }) => counter);
-        expect(removeIds(counters)).to.deep.equal(removeIds(DEFAULT_COUNTERS));
-      });
+      expect(countersFromDBValues.length).to.be.greaterThan(0);
+
+      const removeIdsFromCounters = (arr: counterObjType[]) => {
+        return arr.map(({ id, ...counter }) => counter);
+      };
+
+      expect(removeIdsFromCounters(countersFromDBValues)).to.deep.equal(
+        DEFAULT_COUNTERS
+      );
     });
   });
 
@@ -141,13 +157,14 @@ describe("New user flow with no data present in localStorage or DB", () => {
     expectTestIdToContain("counter-current-count-text", "0", "have.text");
   });
 
-  it("should increment the counter, update value on-screen and store value in localStorage", () => {
+  it("should increment the counter, update value on-screen and store value in the database", () => {
     counterCurrentCountText().click().click();
     expectTestIdToContain("counter-current-count-text", "2", "have.text");
 
-    assertLocalStorageActiveCounterValue(2);
+    assertDatabaseActiveCounterValue(2);
     cy.reload();
-    assertLocalStorageActiveCounterValue(2);
+    cy.wait(2000);
+    assertDatabaseActiveCounterValue(2);
   });
 });
 
@@ -176,9 +193,9 @@ describe("New user flow with no data present in localStorage or DB", () => {
 //     counterCurrentCountText().click().click();
 //     expectTestIdToContain("counter-current-count-text", "2", "have.text");
 
-//     assertLocalStorageActiveCounterValue(2);
+//     assertDatabaseActiveCounterValue(2);
 //     cy.reload();
-//     assertLocalStorageActiveCounterValue(2);
+//     assertDatabaseActiveCounterValue(2);
 //   });
 // });
 
@@ -221,9 +238,9 @@ describe("New user flow with no data present in localStorage or DB", () => {
 //     counterCurrentCountText().click().click();
 //     expectTestIdToContain("counter-current-count-text", "12", "have.text");
 
-//     assertLocalStorageActiveCounterValue(12);
+//     assertDatabaseActiveCounterValue(12);
 //     cy.reload();
-//     assertLocalStorageActiveCounterValue(12);
+//     assertDatabaseActiveCounterValue(12);
 //   });
 // });
 
@@ -288,38 +305,38 @@ describe("New user flow with no data present in localStorage or DB", () => {
 //   it("should reset the counter to 0 and persist across page reloads", () => {
 //     expectTestIdToContain("counter-current-count-text", "10", "have.text");
 //     counterResetBtn().click();
-//     assertLocalStorageActiveCounterValue(0);
+//     assertDatabaseActiveCounterValue(0);
 //     cy.reload();
-//     assertLocalStorageActiveCounterValue(0);
+//     assertDatabaseActiveCounterValue(0);
 //   });
 
 //   it("should reset the counter to 0 multiple times, increment and persist across page reloads", () => {
 //     expectTestIdToContain("counter-current-count-text", "10", "have.text");
-//     assertLocalStorageActiveCounterValue(10);
+//     assertDatabaseActiveCounterValue(10);
 
 //     counterResetBtn().click();
-//     assertLocalStorageActiveCounterValue(0);
+//     assertDatabaseActiveCounterValue(0);
 //     expectTestIdToContain("counter-current-count-text", "0", "have.text");
 
 //     counterCurrentCountText().click();
 //     expectTestIdToContain("counter-current-count-text", "1", "have.text");
-//     assertLocalStorageActiveCounterValue(1);
+//     assertDatabaseActiveCounterValue(1);
 //     cy.reload();
-//     assertLocalStorageActiveCounterValue(1);
+//     assertDatabaseActiveCounterValue(1);
 
 //     counterResetBtn().click();
-//     assertLocalStorageActiveCounterValue(0);
+//     assertDatabaseActiveCounterValue(0);
 //     expectTestIdToContain("counter-current-count-text", "0", "have.text");
 //     cy.reload();
-//     assertLocalStorageActiveCounterValue(0);
+//     assertDatabaseActiveCounterValue(0);
 //     expectTestIdToContain("counter-current-count-text", "0", "have.text");
 
 //     counterCurrentCountText().click().click();
-//     assertLocalStorageActiveCounterValue(2);
+//     assertDatabaseActiveCounterValue(2);
 //     expectTestIdToContain("counter-current-count-text", "2", "have.text");
 
 //     counterResetBtn().click();
-//     assertLocalStorageActiveCounterValue(0);
+//     assertDatabaseActiveCounterValue(0);
 //     expectTestIdToContain("counter-current-count-text", "0", "have.text");
 //   });
 // });
