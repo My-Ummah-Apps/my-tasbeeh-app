@@ -54,7 +54,7 @@ const useSQLiteDB = () => {
         if (import.meta.env.MODE === "development") {
           (window as any).sqliteConnection = sqliteConnection;
           (window as any).dbConnection = dbConnection;
-          // (window as any).dbReady = false;
+          (window as any).dbReady = false;
         }
       } catch (error) {
         console.error("Error initializing database: " + error);
@@ -150,9 +150,9 @@ const useSQLiteDB = () => {
   };
 
   // @ts-ignore
-  // if (isDBInitialised && import.meta.env.MODE === "development") {
-  //   (window as any).dbReady = true;
-  // }
+  if (isDBInitialised && import.meta.env.MODE === "development") {
+    (window as any).dbReady = true;
+  }
 
   return {
     isDBInitialised,
