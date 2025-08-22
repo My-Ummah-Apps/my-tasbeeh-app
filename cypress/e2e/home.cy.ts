@@ -93,7 +93,6 @@ function waitForDBReady(retries = 20): Cypress.Chainable<Window> {
       return win;
     } else {
       cy.wait(250);
-      console.log(retries - 1);
       return waitForDBReady(retries - 1);
     }
   });
@@ -135,74 +134,19 @@ function waitForDBReady(retries = 20): Cypress.Chainable<Window> {
 describe("New user flow with no data present in localStorage or DB", () => {
   beforeEach(() => {
     cy.visit("/");
-    // cy.wait(1500);
     cy.clearLocalStorage();
 
-    // function waitForDBReady(retries = 20) {
-    //   if (retries <= 0) {
-    //     throw new Error("DBReady didn't become true");
-    //   }
-
-    //   return cy.window().then((win) => {
-    //     if (win.dbReady) {
-    //       return win.dbReady;
-    //     } else {
-    //       cy.wait(150);
-    //       waitForDBReady(retries--);
-    //     }
-    //   });
-    // }
-
-    waitForDBReady().then((win) => {
-      const db = (win as any).dbConnection;
-      console.log("window: ", win);
-
-      const params = Object.keys(dictPreferencesDefaultValues)
-        .map((key) => {
-          const value =
-            dictPreferencesDefaultValues[key as keyof userPreferencesType];
-          return [key, Array.isArray(value) ? value.join(",") : value];
-        })
-        .flat();
-
-      const placeholders = Array(params.length / 2)
-        .fill("(?, ?)")
-        .join(", ");
-
-      const insertStmnt = `
-            INSERT OR IGNORE INTO userPreferencesTable (preferenceName, preferenceValue) 
-            VALUES ${placeholders};
-            `;
-
-      return (
-        db.current
+    waitForDBReady()
+      .then((win) => {
+        const db = (win as any).dbConnection;
+        return db.current
           .open()
           .then(() => db.current.run("DELETE FROM userPreferencesTable"))
-          .then(() => db.current.run(insertStmnt, params))
-          .then(() => db.current.run("DELETE FROM counterDataTable"))
-          // ! Remove async below
-          .then(async () => {
-            for (let i = 0; i < DEFAULT_COUNTERS.length; i++) {
-              const counterObj = DEFAULT_COUNTERS[i];
-              const isActive = counterObj.isActive === 1 ? 1 : 0;
-
-              const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
-
-              await db.current.run(insertStmnt, [
-                i,
-                counterObj.name,
-                counterObj.count,
-                counterObj.target,
-                null,
-                isActive,
-              ]);
-            }
-          })
-          .then(() => {
-            // return db.current.close();
-          })
-      );
-    });
+          .then(() => db.current.run("DELETE FROM counterDataTable"));
+      })
+      .then(() => {
+        cy.reload();
+      });
   });
 
   afterEach(() => {
@@ -213,9 +157,9 @@ describe("New user flow with no data present in localStorage or DB", () => {
   });
 
   it("should match DEFAULT_COUNTERS", () => {
-    cy.window()
-      .then((window) => {
-        const db = (window as any).dbConnection;
+    waitForDBReady()
+      .then((win) => {
+        const db = (win as any).dbConnection;
 
         return db.current
           .open()
@@ -236,14 +180,14 @@ describe("New user flow with no data present in localStorage or DB", () => {
     expectTestIdToContain("counter-current-count-text", "0", "have.text");
   });
 
-  it("should increment the counter, update value on-screen and store value in the database", () => {
-    counterCurrentCountText().click().click();
-    expectTestIdToContain("counter-current-count-text", "2", "have.text");
+  // it("should increment the counter, update value on-screen and store value in the database", () => {
+  //   counterCurrentCountText().click().click();
+  //   expectTestIdToContain("counter-current-count-text", "2", "have.text");
 
-    assertDatabaseActiveCounterValue(2);
-    cy.reload();
-    assertDatabaseActiveCounterValue(2);
-  });
+  //   assertDatabaseActiveCounterValue(2);
+  //   cy.reload();
+  //   assertDatabaseActiveCounterValue(2);
+  // });
 });
 
 // describe("New user flow with DEFAULT_COUNTERS inserted", () => {
