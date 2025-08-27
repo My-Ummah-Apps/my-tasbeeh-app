@@ -145,25 +145,28 @@ describe("New user flow with no data present in localStorage or DB", () => {
           .then(() => db.current.run("DELETE FROM counterDataTable"));
       })
       .then(() => {
-        cy.reload();
+        cy.reload().then(() => {
+          waitForDBReady().then((win) => {
+            const db = (win as any).dbConnection;
+            return db.current.open();
+          });
+        });
       });
   });
 
   afterEach(() => {
     waitForDBReady().then((win) => {
+      // cy.window().then((win) => {
       const db = (win as any).dbConnection;
       return db.current.close();
     });
   });
 
-  it("should match DEFAULT_COUNTERS", () => {
-    waitForDBReady()
+  it("should initialise counters table with defaults", () => {
+    cy.window()
       .then((win) => {
         const db = (win as any).dbConnection;
-
-        return db.current
-          .open()
-          .then(() => db.current.query("SELECT * FROM counterDataTable"));
+        return db.current.query("SELECT * FROM counterDataTable");
       })
       .should((countersFromDB) => {
         const removeIdsFromCounters = (arr: counterObjType[]) =>
@@ -175,9 +178,48 @@ describe("New user flow with no data present in localStorage or DB", () => {
       });
   });
 
-  it("should initialise with DEFAULT_COUNTERS and display the active counter", () => {
+  it("should display the default active counter", () => {
     expectTestIdToContain("active-counter-name", "Alhumdulillah", "contain");
+  });
+
+  it("should display the default active counters count", () => {
     expectTestIdToContain("counter-current-count-text", "0", "have.text");
+  });
+
+  it("should initialise DB with default user preferences", () => {
+    cy.window()
+      .then((win) => {
+        const db = (win as any).dbConnection;
+
+        return db.current
+          .open()
+          .then(() => db.current.query("SELECT * FROM userPreferencesTable"));
+      })
+      .should((userPreferences) => {
+        const userPrefsObj = {};
+
+        for (const key of userPreferences.values) {
+          if (
+            key.preferenceName === "appLaunchCount" ||
+            key.preferenceName === "isExistingUser"
+          ) {
+            userPrefsObj[key.preferenceName] = 0;
+          } else {
+            userPrefsObj[key.preferenceName] =
+              key.preferenceValue === "0" || key.preferenceValue === "1"
+                ? Number(key.preferenceValue)
+                : key.preferenceValue;
+          }
+        }
+
+        console.log("OBJ: ", userPrefsObj);
+        console.log(
+          "dictPreferencesDefaultValues: ",
+          dictPreferencesDefaultValues
+        );
+
+        expect(userPrefsObj).to.deep.equal(dictPreferencesDefaultValues);
+      });
   });
 
   // it("should increment the counter, update value on-screen and store value in the database", () => {
