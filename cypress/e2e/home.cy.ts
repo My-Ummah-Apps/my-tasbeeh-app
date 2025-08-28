@@ -18,23 +18,21 @@ const counterTargetText = () => cy.get('data-testid="counter-target-text"');
 const assertDatabaseActiveCounterValue = (num: number) => {
   waitForDBReady().then((win) => {
     const db = (win as any).dbConnection;
-    return (
-      db.current
-        // .open()
-        .then(() => db.current.query("SELECT * FROM counterDataTable"))
-        .then((countersFromDB: DBSQLiteValues) => {
-          if (!countersFromDB || !countersFromDB.values) {
-            throw new Error(
-              "countersFromDB or countersFromDB.values is undefined"
-            );
-          }
-          const activeCounter = countersFromDB.values.find(
-            (counter: counterObjType) => counter.isActive
+    return db.current
+      .open()
+      .then(() => db.current.query("SELECT * FROM counterDataTable"))
+      .then((countersFromDB: DBSQLiteValues) => {
+        if (!countersFromDB || !countersFromDB.values) {
+          throw new Error(
+            "countersFromDB or countersFromDB.values is undefined"
           );
-          if (!activeCounter) throw new Error("No active counter found");
-          expect(activeCounter.count).to.equal(num);
-        })
-    );
+        }
+        const activeCounter = countersFromDB.values.find(
+          (counter: counterObjType) => counter.isActive
+        );
+        if (!activeCounter) throw new Error("No active counter found");
+        expect(activeCounter.count).to.equal(num);
+      });
     // .finally(() => db.current.close());
   });
 };
@@ -141,8 +139,11 @@ describe("New user flow with no data present in localStorage or DB", () => {
         const db = (win as any).dbConnection;
         return db.current
           .open()
-          .then(() => db.current.run("DELETE FROM userPreferencesTable"))
-          .then(() => db.current.run("DELETE FROM counterDataTable"));
+          .then(() => db.current.run("DROP TABLE IF EXISTS counterDataTable"))
+          .then(() =>
+            db.current.run("DROP TABLE IF EXISTS userPreferencesTable")
+          )
+          .then(() => db.current.close());
       })
       .then(() => {
         cy.reload().then(() => {
@@ -156,7 +157,6 @@ describe("New user flow with no data present in localStorage or DB", () => {
 
   afterEach(() => {
     waitForDBReady().then((win) => {
-      // cy.window().then((win) => {
       const db = (win as any).dbConnection;
       return db.current.close();
     });
@@ -221,21 +221,12 @@ describe("New user flow with no data present in localStorage or DB", () => {
         expect(userPrefsObj).to.deep.equal(dictPreferencesDefaultValues);
       });
   });
-
-  // it("should increment the counter, update value on-screen and store value in the database", () => {
-  //   counterCurrentCountText().click().click();
-  //   expectTestIdToContain("counter-current-count-text", "2", "have.text");
-
-  //   assertDatabaseActiveCounterValue(2);
-  //   cy.reload();
-  //   assertDatabaseActiveCounterValue(2);
-  // });
 });
 
 // describe("New user flow with DEFAULT_COUNTERS inserted", () => {
 //   beforeEach(() => {
 //     cy.visit("/");
-//     cy.wait(2000);
+//     // cy.wait(2000);
 //     // ! Ideally, cy.wait here needs to be replaced by something like the below, where a flag is checked before proceeding as opposed to an arbitray wait time
 //     // cy.window().its("dbReady").should("be.true");
 
@@ -268,6 +259,15 @@ describe("New user flow with no data present in localStorage or DB", () => {
 //       });
 //   });
 
+// it("should increment the counter, update value on-screen and store value in the database", () => {
+//   counterCurrentCountText().click().click();
+//   expectTestIdToContain("counter-current-count-text", "2", "have.text");
+
+//   assertDatabaseActiveCounterValue(2);
+//   cy.reload();
+//   assertDatabaseActiveCounterValue(2);
+// });
+
 //   it("should display counter with isActive property set to true along with the counters count value", () => {
 //     expectTestIdToContain("active-counter-name", "Alhumdulillah", "contain");
 //     expectTestIdToContain("counter-current-count-text", "0", "have.text");
@@ -291,64 +291,64 @@ describe("New user flow with no data present in localStorage or DB", () => {
 //   });
 // });
 
-// describe("Existing user flow", () => {
-//   beforeEach(() => {
-//     cy.visit("/");
-//     cy.wait(2000);
-//     // ! Ideally, cy.wait here needs to be replaced by something like the below, where a flag is checked before proceeding as opposed to an arbitray wait time
-//     // cy.window().its("dbReady").should("be.true");
+describe("Existing user flow", () => {
+  beforeEach(() => {
+    cy.visit("/");
+    waitForDBReady()
+      .then((win) => {
+        const db = (win as any).dbConnection;
 
-//     cy.window()
-//       .then(async (window) => {
-//         const db = (window as any).dbConnection;
+        return db.current
+          .open()
+          .then(() => db.current.run("DELETE FROM counterDataTable"))
+          .then(() => {
+            const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
 
-//         await db.current.open();
-//         await db.current.run("DELETE FROM counterDataTable");
+            return db.current.run(insertStmnt, [
+              0,
+              DUMMY_COUNTERS_EXISTING_USER[0].name,
+              DUMMY_COUNTERS_EXISTING_USER[0].count,
+              DUMMY_COUNTERS_EXISTING_USER[0].target,
+              null,
+              1,
+            ]);
+          })
+          .then(() => db.current.close());
+      })
+      .then(() => cy.reload())
+      .then(() => {
+        waitForDBReady().then((win) => {
+          const db = (win as any).dbConnection;
+          return db.current.open();
+        });
+      });
+  });
 
-//         for (let i = 0; i < DUMMY_COUNTERS_EXISTING_USER.length; i++) {
-//           const counterObj = DUMMY_COUNTERS_EXISTING_USER[i];
-//           const isActive = counterObj.isActive === 1 ? 1 : 0;
+  afterEach(() => {
+    waitForDBReady().then((win) => {
+      const db = (win as any).dbConnection;
+      // if (db.current.isDBOpen()) return db.current.close();
+      return db.current.close();
+    });
+  });
 
-//           const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+  it("should display counter with isActive property set to true", () => {
+    expectTestIdToContain("active-counter-name", "Counter 1", "contain");
+  });
 
-//           await db.current.run(insertStmnt, [
-//             i,
-//             counterObj.name,
-//             counterObj.count,
-//             counterObj.target,
-//             null,
-//             isActive,
-//           ]);
-//         }
-//         await db.current.close();
-//       })
-//       .then(() => {
-//         cy.reload();
-//       });
-//   });
+  it("should display active counters count value", () => {
+    expectTestIdToContain("counter-current-count-text", "10", "have.text");
+  });
 
-//   afterEach(() => {
-//     cy.window().then(async (window) => {
-//       const db = (window as any).dbConnection;
-//       await db.current.close();
-//     });
-//   });
+  it("should increment the counter, update value on-screen and store value in the database", () => {
+    counterCurrentCountText().click().click();
+    expectTestIdToContain("counter-current-count-text", "12", "have.text");
 
-//   it("should display counter with isActive property set to true along with the counters count value from the mockCountersArr array", () => {
-//     expectTestIdToContain("active-counter-name", "Counter 1", "contain");
-//     expectTestIdToContain("counter-current-count-text", "10", "have.text");
-//   });
-
-//   it("should increment the counter, update value on-screen and store value in the database", () => {
-//     counterCurrentCountText().click().click();
-//     expectTestIdToContain("counter-current-count-text", "12", "have.text");
-
-//     assertDatabaseActiveCounterValue(12);
-//     cy.reload();
-//     cy.wait(2000);
-//     assertDatabaseActiveCounterValue(12);
-//   });
-// });
+    assertDatabaseActiveCounterValue(12);
+    cy.reload();
+    assertDatabaseActiveCounterValue(12);
+  });
+});
 
 // describe("Counter goal text", () => {
 //   beforeEach(() => {
