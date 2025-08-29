@@ -18,21 +18,31 @@ const counterTargetText = () => cy.get('data-testid="counter-target-text"');
 const assertDatabaseActiveCounterValue = (num: number) => {
   waitForDBReady().then((win) => {
     const db = (win as any).dbConnection;
-    return db.current
-      .open()
-      .then(() => db.current.query("SELECT * FROM counterDataTable"))
-      .then((countersFromDB: DBSQLiteValues) => {
-        if (!countersFromDB || !countersFromDB.values) {
-          throw new Error(
-            "countersFromDB or countersFromDB.values is undefined"
+    return (
+      db.current
+        // .open()
+        .then(() => db.current.query("SELECT * FROM counterDataTable"))
+        .then((countersFromDB: DBSQLiteValues) => {
+          if (!countersFromDB || !countersFromDB.values) {
+            throw new Error(
+              "countersFromDB or countersFromDB.values is undefined"
+            );
+          }
+          const activeCounter = countersFromDB.values.find(
+            (counter: counterObjType) => counter.isActive
           );
-        }
-        const activeCounter = countersFromDB.values.find(
-          (counter: counterObjType) => counter.isActive
-        );
-        if (!activeCounter) throw new Error("No active counter found");
-        expect(activeCounter.count).to.equal(num);
-      });
+          if (!activeCounter) throw new Error("No active counter found");
+          expect(activeCounter.count).to.equal(num);
+        })
+    );
+    // .then(() => {
+    //   waitForDBReady().then((win) => {
+    //     const db = (win as any).dbConnection;
+    //     return db.current.isDBOpen().then((res) => {
+    //       if (res.result) return db.current.close();
+    //     });
+    //   });
+    // });
     // .finally(() => db.current.close());
   });
 };
@@ -74,10 +84,10 @@ const DUMMY_COUNTERS_EXISTING_USER: Omit<counterObjType, "id">[] = [
   {
     orderIndex: 1,
     name: "Counter 2",
-    count: 22,
+    count: 0,
     color: "#EF5350",
     isActive: 0,
-    target: 43,
+    target: 5,
   },
 ];
 
@@ -331,7 +341,6 @@ describe("Existing user flow", () => {
   afterEach(() => {
     waitForDBReady().then((win) => {
       const db = (win as any).dbConnection;
-      // if (db.current.isDBOpen()) return db.current.close();
       return db.current.close();
     });
   });
@@ -392,6 +401,13 @@ describe("Counter reset and persistence after reload", () => {
       });
   });
 
+  afterEach(() => {
+    waitForDBReady().then((win) => {
+      const db = (win as any).dbConnection;
+      return db.current.close();
+    });
+  });
+
   it("should reset the counter to 0 and persist across page reloads", () => {
     expectTestIdToContain("counter-current-count-text", "10", "have.text");
     counterResetBtn().click();
@@ -401,80 +417,116 @@ describe("Counter reset and persistence after reload", () => {
     assertDatabaseActiveCounterValue(0);
   });
 
-  // it("should reset the counter to 0 multiple times, increment and persist across page reloads", () => {
-  //   expectTestIdToContain("counter-current-count-text", "10", "have.text");
-  //   assertDatabaseActiveCounterValue(10);
+  it("should reset the counter to 0 multiple times, increment and persist across page reloads", () => {
+    expectTestIdToContain("counter-current-count-text", "10", "have.text");
+    assertDatabaseActiveCounterValue(10);
 
-  //   counterResetBtn().click();
-  //   assertDatabaseActiveCounterValue(0);
-  //   expectTestIdToContain("counter-current-count-text", "0", "have.text");
+    counterResetBtn().click();
+    cy.contains("Reset Tasbeeh").click();
+    assertDatabaseActiveCounterValue(0);
+    expectTestIdToContain("counter-current-count-text", "0", "have.text");
 
-  //   counterCurrentCountText().click();
-  //   expectTestIdToContain("counter-current-count-text", "1", "have.text");
-  //   assertDatabaseActiveCounterValue(1);
-  //   cy.reload();
-  //   assertDatabaseActiveCounterValue(1);
+    counterCurrentCountText().click();
+    expectTestIdToContain("counter-current-count-text", "1", "have.text");
+    assertDatabaseActiveCounterValue(1);
+    cy.reload();
+    assertDatabaseActiveCounterValue(1);
 
-  //   counterResetBtn().click();
-  //   assertDatabaseActiveCounterValue(0);
-  //   expectTestIdToContain("counter-current-count-text", "0", "have.text");
-  //   cy.reload();
-  //   assertDatabaseActiveCounterValue(0);
-  //   expectTestIdToContain("counter-current-count-text", "0", "have.text");
+    counterResetBtn().click();
+    cy.contains("Reset Tasbeeh").click();
+    assertDatabaseActiveCounterValue(0);
+    expectTestIdToContain("counter-current-count-text", "0", "have.text");
+    cy.reload();
+    assertDatabaseActiveCounterValue(0);
+    expectTestIdToContain("counter-current-count-text", "0", "have.text");
 
-  //   counterCurrentCountText().click().click();
-  //   assertDatabaseActiveCounterValue(2);
-  //   expectTestIdToContain("counter-current-count-text", "2", "have.text");
+    counterCurrentCountText().click().click();
+    assertDatabaseActiveCounterValue(2);
+    expectTestIdToContain("counter-current-count-text", "2", "have.text");
 
-  //   counterResetBtn().click();
-  //   assertDatabaseActiveCounterValue(0);
-  //   expectTestIdToContain("counter-current-count-text", "0", "have.text");
-  // });
+    counterResetBtn().click();
+    cy.contains("Reset Tasbeeh").click();
+    assertDatabaseActiveCounterValue(0);
+    expectTestIdToContain("counter-current-count-text", "0", "have.text");
+  });
 });
 
-// describe("Counter target text behaviour", () => {
-//   beforeEach(() => {
-//     cy.visit("/", {
-//       onBeforeLoad(win) {
-//         win.localStorage.setItem(
-//           "localSavedCountersArray",
-//           JSON.stringify([
-//             {
-//               counter: "Dummy Counter",
-//               count: 0,
-//               color: "#EF5350",
-//               isActive: true,
-//               target: 5,
-//               id: "random identifier 1",
-//             },
-//           ])
-//         );
-//         win.localStorage.setItem("appVersion", LATEST_APP_VERSION);
-//       },
-//     });
-//   });
+describe("Counter target text behaviour", () => {
+  beforeEach(() => {
+    cy.visit("/");
+    waitForDBReady()
+      .then((win) => {
+        const db = (win as any).dbConnection;
 
-//   it("updates and persists correct percentage as counter increases and reaches/exceeds target", () => {
-//     expectTestIdToContain("active-counter-name", "Dummy Counter", "contain");
-//     expectTestIdToContain("counter-current-count-text", "0", "have.text");
+        return db.current
+          .open()
+          .then(() => db.current.run("DELETE FROM counterDataTable"))
+          .then(() => cy.reload())
+          .then(() => {
+            const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
 
-//     counterCurrentCountText().click();
-//     expectTestIdToContain("counter-progress-percent-text", "20%", "have.text");
-//     counterCurrentCountText().click();
-//     expectTestIdToContain("counter-progress-percent-text", "40%", "have.text");
-//     cy.reload();
-//     expectTestIdToContain("counter-progress-percent-text", "40%", "have.text");
-//     counterCurrentCountText().click().click().click();
-//     // clickIncrement(counterCurrentCountText(), 3);
-//     expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
-//     cy.reload();
-//     expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
-//     counterCurrentCountText().click().click();
-//     expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
-//     cy.reload();
-//     expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
-//   });
-// });
+            return db.current.run(insertStmnt, [
+              0,
+              DUMMY_COUNTERS_EXISTING_USER[1].name,
+              DUMMY_COUNTERS_EXISTING_USER[1].count,
+              DUMMY_COUNTERS_EXISTING_USER[1].target,
+              null,
+              1,
+            ]);
+          })
+          .then(() => db.current.close());
+      })
+      .then(() => cy.reload())
+      .then(() => {
+        waitForDBReady().then((win) => {
+          const db = (win as any).dbConnection;
+          return db.current.open();
+        });
+      });
+  });
+
+  // afterEach(() => {
+  //   waitForDBReady()
+  //     .then((win) => {
+  //       return (win as any).dbConnection;
+  //       // if (db.current.isDBOpen()) return db.current.close();
+  //       // return db.current.close();
+  //     })
+  //     .then((db) => {
+  //       return db.current.isDBOpen();
+  //     })
+  //     .then((db) => {
+  //       if (db.result) return db.current.close();
+  //     });
+  // });
+
+  // afterEach(() => {
+  //   waitForDBReady().then((win) => {
+  //     const db = (win as any).dbConnection;
+  //     return db.current.close();
+  //   });
+  // });
+
+  it("updates and persists correct percentage as counter increases and reaches/exceeds target", () => {
+    expectTestIdToContain("active-counter-name", "Counter 2", "contain");
+    expectTestIdToContain("counter-current-count-text", "0", "have.text");
+
+    counterCurrentCountText().click();
+    expectTestIdToContain("counter-progress-percent-text", "20%", "have.text");
+    counterCurrentCountText().click();
+    expectTestIdToContain("counter-progress-percent-text", "40%", "have.text");
+    cy.reload();
+    expectTestIdToContain("counter-progress-percent-text", "40%", "have.text");
+    counterCurrentCountText().click().click().click();
+    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
+    cy.reload();
+    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
+    counterCurrentCountText().click().click();
+    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
+    cy.reload();
+    expectTestIdToContain("counter-progress-percent-text", "100%", "have.text");
+  });
+});
 
 // describe("Counter button accessibility", () => {
 //   beforeEach(() => {
