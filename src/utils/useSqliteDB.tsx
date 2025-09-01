@@ -6,6 +6,8 @@ import {
   CapacitorSQLite,
 } from "@capacitor-community/sqlite";
 
+const isTest = window.Cypress;
+
 const useSQLiteDB = () => {
   const sqliteConnection = useRef<SQLiteConnection>(); // This is the connection to the dbConnection
   const dbConnection = useRef<SQLiteDBConnection>(); // This is the connection to the database itself, will deal with READ/INSERT etc
@@ -51,7 +53,7 @@ const useSQLiteDB = () => {
         setIsDBInitialised(true);
 
         // @ts-ignore
-        if (import.meta.env.MODE === "development") {
+        if (isTest) {
           (window as any).sqliteConnection = sqliteConnection;
           (window as any).dbConnection = dbConnection;
           (window as any).dbReady = false;
@@ -85,10 +87,14 @@ const useSQLiteDB = () => {
         );
       } else if (action === "open" && isDatabaseOpen.result === false) {
         await dbConnection.current.open();
-        // console.log("DB CONNECTION OPENED");
       } else if (action === "close" && isDatabaseOpen.result === true) {
-        await dbConnection.current.close();
-        // console.log("DB CONNECTION CLOSED");
+        if (isTest) {
+          console.log("CLOSING AND OPENING");
+          await dbConnection.current.close();
+          await dbConnection.current.open();
+        } else {
+          await dbConnection.current.close();
+        }
       } else {
         throw new Error(
           `Database is: ${isDatabaseOpen.result}, unable to ${action} database connection`
@@ -150,7 +156,7 @@ const useSQLiteDB = () => {
   };
 
   // @ts-ignore
-  if (isDBInitialised && import.meta.env.MODE === "development") {
+  if (isDBInitialised && isTest) {
     (window as any).dbReady = true;
   }
 

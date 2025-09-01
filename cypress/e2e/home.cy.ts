@@ -18,23 +18,21 @@ const counterTargetText = () => cy.get('data-testid="counter-target-text"');
 const assertDatabaseActiveCounterValue = (num: number) => {
   waitForDBReady().then((win) => {
     const db = (win as any).dbConnection;
-    return (
-      db.current
-        // .open()
-        .then(() => db.current.query("SELECT * FROM counterDataTable"))
-        .then((countersFromDB: DBSQLiteValues) => {
-          if (!countersFromDB || !countersFromDB.values) {
-            throw new Error(
-              "countersFromDB or countersFromDB.values is undefined"
-            );
-          }
-          const activeCounter = countersFromDB.values.find(
-            (counter: counterObjType) => counter.isActive
+    return db.current
+      .open()
+      .then(() => db.current.query("SELECT * FROM counterDataTable"))
+      .then((countersFromDB: DBSQLiteValues) => {
+        if (!countersFromDB || !countersFromDB.values) {
+          throw new Error(
+            "countersFromDB or countersFromDB.values is undefined"
           );
-          if (!activeCounter) throw new Error("No active counter found");
-          expect(activeCounter.count).to.equal(num);
-        })
-    );
+        }
+        const activeCounter = countersFromDB.values.find(
+          (counter: counterObjType) => counter.isActive
+        );
+        if (!activeCounter) throw new Error("No active counter found");
+        expect(activeCounter.count).to.equal(num);
+      });
     // .then(() => {
     //   waitForDBReady().then((win) => {
     //     const db = (win as any).dbConnection;
@@ -528,37 +526,56 @@ describe("Counter target text behaviour", () => {
   });
 });
 
-// describe("Counter button accessibility", () => {
-//   beforeEach(() => {
-//     cy.visit("/", {
-//       onBeforeLoad(win) {
-//         win.localStorage.setItem(
-//           "localSavedCountersArray",
-//           JSON.stringify([
-//             {
-//               counter: "Dummy Counter",
-//               count: 0,
-//               color: "#EF5350",
-//               isActive: true,
-//               target: 5,
-//               id: "random identifier 1",
-//             },
-//           ])
-//         );
-//         win.localStorage.setItem("appVersion", LATEST_APP_VERSION);
-//       },
-//     });
-//   });
-//   it("should have the correct aria-label", () => {
-//     counterIncrementBtn()
-//       .should("have.attr", "aria-label")
-//       .and("include", "Increase counter for Dummy Counter, current value is 0");
-//   });
+describe("Counter button accessibility", () => {
+  beforeEach(() => {
+    cy.visit("/");
+    waitForDBReady()
+      .then((win) => {
+        const db = (win as any).dbConnection;
 
-//   it("should update aria-label correct after incrementing the counter", () => {
-//     counterIncrementBtn().click();
-//     counterIncrementBtn()
-//       .should("have.attr", "aria-label")
-//       .and("include", "Increase counter for Dummy Counter, current value is 1");
-//   });
-// });
+        return db.current
+          .open()
+          .then(() => db.current.run("DELETE FROM counterDataTable"))
+          .then(() => cy.reload())
+          .then(() => {
+            const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+
+            return db.current.run(insertStmnt, [
+              0,
+              DUMMY_COUNTERS_EXISTING_USER[1].name,
+              DUMMY_COUNTERS_EXISTING_USER[1].count,
+              DUMMY_COUNTERS_EXISTING_USER[1].target,
+              null,
+              1,
+            ]);
+          })
+          .then(() => db.current.close());
+      })
+      .then(() => cy.reload())
+      .then(() => {
+        waitForDBReady().then((win) => {
+          const db = (win as any).dbConnection;
+          return db.current.open();
+        });
+      });
+  });
+
+  it("should have the correct aria-label", () => {
+    counterIncrementBtn()
+      .should("have.attr", "aria-label")
+      .and(
+        "include",
+        `Increase counter for ${DUMMY_COUNTERS_EXISTING_USER[1].name}, current value is 0`
+      );
+  });
+
+  it("should update aria-label correct after incrementing the counter", () => {
+    counterIncrementBtn().click();
+    counterIncrementBtn()
+      .should("have.attr", "aria-label")
+      .and(
+        "include",
+        `Increase counter for ${DUMMY_COUNTERS_EXISTING_USER[1].name}, current value is 1`
+      );
+  });
+});
