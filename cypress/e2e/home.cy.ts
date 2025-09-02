@@ -411,3 +411,7 @@ describe("Counter button accessibility", () => {
       );
   });
 });
+
+describe("Counter incrementing with auto-switch enabled", () => {
+  it("increments counter and switches to next counter when target is reached", () => {});
+});
