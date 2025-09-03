@@ -43,6 +43,62 @@ const assertDatabaseActiveCounterValue = (num: number) => {
   });
 };
 
+const resetDBAndLocalStorage = () => {
+  cy.visit("/");
+  cy.clearLocalStorage();
+
+  return waitForDBReady()
+    .then((win) => {
+      const db = (win as any).dbConnection;
+      return db.current
+        .open()
+        .then(() => db.current.run("DROP TABLE IF EXISTS counterDataTable"))
+        .then(() => db.current.run("DROP TABLE IF EXISTS userPreferencesTable"))
+        .then(() => db.current.close());
+    })
+    .then(() => {
+      cy.reload().then(() => {
+        waitForDBReady().then((win) => {
+          const db = (win as any).dbConnection;
+          return db.current.open();
+        });
+      });
+    });
+};
+
+const insertDummyCounter = (counter: number) => {
+  cy.visit("/");
+  return waitForDBReady()
+    .then((win) => {
+      const db = (win as any).dbConnection;
+
+      return db.current
+        .open()
+        .then(() => db.current.run("DELETE FROM counterDataTable"))
+        .then(() => cy.reload())
+        .then(() => {
+          const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
+
+          return db.current.run(insertStmnt, [
+            0,
+            DUMMY_COUNTERS[counter].name,
+            DUMMY_COUNTERS[counter].count,
+            DUMMY_COUNTERS[counter].target,
+            null,
+            1,
+          ]);
+        })
+        .then(() => db.current.close());
+    })
+    .then(() => cy.reload())
+    .then(() => {
+      waitForDBReady().then((win) => {
+        const db = (win as any).dbConnection;
+        return db.current.open();
+      });
+    });
+};
+
 const expectTestIdToContain = (
   testId: string,
   value: string,
@@ -51,7 +107,7 @@ const expectTestIdToContain = (
   cy.get(`[data-testid="${testId}"]`).should(assertion, value);
 };
 
-const DUMMY_COUNTERS_EXISTING_USER: Omit<counterObjType, "id">[] = [
+const DUMMY_COUNTERS: Omit<counterObjType, "id">[] = [
   {
     orderIndex: 0,
     name: "Counter 1",
@@ -68,32 +124,19 @@ const DUMMY_COUNTERS_EXISTING_USER: Omit<counterObjType, "id">[] = [
     isActive: 0,
     target: 5,
   },
+  {
+    orderIndex: 2,
+    name: "Counter 3",
+    count: 0,
+    color: "#EF5350",
+    isActive: 0,
+    target: 3,
+  },
 ];
 
 describe("New user flow with no data present in localStorage or DB", () => {
   beforeEach(() => {
-    cy.visit("/");
-    cy.clearLocalStorage();
-
-    waitForDBReady()
-      .then((win) => {
-        const db = (win as any).dbConnection;
-        return db.current
-          .open()
-          .then(() => db.current.run("DROP TABLE IF EXISTS counterDataTable"))
-          .then(() =>
-            db.current.run("DROP TABLE IF EXISTS userPreferencesTable")
-          )
-          .then(() => db.current.close());
-      })
-      .then(() => {
-        cy.reload().then(() => {
-          waitForDBReady().then((win) => {
-            const db = (win as any).dbConnection;
-            return db.current.open();
-          });
-        });
-      });
+    resetDBAndLocalStorage();
   });
 
   afterEach(() => {
@@ -161,35 +204,7 @@ describe("New user flow with no data present in localStorage or DB", () => {
 
 describe("Existing user flow", () => {
   beforeEach(() => {
-    cy.visit("/");
-    waitForDBReady()
-      .then((win) => {
-        const db = (win as any).dbConnection;
-
-        return db.current
-          .open()
-          .then(() => db.current.run("DELETE FROM counterDataTable"))
-          .then(() => {
-            const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
-
-            return db.current.run(insertStmnt, [
-              0,
-              DUMMY_COUNTERS_EXISTING_USER[0].name,
-              DUMMY_COUNTERS_EXISTING_USER[0].count,
-              DUMMY_COUNTERS_EXISTING_USER[0].target,
-              null,
-              1,
-            ]);
-          })
-          .then(() => db.current.close());
-      })
-      .then(() => cy.reload())
-      .then(() => {
-        waitForDBReady().then((win) => {
-          const db = (win as any).dbConnection;
-          return db.current.open();
-        });
-      });
+    insertDummyCounter(0);
   });
 
   afterEach(() => {
@@ -220,36 +235,7 @@ describe("Existing user flow", () => {
 
 describe("Counter reset and persistence after reload", () => {
   beforeEach(() => {
-    cy.visit("/");
-    waitForDBReady()
-      .then((win) => {
-        const db = (win as any).dbConnection;
-
-        return db.current
-          .open()
-          .then(() => db.current.run("DELETE FROM counterDataTable"))
-          .then(() => cy.reload())
-          .then(() => {
-            const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
-
-            return db.current.run(insertStmnt, [
-              0,
-              DUMMY_COUNTERS_EXISTING_USER[0].name,
-              DUMMY_COUNTERS_EXISTING_USER[0].count,
-              DUMMY_COUNTERS_EXISTING_USER[0].target,
-              null,
-              1,
-            ]);
-          })
-          .then(() => db.current.close());
-      })
-      .then(() => cy.reload())
-      .then(() => {
-        waitForDBReady().then((win) => {
-          const db = (win as any).dbConnection;
-          return db.current.open();
-        });
-      });
+    insertDummyCounter(0);
   });
 
   afterEach(() => {
@@ -301,42 +287,13 @@ describe("Counter reset and persistence after reload", () => {
 
 describe("Counter target text behaviour", () => {
   beforeEach(() => {
-    cy.visit("/");
-    waitForDBReady()
-      .then((win) => {
-        const db = (win as any).dbConnection;
-
-        return db.current
-          .open()
-          .then(() => db.current.run("DELETE FROM counterDataTable"))
-          .then(() => cy.reload())
-          .then(() => {
-            const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
-
-            return db.current.run(insertStmnt, [
-              0,
-              DUMMY_COUNTERS_EXISTING_USER[1].name,
-              DUMMY_COUNTERS_EXISTING_USER[1].count,
-              DUMMY_COUNTERS_EXISTING_USER[1].target,
-              null,
-              1,
-            ]);
-          })
-          .then(() => db.current.close());
-      })
-      .then(() => cy.reload())
-      .then(() => {
-        waitForDBReady().then((win) => {
-          const db = (win as any).dbConnection;
-          return db.current.open();
-        });
-      });
+    insertDummyCounter(1);
   });
 
   afterEach(() => {
     closeDBConnection();
   });
-  // ! Below test is causing DB race conditions
+  // ! Below test is causing alot of DB race conditions
   // it("updates and persists correct percentage as counter increases and reaches/exceeds target", () => {
   //   expectTestIdToContain("active-counter-name", "Counter 2", "contain");
   //   expectTestIdToContain("counter-current-count-text", "0", "have.text");
@@ -360,36 +317,7 @@ describe("Counter target text behaviour", () => {
 
 describe("Counter button accessibility", () => {
   beforeEach(() => {
-    cy.visit("/");
-    waitForDBReady()
-      .then((win) => {
-        const db = (win as any).dbConnection;
-
-        return db.current
-          .open()
-          .then(() => db.current.run("DELETE FROM counterDataTable"))
-          .then(() => cy.reload())
-          .then(() => {
-            const insertStmnt = `INSERT into counterDataTable(orderIndex, name, count, target, color, isActive) VALUES (?, ?, ?, ?, ?, ?)`;
-
-            return db.current.run(insertStmnt, [
-              0,
-              DUMMY_COUNTERS_EXISTING_USER[1].name,
-              DUMMY_COUNTERS_EXISTING_USER[1].count,
-              DUMMY_COUNTERS_EXISTING_USER[1].target,
-              null,
-              1,
-            ]);
-          })
-          .then(() => db.current.close());
-      })
-      .then(() => cy.reload())
-      .then(() => {
-        waitForDBReady().then((win) => {
-          const db = (win as any).dbConnection;
-          return db.current.open();
-        });
-      });
+    insertDummyCounter(1);
   });
 
   it("should have the correct aria-label", () => {
@@ -397,7 +325,7 @@ describe("Counter button accessibility", () => {
       .should("have.attr", "aria-label")
       .and(
         "include",
-        `Increase counter for ${DUMMY_COUNTERS_EXISTING_USER[1].name}, current value is 0`
+        `Increase counter for ${DUMMY_COUNTERS[1].name}, current value is 0`
       );
   });
 
@@ -407,11 +335,39 @@ describe("Counter button accessibility", () => {
       .should("have.attr", "aria-label")
       .and(
         "include",
-        `Increase counter for ${DUMMY_COUNTERS_EXISTING_USER[1].name}, current value is 1`
+        `Increase counter for ${DUMMY_COUNTERS[1].name}, current value is 1`
       );
   });
 });
 
-describe("Counter incrementing with auto-switch enabled", () => {
-  it("increments counter and switches to next counter when target is reached", () => {});
+describe.only("Counter incrementing with auto-switch enabled", () => {
+  beforeEach(() => {
+    resetDBAndLocalStorage();
+    // insertDummyCounter(1);
+  });
+
+  it("increments counter and switches to next counter when target is reached", () => {
+    cy.visit("SettingsPage");
+    cy.get('[data-testid="auto-counter-switch-toggle"]').click();
+    cy.visit("/");
+    for (let i = 0; i < DEFAULT_COUNTERS[0].target; i++) {
+      counterIncrementBtn().click();
+    }
+    expectTestIdToContain("active-counter-name", "Subhanallah", "contain");
+    for (let i = 0; i < DEFAULT_COUNTERS[1].target; i++) {
+      counterIncrementBtn().click();
+    }
+  });
+
+  it("should display switch now and cancel buttons when next counter is being loaded", () => {
+    cy.visit("SettingsPage");
+    cy.get('[data-testid="auto-counter-switch-toggle"]').click();
+    cy.visit("/");
+    for (let i = 0; i < DEFAULT_COUNTERS[0].target; i++) {
+      counterIncrementBtn().click();
+    }
+
+    cy.contains("Cancel").should("be.visible");
+    cy.contains("Switch now").should("be.visible");
+  });
 });

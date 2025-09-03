@@ -386,6 +386,7 @@ const SettingsPage = ({
                     </p>
                   </div>
                   <IonToggle
+                    data-testid="auto-counter-switch-toggle"
                     color={isPlatform("ios") ? activeColor : ""}
                     style={toggleStyles(userPreferencesState, activeColor)}
                     checked={userPreferencesState.autoSwitchCounter === 1}

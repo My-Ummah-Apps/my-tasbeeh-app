@@ -89,7 +89,6 @@ const useSQLiteDB = () => {
         await dbConnection.current.open();
       } else if (action === "close" && isDatabaseOpen.result === true) {
         if (isTest) {
-          console.log("CLOSING AND OPENING DB");
           await dbConnection.current.close();
           await dbConnection.current.open();
         } else {

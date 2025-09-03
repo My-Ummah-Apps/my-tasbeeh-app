@@ -64,7 +64,7 @@ function ActiveCounter({
         }
       }, 0);
     });
-  }, [activeCounter.name]);
+  }, [activeCounter?.name]);
 
   const counterNameStyles = {
     textOverflow: activeCounter.name.length > 50 ? "ellipsis" : "clip",
