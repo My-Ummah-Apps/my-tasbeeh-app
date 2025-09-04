@@ -23,7 +23,7 @@ import Toast from "../components/Toast";
 import ActionSheet from "../components/ActionSheet";
 import { useLocation } from "react-router-dom";
 import Overlay from "../components/Overlay";
-import { add, refresh } from "ionicons/icons";
+import { add, refresh, warningOutline } from "ionicons/icons";
 
 interface CountersPageProps {
   updateActiveCounter: (
@@ -292,19 +292,25 @@ function CountersPage({
             className="z-[10001] fixed bottom-[calc(20px+10vh)]
           text-center px-6 py-5 rounded-xl shadow-xl bg-[var(--body-bg-color)] color-[var(ion-text-color)]"
           >
-            <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
-            <h2 className="mb-2 text-lg font-semibold">{"Swipe to reveal"}</h2>
-            <p className="mb-5 text-base">
-              {"Swipe left on a tasbeeh to reveal more options"}
-            </p>
             <IonButton
-              className="mt-5"
+              shape="round"
+              fill="clear"
+              className="absolute top-0 right-0 text-white"
               onClick={() => {
                 setShowSwipeHint(false);
               }}
             >
-              CLOSE
+              X
             </IonButton>
+            <IonIcon
+              className="text-4xl text-yellow-400"
+              icon={warningOutline}
+            />
+            <h1 className="mt-0 mb-4 text-4xl text-yellow-400">IMPORTANT</h1>
+            <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
+            <h2 className="mb-2 text-lg font-semibold">
+              {"Swipe left on a tasbeeh to reveal more options"}
+            </h2>
           </motion.div>
         </>
       )}
