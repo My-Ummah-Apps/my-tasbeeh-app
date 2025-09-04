@@ -339,7 +339,11 @@ const SettingsPage = ({
                     </div>
                     <IonToggle
                       color={isPlatform("ios") ? activeColor : ""}
-                      style={toggleStyles(userPreferencesState, activeColor)}
+                      style={toggleStyles(
+                        userPreferencesState,
+                        "haptics",
+                        activeColor
+                      )}
                       checked={userPreferencesState.haptics === 1}
                       onIonChange={async (e) => {
                         const hapticsValue = e.detail.checked ? 1 : 0;
@@ -362,7 +366,11 @@ const SettingsPage = ({
                   </div>
                   <IonToggle
                     color={isPlatform("ios") ? activeColor : ""}
-                    style={toggleStyles(userPreferencesState, activeColor)}
+                    style={toggleStyles(
+                      userPreferencesState,
+                      "dailyCounterReset",
+                      activeColor
+                    )}
                     checked={userPreferencesState.dailyCounterReset === 1}
                     onIonChange={async (e) => {
                       const dailyCounterResetValue = e.detail.checked ? 1 : 0;
@@ -388,7 +396,11 @@ const SettingsPage = ({
                   <IonToggle
                     data-testid="auto-counter-switch-toggle"
                     color={isPlatform("ios") ? activeColor : ""}
-                    style={toggleStyles(userPreferencesState, activeColor)}
+                    style={toggleStyles(
+                      userPreferencesState,
+                      "autoSwitchCounter",
+                      activeColor
+                    )}
                     checked={userPreferencesState.autoSwitchCounter === 1}
                     onIonChange={async (e) => {
                       const autoSwitchCounterValue = e.detail.checked ? 1 : 0;

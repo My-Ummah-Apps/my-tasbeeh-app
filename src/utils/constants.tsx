@@ -161,6 +161,7 @@ export const nextCounterDelay = 3000;
 
 export const toggleStyles = (
   userPreferencesState: userPreferencesType,
+  preference: keyof userPreferencesType,
   activeColor: MaterialColor
 ) => {
   return {
@@ -169,6 +170,6 @@ export const toggleStyles = (
       "--handle-background-checked": activeColor,
     }),
     "--ion-color-base":
-      userPreferencesState.autoSwitchCounter === 1 ? activeColor : "#ccc",
+      userPreferencesState[preference] === 1 ? activeColor : "#ccc",
   };
 };

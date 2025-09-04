@@ -48,7 +48,11 @@ const NotificationOptions = ({
         <IonToggle
           mode={isPlatform("ios") ? "ios" : "md"}
           color={isPlatform("ios") ? activeColor : ""}
-          style={toggleStyles(userPreferencesState, activeColor)}
+          style={toggleStyles(
+            userPreferencesState,
+            "morningNotification",
+            activeColor
+          )}
           checked={userPreferencesState.morningNotification === 1}
           onIonChange={async (e) => {
             const morningNotificationValue = e.detail.checked;
@@ -85,7 +89,11 @@ const NotificationOptions = ({
         <IonToggle
           mode={isPlatform("ios") ? "ios" : "md"}
           color={isPlatform("ios") ? activeColor : ""}
-          style={toggleStyles(userPreferencesState, activeColor)}
+          style={toggleStyles(
+            userPreferencesState,
+            "afternoonNotification",
+            activeColor
+          )}
           checked={userPreferencesState.afternoonNotification === 1}
           onIonChange={async (e) => {
             const afternoonNotificationValue = e.detail.checked;
@@ -122,7 +130,11 @@ const NotificationOptions = ({
         <IonToggle
           mode={isPlatform("ios") ? "ios" : "md"}
           color={isPlatform("ios") ? activeColor : ""}
-          style={toggleStyles(userPreferencesState, activeColor)}
+          style={toggleStyles(
+            userPreferencesState,
+            "eveningNotification",
+            activeColor
+          )}
           checked={userPreferencesState.eveningNotification === 1}
           onIonChange={async (e) => {
             const eveningNotificationValue = e.detail.checked;
