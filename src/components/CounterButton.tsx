@@ -84,29 +84,37 @@ function CounterButton({
       hapticsImpactMedium();
     }
 
-    updateCountersState(incrementCounter(countersState));
+    const updatedCounters = incrementCounter(countersState);
+    updateCountersState(updatedCounters);
+
+    const newActiveCounter = updatedCounters.filter(
+      (counter) => counter.isActive === 1
+    )[0];
 
     try {
       await toggleDBConnection("open");
       const updateCounterCount = `UPDATE counterDataTable SET count = count + 1 WHERE id = ?`;
-      await dbConnection.current!.run(updateCounterCount, [activeCounter.id]);
+      await dbConnection.current!.run(updateCounterCount, [
+        newActiveCounter.id,
+      ]);
     } catch (error) {
       console.error("Error incrementing counter: ", error);
     } finally {
       await toggleDBConnection("close");
     }
 
-    if (activeCounter.count === activeCounter.target) {
+    if (newActiveCounter.count === newActiveCounter.target) {
       if (userPreferencesState.autoSwitchCounter === 1) {
         if (Capacitor.isNativePlatform()) {
           hapticsVibrate(1500);
         }
 
-        const currentCounterIndex = countersState.findIndex(
+        const currentCounterIndex = updatedCounters.findIndex(
           (counter) => counter.isActive === 1
         );
 
-        const isLastCounter = currentCounterIndex === countersState.length - 1;
+        const isLastCounter =
+          currentCounterIndex === updatedCounters.length - 1;
 
         if (isLastCounter) {
           setShowEndOfListAlert(true);
@@ -114,7 +122,7 @@ function CounterButton({
         }
 
         const nextCounterIndex = currentCounterIndex + 1;
-        const nextCounterId = countersState[nextCounterIndex].id;
+        const nextCounterId = updatedCounters[nextCounterIndex].id;
         const nextCounterColor =
           materialColors[nextCounterIndex % materialColors.length];
 
