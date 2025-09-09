@@ -7,7 +7,7 @@ import {
   userPreferencesType,
 } from "../utils/types";
 import { IonToggle, isPlatform } from "@ionic/react";
-import { toggleStyles } from "../utils/constants";
+import { toggleStyles } from "../utils/helpers";
 
 interface NotificationOptionsProps {
   updateUserPreference: (

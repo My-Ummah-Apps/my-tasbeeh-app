@@ -10,6 +10,7 @@ import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { materialColors } from "../utils/constants";
 import { MutableRefObject, useRef } from "react";
+import { incrementCounter } from "../utils/helpers";
 
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
@@ -83,16 +84,7 @@ function CounterButton({
       hapticsImpactMedium();
     }
 
-    const updatedCountersArr = countersState.map((counter) => {
-      const isActive = counter.isActive === 1;
-
-      if (isActive) {
-        return { ...counter, count: (counter.count += 1) };
-      }
-      return { ...counter };
-    });
-
-    updateCountersState(updatedCountersArr);
+    updateCountersState(incrementCounter(countersState));
 
     try {
       await toggleDBConnection("open");

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { showAlert } from "../../utils/constants";
 import { counterObjType, MaterialColor } from "../../utils/types";
 import { IonModal, IonTextarea, IonItem, IonInput } from "@ionic/react";
+import { showAlert } from "../../utils/helpers";
 
 interface BottomSheetFormProps {
   activeColor: MaterialColor;

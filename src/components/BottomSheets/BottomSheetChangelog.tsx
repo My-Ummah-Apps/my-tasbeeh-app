@@ -22,10 +22,10 @@ const BottomSheetChangelog = ({
       onWillDismiss={() => setShowChangelogBottomSheet(false)}
     >
       <h1 className="modal-header-text">Changelog</h1>
-      <section className="ion-content-changelog-wrap pb-30 overflow-auto">
-        <h1 className="ml-4 mb-4 text-2xl">Whats new?</h1>
+      <section className="overflow-auto ion-content-changelog-wrap pb-30">
+        <h1 className="mb-4 ml-4 text-2xl">Whats new?</h1>
         {changeLogs.map((item, i) => (
-          <section key={i} className="mt-4 mx-6 mb-0">
+          <section key={i} className="mx-6 mt-4 mb-0">
             {/* <p>v{item.versionNum}</p> */}
             <p>
               {item.versionNum === LATEST_APP_VERSION
@@ -35,9 +35,9 @@ const BottomSheetChangelog = ({
             {item.changes.map((item) => (
               <section
                 key={item.heading}
-                className="changelog-individual-change-wrap my-4 p-4"
+                className="px-4 pb-4 mb-4 changelog-individual-change-wrap"
               >
-                <h2 className="font-medium mb-2 text-lg">{item.heading}</h2>
+                <h2 className="mb-2 text-lg font-medium">{item.heading}</h2>
                 <p className="text-sm">{item.text}</p>
               </section>
             ))}

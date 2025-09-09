@@ -1,10 +1,4 @@
-import { Dialog } from "@capacitor/dialog";
-import { StatusBar, Style } from "@capacitor/status-bar";
-import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
-import { counterObjType, MaterialColor, userPreferencesType } from "./types";
-import { DBSQLiteValues } from "@capacitor-community/sqlite";
-import { Capacitor } from "@capacitor/core";
-import { isPlatform } from "@ionic/react";
+import { counterObjType, userPreferencesType } from "./types";
 
 export const materialColors = [
   "#EF5350",
@@ -91,15 +85,6 @@ export const DEFAULT_COUNTERS: Omit<counterObjType, "id">[] = [
   },
 ];
 
-export function assertValidDBResult(
-  result: DBSQLiteValues | undefined,
-  query: string
-): asserts result is DBSQLiteValues & { values: any[] } {
-  if (!result || !result.values) {
-    throw new Error(`${query}.values does not exist`);
-  }
-}
-
 export const todaysDate = new Date().toLocaleDateString("en-CA");
 
 export const dictPreferencesDefaultValues: userPreferencesType = {
@@ -140,36 +125,4 @@ export const sheetBackdropColor = {
 
 // type ToastOptions = Parameters<typeof Toast.show>[0];
 
-export const showAlert = async (title: string, message: string) => {
-  await Dialog.alert({
-    title: title,
-    message: message,
-  });
-};
-
-export const setStatusAndNavBarBGColor = async (
-  backgroundColor: string,
-  textColor: Style
-) => {
-  if (Capacitor.getPlatform() === "android") {
-    await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
-  }
-  await StatusBar.setStyle({ style: textColor });
-};
-
 export const nextCounterDelay = 3000;
-
-export const toggleStyles = (
-  userPreferencesState: userPreferencesType,
-  preference: keyof userPreferencesType,
-  activeColor: MaterialColor
-) => {
-  return {
-    "--track-background-checked": activeColor + "90",
-    ...(isPlatform("android") && {
-      "--handle-background-checked": activeColor,
-    }),
-    "--ion-color-base":
-      userPreferencesState[preference] === 1 ? activeColor : "#ccc",
-  };
-};

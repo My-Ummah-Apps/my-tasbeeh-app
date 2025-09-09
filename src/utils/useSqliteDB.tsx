@@ -6,7 +6,7 @@ import {
   CapacitorSQLite,
 } from "@capacitor-community/sqlite";
 
-const isTest = window.Cypress;
+const isTest = (window as any).Cypress;
 
 const useSQLiteDB = () => {
   const sqliteConnection = useRef<SQLiteConnection>(); // This is the connection to the dbConnection

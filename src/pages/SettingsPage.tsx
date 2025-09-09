@@ -40,8 +40,8 @@ import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetTheme
 import { IonToggle } from "@ionic/react";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import BottomSheetReorderCounters from "../components/BottomSheets/BottomSheetReorderCounters";
-import { toggleStyles } from "../utils/constants";
 import { useState } from "react";
+import { toggleStyles } from "../utils/helpers";
 
 interface SettingsageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;

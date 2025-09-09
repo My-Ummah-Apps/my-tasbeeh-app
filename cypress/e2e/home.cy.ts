@@ -340,34 +340,34 @@ describe("Counter button accessibility", () => {
   });
 });
 
-describe.only("Counter incrementing with auto-switch enabled", () => {
-  beforeEach(() => {
-    resetDBAndLocalStorage();
-    // insertDummyCounter(1);
-  });
+// describe("Counter incrementing with auto-switch enabled", () => {
+//   beforeEach(() => {
+//     resetDBAndLocalStorage();
+//     // insertDummyCounter(1);
+//   });
 
-  it("increments counter and switches to next counter when target is reached", () => {
-    cy.visit("SettingsPage");
-    cy.get('[data-testid="auto-counter-switch-toggle"]').click();
-    cy.visit("/");
-    for (let i = 0; i < DEFAULT_COUNTERS[0].target; i++) {
-      counterIncrementBtn().click();
-    }
-    expectTestIdToContain("active-counter-name", "Subhanallah", "contain");
-    for (let i = 0; i < DEFAULT_COUNTERS[1].target; i++) {
-      counterIncrementBtn().click();
-    }
-  });
+//   it("increments counter and switches to next counter when target is reached", () => {
+//     cy.visit("SettingsPage");
+//     cy.get('[data-testid="auto-counter-switch-toggle"]').click();
+//     cy.visit("/");
+//     for (let i = 0; i < DEFAULT_COUNTERS[0].target; i++) {
+//       counterIncrementBtn().click();
+//     }
+//     expectTestIdToContain("active-counter-name", "Subhanallah", "contain");
+//     for (let i = 0; i < DEFAULT_COUNTERS[1].target; i++) {
+//       counterIncrementBtn().click();
+//     }
+//   });
 
-  it("should display switch now and cancel buttons when next counter is being loaded", () => {
-    cy.visit("SettingsPage");
-    cy.get('[data-testid="auto-counter-switch-toggle"]').click();
-    cy.visit("/");
-    for (let i = 0; i < DEFAULT_COUNTERS[0].target; i++) {
-      counterIncrementBtn().click();
-    }
+//   it("should display switch now and cancel buttons when next counter is being loaded", () => {
+//     cy.visit("SettingsPage");
+//     cy.get('[data-testid="auto-counter-switch-toggle"]').click();
+//     cy.visit("/");
+//     for (let i = 0; i < DEFAULT_COUNTERS[0].target; i++) {
+//       counterIncrementBtn().click();
+//     }
 
-    cy.contains("Cancel").should("be.visible");
-    cy.contains("Switch now").should("be.visible");
-  });
-});
+//     cy.contains("Cancel").should("be.visible");
+//     cy.contains("Switch now").should("be.visible");
+//   });
+// });

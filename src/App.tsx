@@ -10,12 +10,9 @@ import { SplashScreen } from "@capacitor/splash-screen";
 import { Capacitor } from "@capacitor/core";
 
 import {
-  assertValidDBResult,
   DEFAULT_COUNTERS,
   dictPreferencesDefaultValues,
   materialColors,
-  setStatusAndNavBarBGColor,
-  showAlert,
   todaysDate,
 } from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
@@ -40,6 +37,11 @@ import { DBSQLiteValues } from "@capacitor-community/sqlite";
 import BottomSheetChangelog from "./components/BottomSheets/BottomSheetChangelog";
 import BottomSheetMajorUpdate from "./components/BottomSheets/BottomSheetMajorUpdate";
 import TabBar from "./components/TabBar";
+import {
+  assertValidDBResult,
+  setStatusAndNavBarBGColor,
+  showAlert,
+} from "./utils/helpers";
 
 function App() {
   const justLaunched = useRef(true);

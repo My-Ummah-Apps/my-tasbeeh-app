@@ -1,8 +1,26 @@
-export const LATEST_APP_VERSION = "3.1";
+export const LATEST_APP_VERSION = "3.2";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "Bug Fix",
+        text: (
+          <>
+            <strong>Fixed</strong>: Resolve issue with toggles on the settings
+            page not triggering on color when switched on
+            <br></br>
+            <br></br>
+            <strong>UX</strong>: Pop up message which shows first-time users the
+            swipe left to reveal feature has been improved
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "3.1",
     changes: [
       {
         heading: "Bug Fix",

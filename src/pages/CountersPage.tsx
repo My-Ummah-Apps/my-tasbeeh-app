@@ -23,7 +23,12 @@ import Toast from "../components/Toast";
 import ActionSheet from "../components/ActionSheet";
 import { useLocation } from "react-router-dom";
 import Overlay from "../components/Overlay";
-import { add, refresh, warningOutline } from "ionicons/icons";
+import {
+  add,
+  refresh,
+  warningOutline,
+  closeCircleOutline,
+} from "ionicons/icons";
 
 interface CountersPageProps {
   updateActiveCounter: (
@@ -293,20 +298,21 @@ function CountersPage({
           text-center px-6 py-5 rounded-xl shadow-xl bg-[var(--body-bg-color)] color-[var(ion-text-color)]"
           >
             <IonButton
+              size="small"
               shape="round"
               fill="clear"
-              className="absolute top-0 right-0 text-white"
+              className="absolute right-[-10px] text-white top-2"
               onClick={() => {
                 setShowSwipeHint(false);
               }}
             >
-              X
+              <IonIcon
+                className="text-3xl text-[var(--ion-text-color)]"
+                icon={closeCircleOutline}
+              />
             </IonButton>
-            <IonIcon
-              className="text-4xl text-yellow-400"
-              icon={warningOutline}
-            />
-            <h1 className="mt-0 mb-4 text-4xl text-yellow-400">IMPORTANT</h1>
+            <IonIcon className="text-4xl text-red-700" icon={warningOutline} />
+            <h1 className="mt-0 mb-4 text-4xl text-red-700">IMPORTANT</h1>
             <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
             <h2 className="mb-2 text-lg font-semibold">
               {"Swipe left on a tasbeeh to reveal more options"}
