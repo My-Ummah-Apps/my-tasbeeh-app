@@ -10,7 +10,7 @@ import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { materialColors } from "../utils/constants";
 import { MutableRefObject, useRef } from "react";
-import { incrementCounter } from "../utils/helpers";
+// import { incrementCounter } from "../utils/helpers";
 
 const hapticsImpactMedium = async () => {
   await Haptics.impact({ style: ImpactStyle.Medium });
@@ -21,6 +21,28 @@ const hapticsImpactMedium = async () => {
 
 const hapticsVibrate = async (duration: number) => {
   await Haptics.vibrate({ duration: duration });
+};
+
+export const incrementCounter = (countersState: counterObjType[]) => {
+  return countersState.map((counter) => {
+    const isActive = counter.isActive === 1;
+
+    if (isActive) {
+      return { ...counter, count: counter.count + 1 };
+    }
+    return { ...counter };
+  });
+};
+
+export const getNextCounterInfo = (
+  currentCounterIndex: number,
+  updatedCounters: counterObjType[]
+) => {
+  const nextCounterIndex = currentCounterIndex + 1;
+  return {
+    nextCounterId: updatedCounters[nextCounterIndex].id,
+    nextCounterColor: materialColors[nextCounterIndex % materialColors.length],
+  };
 };
 
 interface CounterButtonProps {
@@ -121,10 +143,10 @@ function CounterButton({
           return;
         }
 
-        const nextCounterIndex = currentCounterIndex + 1;
-        const nextCounterId = updatedCounters[nextCounterIndex].id;
-        const nextCounterColor =
-          materialColors[nextCounterIndex % materialColors.length];
+        const { nextCounterId, nextCounterColor } = getNextCounterInfo(
+          currentCounterIndex,
+          updatedCounters
+        );
 
         setShowNextCounterToast(true);
 

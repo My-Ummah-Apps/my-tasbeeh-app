@@ -1,4 +1,4 @@
-import { incrementCounter } from "./helpers";
+import { incrementCounter } from "../components/CounterButton";
 import { counterObjType } from "./types";
 
 const dummyCounters: counterObjType[] = [
@@ -23,14 +23,14 @@ const dummyCounters: counterObjType[] = [
 ];
 
 describe("incrementCounter", () => {
-  const updatedCounters = incrementCounter(dummyCounters);
-
   it("increments only the active counter", () => {
+    const updatedCounters = incrementCounter(dummyCounters);
     expect(updatedCounters[0].count).toBe(1);
     expect(updatedCounters[1].count).toBe(0);
   });
 
   it("returns same counters with same IDs", () => {
+    const updatedCounters = incrementCounter(dummyCounters);
     expect(updatedCounters.map((c) => c.id)).toEqual(
       dummyCounters.map((c) => c.id)
     );

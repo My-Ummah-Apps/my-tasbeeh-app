@@ -1,5 +1,5 @@
 import { isPlatform } from "@ionic/react";
-import { counterObjType, MaterialColor, userPreferencesType } from "./types";
+import { MaterialColor, userPreferencesType } from "./types";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { EdgeToEdge } from "@capawesome/capacitor-android-edge-to-edge-support";
 import { Capacitor } from "@capacitor/core";
@@ -46,14 +46,3 @@ export function assertValidDBResult(
     throw new Error(`${query}.values does not exist`);
   }
 }
-
-export const incrementCounter = (countersState: counterObjType[]) => {
-  return countersState.map((counter) => {
-    const isActive = counter.isActive === 1;
-
-    if (isActive) {
-      return { ...counter, count: counter.count + 1 };
-    }
-    return { ...counter };
-  });
-};
