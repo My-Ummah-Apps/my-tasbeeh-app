@@ -40,6 +40,7 @@ export const getNextCounterInfo = (
 ) => {
   const nextCounterIndex = currentCounterIndex + 1;
   return {
+    nextCounterIndex,
     nextCounterId: updatedCounters[nextCounterIndex].id,
     nextCounterColor: materialColors[nextCounterIndex % materialColors.length],
   };
