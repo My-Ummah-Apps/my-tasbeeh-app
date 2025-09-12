@@ -5,9 +5,11 @@ import userEvent from "@testing-library/user-event";
 import {
   getNextCounterInfo,
   incrementCounter,
+  incrementCounterInDB,
 } from "../components/CounterButton";
 import { counterObjType } from "../utils/types";
 import { materialColors } from "../utils/constants";
+import { vi } from "vitest";
 
 const dummyCounters: counterObjType[] = [
   {
@@ -58,6 +60,39 @@ describe("AutoSwitchCounter", () => {
     expect(nextCounterIndex).toBe(1);
     expect(nextCounterId).toBe(2);
     expect(nextCounterColor).toBe(expectedColor);
+  });
+});
+
+describe("OpenAndCloseDBConnection", () => {
+  it("opens and closes DB connection", async () => {
+    const toggleDBConnection = vi.fn().mockResolvedValue(undefined);
+    const dbConnection = {
+      current: {
+        run: vi.fn().mockResolvedValue(undefined),
+      },
+    };
+    const newActiveCounter: counterObjType = {
+      count: 0,
+      id: 1,
+      orderIndex: 0,
+      name: "Test",
+      target: 5,
+      color: "#EF5350",
+      isActive: 1,
+    };
+
+    await incrementCounterInDB(
+      toggleDBConnection,
+      dbConnection,
+      newActiveCounter
+    );
+
+    expect(toggleDBConnection).toHaveBeenCalledWith("open");
+    expect(dbConnection.current.run).toHaveBeenCalledWith(
+      `UPDATE counterDataTable SET count = count + 1 WHERE id = ?`,
+      [1]
+    );
+    expect(toggleDBConnection).toHaveBeenCalledWith("close");
   });
 });
 

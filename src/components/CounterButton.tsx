@@ -46,6 +46,22 @@ export const getNextCounterInfo = (
   };
 };
 
+export const incrementCounterInDB = async (
+  toggleDBConnection: (action: DBConnectionStateType) => Promise<void>,
+  dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>,
+  newActiveCounter: counterObjType
+) => {
+  try {
+    await toggleDBConnection("open");
+    const updateCounterCount = `UPDATE counterDataTable SET count = count + 1 WHERE id = ?`;
+    await dbConnection.current!.run(updateCounterCount, [newActiveCounter.id]);
+  } catch (error) {
+    console.error("Error incrementing counter: ", error);
+  } finally {
+    await toggleDBConnection("close");
+  }
+};
+
 interface CounterButtonProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>;
@@ -114,17 +130,11 @@ function CounterButton({
       (counter) => counter.isActive === 1
     )[0];
 
-    try {
-      await toggleDBConnection("open");
-      const updateCounterCount = `UPDATE counterDataTable SET count = count + 1 WHERE id = ?`;
-      await dbConnection.current!.run(updateCounterCount, [
-        newActiveCounter.id,
-      ]);
-    } catch (error) {
-      console.error("Error incrementing counter: ", error);
-    } finally {
-      await toggleDBConnection("close");
-    }
+    await incrementCounterInDB(
+      toggleDBConnection,
+      dbConnection,
+      newActiveCounter
+    );
 
     if (newActiveCounter.count === newActiveCounter.target) {
       if (userPreferencesState.autoSwitchCounter === 1) {
