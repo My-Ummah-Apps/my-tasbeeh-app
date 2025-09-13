@@ -1,5 +1,5 @@
-import { screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+// import { screen, waitFor } from "@testing-library/react";
+// import userEvent from "@testing-library/user-event";
 // import { vi } from "vitest";
 
 import {
@@ -64,14 +64,22 @@ describe("AutoSwitchCounter", () => {
 });
 
 describe("OpenAndCloseDBConnection", () => {
-  it("opens and closes DB connection", async () => {
-    const toggleDBConnection = vi.fn().mockResolvedValue(undefined);
-    const dbConnection = {
+  let toggleDBConnection: ReturnType<typeof vi.fn>;
+  let dbConnection: {
+    current: {
+      run: ReturnType<typeof vi.fn>;
+    };
+  };
+  let newActiveCounter: counterObjType;
+
+  beforeEach(() => {
+    toggleDBConnection = vi.fn().mockResolvedValue(undefined);
+    dbConnection = {
       current: {
         run: vi.fn().mockResolvedValue(undefined),
       },
     };
-    const newActiveCounter: counterObjType = {
+    newActiveCounter = {
       count: 0,
       id: 1,
       orderIndex: 0,
@@ -80,19 +88,33 @@ describe("OpenAndCloseDBConnection", () => {
       color: "#EF5350",
       isActive: 1,
     };
+  });
 
+  it("opens and closes DB connection", async () => {
     await incrementCounterInDB(
       toggleDBConnection,
+      // @ts-ignore
       dbConnection,
       newActiveCounter
     );
 
     expect(toggleDBConnection).toHaveBeenCalledWith("open");
+    expect(toggleDBConnection).toHaveBeenNthCalledWith(1, "open");
     expect(dbConnection.current.run).toHaveBeenCalledWith(
       `UPDATE counterDataTable SET count = count + 1 WHERE id = ?`,
       [1]
     );
     expect(toggleDBConnection).toHaveBeenCalledWith("close");
+    expect(toggleDBConnection).toHaveBeenNthCalledWith(2, "close");
+  });
+
+  it("should catch error", async () => {
+    await incrementCounterInDB(
+      toggleDBConnection,
+      // @ts-ignore
+      dbConnection,
+      newActiveCounter
+    );
   });
 });
 
