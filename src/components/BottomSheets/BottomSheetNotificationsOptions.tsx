@@ -52,7 +52,6 @@ const BottomSheetNotificationsOptions = ({
         activeCounter={activeCounter}
         userPreferencesState={userPreferencesState}
       />
-
       {/* // style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }} */}
     </IonModal>
   );

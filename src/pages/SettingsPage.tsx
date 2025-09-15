@@ -42,6 +42,7 @@ import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import BottomSheetReorderCounters from "../components/BottomSheets/BottomSheetReorderCounters";
 import { useState } from "react";
 import { toggleStyles } from "../utils/helpers";
+import BottomSheetCounterScrollSpeed from "../components/BottomSheets/BottomSheetCounterScrollSpeed";
 
 interface SettingsageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -425,6 +426,21 @@ const SettingsPage = ({
                 countersState={countersState}
                 updateCountersState={updateCountersState}
               />
+
+              <section className="individual-section-wrap theme-setting-wrap">
+                <SettingIndividual
+                  id="open-counter-scroll-speed-sheet"
+                  headingText={"Scrolling speed"}
+                  subText={
+                    "Adjust how fast long tasbeeh names move across the screen"
+                  }
+                />
+                <BottomSheetCounterScrollSpeed
+                  triggerId="open-counter-scroll-speed-sheet"
+                  // updateUserPreference={updateUserPreference}
+                  // theme={theme}
+                />
+              </section>
 
               <section className="individual-section-wrap setting-bottom-border">
                 {Capacitor.getPlatform() === "android" && (
