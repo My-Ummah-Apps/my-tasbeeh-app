@@ -1,7 +1,3 @@
-// import { screen, waitFor } from "@testing-library/react";
-// import userEvent from "@testing-library/user-event";
-// import { vi } from "vitest";
-
 import {
   getNextCounterInfo,
   incrementCounter,
@@ -92,6 +88,10 @@ describe("OpenAndCloseDBConnection", () => {
     vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
+  afterEach(() => {
+    (console.error as any).mockRestore?.();
+  });
+
   it("opens and closes DB connection", async () => {
     await incrementCounterInDB(
       toggleDBConnection,
@@ -139,42 +139,25 @@ describe("OpenAndCloseDBConnection", () => {
   });
 });
 
-// screen.logTestingPlaygroundURL();
+// const mockDBConnection = {
+//   current: {
+//     run: vi.fn().mockResolvedValue(undefined),
+//   },
+// };
 
-// test.skip("increases number upon button being tapped", async () => {
-//   //   render(
-//   //     <CounterButton
-//   //       setHaptics={vi.fn()}
-//   //       haptics={false}
-//   //       // saveArrayLocally={vi.fn()}
-//   //       // localSavedCountersArray={[
-//   //       //   {
-//   //       //     counter: "Alhumdulillah",
-//   //       //     count: 0,
-//   //       //     color: "#EF5350",
-//   //       //     isActive: true,
-//   //       //     target: 50,
-//   //       //     id: 1,
-//   //       //   },
-//   //       // ]}
-//   //       // setActiveCounterNumber={vi.fn()}
-//   //       // activeCounterNumber={0}
-//   //       // activeCounterTarget={3}
-//   //     />
-//   //   );
-//   const btn = screen.getByRole("button", {
-//     name: /Increase counter, current value is 0/i,
-//   });
-//   expect(btn).toBeInTheDocument();
-//   expect(btn).toHaveAttribute(
-//     "aria-label",
-//     "Increase counter, current value is 0"
-//   );
-//   userEvent.click(btn);
-//   await waitFor(() => {
-//     expect(btn).toHaveAttribute(
-//       "aria-label",
-//       "Increase counter, current value is 1"
-//     );
-//   });
-// });
+// render(
+//   <CounterButton
+//     dbConnection={mockDBConnection as any}
+//     toggleDBConnection={toggleDBConnection}
+//     setShowNextCounterToast={setShowNextCounterToast}
+//     cancellableDelayRef={cancellableDelayRef}
+//     isAutoSwitchCancelled={isAutoSwitchCancelled}
+//     setShowEndOfListAlert={setShowEndOfListAlert}
+//     userPreferencesState={userPreferencesState}
+//     updateActiveCounter={updateActiveCounter}
+//     activeColor={activeColor}
+//     countersState={countersState}
+//     updateCountersState={updateCountersState}
+//     activeCounter={activeCounter}
+//   />
+// );
