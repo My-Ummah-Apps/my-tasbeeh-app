@@ -88,6 +88,8 @@ describe("OpenAndCloseDBConnection", () => {
       color: "#EF5350",
       isActive: 1,
     };
+
+    vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
   it("opens and closes DB connection", async () => {
@@ -108,13 +110,32 @@ describe("OpenAndCloseDBConnection", () => {
     expect(toggleDBConnection).toHaveBeenNthCalledWith(2, "close");
   });
 
-  it("should catch error", async () => {
+  it("should catch error and close DB", async () => {
+    dbConnection = {
+      current: {
+        run: vi.fn().mockRejectedValue(new Error("DB fail")),
+      },
+    };
+
     await incrementCounterInDB(
       toggleDBConnection,
       // @ts-ignore
       dbConnection,
       newActiveCounter
     );
+
+    expect(toggleDBConnection).toHaveBeenCalledWith("open");
+    expect(toggleDBConnection).toHaveBeenNthCalledWith(1, "open");
+    expect(dbConnection.current.run).toHaveBeenCalledWith(
+      `UPDATE counterDataTable SET count = count + 1 WHERE id = ?`,
+      [1]
+    );
+    expect(console.error).toHaveBeenCalledWith(
+      "Error incrementing counter: ",
+      expect.any(Error)
+    );
+    expect(toggleDBConnection).toHaveBeenCalledWith("close");
+    expect(toggleDBConnection).toHaveBeenNthCalledWith(2, "close");
   });
 });
 
