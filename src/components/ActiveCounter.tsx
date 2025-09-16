@@ -12,7 +12,7 @@ import { refresh } from "ionicons/icons";
 interface CounterNameAndNumberProps {
   activeColor: MaterialColor;
   activeCounter: counterObjType;
-  resetSingleCounter: (id: number) => Promise<void>;
+  resetSingleCounter?: (id: number) => Promise<void>;
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
 }

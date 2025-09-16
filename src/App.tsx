@@ -860,6 +860,7 @@ function App() {
                   updateUserPreference={updateUserPreference}
                   updateCountersState={updateCountersState}
                   countersState={countersState}
+                  setLanguageDirection={setLanguageDirection}
                   activeColor={activeColor}
                   activeCounter={activeCounter}
                   closeSlidingItems={closeSlidingItems}

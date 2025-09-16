@@ -27,6 +27,7 @@ import { LocalNotifications } from "@capacitor/local-notifications";
 import {
   counterObjType,
   DBConnectionStateType,
+  languageDirection,
   MaterialColor,
   PreferenceKeyType,
   themeType,
@@ -56,6 +57,7 @@ interface SettingsageProps {
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   countersState: counterObjType[];
+  setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   closeSlidingItems: () => void;
   theme: themeType | null;
   setShowChangelogBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -71,6 +73,7 @@ const SettingsPage = ({
   activeColor,
   activeCounter,
   countersState,
+  setLanguageDirection,
   theme,
   setShowChangelogBottomSheet,
 }: SettingsageProps) => {
@@ -437,6 +440,7 @@ const SettingsPage = ({
                 />
                 <BottomSheetCounterScrollSpeed
                   triggerId="open-counter-scroll-speed-sheet"
+                  setLanguageDirection={setLanguageDirection}
                   // updateUserPreference={updateUserPreference}
                   // theme={theme}
                 />
