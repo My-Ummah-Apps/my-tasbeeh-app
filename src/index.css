@@ -265,6 +265,23 @@ ion-toggle {
   --handle-background: #eb7769; */
 }
 
+ion-range {
+  --bar-background: var(--ion-text-color);
+  --bar-background-active: var(--ion-text-color);
+  --knob-background: var(--ion-text-color);
+}
+
+/* .range-tick {
+  background: blue !important;
+} */
+
+ion-range::part(tick) {
+  background-color: var(--ion-text-color);
+}
+ion-range::part(tick-active) {
+  background-color: var(--ion-text-color);
+}
+
 .action-sheet {
   --background: var(--body-bg-color);
   --color: var(--ion-text-color);

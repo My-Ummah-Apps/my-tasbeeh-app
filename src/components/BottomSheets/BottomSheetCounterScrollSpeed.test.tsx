@@ -3,21 +3,28 @@ import { renderModalContent } from "./BottomSheetCounterScrollSpeed";
 import { vi } from "vitest";
 
 describe("Dummy Counter", () => {
-  it("renders the dummy counter", () => {
+  beforeEach(() => {
     render(renderModalContent(vi.fn()));
+  });
 
+  it("renders the dummy counter", () => {
     const dummyCounter = screen.getAllByText(
-      "This is an example tasbeeh This is an example tasbeeh"
+      "This is an example tasbeeh This is an example tasbeeh This is an example tasbeeh This is an example tasbeeh"
     );
-    const targetText = screen.getByText("100%");
 
     expect(dummyCounter[0]).toBeInTheDocument();
     expect(dummyCounter).toHaveLength(2);
-    expect(targetText).toBeInTheDocument();
+    expect(screen.getByText("100%")).toBeInTheDocument();
   });
 
+  //   ! This test will need moving to the active counter components test file
   //   it("scrolls the dummy counter", () => {
-  //     render(modalContent)
 
-  //   })
+  //   });
+
+  it("renders slider", () => {
+    expect(screen.getByLabelText("Range with ticks")).toBeInTheDocument();
+    expect(screen.getByText("Very Slow")).toBeInTheDocument();
+    expect(screen.getByText("Very Fast")).toBeInTheDocument();
+  });
 });
