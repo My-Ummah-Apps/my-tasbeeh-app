@@ -6,10 +6,14 @@ describe("Dummy Counter", () => {
   it("renders the dummy counter", () => {
     render(renderModalContent(vi.fn()));
 
-    const dummyCounter = screen.getByText(
+    const dummyCounter = screen.getAllByText(
       "This is an example tasbeeh This is an example tasbeeh"
     );
-    expect(dummyCounter).toBeInTheDocument();
+    const targetText = screen.getByText("100%");
+
+    expect(dummyCounter[0]).toBeInTheDocument();
+    expect(dummyCounter).toHaveLength(2);
+    expect(targetText).toBeInTheDocument();
   });
 
   //   it("scrolls the dummy counter", () => {
