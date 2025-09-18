@@ -125,6 +125,7 @@ function App() {
     useState<userPreferencesType>(dictPreferencesDefaultValues);
   const [showAddSuccessToast, setShowAddSuccessToast] = useState(false);
   const [showEditSuccessToast, setShowEditSuccessToast] = useState(false);
+  const [scrollSpeed, setScrollSpeed] = useState<number>();
 
   const clearLocalStorage = () => {
     localStorage.removeItem("localSavedCountersArray");
@@ -866,6 +867,8 @@ function App() {
                   closeSlidingItems={closeSlidingItems}
                   theme={theme}
                   setShowChangelogBottomSheet={setShowChangelogBottomSheet}
+                  setScrollSpeed={setScrollSpeed}
+                  scrollSpeed={scrollSpeed}
                 />
               )}
             />

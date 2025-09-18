@@ -1,5 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { renderModalContent } from "./BottomSheetCounterScrollSpeed";
+import {
+  changeScrollSpeed,
+  renderModalContent,
+} from "./BottomSheetCounterScrollSpeed";
 import { vi } from "vitest";
 
 describe("Dummy Counter", () => {
@@ -26,5 +29,10 @@ describe("Dummy Counter", () => {
     expect(screen.getByLabelText("Range with ticks")).toBeInTheDocument();
     expect(screen.getByText("Very Slow")).toBeInTheDocument();
     expect(screen.getByText("Very Fast")).toBeInTheDocument();
+  });
+
+  it("changes slider speed", () => {
+    const mockSetScrollSpeed = vi.fn();
+    changeScrollSpeed(1, mockSetScrollSpeed);
   });
 });

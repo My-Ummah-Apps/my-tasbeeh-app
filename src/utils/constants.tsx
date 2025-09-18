@@ -99,6 +99,7 @@ export const dictPreferencesDefaultValues: userPreferencesType = {
   autoSwitchCounter: 0,
   activeColor: materialColors[0],
   theme: "light",
+  scrollSpeed: 2,
 };
 
 export const pageTransitionStyles = {

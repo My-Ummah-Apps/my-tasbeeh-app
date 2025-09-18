@@ -30,6 +30,7 @@ import {
   languageDirection,
   MaterialColor,
   PreferenceKeyType,
+  scrollSpeedValue,
   themeType,
   userPreferencesType,
 } from "../utils/types";
@@ -61,6 +62,8 @@ interface SettingsageProps {
   closeSlidingItems: () => void;
   theme: themeType | null;
   setShowChangelogBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setScrollSpeed: React.Dispatch<React.SetStateAction<scrollSpeedValue>>;
+  scrollSpeed: scrollSpeedValue;
 }
 
 const SettingsPage = ({
@@ -76,6 +79,8 @@ const SettingsPage = ({
   setLanguageDirection,
   theme,
   setShowChangelogBottomSheet,
+  setScrollSpeed,
+  scrollSpeed,
 }: SettingsageProps) => {
   const [showNotificationsSheet, setShowNotificationsSheet] = useState(false);
 
@@ -441,7 +446,9 @@ const SettingsPage = ({
                 <BottomSheetCounterScrollSpeed
                   triggerId="open-counter-scroll-speed-sheet"
                   setLanguageDirection={setLanguageDirection}
-                  // updateUserPreference={updateUserPreference}
+                  setScrollSpeed={setScrollSpeed}
+                  scrollSpeed={scrollSpeed}
+                  updateUserPreference={updateUserPreference}
                   // theme={theme}
                 />
               </section>
