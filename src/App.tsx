@@ -13,6 +13,7 @@ import {
   DEFAULT_COUNTERS,
   dictPreferencesDefaultValues,
   materialColors,
+  speedMap,
   todaysDate,
 } from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
@@ -29,6 +30,7 @@ import {
   themeType,
   userPreferencesType,
   BinaryValue,
+  scrollSpeedValue,
 } from "./utils/types";
 
 // import { AnimatePresence } from "framer-motion";
@@ -125,7 +127,7 @@ function App() {
     useState<userPreferencesType>(dictPreferencesDefaultValues);
   const [showAddSuccessToast, setShowAddSuccessToast] = useState(false);
   const [showEditSuccessToast, setShowEditSuccessToast] = useState(false);
-  const [scrollSpeed, setScrollSpeed] = useState<number>();
+  const [scrollSpeed, setScrollSpeed] = useState<scrollSpeedValue>(2);
 
   const clearLocalStorage = () => {
     localStorage.removeItem("localSavedCountersArray");
@@ -549,6 +551,8 @@ function App() {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType | string
   ) => {
+    console.log("UPDATING PREFS");
+
     try {
       await toggleDBConnection("open");
       const query = `INSERT OR REPLACE INTO userPreferencesTable (preferenceName, preferenceValue) VALUES (?, ?)`;
@@ -572,6 +576,14 @@ function App() {
   useEffect(() => {
     handleTheme(userPreferencesState.theme);
   }, [userPreferencesState.theme]);
+
+  useEffect(() => {
+    setScrollSpeed(speedMap[userPreferencesState.scrollSpeed]);
+    console.log(
+      "scroll speed change detected in prefernece state, changing to: ",
+      scrollSpeed
+    );
+  }, [userPreferencesState.scrollSpeed]);
 
   if (Capacitor.getPlatform() === "ios") {
     Keyboard.setAccessoryBarVisible({ isVisible: true });
@@ -817,6 +829,8 @@ function App() {
                   countersState={countersState}
                   setLanguageDirection={setLanguageDirection}
                   languageDirection={languageDirection}
+                  setScrollSpeed={setScrollSpeed}
+                  scrollSpeed={scrollSpeed}
                 />
               )}
             />

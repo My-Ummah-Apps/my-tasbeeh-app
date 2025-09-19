@@ -4,25 +4,32 @@ import {
   counterObjType,
   languageDirection,
   MaterialColor,
+  scrollSpeedValue,
+  userPreferencesType,
 } from "../utils/types";
 import ActionSheet from "./ActionSheet";
 import { IonIcon } from "@ionic/react";
 import { refresh } from "ionicons/icons";
+import { speedMap } from "../utils/constants";
 
 interface CounterNameAndNumberProps {
+  userPreferencesState: userPreferencesType;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetSingleCounter?: (id: number) => Promise<void>;
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
+  scrollSpeed: scrollSpeedValue;
 }
 
 function ActiveCounter({
+  userPreferencesState,
   activeColor,
   activeCounter,
   resetSingleCounter,
   setLanguageDirection,
   languageDirection,
+  scrollSpeed,
 }: CounterNameAndNumberProps) {
   const counterTextContainerRef = useRef<HTMLElement | null>(null);
   const activeCounterTextRef = useRef<HTMLDivElement | null>(null);
@@ -55,16 +62,18 @@ function ActiveCounter({
           mScrollRef.current &&
           activeCounterTextRef.current.clientWidth > counterTextContainerWidth
         ) {
+          console.log("scrollSpeed within actiev counter is: ", scrollSpeed);
+
           setScroll(true);
-          const scrollSpeed =
-            activeCounterTextRef.current.innerText.length * 0.3;
-          mScrollRef.current.style.animationDuration = `${scrollSpeed}s`;
+          const scrollSpeedCalc =
+            activeCounterTextRef.current.innerText.length * scrollSpeed;
+          mScrollRef.current.style.animationDuration = `${scrollSpeedCalc}s`;
         } else {
           console.warn("Scroll refs not ready, skipping scroll setup.");
         }
       }, 0);
     });
-  }, [activeCounter?.name]);
+  }, [activeCounter?.name, scrollSpeed]);
 
   const counterNameStyles = {
     textOverflow: activeCounter.name.length > 50 ? "ellipsis" : "clip",

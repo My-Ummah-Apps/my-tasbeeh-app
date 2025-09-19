@@ -449,6 +449,7 @@ const SettingsPage = ({
                   setScrollSpeed={setScrollSpeed}
                   scrollSpeed={scrollSpeed}
                   updateUserPreference={updateUserPreference}
+                  userPreferencesState={userPreferencesState}
                   // theme={theme}
                 />
               </section>

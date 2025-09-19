@@ -15,6 +15,7 @@ import {
   DBConnectionStateType,
   languageDirection,
   MaterialColor,
+  scrollSpeedValue,
   userPreferencesType,
 } from "../utils/types";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
@@ -39,6 +40,7 @@ interface HomePageProps {
   countersState: counterObjType[];
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
+  scrollSpeed: scrollSpeedValue;
 }
 
 const HomePage = ({
@@ -53,7 +55,10 @@ const HomePage = ({
   countersState,
   setLanguageDirection,
   languageDirection,
+  scrollSpeed,
 }: HomePageProps) => {
+  console.log("HOME PAGE RENDERED");
+
   const [count, setCount] = useState(3);
   const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [showNextCounterToast, setShowNextCounterToast] = useState(false);
@@ -122,11 +127,13 @@ const HomePage = ({
           //  {...pageTransitionStyles}
         > */}
         <ActiveCounter
+          userPreferencesState={userPreferencesState}
           activeColor={activeColor}
           activeCounter={activeCounter}
           resetSingleCounter={resetSingleCounter}
           setLanguageDirection={setLanguageDirection}
           languageDirection={languageDirection}
+          scrollSpeed={scrollSpeed}
         />
         <CounterButton
           dbConnection={dbConnection}

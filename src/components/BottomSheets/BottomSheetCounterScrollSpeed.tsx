@@ -7,16 +7,20 @@ import {
   PreferenceKeyType,
   scrollSpeedValue,
   themeType,
+  userPreferencesType,
 } from "../../utils/types";
 import { IonRange } from "@ionic/react";
 
+export const dummyCounterText = `This is an example tasbeeh This is an example tasbeeh This is an example tasbeeh This is an example tasbeeh`;
+
 export const renderModalContent = (
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>,
-  setScrollSpeed: React.Dispatch<React.SetStateAction<scrollSpeedValue>>,
+  scrollSpeed: scrollSpeedValue,
   updateUserPreference: (
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType
-  ) => Promise<void>
+  ) => Promise<void>,
+  userPreferencesState: userPreferencesType
 ) => {
   return (
     <section
@@ -38,6 +42,7 @@ export const renderModalContent = (
         //   resetSingleCounter={vi.fn()}
         setLanguageDirection={setLanguageDirection}
         languageDirection={"ltr"}
+        scrollSpeed={scrollSpeed}
       />
       <section className="flex justify-between mx-4 mt-10 text-sm">
         <p>Very Slow</p>
@@ -46,13 +51,10 @@ export const renderModalContent = (
       <section className="mx-6">
         <IonRange
           aria-label="Range with ticks"
+          value={userPreferencesState.scrollSpeed}
           onIonChange={({ detail }) => {
             console.log("ionChange emitted value: " + detail.value);
-            changeScrollSpeed(
-              detail.value,
-              setScrollSpeed,
-              updateUserPreference
-            );
+            changeScrollSpeed(detail.value, updateUserPreference);
           }}
           ticks={true}
           snaps={true}
@@ -66,13 +68,11 @@ export const renderModalContent = (
 
 export const changeScrollSpeed = async (
   speed: 0 | 1 | 2 | 3 | 4,
-  setScrollSpeed: React.Dispatch<React.SetStateAction<scrollSpeedValue>>,
   updateUserPreference: (
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType
   ) => Promise<void>
 ) => {
-  setScrollSpeed(speed);
   await updateUserPreference("scrollSpeed", speed);
 };
 
@@ -85,13 +85,14 @@ interface BottomSheetCounterScrollSpeedProps {
     preferenceName: PreferenceKeyType,
     preferenceValue: number | MaterialColor | themeType
   ) => Promise<void>;
+  userPreferencesState: userPreferencesType;
 }
 const BottomSheetCounterScrollSpeed = ({
   triggerId,
   setLanguageDirection,
-  setScrollSpeed,
   scrollSpeed,
   updateUserPreference,
+  userPreferencesState,
 }: BottomSheetCounterScrollSpeedProps) => {
   return (
     <IonModal
@@ -106,8 +107,9 @@ const BottomSheetCounterScrollSpeed = ({
     >
       {renderModalContent(
         setLanguageDirection,
-        setScrollSpeed,
-        updateUserPreference
+        scrollSpeed,
+        updateUserPreference,
+        userPreferencesState
       )}
     </IonModal>
   );

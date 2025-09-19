@@ -127,3 +127,5 @@ export const sheetBackdropColor = {
 // type ToastOptions = Parameters<typeof Toast.show>[0];
 
 export const nextCounterDelay = 3000;
+
+export const speedMap = [0.8, 0.4, 0.2, 0.1, 0.0599];
