@@ -311,8 +311,8 @@ function CountersPage({
                 icon={closeCircleOutline}
               />
             </IonButton>
-            <IonIcon className="text-4xl text-red-700" icon={warningOutline} />
-            <h1 className="mt-0 mb-4 text-4xl text-red-700">IMPORTANT</h1>
+            <IonIcon className="text-4xl text-red-500" icon={warningOutline} />
+            <h1 className="mt-0 mb-4 text-4xl text-red-500">IMPORTANT</h1>
             <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
             <h2 className="mb-2 text-lg font-semibold">
               {"Swipe left on a tasbeeh to reveal more options"}

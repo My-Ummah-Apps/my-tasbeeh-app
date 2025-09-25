@@ -8,7 +8,7 @@ import {
   userPreferencesType,
 } from "../utils/types";
 import ActionSheet from "./ActionSheet";
-import { IonIcon } from "@ionic/react";
+import { IonIcon, useIonViewWillEnter } from "@ionic/react";
 import { refresh } from "ionicons/icons";
 import { speedMap } from "../utils/constants";
 
@@ -19,6 +19,7 @@ interface CounterNameAndNumberProps {
   resetSingleCounter?: (id: number) => Promise<void>;
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
+  setScrollSpeed: React.Dispatch<React.SetStateAction<scrollSpeedValue>>;
   scrollSpeed: scrollSpeedValue;
 }
 
@@ -29,28 +30,41 @@ function ActiveCounter({
   resetSingleCounter,
   setLanguageDirection,
   languageDirection,
+  setScrollSpeed,
   scrollSpeed,
 }: CounterNameAndNumberProps) {
+  console.log("ACTIVE COUNTER RENDERED, SCROLL SPEED IS: ", scrollSpeed);
+
   const counterTextContainerRef = useRef<HTMLElement | null>(null);
   const activeCounterTextRef = useRef<HTMLDivElement | null>(null);
   const mScrollRef = useRef<HTMLDivElement | null>(null);
 
   const [scroll, setScroll] = useState<boolean>(false);
 
+  setScrollSpeed(0);
+  setScrollSpeed(userPreferencesState?.scrollSpeed);
+
   useEffect(() => {
+    console.log("useEffect triggered");
+
     if (direction(activeCounter.name) === "ltr") {
       setLanguageDirection("ltr");
     } else if (direction(activeCounter.name) === "rtl") {
       setLanguageDirection("rtl");
     }
+
     // The reason for the below code being wrapped in requestAnimationFrame and setTimeout is
     // so that this code runs only after the DOM has fully rendered, without the code
     // being wrapped counterTextContainerRef can end up being null breaking the scroll functionality
     requestAnimationFrame(() => {
+      console.log("requestAnimationFrame triggered");
+
       setTimeout(() => {
         const counterTextContainerWidth = counterTextContainerRef.current
           ? counterTextContainerRef.current.clientWidth
           : 0;
+
+        console.log("counterTextContainerWidth: ", counterTextContainerWidth);
 
         if (
           activeCounterTextRef.current &&
@@ -62,18 +76,32 @@ function ActiveCounter({
           mScrollRef.current &&
           activeCounterTextRef.current.clientWidth > counterTextContainerWidth
         ) {
-          console.log("scrollSpeed within actiev counter is: ", scrollSpeed);
-
+          console.log(
+            "scrollSpeed within requestAnimationFrame is: ",
+            scrollSpeed
+          );
+          console.log(
+            activeCounterTextRef.current.clientWidth > counterTextContainerWidth
+          );
           setScroll(true);
           const scrollSpeedCalc =
             activeCounterTextRef.current.innerText.length * scrollSpeed;
           mScrollRef.current.style.animationDuration = `${scrollSpeedCalc}s`;
         } else {
+          console.log(
+            activeCounterTextRef.current.clientWidth > counterTextContainerWidth
+          );
           console.warn("Scroll refs not ready, skipping scroll setup.");
         }
       }, 0);
     });
-  }, [activeCounter?.name, scrollSpeed]);
+  }, [
+    activeCounter?.name,
+    // userPreferencesState?.scrollSpeed,
+    scrollSpeed,
+    // counterTextContainerRef.current,
+    // counterTextContainerRef.current?.clientWidth,
+  ]);
 
   const counterNameStyles = {
     textOverflow: activeCounter.name.length > 50 ? "ellipsis" : "clip",

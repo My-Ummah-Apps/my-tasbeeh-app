@@ -40,6 +40,7 @@ interface HomePageProps {
   countersState: counterObjType[];
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
+  setScrollSpeed: React.Dispatch<React.SetStateAction<scrollSpeedValue>>;
   scrollSpeed: scrollSpeedValue;
 }
 
@@ -55,10 +56,9 @@ const HomePage = ({
   countersState,
   setLanguageDirection,
   languageDirection,
+  setScrollSpeed,
   scrollSpeed,
 }: HomePageProps) => {
-  console.log("HOME PAGE RENDERED");
-
   const [count, setCount] = useState(3);
   const [isNextCounterLoading, setIsNextCounterLoading] = useState(false);
   const [showNextCounterToast, setShowNextCounterToast] = useState(false);
@@ -133,6 +133,7 @@ const HomePage = ({
           resetSingleCounter={resetSingleCounter}
           setLanguageDirection={setLanguageDirection}
           languageDirection={languageDirection}
+          setScrollSpeed={setScrollSpeed}
           scrollSpeed={scrollSpeed}
         />
         <CounterButton

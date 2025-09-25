@@ -1,6 +1,6 @@
 import { IonModal } from "@ionic/react";
 import ActiveCounter from "../ActiveCounter";
-import { materialColors } from "../../utils/constants";
+import { materialColors, speedMap } from "../../utils/constants";
 import {
   languageDirection,
   MaterialColor,
@@ -15,6 +15,7 @@ export const dummyCounterText = `This is an example tasbeeh This is an example t
 
 export const renderModalContent = (
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>,
+  setScrollSpeed: React.Dispatch<React.SetStateAction<scrollSpeedValue>>,
   scrollSpeed: scrollSpeedValue,
   updateUserPreference: (
     preferenceName: PreferenceKeyType,
@@ -33,7 +34,7 @@ export const renderModalContent = (
         activeCounter={{
           id: -1,
           orderIndex: -1,
-          name: "This is an example tasbeeh This is an example tasbeeh This is an example tasbeeh This is an example tasbeeh",
+          name: dummyCounterText,
           count: 10,
           target: 10,
           color: materialColors[0],
@@ -42,6 +43,7 @@ export const renderModalContent = (
         //   resetSingleCounter={vi.fn()}
         setLanguageDirection={setLanguageDirection}
         languageDirection={"ltr"}
+        setScrollSpeed={setScrollSpeed}
         scrollSpeed={scrollSpeed}
       />
       <section className="flex justify-between mx-4 mt-10 text-sm">
@@ -55,6 +57,7 @@ export const renderModalContent = (
           onIonChange={({ detail }) => {
             console.log("ionChange emitted value: " + detail.value);
             changeScrollSpeed(detail.value, updateUserPreference);
+            // setScrollSpeed(speedMap[userPreferencesState.scrollSpeed]);
           }}
           ticks={true}
           snaps={true}
@@ -90,6 +93,7 @@ interface BottomSheetCounterScrollSpeedProps {
 const BottomSheetCounterScrollSpeed = ({
   triggerId,
   setLanguageDirection,
+  setScrollSpeed,
   scrollSpeed,
   updateUserPreference,
   userPreferencesState,
@@ -103,10 +107,11 @@ const BottomSheetCounterScrollSpeed = ({
       initialBreakpoint={1}
       breakpoints={[0, 1]}
       // handleBehavior="cycle"
-      // onWillDismiss={(event) => onWillDismiss(event)}
+      // onWillDismiss={(event) => setScrollSpeed(0)}
     >
       {renderModalContent(
         setLanguageDirection,
+        setScrollSpeed,
         scrollSpeed,
         updateUserPreference,
         userPreferencesState

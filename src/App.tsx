@@ -580,8 +580,8 @@ function App() {
   useEffect(() => {
     setScrollSpeed(speedMap[userPreferencesState.scrollSpeed]);
     console.log(
-      "scroll speed change detected in prefernece state, changing to: ",
-      scrollSpeed
+      "CHANGING SCROLL SPEED STATE TO ",
+      speedMap[userPreferencesState.scrollSpeed]
     );
   }, [userPreferencesState.scrollSpeed]);
 
