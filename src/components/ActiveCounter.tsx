@@ -8,18 +8,19 @@ import {
   userPreferencesType,
 } from "../utils/types";
 import ActionSheet from "./ActionSheet";
-import { IonIcon, useIonViewWillEnter } from "@ionic/react";
+import { IonIcon, useIonViewDidEnter, useIonViewWillEnter } from "@ionic/react";
 import { refresh } from "ionicons/icons";
 import { speedMap } from "../utils/constants";
+import { useLocation } from "react-router-dom";
 
 interface CounterNameAndNumberProps {
-  userPreferencesState: userPreferencesType;
+  userPreferencesState?: userPreferencesType;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
   resetSingleCounter?: (id: number) => Promise<void>;
   setLanguageDirection: React.Dispatch<React.SetStateAction<languageDirection>>;
   languageDirection: languageDirection;
-  setScrollSpeed: React.Dispatch<React.SetStateAction<scrollSpeedValue>>;
+  setScrollSpeed?: React.Dispatch<React.SetStateAction<scrollSpeedValue>>;
   scrollSpeed: scrollSpeedValue;
 }
 
@@ -33,20 +34,24 @@ function ActiveCounter({
   setScrollSpeed,
   scrollSpeed,
 }: CounterNameAndNumberProps) {
-  console.log("ACTIVE COUNTER RENDERED, SCROLL SPEED IS: ", scrollSpeed);
-
   const counterTextContainerRef = useRef<HTMLElement | null>(null);
   const activeCounterTextRef = useRef<HTMLDivElement | null>(null);
   const mScrollRef = useRef<HTMLDivElement | null>(null);
 
   const [scroll, setScroll] = useState<boolean>(false);
 
-  setScrollSpeed(0);
-  setScrollSpeed(userPreferencesState?.scrollSpeed);
+  // const location = useLocation();
+
+  // useEffect(() => {
+  //   if (!setScrollSpeed) return;
+  //   setScrollSpeed(speedMap[userPreferencesState?.scrollSpeed]);
+  //   console.log(
+  //     "userPreferencesState?.scrollSpeed: ",
+  //     userPreferencesState?.scrollSpeed
+  //   );
+  // }, [location]);
 
   useEffect(() => {
-    console.log("useEffect triggered");
-
     if (direction(activeCounter.name) === "ltr") {
       setLanguageDirection("ltr");
     } else if (direction(activeCounter.name) === "rtl") {
@@ -57,14 +62,10 @@ function ActiveCounter({
     // so that this code runs only after the DOM has fully rendered, without the code
     // being wrapped counterTextContainerRef can end up being null breaking the scroll functionality
     requestAnimationFrame(() => {
-      console.log("requestAnimationFrame triggered");
-
       setTimeout(() => {
         const counterTextContainerWidth = counterTextContainerRef.current
           ? counterTextContainerRef.current.clientWidth
           : 0;
-
-        console.log("counterTextContainerWidth: ", counterTextContainerWidth);
 
         if (
           activeCounterTextRef.current &&
@@ -76,32 +77,16 @@ function ActiveCounter({
           mScrollRef.current &&
           activeCounterTextRef.current.clientWidth > counterTextContainerWidth
         ) {
-          console.log(
-            "scrollSpeed within requestAnimationFrame is: ",
-            scrollSpeed
-          );
-          console.log(
-            activeCounterTextRef.current.clientWidth > counterTextContainerWidth
-          );
           setScroll(true);
           const scrollSpeedCalc =
             activeCounterTextRef.current.innerText.length * scrollSpeed;
           mScrollRef.current.style.animationDuration = `${scrollSpeedCalc}s`;
         } else {
-          console.log(
-            activeCounterTextRef.current.clientWidth > counterTextContainerWidth
-          );
           console.warn("Scroll refs not ready, skipping scroll setup.");
         }
       }, 0);
     });
-  }, [
-    activeCounter?.name,
-    // userPreferencesState?.scrollSpeed,
-    scrollSpeed,
-    // counterTextContainerRef.current,
-    // counterTextContainerRef.current?.clientWidth,
-  ]);
+  }, [activeCounter?.name, scrollSpeed]);
 
   const counterNameStyles = {
     textOverflow: activeCounter.name.length > 50 ? "ellipsis" : "clip",

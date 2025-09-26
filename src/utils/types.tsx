@@ -1,3 +1,4 @@
+import { RangeValue } from "@ionic/core";
 import { materialColors } from "./constants";
 
 export type DBConnectionStateType = "open" | "close";
@@ -5,8 +6,6 @@ export type DBConnectionStateType = "open" | "close";
 export type themeType = "light" | "dark" | "system";
 
 export type BinaryValue = 0 | 1;
-
-export type scrollSpeedValue = 0 | 1 | 2 | 3 | 4;
 
 export interface userPreferencesType {
   morningNotification: BinaryValue;
@@ -20,7 +19,7 @@ export interface userPreferencesType {
   autoSwitchCounter: BinaryValue;
   activeColor: MaterialColor;
   theme: themeType;
-  scrollSpeed: scrollSpeedValue;
+  scrollSpeed: RangeValue;
 }
 
 export type PreferenceKeyType = keyof userPreferencesType;

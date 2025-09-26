@@ -1,6 +1,7 @@
 import { IonModal } from "@ionic/react";
 import ActiveCounter from "../ActiveCounter";
 import { materialColors, speedMap } from "../../utils/constants";
+import { RangeValue } from "@ionic/core";
 import {
   languageDirection,
   MaterialColor,
@@ -54,10 +55,10 @@ export const renderModalContent = (
         <IonRange
           aria-label="Range with ticks"
           value={userPreferencesState.scrollSpeed}
-          onIonChange={({ detail }) => {
+          onIonChange={async ({ detail }) => {
             console.log("ionChange emitted value: " + detail.value);
-            changeScrollSpeed(detail.value, updateUserPreference);
-            // setScrollSpeed(speedMap[userPreferencesState.scrollSpeed]);
+            const speed = detail.value;
+            await updateUserPreference("scrollSpeed", speed);
           }}
           ticks={true}
           snaps={true}
@@ -67,16 +68,6 @@ export const renderModalContent = (
       </section>
     </section>
   );
-};
-
-export const changeScrollSpeed = async (
-  speed: 0 | 1 | 2 | 3 | 4,
-  updateUserPreference: (
-    preferenceName: PreferenceKeyType,
-    preferenceValue: number | MaterialColor | themeType
-  ) => Promise<void>
-) => {
-  await updateUserPreference("scrollSpeed", speed);
 };
 
 interface BottomSheetCounterScrollSpeedProps {

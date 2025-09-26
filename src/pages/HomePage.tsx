@@ -8,6 +8,8 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
+  useIonViewDidEnter,
+  useIonViewWillEnter,
 } from "@ionic/react";
 
 import {
@@ -21,7 +23,7 @@ import {
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import Toast from "../components/Toast";
 import { useEffect, useRef, useState } from "react";
-import { nextCounterDelay } from "../utils/constants";
+import { nextCounterDelay, speedMap } from "../utils/constants";
 import { IonAlert } from "@ionic/react";
 import Overlay from "../components/Overlay";
 
@@ -64,6 +66,14 @@ const HomePage = ({
   const [showNextCounterToast, setShowNextCounterToast] = useState(false);
   const [showEndOfListAlert, setShowEndOfListAlert] = useState(false);
   let isAutoSwitchCancelled = useRef(false);
+
+  useIonViewWillEnter(() => {
+    setScrollSpeed(speedMap[userPreferencesState.scrollSpeed]);
+    console.log(
+      "userPreferencesState?.scrollSpeed: ",
+      userPreferencesState?.scrollSpeed
+    );
+  });
 
   useEffect(() => {
     if (count === 1 && !showNextCounterToast) {

@@ -3,6 +3,7 @@ import { Redirect, Route } from "react-router-dom";
 // import { IonApp } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { IonApp, IonRouterOutlet, IonTabs } from "@ionic/react";
+import { RangeValue } from "@ionic/core";
 
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
@@ -549,10 +550,8 @@ function App() {
 
   const updateUserPreference = async (
     preferenceName: PreferenceKeyType,
-    preferenceValue: number | MaterialColor | themeType | string
+    preferenceValue: number | MaterialColor | themeType | string | RangeValue
   ) => {
-    console.log("UPDATING PREFS");
-
     try {
       await toggleDBConnection("open");
       const query = `INSERT OR REPLACE INTO userPreferencesTable (preferenceName, preferenceValue) VALUES (?, ?)`;
@@ -580,8 +579,8 @@ function App() {
   useEffect(() => {
     setScrollSpeed(speedMap[userPreferencesState.scrollSpeed]);
     console.log(
-      "CHANGING SCROLL SPEED STATE TO ",
-      speedMap[userPreferencesState.scrollSpeed]
+      "userPreferencesState.scrollSpeed: ",
+      userPreferencesState.scrollSpeed
     );
   }, [userPreferencesState.scrollSpeed]);
 
