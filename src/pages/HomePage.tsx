@@ -26,6 +26,7 @@ import { useEffect, useRef, useState } from "react";
 import { nextCounterDelay, speedMap } from "../utils/constants";
 import { IonAlert } from "@ionic/react";
 import Overlay from "../components/Overlay";
+import { useLocation } from "react-router-dom";
 
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -67,13 +68,30 @@ const HomePage = ({
   const [showEndOfListAlert, setShowEndOfListAlert] = useState(false);
   let isAutoSwitchCancelled = useRef(false);
 
-  useIonViewWillEnter(() => {
-    setScrollSpeed(speedMap[userPreferencesState.scrollSpeed]);
-    console.log(
-      "userPreferencesState?.scrollSpeed: ",
-      userPreferencesState?.scrollSpeed
-    );
-  });
+  // ! For some reason, userPreferencesState?.scrollSpeed below is reverting to 2
+  // ! ie the initial state value thats set in app.tsx upon app launch or on page switch,
+  // ! settings page -> homepage
+  // ! as opposed to the latest value from the scroll sheet
+
+  // console.log("userPreferencesState in homepage: ", userPreferencesState);
+
+  // useIonViewWillEnter(() => {
+  //   setScrollSpeed(userPreferencesState.scrollSpeed);
+  //   console.log(
+  //     "userPreferencesState?.scrollSpeed in homepage: ",
+  //     userPreferencesState?.scrollSpeed
+  //   );
+  // });
+
+  const location = useLocation();
+
+  // useEffect(() => {
+  //   setScrollSpeed(userPreferencesState.scrollSpeed);
+  //   console.log(
+  //     "userPreferencesState?.scrollSpeed in homepage state: ",
+  //     userPreferencesState?.scrollSpeed
+  //   );
+  // }, [location]);
 
   useEffect(() => {
     if (count === 1 && !showNextCounterToast) {

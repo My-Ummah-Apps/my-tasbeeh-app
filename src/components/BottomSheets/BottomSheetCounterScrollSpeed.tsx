@@ -1,7 +1,7 @@
 import { IonModal } from "@ionic/react";
 import ActiveCounter from "../ActiveCounter";
 import { materialColors, speedMap } from "../../utils/constants";
-import { RangeValue } from "@ionic/core";
+
 import {
   languageDirection,
   MaterialColor,

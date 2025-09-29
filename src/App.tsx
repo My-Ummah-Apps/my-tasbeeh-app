@@ -3,7 +3,6 @@ import { Redirect, Route } from "react-router-dom";
 // import { IonApp } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { IonApp, IonRouterOutlet, IonTabs } from "@ionic/react";
-import { RangeValue } from "@ionic/core";
 
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from "@capacitor/status-bar";
@@ -471,7 +470,8 @@ function App() {
       if (
         item.preferenceValue === "0" ||
         item.preferenceValue === "1" ||
-        item.preferenceName === "appLaunchCount"
+        item.preferenceName === "appLaunchCount" ||
+        item.preferenceName === "scrollSpeed"
       ) {
         (item as { preferenceValue: number }).preferenceValue = Number(
           item.preferenceValue
@@ -550,7 +550,7 @@ function App() {
 
   const updateUserPreference = async (
     preferenceName: PreferenceKeyType,
-    preferenceValue: number | MaterialColor | themeType | string | RangeValue
+    preferenceValue: number | MaterialColor | themeType | string
   ) => {
     try {
       await toggleDBConnection("open");
@@ -577,9 +577,9 @@ function App() {
   }, [userPreferencesState.theme]);
 
   useEffect(() => {
-    setScrollSpeed(speedMap[userPreferencesState.scrollSpeed]);
+    setScrollSpeed(userPreferencesState.scrollSpeed);
     console.log(
-      "userPreferencesState.scrollSpeed: ",
+      "userPreferencesState.scrollSpeed in app.tsx: ",
       userPreferencesState.scrollSpeed
     );
   }, [userPreferencesState.scrollSpeed]);
