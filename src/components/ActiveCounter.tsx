@@ -52,6 +52,7 @@ function ActiveCounter({
 
   const handleUpdateScrollSpeed = () => {
     setScroll(true);
+    if (!activeCounterTextRef.current || !mScrollRef.current) return;
     const scrollSpeedCalc =
       activeCounterTextRef.current.innerText.length * speedMap[scrollSpeed];
     mScrollRef.current.style.animationDuration = `${scrollSpeedCalc}s`;
