@@ -68,31 +68,6 @@ const HomePage = ({
   const [showEndOfListAlert, setShowEndOfListAlert] = useState(false);
   let isAutoSwitchCancelled = useRef(false);
 
-  // ! For some reason, userPreferencesState?.scrollSpeed below is reverting to 2
-  // ! ie the initial state value thats set in app.tsx upon app launch or on page switch,
-  // ! settings page -> homepage
-  // ! as opposed to the latest value from the scroll sheet
-
-  // console.log("userPreferencesState in homepage: ", userPreferencesState);
-
-  // useIonViewWillEnter(() => {
-  //   setScrollSpeed(userPreferencesState.scrollSpeed);
-  //   console.log(
-  //     "userPreferencesState?.scrollSpeed in homepage: ",
-  //     userPreferencesState?.scrollSpeed
-  //   );
-  // });
-
-  const location = useLocation();
-
-  // useEffect(() => {
-  //   setScrollSpeed(userPreferencesState.scrollSpeed);
-  //   console.log(
-  //     "userPreferencesState?.scrollSpeed in homepage state: ",
-  //     userPreferencesState?.scrollSpeed
-  //   );
-  // }, [location]);
-
   useEffect(() => {
     if (count === 1 && !showNextCounterToast) {
       setCount(3);

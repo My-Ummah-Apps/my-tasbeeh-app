@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 import { direction } from "direction";
 import {
   counterObjType,
@@ -8,7 +8,7 @@ import {
   userPreferencesType,
 } from "../utils/types";
 import ActionSheet from "./ActionSheet";
-import { IonIcon, useIonViewDidEnter, useIonViewWillEnter } from "@ionic/react";
+import { IonIcon } from "@ionic/react";
 import { refresh } from "ionicons/icons";
 import { speedMap } from "../utils/constants";
 import { useLocation } from "react-router-dom";
@@ -34,54 +34,30 @@ function ActiveCounter({
   setScrollSpeed,
   scrollSpeed,
 }: CounterNameAndNumberProps) {
-  console.log("ACTIVE COUNTER HAS RE-RENDERED");
-
   const counterTextContainerRef = useRef<HTMLElement | null>(null);
   const activeCounterTextRef = useRef<HTMLDivElement | null>(null);
   const mScrollRef = useRef<HTMLDivElement | null>(null);
 
   const [scroll, setScroll] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   console.log("Scroll speed in active counter is: ", scrollSpeed);
-  // }, [userPreferencesState?.scrollSpeed]);
-
-  // // const location = useLocation();
-
-  // useEffect(() => {
-  //   if (!setScrollSpeed) return;
-  //   setScrollSpeed(userPreferencesState?.scrollSpeed);
-  //   console.log(
-  //     "userPreferencesState?.scrollSpeed in homepage state: ",
-  //     userPreferencesState?.scrollSpeed
-  //   );
-  // }, [userPreferencesState?.scrollSpeed, location]);
-  // ! Below confirms scrollSpeed updates with new speed
-  console.log("scrollSpeed state updated in active counter: ", scrollSpeed);
+  const location = useLocation();
 
   useEffect(() => {
-    if (!setScrollSpeed) return;
-    console.log(
-      "userPreferencesState?.scrollSpeed in activecounter: ",
-      userPreferencesState?.scrollSpeed
-    );
+    if (!setScrollSpeed || !userPreferencesState?.scrollSpeed) return;
+
     setScrollSpeed(userPreferencesState?.scrollSpeed);
 
-    test();
+    handleUpdateScrollSpeed();
   }, [location, userPreferencesState?.scrollSpeed]);
 
-  const test = () => {
-    console.log("TEST FUNCTION HAS BEGUN");
+  const handleUpdateScrollSpeed = () => {
     setScroll(true);
     const scrollSpeedCalc =
       activeCounterTextRef.current.innerText.length * speedMap[scrollSpeed];
     mScrollRef.current.style.animationDuration = `${scrollSpeedCalc}s`;
-    console.log("TEST FUNCTION HAS FINISHED");
   };
 
   useEffect(() => {
-    // ! This useEffect is not running upon active counter being re-rendered, hence new speed is not applying
-    console.log("useEffect HAS RUN");
     if (direction(activeCounter.name) === "ltr") {
       setLanguageDirection("ltr");
     } else if (direction(activeCounter.name) === "rtl") {
@@ -92,8 +68,6 @@ function ActiveCounter({
     // so that this code runs only after the DOM has fully rendered, without the code
     // being wrapped counterTextContainerRef can end up being null breaking the scroll functionality
     requestAnimationFrame(() => {
-      console.log("REQUEST ANIMATION FRAME HAS RUN");
-
       setTimeout(() => {
         const counterTextContainerWidth = counterTextContainerRef.current
           ? counterTextContainerRef.current.clientWidth
@@ -109,8 +83,7 @@ function ActiveCounter({
           mScrollRef.current &&
           activeCounterTextRef.current.clientWidth > counterTextContainerWidth
         ) {
-          console.log("SETTING NEW SPEED IN ACTIVE COUNTER");
-          test();
+          handleUpdateScrollSpeed();
         } else {
           console.warn("Scroll refs not ready, skipping scroll setup.");
         }
