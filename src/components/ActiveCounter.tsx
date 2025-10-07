@@ -194,6 +194,7 @@ function ActiveCounter({
             text: "Reset Tasbeeh",
             role: "destructive",
             handler: async () => {
+              if (!resetSingleCounter) return;
               await resetSingleCounter(activeCounter.id);
             },
           },

@@ -1,6 +1,6 @@
 import { IonModal } from "@ionic/react";
 import ActiveCounter from "../ActiveCounter";
-import { materialColors, speedMap } from "../../utils/constants";
+import { materialColors } from "../../utils/constants";
 
 import {
   languageDirection,
@@ -58,7 +58,7 @@ export const renderModalContent = (
           onIonChange={async ({ detail }) => {
             console.log("ionChange emitted value: " + detail.value);
             const speed = detail.value;
-            await updateUserPreference("scrollSpeed", speed);
+            await updateUserPreference("scrollSpeed", speed as number);
           }}
           ticks={true}
           snaps={true}

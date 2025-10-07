@@ -8,8 +8,6 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  useIonViewDidEnter,
-  useIonViewWillEnter,
 } from "@ionic/react";
 
 import {
@@ -23,10 +21,9 @@ import {
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import Toast from "../components/Toast";
 import { useEffect, useRef, useState } from "react";
-import { nextCounterDelay, speedMap } from "../utils/constants";
+import { nextCounterDelay } from "../utils/constants";
 import { IonAlert } from "@ionic/react";
 import Overlay from "../components/Overlay";
-import { useLocation } from "react-router-dom";
 
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;

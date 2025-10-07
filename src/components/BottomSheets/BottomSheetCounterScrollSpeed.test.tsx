@@ -1,16 +1,47 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import {
-  changeScrollSpeed,
   dummyCounterText,
   renderModalContent,
-  speedMap,
 } from "./BottomSheetCounterScrollSpeed";
 import { vi } from "vitest";
+import { speedMap } from "../../utils/constants";
+import { userPreferencesType } from "../../utils/types";
+import { MemoryRouter } from "react-router-dom";
+
+const mockedSetLanguageDirection = vi.fn();
+const mockedSetScrollSpeed = vi.fn();
+const mockedScrollSpeed = 3;
+const mockedUpdateUserPreference = vi.fn().mockResolvedValue(undefined);
+
+const mockedUserPreferencesState: userPreferencesType = {
+  morningNotification: 1,
+  afternoonNotification: 0,
+  eveningNotification: 0,
+  isExistingUser: 1,
+  appLaunchCount: 3,
+  haptics: 1,
+  previousLaunchDate: "2025-10-07",
+  dailyCounterReset: 0,
+  autoSwitchCounter: 0,
+  activeColor: "#5C6BC0",
+  theme: "dark",
+  scrollSpeed: 2,
+};
 
 describe("Dummy Counter", () => {
   let slider: HTMLElement;
   beforeEach(() => {
-    render(renderModalContent(vi.fn()));
+    render(
+      <MemoryRouter>
+        {renderModalContent(
+          mockedSetLanguageDirection,
+          mockedSetScrollSpeed,
+          mockedScrollSpeed,
+          mockedUpdateUserPreference,
+          mockedUserPreferencesState
+        )}
+      </MemoryRouter>
+    );
     slider = screen.getByLabelText("Range with ticks");
   });
 

@@ -13,7 +13,6 @@ import {
   DEFAULT_COUNTERS,
   dictPreferencesDefaultValues,
   materialColors,
-  speedMap,
   todaysDate,
 } from "./utils/constants";
 import { InAppReview } from "@capacitor-community/in-app-review";
@@ -578,10 +577,6 @@ function App() {
 
   useEffect(() => {
     setScrollSpeed(userPreferencesState.scrollSpeed);
-    console.log(
-      "userPreferencesState.scrollSpeed in app.tsx: ",
-      userPreferencesState.scrollSpeed
-    );
   }, [userPreferencesState.scrollSpeed]);
 
   if (Capacitor.getPlatform() === "ios") {
