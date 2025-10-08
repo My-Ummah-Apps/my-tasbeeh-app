@@ -4,7 +4,7 @@ import {
   renderModalContent,
 } from "./BottomSheetCounterScrollSpeed";
 import { vi } from "vitest";
-import { speedMap } from "../../utils/constants";
+import { calcScrollSpeed, speedMap } from "../../utils/constants";
 import { userPreferencesType } from "../../utils/types";
 import { MemoryRouter } from "react-router-dom";
 
@@ -70,13 +70,12 @@ describe("Dummy Counter", () => {
     expect(slider).toHaveValue(3);
     const scrollContainer = screen.getByTestId("scroll-container");
     const scrollText = screen.getAllByText(dummyCounterText)[0];
-
-    // expect(scrollText[0].style.animationDuration).toBe("3s");
-    // console.log("scrollText ", scrollText.textContent);
-    const scrollSpeedCalc = scrollText.textContent.length * speedMap[2];
-    console.log("scrollSpeedCalc: ", scrollSpeedCalc);
-    console.log("scrollContainer: ", scrollContainer);
-
-    // expect(scrollContainer.style.animationDuration).toBe(`${scrollSpeedCalc}s`);
+  });
+  it("calculates correct scroll speed", () => {
+    expect(calcScrollSpeed(10, 1)).toBe(10 * speedMap[1]);
+    expect(calcScrollSpeed(100, 3)).toBe(100 * speedMap[3]);
+    expect(calcScrollSpeed(25, 4)).toBe(25 * speedMap[4]);
+    expect(calcScrollSpeed(13, 2)).toBe(13 * speedMap[2]);
+    expect(calcScrollSpeed(56, 0)).toBe(56 * speedMap[0]);
   });
 });

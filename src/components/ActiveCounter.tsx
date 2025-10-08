@@ -10,7 +10,7 @@ import {
 import ActionSheet from "./ActionSheet";
 import { IonIcon } from "@ionic/react";
 import { refresh } from "ionicons/icons";
-import { speedMap } from "../utils/constants";
+import { calcScrollSpeed, speedMap } from "../utils/constants";
 import { useLocation } from "react-router-dom";
 
 interface CounterNameAndNumberProps {
@@ -55,8 +55,13 @@ function ActiveCounter({
   const handleUpdateScrollSpeed = () => {
     setScroll(true);
     if (!activeCounterTextRef.current || !mScrollRef.current) return;
-    const scrollSpeedCalc =
-      activeCounterTextRef.current.innerText.length * speedMap[scrollSpeed];
+    // const scrollSpeedCalc =
+    //   activeCounterTextRef.current.innerText.length * speedMap[scrollSpeed];
+    // mScrollRef.current.style.animationDuration = `${scrollSpeedCalc}s`;
+    const scrollSpeedCalc = calcScrollSpeed(
+      activeCounterTextRef.current.innerText.length,
+      scrollSpeed
+    );
     mScrollRef.current.style.animationDuration = `${scrollSpeedCalc}s`;
   };
 

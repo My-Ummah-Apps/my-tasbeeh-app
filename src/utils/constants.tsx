@@ -1,4 +1,4 @@
-import { counterObjType, userPreferencesType } from "./types";
+import { counterObjType, scrollSpeedValue, userPreferencesType } from "./types";
 
 export const materialColors = [
   "#EF5350",
@@ -129,3 +129,8 @@ export const sheetBackdropColor = {
 export const nextCounterDelay = 3000;
 
 export const speedMap = [0.8, 0.4, 0.2, 0.1, 0.0599];
+
+export const calcScrollSpeed = (
+  textLength: number,
+  scrollSpeed: scrollSpeedValue
+) => textLength * speedMap[scrollSpeed];
