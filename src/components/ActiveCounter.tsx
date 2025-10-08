@@ -10,7 +10,7 @@ import {
 import ActionSheet from "./ActionSheet";
 import { IonIcon } from "@ionic/react";
 import { refresh } from "ionicons/icons";
-import { calcScrollSpeed, speedMap } from "../utils/constants";
+import { calcScrollSpeed } from "../utils/constants";
 import { useLocation } from "react-router-dom";
 
 interface CounterNameAndNumberProps {

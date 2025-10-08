@@ -35,9 +35,9 @@
   --form-input-bg-color: rgba(197, 197, 197, 0.5);
   --form-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.6);
   --settings-page-box-shadow: 0 0px 5px 0 rgba(132, 132, 132, 0.2);
-  --range-bar-background: rgb(79, 79, 79);
+  --range-bar-background: rgb(150, 150, 150);
   --bar-background-active: rgb(79, 79, 79);
-  --range-knob-background: rgb(118, 118, 118);
+  --range-knob-background: rgb(255, 255, 255);
 }
 
 body.dark {
@@ -65,7 +65,7 @@ body.dark {
   --form-box-shadow: none;
   --settings-page-box-shadow: none;
   --range-bar-background: rgb(255, 255, 255);
-  --bar-background-active: rgb(255, 255, 255);
+  --bar-background-active: rgb(154, 92, 92);
   --range-knob-background: rgb(255, 255, 255);
 }
 
@@ -272,11 +272,11 @@ ion-toggle {
 
 ion-range {
   --bar-background: var(--range-bar-background);
-  --bar-background-active: var(--bar-background-active);
+  /* --bar-background-active: blue; */
   --knob-background: var(--range-knob-background);
-  /* --bar-background: rgb(59, 59, 59);
-  --bar-background-active: rgb(55, 55, 55);
-  --knob-background: rgb(78, 78, 78); */
+  /* --bar-background: rgb(59, 59, 59); */
+  /* --bar-background-active: rgb(0, 0, 0); */
+  /* --knob-background: rgb(78, 78, 78);  */
 }
 
 /* .range-tick {
@@ -286,8 +286,9 @@ ion-range {
 ion-range::part(tick) {
   background-color: var(--range-bar-background);
 }
+
 ion-range::part(tick-active) {
-  background-color: var(--range-bar-background);
+  /* background-color: var(--range-bar-background); */
 }
 
 .action-sheet {

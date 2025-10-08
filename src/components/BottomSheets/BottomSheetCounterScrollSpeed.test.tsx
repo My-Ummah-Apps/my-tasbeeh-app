@@ -68,8 +68,8 @@ describe("Dummy Counter", () => {
     expect(slider).toBeInTheDocument();
     fireEvent.input(slider, { target: { value: "3" } });
     expect(slider).toHaveValue(3);
-    const scrollContainer = screen.getByTestId("scroll-container");
-    const scrollText = screen.getAllByText(dummyCounterText)[0];
+    // const scrollContainer = screen.getByTestId("scroll-container");
+    // const scrollText = screen.getAllByText(dummyCounterText)[0];
   });
   it("calculates correct scroll speed", () => {
     expect(calcScrollSpeed(10, 1)).toBe(10 * speedMap[1]);
