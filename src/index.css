@@ -170,7 +170,6 @@ ion-toolbar {
   --background: var(--body-bg-color);
   --color: white;
   /* margin-bottom: 1rem; */
-
   /* --border-color: #f24aec; */
   /* --border-width: 4px 0; */
   --border-style: double;
@@ -574,13 +573,11 @@ ion-textarea .native-textarea {
 .scroll-ltr {
   -webkit-animation: scrollText-ltr infinite linear;
   animation: scrollText-ltr infinite linear;
-  animation-delay: 1.7s;
 }
 
 .scroll-rtl {
   -webkit-animation: scrollText-rtl infinite linear;
   animation: scrollText-rtl infinite linear;
-  animation-delay: 1.7s;
 }
 
 .single-counter-text-wrap {

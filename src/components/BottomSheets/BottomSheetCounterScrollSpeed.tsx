@@ -46,6 +46,7 @@ export const renderModalContent = (
         languageDirection={"ltr"}
         setScrollSpeed={setScrollSpeed}
         scrollSpeed={scrollSpeed}
+        animationDelay={400}
       />
       <section className="flex justify-between mx-4 mt-10 text-sm">
         <p>Very Slow</p>

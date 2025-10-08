@@ -22,6 +22,7 @@ interface CounterNameAndNumberProps {
   languageDirection: languageDirection;
   setScrollSpeed?: React.Dispatch<React.SetStateAction<scrollSpeedValue>>;
   scrollSpeed: scrollSpeedValue;
+  animationDelay: number;
 }
 
 function ActiveCounter({
@@ -33,6 +34,7 @@ function ActiveCounter({
   languageDirection,
   setScrollSpeed,
   scrollSpeed,
+  animationDelay,
 }: CounterNameAndNumberProps) {
   const counterTextContainerRef = useRef<HTMLElement | null>(null);
   const activeCounterTextRef = useRef<HTMLDivElement | null>(null);
@@ -131,7 +133,9 @@ function ActiveCounter({
               <div className={scroll ? "scroll" : ""}>
                 <div
                   ref={mScrollRef}
-                  className={`single-counter-text-wrap ${
+                  style={{ animationDelay: `${animationDelay}ms` }}
+                  data-testid="scroll-container"
+                  className={`single-counter-text-wrap  ${
                     scroll
                       ? languageDirection === "ltr"
                         ? "scroll-ltr"

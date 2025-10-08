@@ -135,6 +135,7 @@ const HomePage = ({
           languageDirection={languageDirection}
           setScrollSpeed={setScrollSpeed}
           scrollSpeed={scrollSpeed}
+          animationDelay={1700}
         />
         <CounterButton
           dbConnection={dbConnection}
