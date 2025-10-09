@@ -1,6 +1,6 @@
 import { MdDeleteOutline, MdEdit, MdOutlineRestartAlt } from "react-icons/md";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   IonItem,
   IonItemSliding,
@@ -10,7 +10,7 @@ import {
 } from "@ionic/react";
 import { direction } from "direction";
 import { counterObjType, MaterialColor } from "../utils/types";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface CountersListItemProps {
   updateActiveCounter: (
@@ -38,6 +38,14 @@ const CountersListItem = ({
   const closeOpenSlidingItems = () => {
     slidingRef.current?.closeOpened();
   };
+
+  const location = useLocation();
+
+  useEffect(() => {
+    return () => {
+      slidingRef.current?.closeOpened();
+    };
+  }, [location.pathname]);
 
   return (
     <IonItemSliding disabled={false} ref={slidingRef}>
