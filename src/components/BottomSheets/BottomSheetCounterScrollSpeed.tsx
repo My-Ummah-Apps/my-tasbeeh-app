@@ -57,7 +57,6 @@ export const renderModalContent = (
           aria-label="Range with ticks"
           value={userPreferencesState.scrollSpeed}
           onIonChange={async ({ detail }) => {
-            console.log("ionChange emitted value: " + detail.value);
             const speed = detail.value;
             await updateUserPreference("scrollSpeed", speed as number);
           }}

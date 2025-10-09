@@ -13,7 +13,7 @@ import { refresh } from "ionicons/icons";
 import { calcScrollSpeed } from "../utils/constants";
 import { useLocation } from "react-router-dom";
 
-interface CounterNameAndNumberProps {
+interface ActiveCounterProps {
   userPreferencesState?: userPreferencesType;
   activeColor: MaterialColor;
   activeCounter: counterObjType;
@@ -35,7 +35,7 @@ function ActiveCounter({
   setScrollSpeed,
   scrollSpeed,
   animationDelay,
-}: CounterNameAndNumberProps) {
+}: ActiveCounterProps) {
   const counterTextContainerRef = useRef<HTMLElement | null>(null);
   const activeCounterTextRef = useRef<HTMLDivElement | null>(null);
   const mScrollRef = useRef<HTMLDivElement | null>(null);

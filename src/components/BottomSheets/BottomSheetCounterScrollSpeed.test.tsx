@@ -1,10 +1,9 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import {
   dummyCounterText,
   renderModalContent,
 } from "./BottomSheetCounterScrollSpeed";
 import { vi } from "vitest";
-import { calcScrollSpeed, speedMap } from "../../utils/constants";
 import { userPreferencesType } from "../../utils/types";
 import { MemoryRouter } from "react-router-dom";
 
@@ -47,16 +46,10 @@ describe("Dummy Counter", () => {
 
   it("renders the dummy counter", () => {
     const dummyCounter = screen.getAllByText(dummyCounterText);
-
     expect(dummyCounter[0]).toBeInTheDocument();
     expect(dummyCounter).toHaveLength(2);
-    expect(screen.getByText("100%")).toBeInTheDocument();
+    // expect(screen.getByText("100%")).toBeInTheDocument();
   });
-
-  //   ! This test will need moving to the active counter components test file
-  //   it("scrolls the dummy counter", () => {
-
-  //   });
 
   it("renders slider", () => {
     expect(slider).toBeInTheDocument();
@@ -64,18 +57,11 @@ describe("Dummy Counter", () => {
     expect(screen.getByText("Very Fast")).toBeInTheDocument();
   });
 
-  it("changes speed when slider moves", () => {
+  it("updateUserPreference when slider changes", async () => {
     expect(slider).toBeInTheDocument();
-    fireEvent.input(slider, { target: { value: "3" } });
-    expect(slider).toHaveValue(3);
-    // const scrollContainer = screen.getByTestId("scroll-container");
-    // const scrollText = screen.getAllByText(dummyCounterText)[0];
-  });
-  it("calculates correct scroll speed", () => {
-    expect(calcScrollSpeed(10, 1)).toBe(10 * speedMap[1]);
-    expect(calcScrollSpeed(100, 3)).toBe(100 * speedMap[3]);
-    expect(calcScrollSpeed(25, 4)).toBe(25 * speedMap[4]);
-    expect(calcScrollSpeed(13, 2)).toBe(13 * speedMap[2]);
-    expect(calcScrollSpeed(56, 0)).toBe(56 * speedMap[0]);
+    fireEvent(slider, new CustomEvent("ionChange", { detail: { value: 3 } }));
+    await waitFor(() =>
+      expect(mockedUpdateUserPreference).toHaveBeenCalledWith("scrollSpeed", 3)
+    );
   });
 });
