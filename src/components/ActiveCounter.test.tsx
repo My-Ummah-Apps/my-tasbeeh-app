@@ -53,6 +53,7 @@ it("calculates correct scroll speed", () => {
 // Test that the reset button shows
 // Test that the reset button works
 // Test that the progress tet is correct
+// Test that the progress tet is correct
 
 describe("Active Counter unit tests", () => {
   beforeEach(() => {
