@@ -48,12 +48,9 @@ it("calculates correct scroll speed", () => {
   expect(calcScrollSpeed(56, 4)).toBe(56 * speedMap[4]);
 });
 
-// Test that the counter text shows up
 // Test that the counter is scrolling
-// Test that the reset button shows
 // Test that the reset button works
-// Test that the progress tet is correct
-// Test that the progress tet is correct
+// Test that the progress text is correct
 
 describe("Active Counter unit tests", () => {
   beforeEach(() => {
@@ -84,6 +81,11 @@ describe("Active Counter unit tests", () => {
       .filter((el) => el.className === "active-counter-name");
 
     expect(counterText.length).toBe(2);
+  });
+
+  it("renders reset icon", () => {
+    const resetIcon = screen.getByRole("button", { name: /reset counter/i });
+    expect(resetIcon).toBeInTheDocument();
   });
 
   //   ! This test will need moving to the active counter components test file
