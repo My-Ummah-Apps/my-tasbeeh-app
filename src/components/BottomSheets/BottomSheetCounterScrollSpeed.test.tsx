@@ -44,6 +44,11 @@ describe("Dummy Counter", () => {
     slider = screen.getByLabelText("Range with ticks");
   });
 
+  it("renders header text", () => {
+    const headerText = screen.getByText("Scroll Speed");
+    expect(headerText).toBeInTheDocument();
+  });
+
   it("renders the dummy counter", () => {
     const dummyCounter = screen.getAllByText(dummyCounterText);
     expect(dummyCounter[0]).toBeInTheDocument();
@@ -51,13 +56,13 @@ describe("Dummy Counter", () => {
     // expect(screen.getByText("100%")).toBeInTheDocument();
   });
 
-  it("renders slider", () => {
+  it("renders slider and 'very fast'/'very slow' text", () => {
     expect(slider).toBeInTheDocument();
     expect(screen.getByText("Very Slow")).toBeInTheDocument();
     expect(screen.getByText("Very Fast")).toBeInTheDocument();
   });
 
-  it("updateUserPreference when slider changes", async () => {
+  it("updates user preference when slider changes", async () => {
     expect(slider).toBeInTheDocument();
     fireEvent(slider, new CustomEvent("ionChange", { detail: { value: 3 } }));
     await waitFor(() =>
