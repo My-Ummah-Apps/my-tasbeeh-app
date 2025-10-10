@@ -1,13 +1,28 @@
-import { render } from "@testing-library/react";
-import { calcScrollSpeed, speedMap } from "../utils/constants";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { calcScrollSpeed, materialColors, speedMap } from "../utils/constants";
 import ActiveCounter from "./ActiveCounter";
-import { userPreferencesType } from "../utils/types";
-import { vi } from "vitest";
+import { counterObjType, userPreferencesType } from "../utils/types";
+import { expect, vi } from "vitest";
+import { MemoryRouter } from "react-router-dom";
+import React from "react";
 
 const mockedSetLanguageDirection = vi.fn();
+const mockedLanguageDirection = "ltr";
 const mockedSetScrollSpeed = vi.fn();
 const mockedScrollSpeed = 3;
-const mockedUpdateUserPreference = vi.fn().mockResolvedValue(undefined);
+// const mockedUpdateUserPreference = vi.fn().mockResolvedValue(undefined);
+const mockedResetSingleCounter = vi.fn().mockResolvedValue(undefined);
+const mockColor = materialColors[0];
+
+const mockedCounterObj: counterObjType = {
+  id: 1,
+  orderIndex: 1,
+  name: "Counter 1",
+  count: 5,
+  target: 10,
+  color: mockColor,
+  isActive: 1,
+};
 
 const mockedUserPreferencesState: userPreferencesType = {
   morningNotification: 1,
@@ -33,9 +48,41 @@ it("calculates correct scroll speed", () => {
   expect(calcScrollSpeed(56, 4)).toBe(56 * speedMap[4]);
 });
 
-describe("Active Counter", () => {
+// Test that the counter text shows up
+// Test that the counter is scrolling
+// Test that the reset button shows
+// Test that the reset button works
+// Test that the progress tet is correct
+
+describe("Active Counter unit tests", () => {
   beforeEach(() => {
-    render(<ActiveCounter />);
+    render(
+      <MemoryRouter>
+        <ActiveCounter
+          userPreferencesState={mockedUserPreferencesState}
+          activeColor={mockColor}
+          activeCounter={mockedCounterObj}
+          resetSingleCounter={mockedResetSingleCounter}
+          setLanguageDirection={mockedSetLanguageDirection}
+          languageDirection={mockedLanguageDirection}
+          setScrollSpeed={mockedSetScrollSpeed}
+          scrollSpeed={mockedScrollSpeed}
+          animationDelay={1700}
+        />
+      </MemoryRouter>
+    );
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("renders counter text", () => {
+    const counterText = screen
+      .getAllByText(mockedCounterObj.name)
+      .filter((el) => el.className === "active-counter-name");
+
+    expect(counterText.length).toBe(2);
   });
 
   //   ! This test will need moving to the active counter components test file
