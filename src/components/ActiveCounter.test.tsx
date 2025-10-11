@@ -1,10 +1,10 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { calcScrollSpeed, materialColors, speedMap } from "../utils/constants";
 import ActiveCounter from "./ActiveCounter";
 import { counterObjType, userPreferencesType } from "../utils/types";
 import { expect, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
-import React from "react";
+import userEvent from "@testing-library/user-event";
 
 const mockedSetLanguageDirection = vi.fn();
 const mockedLanguageDirection = "ltr";
@@ -39,6 +39,24 @@ const mockedUserPreferencesState: userPreferencesType = {
   scrollSpeed: 2,
 };
 
+vi.mock("./ActionSheet", () => ({
+  default: ({ buttons }: any) => {
+    return (
+      <div>
+        {buttons.map((btn: any, i: number) => (
+          <button
+            key={i}
+            onClick={() => btn.handler && btn.handler()}
+            data-testid={`action-sheet-btn-${btn.role}`}
+          >
+            {btn.text}
+          </button>
+        ))}
+      </div>
+    );
+  },
+}));
+
 it("calculates correct scroll speed", () => {
   expect(calcScrollSpeed(10, 1)).toBe(10 * speedMap[1]);
   expect(calcScrollSpeed(100, 3)).toBe(100 * speedMap[3]);
@@ -50,7 +68,6 @@ it("calculates correct scroll speed", () => {
 
 // Test that the counter is scrolling
 // Test that the reset button works
-// Test that the progress text is correct
 
 describe("Active Counter unit tests", () => {
   beforeEach(() => {
@@ -88,15 +105,28 @@ describe("Active Counter unit tests", () => {
     expect(resetIcon).toBeInTheDocument();
   });
 
-  //   ! This test will need moving to the active counter components test file
+  it("triggers action sheet upon reset icon being clicked", () => {
+    const resetIcon = screen.getByRole("button", { name: /reset counter/i });
+    userEvent.click(resetIcon);
+    const resetButton = screen.getByText(/reset tasbeeh/i);
+    expect(resetButton).toBeVisible();
+  });
+
+  it("fires reset counter function upon 'Reset Tasbeeh' button being clicked", async () => {
+    const destructiveButton = screen.getByTestId(
+      "action-sheet-btn-destructive"
+    );
+    await userEvent.click(destructiveButton);
+    expect(mockedResetSingleCounter).toBeCalledTimes(1);
+    expect(mockedResetSingleCounter).toHaveBeenCalledWith(mockedCounterObj.id);
+  });
+
+  it("display correct progress percentage", () => {
+    const percentageText = screen.getByTestId("counter-progress-percent-text");
+    expect(percentageText.textContent).toBe("50%");
+  });
+
   //   it("scrolls the dummy counter", () => {
 
   //   });
-
-  // it("renders the counter text", () => {
-  //   const dummyCounter = screen.getAllByText(dummyCounterText);
-  //   expect(dummyCounter[0]).toBeInTheDocument();
-  //   expect(dummyCounter).toHaveLength(2);
-  //   // expect(screen.getByText("100%")).toBeInTheDocument();
-  // });
 });
