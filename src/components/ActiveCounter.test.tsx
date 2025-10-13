@@ -17,7 +17,7 @@ const mockColor = materialColors[0];
 const mockedCounterObj: counterObjType = {
   id: 1,
   orderIndex: 1,
-  name: "Counter 1",
+  name: "This is a test counter for unit and integration tests",
   count: 5,
   target: 10,
   color: mockColor,
@@ -68,6 +68,7 @@ it("calculates correct scroll speed", () => {
 
 // Test that the counter is scrolling
 // Test that the reset button works
+// Test that the correct direction (ltr / rtl) is applied
 
 describe("Active Counter unit tests", () => {
   beforeEach(() => {
@@ -126,7 +127,5 @@ describe("Active Counter unit tests", () => {
     expect(percentageText.textContent).toBe("50%");
   });
 
-  //   it("scrolls the dummy counter", () => {
-
-  //   });
+  it("scrolls the counter", () => {});
 });

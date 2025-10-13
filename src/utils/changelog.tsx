@@ -1,4 +1,4 @@
-export const LATEST_APP_VERSION = "3.2";
+export const LATEST_APP_VERSION = "3.3";
 
 export const changeLogs = [
   {

@@ -33,10 +33,10 @@ const BottomSheetMajorUpdate = ({
         Version {LATEST_APP_VERSION}
       </p>
       <h1 style={{ color: "#fff" }} className="text-3xl font-bold">
-        UX/UI Improvements
+        Scroll Speed Control
       </h1>
       <p className="mt-2 mb-6 text-sm">
-        Small changes have been made to the app, see details below.
+        Set how fast counters move on your screen.{" "}
       </p>
       <section>
         <div className="flex items-center mb-5">
@@ -47,13 +47,12 @@ const BottomSheetMajorUpdate = ({
             <h2 style={{ color: "#c583f1" }}>UX Improvements</h2>
             <p className="text-sm">
               {" "}
-              The app’s header and navigation bar have been redesigned, and tab
-              icons have been rearranged to better match your device’s platform
-              style.
+              You can now adjust the scroll speed for long tasbeehs from the
+              settings page.
             </p>
           </div>
         </div>
-        <div className="flex items-center mb-5">
+        {/* <div className="flex items-center mb-5">
           <div>
             <MdOutlinePalette className="mr-5 text-3xl text-[#ee7578]" />
           </div>
@@ -65,7 +64,7 @@ const BottomSheetMajorUpdate = ({
               small improvements for a smoother experience.
             </p>
           </div>
-        </div>
+        </div> */}
       </section>
       <button
         onClick={() => {

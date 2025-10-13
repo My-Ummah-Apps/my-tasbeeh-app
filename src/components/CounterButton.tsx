@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { materialColors } from "../utils/constants";
-import { MutableRefObject, useRef } from "react";
+import { MutableRefObject, useRef, useState } from "react";
 // import { incrementCounter } from "../utils/helpers";
 
 const hapticsImpactMedium = async () => {
@@ -99,6 +99,22 @@ function CounterButton({
 }: CounterButtonProps) {
   const buttonRef = useRef(null);
 
+  // const countLength = useRef(activeCounter.count.toString.length);
+
+  const [countLength, setCountLength] = useState(
+    activeCounter.count.toString.length
+  );
+
+  const baseFontSize = 8;
+  let fontSize = Math.max(baseFontSize - (countLength - 3) * 1, 3);
+
+  // useEffect(() => {
+  //   console.log("HAS RUN");
+  //   if (countLength > 3) {
+  //     // fontSize = 2;
+  //   }
+  // }, [countLength]);
+
   // const hapticInterval = useRef<number | null>(null);
 
   // const controls = useAnimation();
@@ -129,6 +145,17 @@ function CounterButton({
     const newActiveCounter = updatedCounters.filter(
       (counter) => counter.isActive === 1
     )[0];
+
+    // countLength.current =
+    //   updatedCounters
+    //     .find((counter) => counter.isActive === 1)
+    //     ?.count.toString().length ?? activeCounter.count.toString().length;
+
+    setCountLength(
+      updatedCounters
+        .find((counter) => counter.isActive === 1)
+        ?.count.toString().length ?? activeCounter.count.toString().length
+    );
 
     await incrementCounterInDB(
       toggleDBConnection,
@@ -202,8 +229,10 @@ function CounterButton({
     >
       <div className="increment-btn-number-and-target-wrap">
         <div
+          style={{ fontSize: `${fontSize}rem` }}
+          // className="text-[8rem]"
+
           data-testid="counter-current-count-text"
-          className="increment-btn-number"
         >
           {activeCounter.count}
         </div>
