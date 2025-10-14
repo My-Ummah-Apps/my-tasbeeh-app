@@ -99,8 +99,6 @@ function CounterButton({
 }: CounterButtonProps) {
   const buttonRef = useRef(null);
 
-  // const countLength = useRef(activeCounter.count.toString.length);
-
   const [countLength, setCountLength] = useState(
     activeCounter.count.toString().length
   );
@@ -109,18 +107,8 @@ function CounterButton({
     setCountLength(activeCounter.count.toString().length);
   }, [activeCounter.count.toString().length]);
 
-  console.log("countLength: ", countLength);
-
   const baseFontSize = 8;
   let fontSize = Math.max(baseFontSize - (countLength - 3) * 1, 2.5);
-  console.log("fontSize: ", fontSize);
-
-  // useEffect(() => {
-  //   console.log("HAS RUN");
-  //   if (countLength > 3) {
-  //     // fontSize = 2;
-  //   }
-  // }, [countLength]);
 
   // const hapticInterval = useRef<number | null>(null);
 

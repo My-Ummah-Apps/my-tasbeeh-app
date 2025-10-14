@@ -35,6 +35,17 @@ const NotificationOptions = ({
   //   description: "General Notification",
   // });
 
+  const remembranceVerses = [
+    `"So remember Me; I will remember you." (Quran 2:152)`,
+    `"O believers! Always remember Allah often." (Quran 33:41)`,
+    `"Surely in the remembrance of Allah do hearts find comfort." (Quran 13:28)`,
+    `"Remember your Lord often and glorify ˹Him˺ morning and evening." (Quran 3:41)`,
+    `"Remember the Name of your Lord, and devote yourself to Him wholeheartedly." (Quran 73:8)`,
+    `"Remember the name of your Lord morning and evening." (Quran 76:25)`,
+    `“And remember Allah much, that you may be successful." (Quran 62:10)`,
+    `"And the remembrance of Allah is greater." (Quran 29:45)`,
+  ];
+
   return (
     <section className="notification-options-wrap">
       <h1 className="modal-header-text">Notifications</h1>
@@ -64,7 +75,10 @@ const NotificationOptions = ({
                 notifications: [
                   {
                     title: "Morning Reminder",
-                    body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
+                    // body: `"Therefore remember Me. I will remember you." (Quran 2:152)`,
+                    body: remembranceVerses[
+                      Math.floor(Math.random() * remembranceVerses.length)
+                    ],
                     id: 1,
                     schedule: {
                       on: { hour: 8, minute: 0 },
@@ -105,7 +119,9 @@ const NotificationOptions = ({
                 notifications: [
                   {
                     title: "Afternoon Reminder",
-                    body: `“And remember Allah much, that you may be successful." (Quran 62:10)`,
+                    body: remembranceVerses[
+                      Math.floor(Math.random() * remembranceVerses.length)
+                    ],
                     id: 2,
                     schedule: {
                       on: { hour: 14, minute: 0 },
@@ -146,7 +162,9 @@ const NotificationOptions = ({
                 notifications: [
                   {
                     title: "Evening Reminder",
-                    body: `"And the remembrance of Allah is greater." (Quran 29:45)`,
+                    body: remembranceVerses[
+                      Math.floor(Math.random() * remembranceVerses.length)
+                    ],
                     id: 3,
                     schedule: {
                       on: { hour: 19, minute: 0 },

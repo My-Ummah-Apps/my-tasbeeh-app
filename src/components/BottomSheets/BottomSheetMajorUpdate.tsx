@@ -1,6 +1,5 @@
 // import { GoRocket } from "react-icons/go";
 import { GoZap } from "react-icons/go";
-import { MdOutlinePalette } from "react-icons/md";
 import { LATEST_APP_VERSION } from "../../utils/changelog";
 
 interface BottomSheetMajorUpdateProps {
