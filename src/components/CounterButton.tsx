@@ -110,6 +110,8 @@ function CounterButton({
   const baseFontSize = 8;
   let fontSize = Math.max(baseFontSize - (countLength - 3) * 1, 2.5);
 
+  console.log("fontSize: ", fontSize);
+
   // const hapticInterval = useRef<number | null>(null);
 
   // const controls = useAnimation();
@@ -222,18 +224,16 @@ function CounterButton({
       }}
       className={`increment-btn`}
     >
-      <div className="increment-btn-number-and-target-wrap">
+      <div className="text-white">
         <div
           style={{ fontSize: `${fontSize}rem` }}
-          // className="text-[8rem]"
-
           data-testid="counter-current-count-text"
         >
           {activeCounter.count}
         </div>
-        <div data-testid="counter-target-text" className="mt-[5rem] text-2xl">
+        <p data-testid="counter-target-text" className="text-2xl">
           of {activeCounter.target}
-        </div>
+        </p>
       </div>
     </motion.button>
   );

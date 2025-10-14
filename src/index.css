@@ -363,27 +363,13 @@ h2 {
   /* margin: 5rem auto; */
   margin-inline: auto;
   border-radius: 50%;
-  line-height: 0vw;
+  /* line-height: 0vw; */
   color: #ced4e2;
   z-index: 1;
   text-align: center;
   border: none;
   box-shadow: var(--counters-page-single-counter-box-shadow);
 }
-
-.increment-btn-number-and-target-wrap {
-  color: #fff;
-  margin-top: 4rem;
-}
-
-/* .increment-btn-number {
-  font-size: 8rem;
-} */
-
-/* .increment-btn-target {
-  font-size: 1.5rem;
-  margin-top: 6rem;
-} */
 
 /* COUNTERS PAGE */
 
