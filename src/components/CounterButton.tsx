@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { materialColors } from "../utils/constants";
-import { MutableRefObject, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 // import { incrementCounter } from "../utils/helpers";
 
 const hapticsImpactMedium = async () => {
@@ -102,11 +102,18 @@ function CounterButton({
   // const countLength = useRef(activeCounter.count.toString.length);
 
   const [countLength, setCountLength] = useState(
-    activeCounter.count.toString.length
+    activeCounter.count.toString().length
   );
 
+  useEffect(() => {
+    setCountLength(activeCounter.count.toString().length);
+  }, [activeCounter.count.toString().length]);
+
+  console.log("countLength: ", countLength);
+
   const baseFontSize = 8;
-  let fontSize = Math.max(baseFontSize - (countLength - 3) * 1, 3);
+  let fontSize = Math.max(baseFontSize - (countLength - 3) * 1, 2.5);
+  console.log("fontSize: ", fontSize);
 
   // useEffect(() => {
   //   console.log("HAS RUN");
@@ -236,7 +243,7 @@ function CounterButton({
         >
           {activeCounter.count}
         </div>
-        <div data-testid="counter-target-text" className="increment-btn-target">
+        <div data-testid="counter-target-text" className="mt-[5rem] text-2xl">
           of {activeCounter.target}
         </div>
       </div>

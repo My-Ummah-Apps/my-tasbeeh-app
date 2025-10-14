@@ -141,7 +141,7 @@ const BottomSheetForm = ({
                 <IonItem>
                   <IonInput
                     className="form-input"
-                    maxlength={5}
+                    maxlength={10}
                     label="Count"
                     labelPlacement="floating"
                     inputMode="numeric"
