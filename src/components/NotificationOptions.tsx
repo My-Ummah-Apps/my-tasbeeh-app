@@ -81,7 +81,7 @@ const NotificationOptions = ({
                     ],
                     id: 1,
                     schedule: {
-                      on: { hour: 8, minute: 0 },
+                      on: { hour: 7, minute: 0 },
                       allowWhileIdle: true,
                       repeats: true,
                     },

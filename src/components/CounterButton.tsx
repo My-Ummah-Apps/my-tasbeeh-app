@@ -110,7 +110,7 @@ function CounterButton({
   const baseFontSize = 8;
   let fontSize = Math.max(baseFontSize - (countLength - 3) * 1, 2.5);
 
-  console.log("fontSize: ", fontSize);
+  // console.log("fontSize: ", fontSize);
 
   // const hapticInterval = useRef<number | null>(null);
 

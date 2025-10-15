@@ -8,6 +8,7 @@ import {
   IonItemOption,
   IonReorder,
 } from "@ionic/react";
+import { motion } from "framer-motion";
 import { direction } from "direction";
 import { counterObjType, MaterialColor } from "../utils/types";
 import { useEffect, useRef } from "react";

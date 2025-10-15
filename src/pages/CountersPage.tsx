@@ -17,7 +17,7 @@ import {
 import CountersListItem from "../components/CountersListItem";
 import { materialColors } from "../utils/constants";
 import { counterObjType, MaterialColor } from "../utils/types";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import BottomSheetForm from "../components/BottomSheets/BottomSheetForm";
 import Toast from "../components/Toast";
 import ActionSheet from "../components/ActionSheet";
@@ -177,22 +177,35 @@ function CountersPage({
           />
 
           <IonList mode="ios" className="counters-wrap">
-            {countersState.map((counterItem: counterObjType, i) => {
-              let color = materialColors[i % materialColors.length];
+            <AnimatePresence>
+              {countersState.map((counterItem: counterObjType, i) => {
+                let color = materialColors[i % materialColors.length];
 
-              return (
-                <CountersListItem
-                  key={counterItem.id}
-                  updateActiveCounter={updateActiveCounter}
-                  setShowResetActionSheet={setShowResetActionSheet}
-                  setShowDeleteActionSheet={setShowDeleteActionSheet}
-                  setCounterId={setCounterId}
-                  setShowForm={setShowForm}
-                  color={color}
-                  counterItem={counterItem}
-                />
-              );
-            })}
+                return (
+                  <motion.div
+                    key={counterItem.id}
+                    layout
+                    initial={{ opacity: 1, x: 0 }}
+                    exit={{
+                      opacity: 0,
+                      x: 100,
+                      transition: { duration: 0.3, ease: "easeInOut" },
+                    }}
+                  >
+                    <CountersListItem
+                      key={counterItem.id}
+                      updateActiveCounter={updateActiveCounter}
+                      setShowResetActionSheet={setShowResetActionSheet}
+                      setShowDeleteActionSheet={setShowDeleteActionSheet}
+                      setCounterId={setCounterId}
+                      setShowForm={setShowForm}
+                      color={color}
+                      counterItem={counterItem}
+                    />
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </IonList>
           <BottomSheetForm
             activeColor={activeColor}
@@ -315,7 +328,7 @@ function CountersPage({
             <h1 className="mt-0 mb-4 text-4xl text-red-500">IMPORTANT</h1>
             <img src={slideToRevealImg} alt="" className="mx-auto mb-3" />
             <h2 className="mb-2 text-lg font-semibold">
-              {"Swipe left on a tasbeeh to reveal more options"}
+              {"Swipe left on a tasbeeh for edit/delete/reset options"}
             </h2>
           </motion.div>
         </>
