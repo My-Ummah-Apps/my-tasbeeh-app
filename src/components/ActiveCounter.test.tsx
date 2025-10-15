@@ -127,5 +127,9 @@ describe("Active Counter unit tests", () => {
     expect(percentageText.textContent).toBe("50%");
   });
 
+  // it("scrolls the counter", () => {});
+});
+
+describe("Active Counter integration tests", () => {
   it("scrolls the counter", () => {});
 });

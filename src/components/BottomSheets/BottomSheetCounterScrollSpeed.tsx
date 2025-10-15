@@ -31,14 +31,14 @@ export const renderModalContent = (
     >
       <h1 className="mb-5 modal-header-text">Scroll Speed</h1>
       <ActiveCounter
-        activeColor={"#EF5350"}
+        activeColor={"#5C6BC0"}
         activeCounter={{
           id: -1,
           orderIndex: -1,
           name: dummyCounterText,
           count: 10,
           target: 10,
-          color: materialColors[0],
+          color: materialColors[4],
           isActive: 0,
         }}
         //   resetSingleCounter={vi.fn()}

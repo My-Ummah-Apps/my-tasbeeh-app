@@ -45,7 +45,7 @@ const BottomSheetChangelog = ({
         ))}
         <button
           onClick={() => setShowChangelogBottomSheet(false)}
-          className="sheet-changelog-close-btn text-base fixed bottom-[10%] left-1/2 -translate-x-1/2 translate-y-1/2 border-none bg-[#5c6bc0] text-white w-[90%] p-6"
+          className="sheet-changelog-close-btn fixed bottom-[10%] left-1/2 -translate-x-1/2 translate-y-1/2 border-none bg-[#5c6bc0] text-white w-[90%] p-6"
         >
           Close
         </button>

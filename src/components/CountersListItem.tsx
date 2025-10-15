@@ -8,7 +8,6 @@ import {
   IonItemOption,
   IonReorder,
 } from "@ionic/react";
-import { motion } from "framer-motion";
 import { direction } from "direction";
 import { counterObjType, MaterialColor } from "../utils/types";
 import { useEffect, useRef } from "react";
@@ -57,7 +56,7 @@ const CountersListItem = ({
             backgroundColor: color + "BF",
           }}
           onClick={async () => {
-            updateActiveCounter(counterItem.id, color);
+            await updateActiveCounter(counterItem.id, color);
           }}
         >
           <div className="relative z-[1] py-[0.7rem] px-0 w-[95%]">

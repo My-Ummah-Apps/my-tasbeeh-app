@@ -1,6 +1,7 @@
-// import { GoRocket } from "react-icons/go";
+import { GoRocket } from "react-icons/go";
 import { GoZap } from "react-icons/go";
 import { LATEST_APP_VERSION } from "../../utils/changelog";
+// import { MdOutlinePalette } from "react-icons/md";
 
 interface BottomSheetMajorUpdateProps {
   setShowMajorUpdateBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,18 +33,18 @@ const BottomSheetMajorUpdate = ({
         Version {LATEST_APP_VERSION}
       </p>
       <h1 style={{ color: "#fff" }} className="text-3xl font-bold">
-        Scroll Speed Control
+        New Feature & Minor Improvements
       </h1>
-      <p className="mt-2 mb-6 text-sm">
+      {/* <p className="mt-2 mb-6 text-sm">
         Set how fast counters move on your screen.{" "}
-      </p>
+      </p> */}
       <section>
         <div className="flex items-center mb-5">
           <div>
-            <GoZap className="mr-5 text-3xl text-[#c583f1]" />
+            <GoRocket className="mr-5 text-3xl text-[#c583f1]" />
           </div>
           <div>
-            <h2 style={{ color: "#c583f1" }}>UX Improvements</h2>
+            <h2 style={{ color: "#c583f1" }}>Scroll Speed Control</h2>
             <p className="text-sm">
               {" "}
               You can now adjust the scroll speed for long tasbeehs from the
@@ -51,19 +52,21 @@ const BottomSheetMajorUpdate = ({
             </p>
           </div>
         </div>
-        {/* <div className="flex items-center mb-5">
+        <div className="flex items-center mb-5">
           <div>
-            <MdOutlinePalette className="mr-5 text-3xl text-[#ee7578]" />
+            <GoZap className="mr-5 text-3xl text-[#ee7578]" />
           </div>
           <div>
-            <h2 style={{ color: "#ee7578" }}>UI Improvements</h2>
+            <h2 style={{ color: "#ee7578" }}>Minor UX Improvements</h2>
             <p className="text-sm">
               {" "}
-              Toast alert display times have been adjusted, along with other
-              small improvements for a smoother experience.
+              Counter numbers now automatically adjust their font size as they
+              grow to stay neatly inside the circle, notifications have more
+              variety with randomised messages, and deleting a counter now
+              features a smooth animation for a better experience.
             </p>
           </div>
-        </div> */}
+        </div>
       </section>
       <button
         onClick={() => {

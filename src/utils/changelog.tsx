@@ -2,7 +2,49 @@ export const LATEST_APP_VERSION = "3.3";
 
 export const changeLogs = [
   {
-    versionNum: LATEST_APP_VERSION,
+    versionNum: "3.3",
+    changes: [
+      {
+        heading: "Counter Display",
+        text: (
+          <>
+            <strong>Improved</strong>: Counter numbers now automatically shrink
+            as they grow, keeping the count neatly inside the circle button.
+          </>
+        ),
+      },
+      {
+        heading: "Notifications Variety",
+        text: (
+          <>
+            <strong>Enhanced</strong>: Added more notification messages with
+            randomised text for morning, afternoon, and evening reminders.
+          </>
+        ),
+      },
+      {
+        heading: "Counter Deletion Animation",
+        text: (
+          <>
+            <strong>New</strong>: Deleting a counter now features a smooth
+            animation for a better visual experience.
+          </>
+        ),
+      },
+      {
+        heading: "List Item Bug Fix",
+        text: (
+          <>
+            <strong>Fixed</strong>: Resolved an issue where a list item would
+            remain partially slid after navigating away and back to the counters
+            page.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "3.2",
     changes: [
       {
         heading: "Bug Fix",

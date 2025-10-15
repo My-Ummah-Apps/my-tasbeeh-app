@@ -409,7 +409,7 @@ MdModeEditOutline {
 }
 
 .single-counter-counter-name {
-  font-size: 1.3rem;
+  /* font-size: 1.3rem; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
