@@ -338,18 +338,6 @@ h2 {
   border-radius: 0.7rem;
 }
 
-.counter-type-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 2rem;
-}
-
-.counter-type-wrap h1 {
-  margin-bottom: 1rem;
-}
-
 .increment-btn {
   position: absolute;
   bottom: calc(20px + 2vh);
@@ -399,12 +387,9 @@ MdModeEditOutline {
   align-items: center;
   color: white;
   width: 100%;
-  /* border-radius: 1rem; */
   box-shadow: var(--counters-page-single-counter-box-shadow);
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
   position: relative;
-  /* margin: 0.5rem auto 0.5rem auto; */
-  /* margin-inline: auto; */
   margin: 0.5rem auto;
   /* clip-path: circle(70% at 50% 50%); */
   /* clip-path: inset(0% 0% 0% 0% round 10px); */
@@ -452,18 +437,6 @@ textarea:focus {
 .counters-page-header svg {
   font-size: 1.7rem;
   width: clamp(4.375rem, 4.0625rem + 1.4286vw, 4.6875rem);
-}
-
-/* NAVBAR */
-
-.target-text {
-  position: absolute;
-  left: 50%;
-  font-size: 0.7rem;
-  top: 131%;
-  transform: translateX(-50%);
-  color: var(--svg-color);
-  z-index: 1;
 }
 
 /* FORMS */

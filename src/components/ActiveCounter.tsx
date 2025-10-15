@@ -185,7 +185,7 @@ function ActiveCounter({
           />
         </section>
         <section
-          className="counter-type-wrap"
+          className="flex items-center justify-center text-[2rem] text-center"
           style={{ position: "absolute", opacity: 0 }}
         >
           <div ref={activeCounterTextRef}>
