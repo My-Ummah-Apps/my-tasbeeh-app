@@ -71,7 +71,11 @@ const BottomSheetReorderCounters = ({
           <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
             {countersState.map((counterItem: counterObjType) => {
               return (
-                <IonItem key={counterItem.id} mode="ios" className="text-white">
+                <IonItem
+                  key={counterItem.id}
+                  // mode="ios"
+                  className="text-white"
+                >
                   <IonLabel className="overflow-hidden whitespace-nowrap text-ellipsis">
                     {counterItem.name}
                   </IonLabel>

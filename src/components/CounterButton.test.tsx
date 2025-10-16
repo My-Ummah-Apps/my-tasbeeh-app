@@ -139,6 +139,8 @@ describe("OpenAndCloseDBConnection", () => {
   });
 });
 
+// ! Add test which checks for target text ('of 50')
+
 // const mockDBConnection = {
 //   current: {
 //     run: vi.fn().mockResolvedValue(undefined),

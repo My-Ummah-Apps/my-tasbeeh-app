@@ -191,11 +191,18 @@ describe("New user flow with no data present in localStorage or DB", () => {
             userPrefsObj[key.preferenceName] = 0;
           } else {
             userPrefsObj[key.preferenceName] =
-              key.preferenceValue === "0" || key.preferenceValue === "1"
+              key.preferenceValue === "0" ||
+              key.preferenceValue === "1" ||
+              key.preferenceName === "scrollSpeed"
                 ? Number(key.preferenceValue)
                 : key.preferenceValue;
           }
         }
+        console.log("userPrefsObj: ", userPrefsObj);
+        console.log(
+          "dictPreferencesDefaultValues: ",
+          dictPreferencesDefaultValues
+        );
 
         expect(userPrefsObj).to.deep.equal(dictPreferencesDefaultValues);
       });

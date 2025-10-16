@@ -573,7 +573,7 @@ input[type="number"] {
   color: var(ion-text-color);
   position: relative;
   background: var(--setings-page-boxes-bg-color);
-  margin: 1rem auto 2rem auto;
+  margin: 1rem auto 1rem auto;
   width: 90%;
   border-radius: 0.5rem;
   box-shadow: var(--settings-page-box-shadow);

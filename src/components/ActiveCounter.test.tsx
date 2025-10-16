@@ -1,43 +1,21 @@
 import { render, screen } from "@testing-library/react";
-import { calcScrollSpeed, materialColors, speedMap } from "../utils/constants";
+import { calcScrollSpeed, speedMap } from "../utils/constants";
 import ActiveCounter from "./ActiveCounter";
-import { counterObjType, userPreferencesType } from "../utils/types";
 import { expect, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import {
+  mockColor,
+  mockedCounterObj,
+  mockedResetSingleCounter,
+  mockedScrollSpeed,
+  mockedSetLanguageDirection,
+  mockedSetScrollSpeed,
+  mockedUserPreferencesState,
+} from "./__mocks__/mockData";
 
-const mockedSetLanguageDirection = vi.fn();
 const mockedLanguageDirection = "ltr";
-const mockedSetScrollSpeed = vi.fn();
-const mockedScrollSpeed = 3;
 // const mockedUpdateUserPreference = vi.fn().mockResolvedValue(undefined);
-const mockedResetSingleCounter = vi.fn().mockResolvedValue(undefined);
-const mockColor = materialColors[0];
-
-const mockedCounterObj: counterObjType = {
-  id: 1,
-  orderIndex: 1,
-  name: "This is a test counter for unit and integration tests",
-  count: 5,
-  target: 10,
-  color: mockColor,
-  isActive: 1,
-};
-
-const mockedUserPreferencesState: userPreferencesType = {
-  morningNotification: 1,
-  afternoonNotification: 0,
-  eveningNotification: 0,
-  isExistingUser: 1,
-  appLaunchCount: 3,
-  haptics: 1,
-  previousLaunchDate: "2025-10-07",
-  dailyCounterReset: 0,
-  autoSwitchCounter: 0,
-  activeColor: "#5C6BC0",
-  theme: "dark",
-  scrollSpeed: 2,
-};
 
 vi.mock("./ActionSheet", () => ({
   default: ({ buttons }: any) => {
