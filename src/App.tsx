@@ -390,7 +390,7 @@ function App() {
         isExistingUser
       ) {
         // setShowChangelogBottomSheet(true);
-        setShowMajorUpdateBottomSheet(true);
+        // setShowMajorUpdateBottomSheet(true);
       }
 
       if (DBResultPreferences.values.length === 0) {

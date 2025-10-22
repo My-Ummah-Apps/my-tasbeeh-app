@@ -1,6 +1,21 @@
-export const LATEST_APP_VERSION = "3.3";
+export const LATEST_APP_VERSION = "3.4";
 
 export const changeLogs = [
+  {
+    versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "Fixed reinstall issue on Android devices",
+        text: (
+          <>
+            <strong>Fixed:</strong> Resolved issue that could stop the app from
+            launching when restored from a device backup. The app now starts
+            correctly after reinstalling.
+          </>
+        ),
+      },
+    ],
+  },
   {
     versionNum: "3.3",
     changes: [
