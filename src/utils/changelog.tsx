@@ -1,8 +1,23 @@
-export const LATEST_APP_VERSION = "3.4";
+export const LATEST_APP_VERSION = "3.5";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "Improved app restore and data handling",
+        text: (
+          <>
+            <strong>Fixed:</strong> Further improved and resolved issues which
+            were occurring when users were trying to reinstall the app on some
+            devices.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "3.4",
     changes: [
       {
         heading: "Fixed reinstall issue on Android devices",
