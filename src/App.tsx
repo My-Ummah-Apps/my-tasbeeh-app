@@ -69,56 +69,13 @@ function App() {
     slidingItems.forEach((item) => item.closeOpened());
   };
 
-  // const [iapProducts, setIapProducts] = useState(null);
-  // document.addEventListener("deviceready", onDeviceReady, false);
-
-  // function onDeviceReady() {
-  //   Purchases.setDebugLogsEnabled(true);
-
-  //   if (Capacitor.getPlatform() === "ios") {
-  //     Purchases.configureWith({
-  //       apiKey: process.env.REACT_APP_APPLE_APIKEY,
-  //     });
-  //   } else if (Capacitor.getPlatform() === "android") {
-  //     Purchases.configureWith({
-  //       apiKey: process.env.REACT_APP_GOOGLE_APIKEY,
-  //     });
-  //   }
-  // }
-
-  // const productsArray = [
-  //   process.env.REACT_APP_ST,
-  //   process.env.REACT_APP_MT,
-  //   process.env.REACT_APP_LT,
-  //   process.env.REACT_APP_XLT,
-  // ];
-
-  // useEffect(() => {
-  //   if (Capacitor.isNativePlatform()) {
-  //     (async () => {
-  //       const fetchedProducts = await Purchases.getProducts(
-  //         productsArray,
-  //         "inapp"
-  //       );
-  //       fetchedProducts.sort(function (a, b) {
-  //         return a.price - b.price;
-  //       });
-  //       setIapProducts(fetchedProducts);
-  //     })();
-
-  //     return () => {
-  //       // Not required right now, but if needed this will get called when the component unmounts
-  //     };
-  //   }
-  // }, []);
-
   const [countersState, setCountersState] = useState<counterObjType[]>([]);
   const [counterId, setCounterId] = useState<number | null>(null);
   const [languageDirection, setLanguageDirection] =
     useState<languageDirection>("neutral");
   const [theme, setTheme] = useState<themeType | null>(null);
   const [activeColor, setActiveColor] = useState<MaterialColor>(
-    materialColors[0]
+    materialColors[0],
   );
   const [showDeleteToast, setShowDeleteToast] = useState(false);
   const [showAllResetToast, setShowAllResetToast] = useState(false);
@@ -242,7 +199,7 @@ function App() {
 
       const countersArr: counterObjType[] = JSON.parse(
         // @ts-ignore
-        localStorage.getItem("localSavedCountersArray")
+        localStorage.getItem("localSavedCountersArray"),
       );
       // console.log("LOCALSTORAGE COUNTERS: ", countersArr);
 
@@ -376,13 +333,13 @@ function App() {
       await toggleDBConnection("open");
 
       let DBResultPreferences = await dbConnection.current!.query(
-        `SELECT * FROM userPreferencesTable`
+        `SELECT * FROM userPreferencesTable`,
       );
 
       assertValidDBResult(DBResultPreferences, "DBResultPreferences");
 
       const isExistingUser = DBResultPreferences.values.find(
-        (item) => item.preferenceName === "isExistingUser"
+        (item) => item.preferenceName === "isExistingUser",
       );
 
       if (
@@ -396,33 +353,33 @@ function App() {
       if (DBResultPreferences.values.length === 0) {
         await initialiseDefaultPrefsAndCounters();
         DBResultPreferences = await dbConnection.current!.query(
-          `SELECT * FROM userPreferencesTable`
+          `SELECT * FROM userPreferencesTable`,
         );
         assertValidDBResult(DBResultPreferences, "DBResultPreferences");
       }
 
       const theme: themeType =
         DBResultPreferences.values.find(
-          (item) => item.preferenceName === "theme"
+          (item) => item.preferenceName === "theme",
         )?.preferenceValue ?? "light";
 
       const rawDailyCounterResetPrefValue =
         DBResultPreferences.values.find(
-          (item) => item.preferenceName === "dailyCounterReset"
+          (item) => item.preferenceName === "dailyCounterReset",
         )?.preferenceValue ?? "0";
 
       const dailyCounterResetPrefValue: BinaryValue =
         rawDailyCounterResetPrefValue === "0" ? 0 : 1;
 
       const previousLaunchDate: string = DBResultPreferences.values.find(
-        (item) => item.preferenceName === "previousLaunchDate"
+        (item) => item.preferenceName === "previousLaunchDate",
       )?.preferenceValue;
 
       const resetCounters =
         dailyCounterResetPrefValue === 1 && previousLaunchDate !== todaysDate;
 
       const DBResultAllCounterData = await dbConnection.current!.query(
-        `SELECT * FROM counterDataTable`
+        `SELECT * FROM counterDataTable`,
       );
 
       // console.log("DBResultAllCounterData: ", DBResultAllCounterData.values);
@@ -431,7 +388,7 @@ function App() {
       assertValidDBResult(DBResultAllCounterData, "DBResultAllCounterData");
 
       await handleUserPreferencesDataFromDB(
-        DBResultPreferences.values as PreferenceObjType[]
+        DBResultPreferences.values as PreferenceObjType[],
       );
       await handleCounterDataFromDB(DBResultAllCounterData, resetCounters);
       await updateUserPreference("isExistingUser", 1);
@@ -463,7 +420,7 @@ function App() {
   };
 
   const handleUserPreferencesDataFromDB = async (
-    DBResultPreferences: PreferenceObjType[]
+    DBResultPreferences: PreferenceObjType[],
   ) => {
     DBResultPreferences.forEach((item) => {
       if (
@@ -473,7 +430,7 @@ function App() {
         item.preferenceName === "scrollSpeed"
       ) {
         (item as { preferenceValue: number }).preferenceValue = Number(
-          item.preferenceValue
+          item.preferenceValue,
         );
       }
     });
@@ -481,10 +438,10 @@ function App() {
     // ? Some of the below code may not be required, as default preferences are being initialised within the initialiseDefaultPrefsAndCounters function
 
     const assignPreference = async (
-      preference: PreferenceKeyType
+      preference: PreferenceKeyType,
     ): Promise<void> => {
       const preferenceQuery = DBResultPreferences.find(
-        (row) => row.preferenceName === preference
+        (row) => row.preferenceName === preference,
       );
 
       if (preferenceQuery) {
@@ -498,7 +455,7 @@ function App() {
       } else {
         await updateUserPreference(
           preference,
-          dictPreferencesDefaultValues[preference]
+          dictPreferencesDefaultValues[preference],
         );
       }
     };
@@ -514,7 +471,7 @@ function App() {
 
   const handleCounterDataFromDB = async (
     DBResultAllCounterData: DBSQLiteValues,
-    resetCounters: boolean
+    resetCounters: boolean,
   ) => {
     const countersFromDB = DBResultAllCounterData.values as Array<
       Record<string, any>
@@ -541,7 +498,7 @@ function App() {
         target: Number(item.target),
         color: item.color,
         isActive: Number(item.isActive) as BinaryValue,
-      })
+      }),
     );
 
     updateCountersState(counters);
@@ -549,7 +506,7 @@ function App() {
 
   const updateUserPreference = async (
     preferenceName: PreferenceKeyType,
-    preferenceValue: number | MaterialColor | themeType | string
+    preferenceValue: number | MaterialColor | themeType | string,
   ) => {
     try {
       await toggleDBConnection("open");
@@ -625,7 +582,7 @@ function App() {
       await toggleDBConnection("open");
 
       const maxOrderIndexResult = await dbConnection.current!.query(
-        `SELECT MAX(orderIndex) AS maxOrderIndex FROM counterDataTable`
+        `SELECT MAX(orderIndex) AS maxOrderIndex FROM counterDataTable`,
       );
       const maxOrderIndex =
         maxOrderIndexResult?.values?.[0].maxOrderIndex ?? -1;
@@ -670,7 +627,7 @@ function App() {
     id: number,
     modifiedCounterName: string,
     modifiedCount: number,
-    modifiedTarget: number
+    modifiedTarget: number,
   ) => {
     try {
       await toggleDBConnection("open");
@@ -710,7 +667,7 @@ function App() {
 
   const deleteCounter = async (id: number) => {
     const remainingCounters = countersState.filter(
-      (counter) => counter.id !== id
+      (counter) => counter.id !== id,
     );
     if (remainingCounters.length === 0) {
       showAlert("Unable to delete Tasbeeh", "At least one tasbeeh must exist");
@@ -721,7 +678,7 @@ function App() {
       (counter, i) => ({
         ...counter,
         isActive: activeCounter.id === id && i === 0 ? 1 : counter.isActive,
-      })
+      }),
     );
 
     const remainingCountersAfterDelete: counterObjType[] =
@@ -733,10 +690,10 @@ function App() {
       await toggleDBConnection("open");
       await dbConnection.current!.run(
         `DELETE FROM counterDataTable WHERE id = ?`,
-        [id]
+        [id],
       );
       const isActiveCounterBeingDeleted = countersState.some(
-        (counter) => counter.id === id && counter.isActive === 1
+        (counter) => counter.id === id && counter.isActive === 1,
       );
 
       // const test = await dbConnection.current!.query(
@@ -748,7 +705,7 @@ function App() {
         // console.log("UPDATING ISACTIVE COUNTER");
         await dbConnection.current!.run(
           `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
-          [remainingCountersAfterDelete[0].id]
+          [remainingCountersAfterDelete[0].id],
         );
       }
       // const test1 = await dbConnection.current!.query(
@@ -768,7 +725,7 @@ function App() {
 
   const updateActiveCounter = async (
     counterId: number,
-    color: MaterialColor
+    color: MaterialColor,
   ) => {
     setCounterId(counterId);
 
@@ -777,7 +734,7 @@ function App() {
         return counter.id === counterId
           ? { ...counter, isActive: 1 }
           : { ...counter, isActive: 0 };
-      }
+      },
     );
 
     // setActiveColor(color);
@@ -787,11 +744,11 @@ function App() {
     try {
       await toggleDBConnection("open");
       await dbConnection.current!.run(
-        `UPDATE counterDataTable SET isActive = 0`
+        `UPDATE counterDataTable SET isActive = 0`,
       );
       await dbConnection.current!.run(
         `UPDATE counterDataTable SET isActive = 1 WHERE id = ?`,
-        [counterId]
+        [counterId],
       );
     } catch (error) {
       console.error("Error updating active counter/active color: ", error);

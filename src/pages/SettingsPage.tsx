@@ -19,8 +19,6 @@ import {
 
 // import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
-// import { Purchases } from "@awesome-cordova-plugins/purchases";
-// import { PURCHASE_TYPE } from "cordova-plugin-purchases";
 import { Share } from "@capacitor/share";
 import { LocalNotifications } from "@capacitor/local-notifications";
 
@@ -52,7 +50,7 @@ interface SettingsageProps {
   userPreferencesState: userPreferencesType;
   updateUserPreference: (
     preferenceName: PreferenceKeyType,
-    preferenceValue: number | MaterialColor | themeType
+    preferenceValue: number | MaterialColor | themeType,
   ) => Promise<void>;
   updateCountersState: (arr: counterObjType[]) => void;
   activeColor: MaterialColor;
@@ -125,61 +123,6 @@ const SettingsPage = ({
       }
     }
   }
-
-  // async function triggerPurchase(tipAmount) {
-  //   try {
-  //     if (Capacitor.getPlatform() == "ios") {
-  //       const { customerInfo, productIdentifier } =
-  //         await Purchases.purchaseProduct(tipAmount);
-  //     }
-  //   } catch (e) {
-  //     // if (!e.userCancelled) {
-  //     console.log("ERROR HAS OCCURRED:");
-  //     console.log(e);
-  //     // console.log(e.userCancelled);
-
-  //     // }
-  //   }
-  //   try {
-  //     if (Capacitor.getPlatform() == "android") {
-  //       await Purchases.purchaseProduct(
-  //         tipAmount,
-  //         null,
-  //         Purchases.PURCHASE_TYPE.INAPP
-  //       );
-  //     }
-  //   } catch (e) {
-  //     console.log("ERROR", e);
-  //     console.log(Purchases.PURCHASE_TYPE.INAPP);
-  //   }
-  //   // try {
-  //   //   await Purchases.purchaseProduct(
-  //   //     tipAmount,
-  //   //     ({ productIdentifier, customerInfo }) => {
-  //   //       // console.log("productIdentifier and customerInfo:");
-  //   //       // console.log(productIdentifier);
-  //   //       // console.log(customerInfo);
-  //   //     },
-  //   //     ({ error, userCancelled }) => {
-  //   //       // Error making purchase
-  //   //       console.log("ERROR HAS OCCURRED:");
-  //   //       console.log(error);
-  //   //     },
-  //   //     null,
-  //   //     Purchases.PURCHASE_TYPE.INAPP
-  //   //   );
-  //   // } catch (e) {
-  //   //   console.log("ERROR OCCURRED:");
-  //   //   console.log(e);
-  //   //   console.log("Purchases.PURCHASE_TYPE.INAPP is:");
-  //   //   console.log(Purchases.PURCHASE_TYPE.INAPP);
-  //   // }
-
-  //   // console.log("PURCHASE SUCCESSFULL");
-  //   // console.log(customerInfo);
-  //   // console.log(productIdentifier);
-
-  // }
 
   const shareThisAppLink = async (link: string) => {
     await Share.share({
@@ -351,7 +294,7 @@ const SettingsPage = ({
                       style={toggleStyles(
                         userPreferencesState,
                         "haptics",
-                        activeColor
+                        activeColor,
                       )}
                       checked={userPreferencesState.haptics === 1}
                       onIonChange={async (e) => {
@@ -378,14 +321,14 @@ const SettingsPage = ({
                     style={toggleStyles(
                       userPreferencesState,
                       "dailyCounterReset",
-                      activeColor
+                      activeColor,
                     )}
                     checked={userPreferencesState.dailyCounterReset === 1}
                     onIonChange={async (e) => {
                       const dailyCounterResetValue = e.detail.checked ? 1 : 0;
                       await updateUserPreference(
                         "dailyCounterReset",
-                        dailyCounterResetValue
+                        dailyCounterResetValue,
                       );
                     }}
                   ></IonToggle>
@@ -408,14 +351,14 @@ const SettingsPage = ({
                     style={toggleStyles(
                       userPreferencesState,
                       "autoSwitchCounter",
-                      activeColor
+                      activeColor,
                     )}
                     checked={userPreferencesState.autoSwitchCounter === 1}
                     onIonChange={async (e) => {
                       const autoSwitchCounterValue = e.detail.checked ? 1 : 0;
                       await updateUserPreference(
                         "autoSwitchCounter",
-                        autoSwitchCounterValue
+                        autoSwitchCounterValue,
                       );
                     }}
                   ></IonToggle>
@@ -461,7 +404,7 @@ const SettingsPage = ({
                     subText={"Rate us on the Google Play Store"}
                     onClick={() => {
                       link(
-                        "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
+                        "https://play.google.com/store/apps/details?id=com.tasbeeh.my",
                       );
                     }}
                   />
@@ -472,7 +415,7 @@ const SettingsPage = ({
                     subText={"Rate us on the App Store"}
                     onClick={() => {
                       link(
-                        "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967"
+                        "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967",
                       );
                     }}
                   />
@@ -484,11 +427,11 @@ const SettingsPage = ({
                     onClick={() => {
                       if (Capacitor.getPlatform() === "android") {
                         shareThisAppLink(
-                          "https://play.google.com/store/apps/details?id=com.tasbeeh.my"
+                          "https://play.google.com/store/apps/details?id=com.tasbeeh.my",
                         );
                       } else if (Capacitor.getPlatform() === "ios") {
                         shareThisAppLink(
-                          "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967"
+                          "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967",
                         );
                       }
                     }}
@@ -507,7 +450,7 @@ const SettingsPage = ({
                   subText={"Send us your feedback"}
                   onClick={() => {
                     link(
-                      "mailto: contact@myummahapps.com?subject=My Tasbeeh App Feedback"
+                      "mailto: contact@myummahapps.com?subject=My Tasbeeh App Feedback",
                     );
                   }}
                 />
@@ -523,7 +466,7 @@ const SettingsPage = ({
                   subText={"View Privacy Policy"}
                   onClick={() => {
                     link(
-                      "https://sites.google.com/view/mytasbeehprivacypolicy/home"
+                      "https://sites.google.com/view/mytasbeehprivacypolicy/home",
                     );
                   }}
                 />
