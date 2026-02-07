@@ -113,12 +113,14 @@ function App() {
       statusBarThemeColor = "#242424";
       document.body.classList.add("dark");
       if (Capacitor.isNativePlatform()) {
+        // setStatusAndNavBarBGColor(statusBarThemeColor, Style.Dark);
         setStatusAndNavBarBGColor(statusBarThemeColor, Style.Dark);
       }
     } else if (themeColor === "light") {
       statusBarThemeColor = "#EDEDED";
       document.body.classList.remove("dark");
       if (Capacitor.isNativePlatform()) {
+        // setStatusAndNavBarBGColor(statusBarThemeColor, Style.Light);
         setStatusAndNavBarBGColor(statusBarThemeColor, Style.Light);
       }
     }
@@ -126,6 +128,10 @@ function App() {
     if (Capacitor.isNativePlatform()) {
       const statusBarIconsColor =
         statusBarThemeColor === "#EDEDED" ? Style.Light : Style.Dark;
+      // const statusBarIconsColor =
+      //   statusBarThemeColor === "#EDEDED"
+      //     ? SystemBarsStyle.Light
+      //     : SystemBarsStyle.Dark;
       if (Capacitor.getPlatform() === "android" && justLaunched.current) {
         setTimeout(() => {
           setStatusAndNavBarBGColor(statusBarThemeColor, statusBarIconsColor);
@@ -292,8 +298,10 @@ function App() {
       setTimeout(() => {
         if (statusBarThemeColor === "#EDEDED") {
           StatusBar.setStyle({ style: Style.Light });
+          // SystemBars.setStyle({ style: SystemBarsStyle.Light });
         } else if (statusBarThemeColor === "#242424") {
           StatusBar.setStyle({ style: Style.Dark });
+          // SystemBars.setStyle({ style: SystemBarsStyle.Dark });
         }
       }, android_style_delay);
     }

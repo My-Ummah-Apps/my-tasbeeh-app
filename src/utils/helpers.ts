@@ -9,7 +9,7 @@ import { DBSQLiteValues } from "@capacitor-community/sqlite";
 export const toggleStyles = (
   userPreferencesState: userPreferencesType,
   preference: keyof userPreferencesType,
-  activeColor: MaterialColor
+  activeColor: MaterialColor,
 ) => {
   return {
     "--track-background-checked": activeColor + "90",
@@ -23,12 +23,14 @@ export const toggleStyles = (
 
 export const setStatusAndNavBarBGColor = async (
   backgroundColor: string,
-  textColor: Style
+  // textColor: SystemBarsStyle,
+  textColor: Style,
 ) => {
   if (Capacitor.getPlatform() === "android") {
     await EdgeToEdge.setBackgroundColor({ color: backgroundColor });
   }
   await StatusBar.setStyle({ style: textColor });
+  // await SystemBars.setStyle({ style: textColor });
 };
 
 export const showAlert = async (title: string, message: string) => {
@@ -40,7 +42,7 @@ export const showAlert = async (title: string, message: string) => {
 
 export function assertValidDBResult(
   result: DBSQLiteValues | undefined,
-  query: string
+  query: string,
 ): asserts result is DBSQLiteValues & { values: any[] } {
   if (!result || !result.values) {
     throw new Error(`${query}.values does not exist`);

@@ -24,6 +24,9 @@ const config: CapacitorConfig = {
       resizeOnFullScreen: false,
       // resizeOnFullScreen: true, // This is a workaround for Android devices to stop the delete button from jumping up and down as the user switches between the alphabet keyboard and number keypad as both keyboards have different heights, without resizeOnFullScreen: true they push the delete button up and down
     },
+    SystemBars: {
+      insetsHandling: "disable",
+    },
     LocalNotifications: {
       smallIcon: "res:///ic_statusbar_notification_icon",
     },

@@ -599,6 +599,14 @@ input[type="number"] {
   padding: 1.5rem 1rem;
 }
 
+/* ion-header {
+  --ion-safe-area-top: 0px;
+}
+
+ion-tabs {
+  --ion-safe-area-bottom: 0px;
+} */
+
 .individual-notification-option-wrap:not(:last-child) {
   border-bottom: 1px solid var(--settings-page-borders);
 }
