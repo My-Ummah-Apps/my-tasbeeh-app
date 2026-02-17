@@ -33,7 +33,7 @@ import {
 interface CountersPageProps {
   updateActiveCounter: (
     counterId: number,
-    color: MaterialColor
+    color: MaterialColor,
   ) => Promise<void>;
   setCounterId: React.Dispatch<React.SetStateAction<number | null>>;
   counterId: number | null;
@@ -46,7 +46,7 @@ interface CountersPageProps {
     id: number,
     modifiedCounterName: string,
     modifiedCount: number,
-    modifiedTarget: number
+    modifiedTarget: number,
   ) => Promise<void>;
   resetSingleCounter: (id: number) => Promise<void>;
   resetAllCounters: () => Promise<void>;
@@ -88,6 +88,7 @@ function CountersPage({
   const [showSwipeHint, setShowSwipeHint] = useState(false);
   const [showResetActionSheet, setShowResetActionSheet] = useState(false);
   const [showDeleteActionSheet, setShowDeleteActionSheet] = useState(false);
+  const [slideItems, setSlideItems] = useState(false);
 
   useEffect(() => {
     const hasSeenHint = localStorage.getItem("hasSeenSwipeHint");
@@ -201,6 +202,9 @@ function CountersPage({
                       setShowForm={setShowForm}
                       color={color}
                       counterItem={counterItem}
+                      // setShowSwipeHint={setShowSwipeHint}
+                      setSlideItems={setSlideItems}
+                      slideItems={slideItems}
                     />
                   </motion.div>
                 );
@@ -229,7 +233,7 @@ function CountersPage({
                 handler: async () => {
                   if (counterId == null) {
                     console.error(
-                      "CounterId does not exist within Reset Tasbeeh ActionSheet Buttons"
+                      "CounterId does not exist within Reset Tasbeeh ActionSheet Buttons",
                     );
                     return;
                   }
@@ -260,7 +264,7 @@ function CountersPage({
                 handler: async () => {
                   if (counterId == null) {
                     console.error(
-                      "CounterId does not exist within Delete Tasbeeh ActionSheet Buttons"
+                      "CounterId does not exist within Delete Tasbeeh ActionSheet Buttons",
                     );
                     return;
                   }
@@ -317,6 +321,10 @@ function CountersPage({
               className="absolute right-[-10px] text-white top-2"
               onClick={() => {
                 setShowSwipeHint(false);
+
+                setTimeout(() => {
+                  setSlideItems(true);
+                }, 300);
               }}
             >
               <IonIcon

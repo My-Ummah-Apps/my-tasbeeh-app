@@ -15,7 +15,7 @@ import { useEffect, useRef } from "react";
 interface CountersListItemProps {
   updateActiveCounter: (
     counterId: number,
-    color: MaterialColor
+    color: MaterialColor,
   ) => Promise<void>;
   setShowResetActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setShowDeleteActionSheet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +23,8 @@ interface CountersListItemProps {
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   color: MaterialColor;
   counterItem: counterObjType;
+  setSlideItems: React.Dispatch<React.SetStateAction<boolean>>;
+  slideItems: boolean;
 }
 
 const CountersListItem = ({
@@ -33,11 +35,30 @@ const CountersListItem = ({
   setShowForm,
   color,
   counterItem,
+  setSlideItems,
+  slideItems,
 }: CountersListItemProps) => {
   const slidingRef = useRef<HTMLIonItemSlidingElement | null>(null);
   const closeOpenSlidingItems = () => {
     slidingRef.current?.closeOpened();
   };
+
+  const openAndCloseSlidingItem = () => {
+    console.log("slidingRef.current: ", slidingRef.current);
+
+    slidingRef.current?.open("end");
+    setTimeout(() => {
+      slidingRef.current?.close();
+    }, 1500);
+  };
+
+  useEffect(() => {
+    if (!slideItems) return;
+
+    openAndCloseSlidingItem();
+    setSlideItems(false);
+    localStorage.setItem("hasSeenSwipeHint", "true");
+  }, [slideItems]);
 
   const location = useLocation();
 
