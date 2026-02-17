@@ -1,8 +1,24 @@
-export const LATEST_APP_VERSION = "3.5";
+export const LATEST_APP_VERSION = "3.6";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "SDK Updated for Latest OS Support",
+        text: (
+          <>
+            <strong>Improved:</strong> The apps underlying SDK has been updated
+            to ensure full compatibility with the newest operating system
+            versions. This update improves performance, stability, and ensures
+            all features continue to run smoothly on the latest devices.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "3.5",
     changes: [
       {
         heading: "Improved app restore and data handling",
