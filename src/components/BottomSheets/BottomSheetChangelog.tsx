@@ -28,9 +28,13 @@ const BottomSheetChangelog = ({
           <section key={i} className="mx-6 mt-4 mb-0">
             {/* <p>v{item.versionNum}</p> */}
             <p>
-              {item.versionNum === LATEST_APP_VERSION
-                ? `v${item.versionNum} - Latest Version`
-                : `v${item.versionNum}`}
+              {item.versionNum === LATEST_APP_VERSION ? (
+                <span className="font-bold">
+                  `v{item.versionNum} - Latest Version`
+                </span>
+              ) : (
+                `v${item.versionNum}`
+              )}
             </p>
             {item.changes.map((item) => (
               <section

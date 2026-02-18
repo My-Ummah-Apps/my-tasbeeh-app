@@ -1,8 +1,24 @@
-export const LATEST_APP_VERSION = "3.6";
+export const LATEST_APP_VERSION = "3.7";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading:
+          "Fixed issue with tasbeeh value not updating properly after auto-switch",
+        text: (
+          <>
+            <strong>Fixed:</strong> Resolved an issue where the active tasbeehs
+            count number would fail to update correctly during automatic
+            switching.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "3.6",
     changes: [
       {
         heading: "SDK Updated for Latest OS Support",
@@ -51,10 +67,10 @@ export const changeLogs = [
     versionNum: "3.3",
     changes: [
       {
-        heading: "Counter Display",
+        heading: "Tasbeeh Display",
         text: (
           <>
-            <strong>Improved</strong>: Counter numbers now automatically shrink
+            <strong>Improved</strong>: Tasbeeh numbers now automatically shrink
             as they grow, keeping the count neatly inside the circle button.
           </>
         ),
@@ -69,10 +85,10 @@ export const changeLogs = [
         ),
       },
       {
-        heading: "Counter Deletion Animation",
+        heading: "Tasbeeh Deletion Animation",
         text: (
           <>
-            <strong>New</strong>: Deleting a counter now features a smooth
+            <strong>New</strong>: Deleting a tasbeeh now features a smooth
             animation for a better visual experience.
           </>
         ),
@@ -82,7 +98,7 @@ export const changeLogs = [
         text: (
           <>
             <strong>Fixed</strong>: Resolved an issue where a list item would
-            remain partially slid after navigating away and back to the counters
+            remain partially slid after navigating away and back to the tasbeehs
             page.
           </>
         ),
@@ -114,7 +130,7 @@ export const changeLogs = [
         heading: "Bug Fix",
         text: (
           <>
-            <strong>Fixed</strong>: Resolved issue with long counter names not
+            <strong>Fixed</strong>: Resolved issue with long tasbeeh names not
             auto-scrolling properly
           </>
         ),
@@ -153,7 +169,7 @@ export const changeLogs = [
         heading: "Auto Tasbeeh Switch",
         text: (
           <>
-            <strong>Fixed</strong>: Resolved issue with reorder counter sheet
+            <strong>Fixed</strong>: Resolved issue with reorder tasbeeh sheet
             being dragged up/down while the content within it was being
             scrolled.
           </>
