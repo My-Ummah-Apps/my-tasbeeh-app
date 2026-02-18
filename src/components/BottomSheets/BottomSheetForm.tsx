@@ -14,7 +14,7 @@ interface BottomSheetFormProps {
     id: number,
     modifiedCounterName: string,
     modifiedCount: number,
-    modifiedTarget: number
+    modifiedTarget: number,
   ) => Promise<void>;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   showForm: boolean;
@@ -40,7 +40,7 @@ const BottomSheetForm = ({
   };
 
   const submitCounter = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
     setSubmitted(true);
@@ -56,13 +56,13 @@ const BottomSheetForm = ({
     const isDuplicate = countersState.some(
       (item) =>
         counterId !== item.id &&
-        inputName.toLowerCase() === item.name.trim().toLowerCase()
+        inputName.toLowerCase() === item.name.trim().toLowerCase(),
     );
 
     if (isDuplicate) {
       showAlert(
         "Duplicate Tasbeeh",
-        "A tasbeeh with this name already exists. Please choose a different name."
+        "A tasbeeh with this name already exists. Please choose a different name.",
       );
       return;
     }
@@ -82,7 +82,7 @@ const BottomSheetForm = ({
       breakpoints={[0, 0.97]}
       onWillPresent={() => {
         const clickedCounter = countersState.find(
-          (counter) => counter.id === counterId
+          (counter) => counter.id === counterId,
         );
         const isEditingCounter = !!clickedCounter;
 
@@ -93,7 +93,6 @@ const BottomSheetForm = ({
         });
       }}
       onWillDismiss={() => {
-        console.log("onWillDismiss has run");
         closeFormCleanup();
       }}
     >

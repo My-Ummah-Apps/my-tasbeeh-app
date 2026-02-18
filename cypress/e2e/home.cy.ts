@@ -27,11 +27,11 @@ const assertDatabaseActiveCounterValue = (num: number) => {
         .then((countersFromDB: DBSQLiteValues) => {
           if (!countersFromDB || !countersFromDB.values) {
             throw new Error(
-              "countersFromDB or countersFromDB.values is undefined"
+              "countersFromDB or countersFromDB.values is undefined",
             );
           }
           const activeCounter = countersFromDB.values.find(
-            (counter: counterObjType) => counter.isActive
+            (counter: counterObjType) => counter.isActive,
           );
           if (!activeCounter) throw new Error("No active counter found");
           expect(activeCounter.count).to.equal(num);
@@ -102,7 +102,7 @@ const insertDummyCounter = (counter: number) => {
 const expectTestIdToContain = (
   testId: string,
   value: string,
-  assertion: "contain" | "have.text"
+  assertion: "contain" | "have.text",
 ) => {
   cy.get(`[data-testid="${testId}"]`).should(assertion, value);
 };
@@ -154,7 +154,7 @@ describe("New user flow with no data present in localStorage or DB", () => {
           arr.map(({ id, ...counter }) => counter);
 
         expect(removeIdsFromCounters(countersFromDB.values)).to.deep.equal(
-          DEFAULT_COUNTERS
+          DEFAULT_COUNTERS,
         );
       });
   });
@@ -198,11 +198,11 @@ describe("New user flow with no data present in localStorage or DB", () => {
                 : key.preferenceValue;
           }
         }
-        console.log("userPrefsObj: ", userPrefsObj);
-        console.log(
-          "dictPreferencesDefaultValues: ",
-          dictPreferencesDefaultValues
-        );
+        // console.log("userPrefsObj: ", userPrefsObj);
+        // console.log(
+        //   "dictPreferencesDefaultValues: ",
+        //   dictPreferencesDefaultValues
+        // );
 
         expect(userPrefsObj).to.deep.equal(dictPreferencesDefaultValues);
       });
@@ -332,7 +332,7 @@ describe("Counter button accessibility", () => {
       .should("have.attr", "aria-label")
       .and(
         "include",
-        `Increase counter for ${DUMMY_COUNTERS[1].name}, current value is 0`
+        `Increase counter for ${DUMMY_COUNTERS[1].name}, current value is 0`,
       );
   });
 
@@ -342,7 +342,7 @@ describe("Counter button accessibility", () => {
       .should("have.attr", "aria-label")
       .and(
         "include",
-        `Increase counter for ${DUMMY_COUNTERS[1].name}, current value is 1`
+        `Increase counter for ${DUMMY_COUNTERS[1].name}, current value is 1`,
       );
   });
 });

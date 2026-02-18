@@ -61,7 +61,7 @@ function App() {
     count: 0,
     target: 0,
     color: materialColors[0],
-    isActive: 0,
+    isActive: 0 as BinaryValue,
   });
 
   const closeSlidingItems = () => {
@@ -737,16 +737,34 @@ function App() {
   ) => {
     setCounterId(counterId);
 
-    const updatedCountersArr: counterObjType[] = countersState.map(
-      (counter: counterObjType) => {
-        return counter.id === counterId
-          ? { ...counter, isActive: 1 }
-          : { ...counter, isActive: 0 };
-      },
-    );
+    setCountersState((prev) => {
+      const counters = prev
+        .map((counter: counterObjType) => {
+          return counter.id === counterId
+            ? { ...counter, isActive: 1 as BinaryValue }
+            : { ...counter, isActive: 0 as BinaryValue };
+        })
+        .sort((a, b) => a.orderIndex - b.orderIndex);
+      setActiveCounter(
+        counters.find((counter) => counter.isActive === 1) ?? counters[0],
+      );
+      return counters;
+    });
 
-    // setActiveColor(color);
-    updateCountersState(updatedCountersArr);
+    // setCountersState([...arr].sort((a, b) => a.orderIndex - b.orderIndex));
+
+    // setActiveCounter(activeCounter);
+
+    // ! countersState here is stale during auto-switch
+    // const updatedCountersArr: counterObjType[] = countersState.map(
+    //   (counter: counterObjType) => {
+    //     return counter.id === counterId
+    //       ? { ...counter, isActive: 1 }
+    //       : { ...counter, isActive: 0 };
+    //   },
+    // );
+
+    // updateCountersState(updatedCountersArr);
     await updateUserPreference("activeColor", color);
 
     try {

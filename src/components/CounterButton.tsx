@@ -28,6 +28,7 @@ export const incrementCounter = (countersState: counterObjType[]) => {
     const isActive = counter.isActive === 1;
 
     if (isActive) {
+      // console.log("UPDATING ACTIVE COUNTER: ", counter.name, counter.count);
       return { ...counter, count: counter.count + 1 };
     }
     return { ...counter };
@@ -36,7 +37,7 @@ export const incrementCounter = (countersState: counterObjType[]) => {
 
 export const getNextCounterInfo = (
   currentCounterIndex: number,
-  updatedCounters: counterObjType[]
+  updatedCounters: counterObjType[],
 ) => {
   const nextCounterIndex = currentCounterIndex + 1;
   return {
@@ -49,7 +50,7 @@ export const getNextCounterInfo = (
 export const incrementCounterInDB = async (
   toggleDBConnection: (action: DBConnectionStateType) => Promise<void>,
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>,
-  newActiveCounter: counterObjType
+  newActiveCounter: counterObjType,
 ) => {
   try {
     await toggleDBConnection("open");
@@ -75,7 +76,7 @@ interface CounterButtonProps {
   setShowEndOfListAlert: React.Dispatch<React.SetStateAction<boolean>>;
   updateActiveCounter: (
     counterId: number,
-    color: MaterialColor
+    color: MaterialColor,
   ) => Promise<void>;
   activeColor: MaterialColor;
   countersState: counterObjType[];
@@ -100,7 +101,7 @@ function CounterButton({
   const buttonRef = useRef(null);
 
   const [countLength, setCountLength] = useState(
-    activeCounter.count.toString().length
+    activeCounter.count.toString().length,
   );
 
   useEffect(() => {
@@ -140,7 +141,7 @@ function CounterButton({
     updateCountersState(updatedCounters);
 
     const newActiveCounter = updatedCounters.filter(
-      (counter) => counter.isActive === 1
+      (counter) => counter.isActive === 1,
     )[0];
 
     // countLength.current =
@@ -151,13 +152,13 @@ function CounterButton({
     setCountLength(
       updatedCounters
         .find((counter) => counter.isActive === 1)
-        ?.count.toString().length ?? activeCounter.count.toString().length
+        ?.count.toString().length ?? activeCounter.count.toString().length,
     );
 
     await incrementCounterInDB(
       toggleDBConnection,
       dbConnection,
-      newActiveCounter
+      newActiveCounter,
     );
 
     if (newActiveCounter.count === newActiveCounter.target) {
@@ -167,7 +168,7 @@ function CounterButton({
         }
 
         const currentCounterIndex = updatedCounters.findIndex(
-          (counter) => counter.isActive === 1
+          (counter) => counter.isActive === 1,
         );
 
         const isLastCounter =
@@ -180,7 +181,7 @@ function CounterButton({
 
         const { nextCounterId, nextCounterColor } = getNextCounterInfo(
           currentCounterIndex,
-          updatedCounters
+          updatedCounters,
         );
 
         setShowNextCounterToast(true);
@@ -196,10 +197,6 @@ function CounterButton({
             await updateActiveCounter(nextCounterId, nextCounterColor);
           }
         };
-
-        // if (hapticInterval.current !== null) {
-        //   clearInterval(hapticInterval.current);
-        // }
 
         await delayActiveCounterUpdate();
         isAutoSwitchCancelled.current = false;
