@@ -33,7 +33,7 @@ import {
   userPreferencesType,
 } from "../utils/types";
 import SettingIndividual from "../components/SettingIndividual";
-import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
+// import BottomSheetAboutUs from "../components/BottomSheets/BottomSheetAboutUs";
 import BottomSheetNotificationsOptions from "../components/BottomSheets/BottomSheetNotificationsOptions";
 import BottomSheetThemeOptions from "../components/BottomSheets/BottomSheetThemeOptions";
 
@@ -188,7 +188,7 @@ const SettingsPage = ({
                   backgroundColor: activeColor,
                 }}
               >
-                MyUmmahApps Ltd provides free, open source applications for the
+               provides free, open source applications for the
                 Muslim community, these applications contain no ads.
               </p>
 
@@ -450,17 +450,17 @@ const SettingsPage = ({
                   subText={"Send us your feedback"}
                   onClick={() => {
                     link(
-                      "mailto: contact@myummahapps.com?subject=My Tasbeeh App Feedback",
+                      "mailto: mohammed@mohammedpatel.dev?subject=My Tasbeeh App Feedback",
                     );
                   }}
                 />
-                <SettingIndividual
+                {/* <SettingIndividual
                   headingText={"Website"}
                   subText={"Visit our website"}
                   onClick={() => {
-                    link("https://myummahapps.com/");
+                    link("");
                   }}
-                />
+                /> */}
                 <SettingIndividual
                   headingText={"Privacy Policy"}
                   subText={"View Privacy Policy"}
@@ -483,7 +483,7 @@ const SettingsPage = ({
                   subText={"About us"}
                   indvidualStyles={"rounded-b-md border-0"}
                 />
-                <BottomSheetAboutUs triggerId="open-about-us-modal" />
+                {/* <BottomSheetAboutUs triggerId="open-about-us-modal" /> */}
               </section>
             </div>
           </motion.main>

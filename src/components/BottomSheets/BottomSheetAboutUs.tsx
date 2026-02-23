@@ -1,6 +1,5 @@
 // @ts-ignore
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
-import MyUmmahAppsLogo from "/src//images/My-Ummah-Apps-72ppi.png";
 import { IonModal } from "@ionic/react";
 
 interface BottomSheetAboutUsProps {
@@ -27,16 +26,14 @@ const BottomSheetAboutUs = ({
         <div className="text-center">
           <img
             className="block mx-auto mb-2"
-            src={MyUmmahAppsLogo}
+            // src={}
             height="50"
             width="40%"
             alt=""
           />
-          <p className="p-4 text-sm leading-5">
-            MyUmmahApps Ltd is an organization driven by a passionate commitment
-            to empower the Muslim community through privacy friendly Open Source
-            Mobile Applications.{" "}
-          </p>
+          {/* <p className="p-4 text-sm leading-5">
+         
+          </p> */}
         </div>
         <div className="mx-4 mt-5 text-xs text-center">
           <p className="mb-[0.2rem]">App Icon by: </p>
