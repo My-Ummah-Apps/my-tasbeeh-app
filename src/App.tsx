@@ -846,8 +846,6 @@ function App() {
                 <SettingsPage
                   dbConnection={dbConnection}
                   toggleDBConnection={toggleDBConnection}
-                  // iapProducts={iapProducts}
-                  // setUserPreferencesState={setUserPreferencesState}
                   userPreferencesState={userPreferencesState}
                   updateUserPreference={updateUserPreference}
                   updateCountersState={updateCountersState}

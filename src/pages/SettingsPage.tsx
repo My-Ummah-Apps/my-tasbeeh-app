@@ -67,7 +67,6 @@ interface SettingsageProps {
 const SettingsPage = ({
   dbConnection,
   toggleDBConnection,
-  // iapProducts,
   updateUserPreference,
   updateCountersState,
   userPreferencesState,
@@ -151,99 +150,6 @@ const SettingsPage = ({
             className="settings-page-content-wrap"
           >
             <div className="settings-page-options-and-info-wrap">
-              {/* <div className="individual-section-wrap">
-          <div
-            className="support-box-wrap"
-            onClick={() => {
-
-            }}
-          >
-            <div className="support-box-icon-and-text-wrap">
-              <FaHandHoldingHeart
-                style={{
-                  fontSize: "32px",
-                  color: activeColor,
-                }}
-              />
-              <div className="support-box-text-wrap">
-                <p className="support-main-text-heading">Contribute</p>
-                <p className="support-sub-text">Support our work</p>
-              </div>
-            </div>
-            <MdOutlineChevronRight className="chevron" />
-          </div>
-
-        
-            <div className="tip-box-wrap">
-              <p
-                className="tip-jar-box-first-line-of-text tip-jar-box-text"
-                style={{
-                  backgroundColor: activeColor,
-                }}
-              ></p>
-
-              <p
-                className="tip-jar-box-text"
-                style={{
-                  backgroundColor: activeColor,
-                }}
-              >
-               provides free, open source applications for the
-                Muslim community, these applications contain no ads.
-              </p>
-
-              <p
-                className="tip-jar-box-text"
-                style={{
-                  backgroundColor: activeColor,
-                }}
-              >
-                {" "}
-                Your support will help us continue serving the Ummah in this
-                endeavor.
-              </p>
-
-              <p
-                className="tip-jar-box-text"
-                style={{
-                  backgroundColor: activeColor,
-                }}
-              >
-                {" "}
-                May Allah reward you.
-              </p>
-
-              {!iapProducts ? (
-                <p style={{ padding: "2rem" }}>Loading...</p>
-              ) : (
-                iapProducts.map((item) => {
-                  return (
-                    <div
-                      className="tip-wrap"
-                      onClick={() => {
-                        triggerPurchase(item.identifier);
-
-                      }}
-                    >
-                      <p>{item.title}</p>
-                      <p>{item.priceString}</p>
-                    </div>
-                  );
-                })
-              )}
-            
-                {" "}
-                <div class="lds-ellipsis">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-
-            </div>
-
-        </div>
-*/}
               {Capacitor.isNativePlatform() && (
                 <section className="individual-section-wrap">
                   <SettingIndividual
@@ -401,7 +307,7 @@ const SettingsPage = ({
                 {Capacitor.getPlatform() === "android" && (
                   <SettingIndividual
                     headingText={"Review"}
-                    subText={"Rate us on the Google Play Store"}
+                    subText={"Rate the app on the Google Play Store"}
                     onClick={() => {
                       link(
                         "https://play.google.com/store/apps/details?id=com.tasbeeh.my",
@@ -412,7 +318,7 @@ const SettingsPage = ({
                 {Capacitor.getPlatform() === "ios" && (
                   <SettingIndividual
                     headingText={"Review"}
-                    subText={"Rate us on the App Store"}
+                    subText={"Rate the app on the App Store"}
                     onClick={() => {
                       link(
                         "https://apps.apple.com/us/app/my-tasbeeh-app/id6449438967",
@@ -447,7 +353,7 @@ const SettingsPage = ({
                 />
                 <SettingIndividual
                   headingText={"Feedback"}
-                  subText={"Send us your feedback"}
+                  subText={"Report Bugs / Request Features"}
                   onClick={() => {
                     link(
                       "mailto: mohammed@mohammedpatel.dev?subject=My Tasbeeh App Feedback",
@@ -477,12 +383,12 @@ const SettingsPage = ({
                     link("https://github.com/My-Ummah-Apps/my-tasbeeh-app");
                   }}
                 />
-                <SettingIndividual
+                {/* <SettingIndividual
                   id="open-about-us-modal"
                   headingText={"About"}
                   subText={"About us"}
                   indvidualStyles={"rounded-b-md border-0"}
-                />
+                /> */}
                 {/* <BottomSheetAboutUs triggerId="open-about-us-modal" /> */}
               </section>
             </div>
